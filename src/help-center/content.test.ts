@@ -227,3 +227,59 @@ describe('fidelity to content-source', () => {
     }
   });
 });
+
+/**
+ * The coverage report the proposal asks to run with the suite. An empty
+ * subcategory is warned about and never fatal; only malformed data fails, and
+ * validationErrors() above is what enforces that.
+ */
+describe('the migrated article set', () => {
+  it('carries every article in the approved mapping', () => {
+    expect(helpCenterArticles).toHaveLength(23);
+    expect(helpCenterArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(23);
+    expect(helpCenterArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(21);
+  });
+
+  it('splits bodies exactly where the source pages diverge', () => {
+    const variants = helpCenterArticles.filter(
+      article =>
+        article.platforms.length === 2 &&
+        article.bodies['extension-desktop'] !== article.bodies.mobile
+    );
+    expect(variants.map(article => article.id).sort()).toEqual(
+      [
+        'how-do-i-create-a-bread-wallet',
+        'how-do-i-restore-my-wallet-with-a-recovery-phrase',
+        'how-to-find-a-token-contract-address-in-bread-wallet',
+        'how-to-fund-your-bread-wallet',
+        'how-to-install-bread-wallet',
+        'is-bread-wallet-available-on-mobile'
+      ].sort()
+    );
+  });
+
+  it('keeps no image placeholders in migrated bodies', () => {
+    for (const article of helpCenterArticles) {
+      for (const platform of article.platforms) {
+        expect(article.bodies[platform], `${article.id} (${platform})`).not.toContain('[image removed]');
+      }
+    }
+  });
+
+  it('prints the coverage report and warns on empty subcategories', () => {
+    const rows = coverageReport(helpCenterArticles);
+    const warnings = coverageWarnings(rows);
+
+    const lines = rows.map(
+      row => `  ${String(row.count).padStart(2)}  ${row.platform.padEnd(18)} ${row.mainCategory} › ${row.subcategory}`
+    );
+    console.info(['', 'Help Center coverage (articles per subcategory per platform):', ...lines].join('\n'));
+    if (warnings.length > 0) {
+      console.warn(['', `Coverage warnings (${warnings.length}) — empty is a visible state, not a failure:`,
+        ...warnings.map(warning => `  ! ${warning}`)].join('\n'));
+    }
+
+    // Warnings never fail the suite. Malformed data does, via validationErrors().
+    expect(validationErrors(helpCenterArticles)).toEqual([]);
+  });
+});

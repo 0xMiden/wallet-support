@@ -17,6 +17,26 @@ guard:
 NODE_OPTIONS=--max-old-space-size=1536 ./node_modules/.bin/vitest run --no-file-parallelism
 ```
 
+The suite prints a coverage report — articles per subcategory per platform. The default reporter hides
+test output, so ask for it explicitly:
+
+```bash
+NODE_OPTIONS=--max-old-space-size=1536 ./node_modules/.bin/vitest run --no-file-parallelism \
+  -t 'prints the coverage report' --reporter=verbose
+```
+
+An empty subcategory is warned about, never fatal. Malformed data fails: an article referencing a
+subcategory that does not exist, filed under the wrong main category, declaring a platform it has no
+body for, or duplicating an id or title.
+
+## Content
+
+Articles live in `src/help-center/content/` as one Markdown file per article, migrated verbatim from
+`content-source/` per `tasks/content-proposal.md`. Frontmatter carries `id`, `title`, `mainCategory`,
+`subcategory`, and `platforms`; a body that differs per platform is split with
+`<!-- platform: extension-desktop -->` markers. Articles are keyed on subcategory **ids**, never on
+display titles. `content.test.ts` compares every migrated body back against `content-source/`.
+
 ## Pre-commit checks
 
 `.githooks/pre-commit` runs `yarn typecheck` and the test suite before each commit. It is tracked in
