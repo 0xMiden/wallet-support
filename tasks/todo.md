@@ -408,3 +408,43 @@ CSS hash alone.
 
 Article rendering, derived tabs, platform persistence, and the Contact Support link are all unverified by
 eye. Checklist handed over separately.
+
+## Article cards and per-article pages
+
+- [x] Replace the stacked article list with one card per article.
+- [x] Add `#subcategory/article` routing and an article view.
+- [x] Design the card from Bread's own identity, not from the references.
+- [x] Derive card excerpts from the body; tune the rule against the real articles.
+- [x] Verify, deploy to the preview, and record the new baseline.
+
+### Card check-in
+
+The references were read for information hierarchy only. One uses a uniform rounded rectangle, the other
+a clipped corner; the clipped corner is already recorded in lessons.md as a borrowed motif removed once
+before, so neither shape is reused here.
+
+### Card results
+
+- Cards are shaped as a tin loaf — domed top corners, squared base — with a warm crust band along the top
+  edge and the diagonal scores a baker cuts into dough. The round open control reuses the loaf marker the
+  sidebar and sequence cards already carry.
+- Routing rules live in `routing.ts` as a pure function given its lookups, so they are tested without the
+  component. The case that matters: an article id that exists but belongs to another subcategory opens
+  the subcategory rather than being lifted into it.
+- Excerpts are derived from the body, never authored. Callouts are skipped and a short label such as
+  `**Steps:**` is joined to the first list item rather than shown alone. All 23 read sensibly.
+- Platform tabs inside an article key on that article rather than its subcategory, so a reader is never
+  asked to choose between two identical pages. A single-platform article shows an "Extension only" badge.
+- The sequence nav walks sibling articles inside an article and subcategories outside one, through the
+  same markup.
+- 112 tests across 5 files, typecheck and build clean.
+
+### Card deployment
+
+- Preview deployment ID: `7592c75a`.
+- Environment `Preview`, branch `help-center-shell`. Production still never deployed.
+- New drift baseline: `index-CKFrJdA_.js` and `index-BLf8CD-8.css`.
+
+### Awaiting visual review
+
+The card shape, crust and scores, the grid at both widths, and the article view are unverified by eye.
