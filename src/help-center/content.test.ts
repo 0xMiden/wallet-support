@@ -1,0 +1,229 @@
+import { describe, expect, it } from 'vitest';
+
+import extensionSource from '../../content-source/extension.md?raw';
+import mobileSource from '../../content-source/mobile.md?raw';
+
+import { helpCenterMainCategories } from './categories';
+import {
+  articlesFor,
+  coverageReport,
+  coverageWarnings,
+  helpCenterArticles,
+  loadArticles,
+  parseArticle,
+  validationErrors
+} from './content';
+import type { HelpCenterArticle, HelpCenterPlatform } from './types';
+
+const SHARED = `---
+id: what-is-guardian
+title: What is Guardian?
+mainCategory: guardian
+subcategory: guardian-protection
+platforms: [extension-desktop, mobile]
+---
+
+Guardian is a recovery and backup layer.
+`;
+
+const VARIANT = `---
+id: how-to-install
+title: How to install Bread Wallet
+mainCategory: getting-started
+subcategory: setup-and-basic-use
+platforms: [extension-desktop, mobile]
+---
+
+<!-- platform: extension-desktop -->
+
+Click "Add to Chrome".
+
+<!-- platform: mobile -->
+
+Tap "Get" in the App Store.
+`;
+
+describe('parsing an article', () => {
+  it('gives every declared platform the shared body when there are no markers', () => {
+    const article = parseArticle(SHARED, 'shared.md');
+    expect(article.id).toBe('what-is-guardian');
+    expect(article.platforms).toEqual(['extension-desktop', 'mobile']);
+    expect(article.bodies['extension-desktop']).toBe('Guardian is a recovery and backup layer.');
+    expect(article.bodies['extension-desktop']).toBe(article.bodies.mobile);
+  });
+
+  it('keeps each platform body separate when markers are present', () => {
+    const article = parseArticle(VARIANT, 'variant.md');
+    expect(article.bodies['extension-desktop']).toBe('Click "Add to Chrome".');
+    expect(article.bodies.mobile).toBe('Tap "Get" in the App Store.');
+  });
+
+  it('refuses an article with no frontmatter', () => {
+    expect(() => parseArticle('Just a body.', 'bare.md')).toThrow(/missing a frontmatter block/);
+  });
+
+  it('refuses an article missing a required field', () => {
+    const missing = SHARED.replace('title: What is Guardian?\n', '');
+    expect(() => parseArticle(missing, 'missing.md')).toThrow(/missing "title"/);
+  });
+
+  it('refuses an unknown platform', () => {
+    const bad = SHARED.replace('[extension-desktop, mobile]', '[extension-desktop, tablet]');
+    expect(() => parseArticle(bad, 'bad.md')).toThrow(/unknown platform "tablet"/);
+  });
+
+  it('refuses a declared platform with no body', () => {
+    const empty = VARIANT.replace('Tap "Get" in the App Store.\n', '');
+    expect(() => parseArticle(empty, 'empty.md')).toThrow(/no body for it/);
+  });
+
+  it('refuses a section for a platform it does not declare', () => {
+    const undeclared = VARIANT.replace('[extension-desktop, mobile]', '[extension-desktop]');
+    expect(() => parseArticle(undeclared, 'undeclared.md')).toThrow(/does not declare that platform/);
+  });
+
+  it('refuses body text before the first platform marker', () => {
+    const stray = VARIANT.replace('---\n\n<!--', '---\n\nStray text.\n\n<!--');
+    expect(() => parseArticle(stray, 'stray.md')).toThrow(/body text before its first platform marker/);
+  });
+
+  it('loads a set of articles in a stable order', () => {
+    const articles = loadArticles({ './content/b.md': SHARED, './content/a.md': VARIANT });
+    expect(articles.map(article => article.id)).toEqual(['how-to-install', 'what-is-guardian']);
+  });
+});
+
+describe('validating articles against the hierarchy', () => {
+  const base = parseArticle(SHARED, 'base.md');
+
+  it('accepts an article whose subcategory exists under the right main category', () => {
+    expect(validationErrors([base])).toEqual([]);
+  });
+
+  it('rejects a subcategory that does not exist — the Oxford-comma class of mistake', () => {
+    const wrong: HelpCenterArticle = { ...base, subcategory: 'sending-receiving-and-claiming-typo' };
+    expect(validationErrors([wrong])[0]).toMatch(/does not exist/);
+  });
+
+  it('rejects an article filed under the wrong main category', () => {
+    const wrong: HelpCenterArticle = { ...base, mainCategory: 'privacy' };
+    expect(validationErrors([wrong])[0]).toMatch(/belongs to "guardian", not "privacy"/);
+  });
+
+  it('rejects duplicate ids and duplicate titles', () => {
+    const errors = validationErrors([base, base]);
+    expect(errors.some(error => /Duplicate article id/.test(error))).toBe(true);
+    expect(errors.some(error => /Duplicate article title/.test(error))).toBe(true);
+  });
+
+  it('reports no errors for the shipped article set', () => {
+    expect(validationErrors(helpCenterArticles)).toEqual([]);
+  });
+});
+
+describe('coverage', () => {
+  it('reports one row per subcategory per platform', () => {
+    const subcategories = helpCenterMainCategories.reduce(
+      (total, mainCategory) => total + mainCategory.subcategories.length,
+      0
+    );
+    expect(coverageReport(helpCenterArticles)).toHaveLength(subcategories * 2);
+  });
+
+  it('warns about an empty subcategory instead of failing', () => {
+    const rows = coverageReport([]);
+    expect(coverageWarnings(rows)).toHaveLength(rows.length);
+    expect(coverageWarnings(rows)[0]).toMatch(/^No articles for /);
+  });
+
+  it('counts only articles that declare the platform', () => {
+    const extensionOnly: HelpCenterArticle = {
+      ...parseArticle(SHARED, 'ext.md'),
+      platforms: ['extension-desktop'],
+      bodies: { 'extension-desktop': 'Extension only.' }
+    };
+    expect(articlesFor([extensionOnly], 'guardian-protection', 'extension-desktop')).toHaveLength(1);
+    expect(articlesFor([extensionOnly], 'guardian-protection', 'mobile')).toHaveLength(0);
+  });
+});
+
+/**
+ * Fidelity. content-source/ is parsed here by a parser written for this test
+ * alone, deliberately independent of whatever produced the article files, so
+ * this compares two derivations of the same text rather than checking a
+ * round-trip against itself.
+ *
+ * The only transformation the migration may make is dropping "[image removed]"
+ * placeholder lines. Blank-line runs and trailing spaces are normalised on both
+ * sides equally, so that forgives layout noise without forgiving content.
+ */
+const SOURCE_TEXT: Readonly<Record<HelpCenterPlatform, string>> = {
+  'extension-desktop': extensionSource,
+  mobile: mobileSource
+};
+
+function readSource(platform: HelpCenterPlatform): ReadonlyMap<string, string> {
+  const text = SOURCE_TEXT[platform];
+
+  const articles = new Map<string, string>();
+  let title: string | null = null;
+  let buffer: string[] = [];
+
+  for (const line of text.split('\n')) {
+    if (line.startsWith('### ')) {
+      if (title !== null) articles.set(title, buffer.join('\n'));
+      title = line.slice(4).trim();
+      buffer = [];
+      continue;
+    }
+    if (line.startsWith('## ')) continue;
+    if (title !== null) buffer.push(line);
+  }
+  if (title !== null) articles.set(title, buffer.join('\n'));
+  return articles;
+}
+
+function normalise(text: string) {
+  return text
+    .split('\n')
+    .filter(line => line.trim() !== '[image removed]')
+    .map(line => line.replace(/[ \t]+$/, ''))
+    .join('\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
+describe('fidelity to content-source', () => {
+  const sources = {
+    'extension-desktop': readSource('extension-desktop'),
+    mobile: readSource('mobile')
+  } as const;
+
+  it('reads the expected article counts out of content-source', () => {
+    expect(sources['extension-desktop'].size).toBe(23);
+    expect(sources.mobile.size).toBe(21);
+  });
+
+  it('carries every migrated body verbatim, image placeholders aside', () => {
+    for (const article of helpCenterArticles) {
+      for (const platform of article.platforms) {
+        const expected = sources[platform].get(article.title);
+        expect(expected, `${article.id}: "${article.title}" is not on the ${platform} source page`).toBeDefined();
+        expect(normalise(article.bodies[platform] ?? ''), `${article.id} (${platform}) diverges from source`).toBe(
+          normalise(expected as string)
+        );
+      }
+    }
+  });
+
+  it('declares a platform only where the source page carries the title', () => {
+    for (const article of helpCenterArticles) {
+      for (const platform of ['extension-desktop', 'mobile'] as const) {
+        expect(
+          article.platforms.includes(platform),
+          `${article.id}: platform declaration disagrees with the ${platform} source page`
+        ).toBe(sources[platform].has(article.title));
+      }
+    }
+  });
+});
