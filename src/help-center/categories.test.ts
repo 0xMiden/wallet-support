@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { helpCenterMainCategories, supportCategoryId } from './categories';
+import { helpCenterMainCategories } from './categories';
 import { createHelpCenterNavigation } from './navigation';
 
 /**
@@ -101,11 +101,5 @@ describe('the landing target', () => {
     expect(entry?.localIndex).toBe(1);
     expect(entry?.siblingCount).toBe(1);
     expect(entry?.previous).toBeUndefined();
-  });
-});
-
-describe('the support category', () => {
-  it('names a main category that actually exists', () => {
-    expect(mainCategoryIds).toContain(supportCategoryId);
   });
 });

@@ -84,12 +84,3 @@ export const helpCenterMainCategories: readonly HelpCenterMainCategory[] = [
     ]
   }
 ] as const;
-
-/**
- * The one category whose articles offer a direct route to a person. Support is
- * the subject there, so the prompt belongs on those pages and nowhere else.
- *
- * Named here rather than written into the component so a rename of the
- * category breaks a test instead of silently removing the prompt.
- */
-export const supportCategoryId = 'troubleshooting';

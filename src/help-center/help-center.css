@@ -928,6 +928,7 @@
 
 .help-center-article-body h2 {
   margin: var(--space-6) 0 0;
+  scroll-margin-top: var(--space-6);
   color: var(--text-strong);
   font-size: var(--text-lg);
   font-weight: var(--weight-medium);
@@ -981,7 +982,7 @@
  * aggregate count anywhere, by design rather than by oversight.
  */
 .help-center-article-footer {
-  margin-top: var(--space-7);
+  margin-top: var(--space-8);
   padding-top: var(--space-4);
   border-top: 1px solid var(--help-line);
   display: flex;

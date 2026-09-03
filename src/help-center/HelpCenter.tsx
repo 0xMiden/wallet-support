@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
 
 import breadMark from './assets/bread-mark.svg';
-import { helpCenterMainCategories, supportCategoryId } from './categories';
+import { helpCenterMainCategories } from './categories';
 import {
   articleExcerpt,
   articlesFor,
@@ -146,6 +146,8 @@ export function HelpCenter() {
   const [helpful, setHelpful] = useState<'yes' | 'no' | null>(null);
   const [linkCopied, setLinkCopied] = useState(false);
   const lastRoute = useRef<string | null>(null);
+  // The section the reader explicitly asked for, held until they scroll again.
+  const pinnedSection = useRef<string | null>(null);
   const sidebar = useRef<HTMLElement>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
 
@@ -162,6 +164,7 @@ export function HelpCenter() {
       if (lastRoute.current !== null && lastRoute.current !== key) window.scrollTo({ top: 0 });
       lastRoute.current = key;
 
+      pinnedSection.current = null;
       setActiveCategoryId(route.categoryId);
       setActiveArticleId(route.articleId);
       if (nextMainCategoryId) setOpenMainCategoryIds(new Set([nextMainCategoryId]));
@@ -248,24 +251,58 @@ export function HelpCenter() {
   const [currentSection, setCurrentSection] = useState<string | null>(null);
 
   useEffect(() => {
-    setCurrentSection(rendered.headings[0]?.id ?? null);
-    if (rendered.headings.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      entries => {
-        const visible = entries
-          .filter(entry => entry.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
-        if (visible?.target.id) setCurrentSection(visible.target.id);
-      },
-      { rootMargin: '-80px 0px -60% 0px' }
-    );
-
-    for (const heading of rendered.headings) {
-      const element = document.getElementById(heading.id);
-      if (element) observer.observe(element);
+    if (rendered.headings.length === 0) {
+      setCurrentSection(null);
+      return;
     }
-    return () => observer.disconnect();
+
+    const update = () => {
+      // A clicked section stays marked even if the page cannot scroll it to the
+      // top — otherwise clicking an early section of a short article scrolls to
+      // the bottom and the rail marks the last section instead.
+      if (pinnedSection.current !== null) {
+        setCurrentSection(pinnedSection.current);
+        return;
+      }
+
+      const positions = rendered.headings.map(heading => ({
+        id: heading.id,
+        top: document.getElementById(heading.id)?.getBoundingClientRect().top ?? Number.POSITIVE_INFINITY
+      }));
+
+      // At the end of a short page the last section can never reach the top, so
+      // without this the rail would never mark it however far you scrolled.
+      const atBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8;
+      if (atBottom) {
+        setCurrentSection(positions[positions.length - 1]?.id ?? null);
+        return;
+      }
+
+      const passed = positions.filter(position => position.top <= 140);
+      setCurrentSection((passed.length > 0 ? passed[passed.length - 1] : positions[0])?.id ?? null);
+    };
+
+    // Only a deliberate scroll releases the pin; the smooth scroll a click
+    // starts must not release it.
+    const release = () => {
+      pinnedSection.current = null;
+      update();
+    };
+
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    window.addEventListener('wheel', release, { passive: true });
+    window.addEventListener('touchmove', release, { passive: true });
+    window.addEventListener('keydown', release);
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+      window.removeEventListener('wheel', release);
+      window.removeEventListener('touchmove', release);
+      window.removeEventListener('keydown', release);
+    };
   }, [rendered]);
 
   const jumpToSection = (event: MouseEvent, id: string) => {
@@ -274,6 +311,12 @@ export function HelpCenter() {
     event.preventDefault();
     const target = document.getElementById(id);
     if (!target) return;
+
+    // Mark it immediately. The observer catches up a moment later, and on the
+    // last section of a short page it never fires at all, so the rail would
+    // keep pointing at the section above the one just clicked.
+    pinnedSection.current = id;
+    setCurrentSection(id);
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     target.focus({ preventScroll: true });
   };
@@ -320,11 +363,9 @@ export function HelpCenter() {
     ? siblingArticles.filter(sibling => sibling.id !== activeArticle.id).slice(0, 5)
     : [];
 
-  const showSupportPrompt = entry?.mainCategory.id === supportCategoryId;
   // An empty rail should not reserve a column, so the article can use the width.
   const showRail =
-    activeArticle !== undefined &&
-    (rendered.headings.length > 1 || relatedArticles.length > 0 || showSupportPrompt);
+    activeArticle !== undefined && (rendered.headings.length > 1 || relatedArticles.length > 0);
 
   const previousLink: SequenceLink | undefined = activeArticle
     ? articleIndex > 0
@@ -869,15 +910,6 @@ export function HelpCenter() {
                 </nav>
               ) : null}
 
-                {showSupportPrompt ? (
-                  <div className="help-center-rail-support">
-                    <p className="help-center-rail-title">Still stuck?</p>
-                    <a href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">
-                      Contact Support
-                      <SupportIcon />
-                    </a>
-                  </div>
-                ) : null}
               </aside>
             ) : null}
           </section>
