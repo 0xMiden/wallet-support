@@ -32,6 +32,12 @@ const LIST_ITEM = /^(\s*)(?:(\d+)\.|[-*+])\s+(.*)$/;
 const ORDERED_ITEM = /^(\s*)(\d+)\.\s+(.*)$/;
 const BLOCK_QUOTE = /^\s*>\s?(.*)$/;
 const UNSUPPORTED_BLOCK = /^\s*(#{1,6}\s|```|\||(-{3,}|\*{3,}|_{3,})\s*$)/;
+/* A paragraph that is nothing but one bold span is a section label, not a
+   sentence — "**Steps:**", "**If Guardian is enabled:**". The articles use 21
+   of them. Promoting them to headings gives every article a real outline
+   without touching a word of approved content. Only at the top level: a bold
+   lead inside a callout or a list item is emphasis, not document structure. */
+const SECTION_LABEL = /^\*\*([^*]+)\*\*$/;
 
 function escapeText(text: string) {
   return text.replace(/[&<>"']/g, character => ESCAPES[character] as string);
@@ -84,7 +90,7 @@ function dedent(lines: readonly string[], amount: number) {
   return lines.map(line => (line.trim() === '' ? '' : line.slice(amount)));
 }
 
-function renderList(lines: readonly string[], origin: string): string {
+function renderList(lines: readonly string[], origin: string, depth: number): string {
   const first = LIST_ITEM.exec(lines[0] as string) as RegExpExecArray;
   const baseIndent = first[1].length;
   const ordered = ORDERED_ITEM.test(lines[0] as string);
@@ -99,7 +105,8 @@ function renderList(lines: readonly string[], origin: string): string {
   const rendered = items
     .map(item => {
       const rest = item.rest.filter(line => line.trim() !== '' || item.rest.length > 1);
-      const nested = rest.length > 0 ? renderBlocks(dedent(rest, indentOf(rest[0] as string)), origin) : '';
+      const nested =
+        rest.length > 0 ? renderBlocks(dedent(rest, indentOf(rest[0] as string)), origin, depth + 1) : '';
       return `<li>${renderInline(item.text, origin)}${nested}</li>`;
     })
     .join('');
@@ -108,7 +115,7 @@ function renderList(lines: readonly string[], origin: string): string {
   return ordered ? `<ol${start}>${rendered}</ol>` : `<ul>${rendered}</ul>`;
 }
 
-export function renderBlocks(lines: readonly string[], origin: string): string {
+export function renderBlocks(lines: readonly string[], origin: string, depth = 0): string {
   const output: string[] = [];
   let index = 0;
 
@@ -127,7 +134,7 @@ export function renderBlocks(lines: readonly string[], origin: string): string {
         quoted.push((BLOCK_QUOTE.exec(lines[index] as string) as RegExpExecArray)[1]);
         index += 1;
       }
-      output.push(`<blockquote>${renderBlocks(quoted, origin)}</blockquote>`);
+      output.push(`<blockquote>${renderBlocks(quoted, origin, depth + 1)}</blockquote>`);
       continue;
     }
 
@@ -149,7 +156,7 @@ export function renderBlocks(lines: readonly string[], origin: string): string {
         block.push(candidate);
         index += 1;
       }
-      output.push(renderList(block, origin));
+      output.push(renderList(block, origin, depth));
       continue;
     }
 
@@ -161,7 +168,13 @@ export function renderBlocks(lines: readonly string[], origin: string): string {
       paragraph.push(candidate.trim());
       index += 1;
     }
-    output.push(`<p>${renderInline(paragraph.join(' '), origin)}</p>`);
+    const text = paragraph.join(' ');
+    const label = depth === 0 ? SECTION_LABEL.exec(text) : null;
+    output.push(
+      label
+        ? `<h2>${renderInline(label[1] as string, origin)}</h2>`
+        : `<p>${renderInline(text, origin)}</p>`
+    );
   }
 
   return output.join('');

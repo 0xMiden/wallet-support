@@ -12,6 +12,7 @@ import {
 } from './content';
 import { renderMarkdown } from './markdown';
 import { createHelpCenterNavigation } from './navigation';
+import { searchHelpCenter } from './search';
 import { articleHref, categoryHref, parseRoute } from './routing';
 import type { HelpCenterPlatform } from './types';
 import './help-center.css';
@@ -130,23 +131,8 @@ export function HelpCenter() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  const visibleMainCategories = useMemo(() => {
-    const normalizedQuery = query.trim().toLocaleLowerCase();
-    if (!normalizedQuery) return helpCenterMainCategories;
-
-    return helpCenterMainCategories
-      .map(mainCategory => {
-        if (mainCategory.title.toLocaleLowerCase().includes(normalizedQuery)) return mainCategory;
-
-        return {
-          ...mainCategory,
-          subcategories: mainCategory.subcategories.filter(category =>
-            category.title.toLocaleLowerCase().includes(normalizedQuery)
-          )
-        };
-      })
-      .filter(mainCategory => mainCategory.subcategories.length > 0);
-  }, [query]);
+  const searchQuery = query.trim();
+  const isSearching = searchQuery.length > 0;
 
   // Only reachable if a category disappears from the hierarchy while its id is
   // still selected. The navigation module has already thrown in development and
@@ -181,6 +167,14 @@ export function HelpCenter() {
         ? renderMarkdown(activeArticle.bodies[bodyPlatform] ?? '', `${activeArticle.id} (${bodyPlatform})`)
         : '',
     [activeArticle?.id, bodyPlatform]
+  );
+
+  const searchResults = useMemo(
+    () =>
+      isSearching
+        ? searchHelpCenter(helpCenterArticles, helpCenterMainCategories, searchQuery, listPlatform)
+        : [],
+    [isSearching, searchQuery, listPlatform]
   );
 
   const cards = useMemo(() => {
@@ -331,10 +325,9 @@ export function HelpCenter() {
         </a>
 
         <nav aria-label="Help Center categories" className="help-center-navigation">
-          {visibleMainCategories.length > 0 ? (
-            visibleMainCategories.map(mainCategory => {
-              const isSearchActive = query.trim().length > 0;
-              const isGroupOpen = isSearchActive || openMainCategoryIds.has(mainCategory.id);
+          {helpCenterMainCategories.length > 0 ? (
+            helpCenterMainCategories.map(mainCategory => {
+              const isGroupOpen = openMainCategoryIds.has(mainCategory.id);
               const isActiveGroup = mainCategory.id === entry.mainCategory.id;
               const panelId = `${mainCategory.id}-subcategories`;
               const mainCategoryIndex = navigation.mainCategoryIndex(mainCategory.id);
@@ -405,7 +398,7 @@ export function HelpCenter() {
         <div className="help-center-main-inner">
           <div className="help-center-utility-bar">
             <label className="help-center-search">
-              <span className="help-center-visually-hidden">Search Help Center categories</span>
+              <span className="help-center-visually-hidden">Search the Help Center</span>
               <svg aria-hidden="true" viewBox="0 0 24 24">
                 <circle cx="11" cy="11" r="6.5" />
                 <path d="m16 16 4 4" />
@@ -414,7 +407,7 @@ export function HelpCenter() {
                 type="search"
                 value={query}
                 onChange={event => setQuery(event.target.value)}
-                placeholder="Search Help Center categories..."
+                placeholder="Search articles and categories…"
               />
             </label>
 
@@ -429,7 +422,53 @@ export function HelpCenter() {
             </a>
           </div>
 
-          <section className="help-center-category" aria-labelledby="help-center-category-title">
+          {isSearching ? (
+            <section className="help-center-category" aria-label="Search results">
+              <p className="help-center-eyebrow">Search</p>
+              <h1>
+                {searchResults.length} {searchResults.length === 1 ? 'result' : 'results'} for “
+                {searchQuery}”
+              </h1>
+
+              {searchResults.length > 0 ? (
+                <ul className="help-center-card-grid">
+                  {searchResults.map(result => (
+                    <li key={result.article.id}>
+                      <div className="help-center-card">
+                        <span className="help-center-card-context">
+                          {result.mainCategoryTitle} <span aria-hidden="true">·</span>{' '}
+                          {result.subcategoryTitle}
+                        </span>
+                        <h2 className="help-center-card-title">
+                          <a
+                            className="help-center-card-link"
+                            href={articleHref(result.article.subcategory, result.article.id)}
+                          >
+                            {result.article.title}
+                          </a>
+                        </h2>
+                        <p className="help-center-card-excerpt">{result.snippet}</p>
+                        <span className="help-center-card-open" aria-hidden="true">
+                          <ChevronIcon />
+                        </span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="help-center-no-results" role="status">
+                  Nothing matched “{searchQuery}”. Try a different word, or pick a category from the
+                  navigation.
+                </p>
+              )}
+            </section>
+          ) : null}
+
+          <section
+            className="help-center-category"
+            hidden={isSearching}
+            aria-labelledby="help-center-category-title"
+          >
             {activeArticle ? (
               <a className="help-center-back" href={categoryHref(entry.category.id)}>
                 <span aria-hidden="true">

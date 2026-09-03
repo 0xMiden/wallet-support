@@ -7,7 +7,8 @@ const render = (source: string) => renderMarkdown(source, 'test.md');
 
 describe('inline markup', () => {
   it('renders bold and italic', () => {
-    expect(render('**Steps:**')).toBe('<p><strong>Steps:</strong></p>');
+    // Inline bold. A line that is *only* bold is a section label — see below.
+    expect(render('the **Steps:** list')).toBe('<p>the <strong>Steps:</strong> list</p>');
     expect(render('you lost *all* your keys')).toBe('<p>you lost <em>all</em> your keys</p>');
   });
 
@@ -159,5 +160,32 @@ describe('the migrated articles', () => {
         expect(html, `${article.id} (${platform})`).not.toMatch(/\*\*|\]\(/);
       }
     }
+  });
+});
+
+describe('section labels', () => {
+  it('promotes a paragraph that is only a bold span to a heading', () => {
+    expect(render('**Steps:**')).toBe('<h2>Steps:</h2>');
+    expect(render('**If Guardian is enabled:**')).toBe('<h2>If Guardian is enabled:</h2>');
+  });
+
+  it('leaves bold that is part of a sentence alone', () => {
+    expect(render('**Important note:** never share it.')).toBe(
+      '<p><strong>Important note:</strong> never share it.</p>'
+    );
+  });
+
+  it('does not promote a bold lead inside a callout or a list item', () => {
+    expect(render('> **Reminder:**')).toBe('<blockquote><p><strong>Reminder:</strong></p></blockquote>');
+    expect(render('- **Guardian:**')).toBe('<ul><li><strong>Guardian:</strong></li></ul>');
+  });
+
+  it('gives the shipped articles a real outline', () => {
+    const headings = helpCenterArticles.flatMap(article =>
+      article.platforms.flatMap(platform =>
+        [...renderMarkdown(article.bodies[platform] as string, article.id).matchAll(/<h2>/g)]
+      )
+    );
+    expect(headings.length).toBeGreaterThan(20);
   });
 });
