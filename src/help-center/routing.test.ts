@@ -5,8 +5,10 @@ import {
   articleHref,
   categoryHref,
   defaultPlatform,
+  homeHref,
   parsePlatform,
   parseRoute,
+  parseSearchQuery,
   withSearchParams
 } from './routing';
 import type { HelpCenterRouteLookups } from './routing';
@@ -14,26 +16,42 @@ import type { HelpCenterRouteLookups } from './routing';
 const lookups: HelpCenterRouteLookups = {
   hasCategory: categoryId => ['setup-and-basic-use', 'guardian-protection'].includes(categoryId),
   hasArticle: (categoryId, articleId) =>
-    categoryId === 'setup-and-basic-use' && articleId === 'how-to-install-bread-wallet',
-  fallbackCategoryId: 'setup-and-basic-use'
+    categoryId === 'setup-and-basic-use' && articleId === 'how-to-install-bread-wallet'
 };
 
 describe('parsing a route', () => {
   it('reads a bare subcategory', () => {
-    expect(parseRoute('#guardian-protection', lookups)).toEqual({ categoryId: 'guardian-protection' });
+    expect(parseRoute('#guardian-protection', lookups)).toEqual({
+      view: 'category',
+      categoryId: 'guardian-protection'
+    });
   });
 
   it('reads a subcategory and article', () => {
     expect(parseRoute('#setup-and-basic-use/how-to-install-bread-wallet', lookups)).toEqual({
+      view: 'category',
       categoryId: 'setup-and-basic-use',
       articleId: 'how-to-install-bread-wallet'
     });
   });
 
-  it('tolerates a leading slash, and sends an empty hash to the default', () => {
-    expect(parseRoute('#/guardian-protection', lookups)).toEqual({ categoryId: 'guardian-protection' });
-    expect(parseRoute('', lookups)).toEqual({ categoryId: 'setup-and-basic-use' });
-    expect(parseRoute('#', lookups)).toEqual({ categoryId: 'setup-and-basic-use' });
+  it('tolerates a leading slash', () => {
+    expect(parseRoute('#/guardian-protection', lookups)).toEqual({
+      view: 'category',
+      categoryId: 'guardian-protection'
+    });
+  });
+
+  it('sends an empty hash to the home page, not into the content', () => {
+    // The bare URL is the product's front door. It used to open the first
+    // subcategory, which left the Help Center with no address of its own.
+    expect(parseRoute('', lookups)).toEqual({ view: 'home' });
+    expect(parseRoute('#', lookups)).toEqual({ view: 'home' });
+    expect(parseRoute('#/', lookups)).toEqual({ view: 'home' });
+  });
+
+  it('addresses the home page with a bare hash', () => {
+    expect(parseRoute(homeHref(), lookups)).toEqual({ view: 'home' });
   });
 
   it('returns null for a hash that is not a route, so the page stays put', () => {
@@ -45,6 +63,7 @@ describe('parsing a route', () => {
 
   it('opens the subcategory, not a guess, when the article is unknown', () => {
     expect(parseRoute('#setup-and-basic-use/nonsense', lookups)).toEqual({
+      view: 'category',
       categoryId: 'setup-and-basic-use'
     });
   });
@@ -52,12 +71,14 @@ describe('parsing a route', () => {
   it('refuses an article that belongs to a different subcategory', () => {
     // The article exists, but not here. Routing must not lift it into this one.
     expect(parseRoute('#guardian-protection/how-to-install-bread-wallet', lookups)).toEqual({
+      view: 'category',
       categoryId: 'guardian-protection'
     });
   });
 
   it('ignores anything after a second slash', () => {
     expect(parseRoute('#setup-and-basic-use/how-to-install-bread-wallet/extra', lookups)).toEqual({
+      view: 'category',
       categoryId: 'setup-and-basic-use',
       articleId: 'how-to-install-bread-wallet'
     });
@@ -69,13 +90,13 @@ describe('building hrefs', () => {
     const real: HelpCenterRouteLookups = {
       hasCategory: categoryId => helpCenterArticles.some(article => article.subcategory === categoryId),
       hasArticle: (categoryId, articleId) =>
-        findArticle(helpCenterArticles, categoryId, articleId) !== undefined,
-      fallbackCategoryId: 'setup-and-basic-use'
+        findArticle(helpCenterArticles, categoryId, articleId) !== undefined
     };
 
     for (const article of helpCenterArticles) {
       const href = articleHref(article.subcategory, article.id);
       expect(parseRoute(href, real), href).toEqual({
+        view: 'category',
         categoryId: article.subcategory,
         articleId: article.id
       });
@@ -119,18 +140,46 @@ describe('the platform in the URL', () => {
   });
 });
 
+describe('the search query in the URL', () => {
+  it('reads and trims a query', () => {
+    expect(parseSearchQuery('?q=recovery%20phrase')).toBe('recovery phrase');
+    expect(parseSearchQuery('?q=%20guardian%20')).toBe('guardian');
+  });
+
+  it('reads nothing as an empty query rather than as a missing one', () => {
+    expect(parseSearchQuery('')).toBe('');
+    expect(parseSearchQuery('?platform=mobile')).toBe('');
+  });
+
+  it('round-trips through the writer', () => {
+    const written = withSearchParams('', { q: 'recovery phrase' });
+    expect(parseSearchQuery(written)).toBe('recovery phrase');
+  });
+});
+
 describe('writing the query string', () => {
   it('keeps the parameters it was not asked to change', () => {
-    // The defect this replaced: choosing a platform assigned a freshly built
-    // search string over the whole query string, so anything else the reader
-    // arrived with went with it.
-    expect(withSearchParams('?utm=x', { platform: 'mobile' })).toBe('?utm=x&platform=mobile');
-    expect(withSearchParams('?utm=x&ref=y', { platform: null })).toBe('?utm=x&ref=y');
+    // The whole point: choosing a platform must not discard the reader's
+    // search, and searching must not discard their platform.
+    expect(parseSearchQuery(withSearchParams('?q=guardian', { platform: 'mobile' }))).toBe(
+      'guardian'
+    );
+    expect(parsePlatform(withSearchParams('?platform=mobile', { q: 'guardian' }))).toBe('mobile');
   });
 
   it('removes a parameter set to empty or null, so the default state is a bare URL', () => {
-    expect(withSearchParams('?platform=mobile', { platform: null })).toBe('');
-    expect(withSearchParams('?platform=mobile', { platform: '' })).toBe('');
+    expect(withSearchParams('?q=guardian', { q: '' })).toBe('');
+    expect(withSearchParams('?q=guardian', { q: null })).toBe('');
+    expect(withSearchParams('?q=guardian&platform=mobile', { q: null })).toBe('?platform=mobile');
+  });
+
+  it('leaves an unrelated parameter alone', () => {
+    // The defect the merge writer was introduced for: choosing a platform
+    // assigned a freshly built search string over the whole query string, so
+    // anything else the reader arrived with went with it.
+    expect(withSearchParams('?utm=x', { q: 'guardian' })).toBe('?utm=x&q=guardian');
+    expect(withSearchParams('?utm=x', { platform: 'mobile' })).toBe('?utm=x&platform=mobile');
+    expect(withSearchParams('?utm=x&ref=y', { platform: null })).toBe('?utm=x&ref=y');
   });
 
   it('replaces a parameter it already holds rather than repeating it', () => {

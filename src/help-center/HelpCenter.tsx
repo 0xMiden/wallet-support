@@ -18,8 +18,10 @@ import {
   articleHref,
   categoryHref,
   defaultPlatform,
+  homeHref,
   parsePlatform,
   parseRoute,
+  parseSearchQuery,
   withSearchParams
 } from './routing';
 import type { HelpCenterPlatform } from './types';
@@ -48,8 +50,7 @@ function routeFromHash(hash: string) {
   return parseRoute(hash, {
     hasCategory: categoryId => navigation.has(categoryId),
     hasArticle: (categoryId, articleId) =>
-      findArticle(helpCenterArticles, categoryId, articleId) !== undefined,
-    fallbackCategoryId: defaultCategoryId
+      findArticle(helpCenterArticles, categoryId, articleId) !== undefined
   });
 }
 
@@ -122,6 +123,17 @@ function SupportIcon() {
 }
 
 export function HelpCenter() {
+  // Read here rather than left to the mount effect, so the first paint is the
+  // page the URL asked for. A hash that is not a route at all resolves to home;
+  // it used to open the first subcategory, which looked like a working link to
+  // a page nobody requested.
+  //
+  // Nothing renders differently on this commit: the home view is addressable
+  // and every brand link points at it, and the page it shows arrives with the
+  // component in the commit that follows.
+  const [view, setView] = useState<'home' | 'category'>(
+    () => routeFromHash(window.location.hash)?.view ?? 'home'
+  );
   const [activeCategoryId, setActiveCategoryId] = useState(defaultCategoryId);
   const [activeArticleId, setActiveArticleId] = useState<string | undefined>(undefined);
   const [activePlatform, setActivePlatform] = useState<HelpCenterPlatform>(
@@ -131,10 +143,10 @@ export function HelpCenter() {
   );
 
   /**
-   * One writer for the query string, so a parameter this page does not manage
-   * survives a change to one it does. replaceState rather than pushState: the
-   * platform choice is not a navigation the back button should have to step
-   * through on the way out of an article.
+   * The platform choice and the search query share the query string, so both
+   * are written through one merge rather than by rebuilding it. replaceState
+   * rather than pushState: neither is a navigation the back button should have
+   * to step through on the way out of an article.
    */
   const writeSearch = (changes: Readonly<Record<string, string | null>>) => {
     const next = withSearchParams(window.location.search, changes);
@@ -149,7 +161,7 @@ export function HelpCenter() {
     () => new Set(defaultMainCategoryId ? [defaultMainCategoryId] : [])
   );
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(() => parseSearchQuery(window.location.search));
   const [helpful, setHelpful] = useState<'yes' | 'no' | null>(null);
   const [linkCopied, setLinkCopied] = useState(false);
   const lastRoute = useRef<string | null>(null);
@@ -165,6 +177,24 @@ export function HelpCenter() {
       // reader where they are rather than sending them to the first page.
       if (route === null) return;
 
+      if (route.view === 'home') {
+        // Only on a real navigation, never on the first read of the URL: a
+        // shared ?q= link arrives here with an empty hash, and clearing it on
+        // mount would discard the search the reader was sent.
+        if (lastRoute.current !== null) {
+          if (lastRoute.current !== 'home') window.scrollTo({ top: 0 });
+          // Going home means leaving the search behind. Without this the brand
+          // link changed the hash and nothing else, so the one control that
+          // promises a way out of the results kept rendering them.
+          setQuery('');
+        }
+        lastRoute.current = 'home';
+        pinnedSection.current = null;
+        setView('home');
+        setIsMobileMenuOpen(false);
+        return;
+      }
+
       const nextMainCategoryId = navigation.resolve(route.categoryId)?.mainCategory.id;
 
       const key = `${route.categoryId}/${route.articleId ?? ''}`;
@@ -172,6 +202,7 @@ export function HelpCenter() {
       lastRoute.current = key;
 
       pinnedSection.current = null;
+      setView('category');
       setActiveCategoryId(route.categoryId);
       setActiveArticleId(route.articleId);
       if (nextMainCategoryId) setOpenMainCategoryIds(new Set([nextMainCategoryId]));
@@ -204,6 +235,14 @@ export function HelpCenter() {
     setHelpful(null);
     setLinkCopied(false);
   }, [activeArticleId]);
+
+  // A reader who found the answer by searching can now send someone the
+  // search. It was component state only, so the URL described the category
+  // behind the results rather than the results.
+  useEffect(() => {
+    writeSearch({ q: query.trim() || null });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
 
   const copyArticleLink = async () => {
     try {
@@ -424,7 +463,7 @@ export function HelpCenter() {
               <h1>Category unavailable</h1>
               <p className="help-center-category-description">
                 This category is no longer part of the Help Center.{' '}
-                <a href={`#${defaultCategoryId}`}>Return to the first category</a>.
+                <a href={homeHref()}>Return to the Help Center home</a>.
               </p>
             </section>
           </div>
@@ -457,7 +496,7 @@ export function HelpCenter() {
       </a>
 
       <header className="help-center-mobile-header">
-        <a className="help-center-brand" href={`#${defaultCategoryId}`} aria-label="Bread Wallet Help Center home">
+        <a className="help-center-brand" href={homeHref()} aria-label="Bread Wallet Help Center home">
           <img src={breadMark} alt="" />
           <span>
             Bread Wallet
@@ -490,7 +529,7 @@ export function HelpCenter() {
         ref={sidebar}
         aria-label="Help Center navigation"
       >
-        <a className="help-center-brand help-center-desktop-brand" href={`#${defaultCategoryId}`}>
+        <a className="help-center-brand help-center-desktop-brand" href={homeHref()}>
           <img src={breadMark} alt="" />
           <span>
             Bread Wallet
@@ -657,7 +696,7 @@ export function HelpCenter() {
             <nav className="help-center-breadcrumb" aria-label="Breadcrumb">
               <ol>
                 <li>
-                  <a href={categoryHref(defaultCategoryId)} aria-label="Help Center home">
+                  <a href={homeHref()} aria-label="Help Center home">
                     <HomeIcon />
                   </a>
                 </li>

@@ -1,6 +1,7 @@
 /**
- * Hash routing for the Help Center. Two shapes only:
+ * Hash routing for the Help Center. Three shapes only:
  *
+ *   (no hash)               the home page
  *   #subcategory            the subcategory's article cards
  *   #subcategory/article    one article
  *
@@ -14,29 +15,34 @@
  * #help-center-content — and treating those as an unknown category used to
  * reset the reader to the first subcategory, so the one control an assistive
  * user reaches first was the one that discarded their place.
+ *
+ * An empty hash used to mean "the first subcategory", which left the product
+ * with no address of its own: the bare URL opened halfway into the content and
+ * the brand had nowhere to link to. It is now the home page, and every other
+ * route is unchanged.
  */
 
-export interface HelpCenterRoute {
-  categoryId: string;
-  articleId?: string;
-}
+export type HelpCenterRoute =
+  | { readonly view: 'home' }
+  | { readonly view: 'category'; readonly categoryId: string; readonly articleId?: string };
 
 export interface HelpCenterRouteLookups {
   hasCategory(categoryId: string): boolean;
   hasArticle(categoryId: string, articleId: string): boolean;
-  fallbackCategoryId: string;
 }
+
+const home: HelpCenterRoute = { view: 'home' };
 
 export function parseRoute(hash: string, lookups: HelpCenterRouteLookups): HelpCenterRoute | null {
   const [categoryPart = '', articlePart] = hash.replace(/^#\/?/, '').split('/');
 
-  if (!categoryPart) return { categoryId: lookups.fallbackCategoryId };
+  if (!categoryPart) return home;
   if (!lookups.hasCategory(categoryPart)) return null;
-  if (!articlePart) return { categoryId: categoryPart };
+  if (!articlePart) return { view: 'category', categoryId: categoryPart };
 
   return lookups.hasArticle(categoryPart, articlePart)
-    ? { categoryId: categoryPart, articleId: articlePart }
-    : { categoryId: categoryPart };
+    ? { view: 'category', categoryId: categoryPart, articleId: articlePart }
+    : { view: 'category', categoryId: categoryPart };
 }
 
 export function articleHref(categoryId: string, articleId: string) {
@@ -45,6 +51,15 @@ export function articleHref(categoryId: string, articleId: string) {
 
 export function categoryHref(categoryId: string) {
   return `#${categoryId}`;
+}
+
+/**
+ * The home page's address. A bare "#" rather than the pathname, so following
+ * it from any route is a hash change the page already listens for, and so the
+ * link does not discard the query string the reader arrived with.
+ */
+export function homeHref() {
+  return '#';
 }
 
 /**
@@ -63,6 +78,14 @@ export function parsePlatform(search: string): HelpCenterPlatformId | null {
 }
 
 /**
+ * The search query, for the same reason as the platform: a reader who has
+ * found the answer by searching for it can send someone the search.
+ */
+export function parseSearchQuery(search: string): string {
+  return new URLSearchParams(search).get('q')?.trim() ?? '';
+}
+
+/**
  * Writes named parameters into an existing query string, leaving the rest of it
  * alone.
  *
@@ -70,7 +93,8 @@ export function parsePlatform(search: string): HelpCenterPlatformId | null {
  * platform alone, and its caller assigned that over whatever was already
  * there. So any other parameter the reader arrived with — a campaign tag, or
  * anything else a shared link carried — was dropped the moment they touched
- * the platform toggle.
+ * the platform toggle. Two parameters share the string now, which is the
+ * second reason not to rebuild it: writing one must not cost the other.
  *
  * An empty or null value removes the parameter rather than writing "?x=",
  * which keeps the default state of the page addressable as a bare URL.
