@@ -13,7 +13,14 @@ import {
 import { renderMarkdown } from './markdown';
 import { createHelpCenterNavigation } from './navigation';
 import { searchHelpCenter } from './search';
-import { articleHref, categoryHref, parseRoute } from './routing';
+import {
+  articleHref,
+  categoryHref,
+  defaultPlatform,
+  parsePlatform,
+  parseRoute,
+  platformSearch
+} from './routing';
 import type { HelpCenterPlatform } from './types';
 import './help-center.css';
 
@@ -88,6 +95,15 @@ function CloseIcon() {
   );
 }
 
+function LinkIcon() {
+  return (
+    <svg aria-hidden="true" className="help-center-contact-icon" viewBox="0 0 24 24">
+      <path d="M10 13.5a3.5 3.5 0 0 0 5 0l3-3a3.5 3.5 0 0 0-5-5l-1 1" />
+      <path d="M14 10.5a3.5 3.5 0 0 0-5 0l-3 3a3.5 3.5 0 0 0 5 5l1-1" />
+    </svg>
+  );
+}
+
 function SupportIcon() {
   return (
     <svg aria-hidden="true" className="help-center-contact-icon" viewBox="0 0 24 24">
@@ -99,13 +115,30 @@ function SupportIcon() {
 export function HelpCenter() {
   const [activeCategoryId, setActiveCategoryId] = useState(defaultCategoryId);
   const [activeArticleId, setActiveArticleId] = useState<string | undefined>(undefined);
-  const [activePlatform, setActivePlatform] = useState<HelpCenterPlatform>('extension-desktop');
+  const [activePlatform, setActivePlatform] = useState<HelpCenterPlatform>(
+    () =>
+      parsePlatform(window.location.search) ??
+      defaultPlatform(window.matchMedia?.('(pointer: coarse)').matches ?? false)
+  );
+
+  const choosePlatform = (platform: HelpCenterPlatform) => {
+    setActivePlatform(platform);
+    window.history.replaceState(
+      null,
+      '',
+      `${window.location.pathname}${platformSearch(platform)}${window.location.hash}`
+    );
+  };
   const [openMainCategoryIds, setOpenMainCategoryIds] = useState<ReadonlySet<string>>(
     () => new Set(defaultMainCategoryId ? [defaultMainCategoryId] : [])
   );
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [query, setQuery] = useState('');
+  const [helpful, setHelpful] = useState<'yes' | 'no' | null>(null);
+  const [linkCopied, setLinkCopied] = useState(false);
   const lastRoute = useRef<string | null>(null);
+  const sidebar = useRef<HTMLElement>(null);
+  const menuButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -130,6 +163,38 @@ export function HelpCenter() {
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      setIsMobileMenuOpen(false);
+      menuButton.current?.focus();
+    };
+
+    window.addEventListener('keydown', closeOnEscape);
+    // Not the first focusable in the DOM: that is the desktop brand link, which
+    // is display:none at drawer widths and silently refuses focus.
+    sidebar.current?.querySelector<HTMLElement>('.help-center-navigation-heading')?.focus();
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [isMobileMenuOpen]);
+
+  // A verdict belongs to the article it was given about.
+  useEffect(() => {
+    setHelpful(null);
+    setLinkCopied(false);
+  }, [activeArticleId]);
+
+  const copyArticleLink = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setLinkCopied(true);
+    } catch {
+      // Clipboard access can be refused; leave the label unchanged rather than
+      // claiming a copy that did not happen.
+    }
+  };
 
   const searchQuery = query.trim();
   const isSearching = searchQuery.length > 0;
@@ -296,6 +361,7 @@ export function HelpCenter() {
         <button
           className="help-center-menu-button"
           type="button"
+          ref={menuButton}
           aria-controls="help-center-sidebar"
           aria-expanded={isMobileMenuOpen}
           aria-label={isMobileMenuOpen ? 'Close navigation' : 'Open navigation'}
@@ -315,6 +381,8 @@ export function HelpCenter() {
       <aside
         className={`help-center-sidebar${isMobileMenuOpen ? ' is-open' : ''}`}
         id="help-center-sidebar"
+        ref={sidebar}
+        aria-label="Help Center navigation"
       >
         <a className="help-center-brand help-center-desktop-brand" href={`#${defaultCategoryId}`}>
           <img src={breadMark} alt="" />
@@ -506,7 +574,7 @@ export function HelpCenter() {
                   role="tab"
                   aria-selected={activePlatform === 'extension-desktop'}
                   aria-controls="category-content-panel"
-                  onClick={() => setActivePlatform('extension-desktop')}
+                  onClick={() => choosePlatform('extension-desktop')}
                 >
                   Extension
                 </button>
@@ -516,7 +584,7 @@ export function HelpCenter() {
                   role="tab"
                   aria-selected={activePlatform === 'mobile'}
                   aria-controls="category-content-panel"
-                  onClick={() => setActivePlatform('mobile')}
+                  onClick={() => choosePlatform('mobile')}
                 >
                   Mobile
                 </button>
@@ -577,6 +645,49 @@ export function HelpCenter() {
                 </p>
               )}
             </div>
+
+            {activeArticle ? (
+              <div className="help-center-article-footer">
+                {helpful === null ? (
+                  <div className="help-center-helpful">
+                    <span id="help-center-helpful-label">Was this helpful?</span>
+                    <button
+                      type="button"
+                      aria-describedby="help-center-helpful-label"
+                      onClick={() => setHelpful('yes')}
+                    >
+                      Yes
+                    </button>
+                    <button
+                      type="button"
+                      aria-describedby="help-center-helpful-label"
+                      onClick={() => setHelpful('no')}
+                    >
+                      No
+                    </button>
+                  </div>
+                ) : (
+                  <p className="help-center-helpful-reply" role="status">
+                    {helpful === 'yes' ? (
+                      'Thanks — good to know.'
+                    ) : (
+                      <>
+                        Sorry about that.{' '}
+                        <a href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">
+                          Tell us what was missing
+                        </a>
+                        .
+                      </>
+                    )}
+                  </p>
+                )}
+
+                <button className="help-center-copy-link" type="button" onClick={copyArticleLink}>
+                  <LinkIcon />
+                  <span>{linkCopied ? 'Link copied' : 'Copy link'}</span>
+                </button>
+              </div>
+            ) : null}
 
             <nav
               className="help-center-sequence"

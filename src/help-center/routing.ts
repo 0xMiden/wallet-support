@@ -46,3 +46,30 @@ export function articleHref(categoryId: string, articleId: string) {
 export function categoryHref(categoryId: string) {
   return `#${categoryId}`;
 }
+
+/**
+ * The platform choice lives in the URL so a Mobile view can be linked, shared
+ * and survive a reload. It was component state only, so a reader who sent
+ * someone a mobile article sent them the extension instructions.
+ *
+ * A query parameter rather than a hash segment: the hash is the route, and
+ * overloading it would make "#a/b" ambiguous.
+ */
+export type HelpCenterPlatformId = 'extension-desktop' | 'mobile';
+
+export function parsePlatform(search: string): HelpCenterPlatformId | null {
+  const value = new URLSearchParams(search).get('platform');
+  return value === 'mobile' || value === 'extension-desktop' ? value : null;
+}
+
+export function platformSearch(platform: HelpCenterPlatformId): string {
+  return platform === 'extension-desktop' ? '' : `?platform=${platform}`;
+}
+
+/**
+ * With nothing in the URL, a touch device should not be handed desktop
+ * extension instructions first. CLAUDE.md asks for mobile-first.
+ */
+export function defaultPlatform(isTouchDevice: boolean): HelpCenterPlatformId {
+  return isTouchDevice ? 'mobile' : 'extension-desktop';
+}

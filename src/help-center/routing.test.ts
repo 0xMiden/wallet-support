@@ -1,7 +1,14 @@
 import { describe, expect, it } from 'vitest';
 
 import { helpCenterArticles, findArticle } from './content';
-import { articleHref, categoryHref, parseRoute } from './routing';
+import {
+  articleHref,
+  categoryHref,
+  defaultPlatform,
+  parsePlatform,
+  parseRoute,
+  platformSearch
+} from './routing';
 import type { HelpCenterRouteLookups } from './routing';
 
 const lookups: HelpCenterRouteLookups = {
@@ -77,5 +84,34 @@ describe('building hrefs', () => {
 
   it('builds a subcategory href', () => {
     expect(categoryHref('guardian-protection')).toBe('#guardian-protection');
+  });
+});
+
+describe('the platform in the URL', () => {
+  it('reads a platform the page understands', () => {
+    expect(parsePlatform('?platform=mobile')).toBe('mobile');
+    expect(parsePlatform('?platform=extension-desktop')).toBe('extension-desktop');
+  });
+
+  it('ignores anything else', () => {
+    expect(parsePlatform('')).toBeNull();
+    expect(parsePlatform('?platform=tablet')).toBeNull();
+    expect(parsePlatform('?other=mobile')).toBeNull();
+  });
+
+  it('writes only the non-default platform, keeping the plain URL clean', () => {
+    expect(platformSearch('extension-desktop')).toBe('');
+    expect(platformSearch('mobile')).toBe('?platform=mobile');
+  });
+
+  it('round-trips', () => {
+    for (const platform of ['extension-desktop', 'mobile'] as const) {
+      expect(parsePlatform(platformSearch(platform)) ?? 'extension-desktop').toBe(platform);
+    }
+  });
+
+  it('defaults a touch device to Mobile rather than desktop instructions', () => {
+    expect(defaultPlatform(true)).toBe('mobile');
+    expect(defaultPlatform(false)).toBe('extension-desktop');
   });
 });
