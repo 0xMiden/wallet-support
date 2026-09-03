@@ -788,6 +788,115 @@
   background: rgb(231 117 55 / 10%);
 }
 
+/*
+ * Article layout: the body keeps its reading measure and the space beside it
+ * carries the contents list rather than sitting empty. A narrow column reads as
+ * deliberate when something is next to it and as a mistake when nothing is.
+ */
+.help-center-article-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+}
+
+@media (min-width: 1180px) {
+  .help-center-article-layout {
+    /* Bounded so the rail sits beside the text rather than at the far edge of
+       a much wider column — the text column is capped at --measure, so an
+       unbounded 1fr left a 300px gulf between the two. */
+    max-width: 55rem;
+    grid-template-columns: minmax(0, 1fr) 14rem;
+    gap: var(--space-7);
+  }
+}
+
+.help-center-rail {
+  align-self: start;
+  order: -1;
+  display: grid;
+  gap: var(--space-6);
+}
+
+@media (min-width: 1180px) {
+  .help-center-rail {
+    position: sticky;
+    top: var(--space-5);
+    order: 0;
+  }
+}
+
+.help-center-rail-support a {
+  padding: var(--space-3) 0 var(--space-3) var(--space-4);
+  border-left: 2px solid rgb(231 117 55 / 22%);
+  color: var(--help-accent-soft);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.help-center-rail-support a:hover,
+.help-center-rail-support a:focus-visible {
+  color: var(--help-accent-pale);
+}
+
+.help-center-rail-title {
+  margin: 0 0 var(--space-3);
+  color: var(--text-faint);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-strong);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.help-center-contents ul {
+  margin: 0;
+  padding: 0 0 0 var(--space-4);
+  border-left: 2px solid rgb(231 117 55 / 22%);
+  display: grid;
+  gap: var(--space-3);
+  list-style: none;
+}
+
+.help-center-contents a {
+  position: relative;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.35;
+  text-decoration: none;
+  display: block;
+  transition: color 160ms ease;
+}
+
+.help-center-contents a:hover,
+.help-center-contents a:focus-visible {
+  color: var(--help-accent-soft);
+}
+
+/* The bar marks the section the reader is in. */
+.help-center-contents a.is-current {
+  color: var(--text-strong);
+  font-weight: var(--weight-medium);
+}
+
+.help-center-contents a.is-current::before {
+  position: absolute;
+  top: -0.15rem;
+  bottom: -0.15rem;
+  left: calc(var(--space-4) * -1 - 2px);
+  width: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--help-accent);
+  content: '';
+}
+
+.help-center-article-body h2:focus-visible {
+  outline: 3px solid var(--help-accent);
+  outline-offset: 4px;
+}
+
 .help-center-article-body {
   max-width: var(--measure);
   overflow-wrap: anywhere;

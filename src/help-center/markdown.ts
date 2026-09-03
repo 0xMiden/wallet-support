@@ -115,7 +115,30 @@ function renderList(lines: readonly string[], origin: string, depth: number): st
   return ordered ? `<ol${start}>${rendered}</ol>` : `<ul>${rendered}</ul>`;
 }
 
-export function renderBlocks(lines: readonly string[], origin: string, depth = 0): string {
+export interface ArticleHeading {
+  readonly id: string;
+  readonly text: string;
+}
+
+function headingId(text: string, taken: Set<string>) {
+  const base =
+    text
+      .toLocaleLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '') || 'section';
+
+  let id = base;
+  for (let n = 2; taken.has(id); n += 1) id = `${base}-${n}`;
+  taken.add(id);
+  return id;
+}
+
+export function renderBlocks(
+  lines: readonly string[],
+  origin: string,
+  depth = 0,
+  headings?: ArticleHeading[]
+): string {
   const output: string[] = [];
   let index = 0;
 
@@ -170,11 +193,19 @@ export function renderBlocks(lines: readonly string[], origin: string, depth = 0
     }
     const text = paragraph.join(' ');
     const label = depth === 0 ? SECTION_LABEL.exec(text) : null;
-    output.push(
-      label
-        ? `<h2>${renderInline(label[1] as string, origin)}</h2>`
-        : `<p>${renderInline(text, origin)}</p>`
-    );
+
+    if (label && headings) {
+      const plain = (label[1] as string).replace(/\*\*|\*/g, '').trim();
+      const id = headingId(plain, new Set(headings.map(heading => heading.id)));
+      headings.push({ id, text: plain });
+      output.push(`<h2 id="${id}" tabindex="-1">${renderInline(label[1] as string, origin)}</h2>`);
+    } else {
+      output.push(
+        label
+          ? `<h2>${renderInline(label[1] as string, origin)}</h2>`
+          : `<p>${renderInline(text, origin)}</p>`
+      );
+    }
   }
 
   return output.join('');
@@ -182,4 +213,18 @@ export function renderBlocks(lines: readonly string[], origin: string, depth = 0
 
 export function renderMarkdown(source: string, origin: string): string {
   return renderBlocks(source.split('\n'), origin);
+}
+
+/**
+ * Renders and reports the article's section headings, so the contents list is
+ * generated from the article rather than maintained beside it — an authored
+ * list is one more thing that can fall out of step with the body.
+ */
+export function renderArticle(
+  source: string,
+  origin: string
+): { html: string; headings: readonly ArticleHeading[] } {
+  const headings: ArticleHeading[] = [];
+  const html = renderBlocks(source.split('\n'), origin, 0, headings);
+  return { html, headings };
 }

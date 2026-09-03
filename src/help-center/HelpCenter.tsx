@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import type { MouseEvent } from 'react';
 
 import breadMark from './assets/bread-mark.svg';
 import { helpCenterMainCategories } from './categories';
@@ -10,7 +11,7 @@ import {
   helpCenterArticles,
   subcategoryNeedsPlatformChoice
 } from './content';
-import { renderMarkdown } from './markdown';
+import { renderArticle } from './markdown';
 import { createHelpCenterNavigation } from './navigation';
 import { searchHelpCenter } from './search';
 import {
@@ -234,13 +235,48 @@ export function HelpCenter() {
       : (activeArticle.platforms[0] as HelpCenterPlatform)
     : listPlatform;
 
-  const articleHtml = useMemo(
+  const rendered = useMemo(
     () =>
       activeArticle
-        ? renderMarkdown(activeArticle.bodies[bodyPlatform] ?? '', `${activeArticle.id} (${bodyPlatform})`)
-        : '',
+        ? renderArticle(activeArticle.bodies[bodyPlatform] ?? '', `${activeArticle.id} (${bodyPlatform})`)
+        : { html: '', headings: [] },
     [activeArticle?.id, bodyPlatform]
   );
+
+  // Which section the reader is currently in, so the contents list says where
+  // they are rather than only where they could go.
+  const [currentSection, setCurrentSection] = useState<string | null>(null);
+
+  useEffect(() => {
+    setCurrentSection(rendered.headings[0]?.id ?? null);
+    if (rendered.headings.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      entries => {
+        const visible = entries
+          .filter(entry => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+        if (visible?.target.id) setCurrentSection(visible.target.id);
+      },
+      { rootMargin: '-80px 0px -60% 0px' }
+    );
+
+    for (const heading of rendered.headings) {
+      const element = document.getElementById(heading.id);
+      if (element) observer.observe(element);
+    }
+    return () => observer.disconnect();
+  }, [rendered]);
+
+  const jumpToSection = (event: MouseEvent, id: string) => {
+    // The hash belongs to the router, so an in-page jump moves the page
+    // directly instead of writing an anchor the router would have to ignore.
+    event.preventDefault();
+    const target = document.getElementById(id);
+    if (!target) return;
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    target.focus({ preventScroll: true });
+  };
 
   const searchResults = useMemo(
     () =>
@@ -278,6 +314,11 @@ export function HelpCenter() {
   const articleIndex = activeArticle
     ? siblingArticles.findIndex(article => article.id === activeArticle.id)
     : -1;
+
+  // The rest of this subcategory, for the rail.
+  const relatedArticles = activeArticle
+    ? siblingArticles.filter(sibling => sibling.id !== activeArticle.id).slice(0, 5)
+    : [];
 
   const previousLink: SequenceLink | undefined = activeArticle
     ? articleIndex > 0
@@ -642,12 +683,61 @@ export function HelpCenter() {
               }
             >
               {activeArticle ? (
-                /* Every tag and attribute here is emitted by renderMarkdown, which
-                   escapes all text and refuses any construct it does not know. */
-                <div
-                  className="help-center-article-body"
-                  dangerouslySetInnerHTML={{ __html: articleHtml }}
-                />
+                <div className="help-center-article-layout">
+                  {/* Every tag and attribute here is emitted by the renderer, which
+                      escapes all text and refuses any construct it does not know. */}
+                  <div
+                    className="help-center-article-body"
+                    dangerouslySetInnerHTML={{ __html: rendered.html }}
+                  />
+
+                  {/* Only 4 of 23 articles carry more than one section, so a
+                      contents-only rail would sit empty beside the other 19.
+                      It also offers the rest of the subcategory and a way to
+                      ask a person, so the column is never dead space. */}
+                  <aside className="help-center-rail">
+                    {rendered.headings.length > 1 ? (
+                      <nav className="help-center-contents" aria-label="On this page">
+                        <p className="help-center-rail-title">On this page</p>
+                        <ul>
+                          {rendered.headings.map(heading => (
+                            <li key={heading.id}>
+                              <a
+                                href={`#${heading.id}`}
+                                className={heading.id === currentSection ? 'is-current' : undefined}
+                                aria-current={heading.id === currentSection ? 'location' : undefined}
+                                onClick={event => jumpToSection(event, heading.id)}
+                              >
+                                {heading.text}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </nav>
+                    ) : null}
+
+                    {relatedArticles.length > 0 ? (
+                      <nav className="help-center-contents" aria-label={`More in ${entry.category.title}`}>
+                        <p className="help-center-rail-title">More in {entry.category.title}</p>
+                        <ul>
+                          {relatedArticles.map(related => (
+                            <li key={related.id}>
+                              <a href={articleHref(related.subcategory, related.id)}>{related.title}</a>
+                            </li>
+                          ))}
+                        </ul>
+                      </nav>
+                    ) : null}
+
+                    <div className="help-center-rail-support">
+                      <p className="help-center-rail-title">Still stuck?</p>
+                      <a href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">
+                        Contact Support
+                        <SupportIcon />
+                      </a>
+                    </div>
+                  </aside>
+                </div>
               ) : cards.length > 0 ? (
                 <ul className="help-center-card-grid">
                   {cards.map((card, cardIndex) => (
