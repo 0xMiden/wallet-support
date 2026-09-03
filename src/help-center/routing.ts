@@ -8,6 +8,12 @@
  * tested without standing up the component. An unknown id in either position
  * falls back to something it can verify — never to a guess, and never to an
  * article that does not belong to the subcategory in the hash.
+ *
+ * A hash that is not a route at all returns null, meaning "leave the page
+ * where it is". The page also uses in-document anchors — the skip link targets
+ * #help-center-content — and treating those as an unknown category used to
+ * reset the reader to the first subcategory, so the one control an assistive
+ * user reaches first was the one that discarded their place.
  */
 
 export interface HelpCenterRoute {
@@ -21,10 +27,11 @@ export interface HelpCenterRouteLookups {
   fallbackCategoryId: string;
 }
 
-export function parseRoute(hash: string, lookups: HelpCenterRouteLookups): HelpCenterRoute {
+export function parseRoute(hash: string, lookups: HelpCenterRouteLookups): HelpCenterRoute | null {
   const [categoryPart = '', articlePart] = hash.replace(/^#\/?/, '').split('/');
 
-  if (!lookups.hasCategory(categoryPart)) return { categoryId: lookups.fallbackCategoryId };
+  if (!categoryPart) return { categoryId: lookups.fallbackCategoryId };
+  if (!lookups.hasCategory(categoryPart)) return null;
   if (!articlePart) return { categoryId: categoryPart };
 
   return lookups.hasArticle(categoryPart, articlePart)

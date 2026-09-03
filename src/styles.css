@@ -1,9 +1,17 @@
 :root {
   color: #f7f4ef;
   background: #0b0b0b;
-  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+  /*
+   * A system stack, and no webfont. "Inter" was named here but never loaded —
+   * no @font-face, no link tag, no font file — so with font-synthesis disabled
+   * the eight fractional weights this design used (560-760) all collapsed to
+   * whatever the fallback exposed. Hierarchy that only exists in an absent
+   * font is not hierarchy. Weight is now one of three real values and the work
+   * is carried by size, colour and space instead.
+   */
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 }
 
 * {

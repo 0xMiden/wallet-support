@@ -108,15 +108,24 @@ export function HelpCenter() {
   useEffect(() => {
     const handleHashChange = () => {
       const route = routeFromHash(window.location.hash);
+      // Not a route — an in-document anchor such as the skip link. Leave the
+      // reader where they are rather than sending them to the first page.
+      if (route === null) return;
+
       const nextMainCategoryId = navigation.resolve(route.categoryId)?.mainCategory.id;
 
-      setActiveCategoryId(route.categoryId);
-      setActiveArticleId(route.articleId);
+      setActiveCategoryId(previous => {
+        if (previous !== route.categoryId) window.scrollTo({ top: 0 });
+        return route.categoryId;
+      });
+      setActiveArticleId(previous => {
+        if (previous !== route.articleId) window.scrollTo({ top: 0 });
+        return route.articleId;
+      });
       if (nextMainCategoryId) {
         setOpenMainCategoryIds(current => new Set(current).add(nextMainCategoryId));
       }
       setIsMobileMenuOpen(false);
-      window.scrollTo({ top: 0 });
     };
 
     handleHashChange();
@@ -193,10 +202,13 @@ export function HelpCenter() {
 
   // Inside an article the sequence walks its siblings; on a subcategory page it
   // walks subcategories. Both are rendered by the same markup below.
+  // Deliberately the subcategory's own rule, not this article's. The grid the
+  // reader came from was filtered that way, so walking a different list would
+  // offer them an article that was never in it.
   const siblingArticles =
     entry && activeArticle
-      ? showPlatformTabs
-        ? articlesFor(helpCenterArticles, entry.category.id, bodyPlatform)
+      ? subcategoryNeedsPlatformChoice(helpCenterArticles, entry.category.id)
+        ? articlesFor(helpCenterArticles, entry.category.id, activePlatform)
         : articlesInSubcategory(helpCenterArticles, entry.category.id)
       : [];
   const articleIndex = activeArticle
@@ -416,6 +428,15 @@ export function HelpCenter() {
 
           <section className="help-center-category" aria-labelledby="help-center-category-title">
             {activeArticle ? (
+              <a className="help-center-back" href={categoryHref(entry.category.id)}>
+                <span aria-hidden="true">
+                  <ChevronIcon direction="left" />
+                </span>
+                Back to {entry.category.title}
+              </a>
+            ) : null}
+
+            {activeArticle ? (
               <p className="help-center-eyebrow">
                 {entry.mainCategory.title} <span aria-hidden="true">/</span>{' '}
                 <a className="help-center-eyebrow-link" href={categoryHref(entry.category.id)}>
@@ -495,14 +516,16 @@ export function HelpCenter() {
                   dangerouslySetInnerHTML={{ __html: articleHtml }}
                 />
               ) : cards.length > 0 ? (
-                <ul className="help-center-card-grid">
-                  {cards.map(card => (
+                <ul className="help-center-article-list">
+                  {cards.map((card, cardIndex) => (
                     <li key={card.id}>
-                      <a className="help-center-loaf-card" href={card.href}>
-                        <span className="help-center-loaf-scores" aria-hidden="true" />
-                        <span className="help-center-loaf-title">{card.title}</span>
-                        <span className="help-center-loaf-excerpt">{card.excerpt}</span>
-                        <span className="help-center-loaf-open" aria-hidden="true">
+                      <a className="help-center-article-row" href={card.href}>
+                        <span className="help-center-article-marker" aria-hidden="true">
+                          {formatIndex(cardIndex + 1)}
+                        </span>
+                        <h2 className="help-center-article-title">{card.title}</h2>
+                        <p className="help-center-article-excerpt">{card.excerpt}</p>
+                        <span className="help-center-article-open" aria-hidden="true">
                           <ChevronIcon />
                         </span>
                       </a>
@@ -510,7 +533,9 @@ export function HelpCenter() {
                   ))}
                 </ul>
               ) : (
-                <p className="help-center-empty-articles">No articles for {platformLabel} yet.</p>
+                <p className="help-center-empty-articles" role="status">
+                  No articles for {listPlatform === 'extension-desktop' ? 'Extension' : 'Mobile'} yet.
+                </p>
               )}
             </div>
 

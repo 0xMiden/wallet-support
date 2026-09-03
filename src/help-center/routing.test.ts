@@ -23,13 +23,17 @@ describe('parsing a route', () => {
     });
   });
 
-  it('tolerates a leading slash and an empty hash', () => {
+  it('tolerates a leading slash, and sends an empty hash to the default', () => {
     expect(parseRoute('#/guardian-protection', lookups)).toEqual({ categoryId: 'guardian-protection' });
     expect(parseRoute('', lookups)).toEqual({ categoryId: 'setup-and-basic-use' });
+    expect(parseRoute('#', lookups)).toEqual({ categoryId: 'setup-and-basic-use' });
   });
 
-  it('falls back to the default subcategory when the subcategory is unknown', () => {
-    expect(parseRoute('#nonsense/whatever', lookups)).toEqual({ categoryId: 'setup-and-basic-use' });
+  it('returns null for a hash that is not a route, so the page stays put', () => {
+    // The skip link targets #help-center-content. Treating that as an unknown
+    // category used to reset the reader to the first subcategory.
+    expect(parseRoute('#help-center-content', lookups)).toBeNull();
+    expect(parseRoute('#nonsense/whatever', lookups)).toBeNull();
   });
 
   it('opens the subcategory, not a guess, when the article is unknown', () => {

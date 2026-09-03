@@ -1,3 +1,10 @@
+/*
+ * One scale per dimension. Before this the stylesheet held 26 ad-hoc font
+ * sizes, 8 fractional weights, 18 hardcoded text colours and 10 corner
+ * treatments, so every component invented its own values and nothing could
+ * agree by construction. That — not any single page — was the source of the
+ * inconsistent typography, spacing and alignment.
+ */
 .help-center-shell {
   --help-bg: #100c0a;
   --help-panel: #211814;
@@ -9,6 +16,53 @@
   --help-accent: #e77537;
   --help-accent-soft: #f1a47e;
   --help-accent-pale: #fff3ec;
+
+  /* Text roles. Warm throughout: the old palette mixed neutral greys
+     (#c9c9c9, #797979, #666) into a cream system, which read as dirty. Every
+     role clears 4.5:1 on both the sidebar and the panel. */
+  --text-strong: #fcfaf7;
+  --text-body: #ddd2cb;
+  --text-muted: #b6a79e;
+  --text-faint: #9c8b81;
+  --ink-on-accent: #281207;
+
+  /* Type scale, 16px base. */
+  --text-2xs: 0.75rem;
+  --text-xs: 0.8125rem;
+  --text-sm: 0.875rem;
+  --text-md: 0.9375rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-2xl: clamp(1.625rem, 2.8vw, 2.25rem);
+
+  /* Three real weights. A system stack cannot render eight. */
+  --weight-body: 400;
+  --weight-medium: 600;
+  --weight-strong: 700;
+
+  /* Spacing ramp, 0.25rem base. */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  /* One loaf, two scales: domed top, squared base. Previously three
+     mutually contradictory "signature corners" disagreed about which corner
+     was odd and by how much. */
+  --radius-xs: 0.5rem;
+  --radius-sm: 0.9rem;
+  --radius-md: 1.1rem;
+  --radius-pill: 999px;
+  --radius-loaf: 1.1rem 1.1rem 0.4rem 0.4rem;
+  --radius-loaf-lg: 1.75rem 1.75rem 0.6rem 0.6rem;
+  --radius-marker: 55% 55% 38% 38%;
+
+  /* Reading measure, so text blocks can agree on a right edge. */
+  --measure: 68ch;
   min-height: 100vh;
   color: var(--help-copy);
   background:
@@ -43,9 +97,9 @@
   top: 1rem;
   left: 1rem;
   padding: 0.75rem 1rem;
-  color: #161616 !important;
+  color: var(--ink-on-accent) !important;
   background: var(--help-accent-soft);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-xs);
   transform: translateY(-200%);
   transition: transform 160ms ease;
 }
@@ -71,8 +125,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  font-size: 1rem;
-  font-weight: 720;
+  font-size: var(--text-base);
+  font-weight: var(--weight-strong);
   letter-spacing: -0.02em;
 }
 
@@ -91,11 +145,11 @@
   width: fit-content;
   padding: 0.15rem 0.45rem;
   border: 1px solid rgb(231 117 55 / 24%);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   color: var(--help-accent-soft);
   background: rgb(231 117 55 / 9%);
-  font-size: 0.62rem;
-  font-weight: 680;
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-medium);
   letter-spacing: 0.07em;
   text-transform: uppercase;
 }
@@ -115,8 +169,8 @@
   gap: 1rem;
   cursor: pointer;
   color: var(--help-accent-pale);
-  border-radius: 0.9rem;
-  font-weight: 700;
+  border-radius: var(--radius-sm);
+  font-weight: var(--weight-strong);
   text-align: left;
   transition: color 160ms ease, background 160ms ease;
 }
@@ -142,11 +196,11 @@
   width: 1.65rem;
   height: 1.75rem;
   border: 1px solid rgb(241 164 126 / 24%);
-  border-radius: 55% 55% 38% 38%;
-  color: #a88878;
+  border-radius: var(--radius-marker);
+  color: var(--text-faint);
   display: grid;
   place-items: center;
-  font-size: 0.66rem;
+  font-size: var(--text-2xs);
   font-variant-numeric: tabular-nums;
 }
 
@@ -188,14 +242,14 @@
   min-height: 3.35rem;
   padding: 0.75rem 0.45rem 0.75rem 0.75rem;
   border: 1px solid transparent;
-  border-radius: 1.1rem;
-  color: #c9c9c9;
+  border-radius: var(--radius-md);
+  color: var(--text-body);
   display: grid;
   grid-template-columns: 1.7rem minmax(0, 1fr) auto;
   align-items: center;
   gap: 0.55rem;
-  font-size: 0.94rem;
-  font-weight: 560;
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
   line-height: 1.3;
   transition: color 160ms ease, background 160ms ease;
 }
@@ -219,37 +273,37 @@
   width: 1.6rem;
   height: 1.7rem;
   border: 1px solid rgb(241 164 126 / 24%);
-  border-radius: 55% 55% 38% 38%;
-  color: #9b8174;
+  border-radius: var(--radius-marker);
+  color: var(--text-faint);
   display: grid;
   place-items: center;
-  font-size: 0.75rem;
+  font-size: var(--text-2xs);
   font-variant-numeric: tabular-nums;
 }
 
 .help-center-category-list a.is-active .help-center-category-number {
   border-color: var(--help-accent);
-  color: #211006;
+  color: var(--ink-on-accent);
   background: var(--help-accent);
 }
 
 .help-center-no-results {
   margin: 0.75rem;
   color: var(--help-muted);
-  font-size: 0.9rem;
+  font-size: var(--text-md);
 }
 
 .help-center-empty-group {
   margin: 0.25rem 0 0.65rem 3.05rem;
-  color: #806f66;
-  font-size: 0.78rem;
+  color: var(--text-faint);
+  font-size: var(--text-xs);
 }
 
 .help-center-sidebar-status {
   margin: auto 0.5rem 0;
   padding-top: 2rem;
-  color: #826f65;
-  font-size: 0.72rem;
+  color: var(--text-faint);
+  font-size: var(--text-2xs);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -280,7 +334,7 @@
   min-height: 3.35rem;
   padding: 0 1rem;
   border: 1px solid var(--help-line);
-  border-radius: 1.1rem;
+  border-radius: var(--radius-md);
   background: rgb(37 25 20 / 82%);
   display: flex;
   align-items: center;
@@ -310,22 +364,22 @@
 }
 
 .help-center-search input::placeholder {
-  color: #797979;
+  color: var(--text-faint);
 }
 
 .help-center-contact-button {
   min-height: 3.35rem;
   padding: 0.75rem 1.15rem;
   border: 1px solid rgb(255 243 236 / 18%);
-  border-radius: 1.1rem;
-  color: #281207 !important;
+  border-radius: var(--radius-md);
+  color: var(--ink-on-accent) !important;
   background: var(--help-accent);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
-  font-size: 0.9rem;
-  font-weight: 760;
+  font-size: var(--text-md);
+  font-weight: var(--weight-strong);
   white-space: nowrap;
   box-shadow: 0 0.6rem 1.5rem rgb(108 42 12 / 24%);
   text-decoration: none;
@@ -348,7 +402,7 @@
 }
 
 .help-center-category {
-  padding-top: clamp(3.5rem, 8vw, 7rem);
+  padding-top: clamp(2.5rem, 5vw, 4rem);
 }
 
 .help-center-eyebrow {
@@ -356,35 +410,36 @@
   margin: 0 0 1.2rem;
   padding: 0.35rem 0.65rem;
   border: 1px solid rgb(231 117 55 / 22%);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   color: var(--help-accent-soft);
   background: rgb(231 117 55 / 8%);
-  font-size: 0.78rem;
-  font-weight: 700;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-strong);
   letter-spacing: 0.09em;
   text-transform: uppercase;
 }
 
 .help-center-eyebrow span {
   margin: 0 0.4rem;
-  color: #666;
+  color: var(--text-faint);
 }
 
 .help-center-category h1 {
   max-width: 58rem;
   margin: 0;
-  font-size: clamp(2.3rem, 5vw, 4.9rem);
+  font-size: var(--text-2xl);
   color: var(--help-accent-pale);
-  font-weight: 610;
+  font-weight: var(--weight-medium);
   letter-spacing: -0.055em;
-  line-height: 0.98;
+  line-height: 1.12;
+  text-wrap: balance;
 }
 
 .help-center-category-description {
   max-width: 54rem;
   margin: 1.5rem 0 0;
-  color: #d8cec8;
-  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+  color: var(--text-body);
+  font-size: var(--text-lg);
   line-height: 1.55;
 }
 
@@ -393,7 +448,7 @@
   margin-top: clamp(3rem, 6vw, 5rem);
   padding: 0.35rem;
   border: 1px solid rgb(231 117 55 / 24%);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: rgb(231 117 55 / 7%);
   display: inline-flex;
   gap: 0.35rem;
@@ -402,11 +457,11 @@
 .help-center-platform-tabs button {
   min-height: 3.2rem;
   padding: 0.7rem 1.65rem;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: transparent;
   cursor: pointer;
-  font-size: clamp(0.95rem, 1.5vw, 1.18rem);
-  font-weight: 680;
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
   transition: color 160ms ease, background 160ms ease;
 }
 
@@ -415,21 +470,21 @@
 }
 
 .help-center-platform-tabs button[aria-selected='true'] {
-  color: #251107;
+  color: var(--ink-on-accent);
   background: var(--help-accent);
   box-shadow: 0 0.35rem 1.2rem rgb(108 42 12 / 28%);
 }
 
 .help-center-bread-card {
   border: 1px solid rgb(247 200 177 / 15%);
-  border-radius: 2.4rem 2.4rem 0.9rem 2.4rem;
+  border-radius: var(--radius-loaf-lg);
   overflow: hidden;
 }
 
 .help-center-content-panel {
   min-height: 20rem;
-  margin-top: clamp(3rem, 6vw, 5rem);
-  padding: clamp(2rem, 5vw, 4rem);
+  margin-top: var(--space-6);
+  padding: clamp(1.75rem, 4vw, 2.75rem);
   background:
     linear-gradient(125deg, rgb(231 117 55 / 12%), transparent 45%),
     var(--help-panel);
@@ -437,7 +492,7 @@
 }
 
 .help-center-content-panel.has-platform-tabs {
-  margin-top: 1.4rem;
+  margin-top: var(--space-4);
 }
 
 .help-center-panel-label {
@@ -445,14 +500,14 @@
   margin: 0 0 1.25rem;
   padding: 0.35rem 0.65rem 0.35rem 0.4rem;
   border: 1px solid rgb(231 117 55 / 20%);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   color: var(--help-accent-soft);
   background: rgb(16 12 10 / 48%);
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  font-size: 0.78rem;
-  font-weight: 740;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-strong);
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -465,8 +520,8 @@
 .help-center-content-panel > p {
   max-width: 43rem;
   margin: 1rem 0 0;
-  color: #cfc3bc;
-  font-size: 1rem;
+  color: var(--text-body);
+  font-size: var(--text-base);
   line-height: 1.65;
 }
 
@@ -476,12 +531,14 @@
 
 .help-center-eyebrow-link {
   color: var(--help-accent-soft);
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
 }
 
 .help-center-eyebrow-link:hover,
 .help-center-eyebrow-link:focus-visible {
-  text-decoration: underline;
+  color: var(--help-accent-pale);
 }
 
 .help-center-platform-note {
@@ -489,144 +546,167 @@
   margin: 1.15rem 0 0;
   padding: 0.3rem 0.7rem;
   border: 1px solid rgb(231 117 55 / 30%);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   color: var(--help-accent-soft);
   background: rgb(231 117 55 / 9%);
-  font-size: 0.7rem;
-  font-weight: 700;
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-strong);
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
 /*
- * Article cards are shaped as a tin loaf: a domed top and a squared base. The
- * references that prompted this used a uniform rounded rectangle and a clipped
- * corner respectively; both are their own marks, so neither is used here. The
- * crust band and the baker's scores are Bread's, and the round open control
- * reuses the loaf marker the sidebar and sequence cards already carry.
+ * Article index: a divided row list, not a grid of filled cards.
+ *
+ * The cards were containers, so each one needed its own fill, border, padding
+ * and radius — a card nested inside the panel card. Worse, grid gap (0.85rem)
+ * was smaller than card padding (1.6rem), so inter-item space read as less
+ * than intra-item space and the fills fused into a slab. Removing the fill
+ * alone would have made that worse, so the spacing relationship is inverted
+ * here rather than patched.
+ *
+ * Both parts are borrowed from this shell rather than from a reference: the
+ * divider is --help-line, already the sidebar edge and the security rule; the
+ * hover wash is the same 7% orange the sidebar's own rows use. The loaf marker
+ * carries the position, exactly as it does in the sidebar.
  */
-.help-center-card-grid {
-  margin: 1.6rem 0 0;
+.help-center-article-list {
+  margin: var(--space-5) 0 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
-  gap: 0.85rem;
   list-style: none;
 }
 
-.help-center-loaf-card {
-  position: relative;
-  height: 100%;
-  padding: 1.6rem 1.3rem 1.2rem;
-  border: 1px solid rgb(247 200 177 / 14%);
-  border-radius: 1.75rem 1.75rem 0.45rem 0.45rem;
-  background:
-    linear-gradient(180deg, rgb(231 117 55 / 12%), transparent 46%),
-    var(--help-panel);
+.help-center-article-row {
+  padding: var(--space-4) var(--space-3);
+  margin-inline: calc(var(--space-3) * -1);
+  border-radius: var(--radius-md);
   display: grid;
-  align-content: start;
-  gap: 0.45rem;
-  overflow: hidden;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: var(--space-4);
+  row-gap: var(--space-1);
   text-decoration: none;
   transition:
-    border-color 160ms ease,
     background 160ms ease,
     transform 160ms ease;
 }
 
-/* The crust. */
-.help-center-loaf-card::before {
-  position: absolute;
-  inset: 0 0 auto;
-  height: 0.28rem;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--help-accent) 22%,
-    #f7c8b1 50%,
-    var(--help-accent) 78%,
-    transparent
-  );
-  opacity: 0.5;
-  content: '';
-  transition: opacity 160ms ease;
+.help-center-article-list li + li {
+  border-top: 1px solid var(--help-line);
 }
 
-/* The slashes a baker cuts into the dough before it goes in the oven. */
-.help-center-loaf-scores {
-  position: absolute;
-  top: 1.2rem;
-  right: 1.1rem;
-  width: 1.4rem;
-  height: 1.05rem;
-  background: repeating-linear-gradient(
-    62deg,
-    var(--help-accent-soft) 0 1.5px,
-    transparent 1.5px 6px
-  );
-  opacity: 0.3;
-  transition: opacity 160ms ease;
+.help-center-article-row:hover,
+.help-center-article-row:focus-visible {
+  background: rgb(231 117 55 / 7%);
+  transform: translateX(2px);
 }
 
-.help-center-loaf-title {
-  padding-right: 2.4rem;
-  color: var(--help-copy);
-  font-size: 1rem;
-  font-weight: 640;
-  line-height: 1.35;
-  letter-spacing: -0.01em;
-}
-
-.help-center-loaf-excerpt {
-  color: var(--help-muted);
-  font-size: 0.86rem;
-  line-height: 1.55;
-}
-
-.help-center-loaf-open {
-  width: 1.7rem;
-  height: 1.75rem;
-  margin-top: 0.65rem;
+/* The loaf marker, carrying the article's position — the same mark and the
+   same job it has in the sidebar, so the motif gets more consistent. */
+.help-center-article-marker {
+  grid-row: 1 / 3;
+  width: 2rem;
+  height: 2.05rem;
   border: 1px solid rgb(231 117 55 / 28%);
-  border-radius: 55% 55% 38% 38%;
+  border-radius: var(--radius-marker);
   color: var(--help-accent-soft);
   background: rgb(231 117 55 / 10%);
   display: grid;
   place-items: center;
+  font-size: var(--text-2xs);
+  font-variant-numeric: tabular-nums;
+  transition: background 160ms ease;
+}
+
+.help-center-article-row:hover .help-center-article-marker,
+.help-center-article-row:focus-visible .help-center-article-marker {
+  background: rgb(231 117 55 / 22%);
+}
+
+.help-center-article-title {
+  margin: 0;
+  color: var(--text-strong);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.help-center-article-excerpt {
+  grid-column: 2;
+  max-width: var(--measure);
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-md);
+  line-height: 1.55;
+}
+
+/* A grid cell, so it lands at the same height in every row by construction
+   rather than floating below a variable-length excerpt. */
+.help-center-article-open {
+  grid-row: 1 / 3;
+  width: 2rem;
+  height: 2.05rem;
+  border-radius: var(--radius-marker);
+  color: var(--help-accent-soft);
+  display: grid;
+  place-items: center;
+  transition: transform 160ms ease;
+}
+
+.help-center-article-row:hover .help-center-article-open,
+.help-center-article-row:focus-visible .help-center-article-open {
+  transform: translateX(3px);
+}
+
+/*
+ * Back control. Rendered on every article page, including the three
+ * subcategories that hold one article and therefore have no previous/next at
+ * all. Built from the existing round marker and the left chevron the sequence
+ * nav already uses, so it adds no new shape.
+ */
+.help-center-back {
+  width: fit-content;
+  margin-bottom: var(--space-4);
+  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-2);
+  border: 1px solid rgb(231 117 55 / 22%);
+  border-radius: var(--radius-md);
+  color: var(--help-accent-soft);
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-decoration: none;
   transition:
     background 160ms ease,
-    transform 160ms ease;
+    border-color 160ms ease;
 }
 
-.help-center-loaf-card:hover,
-.help-center-loaf-card:focus-visible {
+.help-center-back:hover,
+.help-center-back:focus-visible {
   border-color: rgb(231 117 55 / 45%);
-  background:
-    linear-gradient(180deg, rgb(231 117 55 / 19%), transparent 52%),
-    #2d1e18;
-  transform: translateY(-3px);
+  background: rgb(231 117 55 / 10%);
 }
 
-.help-center-loaf-card:hover::before,
-.help-center-loaf-card:focus-visible::before {
-  opacity: 1;
-}
-
-.help-center-loaf-card:hover .help-center-loaf-scores,
-.help-center-loaf-card:focus-visible .help-center-loaf-scores {
-  opacity: 0.6;
-}
-
-.help-center-loaf-card:hover .help-center-loaf-open,
-.help-center-loaf-card:focus-visible .help-center-loaf-open {
-  background: rgb(231 117 55 / 24%);
-  transform: translateX(2px);
+.help-center-back span[aria-hidden] {
+  width: 1.9rem;
+  height: 1.95rem;
+  border-radius: var(--radius-marker);
+  background: rgb(231 117 55 / 14%);
+  display: grid;
+  place-items: center;
 }
 
 .help-center-article-body {
-  max-width: 43rem;
-  color: #cfc3bc;
-  font-size: 0.97rem;
+  max-width: var(--measure);
+  overflow-wrap: anywhere;
+  color: var(--text-body);
+  font-size: var(--text-base);
   line-height: 1.7;
 }
 
@@ -652,7 +732,7 @@
 
 .help-center-article-body strong {
   color: var(--help-copy);
-  font-weight: 680;
+  font-weight: var(--weight-medium);
 }
 
 .help-center-article-body a {
@@ -665,7 +745,7 @@
   margin: 1.2rem 0 0;
   padding: 0.85rem 1.05rem;
   border-left: 3px solid rgb(231 117 55 / 55%);
-  border-radius: 0 0.75rem 0.75rem 0;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   background: rgb(231 117 55 / 8%);
 }
 
@@ -676,11 +756,16 @@
 .help-center-empty-articles {
   margin: 0;
   color: var(--help-muted);
-  font-size: 0.97rem;
+  font-size: var(--text-base);
+}
+
+.help-center-sequence:empty,
+.help-center-sequence:not(:has(a)) {
+  display: none;
 }
 
 .help-center-sequence {
-  margin-top: clamp(1.75rem, 3.5vw, 2.75rem);
+  margin-top: var(--space-6);
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.75rem;
@@ -690,7 +775,7 @@
   min-height: 4.25rem;
   padding: 0.7rem 0.9rem;
   border: 1px solid rgb(247 200 177 / 15%);
-  border-radius: 1.05rem 1.05rem 0.5rem 1.05rem;
+  border-radius: var(--radius-loaf);
   background:
     linear-gradient(135deg, rgb(231 117 55 / 9%), transparent 52%),
     var(--help-panel);
@@ -721,12 +806,12 @@
 }
 
 .help-center-sequence-meta {
-  color: #bca89d;
+  color: var(--text-muted);
   display: flex;
   align-items: center;
   gap: 0.45rem;
-  font-size: 0.68rem;
-  font-weight: 700;
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-strong);
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -739,12 +824,12 @@
   width: 1.5rem;
   height: 1.55rem;
   border: 1px solid rgb(231 117 55 / 28%);
-  border-radius: 55% 55% 38% 38%;
+  border-radius: var(--radius-marker);
   color: var(--help-accent-soft);
   background: rgb(231 117 55 / 8%);
   display: grid;
   place-items: center;
-  font-size: 0.6rem;
+  font-size: var(--text-2xs);
   font-variant-numeric: tabular-nums;
 }
 
@@ -758,7 +843,7 @@
 
 .help-center-sequence-category::before {
   margin-right: 0.45rem;
-  color: #7d6a60;
+  color: var(--text-faint);
   content: '\00B7';
 }
 
@@ -767,7 +852,7 @@
   margin-top: 0.3rem;
   color: var(--help-copy);
   display: block;
-  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  font-size: var(--text-md);
   line-height: 1.3;
 }
 
@@ -778,9 +863,9 @@
 
 .help-center-sequence-button {
   width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  color: #281207;
+  height: 2.05rem;
+  border-radius: var(--radius-marker);
+  color: var(--ink-on-accent);
   background: var(--help-accent);
   display: grid;
   place-items: center;
@@ -795,11 +880,11 @@
   margin-top: 4rem;
   padding: 1.25rem 0 0;
   border-top: 1px solid var(--help-line);
-  color: #a9958a;
+  color: var(--text-muted);
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   gap: 0.75rem 1.25rem;
-  font-size: 0.82rem;
+  font-size: var(--text-sm);
   line-height: 1.55;
 }
 
@@ -847,7 +932,7 @@
   .help-center-menu-button {
     width: 2.75rem;
     height: 2.75rem;
-    border-radius: 50%;
+    border-radius: var(--radius-md);
     border: 1px solid rgb(231 117 55 / 25%);
     color: var(--help-accent-soft);
     background: rgb(231 117 55 / 9%);
@@ -907,16 +992,12 @@
 
 @media (max-width: 620px) {
   .help-center-brand {
-    font-size: 0.9rem;
+    font-size: var(--text-md);
   }
 
   .help-center-brand img {
     width: 1.8rem;
     height: 1.8rem;
-  }
-
-  .help-center-category h1 {
-    font-size: clamp(2.25rem, 13vw, 3.5rem);
   }
 
   .help-center-utility-bar {
@@ -939,15 +1020,19 @@
 
   .help-center-platform-tabs button {
     min-height: 3.6rem;
-    font-size: 0.84rem;
+    font-size: var(--text-sm);
   }
 
   .help-center-content-panel {
     min-height: 18rem;
   }
 
-  .help-center-card-grid {
-    grid-template-columns: 1fr;
+  .help-center-article-row {
+    column-gap: var(--space-3);
+  }
+
+  .help-center-article-open {
+    display: none;
   }
 
   .help-center-sequence {
@@ -975,8 +1060,9 @@
     transition-duration: 0.01ms !important;
   }
 
-  .help-center-loaf-card:hover,
-  .help-center-loaf-card:focus-visible {
+  .help-center-article-row:hover,
+  .help-center-article-row:focus-visible,
+  .help-center-sequence-card:hover {
     transform: none;
   }
 }
