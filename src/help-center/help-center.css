@@ -5,7 +5,8 @@
  * agree by construction. That — not any single page — was the source of the
  * inconsistent typography, spacing and alignment.
  */
-.help-center-shell {
+.help-center-shell,
+.help-center-home {
   --help-bg: #100c0a;
   --help-panel: #211814;
   --help-panel-elevated: #2a1e18;
@@ -65,8 +66,15 @@
 
   /* Reading measure, so text blocks can agree on a right edge. */
   --measure: 68ch;
+
+  /* Page width for the full-bleed home page. The category view is measured by
+     its sidebar column instead. */
+  --frame: 78rem;
   min-height: 100vh;
   color: var(--help-copy);
+}
+
+.help-center-shell {
   background:
     radial-gradient(circle at 94% 4%, rgb(231 117 55 / 13%), transparent 24rem),
     var(--help-bg);
@@ -1351,7 +1359,10 @@
 @media (prefers-reduced-motion: reduce) {
   .help-center-shell *,
   .help-center-shell *::before,
-  .help-center-shell *::after {
+  .help-center-shell *::after,
+  .help-center-home *,
+  .help-center-home *::before,
+  .help-center-home *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }
@@ -1359,7 +1370,568 @@
   .help-center-card:hover,
   .help-center-card:focus-within,
   .help-center-card:hover .help-center-card-open,
-  .help-center-sequence-card:hover {
+  .help-center-sequence-card:hover,
+  .help-home-card:hover,
+  .help-home-card:focus-visible,
+  .help-home-card:hover .help-home-arrow,
+  .help-home-section-link:hover .help-home-arrow,
+  .help-home-popular button:hover {
     transform: none;
+  }
+}
+
+/* ==========================================================================
+   Home page
+   --------------------------------------------------------------------------
+   Full-bleed sections on a shared inner frame, rather than the category
+   view's sidebar grid. The reference designs this was drawn from are a
+   different product's: the structure is borrowed, the palette is not. One
+   accent, warm ground, and the loaf corner — domed top, squared base — that
+   the rest of the Help Center already uses.
+   ========================================================================== */
+.help-center-home {
+  display: flex;
+  flex-direction: column;
+  background: var(--help-bg);
+}
+
+.help-center-home a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.help-home-header {
+  position: sticky;
+  z-index: 30;
+  top: 0;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--help-line);
+  background: rgb(16 12 10 / 88%);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.help-home-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  font-size: var(--text-md);
+}
+
+/* The brand is the one thing in the header that must never wrap. */
+.help-home-header .help-center-brand span {
+  white-space: nowrap;
+}
+
+.help-home-nav a:not(.help-center-contact-button) {
+  padding: var(--space-1) 0;
+  border-bottom: 2px solid transparent;
+  color: var(--text-body);
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.help-home-nav a:not(.help-center-contact-button):hover,
+.help-home-nav a:not(.help-center-contact-button):focus-visible {
+  color: var(--text-strong);
+}
+
+/* The reader is on this page. The underline says so without a second label. */
+.help-home-nav a[aria-current='page'] {
+  border-bottom-color: var(--help-accent);
+  color: var(--text-strong);
+  font-weight: var(--weight-medium);
+}
+
+.help-home-nav .help-center-contact-button {
+  min-height: 2.85rem;
+  padding: 0.55rem 1.1rem;
+  font-size: var(--text-sm);
+}
+
+.help-home-main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--frame);
+  margin: 0 auto;
+  padding: 0 var(--space-5);
+}
+
+.help-home-main:focus,
+.help-home-main:focus-visible {
+  outline: none;
+}
+
+/* ---- hero ---------------------------------------------------------------- */
+.help-home-hero {
+  padding: var(--space-8) 0 var(--space-7);
+  text-align: center;
+  /* Warm light from above rather than the reference's decorative blobs: it
+     lifts the search field off the ground without competing with it. */
+  background:
+    radial-gradient(ellipse 55% 75% at 50% 0%, rgb(231 117 55 / 24%), transparent 72%),
+    radial-gradient(ellipse 100% 45% at 50% 6%, rgb(247 200 177 / 8%), transparent 70%);
+}
+
+.help-home-hero .help-center-eyebrow {
+  margin-inline: auto;
+}
+
+.help-home-hero h1 {
+  max-width: 22ch;
+  margin: 0 auto var(--space-4);
+  font-size: clamp(2.25rem, 6vw, 3.75rem);
+  font-weight: var(--weight-strong);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+
+.help-home-hero h1 em {
+  color: var(--help-accent);
+  font-style: normal;
+}
+
+.help-home-lede {
+  max-width: 46ch;
+  margin: 0 auto var(--space-6);
+  color: var(--text-muted);
+  font-size: var(--text-lg);
+  line-height: 1.55;
+}
+
+.help-home-search-form {
+  width: min(100%, 40rem);
+  min-height: 4rem;
+  margin: 0 auto;
+  padding: 0.5rem 0.5rem 0.5rem 1.35rem;
+  border: 1px solid var(--help-line);
+  border-radius: var(--radius-pill);
+  background: var(--help-panel);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  box-shadow: 0 1.2rem 2.5rem rgb(0 0 0 / 28%);
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.help-home-search-form:focus-within {
+  border-color: var(--help-accent);
+  box-shadow: 0 0 0 3px rgb(231 117 55 / 26%), 0 1.2rem 2.5rem rgb(0 0 0 / 28%);
+}
+
+.help-home-search {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.help-home-search-icon {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: var(--text-faint);
+  stroke-linecap: round;
+  stroke-width: 1.8;
+}
+
+.help-home-search input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  color: var(--text-strong);
+  background: transparent;
+  font-size: var(--text-base);
+}
+
+.help-home-search input::placeholder {
+  color: var(--text-faint);
+}
+
+.help-home-search input[type='search']::-webkit-search-cancel-button {
+  width: 0.85rem;
+  height: 0.85rem;
+  color: var(--text-faint);
+  background: currentcolor;
+  cursor: pointer;
+  appearance: none;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m6 6 12 12M18 6 6 18' stroke='%23000' stroke-width='2.4' stroke-linecap='round' fill='none'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+}
+
+.help-home-search-submit {
+  flex: none;
+  width: 3rem;
+  height: 3rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--help-accent);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 160ms ease;
+}
+
+.help-home-search-submit:hover,
+.help-home-search-submit:focus-visible {
+  background: var(--help-accent-soft);
+}
+
+.help-home-search-submit .help-home-arrow {
+  stroke: var(--ink-on-accent);
+}
+
+.help-home-arrow {
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.9;
+  transition: transform 160ms ease;
+}
+
+.help-home-popular {
+  margin: var(--space-5) 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  color: var(--text-faint);
+  font-size: var(--text-sm);
+}
+
+.help-home-popular ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+  list-style: none;
+}
+
+.help-home-popular button {
+  padding: 0.45rem 0.95rem;
+  border: 1px solid var(--help-line);
+  border-radius: var(--radius-pill);
+  color: var(--text-body);
+  background: var(--help-panel-subtle);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+}
+
+.help-home-popular button:hover,
+.help-home-popular button:focus-visible {
+  border-color: rgb(231 117 55 / 45%);
+  color: var(--text-strong);
+  background: rgb(231 117 55 / 10%);
+}
+
+/* ---- category cards ------------------------------------------------------ */
+.help-home-categories {
+  padding: var(--space-6) 0 var(--space-7);
+}
+
+.help-home-section-head {
+  margin-bottom: var(--space-5);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.help-home-section-head h2 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-strong);
+  letter-spacing: -0.02em;
+}
+
+.help-home-section-head p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-md);
+}
+
+.help-home-section-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--help-accent-soft) !important;
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+}
+
+.help-home-section-link:hover .help-home-arrow,
+.help-home-section-link:focus-visible .help-home-arrow {
+  transform: translateX(0.2rem);
+}
+
+.help-home-card-grid {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  /* Three, not auto-fill. There are five cards, and auto-fill put four on the
+     first row and abandoned the fifth on its own; 3 + 2 reads as a decision. */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  list-style: none;
+}
+
+.help-home-card {
+  height: 100%;
+  padding: var(--space-5);
+  border: 1px solid var(--help-line);
+  border-radius: var(--radius-card);
+  background: var(--help-panel);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.help-home-card:hover,
+.help-home-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgb(231 117 55 / 45%);
+  background: var(--help-panel-elevated);
+}
+
+.help-home-card:hover .help-home-arrow,
+.help-home-card:focus-visible .help-home-arrow {
+  transform: translateX(0.2rem);
+}
+
+.help-home-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  color: var(--text-faint);
+}
+
+.help-home-card-icon {
+  width: 2.9rem;
+  height: 2.9rem;
+  /* The loaf, at the smallest of its scales. */
+  border-radius: var(--radius-loaf);
+  background: rgb(231 117 55 / 12%);
+  display: grid;
+  place-items: center;
+}
+
+.help-home-card-glyph {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: none;
+  stroke: var(--help-accent-soft);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.help-home-card-title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-strong);
+  letter-spacing: -0.01em;
+}
+
+.help-home-card-description {
+  color: var(--text-muted);
+  font-size: var(--text-md);
+  line-height: 1.5;
+}
+
+.help-home-card-count {
+  margin-top: auto;
+  padding-top: var(--space-2);
+  color: var(--text-faint);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ---- support panel ------------------------------------------------------- */
+.help-home-support {
+  margin: 0 0 var(--space-8);
+  padding: var(--space-6);
+  border: 1px solid rgb(231 117 55 / 22%);
+  border-radius: var(--radius-card);
+  background:
+    radial-gradient(circle at 8% 20%, rgb(231 117 55 / 14%), transparent 60%),
+    var(--help-panel-subtle);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.help-home-support-glyph {
+  flex: none;
+  width: 4.5rem;
+  height: 4.5rem;
+  fill: none;
+  stroke: var(--help-accent-soft);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.2;
+}
+
+.help-home-support-copy {
+  flex: 1 1 22rem;
+}
+
+.help-home-support-copy .help-center-eyebrow {
+  margin-bottom: var(--space-3);
+}
+
+.help-home-support-copy h2 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-strong);
+  letter-spacing: -0.02em;
+}
+
+.help-home-support-copy p {
+  max-width: 52ch;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-md);
+  line-height: 1.55;
+}
+
+/* ---- footer -------------------------------------------------------------- */
+.help-home-footer {
+  padding: var(--space-7) var(--space-5) var(--space-5);
+  border-top: 1px solid var(--help-line);
+  background: var(--help-panel-subtle);
+}
+
+.help-home-footer-inner {
+  width: 100%;
+  max-width: var(--frame);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(14rem, 1.4fr) repeat(3, minmax(9rem, 1fr));
+  gap: var(--space-6) var(--space-5);
+}
+
+.help-home-footer-brand p {
+  max-width: 26ch;
+  margin: var(--space-4) 0 0;
+  color: var(--text-faint);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.help-home-footer-links h2 {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-strong);
+  letter-spacing: 0.02em;
+}
+
+.help-home-footer-links ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  list-style: none;
+}
+
+.help-home-footer-links a {
+  color: var(--text-muted) !important;
+  font-size: var(--text-sm);
+  transition: color 160ms ease;
+}
+
+.help-home-footer-links a:hover,
+.help-home-footer-links a:focus-visible {
+  color: var(--text-strong) !important;
+}
+
+.help-home-footer-note {
+  width: 100%;
+  max-width: var(--frame);
+  margin: var(--space-6) auto 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--help-line);
+  color: var(--text-faint);
+  font-size: var(--text-xs);
+}
+
+@media (max-width: 900px) {
+  .help-home-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .help-home-footer-inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .help-home-support {
+    padding: var(--space-5);
+  }
+
+  .help-home-support-glyph {
+    width: 3.25rem;
+    height: 3.25rem;
+  }
+}
+
+@media (max-width: 620px) {
+  .help-home-header {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .help-home-nav {
+    gap: var(--space-4);
+  }
+
+  /* The pill is the one action worth keeping at this width. "All topics" is
+     one tap away on every card below it, and a link to the page the reader is
+     already on is not worth crushing the brand for. */
+  .help-home-nav a:not(.help-center-contact-button) {
+    display: none;
+  }
+
+  .help-home-main,
+  .help-home-footer {
+    padding-inline: var(--space-4);
+  }
+
+  .help-home-hero {
+    padding: var(--space-6) 0 var(--space-5);
+  }
+
+  .help-home-search-form {
+    min-height: 3.5rem;
+    padding-left: var(--space-4);
+  }
+
+  .help-home-search-submit {
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+
+  .help-home-popular {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .help-home-card-grid,
+  .help-home-footer-inner {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

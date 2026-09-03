@@ -9,7 +9,7 @@ function leaf(id: string): HelpCenterCategory {
 }
 
 function group(id: string, leaves: readonly HelpCenterCategory[]): HelpCenterMainCategory {
-  return { id, title: `Group ${id}`, subcategories: leaves };
+  return { id, title: `Group ${id}`, description: `About group ${id}`, subcategories: leaves };
 }
 
 afterEach(() => {

@@ -9,6 +9,14 @@ export interface HelpCenterCategory {
 export interface HelpCenterMainCategory {
   id: string;
   title: string;
+  /**
+   * One line for the reader, used on the home page's category cards.
+   * Subcategories have carried a description since the beginning; a main
+   * category without one meant the home page had to invent copy at the point
+   * of render, which is how a card and a sidebar entry come to describe the
+   * same topic differently.
+   */
+  description: string;
   subcategories: readonly HelpCenterCategory[];
 }
 

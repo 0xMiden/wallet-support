@@ -216,6 +216,18 @@ export function articlesInSubcategory(
   return articles.filter(article => article.subcategory === subcategoryId);
 }
 
+/**
+ * Counted, never stored. A main category's article total is a fact about the
+ * articles filed under it, and a number kept beside the category would be free
+ * to disagree with them the moment one article moved.
+ */
+export function articlesInMainCategory(
+  articles: readonly HelpCenterArticle[],
+  mainCategoryId: string
+): readonly HelpCenterArticle[] {
+  return articles.filter(article => article.mainCategory === mainCategoryId);
+}
+
 export function findArticle(
   articles: readonly HelpCenterArticle[],
   subcategoryId: string,

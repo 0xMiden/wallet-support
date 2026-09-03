@@ -3,6 +3,7 @@ import type { MouseEvent } from 'react';
 
 import breadMark from './assets/bread-mark.svg';
 import { helpCenterMainCategories } from './categories';
+import { HelpCenterHome } from './HelpCenterHome';
 import {
   articleExcerpt,
   articlesFor,
@@ -11,6 +12,7 @@ import {
   helpCenterArticles,
   subcategoryNeedsPlatformChoice
 } from './content';
+import { CONTACT_SUPPORT_URL } from './links';
 import { renderArticle } from './markdown';
 import { createHelpCenterNavigation } from './navigation';
 import { searchHelpCenter } from './search';
@@ -26,9 +28,6 @@ import {
 } from './routing';
 import type { HelpCenterPlatform } from './types';
 import './help-center.css';
-
-/** Approved destination for the support intake (content proposal §3A). */
-const CONTACT_SUPPORT_URL = 'https://miden-feedback-v2.miden-feedback-relay.workers.dev/';
 
 /**
  * Positions are never computed in this file. Every index, total, and
@@ -127,10 +126,6 @@ export function HelpCenter() {
   // page the URL asked for. A hash that is not a route at all resolves to home;
   // it used to open the first subcategory, which looked like a working link to
   // a page nobody requested.
-  //
-  // Nothing renders differently on this commit: the home view is addressable
-  // and every brand link points at it, and the page it shows arrives with the
-  // component in the commit that follows.
   const [view, setView] = useState<'home' | 'category'>(
     () => routeFromHash(window.location.hash)?.view ?? 'home'
   );
@@ -453,6 +448,20 @@ export function HelpCenter() {
   // noun is useful — it distinguishes moving between articles from moving
   // between sections — so it stays there and goes everywhere else.
   const sequenceNoun = activeArticle ? ' article' : '';
+
+  // Searching is a destination of its own, and the results live in the
+  // category view's main column. So a search started from the home page moves
+  // the reader there without a route change — and clearing the field brings
+  // them back, because the home page is what an empty hash means.
+  if (view === 'home' && !isSearching) {
+    return (
+      <HelpCenterHome
+        mainCategories={helpCenterMainCategories}
+        firstCategoryId={defaultCategoryId}
+        onSearch={setQuery}
+      />
+    );
+  }
 
   if (!entry) {
     return (

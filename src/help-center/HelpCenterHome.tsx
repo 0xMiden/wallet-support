@@ -1,0 +1,324 @@
+import { useState } from 'react';
+import type { FormEvent } from 'react';
+
+import breadMark from './assets/bread-mark.svg';
+import { articlesInMainCategory, helpCenterArticles } from './content';
+import { CONTACT_SUPPORT_URL, helpCenterDownloads } from './links';
+import { categoryHref, homeHref } from './routing';
+import type { HelpCenterMainCategory } from './types';
+
+/**
+ * The Help Center's front door.
+ *
+ * Its own page rather than a band bolted onto the category view: the shell
+ * there is a two-column grid built around the navigation sidebar, and a
+ * full-width hero inside a 21rem column is not a hero. The two share the
+ * design tokens, the brand, and the support intake — nothing else.
+ *
+ * Nothing here is decorative-only. The hero exists to hold the search field,
+ * the cards exist to name the five topics, and the panel at the bottom exists
+ * because a reader who did not find an answer needs somewhere to go.
+ */
+
+/**
+ * The chips under the search field: one route into each of the five main
+ * categories, phrased the way a reader would ask.
+ *
+ * Each is a real query run through the same search the field uses, and
+ * home.test.ts asserts every one returns at least one article. Two of the four
+ * first written here ("Restore wallet", "Transfer stuck") read perfectly well
+ * and found nothing — the search is plain substring matching, so a suggestion
+ * is only as good as the words actually in the articles. That test is the only
+ * thing standing between a content edit and a chip that silently goes dead.
+ */
+export const POPULAR_SEARCHES: readonly string[] = [
+  'Install Bread Wallet',
+  'Recovery phrase',
+  'Private account',
+  'Guardian',
+  'Token is stuck'
+];
+
+function CategoryGlyph({ categoryId }: { categoryId: string }) {
+  // One glyph per main category, drawn in the stroke style the rest of the
+  // page uses. Differentiation is by shape, not by hue: five unrelated colours
+  // would read as five unrelated products.
+  const paths: Record<string, string> = {
+    // A flag planted at the start, not a bare plus — which read as "add".
+    'getting-started': 'M6 4v16M6 4.5h11l-2.2 3.5L17 11.5H6',
+    'manage-wallet': 'M4 8.5h16v10H4zM4 8.5 15 5l2 3.5M15.5 13.5h1.5',
+    privacy: 'M12 5c4 0 7 4 7 7s-3 7-7 7-7-4-7-7 3-7 7-7ZM4 4l16 16',
+    guardian: 'M12 4l7 2.5V12c0 4-3 6.6-7 8-4-1.4-7-4-7-8V6.5L12 4Z',
+    // A gear. The wrench this replaced drew as a small diamond at 24px.
+    troubleshooting:
+      'M12 9.4a2.6 2.6 0 1 0 0 5.2 2.6 2.6 0 0 0 0-5.2ZM12 3.5V6M12 18v2.5M3.5 12H6M18 12h2.5M6 6l1.8 1.8M16.2 16.2 18 18M18 6l-1.8 1.8M7.8 16.2 6 18'
+  };
+
+  return (
+    <svg aria-hidden="true" className="help-home-card-glyph" viewBox="0 0 24 24">
+      <path d={paths[categoryId] ?? 'M12 5v14M5 12h14'} />
+    </svg>
+  );
+}
+
+function ArrowIcon() {
+  return (
+    <svg aria-hidden="true" className="help-home-arrow" viewBox="0 0 24 24">
+      <path d="M5 12h13M13 6l6 6-6 6" />
+    </svg>
+  );
+}
+
+function SearchIcon() {
+  return (
+    <svg aria-hidden="true" className="help-home-search-icon" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="6.5" />
+      <path d="m16 16 4 4" />
+    </svg>
+  );
+}
+
+function SupportGlyph() {
+  return (
+    <svg aria-hidden="true" className="help-home-support-glyph" viewBox="0 0 48 48">
+      <path d="M6 10.5h27v18H16l-10 7v-25Z" />
+      <path d="M14 17.5h11M14 22h7" />
+      <path d="M37 17.5h5v16h-6l-6 4v-4" />
+    </svg>
+  );
+}
+
+export interface HelpCenterHomeProps {
+  readonly mainCategories: readonly HelpCenterMainCategory[];
+  /** Where "View all topics" and the first card's fallback point. */
+  readonly firstCategoryId: string;
+  /** Hands a query to the search the category view already renders. */
+  readonly onSearch: (term: string) => void;
+}
+
+export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: HelpCenterHomeProps) {
+  const [term, setTerm] = useState('');
+  const totalArticles = helpCenterArticles.length;
+
+  const submit = (event: FormEvent) => {
+    event.preventDefault();
+    const trimmed = term.trim();
+    if (trimmed.length > 0) onSearch(trimmed);
+  };
+
+  return (
+    <div className="help-center-home">
+      <a
+        className="help-center-skip-link"
+        href="#help-center-content"
+        onClick={event => {
+          event.preventDefault();
+          document.getElementById('help-center-content')?.focus();
+        }}
+      >
+        Skip to content
+      </a>
+
+      <header className="help-home-header">
+        <a className="help-center-brand" href={homeHref()} aria-label="Bread Wallet Help Center">
+          <img src={breadMark} alt="" />
+          <span>
+            Bread Wallet
+            <small>Help Center</small>
+          </span>
+        </a>
+
+        <nav className="help-home-nav" aria-label="Help Center">
+          <a href={homeHref()} aria-current="page">
+            Help Center
+          </a>
+          <a href={categoryHref(firstCategoryId)}>All topics</a>
+          <a
+            className="help-center-contact-button"
+            href={CONTACT_SUPPORT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Contact Support
+          </a>
+        </nav>
+      </header>
+
+      <main className="help-home-main" id="help-center-content" tabIndex={-1}>
+        <section className="help-home-hero" aria-labelledby="help-home-title">
+          <p className="help-center-eyebrow">Help Center</p>
+          <h1 id="help-home-title">
+            How can we <em>help?</em>
+          </h1>
+          <p className="help-home-lede">
+            Find answers, learn how Bread Wallet works, and get the most out of a wallet only you
+            hold the keys to.
+          </p>
+
+          <form className="help-home-search-form" role="search" onSubmit={submit}>
+            <label className="help-home-search">
+              <span className="help-center-visually-hidden">Search the Help Center</span>
+              <SearchIcon />
+              <input
+                type="search"
+                value={term}
+                onChange={event => setTerm(event.target.value)}
+                placeholder="Search for help articles…"
+                autoComplete="off"
+              />
+            </label>
+            <button className="help-home-search-submit" type="submit">
+              <span className="help-center-visually-hidden">Search</span>
+              <ArrowIcon />
+            </button>
+          </form>
+
+          <div className="help-home-popular">
+            <span id="help-home-popular-label">Popular searches</span>
+            <ul aria-labelledby="help-home-popular-label">
+              {POPULAR_SEARCHES.map(suggestion => (
+                <li key={suggestion}>
+                  <button type="button" onClick={() => onSearch(suggestion)}>
+                    {suggestion}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section className="help-home-categories" aria-labelledby="help-home-categories-title">
+          <div className="help-home-section-head">
+            <div>
+              <h2 id="help-home-categories-title">Support categories</h2>
+              <p>
+                {totalArticles} articles across {mainCategories.length} topics. Start where your
+                question lives.
+              </p>
+            </div>
+            <a className="help-home-section-link" href={categoryHref(firstCategoryId)}>
+              View all topics
+              <ArrowIcon />
+            </a>
+          </div>
+
+          <ul className="help-home-card-grid">
+            {mainCategories.map(mainCategory => {
+              // The destination is the first subcategory because a main
+              // category is a grouping, not a route. Reading order is array
+              // order, the same rule the sidebar follows.
+              const [first] = mainCategory.subcategories;
+              const count = articlesInMainCategory(helpCenterArticles, mainCategory.id).length;
+
+              return (
+                <li key={mainCategory.id}>
+                  <a
+                    className="help-home-card"
+                    href={categoryHref(first ? first.id : firstCategoryId)}
+                  >
+                    <span className="help-home-card-top">
+                      <span className="help-home-card-icon">
+                        <CategoryGlyph categoryId={mainCategory.id} />
+                      </span>
+                      <ArrowIcon />
+                    </span>
+                    <span className="help-home-card-title">{mainCategory.title}</span>
+                    <span className="help-home-card-description">{mainCategory.description}</span>
+                    <span className="help-home-card-count">
+                      {count} {count === 1 ? 'article' : 'articles'}
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+
+        <section className="help-home-support" aria-labelledby="help-home-support-title">
+          <SupportGlyph />
+          <div className="help-home-support-copy">
+            <p className="help-center-eyebrow">Still need help?</p>
+            <h2 id="help-home-support-title">We&rsquo;re here for you</h2>
+            <p>
+              Can&rsquo;t find what you&rsquo;re looking for? Send us the details and we&rsquo;ll
+              take a look — the same form reaches the team that maintains these articles.
+            </p>
+          </div>
+          <a
+            className="help-center-contact-button"
+            href={CONTACT_SUPPORT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Contact Support
+            <ArrowIcon />
+          </a>
+        </section>
+      </main>
+
+      <footer className="help-home-footer">
+        <div className="help-home-footer-inner">
+          <div className="help-home-footer-brand">
+            <a className="help-center-brand" href={homeHref()}>
+              <img src={breadMark} alt="" />
+              <span>
+                Bread Wallet
+                <small>Help Center</small>
+              </span>
+            </a>
+            <p>A self-custodial wallet. Your keys, your assets, your privacy.</p>
+          </div>
+
+          <nav className="help-home-footer-links" aria-label="Help Center topics">
+            <h2>Topics</h2>
+            <ul>
+              {mainCategories.map(mainCategory => {
+                const [first] = mainCategory.subcategories;
+                return (
+                  <li key={mainCategory.id}>
+                    <a href={categoryHref(first ? first.id : firstCategoryId)}>
+                      {mainCategory.title}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+
+          <nav className="help-home-footer-links" aria-label="Get Bread Wallet">
+            <h2>Get the wallet</h2>
+            <ul>
+              {helpCenterDownloads.map(download => (
+                <li key={download.id}>
+                  <a href={download.href} target="_blank" rel="noopener noreferrer">
+                    {download.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav className="help-home-footer-links" aria-label="Support">
+            <h2>Support</h2>
+            <ul>
+              <li>
+                <a href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">
+                  Contact Support
+                </a>
+              </li>
+              <li>
+                <a href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">
+                  Send feedback
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        <p className="help-home-footer-note">
+          © {new Date().getFullYear()} Bread Wallet. Only you hold your recovery phrase.
+        </p>
+      </footer>
+    </div>
+  );
+}

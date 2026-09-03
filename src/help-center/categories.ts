@@ -12,6 +12,12 @@ import type { HelpCenterCategory, HelpCenterMainCategory } from './types';
  * Platform applicability is not stored here either. Whether a subcategory
  * offers a platform choice is a fact about its articles, so content.ts derives
  * it from them; a field here would be a second answer free to disagree.
+ *
+ * A main category's description summarises the subcategories beneath it. It is
+ * stored rather than generated because concatenating three subcategory
+ * sentences produces a paragraph, not a summary — but it is written from them,
+ * so the two cannot describe different topics. Article counts are never stored
+ * here; content.ts counts the articles.
  */
 const gettingStartedSubcategories: readonly HelpCenterCategory[] = [
   {
@@ -43,16 +49,20 @@ export const helpCenterMainCategories: readonly HelpCenterMainCategory[] = [
   {
     id: 'getting-started',
     title: 'Getting started',
+    description: 'Install Bread Wallet, create your first account, and find your way around.',
     subcategories: gettingStartedSubcategories
   },
   {
     id: 'manage-wallet',
     title: 'Manage wallet',
+    description:
+      'Protect access to your wallet, move assets, and follow a transaction through to arrival.',
     subcategories: manageWalletSubcategories
   },
   {
     id: 'privacy',
     title: 'Privacy',
+    description: 'Understand public and private transactions, and what each one reveals.',
     subcategories: [
       {
         id: 'public-and-private-transactions',
@@ -64,6 +74,7 @@ export const helpCenterMainCategories: readonly HelpCenterMainCategory[] = [
   {
     id: 'guardian',
     title: 'Guardian',
+    description: 'Learn what Guardian backs up, how recovery works, and what it can never do.',
     subcategories: [
       {
         id: 'guardian-protection',
@@ -75,6 +86,7 @@ export const helpCenterMainCategories: readonly HelpCenterMainCategory[] = [
   {
     id: 'troubleshooting',
     title: 'Troubleshooting',
+    description: 'Work through the common problems, and reach support when you need a person.',
     subcategories: [
       {
         id: 'common-issues-and-support',
