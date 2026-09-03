@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import breadMark from './assets/bread-mark.svg';
 import { helpCenterMainCategories } from './categories';
@@ -104,6 +104,7 @@ export function HelpCenter() {
   );
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [query, setQuery] = useState('');
+  const lastRoute = useRef<string | null>(null);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -114,14 +115,12 @@ export function HelpCenter() {
 
       const nextMainCategoryId = navigation.resolve(route.categoryId)?.mainCategory.id;
 
-      setActiveCategoryId(previous => {
-        if (previous !== route.categoryId) window.scrollTo({ top: 0 });
-        return route.categoryId;
-      });
-      setActiveArticleId(previous => {
-        if (previous !== route.articleId) window.scrollTo({ top: 0 });
-        return route.articleId;
-      });
+      const key = `${route.categoryId}/${route.articleId ?? ''}`;
+      if (lastRoute.current !== null && lastRoute.current !== key) window.scrollTo({ top: 0 });
+      lastRoute.current = key;
+
+      setActiveCategoryId(route.categoryId);
+      setActiveArticleId(route.articleId);
       if (nextMainCategoryId) {
         setOpenMainCategoryIds(current => new Set(current).add(nextMainCategoryId));
       }
@@ -280,11 +279,17 @@ export function HelpCenter() {
     });
   };
 
-  const platformLabel = activePlatform === 'extension-desktop' ? 'Extension' : 'Mobile';
 
   return (
     <div className="help-center-shell">
-      <a className="help-center-skip-link" href="#help-center-content">
+      <a
+        className="help-center-skip-link"
+        href="#help-center-content"
+        onClick={event => {
+          event.preventDefault();
+          document.getElementById('help-center-content')?.focus();
+        }}
+      >
         Skip to content
       </a>
 
@@ -398,7 +403,7 @@ export function HelpCenter() {
         <p className="help-center-sidebar-status">Category structure · Draft</p>
       </aside>
 
-      <main className="help-center-main" id="help-center-content">
+      <main className="help-center-main" id="help-center-content" tabIndex={-1}>
         <div className="help-center-main-inner">
           <div className="help-center-utility-bar">
             <label className="help-center-search">
@@ -439,9 +444,7 @@ export function HelpCenter() {
             {activeArticle ? (
               <p className="help-center-eyebrow">
                 {entry.mainCategory.title} <span aria-hidden="true">/</span>{' '}
-                <a className="help-center-eyebrow-link" href={categoryHref(entry.category.id)}>
-                  {entry.category.title}
-                </a>
+                {entry.category.title}
               </p>
             ) : (
               <p className="help-center-eyebrow">
@@ -491,8 +494,8 @@ export function HelpCenter() {
 
             <div
               className={`help-center-content-panel help-center-bread-card${
-                showPlatformTabs ? ' has-platform-tabs' : ' is-category-overview'
-              }${activeArticle ? ' is-article' : ' is-index'}`}
+                showPlatformTabs ? ' has-platform-tabs' : ''
+              }${activeArticle ? '' : ' is-index'}`}
               id="category-content-panel"
               role={showPlatformTabs ? 'tabpanel' : 'region'}
               aria-labelledby={
@@ -503,11 +506,6 @@ export function HelpCenter() {
                   : 'help-center-category-title'
               }
             >
-              <div className="help-center-panel-label">
-                <img src={breadMark} alt="" />
-                <span>{showPlatformTabs ? platformLabel : 'Bread Wallet guide'}</span>
-              </div>
-
               {activeArticle ? (
                 /* Every tag and attribute here is emitted by renderMarkdown, which
                    escapes all text and refuses any construct it does not know. */
@@ -519,16 +517,20 @@ export function HelpCenter() {
                 <ul className="help-center-article-list">
                   {cards.map((card, cardIndex) => (
                     <li key={card.id}>
-                      <a className="help-center-article-row" href={card.href}>
+                      <div className="help-center-article-row">
                         <span className="help-center-article-marker" aria-hidden="true">
                           {formatIndex(cardIndex + 1)}
                         </span>
-                        <h2 className="help-center-article-title">{card.title}</h2>
+                        <h2 className="help-center-article-title">
+                          <a className="help-center-article-link" href={card.href}>
+                            {card.title}
+                          </a>
+                        </h2>
                         <p className="help-center-article-excerpt">{card.excerpt}</p>
                         <span className="help-center-article-open" aria-hidden="true">
                           <ChevronIcon />
                         </span>
-                      </a>
+                      </div>
                     </li>
                   ))}
                 </ul>
