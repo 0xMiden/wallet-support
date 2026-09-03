@@ -66,3 +66,17 @@ Pattern:
 
 Preventive rule:
 - Use the concise user-facing label Extension while retaining broader internal identifiers only where compatibility requires them.
+
+# 2026-09-03 - An untracked project has no recovery path
+
+Pattern:
+- The Help Center accumulated seven revision cycles of design work while living outside version control.
+- The parent home repository ignores the directory, and the project had no repository of its own, so the
+  only recoverable artefacts were the deployed Cloudflare bundles and the hashes written into these notes.
+- Two separate WSL sessions had already written to the same tree, so an overwrite would have been silent.
+
+Preventive rule:
+- Put a project under version control at the point it acquires a second revision cycle, not at the point it
+  is finished. Track source, configuration, and notes; keep build output and dependencies ignored.
+- Confirm the deployed artefact and the local source agree before editing a tree that more than one session
+  can write to, and treat a mismatch as a blocker rather than something to build on top of.

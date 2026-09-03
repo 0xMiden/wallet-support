@@ -182,3 +182,38 @@ This is a presentation-only wording change. Internal platform data remains `exte
 - Preview deployment ID: `3c106922-c4af-4746-bd79-240028869937`.
 - The stable preview returned HTTP 200 and its deployed bundle contains `Extension` without the former combined label.
 - The separate feedback Worker `/health` continued to return `ok: true`.
+## Put the Help Center under version control
+
+- [x] Confirm the deployed preview, local `dist/`, and local source all agree before touching the tree.
+- [x] Scan the tree for credentials, tokens, and account identifiers.
+- [x] Initialise a local repository and ignore wrangler local state.
+- [x] Commit the source, configuration, and task notes without build output or dependencies.
+- [x] Confirm no remote is configured.
+
+### Version control check-in
+
+The project had no repository of its own, and the parent `/home/jovan_lomoljo` repository ignores this
+directory, so seven revision cycles of work existed only as unversioned files in a tree that two WSL
+sessions have both written to. This step is local only; no remote, push, or deployment is part of it.
+
+### Version control results
+
+- Drift check was clean before any change: the live preview, `dist/index.html`, and the local source all
+  referenced `index-BCaHZ82S.js` and `index-Bmh77DEi.css`.
+- Credential scan over source, configuration, and notes found no keys, tokens, account identifiers, or
+  Cloudflare credentials; the only URLs present are the already-public `pages.dev` preview addresses.
+- Initialised a repository on branch `main` at `/home/jovan_lomoljo/bread-wallet-help-center`.
+- Added `.wrangler/` to `.gitignore` alongside the existing `node_modules/`, `dist/`, `.vite/`, and `*.local`.
+- Initial commit `3c9d8af` recorded 18 files and 2,079 lines: source, assets, configuration, README, and
+  the `tasks/` notes. Build output and dependencies remain ignored.
+- No remote is configured and nothing was pushed.
+- No source behaviour, category data, styling, or Cloudflare deployment was changed by this step.
+
+### Known inconsistency, not yet fixed
+
+Subcategory numbering disagrees with itself and no build check can catch it. The sidebar and breadcrumb
+number subcategories locally within their main category, while the previous/next cards use the global
+order across all seven. "Security and recovery" therefore renders as `01` in the sidebar and `02` in the
+Previous card. Related: previous/next walks the flat category list across main-category boundaries while
+still saying "subcategory", and the `activeMainCategory` fallback still points at the second main
+category rather than the first. Recorded here rather than fixed, pending a separate go-ahead.
