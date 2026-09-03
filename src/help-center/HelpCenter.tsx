@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
 
 import breadMark from './assets/bread-mark.svg';
-import { helpCenterMainCategories } from './categories';
+import { helpCenterMainCategories, supportCategoryId } from './categories';
 import {
   articleExcerpt,
   articlesFor,
@@ -320,6 +320,12 @@ export function HelpCenter() {
     ? siblingArticles.filter(sibling => sibling.id !== activeArticle.id).slice(0, 5)
     : [];
 
+  const showSupportPrompt = entry?.mainCategory.id === supportCategoryId;
+  // An empty rail should not reserve a column, so the article can use the width.
+  const showRail =
+    activeArticle !== undefined &&
+    (rendered.headings.length > 1 || relatedArticles.length > 0 || showSupportPrompt);
+
   const previousLink: SequenceLink | undefined = activeArticle
     ? articleIndex > 0
       ? {
@@ -582,7 +588,7 @@ export function HelpCenter() {
           ) : null}
 
           <section
-            className={`help-center-category${activeArticle ? ' has-rail' : ''}`}
+            className={`help-center-category${showRail ? ' has-rail' : ''}`}
             hidden={isSearching}
             aria-labelledby="help-center-category-title"
           >
@@ -828,7 +834,8 @@ export function HelpCenter() {
                 contents-only rail would sit empty beside the other 19.
                 It also offers the rest of the subcategory and a way to
                 ask a person, so the column is never dead space. */}
-            <aside className="help-center-rail">
+            {showRail ? (
+              <aside className="help-center-rail">
               {rendered.headings.length > 1 ? (
                 <nav className="help-center-contents" aria-label="On this page">
                   <p className="help-center-rail-title">On this page</p>
@@ -862,14 +869,17 @@ export function HelpCenter() {
                 </nav>
               ) : null}
 
-              <div className="help-center-rail-support">
-                <p className="help-center-rail-title">Still stuck?</p>
-                <a href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">
-                  Contact Support
-                  <SupportIcon />
-                </a>
-              </div>
-            </aside>
+                {showSupportPrompt ? (
+                  <div className="help-center-rail-support">
+                    <p className="help-center-rail-title">Still stuck?</p>
+                    <a href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">
+                      Contact Support
+                      <SupportIcon />
+                    </a>
+                  </div>
+                ) : null}
+              </aside>
+            ) : null}
           </section>
 
           <footer className="help-center-security-reminder">
