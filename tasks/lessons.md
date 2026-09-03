@@ -137,3 +137,40 @@ Preventive rule:
   that function can recurse or be re-entered, or scan without the global flag.
 - Keep the heap cap on test runs even for small suites. It converts a machine-wide freeze into one failed
   command with a readable stack.
+
+# 2026-09-03 - Verify layout by rendering it, not by reasoning about it
+
+Pattern:
+- A row was given `grid-row: 1 / 3` on two of its four cells with no `grid-column`. Grid auto-placement
+  then put the chevron in column 2, the title in column 3 and the excerpt on row 3. Every viewport at or
+  above the mobile breakpoint was wrong.
+- Typecheck, build and 112 passing tests all stayed green: none of them can see grid placement.
+- It survived a careful read of the CSS because the placement algorithm's behaviour is not visible in the
+  declarations — it is a property of how they interact.
+- It looked correct below 620px, where a media query hides the chevron and removes the item that was
+  stealing the column. A mobile-first check would have signed it off.
+
+Preventive rule:
+- Any layout change gets rendered and measured before it is called done. A headless browser reading back
+  bounding boxes at several widths takes a minute and is the only thing that can see this class of bug.
+- Check the widths where a media query changes the DOM's effective shape, not just the narrow end. A
+  breakpoint that removes an element can accidentally repair a layout that is broken everywhere else.
+- Screenshots are worth taking even when the numbers look right: the redundant "EXTENSION" label beside
+  an "Extension" tab, and a 77px gap where every other join was 16-24px, were only obvious once seen.
+
+# 2026-09-03 - A font that is not loaded cannot carry hierarchy
+
+Pattern:
+- The stylesheet encoded its hierarchy in eight fractional font weights (560 to 760) against a family
+  named in one line of CSS and never loaded — no `@font-face`, no link tag, no font file — with
+  `font-synthesis: none` set.
+- Under CSS font matching, all eight resolved to the fallback's nearest available weight. On Windows and
+  Android that is 700, so the page heading, the card title, the nav heading and the primary button
+  rendered identically. The design being reviewed was not the design that shipped.
+
+Preventive rule:
+- Before tuning typography, confirm the font actually loads. Grep for `@font-face`, a stylesheet link and
+  a font file; a `font-family` declaration on its own proves nothing.
+- On a system stack, treat weight as three coarse steps at most, and check each against the real fallback
+  families: 600 collapses into 700 on Roboto and DejaVu, so it buys nothing on Android or Linux.
+- Carry hierarchy in size, colour and space, which render everywhere, rather than in weight, which may not.

@@ -448,3 +448,58 @@ before, so neither shape is reused here.
 ### Awaiting visual review
 
 The card shape, crust and scores, the grid at both widths, and the article view are unverified by eye.
+
+## Design system, row index, and Back navigation
+
+- [x] Inspect the implementation and identify root causes before changing anything.
+- [x] Have UX/UI and QA/Accessibility review the current state.
+- [x] Introduce token scales and migrate every component onto them.
+- [x] Replace the filled article cards with a divided row list.
+- [x] Add Back navigation to every article page.
+- [x] Fix text display: wrapping, measure, hierarchy, contrast.
+- [x] Have QA review the result and fix the regressions it found.
+
+### Root causes
+
+1. No design system, only per-component values: 26 ad-hoc font sizes (five inside a 0.14rem band),
+   8 fractional weights, 18 hardcoded text colours, 10 corner treatments including three contradictory
+   "signature loaf" shapes. Every component invented its own values, so nothing could agree.
+2. `Inter` was named in `styles.css` and never loaded — no `@font-face`, no link, no font file, and
+   `font-synthesis: none`. All eight weights resolved to the fallback's 400/700, so the h1, card title,
+   nav heading and Contact Support button rendered identically.
+3. The article preview was a container rather than a list item, so it needed a fill; and grid gap
+   (0.85rem) was smaller than card padding (1.6rem), so the fills fused into a slab.
+
+### Results
+
+- Scales for type, weight, space, radius, measure and text colour. The stylesheet now holds zero
+  hardcoded font sizes, weights, text colours or radii.
+- System font stack, three real weights. `--weight-medium` is 500, not 600: 600 resolves to 700 against
+  Roboto and DejaVu, so it was not a third weight at all on Android or Linux.
+- The index is a divided row list. Divider is `--help-rule`; hover is the same 7% orange the sidebar
+  rows use; the loaf marker carries the position as it does in the sidebar. Rows are content-height, so
+  uneven heights stop existing, and the chevron is a grid cell rather than a floating block.
+- Back control on every article page, built from the existing marker and chevron.
+- Every text role is warm and clears 4.5:1; three colours previously failed at 4.03, 4.06 and 4.12.
+- No size falls below 12px; five previously did, down to 9.6px.
+
+### The regression QA caught
+
+The row's marker and chevron each had `grid-row: 1 / 3` with no `grid-column`, so auto-placement gave
+the chevron column 2, the title column 3 and the excerpt row 3. Every width at or above 621px was
+broken; it looked right below 621px only because the chevron is `display: none` there. Fixed by placing
+all four cells explicitly, and verified in headless Chromium at 360/620/621/900/1280/1600.
+
+### Deployment
+
+- Preview `c733c5f5`, environment `Preview`, branch `help-center-shell`.
+- New drift baseline: `index-Cu-L4AIR.js` and `index-CV0MyHVA.css`.
+
+### Known and NOT addressed
+
+- Search matches only category and subcategory titles, not the 23 articles.
+- `markdown.ts` forbids headings, so 21 section labels across 12 articles render as bold paragraphs.
+- Images are forbidden; ten step screenshots were dropped during migration.
+- Mobile search results are unreachable: the input is in `<main>`, its output in the off-canvas drawer.
+- Platform choice is component state, not route state, so it resets on reload and cannot be shared.
+- The mobile drawer has no Escape handler, no focus move, and keeps off-canvas controls focusable.
