@@ -325,8 +325,24 @@ have targeted production. The branch was passed explicitly for that reason.
 The preview and the local build now both serve `index-CHm5Uhty.js` and `index-DDGcEOL9.css`. Diff both
 hashes before editing: a design-only change moves the CSS hash while leaving the JS hash alone.
 
-### Awaiting visual review
+### Visual verification — DONE
 
-Typecheck, 44 tests, and the build pass, but nothing has looked at the rendered page. The crossing
-signal, the `Troubleshooting` label at the 9rem ellipsis boundary, sidebar numbering under an active
-search, and the landing state are all unverified by eye.
+Verified by eye on preview `65877c8`, desktop and mobile, all eight checklist items confirmed:
+
+1. `#sending-receiving-and-claiming` — previous card reads `01`, matching the sidebar. This is the case
+   that read `02` before, and it is the defect the whole change existed to remove.
+2. `#security-and-recovery` — previous crosses and names `Getting started`; next stays inside Manage
+   wallet and shows no category name.
+3. `#activity-and-transaction-status` — previous stays; next crosses and names `Privacy`.
+4. `#public-and-private-transactions` — both sides cross, separator sits between label and name.
+5. `#guardian-protection` — next names `Troubleshooting`, the longest label, without clipping at the
+   `9rem` / `0.68rem` ellipsis boundary.
+6. `#setup-and-basic-use` and `#common-issues-and-support` — one card plus spacer, no orphaned separator.
+7. Sidebar under an active search keeps true hierarchy numbering: `sending` shows `02`, `activity`
+   shows `03`, rather than renumbering the filtered list from 1.
+8. Landing with no hash opens Getting started on Setup and basic use, breadcrumb `1 of 1`.
+
+The numbering inconsistency first recorded on 2026-09-03 is closed. Position is derived in one module,
+the denormalised `order` field and the duplicate flattening are gone, and 44 tests hold the behaviour.
+
+Tagged `v0.1.0-shell`, local only.
