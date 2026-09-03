@@ -62,8 +62,32 @@ export function parsePlatform(search: string): HelpCenterPlatformId | null {
   return value === 'mobile' || value === 'extension-desktop' ? value : null;
 }
 
-export function platformSearch(platform: HelpCenterPlatformId): string {
-  return platform === 'extension-desktop' ? '' : `?platform=${platform}`;
+/**
+ * Writes named parameters into an existing query string, leaving the rest of it
+ * alone.
+ *
+ * The helper this replaces returned a complete search string built from the
+ * platform alone, and its caller assigned that over whatever was already
+ * there. So any other parameter the reader arrived with — a campaign tag, or
+ * anything else a shared link carried — was dropped the moment they touched
+ * the platform toggle.
+ *
+ * An empty or null value removes the parameter rather than writing "?x=",
+ * which keeps the default state of the page addressable as a bare URL.
+ */
+export function withSearchParams(
+  search: string,
+  changes: Readonly<Record<string, string | null>>
+): string {
+  const params = new URLSearchParams(search);
+
+  for (const [key, value] of Object.entries(changes)) {
+    if (value === null || value === '') params.delete(key);
+    else params.set(key, value);
+  }
+
+  const next = params.toString();
+  return next ? `?${next}` : '';
 }
 
 /**

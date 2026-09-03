@@ -7,7 +7,7 @@ import {
   defaultPlatform,
   parsePlatform,
   parseRoute,
-  platformSearch
+  withSearchParams
 } from './routing';
 import type { HelpCenterRouteLookups } from './routing';
 
@@ -100,18 +100,42 @@ describe('the platform in the URL', () => {
   });
 
   it('writes only the non-default platform, keeping the plain URL clean', () => {
-    expect(platformSearch('extension-desktop')).toBe('');
-    expect(platformSearch('mobile')).toBe('?platform=mobile');
+    expect(withSearchParams('', { platform: null })).toBe('');
+    expect(withSearchParams('', { platform: 'mobile' })).toBe('?platform=mobile');
   });
 
   it('round-trips', () => {
     for (const platform of ['extension-desktop', 'mobile'] as const) {
-      expect(parsePlatform(platformSearch(platform)) ?? 'extension-desktop').toBe(platform);
+      const written = withSearchParams('', {
+        platform: platform === 'extension-desktop' ? null : platform
+      });
+      expect(parsePlatform(written) ?? 'extension-desktop').toBe(platform);
     }
   });
 
   it('defaults a touch device to Mobile rather than desktop instructions', () => {
     expect(defaultPlatform(true)).toBe('mobile');
     expect(defaultPlatform(false)).toBe('extension-desktop');
+  });
+});
+
+describe('writing the query string', () => {
+  it('keeps the parameters it was not asked to change', () => {
+    // The defect this replaced: choosing a platform assigned a freshly built
+    // search string over the whole query string, so anything else the reader
+    // arrived with went with it.
+    expect(withSearchParams('?utm=x', { platform: 'mobile' })).toBe('?utm=x&platform=mobile');
+    expect(withSearchParams('?utm=x&ref=y', { platform: null })).toBe('?utm=x&ref=y');
+  });
+
+  it('removes a parameter set to empty or null, so the default state is a bare URL', () => {
+    expect(withSearchParams('?platform=mobile', { platform: null })).toBe('');
+    expect(withSearchParams('?platform=mobile', { platform: '' })).toBe('');
+  });
+
+  it('replaces a parameter it already holds rather than repeating it', () => {
+    expect(withSearchParams('?platform=mobile', { platform: 'extension-desktop' })).toBe(
+      '?platform=extension-desktop'
+    );
   });
 });

@@ -20,7 +20,7 @@ import {
   defaultPlatform,
   parsePlatform,
   parseRoute,
-  platformSearch
+  withSearchParams
 } from './routing';
 import type { HelpCenterPlatform } from './types';
 import './help-center.css';
@@ -130,13 +130,20 @@ export function HelpCenter() {
       defaultPlatform(window.matchMedia?.('(pointer: coarse)').matches ?? false)
   );
 
+  /**
+   * One writer for the query string, so a parameter this page does not manage
+   * survives a change to one it does. replaceState rather than pushState: the
+   * platform choice is not a navigation the back button should have to step
+   * through on the way out of an article.
+   */
+  const writeSearch = (changes: Readonly<Record<string, string | null>>) => {
+    const next = withSearchParams(window.location.search, changes);
+    window.history.replaceState(null, '', `${window.location.pathname}${next}${window.location.hash}`);
+  };
+
   const choosePlatform = (platform: HelpCenterPlatform) => {
     setActivePlatform(platform);
-    window.history.replaceState(
-      null,
-      '',
-      `${window.location.pathname}${platformSearch(platform)}${window.location.hash}`
-    );
+    writeSearch({ platform: platform === 'extension-desktop' ? null : platform });
   };
   const [openMainCategoryIds, setOpenMainCategoryIds] = useState<ReadonlySet<string>>(
     () => new Set(defaultMainCategoryId ? [defaultMainCategoryId] : [])
