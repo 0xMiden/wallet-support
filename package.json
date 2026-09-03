@@ -8,13 +8,15 @@
     "typecheck": "tsc --noEmit",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "test": "vitest run --no-file-parallelism"
+    "test": "vitest run --no-file-parallelism",
+    "e2e": "playwright test"
   },
   "dependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@playwright/test": "1.61.0",
     "@types/react": "18.2.76",
     "@types/react-dom": "18.0.6",
     "@vitejs/plugin-react": "6.1.1",

@@ -3,3 +3,5 @@ dist/
 .vite/
 *.local
 .wrangler/
+test-results/
+playwright-report/
