@@ -562,6 +562,20 @@
   font-variant-numeric: tabular-nums;
 }
 
+.help-center-sequence-category {
+  max-width: 9rem;
+  overflow: hidden;
+  color: var(--help-accent-soft);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.help-center-sequence-category::before {
+  margin-right: 0.45rem;
+  color: #7d6a60;
+  content: '\00B7';
+}
+
 .help-center-sequence-card strong {
   max-width: 28rem;
   margin-top: 0.3rem;

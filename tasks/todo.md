@@ -209,11 +209,72 @@ sessions have both written to. This step is local only; no remote, push, or depl
 - No remote is configured and nothing was pushed.
 - No source behaviour, category data, styling, or Cloudflare deployment was changed by this step.
 
-### Known inconsistency, not yet fixed
+## Single-source category positions
 
-Subcategory numbering disagrees with itself and no build check can catch it. The sidebar and breadcrumb
-number subcategories locally within their main category, while the previous/next cards use the global
-order across all seven. "Security and recovery" therefore renders as `01` in the sidebar and `02` in the
-Previous card. Related: previous/next walks the flat category list across main-category boundaries while
-still saying "subcategory", and the `activeMainCategory` fallback still points at the second main
-category rather than the first. Recorded here rather than fixed, pending a separate go-ahead.
+- [x] Report which files computed numbering, previous/next, and breadcrumb position before changing anything.
+- [x] Add a navigation module that derives every position from the hierarchy, taking the hierarchy as a parameter.
+- [x] Remove the fallback index so an unknown category cannot render a plausible wrong number.
+- [x] Refactor the sidebar, breadcrumb, and previous/next cards to consume the module and drop their own counting.
+- [x] Show the target's main category on a previous/next card when the move leaves the current main category.
+- [x] Add a test runner and cover the position rules, including shapes the shipped data does not have.
+- [x] Remove the denormalised `order` field now that nothing displays it.
+- [x] Verify TypeScript, tests, and the production build, and re-run the preview drift check.
+
+### Position check-in
+
+The sidebar and breadcrumb were the reference behaviour and were not changed. The previous/next
+cards were the outlier and now report the same local position as everything else. This is a
+derivation change, not a visual redesign; the crossing signal rides inside the existing meta row so
+card height is untouched.
+
+### Position results
+
+- `src/help-center/navigation.ts` is now the only place a position is computed. It exposes local
+  index, siblings and sibling count, main-category index, previous/next, and whether a move crosses
+  into a different main category.
+- The module takes the hierarchy as a parameter rather than importing it, so the rules can be tested
+  against shapes the shipped data does not have. Four of the five main categories currently hold a
+  single subcategory, so cross-category movement is barely exercised by the real data alone.
+- `resolve()` has no fallback. An unknown id throws in development and logs and returns undefined in
+  production, so a caller must omit the marker rather than render a wrong one. The former
+  `?? helpCenterMainCategories[1]` and `?? helpCenterCategories[0]` fallbacks are both gone.
+- The previous/next card now shows the target's main category name whenever the move crosses a
+  boundary, in the visible meta row and in the accessible label. The name carries a leading separator
+  dot, so it must follow the direction label in both cards; placing it first on the next card renders
+  a dangling dot at the start of the row.
+- Added `navigation.ts` and `navigation.test.ts` to the README's portability file list. The list is what
+  a host copies, so a file missing from it produces a shell that does not compile.
+- Added Vitest 4.1.11, the first release whose peer range admits Vite 8. The project pins vite
+  exactly, so Vitest had resolved a second copy (8.2.2) and tests would not have run against the
+  build's Vite; a `resolutions` entry collapses both onto 8.0.8.
+- 33 tests cover first and last within a group, cross-group movement in both directions, single-category
+  groups, a lone category, an empty group, duplicate ids, and both halves of the missing-id policy. The
+  agreement check asserts against a hand-written table taken from `categories.ts` rather than against
+  the module, so it cannot pass by construction.
+- Removed the `order` field from both levels of the data model. Reading order is array order; a stored
+  position beside the data was the second source of truth that allowed the mismatch.
+- Removed the unused `helpCenterCategories` export. It flattened the hierarchy a second time and so was
+  another copy of reading order; `navigation.categories` is the supported way to read it.
+- Sidebar numbering is now stable under an active search. It previously counted with its render index,
+  so a filtered list renumbered the categories that survived the filter. This was the same root cause
+  and is fixed by the same change.
+- Replaced the hardcoded `'getting-started'` initial open group with the first category's own main
+  category, so renaming or reordering the first group cannot silently break it.
+- `yarn typecheck`, the test run, and `yarn build` all passed.
+
+### Deployment state — NOT deployed
+
+- Local build is now `index-CHm5Uhty.js` and `index-DDGcEOL9.css`.
+- The preview still serves `index-BCaHZ82S.js` and `index-Bmh77DEi.css`, HTTP 200 with
+  `X-Robots-Tag: noindex`. That difference is this refactor, not drift: the check that mattered was
+  that nobody else deployed during the work, and nobody did.
+- Deploying is a separate decision and was not performed.
+
+### Running the tests
+
+`yarn test` is blocked by the host's Jest worker guard, which looks for Jest's `--runInBand` and does
+not recognise Vitest's flags. Run the binary directly instead:
+
+```bash
+NODE_OPTIONS=--max-old-space-size=1536 ./node_modules/.bin/vitest run --no-file-parallelism
+```

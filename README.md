@@ -15,6 +15,10 @@ yarn build
 The Help Center is isolated in `src/help-center/`:
 
 - `HelpCenter.tsx` contains the reusable React shell.
+- `navigation.ts` derives every rendered position from the category hierarchy. Nothing else may
+  compute an index, a total, or a previous/next relationship.
+- `navigation.test.ts` covers those rules. It is the only file here that imports a dev dependency
+  (`vitest`); a host integrating the shell can leave it behind without affecting the component.
 - `categories.ts` contains the category navigation data.
 - `types.ts` defines the small content contract.
 - `help-center.css` contains styles scoped under `.help-center-shell`.

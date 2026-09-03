@@ -1,15 +1,33 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import breadMark from './assets/bread-mark.svg';
-import { helpCenterCategories, helpCenterMainCategories } from './categories';
+import { helpCenterMainCategories } from './categories';
+import { createHelpCenterNavigation } from './navigation';
 import type { HelpCenterPlatform } from './types';
 import './help-center.css';
 
-const defaultCategoryId = helpCenterCategories[0].id;
+/**
+ * Positions are never computed in this file. Every index, total, and
+ * previous/next relationship on the page is read from the navigation module,
+ * which derives all of them from one hierarchy.
+ */
+const navigation = createHelpCenterNavigation(helpCenterMainCategories);
+
+const firstCategoryId = navigation.firstCategoryId;
+if (firstCategoryId === undefined) {
+  throw new Error('Help Center: the category hierarchy contains no categories.');
+}
+
+const defaultCategoryId: string = firstCategoryId;
+const defaultMainCategoryId = navigation.resolve(defaultCategoryId)?.mainCategory.id;
 
 function categoryIdFromHash(hash: string) {
   const candidate = hash.replace(/^#\/?/, '');
-  return helpCenterCategories.some(category => category.id === candidate) ? candidate : defaultCategoryId;
+  return navigation.has(candidate) ? candidate : defaultCategoryId;
+}
+
+function formatIndex(index: number) {
+  return String(index).padStart(2, '0');
 }
 
 function ChevronIcon({ direction = 'right' }: { direction?: 'down' | 'left' | 'right' }) {
@@ -55,7 +73,7 @@ export function HelpCenter() {
   const [activeCategoryId, setActiveCategoryId] = useState(defaultCategoryId);
   const [activePlatform, setActivePlatform] = useState<HelpCenterPlatform>('extension-desktop');
   const [openMainCategoryIds, setOpenMainCategoryIds] = useState<ReadonlySet<string>>(
-    () => new Set(['getting-started'])
+    () => new Set(defaultMainCategoryId ? [defaultMainCategoryId] : [])
   );
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [query, setQuery] = useState('');
@@ -63,13 +81,11 @@ export function HelpCenter() {
   useEffect(() => {
     const handleHashChange = () => {
       const nextCategoryId = categoryIdFromHash(window.location.hash);
-      const nextMainCategory = helpCenterMainCategories.find(mainCategory =>
-        mainCategory.subcategories.some(category => category.id === nextCategoryId)
-      );
+      const nextMainCategoryId = navigation.resolve(nextCategoryId)?.mainCategory.id;
 
       setActiveCategoryId(nextCategoryId);
-      if (nextMainCategory) {
-        setOpenMainCategoryIds(current => new Set(current).add(nextMainCategory.id));
+      if (nextMainCategoryId) {
+        setOpenMainCategoryIds(current => new Set(current).add(nextMainCategoryId));
       }
       setIsMobileMenuOpen(false);
     };
@@ -78,12 +94,6 @@ export function HelpCenter() {
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
-
-  const activeCategoryIndex = helpCenterCategories.findIndex(category => category.id === activeCategoryId);
-  const activeCategory = helpCenterCategories[activeCategoryIndex] ?? helpCenterCategories[0];
-  const previousCategory = activeCategoryIndex > 0 ? helpCenterCategories[activeCategoryIndex - 1] : undefined;
-  const nextCategory =
-    activeCategoryIndex < helpCenterCategories.length - 1 ? helpCenterCategories[activeCategoryIndex + 1] : undefined;
 
   const visibleMainCategories = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase();
@@ -103,13 +113,27 @@ export function HelpCenter() {
       .filter(mainCategory => mainCategory.subcategories.length > 0);
   }, [query]);
 
-  const activeMainCategory =
-    helpCenterMainCategories.find(mainCategory =>
-      mainCategory.subcategories.some(category => category.id === activeCategory.id)
-    ) ?? helpCenterMainCategories[1];
-  const activeSubcategoryIndex = activeMainCategory.subcategories.findIndex(
-    category => category.id === activeCategory.id
-  );
+  // Only reachable if a category disappears from the hierarchy while its id is
+  // still selected. The navigation module has already thrown in development and
+  // logged in production; the page must not invent a position to replace it.
+  const entry = navigation.resolve(activeCategoryId);
+  if (!entry) {
+    return (
+      <div className="help-center-shell">
+        <main className="help-center-main" id="help-center-content">
+          <div className="help-center-main-inner">
+            <section className="help-center-category">
+              <h1>Category unavailable</h1>
+              <p className="help-center-category-description">
+                This category is no longer part of the Help Center.{' '}
+                <a href={`#${defaultCategoryId}`}>Return to the first category</a>.
+              </p>
+            </section>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   const toggleMainCategory = (mainCategoryId: string) => {
     setOpenMainCategoryIds(current => {
@@ -121,7 +145,7 @@ export function HelpCenter() {
   };
 
   const platformLabel = activePlatform === 'extension-desktop' ? 'Extension' : 'Mobile';
-  const hasPlatformVariants = activeCategory.platforms.length > 1;
+  const hasPlatformVariants = entry.category.platforms.length > 1;
 
   return (
     <div className="help-center-shell">
@@ -173,8 +197,9 @@ export function HelpCenter() {
             visibleMainCategories.map(mainCategory => {
               const isSearchActive = query.trim().length > 0;
               const isGroupOpen = isSearchActive || openMainCategoryIds.has(mainCategory.id);
-              const isActiveGroup = mainCategory.id === activeMainCategory.id;
+              const isActiveGroup = mainCategory.id === entry.mainCategory.id;
               const panelId = `${mainCategory.id}-subcategories`;
+              const mainCategoryIndex = navigation.mainCategoryIndex(mainCategory.id);
 
               return (
                 <section className="help-center-navigation-group" key={mainCategory.id}>
@@ -186,9 +211,11 @@ export function HelpCenter() {
                     onClick={() => toggleMainCategory(mainCategory.id)}
                   >
                     <span className="help-center-main-category-label">
-                      <span className="help-center-main-category-number">
-                        {String(mainCategory.order).padStart(2, '0')}
-                      </span>
+                      {mainCategoryIndex === undefined ? null : (
+                        <span className="help-center-main-category-number">
+                          {formatIndex(mainCategoryIndex)}
+                        </span>
+                      )}
                       <span>{mainCategory.title}</span>
                     </span>
                     <ChevronIcon direction={isGroupOpen ? 'down' : 'right'} />
@@ -197,22 +224,29 @@ export function HelpCenter() {
                   <div id={panelId} hidden={!isGroupOpen}>
                     {mainCategory.subcategories.length > 0 ? (
                       <ol className="help-center-category-list">
-                        {mainCategory.subcategories.map((category, categoryIndex) => (
-                          <li key={category.id}>
-                            <a
-                              className={category.id === activeCategory.id ? 'is-active' : undefined}
-                              href={`#${category.id}`}
-                              aria-current={category.id === activeCategory.id ? 'page' : undefined}
-                              onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                              <span className="help-center-category-number">
-                                {String(categoryIndex + 1).padStart(2, '0')}
-                              </span>
-                              <span>{category.title}</span>
-                              <ChevronIcon />
-                            </a>
-                          </li>
-                        ))}
+                        {mainCategory.subcategories.map(category => {
+                          // Read from the hierarchy, not from this list: under an
+                          // active search this list is filtered, and a render index
+                          // would renumber the categories that survive the filter.
+                          const localIndex = navigation.resolve(category.id)?.localIndex;
+
+                          return (
+                            <li key={category.id}>
+                              <a
+                                className={category.id === entry.category.id ? 'is-active' : undefined}
+                                href={`#${category.id}`}
+                                aria-current={category.id === entry.category.id ? 'page' : undefined}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                {localIndex === undefined ? null : (
+                                  <span className="help-center-category-number">{formatIndex(localIndex)}</span>
+                                )}
+                                <span>{category.title}</span>
+                                <ChevronIcon />
+                              </a>
+                            </li>
+                          );
+                        })}
                       </ol>
                     ) : (
                       <p className="help-center-empty-group">No pages yet</p>
@@ -259,11 +293,11 @@ export function HelpCenter() {
 
           <section className="help-center-category" aria-labelledby="help-center-category-title">
             <p className="help-center-eyebrow">
-              {activeMainCategory.title} <span aria-hidden="true">/</span> Subcategory{' '}
-              {activeSubcategoryIndex + 1} of {activeMainCategory.subcategories.length}
+              {entry.mainCategory.title} <span aria-hidden="true">/</span> Subcategory{' '}
+              {entry.localIndex} of {entry.siblingCount}
             </p>
-            <h1 id="help-center-category-title">{activeCategory.title}</h1>
-            <p className="help-center-category-description">{activeCategory.description}</p>
+            <h1 id="help-center-category-title">{entry.category.title}</h1>
+            <p className="help-center-category-description">{entry.category.description}</p>
 
             {hasPlatformVariants ? (
               <div className="help-center-platform-tabs" role="tablist" aria-label="Platform">
@@ -321,43 +355,53 @@ export function HelpCenter() {
             </div>
 
             <nav className="help-center-sequence" aria-label="Category sequence">
-              {previousCategory ? (
+              {entry.previous ? (
                 <a
                   className="help-center-sequence-card is-previous"
-                  href={`#${previousCategory.id}`}
-                  aria-label={`Previous subcategory: ${previousCategory.title}`}
+                  href={`#${entry.previous.category.id}`}
+                  aria-label={
+                    entry.previous.crossesMainCategory
+                      ? `Previous subcategory: ${entry.previous.category.title}, in ${entry.previous.mainCategory.title}`
+                      : `Previous subcategory: ${entry.previous.category.title}`
+                  }
                 >
                   <span className="help-center-sequence-button" aria-hidden="true">
                     <ChevronIcon direction="left" />
                   </span>
                   <span className="help-center-sequence-copy">
                     <span className="help-center-sequence-meta">
-                      <span className="help-center-sequence-index">
-                        {String(previousCategory.order).padStart(2, '0')}
-                      </span>
+                      <span className="help-center-sequence-index">{formatIndex(entry.previous.localIndex)}</span>
                       Previous subcategory
+                      {entry.previous.crossesMainCategory ? (
+                        <span className="help-center-sequence-category">{entry.previous.mainCategory.title}</span>
+                      ) : null}
                     </span>
-                    <strong>{previousCategory.title}</strong>
+                    <strong>{entry.previous.category.title}</strong>
                   </span>
                 </a>
               ) : (
                 <div className="help-center-sequence-spacer" aria-hidden="true" />
               )}
 
-              {nextCategory ? (
+              {entry.next ? (
                 <a
                   className="help-center-sequence-card is-next"
-                  href={`#${nextCategory.id}`}
-                  aria-label={`Next subcategory: ${nextCategory.title}`}
+                  href={`#${entry.next.category.id}`}
+                  aria-label={
+                    entry.next.crossesMainCategory
+                      ? `Next subcategory: ${entry.next.category.title}, in ${entry.next.mainCategory.title}`
+                      : `Next subcategory: ${entry.next.category.title}`
+                  }
                 >
                   <span className="help-center-sequence-copy">
                     <span className="help-center-sequence-meta">
                       Next subcategory
-                      <span className="help-center-sequence-index">
-                        {String(nextCategory.order).padStart(2, '0')}
-                      </span>
+                      {entry.next.crossesMainCategory ? (
+                        <span className="help-center-sequence-category">{entry.next.mainCategory.title}</span>
+                      ) : null}
+                      <span className="help-center-sequence-index">{formatIndex(entry.next.localIndex)}</span>
                     </span>
-                    <strong>{nextCategory.title}</strong>
+                    <strong>{entry.next.category.title}</strong>
                   </span>
                   <span className="help-center-sequence-button" aria-hidden="true">
                     <ChevronIcon />

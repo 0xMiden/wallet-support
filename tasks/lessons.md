@@ -80,3 +80,29 @@ Preventive rule:
   is finished. Track source, configuration, and notes; keep build output and dependencies ignored.
 - Confirm the deployed artefact and the local source agree before editing a tree that more than one session
   can write to, and treat a mismatch as a blocker rather than something to build on top of.
+
+# 2026-09-03 - Derive a fact once, or watch the copies drift
+
+Pattern:
+- The same subcategory position was computed three times: the sidebar counted with its render index,
+  the breadcrumb ran its own search of the hierarchy, and the previous/next cards read a denormalised
+  `order` field stored beside the data.
+- Two of the three agreed, so the disagreement looked like a card bug rather than a missing shared
+  derivation, and patching the card would have left two derivations still free to drift apart.
+- Neither TypeScript nor the production build could see the mismatch. Every reading was individually
+  valid; only their disagreement was wrong, and nothing in the toolchain compares them.
+- The render-index version carried a second, quieter defect: under an active search the list is
+  filtered, so the surviving categories were silently renumbered.
+
+Preventive rule:
+- Derive a displayed fact in one module and have every view read it from there. If two places can
+  compute a position, they will eventually disagree, and the disagreement will not be a type error.
+- Treat a stored position field as a second source of truth. Prefer deriving order from the structure
+  itself, and delete the field once nothing displays it, or it will grow the bug back.
+- Never compute a position from the array a component happens to be rendering. Filtered, paginated, and
+  sorted views all make render position a different quantity from hierarchy position.
+- A resolver should refuse to guess. Throwing in development and returning nothing in production forces
+  the caller to omit a marker; a fallback index quietly renders a confident wrong answer instead.
+- When one of several readings is the odd one out, fix the derivation rather than the odd reading, and
+  pin the expected values in a hand-written table. A test that compares views after they share one
+  source passes by construction and proves nothing.

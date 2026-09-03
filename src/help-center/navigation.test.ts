@@ -4,14 +4,12 @@ import { helpCenterMainCategories } from './categories';
 import { createHelpCenterNavigation } from './navigation';
 import type { HelpCenterCategory, HelpCenterMainCategory } from './types';
 
-// `order` is supplied here only because the data model still carries it. Nothing
-// in the navigation module reads it; position comes from hierarchy shape alone.
-function leaf(id: string, order: number): HelpCenterCategory {
-  return { id, order, title: `Leaf ${id}`, description: `About ${id}`, platforms: [] };
+function leaf(id: string): HelpCenterCategory {
+  return { id, title: `Leaf ${id}`, description: `About ${id}`, platforms: [] };
 }
 
-function group(id: string, order: number, leaves: readonly HelpCenterCategory[]): HelpCenterMainCategory {
-  return { id, order, title: `Group ${id}`, subcategories: leaves };
+function group(id: string, leaves: readonly HelpCenterCategory[]): HelpCenterMainCategory {
+  return { id, title: `Group ${id}`, subcategories: leaves };
 }
 
 afterEach(() => {
@@ -21,8 +19,8 @@ afterEach(() => {
 
 describe('position within a main category', () => {
   const navigation = createHelpCenterNavigation([
-    group('alpha', 1, [leaf('a1', 1), leaf('a2', 2), leaf('a3', 3)]),
-    group('beta', 2, [leaf('b1', 4), leaf('b2', 5)])
+    group('alpha', [leaf('a1'), leaf('a2'), leaf('a3')]),
+    group('beta', [leaf('b1'), leaf('b2')])
   ]);
 
   it('numbers the first category in a group as 1, not by its global position', () => {
@@ -45,8 +43,8 @@ describe('position within a main category', () => {
 
 describe('previous and next', () => {
   const navigation = createHelpCenterNavigation([
-    group('alpha', 1, [leaf('a1', 1), leaf('a2', 2), leaf('a3', 3)]),
-    group('beta', 2, [leaf('b1', 4), leaf('b2', 5)])
+    group('alpha', [leaf('a1'), leaf('a2'), leaf('a3')]),
+    group('beta', [leaf('b1'), leaf('b2')])
   ]);
 
   it('has no previous at the very first category', () => {
@@ -95,8 +93,8 @@ describe('previous and next', () => {
 
 describe('single-category groups', () => {
   const navigation = createHelpCenterNavigation([
-    group('alpha', 1, [leaf('only-a', 1)]),
-    group('beta', 2, [leaf('only-b', 2)])
+    group('alpha', [leaf('only-a')]),
+    group('beta', [leaf('only-b')])
   ]);
 
   it('reports 1 of 1 for a lone category', () => {
@@ -113,7 +111,7 @@ describe('single-category groups', () => {
 
 describe('degenerate hierarchies', () => {
   it('handles a hierarchy holding a single category', () => {
-    const navigation = createHelpCenterNavigation([group('alpha', 1, [leaf('lonely', 1)])]);
+    const navigation = createHelpCenterNavigation([group('alpha', [leaf('lonely')])]);
     const entry = navigation.resolve('lonely');
     expect(entry?.localIndex).toBe(1);
     expect(entry?.previous).toBeUndefined();
@@ -122,9 +120,9 @@ describe('degenerate hierarchies', () => {
 
   it('skips an empty main category when walking previous and next', () => {
     const navigation = createHelpCenterNavigation([
-      group('alpha', 1, [leaf('a1', 1)]),
-      group('empty', 2, []),
-      group('beta', 3, [leaf('b1', 2)])
+      group('alpha', [leaf('a1')]),
+      group('empty', []),
+      group('beta', [leaf('b1')])
     ]);
     expect(navigation.resolve('a1')?.next?.category.id).toBe('b1');
     expect(navigation.resolve('b1')?.previous?.category.id).toBe('a1');
@@ -138,7 +136,7 @@ describe('degenerate hierarchies', () => {
 });
 
 describe('unknown and duplicate ids', () => {
-  const navigation = createHelpCenterNavigation([group('alpha', 1, [leaf('a1', 1)])]);
+  const navigation = createHelpCenterNavigation([group('alpha', [leaf('a1')])]);
 
   it('reports whether a category exists without throwing', () => {
     expect(navigation.has('a1')).toBe(true);
@@ -161,11 +159,11 @@ describe('unknown and duplicate ids', () => {
   });
 
   it('rejects a hierarchy with duplicate ids outright', () => {
-    expect(() => createHelpCenterNavigation([group('alpha', 1, [leaf('dupe', 1), leaf('dupe', 2)])])).toThrow(
+    expect(() => createHelpCenterNavigation([group('alpha', [leaf('dupe'), leaf('dupe')])])).toThrow(
       /duplicate category id "dupe"/
     );
     expect(() =>
-      createHelpCenterNavigation([group('same', 1, [leaf('x', 1)]), group('same', 2, [leaf('y', 2)])])
+      createHelpCenterNavigation([group('same', [leaf('x')]), group('same', [leaf('y')])])
     ).toThrow(/duplicate main category id "same"/);
   });
 });
