@@ -545,3 +545,53 @@ an endpoint — a Worker plus KV or D1 — and is a separate decision.
   on assets: there are no image files in the repo and none can be invented.
 - Attaching the article title to a "No" report. The support form's accepted parameters are not known
   here, so nothing is appended rather than guessing at another service's API.
+
+## Home page at the bare URL
+
+- [x] Split the query-string writer so one parameter cannot cost another.
+- [x] Make an empty hash the home route; point the brand mark and breadcrumb at it.
+- [x] Put the search query in the URL as `?q=`.
+- [x] Build the home page: hero, search, popular searches, five category cards, support panel, footer.
+- [x] Add Playwright and cover the routing rules end to end.
+- [x] Show the six authored lines for approval before committing them.
+
+### Results
+
+- Five commits, each building and passing its own tests, because the pre-commit hook runs typecheck
+  and the unit suite on every one: `3afb100` query-string fix, `3b0047e` routing, `2a810fa` the page,
+  `524558b` meta description, `9a334c6` Playwright.
+- Cards are the five main categories. Counts are read from the articles — 6, 9, 3, 1, 4 — and nothing
+  stores a total that could disagree with them.
+- Main categories gained a `description`, which subcategories already had.
+- The five popular searches are one per category and every one is asserted to return an article.
+  Two of the four first written found nothing: the search is plain substring matching, so
+  "Restore wallet" and "Transfer stuck" both read well and matched no text.
+- 144 unit tests in node, 6 Playwright cases against the production build. `yarn e2e` runs them.
+
+### One bug found by rendering it
+
+The brand mark did not leave search results. It changed the hash, but the results kept rendering
+because the query was still set, so the one control that promises a way out of the results was the one
+that did not provide it. Found by driving the built page, not by reading the diff. Playwright case four
+fails if the fix is removed, and only case four.
+
+### The stated e2e case that was not reachable
+
+"Choosing Mobile does not drop an active search" cannot be performed: the platform tabs sit inside the
+category section, which is `hidden` while results show. The test drives the same invariant in the order
+a reader can — set Mobile, then search — plus clearing the search and checking the platform survives.
+
+### Copy approval
+
+Six authored lines were listed for approval before landing. One was corrected: the Guardian description
+had promised "how to manage it", and the only article under Guardian explains what it is. It now reads
+"Learn what Guardian backs up, how recovery works, and what it can never do."
+
+### Still open
+
+- Step screenshots. Unchanged: ten were dropped during migration and there are no image assets in the
+  repo.
+- Footer links with no destination: Documentation, About, Blog, Careers, Status, and the legal pages are
+  absent rather than dead. They need real URLs.
+- No DOM-level unit tests. The unit suite stays in node; component behaviour is covered by Playwright
+  instead of jsdom.

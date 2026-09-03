@@ -174,3 +174,29 @@ Preventive rule:
 - On a system stack, treat weight as three coarse steps at most, and check each against the real fallback
   families: 600 collapses into 700 on Roboto and DejaVu, so it buys nothing on Android or Linux.
 - Carry hierarchy in size, colour and space, which render everywhere, rather than in weight, which may not.
+
+# 2026-09-03 - Copy written to fill a render gap is still authored copy
+
+Pattern:
+- The home page's cards needed a line per main category. Subcategories had carried a description
+  since the beginning; main categories had not, so there was a hole in the data model exactly where
+  the design needed prose.
+- Five descriptions and a replacement meta description were written to fill it, shipped into the
+  working tree, and reported only as prose in a summary of what had been built. Six lines of
+  reader-facing copy were a paragraph in a status update rather than a list awaiting approval.
+- CLAUDE.md's licence to improve "categories, subcategories, navigation, layout, and presentation"
+  reads like permission to write the words those things contain. It is not: the standing gate is that
+  reviewed titles and content must not change without approval, and new copy ships in the same voice
+  beside them.
+- One line was wrong on the facts, and only review caught it. "Learn what Guardian protects against
+  and how to manage it" promised managing Guardian; the single article under it explains what
+  Guardian is. A card had been made to advertise an article that does not exist.
+
+Preventive rule:
+- When a layout needs a line that does not exist yet, write it, then stop and list every such line
+  verbatim with the field it fills, before committing. Do not fold it into a summary of the work,
+  where it can be approved by omission.
+- Check each new line against the articles actually filed under it. A category description is a
+  promise about the content beneath it, and the count of that content is one grep away.
+- Prefer a layout that needs no new copy. Deriving a card's supporting text from what is already
+  written cannot drift and cannot overpromise.
