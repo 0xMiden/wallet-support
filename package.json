@@ -7,7 +7,8 @@
     "dev": "vite",
     "typecheck": "tsc --noEmit",
     "build": "tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run --no-file-parallelism"
   },
   "dependencies": {
     "react": "18.2.0",
@@ -18,6 +19,10 @@
     "@types/react-dom": "18.0.6",
     "@vitejs/plugin-react": "6.1.1",
     "typescript": "5.9.3",
+    "vite": "8.0.8",
+    "vitest": "4.1.11"
+  },
+  "resolutions": {
     "vite": "8.0.8"
   }
 }
