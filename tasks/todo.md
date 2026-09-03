@@ -278,3 +278,30 @@ not recognise Vitest's flags. Run the binary directly instead:
 ```bash
 NODE_OPTIONS=--max-old-space-size=1536 ./node_modules/.bin/vitest run --no-file-parallelism
 ```
+
+## Validate the shipped category data
+
+- [x] Confirm whether any test validated `categories.ts` as data. None did.
+- [x] Add `src/help-center/categories.test.ts` for ids, structure, platform applicability, and the landing target.
+- [x] Run the full suite.
+
+### Data-test check-in
+
+`navigation.test.ts` proves the position rules are correct. It touched the shipped data only by
+building a navigation from it, so duplicate ids within one level would have thrown as a side effect,
+but nothing checked the hierarchy as data. A bad edit to `categories.ts` should fail in the suite
+rather than in a browser.
+
+### Data-test results
+
+- Ids: unique per level, unique across the whole hierarchy, never reused between the two levels, and
+  hash-safe, since ids are written straight into `href="#id"` and read back out of the hash.
+- Structure: every subcategory has exactly one parent, no main category is empty, and every category
+  carries a title and description. The parent check is true by construction while the data is nested;
+  it is asserted so that a later move to a flat file with a `parentId` cannot silently lose it.
+- Platform applicability: only known values, no repeats, and never exactly one platform, since the
+  shell renders tabs only when a category has more than one variant.
+- Landing target: the first category resolves, and is pinned as `setup-and-basic-use` inside
+  `getting-started`. The component derives the initially open sidebar group from this category's owner
+  instead of naming a group literally, so this assertion is what keeps that derivation honest.
+- 44 tests across 2 files pass; typecheck clean.
