@@ -10,6 +10,27 @@ yarn dev
 yarn build
 ```
 
+Run the tests with the binary directly rather than `yarn test`, which trips this host's Jest worker
+guard:
+
+```bash
+NODE_OPTIONS=--max-old-space-size=1536 ./node_modules/.bin/vitest run --no-file-parallelism
+```
+
+## Pre-commit checks
+
+`.githooks/pre-commit` runs `yarn typecheck` and the test suite before each commit. It is tracked in
+the repository, but Git does not enable a hooks directory automatically, so enable it once per clone:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+The hook is local and offline: `tsc` and `vitest` come from `node_modules` and nothing contacts a
+network or an external service. Commits that stage no TypeScript, `package.json`, `yarn.lock`,
+`tsconfig.json`, or `vite.config.ts` change skip the checks, so documentation commits stay instant.
+Use `git commit --no-verify` to skip a single commit deliberately.
+
 ## Portability
 
 The Help Center is isolated in `src/help-center/`:
