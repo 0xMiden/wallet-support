@@ -2,9 +2,14 @@ import { useEffect, useMemo, useState } from 'react';
 
 import breadMark from './assets/bread-mark.svg';
 import { helpCenterMainCategories } from './categories';
+import { articlesFor, helpCenterArticles, subcategoryNeedsPlatformChoice } from './content';
+import { renderMarkdown } from './markdown';
 import { createHelpCenterNavigation } from './navigation';
 import type { HelpCenterPlatform } from './types';
 import './help-center.css';
+
+/** Approved destination for the support intake (content proposal §3A). */
+const CONTACT_SUPPORT_URL = 'https://miden-feedback-v2.miden-feedback-relay.workers.dev/';
 
 /**
  * Positions are never computed in this file. Every index, total, and
@@ -117,6 +122,26 @@ export function HelpCenter() {
   // still selected. The navigation module has already thrown in development and
   // logged in production; the page must not invent a position to replace it.
   const entry = navigation.resolve(activeCategoryId);
+
+  // Whether this subcategory offers a platform choice is a fact about its
+  // articles, not something the category data records.
+  const showPlatformTabs =
+    entry !== undefined && subcategoryNeedsPlatformChoice(helpCenterArticles, entry.category.id);
+  const bodyPlatform: HelpCenterPlatform = showPlatformTabs ? activePlatform : 'extension-desktop';
+
+  const visibleArticles = useMemo(() => {
+    if (!entry) return [];
+    const selected = showPlatformTabs
+      ? articlesFor(helpCenterArticles, entry.category.id, activePlatform)
+      : helpCenterArticles.filter(article => article.subcategory === entry.category.id);
+
+    return selected.map(article => ({
+      id: article.id,
+      title: article.title,
+      html: renderMarkdown(article.bodies[bodyPlatform] ?? '', `${article.id} (${bodyPlatform})`)
+    }));
+  }, [entry?.category.id, showPlatformTabs, activePlatform, bodyPlatform]);
+
   if (!entry) {
     return (
       <div className="help-center-shell">
@@ -145,7 +170,6 @@ export function HelpCenter() {
   };
 
   const platformLabel = activePlatform === 'extension-desktop' ? 'Extension' : 'Mobile';
-  const hasPlatformVariants = entry.category.platforms.length > 1;
 
   return (
     <div className="help-center-shell">
@@ -280,15 +304,15 @@ export function HelpCenter() {
               />
             </label>
 
-            <button
+            <a
               className="help-center-contact-button"
-              type="button"
-              disabled
-              aria-label="Contact Support (destination will be added later)"
+              href={CONTACT_SUPPORT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <span>Contact Support</span>
               <SupportIcon />
-            </button>
+            </a>
           </div>
 
           <section className="help-center-category" aria-labelledby="help-center-category-title">
@@ -299,7 +323,7 @@ export function HelpCenter() {
             <h1 id="help-center-category-title">{entry.category.title}</h1>
             <p className="help-center-category-description">{entry.category.description}</p>
 
-            {hasPlatformVariants ? (
+            {showPlatformTabs ? (
               <div className="help-center-platform-tabs" role="tablist" aria-label="Platform">
                 <button
                   id="extension-desktop-tab"
@@ -326,12 +350,12 @@ export function HelpCenter() {
 
             <div
               className={`help-center-content-panel help-center-bread-card${
-                hasPlatformVariants ? ' has-platform-tabs' : ' is-category-overview'
+                showPlatformTabs ? ' has-platform-tabs' : ' is-category-overview'
               }`}
               id="category-content-panel"
-              role={hasPlatformVariants ? 'tabpanel' : 'region'}
+              role={showPlatformTabs ? 'tabpanel' : 'region'}
               aria-labelledby={
-                hasPlatformVariants
+                showPlatformTabs
                   ? activePlatform === 'extension-desktop'
                     ? 'extension-desktop-tab'
                     : 'mobile-tab'
@@ -340,18 +364,23 @@ export function HelpCenter() {
             >
               <div className="help-center-panel-label">
                 <img src={breadMark} alt="" />
-                <span>{hasPlatformVariants ? platformLabel : 'Bread Wallet guide'}</span>
+                <span>{showPlatformTabs ? platformLabel : 'Bread Wallet guide'}</span>
               </div>
-              <h2>Essential pages will be added next.</h2>
-              <p>
-                The category framework is ready. Verified article titles and content will be introduced in the next
-                phase.
-              </p>
-              <div className="help-center-placeholder-lines" aria-hidden="true">
-                <span />
-                <span />
-                <span />
-              </div>
+              {visibleArticles.length > 0 ? (
+                visibleArticles.map(article => (
+                  <article className="help-center-article" key={article.id}>
+                    <h2>{article.title}</h2>
+                    {/* Every tag and attribute here is emitted by renderMarkdown, which
+                        escapes all text and refuses any construct it does not know. */}
+                    <div
+                      className="help-center-article-body"
+                      dangerouslySetInnerHTML={{ __html: article.html }}
+                    />
+                  </article>
+                ))
+              ) : (
+                <p className="help-center-empty-articles">No articles for {platformLabel} yet.</p>
+              )}
             </div>
 
             <nav className="help-center-sequence" aria-label="Category sequence">

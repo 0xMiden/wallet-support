@@ -4,7 +4,6 @@ export interface HelpCenterCategory {
   id: string;
   title: string;
   description: string;
-  platforms: readonly HelpCenterPlatform[];
 }
 
 export interface HelpCenterMainCategory {

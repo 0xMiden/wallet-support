@@ -5,7 +5,7 @@ import { createHelpCenterNavigation } from './navigation';
 import type { HelpCenterCategory, HelpCenterMainCategory } from './types';
 
 function leaf(id: string): HelpCenterCategory {
-  return { id, title: `Leaf ${id}`, description: `About ${id}`, platforms: [] };
+  return { id, title: `Leaf ${id}`, description: `About ${id}` };
 }
 
 function group(id: string, leaves: readonly HelpCenterCategory[]): HelpCenterMainCategory {

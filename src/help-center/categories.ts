@@ -1,6 +1,4 @@
-import type { HelpCenterCategory, HelpCenterMainCategory, HelpCenterPlatform } from './types';
-
-const walletPlatforms = ['extension-desktop', 'mobile'] as const satisfies readonly HelpCenterPlatform[];
+import type { HelpCenterCategory, HelpCenterMainCategory } from './types';
 
 /**
  * The category model is intentionally separate from the UI. The same records
@@ -10,13 +8,16 @@ const walletPlatforms = ['extension-desktop', 'mobile'] as const satisfies reado
  * position stored beside the data is a second source of truth, and the two
  * disagreeing is exactly how one subcategory came to render as 01 in the
  * sidebar and 02 on the previous/next card.
+ *
+ * Platform applicability is not stored here either. Whether a subcategory
+ * offers a platform choice is a fact about its articles, so content.ts derives
+ * it from them; a field here would be a second answer free to disagree.
  */
 const gettingStartedSubcategories: readonly HelpCenterCategory[] = [
   {
     id: 'setup-and-basic-use',
     title: 'Setup and basic use',
-    description: 'The starting point for installing, creating, and navigating Bread Wallet.',
-    platforms: walletPlatforms
+    description: 'The starting point for installing, creating, and navigating Bread Wallet.'
   }
 ];
 
@@ -24,20 +25,17 @@ const manageWalletSubcategories: readonly HelpCenterCategory[] = [
   {
     id: 'security-and-recovery',
     title: 'Security and recovery',
-    description: 'Guidance for protecting wallet access and preparing for recovery.',
-    platforms: walletPlatforms
+    description: 'Guidance for protecting wallet access and preparing for recovery.'
   },
   {
     id: 'sending-receiving-and-claiming',
     title: 'Sending, receiving, and claiming',
-    description: 'Help for the wallet’s core asset flows.',
-    platforms: walletPlatforms
+    description: 'Help for the wallet’s core asset flows.'
   },
   {
     id: 'activity-and-transaction-status',
     title: 'Activity and transaction status',
-    description: 'Help for reviewing wallet activity and transaction progress.',
-    platforms: []
+    description: 'Help for reviewing wallet activity and transaction progress.'
   }
 ] as const;
 
@@ -59,8 +57,7 @@ export const helpCenterMainCategories: readonly HelpCenterMainCategory[] = [
       {
         id: 'public-and-private-transactions',
         title: 'Public and private transactions',
-        description: 'Clear explanations of privacy choices and their effects.',
-        platforms: []
+        description: 'Clear explanations of privacy choices and their effects.'
       }
     ]
   },
@@ -71,8 +68,7 @@ export const helpCenterMainCategories: readonly HelpCenterMainCategory[] = [
       {
         id: 'guardian-protection',
         title: 'Guardian protection',
-        description: 'Help for understanding and managing Guardian protection.',
-        platforms: []
+        description: 'Help for understanding and managing Guardian protection.'
       }
     ]
   },
@@ -83,8 +79,7 @@ export const helpCenterMainCategories: readonly HelpCenterMainCategory[] = [
       {
         id: 'common-issues-and-support',
         title: 'Common issues and support',
-        description: 'A route to common fixes and the appropriate support channel.',
-        platforms: []
+        description: 'A route to common fixes and the appropriate support channel.'
       }
     ]
   }

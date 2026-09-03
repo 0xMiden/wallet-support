@@ -328,7 +328,13 @@
   font-weight: 760;
   white-space: nowrap;
   box-shadow: 0 0.6rem 1.5rem rgb(108 42 12 / 24%);
-  cursor: default;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.help-center-contact-button:hover,
+.help-center-contact-button:focus-visible {
+  background: #f2b48f;
 }
 
 .help-center-contact-icon {
@@ -459,9 +465,9 @@
 .help-center-content-panel h2 {
   max-width: 45rem;
   margin: 0;
-  font-size: clamp(1.65rem, 3vw, 2.65rem);
+  font-size: clamp(1.35rem, 2.2vw, 1.9rem);
   font-weight: 620;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.03em;
 }
 
 .help-center-content-panel > p {
@@ -472,25 +478,66 @@
   line-height: 1.65;
 }
 
-.help-center-placeholder-lines {
-  width: min(100%, 37rem);
-  margin-top: 3rem;
-  display: grid;
-  gap: 0.8rem;
+.help-center-article + .help-center-article {
+  margin-top: 2.75rem;
+  padding-top: 2.25rem;
+  border-top: 1px solid rgb(247 200 177 / 12%);
 }
 
-.help-center-placeholder-lines span {
-  height: 0.6rem;
-  border-radius: 999px;
-  background: rgb(241 164 126 / 13%);
+.help-center-article-body {
+  max-width: 43rem;
+  color: #cfc3bc;
+  font-size: 0.97rem;
+  line-height: 1.7;
 }
 
-.help-center-placeholder-lines span:nth-child(2) {
-  width: 87%;
+.help-center-article-body p,
+.help-center-article-body ol,
+.help-center-article-body ul {
+  margin: 0.9rem 0 0;
 }
 
-.help-center-placeholder-lines span:nth-child(3) {
-  width: 62%;
+.help-center-article-body ol,
+.help-center-article-body ul {
+  padding-left: 1.35rem;
+}
+
+.help-center-article-body li {
+  margin-top: 0.4rem;
+}
+
+.help-center-article-body li > ol,
+.help-center-article-body li > ul {
+  margin-top: 0.35rem;
+}
+
+.help-center-article-body strong {
+  color: var(--help-copy);
+  font-weight: 680;
+}
+
+.help-center-article-body a {
+  color: var(--help-accent-soft);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.help-center-article-body blockquote {
+  margin: 1.2rem 0 0;
+  padding: 0.85rem 1.05rem;
+  border-left: 3px solid rgb(231 117 55 / 55%);
+  border-radius: 0 0.75rem 0.75rem 0;
+  background: rgb(231 117 55 / 8%);
+}
+
+.help-center-article-body blockquote > :first-child {
+  margin-top: 0;
+}
+
+.help-center-empty-articles {
+  margin: 0;
+  color: var(--help-muted);
+  font-size: 0.97rem;
 }
 
 .help-center-sequence {

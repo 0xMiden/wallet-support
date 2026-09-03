@@ -11,6 +11,7 @@ import {
   helpCenterArticles,
   loadArticles,
   parseArticle,
+  subcategoryNeedsPlatformChoice,
   validationErrors
 } from './content';
 import type { HelpCenterArticle, HelpCenterPlatform } from './types';
@@ -281,5 +282,59 @@ describe('the migrated article set', () => {
 
     // Warnings never fail the suite. Malformed data does, via validationErrors().
     expect(validationErrors(helpCenterArticles)).toEqual([]);
+  });
+});
+
+/**
+ * Replaces the old category-level "zero or two platforms" rule. Platform
+ * applicability is no longer stored beside the categories, so the checks are
+ * that each article declares a sound platform set and that tab visibility is
+ * computed from those articles rather than written down somewhere.
+ */
+describe('platform applicability', () => {
+  it('gives every article a valid platform set', () => {
+    for (const article of helpCenterArticles) {
+      expect(article.platforms.length, `${article.id} declares no platform`).toBeGreaterThan(0);
+      expect(new Set(article.platforms).size, `${article.id} repeats a platform`).toBe(
+        article.platforms.length
+      );
+      for (const platform of article.platforms) {
+        expect(['extension-desktop', 'mobile']).toContain(platform);
+      }
+      expect(Object.keys(article.bodies).sort()).toEqual([...article.platforms].sort());
+    }
+  });
+
+  it('derives which subcategories offer a platform choice', () => {
+    const needsChoice = helpCenterMainCategories
+      .flatMap(mainCategory => mainCategory.subcategories)
+      .filter(subcategory => subcategoryNeedsPlatformChoice(helpCenterArticles, subcategory.id))
+      .map(subcategory => subcategory.id);
+
+    expect(needsChoice).toEqual(['setup-and-basic-use', 'security-and-recovery']);
+  });
+
+  it('answers from the articles, not from a stored flag', () => {
+    const shared = parseArticle(SHARED, 'shared.md');
+    expect(subcategoryNeedsPlatformChoice([shared], 'guardian-protection')).toBe(false);
+
+    const variant: HelpCenterArticle = {
+      ...shared,
+      id: 'variant',
+      bodies: { 'extension-desktop': 'Click.', mobile: 'Tap.' }
+    };
+    expect(subcategoryNeedsPlatformChoice([shared, variant], 'guardian-protection')).toBe(true);
+
+    const extensionOnly: HelpCenterArticle = {
+      ...shared,
+      id: 'extension-only',
+      platforms: ['extension-desktop'],
+      bodies: { 'extension-desktop': 'Extension only.' }
+    };
+    expect(subcategoryNeedsPlatformChoice([shared, extensionOnly], 'guardian-protection')).toBe(true);
+  });
+
+  it('reports no choice for a subcategory with no articles at all', () => {
+    expect(subcategoryNeedsPlatformChoice([], 'sending-receiving-and-claiming')).toBe(false);
   });
 });

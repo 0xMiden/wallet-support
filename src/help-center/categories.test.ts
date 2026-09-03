@@ -83,27 +83,6 @@ describe('structure', () => {
   });
 });
 
-describe('platform applicability', () => {
-  it('lists only known platforms, without repeats', () => {
-    for (const { category } of subcategories) {
-      const platforms = [...category.platforms];
-      expect(duplicatesIn(platforms), `${category.id} repeats a platform`).toEqual([]);
-      for (const platform of platforms) {
-        expect(['extension-desktop', 'mobile']).toContain(platform);
-      }
-    }
-  });
-
-  it('never gives a category exactly one platform', () => {
-    // The shell shows platform tabs only when a category has more than one
-    // variant, so a single-entry list is data that can never render.
-    const unrenderable = subcategories
-      .filter(({ category }) => category.platforms.length === 1)
-      .map(({ category }) => category.id);
-    expect(unrenderable).toEqual([]);
-  });
-});
-
 describe('the landing target', () => {
   const navigation = createHelpCenterNavigation(helpCenterMainCategories);
 

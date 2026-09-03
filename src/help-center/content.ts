@@ -186,3 +186,25 @@ export function validationErrors(
 
   return errors;
 }
+
+/**
+ * Whether a subcategory offers a platform choice. True when any of its articles
+ * is missing from a platform, or carries a different body per platform. A
+ * subcategory whose articles read identically everywhere shows one list and no
+ * tabs, because there is nothing to choose between.
+ *
+ * Derived, never stored. The category data used to carry a `platforms` field,
+ * which was a second answer to this question and free to drift from the content.
+ */
+export function subcategoryNeedsPlatformChoice(
+  articles: readonly HelpCenterArticle[],
+  subcategoryId: string
+): boolean {
+  return articles
+    .filter(article => article.subcategory === subcategoryId)
+    .some(
+      article =>
+        article.platforms.length !== KNOWN_PLATFORMS.length ||
+        article.bodies['extension-desktop'] !== article.bodies.mobile
+    );
+}
