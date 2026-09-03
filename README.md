@@ -1,5 +1,8 @@
 # Bread Wallet Help Center
 
+Project guidance for anyone working on this repository, including Claude Code, is in
+[`CLAUDE.md`](CLAUDE.md). Read it before making structural changes.
+
 A category-first Help Center shell for Bread Wallet. This initial phase contains the website structure and seven approved categories, but no support articles.
 
 ## Local commands
