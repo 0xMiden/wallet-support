@@ -95,6 +95,14 @@ function CloseIcon() {
   );
 }
 
+function HomeIcon() {
+  return (
+    <svg aria-hidden="true" className="help-center-crumb-icon" viewBox="0 0 24 24">
+      <path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z" />
+    </svg>
+  );
+}
+
 function LinkIcon() {
   return (
     <svg aria-hidden="true" className="help-center-contact-icon" viewBox="0 0 24 24">
@@ -548,17 +556,37 @@ export function HelpCenter() {
               </a>
             ) : null}
 
-            {activeArticle ? (
-              <p className="help-center-eyebrow">
-                {entry.mainCategory.title} <span aria-hidden="true">/</span>{' '}
-                {entry.category.title}
-              </p>
-            ) : (
-              <p className="help-center-eyebrow">
-                {entry.mainCategory.title} <span aria-hidden="true">/</span> Subcategory{' '}
-                {entry.localIndex} of {entry.siblingCount}
-              </p>
-            )}
+            <nav className="help-center-breadcrumb" aria-label="Breadcrumb">
+              <ol>
+                <li>
+                  <a href={categoryHref(defaultCategoryId)} aria-label="Help Center home">
+                    <HomeIcon />
+                  </a>
+                </li>
+                <li>
+                  <ChevronIcon />
+                  <a href={categoryHref(entry.mainCategory.subcategories[0]?.id ?? entry.category.id)}>
+                    {entry.mainCategory.title}
+                  </a>
+                </li>
+                <li>
+                  <ChevronIcon />
+                  {activeArticle ? (
+                    <a href={categoryHref(entry.category.id)}>{entry.category.title}</a>
+                  ) : (
+                    <span aria-current="page">{entry.category.title}</span>
+                  )}
+                </li>
+                {activeArticle ? (
+                  <li className="help-center-crumb-current">
+                    <ChevronIcon />
+                    <span aria-current="page" title={activeArticle.title}>
+                      {activeArticle.title}
+                    </span>
+                  </li>
+                ) : null}
+              </ol>
+            </nav>
 
             <h1 id="help-center-category-title">
               {activeArticle ? activeArticle.title : entry.category.title}

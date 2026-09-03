@@ -347,6 +347,30 @@
 .help-center-search:focus-within {
   border-color: var(--help-accent);
   background: #281b16;
+  box-shadow: 0 0 0 3px rgb(231 117 55 / 28%);
+}
+
+.help-center-search input:focus,
+.help-center-search input:focus-visible {
+  outline: none;
+}
+
+/* The browser's own clear button renders bright blue — the only cool pixel on
+   the page. Masked so it takes the warm text colour instead of being hidden:
+   clearing a query is worth a control. */
+.help-center-search input[type='search']::-webkit-search-cancel-button {
+  width: 0.85rem;
+  height: 0.85rem;
+  color: var(--text-faint);
+  background: currentcolor;
+  cursor: pointer;
+  appearance: none;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m6 6 12 12M18 6 6 18' stroke='%23000' stroke-width='2.4' stroke-linecap='round' fill='none'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+}
+
+.help-center-search input[type='search']::-webkit-search-cancel-button:hover {
+  color: var(--help-accent-soft);
 }
 
 .help-center-search svg {
@@ -405,6 +429,80 @@
 
 .help-center-category {
   padding-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.help-center-breadcrumb {
+  margin-bottom: var(--space-3);
+}
+
+.help-center-breadcrumb ol {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  list-style: none;
+}
+
+.help-center-breadcrumb li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.help-center-breadcrumb a {
+  padding: 0.15rem 0.1rem;
+  border-radius: var(--radius-xs);
+  color: var(--text-muted);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: color 160ms ease;
+}
+
+.help-center-breadcrumb a:hover,
+.help-center-breadcrumb a:focus-visible {
+  color: var(--help-accent-soft);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.help-center-breadcrumb [aria-current='page'] {
+  color: var(--text-strong);
+  font-weight: var(--weight-medium);
+}
+
+.help-center-breadcrumb .help-center-icon {
+  width: 0.85rem;
+  height: 0.85rem;
+  color: var(--text-faint);
+  flex: none;
+}
+
+.help-center-crumb-icon {
+  width: 1.05rem;
+  height: 1.05rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+/* The current article can be long; it truncates rather than wrapping the trail. */
+.help-center-crumb-current {
+  min-width: 0;
+}
+
+.help-center-crumb-current span {
+  overflow: hidden;
+  max-width: 26rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .help-center-eyebrow {
