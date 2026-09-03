@@ -538,11 +538,13 @@ export function HelpCenter() {
             aria-labelledby="help-center-category-title"
           >
             {activeArticle ? (
-              <a className="help-center-back" href={categoryHref(entry.category.id)}>
-                <span aria-hidden="true">
-                  <ChevronIcon direction="left" />
-                </span>
-                Back to {entry.category.title}
+              <a
+                className="help-center-back"
+                href={categoryHref(entry.category.id)}
+                aria-label={`Back to ${entry.category.title}`}
+                title={`Back to ${entry.category.title}`}
+              >
+                <ChevronIcon direction="left" />
               </a>
             ) : null}
 
