@@ -2,9 +2,17 @@ import { useEffect, useMemo, useState } from 'react';
 
 import breadMark from './assets/bread-mark.svg';
 import { helpCenterMainCategories } from './categories';
-import { articlesFor, helpCenterArticles, subcategoryNeedsPlatformChoice } from './content';
+import {
+  articleExcerpt,
+  articlesFor,
+  articlesInSubcategory,
+  findArticle,
+  helpCenterArticles,
+  subcategoryNeedsPlatformChoice
+} from './content';
 import { renderMarkdown } from './markdown';
 import { createHelpCenterNavigation } from './navigation';
+import { articleHref, categoryHref, parseRoute } from './routing';
 import type { HelpCenterPlatform } from './types';
 import './help-center.css';
 
@@ -26,9 +34,22 @@ if (firstCategoryId === undefined) {
 const defaultCategoryId: string = firstCategoryId;
 const defaultMainCategoryId = navigation.resolve(defaultCategoryId)?.mainCategory.id;
 
-function categoryIdFromHash(hash: string) {
-  const candidate = hash.replace(/^#\/?/, '');
-  return navigation.has(candidate) ? candidate : defaultCategoryId;
+/** Wires the pure router in routing.ts to this page's data. */
+function routeFromHash(hash: string) {
+  return parseRoute(hash, {
+    hasCategory: categoryId => navigation.has(categoryId),
+    hasArticle: (categoryId, articleId) =>
+      findArticle(helpCenterArticles, categoryId, articleId) !== undefined,
+    fallbackCategoryId: defaultCategoryId
+  });
+}
+
+interface SequenceLink {
+  href: string;
+  title: string;
+  index: number;
+  /** Set only when moving here leaves the current main category. */
+  crossesInto?: string;
 }
 
 function formatIndex(index: number) {
@@ -76,6 +97,7 @@ function SupportIcon() {
 
 export function HelpCenter() {
   const [activeCategoryId, setActiveCategoryId] = useState(defaultCategoryId);
+  const [activeArticleId, setActiveArticleId] = useState<string | undefined>(undefined);
   const [activePlatform, setActivePlatform] = useState<HelpCenterPlatform>('extension-desktop');
   const [openMainCategoryIds, setOpenMainCategoryIds] = useState<ReadonlySet<string>>(
     () => new Set(defaultMainCategoryId ? [defaultMainCategoryId] : [])
@@ -85,14 +107,16 @@ export function HelpCenter() {
 
   useEffect(() => {
     const handleHashChange = () => {
-      const nextCategoryId = categoryIdFromHash(window.location.hash);
-      const nextMainCategoryId = navigation.resolve(nextCategoryId)?.mainCategory.id;
+      const route = routeFromHash(window.location.hash);
+      const nextMainCategoryId = navigation.resolve(route.categoryId)?.mainCategory.id;
 
-      setActiveCategoryId(nextCategoryId);
+      setActiveCategoryId(route.categoryId);
+      setActiveArticleId(route.articleId);
       if (nextMainCategoryId) {
         setOpenMainCategoryIds(current => new Set(current).add(nextMainCategoryId));
       }
       setIsMobileMenuOpen(false);
+      window.scrollTo({ top: 0 });
     };
 
     handleHashChange();
@@ -123,24 +147,99 @@ export function HelpCenter() {
   // logged in production; the page must not invent a position to replace it.
   const entry = navigation.resolve(activeCategoryId);
 
-  // Whether this subcategory offers a platform choice is a fact about its
-  // articles, not something the category data records.
-  const showPlatformTabs =
-    entry !== undefined && subcategoryNeedsPlatformChoice(helpCenterArticles, entry.category.id);
-  const bodyPlatform: HelpCenterPlatform = showPlatformTabs ? activePlatform : 'extension-desktop';
+  const activeArticle =
+    entry && activeArticleId
+      ? findArticle(helpCenterArticles, entry.category.id, activeArticleId)
+      : undefined;
 
-  const visibleArticles = useMemo(() => {
-    if (!entry) return [];
+  // In a subcategory, the choice is offered when its articles differ by platform.
+  // Inside one article, only when that article itself differs — otherwise the
+  // reader is asked to choose between two identical pages.
+  const showPlatformTabs =
+    entry !== undefined &&
+    (activeArticle
+      ? activeArticle.platforms.length === 2 &&
+        activeArticle.bodies['extension-desktop'] !== activeArticle.bodies.mobile
+      : subcategoryNeedsPlatformChoice(helpCenterArticles, entry.category.id));
+
+  const listPlatform: HelpCenterPlatform = showPlatformTabs ? activePlatform : 'extension-desktop';
+  const bodyPlatform: HelpCenterPlatform = activeArticle
+    ? activeArticle.platforms.includes(activePlatform)
+      ? activePlatform
+      : (activeArticle.platforms[0] as HelpCenterPlatform)
+    : listPlatform;
+
+  const articleHtml = useMemo(
+    () =>
+      activeArticle
+        ? renderMarkdown(activeArticle.bodies[bodyPlatform] ?? '', `${activeArticle.id} (${bodyPlatform})`)
+        : '',
+    [activeArticle?.id, bodyPlatform]
+  );
+
+  const cards = useMemo(() => {
+    if (!entry || activeArticle) return [];
     const selected = showPlatformTabs
       ? articlesFor(helpCenterArticles, entry.category.id, activePlatform)
-      : helpCenterArticles.filter(article => article.subcategory === entry.category.id);
+      : articlesInSubcategory(helpCenterArticles, entry.category.id);
 
     return selected.map(article => ({
       id: article.id,
       title: article.title,
-      html: renderMarkdown(article.bodies[bodyPlatform] ?? '', `${article.id} (${bodyPlatform})`)
+      href: articleHref(entry.category.id, article.id),
+      excerpt: articleExcerpt(article.bodies[listPlatform] ?? article.bodies['extension-desktop'] ?? '')
     }));
-  }, [entry?.category.id, showPlatformTabs, activePlatform, bodyPlatform]);
+  }, [entry?.category.id, activeArticle?.id, showPlatformTabs, activePlatform, listPlatform]);
+
+  // Inside an article the sequence walks its siblings; on a subcategory page it
+  // walks subcategories. Both are rendered by the same markup below.
+  const siblingArticles =
+    entry && activeArticle
+      ? showPlatformTabs
+        ? articlesFor(helpCenterArticles, entry.category.id, bodyPlatform)
+        : articlesInSubcategory(helpCenterArticles, entry.category.id)
+      : [];
+  const articleIndex = activeArticle
+    ? siblingArticles.findIndex(article => article.id === activeArticle.id)
+    : -1;
+
+  const previousLink: SequenceLink | undefined = activeArticle
+    ? articleIndex > 0
+      ? {
+          href: articleHref(entry?.category.id ?? '', (siblingArticles[articleIndex - 1] as { id: string }).id),
+          title: (siblingArticles[articleIndex - 1] as { title: string }).title,
+          index: articleIndex
+        }
+      : undefined
+    : entry?.previous
+      ? {
+          href: categoryHref(entry.previous.category.id),
+          title: entry.previous.category.title,
+          index: entry.previous.localIndex,
+          ...(entry.previous.crossesMainCategory
+            ? { crossesInto: entry.previous.mainCategory.title }
+            : {})
+        }
+      : undefined;
+
+  const nextLink: SequenceLink | undefined = activeArticle
+    ? articleIndex >= 0 && articleIndex < siblingArticles.length - 1
+      ? {
+          href: articleHref(entry?.category.id ?? '', (siblingArticles[articleIndex + 1] as { id: string }).id),
+          title: (siblingArticles[articleIndex + 1] as { title: string }).title,
+          index: articleIndex + 2
+        }
+      : undefined
+    : entry?.next
+      ? {
+          href: categoryHref(entry.next.category.id),
+          title: entry.next.category.title,
+          index: entry.next.localIndex,
+          ...(entry.next.crossesMainCategory ? { crossesInto: entry.next.mainCategory.title } : {})
+        }
+      : undefined;
+
+  const sequenceNoun = activeArticle ? 'article' : 'subcategory';
 
   if (!entry) {
     return (
@@ -316,12 +415,27 @@ export function HelpCenter() {
           </div>
 
           <section className="help-center-category" aria-labelledby="help-center-category-title">
-            <p className="help-center-eyebrow">
-              {entry.mainCategory.title} <span aria-hidden="true">/</span> Subcategory{' '}
-              {entry.localIndex} of {entry.siblingCount}
-            </p>
-            <h1 id="help-center-category-title">{entry.category.title}</h1>
-            <p className="help-center-category-description">{entry.category.description}</p>
+            {activeArticle ? (
+              <p className="help-center-eyebrow">
+                {entry.mainCategory.title} <span aria-hidden="true">/</span>{' '}
+                <a className="help-center-eyebrow-link" href={categoryHref(entry.category.id)}>
+                  {entry.category.title}
+                </a>
+              </p>
+            ) : (
+              <p className="help-center-eyebrow">
+                {entry.mainCategory.title} <span aria-hidden="true">/</span> Subcategory{' '}
+                {entry.localIndex} of {entry.siblingCount}
+              </p>
+            )}
+
+            <h1 id="help-center-category-title">
+              {activeArticle ? activeArticle.title : entry.category.title}
+            </h1>
+
+            {activeArticle ? null : (
+              <p className="help-center-category-description">{entry.category.description}</p>
+            )}
 
             {showPlatformTabs ? (
               <div className="help-center-platform-tabs" role="tablist" aria-label="Platform">
@@ -348,10 +462,16 @@ export function HelpCenter() {
               </div>
             ) : null}
 
+            {activeArticle && activeArticle.platforms.length === 1 ? (
+              <p className="help-center-platform-note">
+                {activeArticle.platforms[0] === 'extension-desktop' ? 'Extension only' : 'Mobile only'}
+              </p>
+            ) : null}
+
             <div
               className={`help-center-content-panel help-center-bread-card${
                 showPlatformTabs ? ' has-platform-tabs' : ' is-category-overview'
-              }`}
+              }${activeArticle ? ' is-article' : ' is-index'}`}
               id="category-content-panel"
               role={showPlatformTabs ? 'tabpanel' : 'region'}
               aria-labelledby={
@@ -366,32 +486,46 @@ export function HelpCenter() {
                 <img src={breadMark} alt="" />
                 <span>{showPlatformTabs ? platformLabel : 'Bread Wallet guide'}</span>
               </div>
-              {visibleArticles.length > 0 ? (
-                visibleArticles.map(article => (
-                  <article className="help-center-article" key={article.id}>
-                    <h2>{article.title}</h2>
-                    {/* Every tag and attribute here is emitted by renderMarkdown, which
-                        escapes all text and refuses any construct it does not know. */}
-                    <div
-                      className="help-center-article-body"
-                      dangerouslySetInnerHTML={{ __html: article.html }}
-                    />
-                  </article>
-                ))
+
+              {activeArticle ? (
+                /* Every tag and attribute here is emitted by renderMarkdown, which
+                   escapes all text and refuses any construct it does not know. */
+                <div
+                  className="help-center-article-body"
+                  dangerouslySetInnerHTML={{ __html: articleHtml }}
+                />
+              ) : cards.length > 0 ? (
+                <ul className="help-center-card-grid">
+                  {cards.map(card => (
+                    <li key={card.id}>
+                      <a className="help-center-loaf-card" href={card.href}>
+                        <span className="help-center-loaf-scores" aria-hidden="true" />
+                        <span className="help-center-loaf-title">{card.title}</span>
+                        <span className="help-center-loaf-excerpt">{card.excerpt}</span>
+                        <span className="help-center-loaf-open" aria-hidden="true">
+                          <ChevronIcon />
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               ) : (
                 <p className="help-center-empty-articles">No articles for {platformLabel} yet.</p>
               )}
             </div>
 
-            <nav className="help-center-sequence" aria-label="Category sequence">
-              {entry.previous ? (
+            <nav
+              className="help-center-sequence"
+              aria-label={activeArticle ? 'Article sequence' : 'Category sequence'}
+            >
+              {previousLink ? (
                 <a
                   className="help-center-sequence-card is-previous"
-                  href={`#${entry.previous.category.id}`}
+                  href={previousLink.href}
                   aria-label={
-                    entry.previous.crossesMainCategory
-                      ? `Previous subcategory: ${entry.previous.category.title}, in ${entry.previous.mainCategory.title}`
-                      : `Previous subcategory: ${entry.previous.category.title}`
+                    previousLink.crossesInto
+                      ? `Previous ${sequenceNoun}: ${previousLink.title}, in ${previousLink.crossesInto}`
+                      : `Previous ${sequenceNoun}: ${previousLink.title}`
                   }
                 >
                   <span className="help-center-sequence-button" aria-hidden="true">
@@ -399,38 +533,38 @@ export function HelpCenter() {
                   </span>
                   <span className="help-center-sequence-copy">
                     <span className="help-center-sequence-meta">
-                      <span className="help-center-sequence-index">{formatIndex(entry.previous.localIndex)}</span>
-                      Previous subcategory
-                      {entry.previous.crossesMainCategory ? (
-                        <span className="help-center-sequence-category">{entry.previous.mainCategory.title}</span>
+                      <span className="help-center-sequence-index">{formatIndex(previousLink.index)}</span>
+                      Previous {sequenceNoun}
+                      {previousLink.crossesInto ? (
+                        <span className="help-center-sequence-category">{previousLink.crossesInto}</span>
                       ) : null}
                     </span>
-                    <strong>{entry.previous.category.title}</strong>
+                    <strong>{previousLink.title}</strong>
                   </span>
                 </a>
               ) : (
                 <div className="help-center-sequence-spacer" aria-hidden="true" />
               )}
 
-              {entry.next ? (
+              {nextLink ? (
                 <a
                   className="help-center-sequence-card is-next"
-                  href={`#${entry.next.category.id}`}
+                  href={nextLink.href}
                   aria-label={
-                    entry.next.crossesMainCategory
-                      ? `Next subcategory: ${entry.next.category.title}, in ${entry.next.mainCategory.title}`
-                      : `Next subcategory: ${entry.next.category.title}`
+                    nextLink.crossesInto
+                      ? `Next ${sequenceNoun}: ${nextLink.title}, in ${nextLink.crossesInto}`
+                      : `Next ${sequenceNoun}: ${nextLink.title}`
                   }
                 >
                   <span className="help-center-sequence-copy">
                     <span className="help-center-sequence-meta">
-                      Next subcategory
-                      {entry.next.crossesMainCategory ? (
-                        <span className="help-center-sequence-category">{entry.next.mainCategory.title}</span>
+                      Next {sequenceNoun}
+                      {nextLink.crossesInto ? (
+                        <span className="help-center-sequence-category">{nextLink.crossesInto}</span>
                       ) : null}
-                      <span className="help-center-sequence-index">{formatIndex(entry.next.localIndex)}</span>
+                      <span className="help-center-sequence-index">{formatIndex(nextLink.index)}</span>
                     </span>
-                    <strong>{entry.next.category.title}</strong>
+                    <strong>{nextLink.title}</strong>
                   </span>
                   <span className="help-center-sequence-button" aria-hidden="true">
                     <ChevronIcon />

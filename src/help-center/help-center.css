@@ -462,14 +462,6 @@
   height: 1.25rem;
 }
 
-.help-center-content-panel h2 {
-  max-width: 45rem;
-  margin: 0;
-  font-size: clamp(1.35rem, 2.2vw, 1.9rem);
-  font-weight: 620;
-  letter-spacing: -0.03em;
-}
-
 .help-center-content-panel > p {
   max-width: 43rem;
   margin: 1rem 0 0;
@@ -478,10 +470,157 @@
   line-height: 1.65;
 }
 
-.help-center-article + .help-center-article {
-  margin-top: 2.75rem;
-  padding-top: 2.25rem;
-  border-top: 1px solid rgb(247 200 177 / 12%);
+.help-center-content-panel.is-index {
+  min-height: 0;
+}
+
+.help-center-eyebrow-link {
+  color: var(--help-accent-soft);
+  text-decoration: none;
+}
+
+.help-center-eyebrow-link:hover,
+.help-center-eyebrow-link:focus-visible {
+  text-decoration: underline;
+}
+
+.help-center-platform-note {
+  width: fit-content;
+  margin: 1.15rem 0 0;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid rgb(231 117 55 / 30%);
+  border-radius: 999px;
+  color: var(--help-accent-soft);
+  background: rgb(231 117 55 / 9%);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/*
+ * Article cards are shaped as a tin loaf: a domed top and a squared base. The
+ * references that prompted this used a uniform rounded rectangle and a clipped
+ * corner respectively; both are their own marks, so neither is used here. The
+ * crust band and the baker's scores are Bread's, and the round open control
+ * reuses the loaf marker the sidebar and sequence cards already carry.
+ */
+.help-center-card-grid {
+  margin: 1.6rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr));
+  gap: 0.85rem;
+  list-style: none;
+}
+
+.help-center-loaf-card {
+  position: relative;
+  height: 100%;
+  padding: 1.6rem 1.3rem 1.2rem;
+  border: 1px solid rgb(247 200 177 / 14%);
+  border-radius: 1.75rem 1.75rem 0.45rem 0.45rem;
+  background:
+    linear-gradient(180deg, rgb(231 117 55 / 12%), transparent 46%),
+    var(--help-panel);
+  display: grid;
+  align-content: start;
+  gap: 0.45rem;
+  overflow: hidden;
+  text-decoration: none;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+/* The crust. */
+.help-center-loaf-card::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 0.28rem;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--help-accent) 22%,
+    #f7c8b1 50%,
+    var(--help-accent) 78%,
+    transparent
+  );
+  opacity: 0.5;
+  content: '';
+  transition: opacity 160ms ease;
+}
+
+/* The slashes a baker cuts into the dough before it goes in the oven. */
+.help-center-loaf-scores {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.1rem;
+  width: 1.4rem;
+  height: 1.05rem;
+  background: repeating-linear-gradient(
+    62deg,
+    var(--help-accent-soft) 0 1.5px,
+    transparent 1.5px 6px
+  );
+  opacity: 0.3;
+  transition: opacity 160ms ease;
+}
+
+.help-center-loaf-title {
+  padding-right: 2.4rem;
+  color: var(--help-copy);
+  font-size: 1rem;
+  font-weight: 640;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+.help-center-loaf-excerpt {
+  color: var(--help-muted);
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.help-center-loaf-open {
+  width: 1.7rem;
+  height: 1.75rem;
+  margin-top: 0.65rem;
+  border: 1px solid rgb(231 117 55 / 28%);
+  border-radius: 55% 55% 38% 38%;
+  color: var(--help-accent-soft);
+  background: rgb(231 117 55 / 10%);
+  display: grid;
+  place-items: center;
+  transition:
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.help-center-loaf-card:hover,
+.help-center-loaf-card:focus-visible {
+  border-color: rgb(231 117 55 / 45%);
+  background:
+    linear-gradient(180deg, rgb(231 117 55 / 19%), transparent 52%),
+    #2d1e18;
+  transform: translateY(-3px);
+}
+
+.help-center-loaf-card:hover::before,
+.help-center-loaf-card:focus-visible::before {
+  opacity: 1;
+}
+
+.help-center-loaf-card:hover .help-center-loaf-scores,
+.help-center-loaf-card:focus-visible .help-center-loaf-scores {
+  opacity: 0.6;
+}
+
+.help-center-loaf-card:hover .help-center-loaf-open,
+.help-center-loaf-card:focus-visible .help-center-loaf-open {
+  background: rgb(231 117 55 / 24%);
+  transform: translateX(2px);
 }
 
 .help-center-article-body {
@@ -807,6 +946,10 @@
     min-height: 18rem;
   }
 
+  .help-center-card-grid {
+    grid-template-columns: 1fr;
+  }
+
   .help-center-sequence {
     grid-template-columns: 1fr;
   }
@@ -830,5 +973,10 @@
   .help-center-shell *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .help-center-loaf-card:hover,
+  .help-center-loaf-card:focus-visible {
+    transform: none;
   }
 }

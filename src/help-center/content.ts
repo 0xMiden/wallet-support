@@ -208,3 +208,64 @@ export function subcategoryNeedsPlatformChoice(
         article.bodies['extension-desktop'] !== article.bodies.mobile
     );
 }
+
+export function articlesInSubcategory(
+  articles: readonly HelpCenterArticle[],
+  subcategoryId: string
+): readonly HelpCenterArticle[] {
+  return articles.filter(article => article.subcategory === subcategoryId);
+}
+
+export function findArticle(
+  articles: readonly HelpCenterArticle[],
+  subcategoryId: string,
+  articleId: string
+): HelpCenterArticle | undefined {
+  return articles.find(article => article.subcategory === subcategoryId && article.id === articleId);
+}
+
+function stripMarkdown(text: string) {
+  return text
+    .replace(/^\s*>\s?/gm, '')
+    .replace(/^\s*(?:\d+\.|[-*+])\s+/gm, '')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/\*([^*]+)\*/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * A one-line summary for a card. Taken from the body rather than written,
+ * because an article summary that is authored separately is one more thing that
+ * can drift from the article.
+ *
+ * Prefers the first real paragraph. Several articles open with a callout or a
+ * bare label like "**Steps:**", so a short lead is joined to the first list item
+ * instead of being shown alone — "Steps:" is not a summary of anything.
+ */
+export function articleExcerpt(body: string, limit = 150): string {
+  const blocks = body
+    .split(/\n\s*\n/)
+    .map(block => block.trim())
+    .filter(Boolean);
+
+  const isQuote = (block: string) => block.trimStart().startsWith('>');
+  const isList = (block: string) => /^\s*(?:\d+\.|[-*+])\s/.test(block);
+  const plain = blocks.filter(block => !isQuote(block) && !isList(block));
+  const lists = blocks.filter(isList);
+
+  let text = plain.map(stripMarkdown).find(candidate => candidate.length >= 40) ?? '';
+
+  if (!text) {
+    const lead = plain[0] ? stripMarkdown(plain[0]) : '';
+    const firstItem = lists[0] ? stripMarkdown((lists[0].split('\n')[0] ?? '')) : '';
+    text = [lead, firstItem].filter(Boolean).join(' ');
+  }
+  if (!text) text = stripMarkdown(blocks.find(block => !isQuote(block)) ?? blocks[0] ?? '');
+  if (text.length <= limit) return text;
+
+  const cut = text.slice(0, limit);
+  const lastSpace = cut.lastIndexOf(' ');
+  return `${(lastSpace > 0 ? cut.slice(0, lastSpace) : cut).replace(/[ ,.;:]+$/, '')}…`;
+}

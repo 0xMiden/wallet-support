@@ -5,7 +5,10 @@ import mobileSource from '../../content-source/mobile.md?raw';
 
 import { helpCenterMainCategories } from './categories';
 import {
+  articleExcerpt,
   articlesFor,
+  articlesInSubcategory,
+  findArticle,
   coverageReport,
   coverageWarnings,
   helpCenterArticles,
@@ -336,5 +339,57 @@ describe('platform applicability', () => {
 
   it('reports no choice for a subcategory with no articles at all', () => {
     expect(subcategoryNeedsPlatformChoice([], 'sending-receiving-and-claiming')).toBe(false);
+  });
+});
+
+describe('card excerpts', () => {
+  it('uses the first real paragraph', () => {
+    expect(articleExcerpt('Guardian is a recovery layer for private accounts and it protects you.')).toBe(
+      'Guardian is a recovery layer for private accounts and it protects you.'
+    );
+  });
+
+  it('skips a leading callout', () => {
+    const body = '> Caution: only use official links.\n\nThis paragraph is the one a reader wants to see.';
+    expect(articleExcerpt(body)).toBe('This paragraph is the one a reader wants to see.');
+  });
+
+  it('joins a short label to the first list item rather than showing the label alone', () => {
+    // Several articles open with a bare "**Steps:**", which summarises nothing.
+    const body = '**Steps:**\n\n1. From the homepage, select the token you want to view.';
+    expect(articleExcerpt(body)).toBe('Steps: From the homepage, select the token you want to view.');
+  });
+
+  it('strips bold, italic and link syntax but keeps the words', () => {
+    const body = 'Report it to our [**SUPPORT**](https://example.com/) desk and wait *a little* longer.';
+    expect(articleExcerpt(body)).toBe('Report it to our SUPPORT desk and wait a little longer.');
+  });
+
+  it('truncates on a word boundary with an ellipsis', () => {
+    const excerpt = articleExcerpt('word '.repeat(60), 40);
+    expect(excerpt.endsWith('…')).toBe(true);
+    expect(excerpt.length).toBeLessThanOrEqual(41);
+    expect(excerpt).not.toMatch(/\s…$/);
+  });
+
+  it('gives every shipped article a usable excerpt', () => {
+    for (const article of helpCenterArticles) {
+      for (const platform of article.platforms) {
+        const excerpt = articleExcerpt(article.bodies[platform] as string);
+        expect(excerpt.length, `${article.id} (${platform}) excerpt too short`).toBeGreaterThan(20);
+        expect(excerpt, `${article.id} (${platform}) leaked markdown`).not.toMatch(/\*\*|\]\(|^>/);
+      }
+    }
+  });
+});
+
+describe('finding articles', () => {
+  it('lists every article in a subcategory regardless of platform', () => {
+    expect(articlesInSubcategory(helpCenterArticles, 'security-and-recovery')).toHaveLength(7);
+  });
+
+  it('finds an article only inside its own subcategory', () => {
+    expect(findArticle(helpCenterArticles, 'setup-and-basic-use', 'how-to-install-bread-wallet')).toBeDefined();
+    expect(findArticle(helpCenterArticles, 'guardian-protection', 'how-to-install-bread-wallet')).toBeUndefined();
   });
 });
