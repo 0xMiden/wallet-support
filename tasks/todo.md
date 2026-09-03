@@ -388,3 +388,23 @@ approved mapping ran before anything was written and matched exactly: 23 titles,
 
 The empty state is written and tested but no subcategory has zero articles on a selected platform, so it
 cannot be seen on the preview. It becomes reachable only if an article is removed from a platform.
+
+### Migration deployment
+
+- Preview deployment ID: `f30df159-50dc-40bd-9f11-6ec4e1d85022`.
+- Environment `Preview`, branch `help-center-shell`, source commit `cdb8c50`. Production still has never
+  been deployed; the branch was passed explicitly so it could not be inferred from `main`.
+- Alias `https://help-center-shell.bread-wallet-help-center-preview.pages.dev`, HTTP 200 with
+  `X-Robots-Tag: noindex`.
+- Drift check before deploying: the preview was still on the previous pair, so nobody deployed underneath
+  this work.
+
+### New drift-check baseline
+
+`index-Dm9weVRf.js` and `index-X9tn3OFP.css`. Diff both before editing; a design-only change moves the
+CSS hash alone.
+
+### Awaiting visual review
+
+Article rendering, derived tabs, platform persistence, and the Contact Support link are all unverified by
+eye. Checklist handed over separately.
