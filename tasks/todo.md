@@ -262,14 +262,6 @@ card height is untouched.
   category, so renaming or reordering the first group cannot silently break it.
 - `yarn typecheck`, the test run, and `yarn build` all passed.
 
-### Deployment state — NOT deployed
-
-- Local build is now `index-CHm5Uhty.js` and `index-DDGcEOL9.css`.
-- The preview still serves `index-BCaHZ82S.js` and `index-Bmh77DEi.css`, HTTP 200 with
-  `X-Robots-Tag: noindex`. That difference is this refactor, not drift: the check that mattered was
-  that nobody else deployed during the work, and nobody did.
-- Deploying is a separate decision and was not performed.
-
 ### Running the tests
 
 `yarn test` is blocked by the host's Jest worker guard, which looks for Jest's `--runInBand` and does
@@ -305,3 +297,36 @@ rather than in a browser.
   `getting-started`. The component derives the initially open sidebar group from this category's owner
   instead of naming a group literally, so this assertion is what keeps that derivation honest.
 - 44 tests across 2 files pass; typecheck clean.
+
+## Deploy the single-source navigation to the preview
+
+- [x] Confirm the Pages project has no production deployment and pass the preview branch explicitly.
+- [x] Rebuild from the committed state and upload only `dist/`.
+- [x] Verify the alias, headers, and asset hashes.
+
+### Deployment check-in
+
+This directory became a git repository on `main` during this work, so an inferred-branch deploy could
+have targeted production. The branch was passed explicitly for that reason.
+
+### Deployment results
+
+- Preview deployment ID: `09ef9a68-bd75-49b8-ab60-276300866ff1`.
+- Environment `Preview`, branch `help-center-shell`, source commit `65877c8`.
+- Atomic deployment: `https://09ef9a68.bread-wallet-help-center-preview.pages.dev`.
+- Stable alias: `https://help-center-shell.bread-wallet-help-center-preview.pages.dev`, HTTP 200 with
+  `X-Robots-Tag: noindex`.
+- All seven previous deployments were also Preview on `help-center-shell`; production has never been
+  deployed and still has not been.
+- No custom domain, Worker, binding, database, secret, or feedback configuration was created or changed.
+
+### New drift-check baseline
+
+The preview and the local build now both serve `index-CHm5Uhty.js` and `index-DDGcEOL9.css`. Diff both
+hashes before editing: a design-only change moves the CSS hash while leaving the JS hash alone.
+
+### Awaiting visual review
+
+Typecheck, 44 tests, and the build pass, but nothing has looked at the rendered page. The crossing
+signal, the `Troubleshooting` label at the 9rem ellipsis boundary, sidebar numbering under an active
+search, and the landing state are all unverified by eye.
