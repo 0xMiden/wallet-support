@@ -503,3 +503,45 @@ all four cells explicitly, and verified in headless Chromium at 360/620/621/900/
 - Mobile search results are unreachable: the input is in `<main>`, its output in the off-canvas drawer.
 - Platform choice is component state, not route state, so it resets on reload and cannot be shared.
 - The mobile drawer has no Escape handler, no focus move, and keeps off-canvas controls focusable.
+
+## Cards, clearer links, search, headings, and the deferred list
+
+- [x] One card per article on a plain page; outer panel loses its surface.
+- [x] Reword the store links and the bare URL in `content-source/`.
+- [x] Sidebar follows navigation.
+- [x] Search over article titles and bodies, results in the main column.
+- [x] Promote whole-line bold labels to real headings.
+- [x] Platform in the URL; touch devices default to Mobile.
+- [x] Drawer Escape, focus move, and off-canvas controls out of the tab order.
+- [x] "Was this helpful?" and Copy link on article pages.
+
+### Direction change, recorded
+
+The brief of 2026-09-03 said to remove the fill from each article item and keep the outer container.
+The later brief said the opposite: drop the outer panel's surface and give every article its own card.
+The second is what ships. Noted so the first is not read as an unfollowed instruction.
+
+### Content edits, listed in full
+
+Made in `content-source/` so the fidelity test still guards them:
+
+- "Bread Wallet by Miden App - App Store" → "App Store"
+- "Bread Wallet - Apps on Google Play" → "Google Play"
+- "Bread Wallet - Chrome Web Store" → "Chrome Web Store"
+- the bare `chromewebstore.google.com` URL → "Bread Wallet listing on the Chrome Web Store"
+- the caution's three platform lines became a list, so they render one per line
+
+Article titles and body prose are otherwise untouched.
+
+### Was this helpful — what it does and does not record
+
+"Yes" is acknowledged locally and stored nowhere. "No" links into the support form already approved as
+the Contact Support destination. There is no aggregate count of either, anywhere. Getting numbers needs
+an endpoint — a Worker plus KV or D1 — and is a separate decision.
+
+### Still open
+
+- Step screenshots. Ten were dropped during migration and the renderer refuses images. This is blocked
+  on assets: there are no image files in the repo and none can be invented.
+- Attaching the article title to a "No" report. The support form's accepted parameters are not known
+  here, so nothing is appended rather than guessing at another service's API.
