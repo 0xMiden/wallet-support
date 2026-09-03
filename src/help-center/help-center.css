@@ -318,7 +318,7 @@
 }
 
 .help-center-main-inner {
-  width: min(100%, 76rem);
+  width: min(100%, 88rem);
   margin: 0 auto;
 }
 
@@ -790,38 +790,40 @@
 
 /*
  * Article layout: the body keeps its reading measure and the space beside it
- * carries the contents list rather than sitting empty. A narrow column reads as
+ * carries the rail rather than sitting empty. A narrow column reads as
  * deliberate when something is next to it and as a mistake when nothing is.
+ *
+ * The rail is a column of the page, not of the body, so it starts level with
+ * the title instead of below the platform tabs.
  */
-.help-center-article-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-6);
-}
-
-@media (min-width: 1180px) {
-  .help-center-article-layout {
-    /* Bounded so the rail sits beside the text rather than at the far edge of
-       a much wider column — the text column is capped at --measure, so an
-       unbounded 1fr left a 300px gulf between the two. */
-    max-width: 55rem;
-    grid-template-columns: minmax(0, 1fr) 14rem;
-    gap: var(--space-7);
-  }
-}
-
 .help-center-rail {
-  align-self: start;
-  order: -1;
+  margin-top: var(--space-6);
   display: grid;
   gap: var(--space-6);
 }
 
 @media (min-width: 1180px) {
-  .help-center-rail {
+  .help-center-category.has-rail {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 15rem;
+    column-gap: var(--space-7);
+    align-items: start;
+  }
+
+  .help-center-category.has-rail > * {
+    grid-column: 1;
+    min-width: 0;
+  }
+
+  .help-center-category.has-rail > .help-center-rail {
     position: sticky;
     top: var(--space-5);
-    order: 0;
+    /* Not "1 / -1": -1 counts against explicit row lines, and these rows are
+       implicit, so the rail took row 1 alone and stretched it to its height. */
+    grid-row: 1 / span 99;
+    grid-column: 2;
+    align-self: start;
+    margin-top: 0;
   }
 }
 

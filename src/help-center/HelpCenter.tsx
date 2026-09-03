@@ -582,7 +582,7 @@ export function HelpCenter() {
           ) : null}
 
           <section
-            className="help-center-category"
+            className={`help-center-category${activeArticle ? ' has-rail' : ''}`}
             hidden={isSearching}
             aria-labelledby="help-center-category-title"
           >
@@ -691,52 +691,6 @@ export function HelpCenter() {
                     dangerouslySetInnerHTML={{ __html: rendered.html }}
                   />
 
-                  {/* Only 4 of 23 articles carry more than one section, so a
-                      contents-only rail would sit empty beside the other 19.
-                      It also offers the rest of the subcategory and a way to
-                      ask a person, so the column is never dead space. */}
-                  <aside className="help-center-rail">
-                    {rendered.headings.length > 1 ? (
-                      <nav className="help-center-contents" aria-label="On this page">
-                        <p className="help-center-rail-title">On this page</p>
-                        <ul>
-                          {rendered.headings.map(heading => (
-                            <li key={heading.id}>
-                              <a
-                                href={`#${heading.id}`}
-                                className={heading.id === currentSection ? 'is-current' : undefined}
-                                aria-current={heading.id === currentSection ? 'location' : undefined}
-                                onClick={event => jumpToSection(event, heading.id)}
-                              >
-                                {heading.text}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </nav>
-                    ) : null}
-
-                    {relatedArticles.length > 0 ? (
-                      <nav className="help-center-contents" aria-label={`More in ${entry.category.title}`}>
-                        <p className="help-center-rail-title">More in {entry.category.title}</p>
-                        <ul>
-                          {relatedArticles.map(related => (
-                            <li key={related.id}>
-                              <a href={articleHref(related.subcategory, related.id)}>{related.title}</a>
-                            </li>
-                          ))}
-                        </ul>
-                      </nav>
-                    ) : null}
-
-                    <div className="help-center-rail-support">
-                      <p className="help-center-rail-title">Still stuck?</p>
-                      <a href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">
-                        Contact Support
-                        <SupportIcon />
-                      </a>
-                    </div>
-                  </aside>
                 </div>
               ) : cards.length > 0 ? (
                 <ul className="help-center-card-grid">
@@ -869,6 +823,53 @@ export function HelpCenter() {
                 <div className="help-center-sequence-spacer" aria-hidden="true" />
               )}
             </nav>
+
+            {/* Only 4 of 23 articles carry more than one section, so a
+                contents-only rail would sit empty beside the other 19.
+                It also offers the rest of the subcategory and a way to
+                ask a person, so the column is never dead space. */}
+            <aside className="help-center-rail">
+              {rendered.headings.length > 1 ? (
+                <nav className="help-center-contents" aria-label="On this page">
+                  <p className="help-center-rail-title">On this page</p>
+                  <ul>
+                    {rendered.headings.map(heading => (
+                      <li key={heading.id}>
+                        <a
+                          href={`#${heading.id}`}
+                          className={heading.id === currentSection ? 'is-current' : undefined}
+                          aria-current={heading.id === currentSection ? 'location' : undefined}
+                          onClick={event => jumpToSection(event, heading.id)}
+                        >
+                          {heading.text}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              ) : null}
+
+              {relatedArticles.length > 0 ? (
+                <nav className="help-center-contents" aria-label={`More in ${entry.category.title}`}>
+                  <p className="help-center-rail-title">More in {entry.category.title}</p>
+                  <ul>
+                    {relatedArticles.map(related => (
+                      <li key={related.id}>
+                        <a href={articleHref(related.subcategory, related.id)}>{related.title}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              ) : null}
+
+              <div className="help-center-rail-support">
+                <p className="help-center-rail-title">Still stuck?</p>
+                <a href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">
+                  Contact Support
+                  <SupportIcon />
+                </a>
+              </div>
+            </aside>
           </section>
 
           <footer className="help-center-security-reminder">
