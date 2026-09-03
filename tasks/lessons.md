@@ -106,3 +106,34 @@ Preventive rule:
 - When one of several readings is the odd one out, fix the derivation rather than the odd reading, and
   pin the expected values in a hand-written table. A test that compares views after they share one
   source passes by construction and proves nothing.
+
+# 2026-09-03 - Derive the supported subset from the content, not from the plan
+
+Pattern:
+- The Markdown subset for the renderer was agreed in advance as bold, links, lists, blockquotes and
+  paragraphs. Scanning the migrated articles first turned up italic in two sentences that hinge on it —
+  "lost *all* your keys", "your encrypted wallet file, *and* access to your device" — both distinguishing
+  losing something from losing everything, in a recovery article.
+- Had the renderer been lenient it would have dropped the emphasis and nobody would have found out. Had it
+  thrown without the scan, the migration would have failed on two words at the end of the work.
+
+Preventive rule:
+- Before writing a parser, renderer, or validator, enumerate what the real input actually contains. The
+  supported subset is a fact about the data, not a decision to make ahead of it.
+- Prefer refusing an unknown construct to dropping it. In user-facing safety copy, a silently discarded
+  word can invert the meaning of a sentence.
+
+# 2026-09-03 - A global /g regex plus recursion is an infinite loop
+
+Pattern:
+- The inline tokeniser used a module-level regex with the /g flag, and its render function recursed for
+  bold, italic and link labels. Each inner call reset and advanced `lastIndex` on the shared object, so
+  the outer loop never reached the end of its input.
+- The symptom was not a wrong result but unbounded string growth: the test run exhausted the heap and was
+  killed. The project's standing heap cap is the only reason it stayed contained.
+
+Preventive rule:
+- A stateful `/g` regex is shared mutable state. Build it inside the function that scans with it whenever
+  that function can recurse or be re-entered, or scan without the global flag.
+- Keep the heap cap on test runs even for small suites. It converts a machine-wide freeze into one failed
+  command with a readable stack.
