@@ -403,7 +403,10 @@ export function HelpCenter() {
         }
       : undefined;
 
-  const sequenceNoun = activeArticle ? 'article' : 'subcategory';
+  // "Subcategory" is a filing term, not a reader's word. Inside an article the
+  // noun is useful — it distinguishes moving between articles from moving
+  // between sections — so it stays there and goes everywhere else.
+  const sequenceNoun = activeArticle ? ' article' : '';
 
   if (!entry) {
     return (
@@ -820,8 +823,8 @@ export function HelpCenter() {
                   href={previousLink.href}
                   aria-label={
                     previousLink.crossesInto
-                      ? `Previous ${sequenceNoun}: ${previousLink.title}, in ${previousLink.crossesInto}`
-                      : `Previous ${sequenceNoun}: ${previousLink.title}`
+                      ? `Previous${sequenceNoun}: ${previousLink.title}, in ${previousLink.crossesInto}`
+                      : `Previous${sequenceNoun}: ${previousLink.title}`
                   }
                 >
                   <span className="help-center-sequence-button" aria-hidden="true">
@@ -830,7 +833,7 @@ export function HelpCenter() {
                   <span className="help-center-sequence-copy">
                     <span className="help-center-sequence-meta">
                       <span className="help-center-sequence-index">{formatIndex(previousLink.index)}</span>
-                      Previous {sequenceNoun}
+                      Previous{sequenceNoun}
                       {previousLink.crossesInto ? (
                         <span className="help-center-sequence-category">{previousLink.crossesInto}</span>
                       ) : null}
@@ -848,13 +851,13 @@ export function HelpCenter() {
                   href={nextLink.href}
                   aria-label={
                     nextLink.crossesInto
-                      ? `Next ${sequenceNoun}: ${nextLink.title}, in ${nextLink.crossesInto}`
-                      : `Next ${sequenceNoun}: ${nextLink.title}`
+                      ? `Next${sequenceNoun}: ${nextLink.title}, in ${nextLink.crossesInto}`
+                      : `Next${sequenceNoun}: ${nextLink.title}`
                   }
                 >
                   <span className="help-center-sequence-copy">
                     <span className="help-center-sequence-meta">
-                      Next {sequenceNoun}
+                      Next{sequenceNoun}
                       {nextLink.crossesInto ? (
                         <span className="help-center-sequence-category">{nextLink.crossesInto}</span>
                       ) : null}
