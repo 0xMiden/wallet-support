@@ -10,9 +10,9 @@ Format: "## " = Notion section, "### " = article title (verbatim), "> " = callou
 ### How to install Bread Wallet
 
 > ⚠️ Caution: Only download Bread Wallet from official links.
-> iOS: [Bread Wallet by Miden App - App Store](https://apps.apple.com/ch/app/bread-wallet-by-miden/id6789341854?l=en-GB)
-> Android: [Bread Wallet - Apps on Google Play](https://play.google.com/store/apps/details?id=com.miden.wallet)
-> Chrome Store: [Bread Wallet - Chrome Web Store](https://chromewebstore.google.com/detail/miden-wallet/ablmompanofnodfdkgchkpmphailefpb?pli=1)
+> - iOS — [App Store](https://apps.apple.com/ch/app/bread-wallet-by-miden/id6789341854?l=en-GB)
+> - Android — [Google Play](https://play.google.com/store/apps/details?id=com.miden.wallet)
+> - Chrome — [Chrome Web Store](https://chromewebstore.google.com/detail/miden-wallet/ablmompanofnodfdkgchkpmphailefpb?pli=1)
 
 **Steps to install: iOS**
 
@@ -82,8 +82,8 @@ Use the faucet to send testnet tokens to a wallet address. Testnet tokens are fo
 > ⚠️ Caution: These are the only official Bread Wallet downloads for Android and iOS.
 
 - Yes, mobile wallets are available on both Android and iOS. You can download it here:
-  - Android: [Bread Wallet - Apps on Google Play](https://play.google.com/store/apps/details?id=com.miden.wallet)
-  - iOS: [Bread Wallet by Miden App - App Store](https://apps.apple.com/ch/app/bread-wallet-by-miden/id6789341854?l=en-GB)
+  - Android — [Google Play](https://play.google.com/store/apps/details?id=com.miden.wallet)
+  - iOS — [App Store](https://apps.apple.com/ch/app/bread-wallet-by-miden/id6789341854?l=en-GB)
 
 ### What are the supported browsers for Bread Wallet?
 

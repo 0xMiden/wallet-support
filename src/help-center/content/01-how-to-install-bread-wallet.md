@@ -9,13 +9,13 @@ platforms: [extension-desktop, mobile]
 <!-- platform: extension-desktop -->
 
 > ⚠️ Caution: Only download Bread Wallet from official links.
-> iOS: [Bread Wallet by Miden App - App Store](https://apps.apple.com/ch/app/bread-wallet-by-miden/id6789341854?l=en-GB)
-> Android: [Bread Wallet - Apps on Google Play](https://play.google.com/store/apps/details?id=com.miden.wallet)
-> Chrome Store: [Bread Wallet - Chrome Web Store](https://chromewebstore.google.com/detail/miden-wallet/ablmompanofnodfdkgchkpmphailefpb?pli=1)
+> - iOS — [App Store](https://apps.apple.com/ch/app/bread-wallet-by-miden/id6789341854?l=en-GB)
+> - Android — [Google Play](https://play.google.com/store/apps/details?id=com.miden.wallet)
+> - Chrome — [Chrome Web Store](https://chromewebstore.google.com/detail/miden-wallet/ablmompanofnodfdkgchkpmphailefpb?pli=1)
 
 **Steps to install: Chrome browser**
 
-1. Visit [https://chromewebstore.google.com/detail/miden-wallet/ablmompanofnodfdkgchkpmphailefpb?pli=1](https://chromewebstore.google.com/detail/miden-wallet/ablmompanofnodfdkgchkpmphailefpb?pli=1)
+1. Visit the [Bread Wallet listing on the Chrome Web Store](https://chromewebstore.google.com/detail/miden-wallet/ablmompanofnodfdkgchkpmphailefpb?pli=1).
 2. Click the "Add to Chrome" button.
 3. On the confirmation dialog, click "Add extension."
 
@@ -24,9 +24,9 @@ After adding the Bread wallet extension, Bread Wallet will open automatically. T
 <!-- platform: mobile -->
 
 > ⚠️ Caution: Only download Bread Wallet from official links.
-> iOS: [Bread Wallet by Miden App - App Store](https://apps.apple.com/ch/app/bread-wallet-by-miden/id6789341854?l=en-GB)
-> Android: [Bread Wallet - Apps on Google Play](https://play.google.com/store/apps/details?id=com.miden.wallet)
-> Chrome Store: [Bread Wallet - Chrome Web Store](https://chromewebstore.google.com/detail/miden-wallet/ablmompanofnodfdkgchkpmphailefpb?pli=1)
+> - iOS — [App Store](https://apps.apple.com/ch/app/bread-wallet-by-miden/id6789341854?l=en-GB)
+> - Android — [Google Play](https://play.google.com/store/apps/details?id=com.miden.wallet)
+> - Chrome — [Chrome Web Store](https://chromewebstore.google.com/detail/miden-wallet/ablmompanofnodfdkgchkpmphailefpb?pli=1)
 
 **Steps to install: iOS**
 

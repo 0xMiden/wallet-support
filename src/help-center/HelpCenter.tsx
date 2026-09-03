@@ -121,9 +121,7 @@ export function HelpCenter() {
 
       setActiveCategoryId(route.categoryId);
       setActiveArticleId(route.articleId);
-      if (nextMainCategoryId) {
-        setOpenMainCategoryIds(current => new Set(current).add(nextMainCategoryId));
-      }
+      if (nextMainCategoryId) setOpenMainCategoryIds(new Set([nextMainCategoryId]));
       setIsMobileMenuOpen(false);
     };
 
@@ -493,9 +491,9 @@ export function HelpCenter() {
             ) : null}
 
             <div
-              className={`help-center-content-panel help-center-bread-card${
-                showPlatformTabs ? ' has-platform-tabs' : ''
-              }${activeArticle ? '' : ' is-index'}`}
+              className={`help-center-content-panel${showPlatformTabs ? ' has-platform-tabs' : ''}${
+                activeArticle ? '' : ' is-index'
+              }`}
               id="category-content-panel"
               role={showPlatformTabs ? 'tabpanel' : 'region'}
               aria-labelledby={
@@ -514,20 +512,20 @@ export function HelpCenter() {
                   dangerouslySetInnerHTML={{ __html: articleHtml }}
                 />
               ) : cards.length > 0 ? (
-                <ul className="help-center-article-list">
+                <ul className="help-center-card-grid">
                   {cards.map((card, cardIndex) => (
                     <li key={card.id}>
-                      <div className="help-center-article-row">
-                        <span className="help-center-article-marker" aria-hidden="true">
+                      <div className="help-center-card">
+                        <span className="help-center-card-index" aria-hidden="true">
                           {formatIndex(cardIndex + 1)}
                         </span>
-                        <h2 className="help-center-article-title">
-                          <a className="help-center-article-link" href={card.href}>
+                        <h2 className="help-center-card-title">
+                          <a className="help-center-card-link" href={card.href}>
                             {card.title}
                           </a>
                         </h2>
-                        <p className="help-center-article-excerpt">{card.excerpt}</p>
-                        <span className="help-center-article-open" aria-hidden="true">
+                        <p className="help-center-card-excerpt">{card.excerpt}</p>
+                        <span className="help-center-card-open" aria-hidden="true">
                           <ChevronIcon />
                         </span>
                       </div>
