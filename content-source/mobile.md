@@ -14,10 +14,10 @@ Format: "## " = Notion section, "### " = article title (verbatim), "> " = callou
 > - Android — [Google Play](https://play.google.com/store/apps/details?id=com.miden.wallet)
 > - Chrome — [Chrome Web Store](https://chromewebstore.google.com/detail/miden-wallet/ablmompanofnodfdkgchkpmphailefpb?pli=1)
 
-**Steps to install: iOS**
+**Steps to install**
 
-1. Open the App Store and tap the search icon, then type "Bread Wallet" into the search bar.
-2. Tap "Get" and confirm the download as you normally would in the App Store.
+1. Open the App Store on iOS, or Google Play on Android, and search for "Bread Wallet".
+2. Tap "Get" or "Install" and confirm the download as you normally would.
 3. Once it's installed, open the app and follow the prompts to set up your wallet.
 4. Don't forget to back up your recovery phrase somewhere safe and offline. This is very important.
 
@@ -45,9 +45,9 @@ Open the app and you'll land on the Welcome to Bread! screen.
 
 > 🛡️ Think of a Guardian as a secure backup layer: it keeps a safe copy of your wallet's private info so you can recover it on a new device if you ever lose your phone — without ever holding your keys or your funds. You stay in full control the whole time.
 
-1. You'll see the "Your Wallet is ready" screen.
+6. You'll see the "Your Wallet is ready" screen.
    - Tap "Open wallet."
-2. Unlock to open your wallet
+7. Unlock to open your wallet
    - One last check: Bread Wallet asks you to unlock your wallet with the biometric you just set up. Scan your fingerprint and you're in.
    - If the scan doesn't work, tap "Use PIN" to open your wallet with your device passcode instead.
 

@@ -8,7 +8,7 @@ platforms: [extension-desktop, mobile]
 
 <!-- platform: extension-desktop -->
 
-> ⚠️ Caution: This the only official Bread wallet from both Android and iOS
+> ⚠️ Caution: This is the only official Bread Wallet for both Android and iOS.
 
 - Yes, mobile wallets are available on both Android and iOS. You can download it here:
   - Android — [Google Play](https://play.google.com/store/apps/details?id=com.miden.wallet)

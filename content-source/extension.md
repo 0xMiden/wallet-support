@@ -57,7 +57,7 @@ Use the faucet to send test tokens to a wallet address.
 
 ### Is Bread Wallet available on mobile?
 
-> ⚠️ Caution: This the only official Bread wallet from both Android and iOS
+> ⚠️ Caution: This is the only official Bread Wallet for both Android and iOS.
 
 - Yes, mobile wallets are available on both Android and iOS. You can download it here:
   - Android — [Google Play](https://play.google.com/store/apps/details?id=com.miden.wallet)
@@ -109,11 +109,11 @@ Things you need first before restoring the wallet account
 
 **Steps:**
 
-1. On the Miden wallet page creation, you choose between "Create a new wallet" and "I already have a wallet." Select "I already have the wallet."
+1. On the Bread Wallet creation page, you choose between "Create a new wallet" and "I already have a wallet." Select "I already have a wallet."
 2. On the choose your import type page, select "Import with encrypted wallet file," then click "Continue."
 3. On the import wallet page, drag and drop the file or choose from a device (enter the password you set when exporting your wallet). This will decrypt the file and restore access, then click "Continue."
 4. Create a new password. A minimum of 8 characters with at least 1 number, then click "Continue."
-5. Choose how you want to recover your account if you lose access, between "Guardian and Public account," and then click "Continue" and then click "Get started"; you should be able to access the homepage of the wallet and your assets.
+5. Choose how you want to recover your account if you lose access, between "Guardian" and "Public account," and then click "Continue" and then click "Get started"; you should be able to access the homepage of the wallet and your assets.
 
 ### How to download the encrypted file?
 
