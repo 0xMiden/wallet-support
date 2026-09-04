@@ -152,8 +152,7 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
             How can we <em>help?</em>
           </h1>
           <p className="help-home-lede">
-            Find answers, learn how Bread Wallet works, and get the most out of a wallet only you
-            hold the keys to.
+            Find answers, learn how Bread Wallet works, and get the most out of a wallet.
           </p>
 
           <form className="help-home-search-form" role="search" onSubmit={submit}>
