@@ -110,3 +110,27 @@ test('the footer is on every page, not only the home page', async ({ page }) => 
     await expect(page.getByRole('contentinfo'), route).toHaveCount(1);
   }
 });
+
+test('the header links sit on the centre line of the page', async ({ page }) => {
+  // Centred by a three-track grid with equal outer columns, not by pushing
+  // them out of the way of the button: with `space-between` the links landed
+  // wherever the brand and the button happened to leave room.
+  await page.goto('/');
+
+  const nav = await page.locator('.help-home-nav').boundingBox();
+  const width = await page.evaluate(() => document.documentElement.clientWidth);
+  if (nav === null) throw new Error('the header nav was not rendered');
+
+  const navCentre = nav.x + nav.width / 2;
+  expect(Math.abs(navCentre - width / 2)).toBeLessThan(2);
+});
+
+test('the logo carries no Help Center label', async ({ page }) => {
+  for (const route of ['/', '/#setup-and-basic-use']) {
+    await page.goto(route);
+    const brands = page.locator('.help-center-brand');
+    for (let i = 0; i < (await brands.count()); i++) {
+      await expect(brands.nth(i), route).toHaveText('Bread Wallet');
+    }
+  }
+});

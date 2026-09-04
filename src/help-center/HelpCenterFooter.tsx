@@ -28,10 +28,7 @@ export function HelpCenterFooter({ mainCategories, firstCategoryId }: HelpCenter
         <div className="help-center-footer-brand">
           <a className="help-center-brand" href={homeHref()}>
             <img src={breadMark} alt="" />
-            <span>
-              Bread Wallet
-              <small>Help Center</small>
-            </span>
+            <span>Bread Wallet</span>
           </a>
 
           <ul className="help-center-socials">

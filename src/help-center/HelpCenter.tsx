@@ -512,10 +512,7 @@ export function HelpCenter() {
       <header className="help-center-mobile-header">
         <a className="help-center-brand" href={homeHref()} aria-label="Bread Wallet Help Center home">
           <img src={breadMark} alt="" />
-          <span>
-            Bread Wallet
-            <small>Help Center</small>
-          </span>
+            <span>Bread Wallet</span>
         </a>
         <button
           className="help-center-menu-button"
@@ -545,10 +542,7 @@ export function HelpCenter() {
       >
         <a className="help-center-brand help-center-desktop-brand" href={homeHref()}>
           <img src={breadMark} alt="" />
-          <span>
-            Bread Wallet
-            <small>Help Center</small>
-          </span>
+            <span>Bread Wallet</span>
         </a>
 
         <nav aria-label="Help Center categories" className="help-center-navigation">

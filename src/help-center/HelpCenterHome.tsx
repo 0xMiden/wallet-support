@@ -123,26 +123,27 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
       <header className="help-home-header">
         <a className="help-center-brand" href={homeHref()} aria-label="Bread Wallet Help Center">
           <img src={breadMark} alt="" />
-          <span>
-            Bread Wallet
-            <small>Help Center</small>
-          </span>
+            <span>Bread Wallet</span>
         </a>
 
+        {/* Its own element, outside the nav, so the links can sit on the
+            page's centre line rather than the centre of what is left over
+            after the button. */}
         <nav className="help-home-nav" aria-label="Help Center">
           <a href={homeHref()} aria-current="page">
             Help Center
           </a>
           <a href={categoryHref(firstCategoryId)}>All topics</a>
-          <a
-            className="help-center-contact-button"
-            href={CONTACT_SUPPORT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Contact Support
-          </a>
         </nav>
+
+        <a
+          className="help-center-contact-button help-home-header-action"
+          href={CONTACT_SUPPORT_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Contact Support
+        </a>
       </header>
 
       <main className="help-home-main" id="help-center-content" tabIndex={-1}>
