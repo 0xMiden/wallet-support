@@ -153,3 +153,21 @@ test('the footer brand sits at the left edge of the page, not in from it', async
     expect(logo.x - footer.x, route).toBeLessThan(40);
   }
 });
+
+test('the header links are pills that highlight on hover', async ({ page }) => {
+  await page.goto('/');
+
+  const background = (name: string) =>
+    page
+      .locator('.help-home-nav a', { hasText: name })
+      .evaluate(element => getComputedStyle(element).backgroundColor);
+
+  // The page the reader is on carries a tint at rest; the other does not.
+  expect(await background('Help Center')).not.toBe('rgba(0, 0, 0, 0)');
+  expect(await background('All topics')).toBe('rgba(0, 0, 0, 0)');
+
+  await page.locator('.help-home-nav a', { hasText: 'All topics' }).hover();
+  await expect
+    .poll(() => background('All topics'))
+    .not.toBe('rgba(0, 0, 0, 0)');
+});

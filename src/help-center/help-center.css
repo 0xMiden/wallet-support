@@ -1364,7 +1364,9 @@
   .help-home-card:focus-visible,
   .help-home-card:hover .help-home-arrow,
   .help-home-section-link:hover .help-home-arrow,
-  .help-home-popular button:hover {
+  .help-home-popular button:hover,
+  .help-home-nav a:hover,
+  .help-home-nav a:focus-visible {
     transform: none;
   }
 }
@@ -1414,8 +1416,7 @@
 .help-home-nav {
   display: flex;
   align-items: center;
-  gap: var(--space-5);
-  font-size: var(--text-md);
+  gap: var(--space-2);
 }
 
 /* The brand is the one thing in the header that must never wrap. */
@@ -1424,22 +1425,43 @@
 }
 
 .help-home-nav a {
-  padding: var(--space-1) 0;
-  border-bottom: 2px solid transparent;
-  color: var(--text-body);
-  transition: color 160ms ease, border-color 160ms ease;
+  padding: 0.5rem 1.05rem;
+  border: 1px solid var(--help-line);
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+  background: transparent;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-strong);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease,
+    transform 160ms ease;
 }
 
 .help-home-nav a:hover,
 .help-home-nav a:focus-visible {
-  color: var(--text-strong);
+  transform: translateY(-1px);
+  border-color: rgb(231 117 55 / 45%);
+  color: var(--help-accent-soft);
+  background: rgb(231 117 55 / 14%);
 }
 
-/* The reader is on this page. The underline says so without a second label. */
+/*
+ * The reader is on this page. A filled pill would make two solid accent
+ * shapes in one header and put the Contact Support button in competition
+ * with a link; the tint says "here" and leaves the button the only call.
+ */
 .help-home-nav a[aria-current='page'] {
-  border-bottom-color: var(--help-accent);
-  color: var(--text-strong);
-  font-weight: var(--weight-medium);
+  border-color: rgb(231 117 55 / 38%);
+  color: var(--help-accent-soft);
+  background: rgb(231 117 55 / 10%);
+}
+
+.help-home-nav a[aria-current='page']:hover,
+.help-home-nav a[aria-current='page']:focus-visible {
+  border-color: rgb(231 117 55 / 60%);
+  background: rgb(231 117 55 / 18%);
 }
 
 .help-home-header-action {
