@@ -481,6 +481,7 @@ export function HelpCenter() {
         <HelpCenterFooter
           mainCategories={helpCenterMainCategories}
           firstCategoryId={defaultCategoryId}
+          showCopyright={false}
         />
       </div>
     );
@@ -534,456 +535,463 @@ export function HelpCenter() {
         onClick={() => setIsMobileMenuOpen(false)}
       />
 
-      <aside
-        className={`help-center-sidebar${isMobileMenuOpen ? ' is-open' : ''}`}
-        id="help-center-sidebar"
-        ref={sidebar}
-        aria-label="Help Center navigation"
-      >
-        <a className="help-center-brand help-center-desktop-brand" href={homeHref()}>
-          <img src={breadMark} alt="" />
-            <span>Bread Wallet</span>
-        </a>
+      {/* The sidebar and the content are the grid; the footer is not.
+          It used to be a third grid item spanning both columns, and the
+          sidebar — sticky and 100vh — overflowed its row by 287px and
+          painted straight over it. */}
+      <div className="help-center-body">
+        <aside
+          className={`help-center-sidebar${isMobileMenuOpen ? ' is-open' : ''}`}
+          id="help-center-sidebar"
+          ref={sidebar}
+          aria-label="Help Center navigation"
+        >
+          <a className="help-center-brand help-center-desktop-brand" href={homeHref()}>
+            <img src={breadMark} alt="" />
+              <span>Bread Wallet</span>
+          </a>
 
-        <nav aria-label="Help Center categories" className="help-center-navigation">
-          {helpCenterMainCategories.length > 0 ? (
-            helpCenterMainCategories.map(mainCategory => {
-              const isGroupOpen = openMainCategoryIds.has(mainCategory.id);
-              const isActiveGroup = mainCategory.id === entry.mainCategory.id;
-              const panelId = `${mainCategory.id}-subcategories`;
-              const mainCategoryIndex = navigation.mainCategoryIndex(mainCategory.id);
+          <nav aria-label="Help Center categories" className="help-center-navigation">
+            {helpCenterMainCategories.length > 0 ? (
+              helpCenterMainCategories.map(mainCategory => {
+                const isGroupOpen = openMainCategoryIds.has(mainCategory.id);
+                const isActiveGroup = mainCategory.id === entry.mainCategory.id;
+                const panelId = `${mainCategory.id}-subcategories`;
+                const mainCategoryIndex = navigation.mainCategoryIndex(mainCategory.id);
 
-              return (
-                <section className="help-center-navigation-group" key={mainCategory.id}>
-                  <button
-                    className={`help-center-navigation-heading${isActiveGroup ? ' is-active' : ''}`}
-                    type="button"
-                    aria-expanded={isGroupOpen}
-                    aria-controls={panelId}
-                    onClick={() => toggleMainCategory(mainCategory.id)}
-                  >
-                    <span className="help-center-main-category-label">
-                      {mainCategoryIndex === undefined ? null : (
-                        <span className="help-center-main-category-number">
-                          {formatIndex(mainCategoryIndex)}
-                        </span>
+                return (
+                  <section className="help-center-navigation-group" key={mainCategory.id}>
+                    <button
+                      className={`help-center-navigation-heading${isActiveGroup ? ' is-active' : ''}`}
+                      type="button"
+                      aria-expanded={isGroupOpen}
+                      aria-controls={panelId}
+                      onClick={() => toggleMainCategory(mainCategory.id)}
+                    >
+                      <span className="help-center-main-category-label">
+                        {mainCategoryIndex === undefined ? null : (
+                          <span className="help-center-main-category-number">
+                            {formatIndex(mainCategoryIndex)}
+                          </span>
+                        )}
+                        <span>{mainCategory.title}</span>
+                      </span>
+                      <ChevronIcon direction={isGroupOpen ? 'down' : 'right'} />
+                    </button>
+
+                    <div id={panelId} hidden={!isGroupOpen}>
+                      {mainCategory.subcategories.length > 0 ? (
+                        <ol className="help-center-category-list">
+                          {mainCategory.subcategories.map(category => {
+                            // Read from the hierarchy, not from this list: under an
+                            // active search this list is filtered, and a render index
+                            // would renumber the categories that survive the filter.
+                            const localIndex = navigation.resolve(category.id)?.localIndex;
+
+                            return (
+                              <li key={category.id}>
+                                <a
+                                  className={category.id === entry.category.id ? 'is-active' : undefined}
+                                  href={`#${category.id}`}
+                                  aria-current={category.id === entry.category.id ? 'page' : undefined}
+                                  onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                  {localIndex === undefined ? null : (
+                                    <span className="help-center-category-number">{formatIndex(localIndex)}</span>
+                                  )}
+                                  <span>{category.title}</span>
+                                  <ChevronIcon />
+                                </a>
+                              </li>
+                            );
+                          })}
+                        </ol>
+                      ) : (
+                        <p className="help-center-empty-group">No pages yet</p>
                       )}
-                      <span>{mainCategory.title}</span>
-                    </span>
-                    <ChevronIcon direction={isGroupOpen ? 'down' : 'right'} />
-                  </button>
-
-                  <div id={panelId} hidden={!isGroupOpen}>
-                    {mainCategory.subcategories.length > 0 ? (
-                      <ol className="help-center-category-list">
-                        {mainCategory.subcategories.map(category => {
-                          // Read from the hierarchy, not from this list: under an
-                          // active search this list is filtered, and a render index
-                          // would renumber the categories that survive the filter.
-                          const localIndex = navigation.resolve(category.id)?.localIndex;
-
-                          return (
-                            <li key={category.id}>
-                              <a
-                                className={category.id === entry.category.id ? 'is-active' : undefined}
-                                href={`#${category.id}`}
-                                aria-current={category.id === entry.category.id ? 'page' : undefined}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                              >
-                                {localIndex === undefined ? null : (
-                                  <span className="help-center-category-number">{formatIndex(localIndex)}</span>
-                                )}
-                                <span>{category.title}</span>
-                                <ChevronIcon />
-                              </a>
-                            </li>
-                          );
-                        })}
-                      </ol>
-                    ) : (
-                      <p className="help-center-empty-group">No pages yet</p>
-                    )}
-                  </div>
-                </section>
-              );
-            })
-          ) : (
-            <p className="help-center-no-results">No matching categories.</p>
-          )}
-        </nav>
-
-        <p className="help-center-sidebar-status">© {new Date().getFullYear()} Bread Wallet.</p>
-      </aside>
-
-      <main className="help-center-main" id="help-center-content" tabIndex={-1}>
-        <div className="help-center-main-inner">
-          <div className="help-center-utility-bar">
-            <label className="help-center-search">
-              <span className="help-center-visually-hidden">Search the Help Center</span>
-              <svg aria-hidden="true" viewBox="0 0 24 24">
-                <circle cx="11" cy="11" r="6.5" />
-                <path d="m16 16 4 4" />
-              </svg>
-              <input
-                type="search"
-                value={query}
-                onChange={event => setQuery(event.target.value)}
-                placeholder="Search articles and categories…"
-              />
-            </label>
-
-            <a
-              className="help-center-contact-button"
-              href={CONTACT_SUPPORT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span>Contact Support</span>
-              <SupportIcon />
-            </a>
-          </div>
-
-          {isSearching ? (
-            <section className="help-center-category" aria-label="Search results">
-              <p className="help-center-eyebrow">Search</p>
-              <h1>
-                {searchResults.length} {searchResults.length === 1 ? 'result' : 'results'} for “
-                {searchQuery}”
-              </h1>
-
-              {searchResults.length > 0 ? (
-                <ul className="help-center-card-grid">
-                  {searchResults.map(result => (
-                    <li key={result.article.id}>
-                      <div className="help-center-card">
-                        <span className="help-center-card-context">
-                          {result.mainCategoryTitle} <span aria-hidden="true">·</span>{' '}
-                          {result.subcategoryTitle}
-                        </span>
-                        <h2 className="help-center-card-title">
-                          <a
-                            className="help-center-card-link"
-                            href={articleHref(result.article.subcategory, result.article.id)}
-                          >
-                            {result.article.title}
-                          </a>
-                        </h2>
-                        <p className="help-center-card-excerpt">{result.snippet}</p>
-                        <span className="help-center-card-open" aria-hidden="true">
-                          <ChevronIcon />
-                        </span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="help-center-no-results" role="status">
-                  Nothing matched “{searchQuery}”. Try a different word, or pick a category from the
-                  navigation.
-                </p>
-              )}
-            </section>
-          ) : null}
-
-          <section
-            className={`help-center-category${showRail ? ' has-rail' : ''}`}
-            hidden={isSearching}
-            aria-labelledby="help-center-category-title"
-          >
-            {activeArticle ? (
-              <a
-                className="help-center-back"
-                href={categoryHref(entry.category.id)}
-                aria-label={`Back to ${entry.category.title}`}
-                title={`Back to ${entry.category.title}`}
-              >
-                <ChevronIcon direction="left" />
-              </a>
-            ) : null}
-
-            <nav className="help-center-breadcrumb" aria-label="Breadcrumb">
-              <ol>
-                <li>
-                  <a href={homeHref()} aria-label="Help Center home">
-                    <HomeIcon />
-                  </a>
-                </li>
-                <li>
-                  <ChevronIcon />
-                  <a href={categoryHref(entry.mainCategory.subcategories[0]?.id ?? entry.category.id)}>
-                    {entry.mainCategory.title}
-                  </a>
-                </li>
-                <li>
-                  <ChevronIcon />
-                  {activeArticle ? (
-                    <a href={categoryHref(entry.category.id)}>{entry.category.title}</a>
-                  ) : (
-                    <span aria-current="page">{entry.category.title}</span>
-                  )}
-                </li>
-                {activeArticle ? (
-                  <li className="help-center-crumb-current">
-                    <ChevronIcon />
-                    <span aria-current="page" title={activeArticle.title}>
-                      {activeArticle.title}
-                    </span>
-                  </li>
-                ) : null}
-              </ol>
-            </nav>
-
-            <h1 id="help-center-category-title">
-              {activeArticle ? activeArticle.title : entry.category.title}
-            </h1>
-
-            {activeArticle ? null : (
-              <p className="help-center-category-description">{entry.category.description}</p>
+                    </div>
+                  </section>
+                );
+              })
+            ) : (
+              <p className="help-center-no-results">No matching categories.</p>
             )}
+          </nav>
 
-            {showPlatformTabs ? (
-              <div className="help-center-platform-tabs" role="tablist" aria-label="Platform">
-                <button
-                  id="extension-desktop-tab"
-                  type="button"
-                  role="tab"
-                  aria-selected={activePlatform === 'extension-desktop'}
-                  aria-controls="category-content-panel"
-                  onClick={() => choosePlatform('extension-desktop')}
-                >
-                  Extension
-                </button>
-                <button
-                  id="mobile-tab"
-                  type="button"
-                  role="tab"
-                  aria-selected={activePlatform === 'mobile'}
-                  aria-controls="category-content-panel"
-                  onClick={() => choosePlatform('mobile')}
-                >
-                  Mobile
-                </button>
-              </div>
-            ) : null}
+          <p className="help-center-sidebar-status">© {new Date().getFullYear()} Bread Wallet.</p>
+        </aside>
 
-            {activeArticle && activeArticle.platforms.length === 1 ? (
-              <p className="help-center-platform-note">
-                {activeArticle.platforms[0] === 'extension-desktop' ? 'Extension only' : 'Mobile only'}
-              </p>
-            ) : null}
+        <main className="help-center-main" id="help-center-content" tabIndex={-1}>
+          <div className="help-center-main-inner">
+            <div className="help-center-utility-bar">
+              <label className="help-center-search">
+                <span className="help-center-visually-hidden">Search the Help Center</span>
+                <svg aria-hidden="true" viewBox="0 0 24 24">
+                  <circle cx="11" cy="11" r="6.5" />
+                  <path d="m16 16 4 4" />
+                </svg>
+                <input
+                  type="search"
+                  value={query}
+                  onChange={event => setQuery(event.target.value)}
+                  placeholder="Search articles and categories…"
+                />
+              </label>
 
-            <div
-              className={`help-center-content-panel${showPlatformTabs ? ' has-platform-tabs' : ''}${
-                activeArticle ? '' : ' is-index'
-              }`}
-              id="category-content-panel"
-              role={showPlatformTabs ? 'tabpanel' : 'region'}
-              aria-labelledby={
-                showPlatformTabs
-                  ? activePlatform === 'extension-desktop'
-                    ? 'extension-desktop-tab'
-                    : 'mobile-tab'
-                  : 'help-center-category-title'
-              }
-            >
-              {activeArticle ? (
-                <div className="help-center-article-layout">
-                  {/* Every tag and attribute here is emitted by the renderer, which
-                      escapes all text and refuses any construct it does not know. */}
-                  <div
-                    className="help-center-article-body"
-                    dangerouslySetInnerHTML={{ __html: rendered.html }}
-                  />
-
-                </div>
-              ) : cards.length > 0 ? (
-                <ul className="help-center-card-grid">
-                  {cards.map((card, cardIndex) => (
-                    <li key={card.id}>
-                      <div className="help-center-card">
-                        <span className="help-center-card-index" aria-hidden="true">
-                          {formatIndex(cardIndex + 1)}
-                        </span>
-                        <h2 className="help-center-card-title">
-                          <a className="help-center-card-link" href={card.href}>
-                            {card.title}
-                          </a>
-                        </h2>
-                        <p className="help-center-card-excerpt">{card.excerpt}</p>
-                        <span className="help-center-card-open" aria-hidden="true">
-                          <ChevronIcon />
-                        </span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="help-center-empty-articles" role="status">
-                  No articles for {listPlatform === 'extension-desktop' ? 'Extension' : 'Mobile'} yet.
-                </p>
-              )}
+              <a
+                className="help-center-contact-button"
+                href={CONTACT_SUPPORT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span>Contact Support</span>
+                <SupportIcon />
+              </a>
             </div>
 
-            {activeArticle ? (
-              <div className="help-center-article-footer">
-                {helpful === null ? (
-                  <div className="help-center-helpful">
-                    <span id="help-center-helpful-label">Was this helpful?</span>
-                    <button
-                      type="button"
-                      aria-describedby="help-center-helpful-label"
-                      onClick={() => setHelpful('yes')}
-                    >
-                      Yes
-                    </button>
-                    <button
-                      type="button"
-                      aria-describedby="help-center-helpful-label"
-                      onClick={() => setHelpful('no')}
-                    >
-                      No
-                    </button>
-                  </div>
+            {isSearching ? (
+              <section className="help-center-category" aria-label="Search results">
+                <p className="help-center-eyebrow">Search</p>
+                <h1>
+                  {searchResults.length} {searchResults.length === 1 ? 'result' : 'results'} for “
+                  {searchQuery}”
+                </h1>
+
+                {searchResults.length > 0 ? (
+                  <ul className="help-center-card-grid">
+                    {searchResults.map(result => (
+                      <li key={result.article.id}>
+                        <div className="help-center-card">
+                          <span className="help-center-card-context">
+                            {result.mainCategoryTitle} <span aria-hidden="true">·</span>{' '}
+                            {result.subcategoryTitle}
+                          </span>
+                          <h2 className="help-center-card-title">
+                            <a
+                              className="help-center-card-link"
+                              href={articleHref(result.article.subcategory, result.article.id)}
+                            >
+                              {result.article.title}
+                            </a>
+                          </h2>
+                          <p className="help-center-card-excerpt">{result.snippet}</p>
+                          <span className="help-center-card-open" aria-hidden="true">
+                            <ChevronIcon />
+                          </span>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
                 ) : (
-                  <p className="help-center-helpful-reply" role="status">
-                    {helpful === 'yes' ? (
-                      'Thanks — good to know.'
-                    ) : (
-                      <>
-                        Sorry about that.{' '}
-                        <a href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">
-                          Tell us what was missing
-                        </a>
-                        .
-                      </>
-                    )}
+                  <p className="help-center-no-results" role="status">
+                    Nothing matched “{searchQuery}”. Try a different word, or pick a category from the
+                    navigation.
                   </p>
                 )}
-
-                <button className="help-center-copy-link" type="button" onClick={copyArticleLink}>
-                  <LinkIcon />
-                  <span>{linkCopied ? 'Link copied' : 'Copy link'}</span>
-                </button>
-              </div>
+              </section>
             ) : null}
 
-            <nav
-              className="help-center-sequence"
-              aria-label={activeArticle ? 'Article sequence' : 'Category sequence'}
+            <section
+              className={`help-center-category${showRail ? ' has-rail' : ''}`}
+              hidden={isSearching}
+              aria-labelledby="help-center-category-title"
             >
-              {previousLink ? (
+              {activeArticle ? (
                 <a
-                  className="help-center-sequence-card is-previous"
-                  href={previousLink.href}
-                  aria-label={
-                    previousLink.crossesInto
-                      ? `Previous${sequenceNoun}: ${previousLink.title}, in ${previousLink.crossesInto}`
-                      : `Previous${sequenceNoun}: ${previousLink.title}`
-                  }
+                  className="help-center-back"
+                  href={categoryHref(entry.category.id)}
+                  aria-label={`Back to ${entry.category.title}`}
+                  title={`Back to ${entry.category.title}`}
                 >
-                  <span className="help-center-sequence-button" aria-hidden="true">
-                    <ChevronIcon direction="left" />
-                  </span>
-                  <span className="help-center-sequence-copy">
-                    <span className="help-center-sequence-meta">
-                      <span className="help-center-sequence-index">{formatIndex(previousLink.index)}</span>
-                      Previous{sequenceNoun}
-                      {previousLink.crossesInto ? (
-                        <span className="help-center-sequence-category">{previousLink.crossesInto}</span>
-                      ) : null}
-                    </span>
-                    <strong>{previousLink.title}</strong>
-                  </span>
+                  <ChevronIcon direction="left" />
                 </a>
-              ) : (
-                <div className="help-center-sequence-spacer" aria-hidden="true" />
-              )}
+              ) : null}
 
-              {nextLink ? (
-                <a
-                  className="help-center-sequence-card is-next"
-                  href={nextLink.href}
-                  aria-label={
-                    nextLink.crossesInto
-                      ? `Next${sequenceNoun}: ${nextLink.title}, in ${nextLink.crossesInto}`
-                      : `Next${sequenceNoun}: ${nextLink.title}`
-                  }
-                >
-                  <span className="help-center-sequence-copy">
-                    <span className="help-center-sequence-meta">
-                      Next{sequenceNoun}
-                      {nextLink.crossesInto ? (
-                        <span className="help-center-sequence-category">{nextLink.crossesInto}</span>
-                      ) : null}
-                      <span className="help-center-sequence-index">{formatIndex(nextLink.index)}</span>
-                    </span>
-                    <strong>{nextLink.title}</strong>
-                  </span>
-                  <span className="help-center-sequence-button" aria-hidden="true">
+              <nav className="help-center-breadcrumb" aria-label="Breadcrumb">
+                <ol>
+                  <li>
+                    <a href={homeHref()} aria-label="Help Center home">
+                      <HomeIcon />
+                    </a>
+                  </li>
+                  <li>
                     <ChevronIcon />
-                  </span>
-                </a>
-              ) : (
-                <div className="help-center-sequence-spacer" aria-hidden="true" />
+                    <a href={categoryHref(entry.mainCategory.subcategories[0]?.id ?? entry.category.id)}>
+                      {entry.mainCategory.title}
+                    </a>
+                  </li>
+                  <li>
+                    <ChevronIcon />
+                    {activeArticle ? (
+                      <a href={categoryHref(entry.category.id)}>{entry.category.title}</a>
+                    ) : (
+                      <span aria-current="page">{entry.category.title}</span>
+                    )}
+                  </li>
+                  {activeArticle ? (
+                    <li className="help-center-crumb-current">
+                      <ChevronIcon />
+                      <span aria-current="page" title={activeArticle.title}>
+                        {activeArticle.title}
+                      </span>
+                    </li>
+                  ) : null}
+                </ol>
+              </nav>
+
+              <h1 id="help-center-category-title">
+                {activeArticle ? activeArticle.title : entry.category.title}
+              </h1>
+
+              {activeArticle ? null : (
+                <p className="help-center-category-description">{entry.category.description}</p>
               )}
-            </nav>
 
-            {/* Only 4 of 23 articles carry more than one section, so a
-                contents-only rail would sit empty beside the other 19.
-                It also offers the rest of the subcategory and a way to
-                ask a person, so the column is never dead space. */}
-            {showRail ? (
-              <aside className="help-center-rail">
-              {rendered.headings.length > 1 ? (
-                <nav className="help-center-contents" aria-label="On this page">
-                  <p className="help-center-rail-title">On this page</p>
-                  <ul>
-                    {rendered.headings.map(heading => (
-                      <li key={heading.id}>
-                        <a
-                          href={`#${heading.id}`}
-                          className={heading.id === currentSection ? 'is-current' : undefined}
-                          aria-current={heading.id === currentSection ? 'location' : undefined}
-                          onClick={event => jumpToSection(event, heading.id)}
-                        >
-                          {heading.text}
-                        </a>
+              {showPlatformTabs ? (
+                <div className="help-center-platform-tabs" role="tablist" aria-label="Platform">
+                  <button
+                    id="extension-desktop-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected={activePlatform === 'extension-desktop'}
+                    aria-controls="category-content-panel"
+                    onClick={() => choosePlatform('extension-desktop')}
+                  >
+                    Extension
+                  </button>
+                  <button
+                    id="mobile-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected={activePlatform === 'mobile'}
+                    aria-controls="category-content-panel"
+                    onClick={() => choosePlatform('mobile')}
+                  >
+                    Mobile
+                  </button>
+                </div>
+              ) : null}
+
+              {activeArticle && activeArticle.platforms.length === 1 ? (
+                <p className="help-center-platform-note">
+                  {activeArticle.platforms[0] === 'extension-desktop' ? 'Extension only' : 'Mobile only'}
+                </p>
+              ) : null}
+
+              <div
+                className={`help-center-content-panel${showPlatformTabs ? ' has-platform-tabs' : ''}${
+                  activeArticle ? '' : ' is-index'
+                }`}
+                id="category-content-panel"
+                role={showPlatformTabs ? 'tabpanel' : 'region'}
+                aria-labelledby={
+                  showPlatformTabs
+                    ? activePlatform === 'extension-desktop'
+                      ? 'extension-desktop-tab'
+                      : 'mobile-tab'
+                    : 'help-center-category-title'
+                }
+              >
+                {activeArticle ? (
+                  <div className="help-center-article-layout">
+                    {/* Every tag and attribute here is emitted by the renderer, which
+                        escapes all text and refuses any construct it does not know. */}
+                    <div
+                      className="help-center-article-body"
+                      dangerouslySetInnerHTML={{ __html: rendered.html }}
+                    />
+
+                  </div>
+                ) : cards.length > 0 ? (
+                  <ul className="help-center-card-grid">
+                    {cards.map((card, cardIndex) => (
+                      <li key={card.id}>
+                        <div className="help-center-card">
+                          <span className="help-center-card-index" aria-hidden="true">
+                            {formatIndex(cardIndex + 1)}
+                          </span>
+                          <h2 className="help-center-card-title">
+                            <a className="help-center-card-link" href={card.href}>
+                              {card.title}
+                            </a>
+                          </h2>
+                          <p className="help-center-card-excerpt">{card.excerpt}</p>
+                          <span className="help-center-card-open" aria-hidden="true">
+                            <ChevronIcon />
+                          </span>
+                        </div>
                       </li>
                     ))}
                   </ul>
-                </nav>
+                ) : (
+                  <p className="help-center-empty-articles" role="status">
+                    No articles for {listPlatform === 'extension-desktop' ? 'Extension' : 'Mobile'} yet.
+                  </p>
+                )}
+              </div>
+
+              {activeArticle ? (
+                <div className="help-center-article-footer">
+                  {helpful === null ? (
+                    <div className="help-center-helpful">
+                      <span id="help-center-helpful-label">Was this helpful?</span>
+                      <button
+                        type="button"
+                        aria-describedby="help-center-helpful-label"
+                        onClick={() => setHelpful('yes')}
+                      >
+                        Yes
+                      </button>
+                      <button
+                        type="button"
+                        aria-describedby="help-center-helpful-label"
+                        onClick={() => setHelpful('no')}
+                      >
+                        No
+                      </button>
+                    </div>
+                  ) : (
+                    <p className="help-center-helpful-reply" role="status">
+                      {helpful === 'yes' ? (
+                        'Thanks — good to know.'
+                      ) : (
+                        <>
+                          Sorry about that.{' '}
+                          <a href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">
+                            Tell us what was missing
+                          </a>
+                          .
+                        </>
+                      )}
+                    </p>
+                  )}
+
+                  <button className="help-center-copy-link" type="button" onClick={copyArticleLink}>
+                    <LinkIcon />
+                    <span>{linkCopied ? 'Link copied' : 'Copy link'}</span>
+                  </button>
+                </div>
               ) : null}
 
-              {relatedArticles.length > 0 ? (
-                <nav className="help-center-contents" aria-label={`More in ${entry.category.title}`}>
-                  <p className="help-center-rail-title">More in {entry.category.title}</p>
-                  <ul>
-                    {relatedArticles.map(related => (
-                      <li key={related.id}>
-                        <a href={articleHref(related.subcategory, related.id)}>{related.title}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
+              <nav
+                className="help-center-sequence"
+                aria-label={activeArticle ? 'Article sequence' : 'Category sequence'}
+              >
+                {previousLink ? (
+                  <a
+                    className="help-center-sequence-card is-previous"
+                    href={previousLink.href}
+                    aria-label={
+                      previousLink.crossesInto
+                        ? `Previous${sequenceNoun}: ${previousLink.title}, in ${previousLink.crossesInto}`
+                        : `Previous${sequenceNoun}: ${previousLink.title}`
+                    }
+                  >
+                    <span className="help-center-sequence-button" aria-hidden="true">
+                      <ChevronIcon direction="left" />
+                    </span>
+                    <span className="help-center-sequence-copy">
+                      <span className="help-center-sequence-meta">
+                        <span className="help-center-sequence-index">{formatIndex(previousLink.index)}</span>
+                        Previous{sequenceNoun}
+                        {previousLink.crossesInto ? (
+                          <span className="help-center-sequence-category">{previousLink.crossesInto}</span>
+                        ) : null}
+                      </span>
+                      <strong>{previousLink.title}</strong>
+                    </span>
+                  </a>
+                ) : (
+                  <div className="help-center-sequence-spacer" aria-hidden="true" />
+                )}
+
+                {nextLink ? (
+                  <a
+                    className="help-center-sequence-card is-next"
+                    href={nextLink.href}
+                    aria-label={
+                      nextLink.crossesInto
+                        ? `Next${sequenceNoun}: ${nextLink.title}, in ${nextLink.crossesInto}`
+                        : `Next${sequenceNoun}: ${nextLink.title}`
+                    }
+                  >
+                    <span className="help-center-sequence-copy">
+                      <span className="help-center-sequence-meta">
+                        Next{sequenceNoun}
+                        {nextLink.crossesInto ? (
+                          <span className="help-center-sequence-category">{nextLink.crossesInto}</span>
+                        ) : null}
+                        <span className="help-center-sequence-index">{formatIndex(nextLink.index)}</span>
+                      </span>
+                      <strong>{nextLink.title}</strong>
+                    </span>
+                    <span className="help-center-sequence-button" aria-hidden="true">
+                      <ChevronIcon />
+                    </span>
+                  </a>
+                ) : (
+                  <div className="help-center-sequence-spacer" aria-hidden="true" />
+                )}
+              </nav>
+
+              {/* Only 4 of 23 articles carry more than one section, so a
+                  contents-only rail would sit empty beside the other 19.
+                  It also offers the rest of the subcategory and a way to
+                  ask a person, so the column is never dead space. */}
+              {showRail ? (
+                <aside className="help-center-rail">
+                {rendered.headings.length > 1 ? (
+                  <nav className="help-center-contents" aria-label="On this page">
+                    <p className="help-center-rail-title">On this page</p>
+                    <ul>
+                      {rendered.headings.map(heading => (
+                        <li key={heading.id}>
+                          <a
+                            href={`#${heading.id}`}
+                            className={heading.id === currentSection ? 'is-current' : undefined}
+                            aria-current={heading.id === currentSection ? 'location' : undefined}
+                            onClick={event => jumpToSection(event, heading.id)}
+                          >
+                            {heading.text}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </nav>
+                ) : null}
+
+                {relatedArticles.length > 0 ? (
+                  <nav className="help-center-contents" aria-label={`More in ${entry.category.title}`}>
+                    <p className="help-center-rail-title">More in {entry.category.title}</p>
+                    <ul>
+                      {relatedArticles.map(related => (
+                        <li key={related.id}>
+                          <a href={articleHref(related.subcategory, related.id)}>{related.title}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  </nav>
+                ) : null}
+
+                </aside>
               ) : null}
+            </section>
 
-              </aside>
-            ) : null}
-          </section>
-
-          <footer className="help-center-security-reminder">
-            <strong>Security reminder</strong>
-            <span>
-              Bread Wallet support will never ask for your recovery phrase, private key, password, Guardian
-              authentication information, or another wallet secret.
-            </span>
-          </footer>
-        </div>
-      </main>
+            <footer className="help-center-security-reminder">
+              <strong>Security reminder</strong>
+              <span>
+                Bread Wallet support will never ask for your recovery phrase, private key, password, Guardian
+                authentication information, or another wallet secret.
+              </span>
+            </footer>
+          </div>
+        </main>
+      </div>
 
       <HelpCenterFooter
         mainCategories={helpCenterMainCategories}
         firstCategoryId={defaultCategoryId}
+        showCopyright={false}
       />
     </div>
   );

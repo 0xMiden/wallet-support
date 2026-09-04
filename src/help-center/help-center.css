@@ -78,6 +78,14 @@
   background:
     radial-gradient(circle at 94% 4%, rgb(231 117 55 / 13%), transparent 24rem),
     var(--help-bg);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Only these two are the grid. The footer sits after it, full width, with
+   nothing sticky left above it to paint over. */
+.help-center-body {
+  flex: 1;
   display: grid;
   grid-template-columns: minmax(18rem, 21rem) minmax(0, 1fr);
 }
@@ -1200,7 +1208,7 @@
 }
 
 @media (max-width: 900px) {
-  .help-center-shell {
+  .help-center-body {
     display: block;
   }
 
@@ -1830,14 +1838,6 @@
 }
 
 /* ---- footer -------------------------------------------------------------- */
-/* The category view is a two-column grid. Spanning both columns looks right
-   until you scroll: the sidebar is sticky and 100vh, so it keeps painting over
-   whatever sits under it, and the footer's brand column disappeared behind it.
-   The footer goes in the content column, where the reader's eye already is. */
-.help-center-shell > .help-center-footer {
-  grid-column: 2;
-}
-
 .help-center-footer {
   padding: var(--space-7) var(--space-5) var(--space-5);
   border-top: 1px solid var(--help-line);

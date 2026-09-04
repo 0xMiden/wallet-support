@@ -171,3 +171,29 @@ test('the header links are pills that highlight on hover', async ({ page }) => {
     .poll(() => background('All topics'))
     .not.toBe('rgba(0, 0, 0, 0)');
 });
+
+test('every page states its copyright once, and the sidebar never covers the footer', async ({
+  page
+}) => {
+  for (const route of ['/', '/#setup-and-basic-use', '/#guardian-protection/what-is-guardian']) {
+    await page.goto(route);
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+
+    await expect(page.getByText(/©\s*\d{4} Bread Wallet\./), route).toHaveCount(1);
+
+    // The footer used to be a grid item beside the sidebar, which — sticky and
+    // 100vh — overflowed its row and painted 287px over it.
+    const footer = await page.locator('.help-center-footer').boundingBox();
+    const sidebar = await page.locator('.help-center-sidebar').count();
+    if (footer === null) throw new Error(`no footer on ${route}`);
+
+    if (sidebar > 0) {
+      const box = await page.locator('.help-center-sidebar').boundingBox();
+      if (box === null) throw new Error(`no sidebar box on ${route}`);
+      expect(box.y + box.height, route).toBeLessThanOrEqual(footer.y + 1);
+    }
+
+    // The same footer on every page: full width, brand against the left edge.
+    expect(footer.x, route).toBe(0);
+  }
+});
