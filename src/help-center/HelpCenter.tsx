@@ -3,6 +3,7 @@ import type { MouseEvent } from 'react';
 
 import breadMark from './assets/bread-mark.svg';
 import { helpCenterMainCategories } from './categories';
+import { HelpCenterBackToTop } from './HelpCenterBackToTop';
 import { HelpCenterFooter } from './HelpCenterFooter';
 import { HelpCenterHome } from './HelpCenterHome';
 import {
@@ -990,6 +991,8 @@ export function HelpCenter() {
         mainCategories={helpCenterMainCategories}
         firstCategoryId={defaultCategoryId}
       />
+
+      <HelpCenterBackToTop />
     </div>
   );
 }

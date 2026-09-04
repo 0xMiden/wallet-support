@@ -1973,3 +1973,75 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* ==========================================================================
+   Back to top
+   --------------------------------------------------------------------------
+   Only on the pages with a distance to travel — the category listings and the
+   articles. It sits below the drawer and its backdrop in the stack, so an open
+   navigation covers it rather than floating a second control over the overlay.
+   ========================================================================== */
+.help-center-to-top {
+  position: fixed;
+  z-index: 25;
+  right: var(--space-5);
+  bottom: var(--space-5);
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  border: 1px solid var(--help-line);
+  border-radius: var(--radius-pill);
+  color: var(--text-body);
+  background: var(--help-panel-elevated);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  opacity: 0;
+  /* Not display:none — the fade needs something to animate from, and the
+     pointer must not find it while it is invisible. */
+  visibility: hidden;
+  transform: translateY(0.5rem);
+  box-shadow: 0 0.75rem 1.75rem rgb(0 0 0 / 38%);
+  transition: opacity 180ms ease, transform 180ms ease, visibility 0s linear 180ms,
+    border-color 160ms ease, background 160ms ease, color 160ms ease;
+}
+
+.help-center-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity 180ms ease, transform 180ms ease, visibility 0s,
+    border-color 160ms ease, background 160ms ease, color 160ms ease;
+}
+
+.help-center-to-top:hover,
+.help-center-to-top:focus-visible {
+  border-color: rgb(231 117 55 / 50%);
+  color: var(--help-accent-soft);
+  background: rgb(231 117 55 / 16%);
+}
+
+.help-center-to-top svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+@media (max-width: 620px) {
+  .help-center-to-top {
+    right: var(--space-4);
+    bottom: var(--space-4);
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .help-center-to-top {
+    transform: none;
+  }
+}

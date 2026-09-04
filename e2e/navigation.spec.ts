@@ -213,3 +213,34 @@ test('every page states its copyright once, and the sidebar never covers the foo
     expect(footer.x, route).toBe(0);
   }
 });
+
+test('back to top appears once scrolled, returns the reader, and skips the home page', async ({
+  page
+}) => {
+  const button = page.getByRole('button', { name: 'Back to top' });
+
+  // Both a long listing and a short article. "What is Guardian?" scrolls 287px
+  // in total, so a fixed 400px threshold left the button hidden in the footer
+  // — the one place it is for.
+  for (const route of ['/#setup-and-basic-use', '/#guardian-protection/what-is-guardian']) {
+    await page.goto(route);
+    await expect(button, route).toBeHidden();
+
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await expect(button, route).toBeVisible();
+  }
+
+  await button.click();
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+
+  // Focus goes with the viewport. Scrolling alone would leave a keyboard
+  // reader's focus in the footer they just left.
+  await expect
+    .poll(() => page.evaluate(() => document.activeElement?.id ?? ''))
+    .toBe('help-center-content');
+
+  // Not on the home page: one screen of hero, cards and footer.
+  await page.goto('/');
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  await expect(button).toHaveCount(0);
+});
