@@ -88,3 +88,25 @@ test('searching keeps the platform, and the platform keeps the search', async ({
   await expect(page).toHaveURL(/platform=mobile/);
   await expect(page).not.toHaveURL(/q=/);
 });
+
+test('the footer is on every page, not only the home page', async ({ page }) => {
+  // It began inside the home page, which left the article pages — where a
+  // reader is most likely to want the support form or the legal documents —
+  // as the only ones without it.
+  const footer = page.locator('.help-center-footer');
+  const legal = footer.getByRole('link', { name: 'Privacy Policy' });
+
+  for (const route of [
+    '/',
+    '/#setup-and-basic-use',
+    '/#setup-and-basic-use/how-to-install-bread-wallet',
+    '/?q=guardian'
+  ]) {
+    await page.goto(route);
+    await expect(footer, route).toBeVisible();
+    await expect(legal, route).toHaveAttribute('href', 'https://0xmiden.github.io/wallet/privacy/');
+    // One contentinfo landmark per page: the security reminder inside <main>
+    // is not one, and must not become one.
+    await expect(page.getByRole('contentinfo'), route).toHaveCount(1);
+  }
+});

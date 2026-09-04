@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { helpCenterMainCategories } from './categories';
 import { articlesInMainCategory, helpCenterArticles } from './content';
 import { POPULAR_SEARCHES } from './HelpCenterHome';
-import { helpCenterDownloads, helpCenterSocials } from './links';
+import { helpCenterDownloads, helpCenterLegal, helpCenterSocials } from './links';
 import { searchHelpCenter } from './search';
 
 describe('the home page promises', () => {
@@ -63,6 +63,15 @@ describe('the home page promises', () => {
       expect(social.href, social.label).toMatch(/^https:\/\//);
       expect(social.path.length, social.label).toBeGreaterThan(0);
     }
+  });
+
+  it('names both legal documents, and points them where they were given', () => {
+    // One published document, two names for it in the footer. If a separate
+    // terms page ever exists, this test is where the change is declared.
+    expect(helpCenterLegal.map(document => [document.label, document.href])).toEqual([
+      ['Terms of Service', 'https://0xmiden.github.io/wallet/privacy/'],
+      ['Privacy Policy', 'https://0xmiden.github.io/wallet/privacy/']
+    ]);
   });
 
   it('links to a download for each platform the articles name', () => {

@@ -1811,24 +1811,32 @@
 }
 
 /* ---- footer -------------------------------------------------------------- */
-.help-home-footer {
+/* The category view is a two-column grid. Spanning both columns looks right
+   until you scroll: the sidebar is sticky and 100vh, so it keeps painting over
+   whatever sits under it, and the footer's brand column disappeared behind it.
+   The footer goes in the content column, where the reader's eye already is. */
+.help-center-shell > .help-center-footer {
+  grid-column: 2;
+}
+
+.help-center-footer {
   padding: var(--space-7) var(--space-5) var(--space-5);
   border-top: 1px solid var(--help-line);
   background: var(--help-panel-subtle);
 }
 
-.help-home-footer-inner {
+.help-center-footer-inner {
   width: 100%;
   max-width: var(--frame);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(14rem, 1.4fr) repeat(3, minmax(9rem, 1fr));
+  grid-template-columns: minmax(11rem, 1.2fr) repeat(4, minmax(7.5rem, 1fr));
   gap: var(--space-6) var(--space-5);
 }
 
 /* Brand marks, so they are filled shapes rather than the stroked line icons
    the rest of the page draws. */
-.help-home-socials {
+.help-center-socials {
   margin: var(--space-4) 0 0;
   padding: 0;
   display: flex;
@@ -1836,7 +1844,7 @@
   list-style: none;
 }
 
-.help-home-socials a {
+.help-center-socials a {
   width: 2.25rem;
   height: 2.25rem;
   border: 1px solid var(--help-line);
@@ -1847,28 +1855,28 @@
   transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
 }
 
-.help-home-socials a:hover,
-.help-home-socials a:focus-visible {
+.help-center-socials a:hover,
+.help-center-socials a:focus-visible {
   border-color: rgb(231 117 55 / 45%);
   color: var(--text-strong);
   background: rgb(231 117 55 / 10%);
 }
 
-.help-home-socials svg {
+.help-center-socials svg {
   width: 1.05rem;
   height: 1.05rem;
   fill: currentcolor;
   stroke: none;
 }
 
-.help-home-footer-links h2 {
+.help-center-footer-links h2 {
   margin: 0 0 var(--space-3);
   font-size: var(--text-sm);
   font-weight: var(--weight-strong);
   letter-spacing: 0.02em;
 }
 
-.help-home-footer-links ul {
+.help-center-footer-links ul {
   margin: 0;
   padding: 0;
   display: flex;
@@ -1877,18 +1885,18 @@
   list-style: none;
 }
 
-.help-home-footer-links a {
+.help-center-footer-links a {
   color: var(--text-muted) !important;
   font-size: var(--text-sm);
   transition: color 160ms ease;
 }
 
-.help-home-footer-links a:hover,
-.help-home-footer-links a:focus-visible {
+.help-center-footer-links a:hover,
+.help-center-footer-links a:focus-visible {
   color: var(--text-strong) !important;
 }
 
-.help-home-footer-note {
+.help-center-footer-note {
   width: 100%;
   max-width: var(--frame);
   margin: var(--space-6) auto 0;
@@ -1903,7 +1911,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .help-home-footer-inner {
+  .help-center-footer-inner {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1934,7 +1942,7 @@
   }
 
   .help-home-main,
-  .help-home-footer {
+  .help-center-footer {
     padding-inline: var(--space-4);
   }
 
@@ -1958,7 +1966,7 @@
   }
 
   .help-home-card-grid,
-  .help-home-footer-inner {
+  .help-center-footer-inner {
     grid-template-columns: minmax(0, 1fr);
   }
 }

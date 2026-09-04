@@ -3,7 +3,8 @@ import type { FormEvent } from 'react';
 
 import breadMark from './assets/bread-mark.svg';
 import { articlesInMainCategory, helpCenterArticles } from './content';
-import { CONTACT_SUPPORT_URL, helpCenterDownloads, helpCenterSocials } from './links';
+import { HelpCenterFooter } from './HelpCenterFooter';
+import { CONTACT_SUPPORT_URL } from './links';
 import { categoryHref, homeHref } from './routing';
 import type { HelpCenterMainCategory } from './types';
 
@@ -256,80 +257,7 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
         </section>
       </main>
 
-      <footer className="help-home-footer">
-        <div className="help-home-footer-inner">
-          <div className="help-home-footer-brand">
-            <a className="help-center-brand" href={homeHref()}>
-              <img src={breadMark} alt="" />
-              <span>
-                Bread Wallet
-                <small>Help Center</small>
-              </span>
-            </a>
-
-            <ul className="help-home-socials">
-              {helpCenterSocials.map(social => (
-                <li key={social.id}>
-                  <a href={social.href} target="_blank" rel="noopener noreferrer">
-                    {/* The mark carries no text, so the name goes to the label. */}
-                    <span className="help-center-visually-hidden">{social.label}</span>
-                    <svg aria-hidden="true" viewBox="0 0 24 24">
-                      <path d={social.path} />
-                    </svg>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <nav className="help-home-footer-links" aria-label="Help Center topics">
-            <h2>Topics</h2>
-            <ul>
-              {mainCategories.map(mainCategory => {
-                const [first] = mainCategory.subcategories;
-                return (
-                  <li key={mainCategory.id}>
-                    <a href={categoryHref(first ? first.id : firstCategoryId)}>
-                      {mainCategory.title}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-
-          <nav className="help-home-footer-links" aria-label="Get Bread Wallet">
-            <h2>Get the wallet</h2>
-            <ul>
-              {helpCenterDownloads.map(download => (
-                <li key={download.id}>
-                  <a href={download.href} target="_blank" rel="noopener noreferrer">
-                    {download.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <nav className="help-home-footer-links" aria-label="Support">
-            <h2>Support</h2>
-            <ul>
-              <li>
-                <a href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">
-                  Contact Support
-                </a>
-              </li>
-              <li>
-                <a href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">
-                  Send feedback
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-
-        <p className="help-home-footer-note">© {new Date().getFullYear()} Bread Wallet.</p>
-      </footer>
+      <HelpCenterFooter mainCategories={mainCategories} firstCategoryId={firstCategoryId} />
     </div>
   );
 }

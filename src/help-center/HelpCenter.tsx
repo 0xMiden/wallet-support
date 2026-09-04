@@ -3,6 +3,7 @@ import type { MouseEvent } from 'react';
 
 import breadMark from './assets/bread-mark.svg';
 import { helpCenterMainCategories } from './categories';
+import { HelpCenterFooter } from './HelpCenterFooter';
 import { HelpCenterHome } from './HelpCenterHome';
 import {
   articleExcerpt,
@@ -477,6 +478,10 @@ export function HelpCenter() {
             </section>
           </div>
         </main>
+        <HelpCenterFooter
+          mainCategories={helpCenterMainCategories}
+          firstCategoryId={defaultCategoryId}
+        />
       </div>
     );
   }
@@ -981,6 +986,11 @@ export function HelpCenter() {
           </footer>
         </div>
       </main>
+
+      <HelpCenterFooter
+        mainCategories={helpCenterMainCategories}
+        firstCategoryId={defaultCategoryId}
+      />
     </div>
   );
 }
