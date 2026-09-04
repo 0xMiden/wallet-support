@@ -172,6 +172,22 @@ test('the header links are pills that highlight on hover', async ({ page }) => {
     .not.toBe('rgba(0, 0, 0, 0)');
 });
 
+test('the footer is byte-for-byte the same markup on every page', async ({ page }) => {
+  // "All pages must have the home page's footer." Asserting the rendered
+  // markup rather than a handful of properties: the ways it drifted before —
+  // a copyright moved into the sidebar, a brand column indented by a centred
+  // frame — would each have slipped past a spot check.
+  const footers: string[] = [];
+
+  for (const route of ['/', '/#setup-and-basic-use', '/#guardian-protection/what-is-guardian']) {
+    await page.goto(route);
+    footers.push(await page.locator('.help-center-footer').innerHTML());
+  }
+
+  expect(footers[1], 'category page differs from home').toBe(footers[0]);
+  expect(footers[2], 'article page differs from home').toBe(footers[0]);
+});
+
 test('every page states its copyright once, and the sidebar never covers the footer', async ({
   page
 }) => {

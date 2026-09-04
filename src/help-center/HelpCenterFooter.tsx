@@ -19,21 +19,9 @@ export interface HelpCenterFooterProps {
   readonly mainCategories: readonly HelpCenterMainCategory[];
   /** Fallback destination for a main category with no subcategories. */
   readonly firstCategoryId: string;
-  /**
-   * Whether this footer carries the copyright line.
-   *
-   * The category view already shows it at the foot of its sidebar, and a page
-   * that states its copyright twice looks like a mistake rather than a notice.
-   * The home page has no sidebar, so there it is the only place it appears.
-   */
-  readonly showCopyright?: boolean;
 }
 
-export function HelpCenterFooter({
-  mainCategories,
-  firstCategoryId,
-  showCopyright = true
-}: HelpCenterFooterProps) {
+export function HelpCenterFooter({ mainCategories, firstCategoryId }: HelpCenterFooterProps) {
   return (
     <footer className="help-center-footer">
       <div className="help-center-footer-inner">
@@ -115,9 +103,7 @@ export function HelpCenterFooter({
         </nav>
       </div>
 
-      {showCopyright ? (
-        <p className="help-center-footer-note">© {new Date().getFullYear()} Bread Wallet.</p>
-      ) : null}
+      <p className="help-center-footer-note">© {new Date().getFullYear()} Bread Wallet.</p>
     </footer>
   );
 }

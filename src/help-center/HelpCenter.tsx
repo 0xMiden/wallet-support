@@ -481,7 +481,6 @@ export function HelpCenter() {
         <HelpCenterFooter
           mainCategories={helpCenterMainCategories}
           firstCategoryId={defaultCategoryId}
-          showCopyright={false}
         />
       </div>
     );
@@ -618,8 +617,7 @@ export function HelpCenter() {
             )}
           </nav>
 
-          <p className="help-center-sidebar-status">© {new Date().getFullYear()} Bread Wallet.</p>
-        </aside>
+          </aside>
 
         <main className="help-center-main" id="help-center-content" tabIndex={-1}>
           <div className="help-center-main-inner">
@@ -991,7 +989,6 @@ export function HelpCenter() {
       <HelpCenterFooter
         mainCategories={helpCenterMainCategories}
         firstCategoryId={defaultCategoryId}
-        showCopyright={false}
       />
     </div>
   );

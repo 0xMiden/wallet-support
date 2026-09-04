@@ -305,16 +305,6 @@
   font-size: var(--text-xs);
 }
 
-/* Was a status tag — uppercase and letterspaced, which is how a label reads
-   and not how a copyright line does. It carries the same line as the footer
-   now, so it is set the same way. */
-.help-center-sidebar-status {
-  margin: auto 0.5rem 0;
-  padding-top: 2rem;
-  color: var(--text-faint);
-  font-size: var(--text-xs);
-}
-
 .help-center-main {
   min-width: 0;
   padding: clamp(1.5rem, 4vw, 4rem);
