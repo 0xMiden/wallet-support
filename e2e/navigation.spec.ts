@@ -134,3 +134,22 @@ test('the logo carries no Help Center label', async ({ page }) => {
     }
   }
 });
+
+test('the footer brand sits at the left edge of the page, not in from it', async ({ page }) => {
+  // Capped and centred, the frame left a wide gap before the logo — 183px
+  // inside the content column at 1950, and 351px on the home page.
+  await page.setViewportSize({ width: 1600, height: 900 });
+
+  for (const [route, container] of [
+    ['/', '.help-center-footer'],
+    ['/#setup-and-basic-use', '.help-center-footer']
+  ] as const) {
+    await page.goto(route);
+    const footer = await page.locator(container).boundingBox();
+    const logo = await page.locator('.help-center-footer .help-center-brand').boundingBox();
+    if (footer === null || logo === null) throw new Error(`no footer on ${route}`);
+
+    // Within the footer's own padding, and nowhere near its middle.
+    expect(logo.x - footer.x, route).toBeLessThan(40);
+  }
+});

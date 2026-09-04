@@ -297,13 +297,14 @@
   font-size: var(--text-xs);
 }
 
+/* Was a status tag — uppercase and letterspaced, which is how a label reads
+   and not how a copyright line does. It carries the same line as the footer
+   now, so it is set the same way. */
 .help-center-sidebar-status {
   margin: auto 0.5rem 0;
   padding-top: 2rem;
   color: var(--text-faint);
-  font-size: var(--text-2xs);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: var(--text-xs);
 }
 
 .help-center-main {
@@ -1823,8 +1824,6 @@
 
 .help-center-footer-inner {
   width: 100%;
-  max-width: var(--frame);
-  margin: 0 auto;
   display: grid;
   grid-template-columns: minmax(11rem, 1.2fr) repeat(4, minmax(7.5rem, 1fr));
   gap: var(--space-6) var(--space-5);
@@ -1894,8 +1893,7 @@
 
 .help-center-footer-note {
   width: 100%;
-  max-width: var(--frame);
-  margin: var(--space-6) auto 0;
+  margin: var(--space-6) 0 0;
   padding-top: var(--space-4);
   border-top: 1px solid var(--help-line);
   color: var(--text-faint);

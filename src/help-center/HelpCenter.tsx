@@ -612,7 +612,7 @@ export function HelpCenter() {
           )}
         </nav>
 
-        <p className="help-center-sidebar-status">Category structure · Draft</p>
+        <p className="help-center-sidebar-status">© {new Date().getFullYear()} Bread Wallet.</p>
       </aside>
 
       <main className="help-center-main" id="help-center-content" tabIndex={-1}>
