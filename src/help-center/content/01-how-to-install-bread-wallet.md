@@ -19,7 +19,7 @@ platforms: [extension-desktop, mobile]
 2. Click the "Add to Chrome" button.
 3. On the confirmation dialog, click "Add extension."
 
-After adding the Bread wallet extension, Bread Wallet will open automatically. To keep it easy to access, click the **jigsaw icon** in the top-right corner of your browser, then click the **pin icon** to add it to your toolbar.
+After adding the Bread Wallet extension, Bread Wallet will open automatically. To keep it easy to access, click the **jigsaw icon** in the top-right corner of your browser, then click the **pin icon** to add it to your toolbar.
 
 <!-- platform: mobile -->
 

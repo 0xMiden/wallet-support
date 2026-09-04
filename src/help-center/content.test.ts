@@ -393,3 +393,26 @@ describe('finding articles', () => {
     expect(findArticle(helpCenterArticles, 'guardian-protection', 'how-to-install-bread-wallet')).toBeUndefined();
   });
 });
+
+describe('the product name', () => {
+  it('is spelled "Bread Wallet" everywhere it is written out', () => {
+    // The install article named it twice in one sentence, six words apart, two
+    // different ways: "After adding the Bread wallet extension, Bread Wallet
+    // will open automatically." It is a proper noun, and on pages telling
+    // people which download is the official one, an inconsistent name costs
+    // more than it looks like it should.
+    //
+    // The hyphenated lowercase form is a different thing — it appears in store
+    // URLs, the Android package id and the article ids — and is left alone.
+    const wrongCasing = /Bread\s+wallet\b/g;
+
+    for (const article of helpCenterArticles) {
+      expect(article.title, `${article.id} title`).not.toMatch(wrongCasing);
+
+      for (const platform of article.platforms) {
+        const body = article.bodies[platform] as string;
+        expect(body.match(wrongCasing) ?? [], `${article.id} (${platform})`).toEqual([]);
+      }
+    }
+  });
+});
