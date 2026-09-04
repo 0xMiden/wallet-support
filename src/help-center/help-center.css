@@ -1826,12 +1826,39 @@
   gap: var(--space-6) var(--space-5);
 }
 
-.help-home-footer-brand p {
-  max-width: 26ch;
+/* Brand marks, so they are filled shapes rather than the stroked line icons
+   the rest of the page draws. */
+.help-home-socials {
   margin: var(--space-4) 0 0;
-  color: var(--text-faint);
-  font-size: var(--text-sm);
-  line-height: 1.5;
+  padding: 0;
+  display: flex;
+  gap: var(--space-2);
+  list-style: none;
+}
+
+.help-home-socials a {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--help-line);
+  border-radius: var(--radius-pill);
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+}
+
+.help-home-socials a:hover,
+.help-home-socials a:focus-visible {
+  border-color: rgb(231 117 55 / 45%);
+  color: var(--text-strong);
+  background: rgb(231 117 55 / 10%);
+}
+
+.help-home-socials svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  fill: currentcolor;
+  stroke: none;
 }
 
 .help-home-footer-links h2 {

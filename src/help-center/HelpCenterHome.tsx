@@ -3,7 +3,7 @@ import type { FormEvent } from 'react';
 
 import breadMark from './assets/bread-mark.svg';
 import { articlesInMainCategory, helpCenterArticles } from './content';
-import { CONTACT_SUPPORT_URL, helpCenterDownloads } from './links';
+import { CONTACT_SUPPORT_URL, helpCenterDownloads, helpCenterSocials } from './links';
 import { categoryHref, homeHref } from './routing';
 import type { HelpCenterMainCategory } from './types';
 
@@ -241,7 +241,7 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
             <h2 id="help-home-support-title">We&rsquo;re here for you</h2>
             <p>
               Can&rsquo;t find what you&rsquo;re looking for? Send us the details and we&rsquo;ll
-              take a look — the same form reaches the team that maintains these articles.
+              take a look.
             </p>
           </div>
           <a
@@ -266,7 +266,20 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
                 <small>Help Center</small>
               </span>
             </a>
-            <p>A self-custodial wallet. Your keys, your assets, your privacy.</p>
+
+            <ul className="help-home-socials">
+              {helpCenterSocials.map(social => (
+                <li key={social.id}>
+                  <a href={social.href} target="_blank" rel="noopener noreferrer">
+                    {/* The mark carries no text, so the name goes to the label. */}
+                    <span className="help-center-visually-hidden">{social.label}</span>
+                    <svg aria-hidden="true" viewBox="0 0 24 24">
+                      <path d={social.path} />
+                    </svg>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <nav className="help-home-footer-links" aria-label="Help Center topics">
@@ -315,9 +328,7 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
           </nav>
         </div>
 
-        <p className="help-home-footer-note">
-          © {new Date().getFullYear()} Bread Wallet. Only you hold your recovery phrase.
-        </p>
+        <p className="help-home-footer-note">© {new Date().getFullYear()} Bread Wallet.</p>
       </footer>
     </div>
   );

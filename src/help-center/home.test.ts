@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { helpCenterMainCategories } from './categories';
 import { articlesInMainCategory, helpCenterArticles } from './content';
 import { POPULAR_SEARCHES } from './HelpCenterHome';
-import { helpCenterDownloads } from './links';
+import { helpCenterDownloads, helpCenterSocials } from './links';
 import { searchHelpCenter } from './search';
 
 describe('the home page promises', () => {
@@ -47,6 +47,21 @@ describe('the home page promises', () => {
     for (const mainCategory of helpCenterMainCategories) {
       const counted = articlesInMainCategory(helpCenterArticles, mainCategory.id);
       for (const article of counted) expect(article.mainCategory).toBe(mainCategory.id);
+    }
+  });
+
+  it('points the social links at the accounts they were given as', () => {
+    // Supplied by hand, and pointing somewhere no test otherwise visits. An
+    // edit to this list must be a deliberate one.
+    expect(helpCenterSocials.map(social => [social.label, social.href])).toEqual([
+      ['X', 'https://x.com/0xMiden'],
+      ['GitHub', 'https://github.com/0xMiden/wallet'],
+      ['Telegram', 'https://t.me/BuildOnMiden']
+    ]);
+
+    for (const social of helpCenterSocials) {
+      expect(social.href, social.label).toMatch(/^https:\/\//);
+      expect(social.path.length, social.label).toBeGreaterThan(0);
     }
   });
 
