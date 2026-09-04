@@ -395,24 +395,48 @@ describe('finding articles', () => {
 });
 
 describe('the product name', () => {
-  it('is spelled "Bread Wallet" everywhere it is written out', () => {
-    // The install article named it twice in one sentence, six words apart, two
-    // different ways: "After adding the Bread wallet extension, Bread Wallet
-    // will open automatically." It is a proper noun, and on pages telling
-    // people which download is the official one, an inconsistent name costs
-    // more than it looks like it should.
-    //
-    // The hyphenated lowercase form is a different thing — it appears in store
-    // URLs, the Android package id and the article ids — and is left alone.
-    const wrongCasing = /Bread\s+wallet\b/g;
+  /*
+   * Case-insensitive on purpose. The first version of this matched
+   * /Bread\s+wallet/ — a capital B — so it caught "Bread wallet" and sailed
+   * straight past "bread wallet". A guard that only finds the mistake you
+   * happened to make first is not a guard.
+   *
+   * The hyphenated form is a different thing: store URLs, the Android package
+   * id and the article ids all contain "bread-wallet" and must not change. The
+   * space in the pattern is what keeps them out.
+   */
+  const NAMED = /bread[ \u00a0]+wallet/gi;
+  const CORRECT = 'Bread Wallet';
 
+  function misspellings(text: string) {
+    return (text.match(NAMED) ?? []).filter(match => match !== CORRECT);
+  }
+
+  it('is spelled "Bread Wallet" in every article title and body', () => {
     for (const article of helpCenterArticles) {
-      expect(article.title, `${article.id} title`).not.toMatch(wrongCasing);
+      expect(misspellings(article.title), `${article.id} title`).toEqual([]);
 
       for (const platform of article.platforms) {
         const body = article.bodies[platform] as string;
-        expect(body.match(wrongCasing) ?? [], `${article.id} (${platform})`).toEqual([]);
+        expect(misspellings(body), `${article.id} (${platform})`).toEqual([]);
       }
+    }
+  });
+
+  it('is spelled "Bread Wallet" in the interface too, not only the articles', () => {
+    // The article check above cannot see the home page's lede: it reads
+    // helpCenterArticles, and the interface's own copy lives in the components.
+    // "Uniform to all" has to mean both.
+    const components = import.meta.glob<string>('./*.tsx', {
+      query: '?raw',
+      import: 'default',
+      eager: true
+    });
+
+    expect(Object.keys(components).length).toBeGreaterThan(0);
+
+    for (const [file, source] of Object.entries(components)) {
+      expect(misspellings(source), file).toEqual([]);
     }
   });
 });
