@@ -148,7 +148,6 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
 
       <main className="help-home-main" id="help-center-content" tabIndex={-1}>
         <section className="help-home-hero" aria-labelledby="help-home-title">
-          <p className="help-center-eyebrow">Help Center</p>
           <h1 id="help-home-title">
             How can we <em>help?</em>
           </h1>

@@ -1502,10 +1502,6 @@
     radial-gradient(ellipse 100% 45% at 50% 6%, rgb(247 200 177 / 8%), transparent 70%);
 }
 
-.help-home-hero .help-center-eyebrow {
-  margin-inline: auto;
-}
-
 .help-home-hero h1 {
   max-width: 22ch;
   margin: 0 auto var(--space-4);
