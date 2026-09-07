@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { helpCenterArticles, findArticle } from './content';
+import { helpCenterAllArticles, helpCenterArticles, findArticle } from './content';
 import {
   articleHref,
   categoryHref,
@@ -101,6 +101,36 @@ describe('building hrefs', () => {
         articleId: article.id
       });
     }
+  });
+
+  it('lands a held-back article link on its category rather than nowhere', () => {
+    const real: HelpCenterRouteLookups = {
+      hasCategory: categoryId => helpCenterArticles.some(article => article.subcategory === categoryId),
+      hasArticle: (categoryId, articleId) =>
+        findArticle(helpCenterArticles, categoryId, articleId) !== undefined
+    };
+
+    const held = helpCenterAllArticles.find(article => article.hidden === true);
+    expect(held, 'expected a held-back article to exercise this path').toBeDefined();
+
+    const article = held as (typeof helpCenterAllArticles)[number];
+    const href = articleHref(article.subcategory, article.id);
+
+    expect(parseRoute(href, real)).toEqual({ view: 'category', categoryId: article.subcategory });
+
+    // Pinned to the flag rather than to absence: the same href resolves all the
+    // way to the article once the lookup is allowed to see held-back ones, so
+    // this cannot pass for a typo'd id the way the assertion above alone would.
+    const everything: HelpCenterRouteLookups = {
+      hasCategory: categoryId => helpCenterAllArticles.some(a => a.subcategory === categoryId),
+      hasArticle: (categoryId, articleId) =>
+        findArticle(helpCenterAllArticles, categoryId, articleId) !== undefined
+    };
+    expect(parseRoute(href, everything)).toEqual({
+      view: 'category',
+      categoryId: article.subcategory,
+      articleId: article.id
+    });
   });
 
   it('builds a subcategory href', () => {

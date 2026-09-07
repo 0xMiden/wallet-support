@@ -595,3 +595,53 @@ had promised "how to manage it", and the only article under Guardian explains wh
   absent rather than dead. They need real URLs.
 - No DOM-level unit tests. The unit suite stays in node; component behaviour is covered by Playwright
   instead of jsdom.
+
+## Hold back the encrypted-file restore article
+
+Ivan, from the live page: restoring from an encrypted file is not in the wallet UI, so the article should not
+be published on either platform until that flow ships. The article was also flagged `Extension only`, which
+is wrong for the encrypted wallet file in general.
+
+- [x] Verify the claim against the app source rather than the article.
+- [x] Add a way to hold an article back without deleting its approved copy.
+- [x] Hold back `10-how-to-restore-the-wallet-using-an-encrypted-file.md`.
+- [x] Keep every guard pointed at the held-back file.
+- [x] Confirm the behaviour on the built page, not just in tests.
+
+### What the app source says
+
+`ExportFileComplete.tsx:76` branches on `isMobile()`: mobile writes the file to the cache directory and opens
+the native share sheet, desktop downloads a Blob. `EncryptedWalletFileWalletPassword.tsx:134` has a mobile
+passcode path, and the `encryptedWalletFile*` strings ship inside the Android bundle. So the encrypted wallet
+file is not an extension-only feature.
+
+Import is the other half, and it is missing. `EncryptedFileStep` is `WalletPassword | ExportFilePassword |
+ExportFileComplete | Navigate` - export steps only - and `import-wallet-flow/` holds only `ImportSeedPhrase`
+and `ImportRecoveryMethod`. Checked against `~/wallet` at `f95c4855` and `~/wallet-mobile` at `893e22bd`.
+
+### The mechanism
+
+`hidden: true` in frontmatter, with a `hiddenReason` the parser *requires* whenever `hidden` is set, so the
+flag cannot outlive the reason for it. `helpCenterAllArticles` is everything on disk; `helpCenterArticles` is
+what the site publishes. The article file and its `content-source/` entry are untouched, so publishing it
+again is one line.
+
+Fidelity, validation and markdown rendering all run over `helpCenterAllArticles`. Hiding an article must not
+retire the guards that prove its text still matches source - that would be the regression this change could
+otherwise introduce.
+
+### Results
+
+- 154 unit tests, 14 Playwright cases, typecheck clean.
+- The direct link falls back to its category: `parseRoute` returns the category view when an article id does
+  not resolve, so `#security-and-recovery/how-to-restore-the-wallet-using-an-encrypted-file` renders
+  "Security and recovery". Confirmed by driving the production build, not by reading the router.
+- The subcategory lists 6 articles, search for "encrypted" no longer returns it, and the home page reads
+  22 articles. Every one of those numbers is derived, so none of them needed editing.
+
+### Still open
+
+- `11-how-to-download-the-encrypted-file.md` is still `Extension only`, and that flag is wrong: export has a
+  mobile branch. Correcting it needs mobile steps written and added to `content-source/mobile.md`, which is
+  new copy needing approval. Left as-is deliberately.
+- Not deployed. The change is local until Ivan asks for the deploy.

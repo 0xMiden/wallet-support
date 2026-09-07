@@ -4,6 +4,8 @@ title: How to restore the wallet using an encrypted file?
 mainCategory: manage-wallet
 subcategory: security-and-recovery
 platforms: [extension-desktop]
+hidden: true
+hiddenReason: Importing a wallet from an encrypted file is not available in the wallet UI. Publish again once that flow ships.
 ---
 
 Things you need first before restoring the wallet account

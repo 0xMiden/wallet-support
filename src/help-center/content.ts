@@ -51,6 +51,16 @@ export function parseArticle(source: string, origin: string): HelpCenterArticle 
     throw new Error(`${origin}: repeats a platform in its frontmatter.`);
   }
 
+  const hiddenField = fields.get('hidden');
+  if (hiddenField !== undefined && hiddenField !== 'true' && hiddenField !== 'false') {
+    throw new Error(`${origin}: "hidden" must be true or false, not "${hiddenField}".`);
+  }
+  const hidden = hiddenField === 'true';
+  const hiddenReason = fields.get('hiddenReason');
+  if (hidden && !hiddenReason) {
+    throw new Error(`${origin}: is hidden but gives no "hiddenReason".`);
+  }
+
   const declared = platforms as readonly HelpCenterPlatform[];
   const sections = new Map<string, string[]>();
   const shared: string[] = [];
@@ -91,7 +101,8 @@ export function parseArticle(source: string, origin: string): HelpCenterArticle 
     mainCategory: required('mainCategory'),
     subcategory: required('subcategory'),
     platforms: declared,
-    bodies
+    bodies,
+    ...(hidden ? { hidden, hiddenReason } : {})
   };
 }
 
@@ -101,8 +112,23 @@ export function loadArticles(modules: Readonly<Record<string, string>>): readonl
     .map(path => parseArticle(modules[path] as string, path));
 }
 
-export const helpCenterArticles: readonly HelpCenterArticle[] = loadArticles(
+/**
+ * Every article on disk, hidden ones included. Fidelity and validation run over
+ * this list rather than the published one: hiding an article must not quietly
+ * retire the guards that prove its text still matches content-source.
+ */
+export const helpCenterAllArticles: readonly HelpCenterArticle[] = loadArticles(
   import.meta.glob<string>('./content/*.md', { query: '?raw', import: 'default', eager: true })
+);
+
+/**
+ * What the site renders, searches, counts and routes to. A hidden article is
+ * absent from this list, so parseRoute() falls back to the category view for a
+ * link someone still holds, rather than resolving to a page that describes a
+ * flow the wallet does not offer.
+ */
+export const helpCenterArticles: readonly HelpCenterArticle[] = helpCenterAllArticles.filter(
+  article => article.hidden !== true
 );
 
 export function articlesFor(

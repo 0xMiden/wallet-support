@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { helpCenterArticles } from './content';
+import { helpCenterAllArticles } from './content';
 import { renderMarkdown } from './markdown';
 
 const render = (source: string) => renderMarkdown(source, 'test.md');
@@ -143,7 +143,7 @@ describe('refusing what it does not understand', () => {
 describe('the migrated articles', () => {
   it('renders all 44 platform bodies without throwing', () => {
     let rendered = 0;
-    for (const article of helpCenterArticles) {
+    for (const article of helpCenterAllArticles) {
       for (const platform of article.platforms) {
         const html = renderMarkdown(article.bodies[platform] as string, `${article.id} (${platform})`);
         expect(html.length, `${article.id} (${platform}) rendered empty`).toBeGreaterThan(0);
@@ -154,7 +154,7 @@ describe('the migrated articles', () => {
   });
 
   it('leaves no unrendered markdown markers in the output', () => {
-    for (const article of helpCenterArticles) {
+    for (const article of helpCenterAllArticles) {
       for (const platform of article.platforms) {
         const html = renderMarkdown(article.bodies[platform] as string, article.id);
         expect(html, `${article.id} (${platform})`).not.toMatch(/\*\*|\]\(/);
@@ -181,7 +181,7 @@ describe('section labels', () => {
   });
 
   it('gives the shipped articles a real outline', () => {
-    const headings = helpCenterArticles.flatMap(article =>
+    const headings = helpCenterAllArticles.flatMap(article =>
       article.platforms.flatMap(platform =>
         [...renderMarkdown(article.bodies[platform] as string, article.id).matchAll(/<h2>/g)]
       )

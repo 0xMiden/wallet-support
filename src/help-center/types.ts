@@ -32,4 +32,17 @@ export interface HelpCenterArticle {
   subcategory: string;
   platforms: readonly HelpCenterPlatform[];
   bodies: Readonly<Partial<Record<HelpCenterPlatform, string>>>;
+  /**
+   * True when the article stays on disk but is not published. Reserved for an
+   * article that documents a flow the wallet does not currently offer: the
+   * approved copy is kept verbatim so that publishing it again is one
+   * frontmatter line rather than a rewrite.
+   */
+  hidden?: boolean;
+  /**
+   * Why it is hidden, and therefore what has to change before it goes back.
+   * Required whenever `hidden` is true, so an unexplained flag cannot survive
+   * long enough for the reason to be forgotten.
+   */
+  hiddenReason?: string;
 }

@@ -11,6 +11,7 @@ import {
   findArticle,
   coverageReport,
   coverageWarnings,
+  helpCenterAllArticles,
   helpCenterArticles,
   loadArticles,
   parseArticle,
@@ -60,6 +61,40 @@ describe('parsing an article', () => {
     const article = parseArticle(VARIANT, 'variant.md');
     expect(article.bodies['extension-desktop']).toBe('Click "Add to Chrome".');
     expect(article.bodies.mobile).toBe('Tap "Get" in the App Store.');
+  });
+
+  it('leaves an article published when it says nothing about being hidden', () => {
+    expect(parseArticle(SHARED, 'shared.md').hidden).toBeUndefined();
+  });
+
+  it('reads a hidden article and the reason it is held back', () => {
+    const article = parseArticle(
+      SHARED.replace(
+        'platforms: [extension-desktop, mobile]',
+        'platforms: [extension-desktop, mobile]\nhidden: true\nhiddenReason: The flow is not in the wallet UI.'
+      ),
+      'hidden.md'
+    );
+    expect(article.hidden).toBe(true);
+    expect(article.hiddenReason).toBe('The flow is not in the wallet UI.');
+  });
+
+  it('refuses to hide an article without saying why', () => {
+    expect(() =>
+      parseArticle(
+        SHARED.replace('platforms: [extension-desktop, mobile]', 'platforms: [extension-desktop, mobile]\nhidden: true'),
+        'unexplained.md'
+      )
+    ).toThrow(/is hidden but gives no "hiddenReason"/);
+  });
+
+  it('refuses a hidden flag that is not true or false', () => {
+    expect(() =>
+      parseArticle(
+        SHARED.replace('platforms: [extension-desktop, mobile]', 'platforms: [extension-desktop, mobile]\nhidden: yes'),
+        'bad-flag.md'
+      )
+    ).toThrow(/"hidden" must be true or false/);
   });
 
   it('refuses an article with no frontmatter', () => {
@@ -121,7 +156,7 @@ describe('validating articles against the hierarchy', () => {
   });
 
   it('reports no errors for the shipped article set', () => {
-    expect(validationErrors(helpCenterArticles)).toEqual([]);
+    expect(validationErrors(helpCenterAllArticles)).toEqual([]);
   });
 });
 
@@ -209,7 +244,7 @@ describe('fidelity to content-source', () => {
   });
 
   it('carries every migrated body verbatim, image placeholders aside', () => {
-    for (const article of helpCenterArticles) {
+    for (const article of helpCenterAllArticles) {
       for (const platform of article.platforms) {
         const expected = sources[platform].get(article.title);
         expect(expected, `${article.id}: "${article.title}" is not on the ${platform} source page`).toBeDefined();
@@ -221,7 +256,7 @@ describe('fidelity to content-source', () => {
   });
 
   it('declares a platform only where the source page carries the title', () => {
-    for (const article of helpCenterArticles) {
+    for (const article of helpCenterAllArticles) {
       for (const platform of ['extension-desktop', 'mobile'] as const) {
         expect(
           article.platforms.includes(platform),
@@ -239,9 +274,16 @@ describe('fidelity to content-source', () => {
  */
 describe('the migrated article set', () => {
   it('carries every article in the approved mapping', () => {
-    expect(helpCenterArticles).toHaveLength(23);
-    expect(helpCenterArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(23);
-    expect(helpCenterArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(21);
+    expect(helpCenterAllArticles).toHaveLength(23);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(23);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(21);
+  });
+
+  it('publishes every article except the ones held back', () => {
+    expect(helpCenterArticles).toHaveLength(22);
+    expect(helpCenterArticles.map(article => article.id)).not.toContain(
+      'how-to-restore-the-wallet-using-an-encrypted-file'
+    );
   });
 
   it('splits bodies exactly where the source pages diverge', () => {
@@ -384,8 +426,12 @@ describe('card excerpts', () => {
 });
 
 describe('finding articles', () => {
-  it('lists every article in a subcategory regardless of platform', () => {
-    expect(articlesInSubcategory(helpCenterArticles, 'security-and-recovery')).toHaveLength(7);
+  it('lists every published article in a subcategory regardless of platform', () => {
+    expect(articlesInSubcategory(helpCenterArticles, 'security-and-recovery')).toHaveLength(6);
+  });
+
+  it('keeps the held-back article out of its subcategory listing', () => {
+    expect(articlesInSubcategory(helpCenterAllArticles, 'security-and-recovery')).toHaveLength(7);
   });
 
   it('finds an article only inside its own subcategory', () => {
