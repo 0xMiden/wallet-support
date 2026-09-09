@@ -48,7 +48,16 @@ function CategoryGlyph({ categoryId }: { categoryId: string }) {
     // A flag planted at the start, not a bare plus — which read as "add".
     'getting-started': 'M6 4v16M6 4.5h11l-2.2 3.5L17 11.5H6',
     'manage-wallet': 'M4 8.5h16v10H4zM4 8.5 15 5l2 3.5M15.5 13.5h1.5',
-    privacy: 'M12 5c4 0 7 4 7 7s-3 7-7 7-7-4-7-7 3-7 7-7ZM4 4l16 16',
+    /*
+     * An eye with a slash. This was a bare circle with a line through it,
+     * which at panel scale reads as "prohibited" rather than as anything to
+     * do with seeing — and it sat one grid cell away from a compass-shaped
+     * candidate for another category, which would have made two circles with
+     * diagonals in one view. Painted bounds 1.90..22.10 x 3.50..20.50, inside
+     * the viewBox on every side.
+     */
+    privacy:
+      'M2.6 12s3.7-6.2 9.4-6.2S21.4 12 21.4 12s-3.7 6.2-9.4 6.2S2.6 12 2.6 12ZM12 9.4a2.6 2.6 0 1 0 0 5.2 2.6 2.6 0 0 0 0-5.2ZM4.2 4.2 19.8 19.8',
     guardian: 'M12 4l7 2.5V12c0 4-3 6.6-7 8-4-1.4-7-4-7-8V6.5L12 4Z',
     /*
      * A wrench. This was a gear, because an earlier wrench drew as a small
