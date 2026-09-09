@@ -168,9 +168,8 @@
   /* Reading measure, so text blocks can agree on a right edge. */
   --measure: 68ch;
 
-  /* Page width. The reference's container is 1328px; the move from our
-     1248px is a layout change and belongs to the layout commit. */
-  --frame: 78rem;
+  /* Page width, 83rem = 1328px, the reference's container. */
+  --frame: 83rem;
 
   /* Desktop gutter, from the reference's 40px. The footer keeps its own
      tighter padding: its brand sits against the page edge by design, and an
