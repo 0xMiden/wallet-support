@@ -35,7 +35,18 @@
   border: 0;
 }
 
-.help-center-shell :focus-visible {
+/*
+ * The focus ring, on every root.
+ *
+ * This was scoped to .help-center-shell, and the home page's root is
+ * .help-center-home — so the entry page, and only the entry page, fell back
+ * to the browser's 1px default on all nine of its tabbables while every other
+ * page got the accent ring. Found by tabbing, not by reading: programmatic
+ * .focus() does not reliably trigger :focus-visible and reported the home
+ * page as fine.
+ */
+.help-center-shell :focus-visible,
+.help-center-home :focus-visible {
   outline: 3px solid var(--help-accent);
   outline-offset: 3px;
 }
