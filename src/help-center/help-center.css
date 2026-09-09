@@ -1008,12 +1008,30 @@
   text-underline-offset: 0.2em;
 }
 
+/*
+ * The callout carries the scam warnings, and it was carrying them quietly.
+ * Its fill was the 6% tint, which renders twenty-one channel steps from the
+ * page — the same invisible value the sidebar hovers had — and its rule was
+ * 45% accent, a pale peach rather than a bar. The block read as a slightly
+ * warm paragraph.
+ *
+ * The rule is now the accent at full strength, and the fill steps up to where
+ * it can be seen. The bar does most of the work deliberately: 18% orange
+ * behind five lines of warning is a heavy thing to read through, where a
+ * strong edge and a light wash say the same and stay legible. Body text on
+ * the new fill measures 8.28:1.
+ *
+ * The other small faint surfaces — the back button, the sequence index — keep
+ * theirs. They are chips a couple of centimetres across with their own
+ * borders, where the fill is a hint and the border is the shape; this is a
+ * block, where the fill is most of what you see.
+ */
 .help-center-article-body blockquote {
   margin: 1.2rem 0 0;
   padding: 0.85rem 1.05rem;
-  border-left: 3px solid var(--tint-edge);
+  border-left: 3px solid var(--help-accent);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  background: var(--tint-faint);
+  background: var(--tint-soft);
 }
 
 .help-center-article-body blockquote > :first-child {
@@ -1875,7 +1893,7 @@
 }
 
 .help-home-support-copy .help-center-eyebrow {
-  color: var(--accent-text-deep);
+  color: var(--accent-text);
   margin-bottom: var(--space-3);
 }
 

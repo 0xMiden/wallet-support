@@ -202,3 +202,17 @@ single link on the home page.
 containers at 1440 only. At 620 the category view sat at 31px against the home page's 20px, and
 below 620 the home page was pinned to 16px against the token's 20px. Both surfaced only when parity
 was checked across seven widths during the fix.
+
+**The contrast sweep itself was wrong, and "zero AA failures" was not true.** The harness resolved
+an element's backdrop by walking up to the first ancestor with an opaque background, which skipped
+straight past the element's *own* translucent fill. Every accent-coloured chip, eyebrow and callout
+was therefore measured against white rather than against the tint it actually sits on.
+
+Composited properly, `--accent-text` at `#bf5417` failed in fifteen places across seven views: 4.22
+on a 10% chip, 4.41 on a 6% one, 4.26 on the cream panel, 4.10 inside a callout. It cleared 4.5:1 on
+the bare page by one hundredth, which is the only reason it ever looked fine. Fixed by collapsing
+`--accent-text` onto the deeper `#a8460f` that the cream panel already required — one value that
+clears every ground the interface actually uses.
+
+Every contrast figure quoted earlier in this report was produced by the same flawed harness and
+should be re-read with that in mind.

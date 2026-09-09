@@ -102,10 +102,26 @@
    * of the same hue, and #e77537 keeps every job that carries no text: fills,
    * icons, borders, tints.
    */
-  --accent-text: #bf5417;     /* 4.51:1 on the page, passes at any size */
-  --accent-text-lg: #e65303;  /* 3.62:1, headings 24px and over only    */
-  --accent-text-deep: #a8460f;/* 4.82:1 on the cream panel, where the    */
-                              /* step above only reaches 3.80:1          */
+  /*
+   * One value, deep enough for every ground we actually put it on.
+   *
+   * It was #bf5417, which clears 4.5:1 on the bare page by a hundredth and
+   * fails on every tint the interface sits it upon: 4.22 on a 10% chip, 4.41
+   * on a 6% one, 4.26 on the cream panel, 4.10 in a callout. Fifteen real
+   * failures across seven views.
+   *
+   * They were missed because the audit harness read the first opaque ancestor
+   * as the backdrop and walked straight past the element's own translucent
+   * fill — so every one of these measured against white and passed. The
+   * report that said "zero AA failures" was measuring the wrong thing.
+   *
+   * #a8460f is the value the cream panel already needed, and it clears every
+   * ground: 5.72 on the page, 5.34 on a chip, 5.19 in a callout. A separate
+   * --accent-text-deep for the one hard case is what let the easy cases stay
+   * wrong, so there is no longer a separate one.
+   */
+  --accent-text: #a8460f;
+  --accent-text-lg: #e65303;  /* 3.62:1, headings 24px and over only */
 
   /* One accent, five tints. The stylesheet previously spelled out twenty
      different alphas of the same orange; a component asking for "a soft
