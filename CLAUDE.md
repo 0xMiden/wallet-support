@@ -4,6 +4,8 @@ Build the Bread Help Center as a production-quality support product using establ
 
 Keep the architecture simple, maintainable, accessible, performant, secure, and easy to extend. Avoid short-term fixes that create future technical debt.
 
+Do not write to MEMORY.md or memory memos unless Ivan explicitly asks in the current turn.
+
 ## Roles
 
 Use specialized agents when their expertise is relevant.
@@ -32,6 +34,12 @@ Owns how Help Center information is organized.
 - Assign each article to the correct **main category and subcategory**.
 - Keep the structure intuitive and scalable as more articles are added.
 - Maintain clear relationships between categories, subcategories, and articles.
+- Use the house vocabulary for Guardian's account keys: **everyday key** (not "hot key") and
+  **recovery key** (not "cold key"). External sources, including the Miden blog, use the retired
+  terms; quote them only where the note is explicitly describing that source. `content.test.ts`
+  enforces this over the articles, `content-source/`, and the interface components.
+- Bold for UI labels in article bodies, punctuation outside the bold; quotes only in titles
+  (plain text) and for genuine quotation.
 
 Existing reviewed Help Center **titles and written content must not be changed** unless explicitly approved. Images, screenshots, categories, subcategories, navigation, layout, and presentation may be improved.
 

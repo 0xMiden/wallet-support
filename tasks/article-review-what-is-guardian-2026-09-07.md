@@ -49,7 +49,7 @@ Nothing was flagged at step 6, so no step 1–5 edit had to be reverted.
 
 2. **Proposed depth link, not inserted:** `https://miden.xyz/blog/what-is-miden-guardian` (or `https://docs.miden.xyz/`) at the end of the article for readers who want the mechanism. **No article on the live site links to either** — the entire corpus contains four outbound URLs (three store links and the support relay). Adding the first outbound docs link is a messaging decision, not a copy edit. Options: (a) leave as-is, (b) add to this article only, (c) adopt a site-wide "Learn more" convention for all six concept articles.
 
-3. **Scope the reader may expect and this article does not cover:** the blog describes Guardian's Phase I as a 2-of-3 key structure (hot key, cold key, Guardian's co-signing service key), which is what makes "cannot move funds by itself" true. `12-how-do-i-keep-my-wallet-secure.md` alludes to it; this article does not. Adding it is a new claim, so it is not in the correction. Decide whether the Guardian category should explain the key structure anywhere.
+3. **Scope the reader may expect and this article does not cover:** the blog describes Guardian's Phase I as a 2-of-3 key structure (hot key, cold key, Guardian's co-signing service key), which is what makes "cannot move funds by itself" true. (house terms: everyday key, recovery key; the service key is Guardian's co-signing key) `12-how-do-i-keep-my-wallet-secure.md` alludes to it; this article does not. Adding it is a new claim, so it is not in the correction. Decide whether the Guardian category should explain the key structure anywhere.
 
 ## Post-checks
 

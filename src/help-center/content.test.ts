@@ -486,3 +486,65 @@ describe('the product name', () => {
     }
   });
 });
+
+describe('the key-structure vocabulary', () => {
+  /*
+   * The house terms for Guardian's two account keys are "everyday key" and
+   * "recovery key". The Miden blog calls the same pair "hot key" and "cold
+   * key"; nothing on the site does, and this is what keeps it that way when
+   * the next article is written from the blog.
+   *
+   * The two patterns are deliberately NOT symmetrical. "hot key" and
+   * "hot-key" are caught; the closed "hotkey" is not, because that spelling
+   * belongs to keyboard shortcuts and this repo documents keyboard
+   * navigation. "coldkey" has no such competing sense, so the closed form
+   * stays banned there. A guard that only catches the spacing the source
+   * happened to pick is not a guard — but neither is one that fails on a
+   * word used correctly.
+   */
+  const BANNED = [
+    { pattern: /hot[ \u00a0-]keys?/gi, instead: 'everyday key' },
+    { pattern: /cold[ \u00a0-]?keys?/gi, instead: 'recovery key' }
+  ] as const;
+
+  function retired(text: string) {
+    return BANNED.flatMap(({ pattern, instead }) =>
+      (text.match(pattern) ?? []).map(match => `"${match}" — say "${instead}"`)
+    );
+  }
+
+  it('is "everyday key" and "recovery key" in every article, held-back ones included', () => {
+    // helpCenterAllArticles, not helpCenterArticles: a held-back article is
+    // one line away from publishing, so it has to comply before it gets there.
+    for (const article of helpCenterAllArticles) {
+      expect(retired(article.title), `${article.id} title`).toEqual([]);
+
+      for (const platform of article.platforms) {
+        const body = article.bodies[platform] as string;
+        expect(retired(body), `${article.id} (${platform})`).toEqual([]);
+      }
+    }
+  });
+
+  it('is the vocabulary on the content-source pages too, so fidelity cannot pull it back', () => {
+    // The articles are checked verbatim against content-source. Leaving the
+    // retired terms there would make correcting an article fail the fidelity
+    // check instead — the two files have to move together.
+    expect(retired(extensionSource), 'content-source/extension.md').toEqual([]);
+    expect(retired(mobileSource), 'content-source/mobile.md').toEqual([]);
+  });
+
+  it('is the vocabulary in the interface too, not only the articles', () => {
+    const components = import.meta.glob<string>('./*.tsx', {
+      query: '?raw',
+      import: 'default',
+      eager: true
+    });
+
+    expect(Object.keys(components).length).toBeGreaterThan(0);
+
+    for (const [file, source] of Object.entries(components)) {
+      expect(retired(source), file).toEqual([]);
+    }
+  });
+});
