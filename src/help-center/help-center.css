@@ -163,17 +163,45 @@
 }
 
 /*
- * The group heading highlights on hover and at no other time.
+ * One highlight in this tree, on the last thing the reader chose.
  *
- * It used to stay lit while you were anywhere inside the group, which meant
- * two things were highlighted at once — the group and the subcategory you had
- * actually clicked — and the one you chose was not obviously the one being
- * pointed at. The selection belongs to the row you clicked.
+ * It used to sit on .is-active — the group containing the current page —
+ * which meant a group and a subcategory were lit at once and the one actually
+ * chosen was not the one being pointed at. It is now .is-selected, set by
+ * clicking a heading and cleared by going anywhere, so the highlight
+ * transfers to whatever was clicked last and only ever marks one thing.
  *
- * The group is still findable without it: it is the one left expanded, and it
- * is the one containing the highlighted row. .is-active stays on the element
- * for the state it drives; it simply no longer paints.
+ * .is-active stays on the element for the state it drives. It no longer
+ * paints: the current group is findable as the one left expanded, and as the
+ * one holding the highlighted row.
  */
+.help-center-navigation-heading.is-selected {
+  color: var(--text-strong);
+  background: var(--tint-strong);
+}
+
+/*
+ * One highlight means one. While a heading holds it, the row for the page
+ * behind stands down to its resting appearance — otherwise clicking a group
+ * lights it while the last page stays lit too, which is the two-at-once
+ * problem in a new place.
+ *
+ * The page is not lost: it is the article still on screen beside the tree.
+ */
+.help-center-navigation.has-selected-heading .help-center-category-list a.is-active {
+  color: var(--text-body);
+  border-color: transparent;
+  background: none;
+}
+
+.help-center-navigation.has-selected-heading
+  .help-center-category-list
+  a.is-active
+  .help-center-category-number {
+  border-color: var(--tint-strong);
+  color: var(--text-faint);
+  background: none;
+}
 
 .help-center-navigation-group + .help-center-navigation-group {
   margin-top: 0.25rem;

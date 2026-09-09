@@ -157,6 +157,18 @@ export function HelpCenter() {
   const [openMainCategoryIds, setOpenMainCategoryIds] = useState<ReadonlySet<string>>(
     () => new Set(defaultMainCategoryId ? [defaultMainCategoryId] : [])
   );
+  /*
+   * The heading the reader last clicked, and nothing more.
+   *
+   * The highlight in this tree marks the last thing chosen, wherever it was:
+   * click a subcategory and the row holds it, click a group and the group
+   * holds it. A group heading is a disclosure toggle rather than a link, so
+   * there is no route change to hang that on — hence one piece of state.
+   *
+   * It is cleared whenever the route moves, so opening a group and then
+   * picking a page inside it leaves the page highlighted rather than both.
+   */
+  const [selectedMainCategoryId, setSelectedMainCategoryId] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [query, setQuery] = useState(() => parseSearchQuery(window.location.search));
   const [helpful, setHelpful] = useState<'yes' | 'no' | null>(null);
@@ -232,6 +244,12 @@ export function HelpCenter() {
     setHelpful(null);
     setLinkCopied(false);
   }, [activeArticleId]);
+
+  // Going somewhere hands the highlight to the page you went to, so a group
+  // opened on the way does not keep it.
+  useEffect(() => {
+    setSelectedMainCategoryId(null);
+  }, [activeCategoryId, activeArticleId]);
 
   // A reader who found the answer by searching can now send someone the
   // search. It was component state only, so the URL described the category
@@ -488,6 +506,7 @@ export function HelpCenter() {
   }
 
   const toggleMainCategory = (mainCategoryId: string) => {
+    setSelectedMainCategoryId(mainCategoryId);
     setOpenMainCategoryIds(current => {
       const next = new Set(current);
       if (next.has(mainCategoryId)) next.delete(mainCategoryId);
@@ -551,7 +570,12 @@ export function HelpCenter() {
               <span>Bread Wallet</span>
           </a>
 
-          <nav aria-label="Help Center categories" className="help-center-navigation">
+          <nav
+            aria-label="Help Center categories"
+            className={`help-center-navigation${
+              selectedMainCategoryId === null ? '' : ' has-selected-heading'
+            }`}
+          >
             {helpCenterMainCategories.length > 0 ? (
               helpCenterMainCategories.map(mainCategory => {
                 const isGroupOpen = openMainCategoryIds.has(mainCategory.id);
@@ -562,7 +586,9 @@ export function HelpCenter() {
                 return (
                   <section className="help-center-navigation-group" key={mainCategory.id}>
                     <button
-                      className={`help-center-navigation-heading${isActiveGroup ? ' is-active' : ''}`}
+                      className={`help-center-navigation-heading${isActiveGroup ? ' is-active' : ''}${
+                        selectedMainCategoryId === mainCategory.id ? ' is-selected' : ''
+                      }`}
                       type="button"
                       aria-expanded={isGroupOpen}
                       aria-controls={panelId}
