@@ -8,7 +8,7 @@ platforms: [extension-desktop, mobile]
 
 The most important thing to know: if your wallet is still unlocked and working on your device, you haven't truly lost access yet, so back up your recovery phrase again right away and export an encrypted wallet file too, while you still can.
 
-**There's an important detail here:** your recovery phrase restores your public account, but a private account also needs its own backup, your encrypted wallet file (or Guardian). So "losing your recovery phrase" and "losing your private account backup" are two different problems, and it's worth protecting against both.
+**There's an important detail here:** your recovery phrase restores your public account, but a private account also needs its own backup, your encrypted wallet file (or Guardian). So *losing your recovery phrase* and *losing your private account backup* are two different problems, and it's worth protecting against both.
 
 Whether you can recover depends on your wallet setup, whether Guardian is on, and which backups you still have.
 
@@ -25,4 +25,4 @@ Your recovery phrase and encrypted wallet file are your only backups.
 
 **Important note:**
 
-No one from Bread Wallet or your Guardian operator can reset or recover your recovery phrase for you. And remember: your recovery phrase alone does not bring back a private account; keep your encrypted wallet file (and/or Guardian) for that. Anyone claiming they can "recover" your lost phrase is running a scam.
+No one from Bread Wallet or your Guardian operator can reset or recover your recovery phrase for you. And remember: your recovery phrase alone does not bring back a private account; keep your encrypted wallet file (and/or Guardian) for that. Anyone claiming they can *recover* your lost phrase is running a scam.

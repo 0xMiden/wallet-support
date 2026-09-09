@@ -12,4 +12,4 @@ The most important step if you've been compromised: move your remaining assets t
 
 **Important note:**
 
-Never share your recovery phrase or backup password with anyone offering to "recover" or "restore" hacked funds. This is one of the most common scams, and it only makes things worse. Bread Wallet support will never ask for your recovery phrase, and neither will a Guardian operator.
+Never share your recovery phrase or backup password with anyone offering to *recover* or *restore* hacked funds. This is one of the most common scams, and it only makes things worse. Bread Wallet support will never ask for your recovery phrase, and neither will a Guardian operator.

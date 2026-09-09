@@ -1,6 +1,6 @@
 ---
 id: my-token-is-stuck-on-consuming-receiver-address
-title: My token is stuck on "Consuming" (receiver address)
+title: My token is stuck on Consuming (receiver address)
 mainCategory: troubleshooting
 subcategory: common-issues-and-support
 platforms: [extension-desktop, mobile]

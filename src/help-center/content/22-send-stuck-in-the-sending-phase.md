@@ -1,6 +1,6 @@
 ---
 id: send-stuck-in-the-sending-phase
-title: Send stuck in the "Sending" phase
+title: Send stuck in the Sending phase
 mainCategory: troubleshooting
 subcategory: common-issues-and-support
 platforms: [extension-desktop, mobile]

@@ -77,7 +77,7 @@ The most important step if you've been compromised: move your remaining assets t
 
 **Important note:**
 
-Never share your recovery phrase or backup password with anyone offering to "recover" or "restore" hacked funds. This is one of the most common scams, and it only makes things worse. Bread Wallet support will never ask for your recovery phrase, and neither will a Guardian operator.
+Never share your recovery phrase or backup password with anyone offering to *recover* or *restore* hacked funds. This is one of the most common scams, and it only makes things worse. Bread Wallet support will never ask for your recovery phrase, and neither will a Guardian operator.
 
 ### How do I restore my wallet with a recovery phrase?
 
@@ -161,7 +161,7 @@ Think of your recovery phrase as the master key to a safe; whoever holds it owns
 
 The most important thing to know: if your wallet is still unlocked and working on your device, you haven't truly lost access yet, so back up your recovery phrase again right away and export an encrypted wallet file too, while you still can.
 
-**There's an important detail here:** your recovery phrase restores your public account, but a private account also needs its own backup, your encrypted wallet file (or Guardian). So "losing your recovery phrase" and "losing your private account backup" are two different problems, and it's worth protecting against both.
+**There's an important detail here:** your recovery phrase restores your public account, but a private account also needs its own backup, your encrypted wallet file (or Guardian). So *losing your recovery phrase* and *losing your private account backup* are two different problems, and it's worth protecting against both.
 
 Whether you can recover depends on your wallet setup, whether Guardian is on, and which backups you still have.
 
@@ -178,7 +178,7 @@ Your recovery phrase and encrypted wallet file are your only backups.
 
 **Important note:**
 
-No one from Bread Wallet or your Guardian operator can reset or recover your recovery phrase for you. And remember: your recovery phrase alone does not bring back a private account; keep your encrypted wallet file (and/or Guardian) for that. Anyone claiming they can "recover" your lost phrase is running a scam.
+No one from Bread Wallet or your Guardian operator can reset or recover your recovery phrase for you. And remember: your recovery phrase alone does not bring back a private account; keep your encrypted wallet file (and/or Guardian) for that. Anyone claiming they can *recover* your lost phrase is running a scam.
 
 ### What is the difference between a recovery phrase and an encrypted wallet file?
 
@@ -218,7 +218,7 @@ Guardian does not hold your recovery phrase, does not hold your private key, and
 
 On Miden, an account can be public or private, and the difference is about where your account's data is stored.
 
-- With a private account, only a small cryptographic "commitment" (the fingerprint of your data) is stored on the public blockchain, while the full account data stays with you, off-chain. This gives you strong privacy; the network can confirm your account is valid without seeing its contents, like your balances.
+- With a private account, only a small cryptographic *commitment* (the fingerprint of your data) is stored on the public blockchain, while the full account data stays with you, off-chain. This gives you strong privacy; the network can confirm your account is valid without seeing its contents, like your balances.
 - With a public account, the full account data is stored on-chain and is visible to everyone.
 
 Because a private account's data lives only with you, your recovery phrase alone won't bring it back; you recover a private account from your encrypted wallet file or Guardian, not from the recovery phrase alone.
@@ -257,11 +257,11 @@ Recall height is the block height after which a sender can reclaim an unclaimed 
 
 Please report this directly to our [**SUPPORT**](https://miden-feedback-v2.miden-feedback-relay.workers.dev/?cb=4).
 
-### My token is stuck on "Consuming" (receiver address)
+### My token is stuck on Consuming (receiver address)
 
 If a transaction appears stuck on the **Consuming** stage, the wallet is still working in the background and will often resolve it on its own within a few minutes. No action is needed in most cases. If it remains stuck, closing and reopening the app may prompt the wallet to resume the transaction. The wallet will cancel, mark it as failed if it cannot be completed within 30 minutes, and attempt to resume note consumption.
 
-### Send stuck in the "Sending" phase
+### Send stuck in the Sending phase
 
 If the app closes while a send is in progress, the transaction may stay in the **Sending** state for up to 30 minutes. No funds leave the wallet. If the transaction cannot complete, it will be marked as failed and your token balance will remain the same.
 

@@ -548,3 +548,35 @@ describe('the key-structure vocabulary', () => {
     }
   });
 });
+
+describe('quotation marks', () => {
+  /*
+   * There are none, by Ivan's call 2026-09-09. A UI label is bold, a word
+   * being talked about rather than used is italic, and a concept is plain
+   * text — so a straight double quote in an article is a label that never
+   * got converted.
+   *
+   * Titles are checked with the bodies. They are escaped plain text, so
+   * neither bold nor italic reaches them: the quotes there were simply
+   * dropped, and this is what stops them coming back.
+   *
+   * Only the articles are scanned. content-source carries a provenance
+   * header that quotes the Notion page it was read from, and that header is
+   * never rendered; the fidelity check is what keeps the article bodies and
+   * their source in step.
+   */
+  function quoted(text: string) {
+    return text.match(/"[^"]*"/g) ?? [];
+  }
+
+  it('are absent from every article, held-back ones included', () => {
+    for (const article of helpCenterAllArticles) {
+      expect(quoted(article.title), `${article.id} title`).toEqual([]);
+
+      for (const platform of article.platforms) {
+        const body = article.bodies[platform] as string;
+        expect(quoted(body), `${article.id} (${platform}) — bold a UI label, italicise a word-as-word`).toEqual([]);
+      }
+    }
+  });
+});
