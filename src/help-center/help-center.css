@@ -1422,7 +1422,7 @@
   width: 100%;
   max-width: var(--frame);
   margin: 0 auto;
-  padding: 0 var(--space-5);
+  padding: 0 var(--gutter);
 }
 
 .help-home-main:focus,

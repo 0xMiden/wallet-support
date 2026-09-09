@@ -171,8 +171,27 @@
   /* Page width, 83rem = 1328px, the reference's container. */
   --frame: 83rem;
 
-  /* Desktop gutter, from the reference's 40px. The footer keeps its own
-     tighter padding: its brand sits against the page edge by design, and an
-     e2e test measures that it does. */
+  /*
+   * Page gutter. 2.5rem = the reference's 40px on desktop, stepping down on
+   * a phone where 40px of a 390px screen is a fifth of the width.
+   *
+   * The footer is deliberately outside this: its brand sits against the page
+   * edge by design, and a Playwright case measures that the logo starts
+   * within 40px of the footer's own left edge at 1600px. Handing it the
+   * 2.5rem gutter would put it exactly on that boundary.
+   */
   --gutter: 2.5rem;
+}
+
+/*
+ * One responsive token. Our breakpoints stay where they are — 620, 900 and
+ * 1180 are set where this layout's sidebar grid actually breaks, whereas the
+ * reference's 991/767/479 are Webflow's stock values and answer to nothing in
+ * our page.
+ */
+@media (max-width: 620px) {
+  .help-center-shell,
+  .help-center-home {
+    --gutter: 1.25rem;
+  }
 }
