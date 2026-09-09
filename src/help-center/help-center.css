@@ -223,15 +223,31 @@
   transition: color 160ms ease, background 160ms ease;
 }
 
+/*
+ * Both halves of this hover died in the inversion.
+ *
+ * The colour change was --text-body to --help-copy, which on the dark ground
+ * ran #ddd2cb to #fcfaf7 — a visible brightening. On the light ground both
+ * tokens are #484848, so it set the colour to the colour it already was.
+ *
+ * The background was --tint-faint, 6% accent. On near-black that read as a
+ * warm glow; composited on the white sidebar it is #fef7f3, twenty-one
+ * channel steps from white across all three, which is nothing.
+ *
+ * So the row underlined on hover and did nothing else. Now it darkens to the
+ * strong ink and takes a tint that can actually be seen, and the ladder from
+ * rest through hover to active is three distinct steps rather than two that
+ * happen to look the same.
+ */
 .help-center-category-list a:hover {
-  color: var(--help-copy);
-  background: var(--tint-faint);
+  color: var(--text-strong);
+  background: var(--tint-soft);
 }
 
 .help-center-category-list a.is-active {
-  color: var(--help-copy);
+  color: var(--text-strong);
   border-color: var(--tint-strong);
-  background: var(--tint-soft);
+  background: var(--tint-medium);
 }
 
 .help-center-category-list a.is-active .help-center-icon {

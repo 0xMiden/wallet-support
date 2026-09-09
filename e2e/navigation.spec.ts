@@ -280,3 +280,73 @@ test('a focused search box is ringed by its pill, not by a rectangle inside it',
     expect(shadow, `${route}: the wrapper must show the focus instead`).not.toBe('none');
   }
 });
+
+test('every hover state actually changes something', async ({ page }) => {
+  /*
+   * Three bugs this session were the same shape: a rule that exists, reads
+   * correctly, and does nothing. The underline-on-hover rule named a root
+   * class that is not in the markup. The sidebar hover set --help-copy over
+   * --text-body, two tokens that were different on the dark ground and are
+   * both #484848 on the light one, and painted a 6% tint that survived the
+   * inversion as twenty-one channel steps from white.
+   *
+   * Reading the CSS cannot catch that. Hovering can — but only if it watches
+   * the right properties. The first version of this test compared every
+   * property at once and passed the dead sidebar hover, because a global rule
+   * underlines any link in the shell and that alone counted as "something
+   * changed". A surface is checked for a surface change; a text link is
+   * allowed to answer with its underline.
+   */
+  const SURFACE = ['backgroundColor', 'color', 'borderTopColor', 'transform', 'opacity'] as const;
+  const TEXT = ['color', 'textDecorationLine'] as const;
+
+  const targets = [
+    ['/', '.help-home-card', 'a home category card', SURFACE, null],
+    ['/', '.help-home-section-link', 'the View all topics link', TEXT, null],
+    ['/', '.help-home-nav a:not([aria-current])', 'a header nav pill', SURFACE, null],
+    ['/#setup-and-basic-use', '.help-center-card', 'a subcategory article card', SURFACE, null],
+    [
+      '/#setup-and-basic-use',
+      '.help-center-category-list a:not(.is-active)',
+      'a sidebar subcategory',
+      SURFACE,
+      // The only open group is the active one, and its single subcategory is
+      // the active row. Open another to get at a resting one, which is what a
+      // reader does before hovering it anyway.
+      'Manage wallet'
+    ],
+    [
+      '/#setup-and-basic-use',
+      ".help-center-platform-tabs button[aria-selected='false']",
+      'the unselected platform tab',
+      SURFACE,
+      null
+    ]
+  ] as const;
+
+  const read = (locator: ReturnType<typeof page.locator>, props: readonly string[]) =>
+    locator.evaluate((element, names) => {
+      const style = getComputedStyle(element) as unknown as Record<string, string>;
+      return names.map(name => style[name]).join('|');
+    }, props as string[]);
+
+  for (const [route, selector, label, props, openGroup] of targets) {
+    await page.goto(route);
+    if (openGroup !== null) {
+      await page.locator('.help-center-navigation-heading', { hasText: openGroup }).click();
+      await expect(page.locator(selector).first()).toBeVisible();
+    }
+    // Park the pointer somewhere harmless first: measuring "rest" while the
+    // mouse still sits on the element from a previous step is how a hover
+    // underline once got recorded as the resting state.
+    await page.mouse.move(4, 4);
+    const element = page.locator(selector).first();
+    await element.scrollIntoViewIfNeeded();
+
+    const rest = await read(element, props);
+    await element.hover();
+    await expect
+      .poll(() => read(element, props), { message: `${label} does not change on hover` })
+      .not.toBe(rest);
+  }
+});
