@@ -162,10 +162,18 @@
   background: var(--tint-medium);
 }
 
-.help-center-navigation-heading.is-active {
-  color: var(--text-strong);
-  background: var(--tint-strong);
-}
+/*
+ * The group heading highlights on hover and at no other time.
+ *
+ * It used to stay lit while you were anywhere inside the group, which meant
+ * two things were highlighted at once — the group and the subcategory you had
+ * actually clicked — and the one you chose was not obviously the one being
+ * pointed at. The selection belongs to the row you clicked.
+ *
+ * The group is still findable without it: it is the one left expanded, and it
+ * is the one containing the highlighted row. .is-active stays on the element
+ * for the state it drives; it simply no longer paints.
+ */
 
 .help-center-navigation-group + .help-center-navigation-group {
   margin-top: 0.25rem;
@@ -188,12 +196,6 @@
   place-items: center;
   font-size: var(--text-2xs);
   font-variant-numeric: tabular-nums;
-}
-
-.help-center-navigation-heading.is-active .help-center-main-category-number {
-  border-color: var(--tint-edge);
-  color: var(--accent-text);
-  background: var(--tint-soft);
 }
 
 .help-center-icon,
