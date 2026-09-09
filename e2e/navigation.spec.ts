@@ -307,6 +307,13 @@ test('every hover state actually changes something', async ({ page }) => {
     ['/#setup-and-basic-use', '.help-center-card', 'a subcategory article card', SURFACE, null],
     [
       '/#setup-and-basic-use',
+      '.help-center-navigation-heading:not(.is-active)',
+      'a sidebar group heading',
+      SURFACE,
+      null
+    ],
+    [
+      '/#setup-and-basic-use',
       '.help-center-category-list a:not(.is-active)',
       'a sidebar subcategory',
       SURFACE,
@@ -324,11 +331,52 @@ test('every hover state actually changes something', async ({ page }) => {
     ]
   ] as const;
 
+  /*
+   * Returns the channels, not a string, so the change can be weighed. "Any
+   * difference at all" was not a strong enough bar: the group headings hovered
+   * to a 6% accent tint, which is a real change and an invisible one — 21
+   * channel steps from white, against 36 for the 10% the rest of the sidebar
+   * uses. A test that passes a hover nobody can see is not testing the thing
+   * that matters.
+   */
   const read = (locator: ReturnType<typeof page.locator>, props: readonly string[]) =>
     locator.evaluate((element, names) => {
       const style = getComputedStyle(element) as unknown as Record<string, string>;
-      return names.map(name => style[name]).join('|');
+      const channels: number[] = [];
+      for (const name of names) {
+        const value = style[name] ?? '';
+        const numbers = value.match(/[\d.]+/g);
+        if (name === 'backgroundColor' || name === 'color' || name === 'borderTopColor') {
+          const [r, g, b] = (numbers ?? ['0', '0', '0']).map(Number) as [number, number, number];
+          const alpha = numbers && numbers.length > 3 ? Number(numbers[3]) : 1;
+          // Composite onto the parent, so a tint's real weight is measured
+          // rather than its nominal alpha.
+          const parent = element.parentElement;
+          const backdrop = (parent ? getComputedStyle(parent).backgroundColor : 'rgb(255,255,255)')
+            .match(/[\d.]+/g)
+            ?.slice(0, 3)
+            .map(Number) ?? [255, 255, 255];
+          channels.push(
+            ...[r, g, b].map((channel, index) =>
+              Math.round(channel * alpha + (backdrop[index] as number) * (1 - alpha))
+            )
+          );
+        } else if (name === 'textDecorationLine') {
+          // An underline appearing or vanishing is perceptible whatever its
+          // numbers say, so it is scored as such rather than by string length.
+          channels.push(value === 'none' ? 0 : 100);
+        } else {
+          channels.push(...(numbers ?? []).map(Number), value.length);
+        }
+      }
+      return channels;
     }, props as string[]);
+
+  const distance = (a: readonly number[], b: readonly number[]) =>
+    a.reduce((total, value, index) => total + Math.abs(value - (b[index] ?? 0)), 0);
+
+  // 6% accent on white measures 21; the 10% the sidebar uses measures 36.
+  const PERCEPTIBLE = 24;
 
   for (const [route, selector, label, props, openGroup] of targets) {
     await page.goto(route);
@@ -346,7 +394,9 @@ test('every hover state actually changes something', async ({ page }) => {
     const rest = await read(element, props);
     await element.hover();
     await expect
-      .poll(() => read(element, props), { message: `${label} does not change on hover` })
-      .not.toBe(rest);
+      .poll(() => read(element, props).then(hover => distance(rest, hover)), {
+        message: `${label} changes too little on hover to be seen`
+      })
+      .toBeGreaterThanOrEqual(PERCEPTIBLE);
   }
 });

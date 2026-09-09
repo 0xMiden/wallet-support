@@ -144,10 +144,27 @@
   transition: color 160ms ease, background 160ms ease;
 }
 
-.help-center-navigation-heading:hover,
+/*
+ * Split, and both made visible. These shared one rule and one 6% tint, so
+ * hovering a group looked exactly like the group you were already in, and
+ * neither looked like much: 6% accent on the white sidebar composites to
+ * #fef7f3, twenty-one channel steps from white.
+ *
+ * The colour was --help-copy over --text-body, which is the same no-op the
+ * subcategory rows had — both tokens are #484848 on this ground.
+ *
+ * The active group stays weaker than its active child, which carries an
+ * accent border and a solid number on top of its own tint. A parent that
+ * shouts as loudly as the page you are on is a parent competing with it.
+ */
+.help-center-navigation-heading:hover {
+  color: var(--text-strong);
+  background: var(--tint-medium);
+}
+
 .help-center-navigation-heading.is-active {
-  color: var(--help-copy);
-  background: var(--tint-faint);
+  color: var(--text-strong);
+  background: var(--tint-strong);
 }
 
 .help-center-navigation-group + .help-center-navigation-group {
@@ -241,13 +258,13 @@
  */
 .help-center-category-list a:hover {
   color: var(--text-strong);
-  background: var(--tint-soft);
+  background: var(--tint-medium);
 }
 
 .help-center-category-list a.is-active {
   color: var(--text-strong);
-  border-color: var(--tint-strong);
-  background: var(--tint-medium);
+  border-color: var(--tint-edge);
+  background: var(--tint-strong);
 }
 
 .help-center-category-list a.is-active .help-center-icon {
@@ -565,8 +582,15 @@
   transition: color 160ms ease, background 160ms ease;
 }
 
+/*
+ * The tab sits on a track that is itself a 6% tint, so a 10% hover was a 4%
+ * step and effectively nothing — the same invisible-hover bug as the sidebar,
+ * hiding behind the fact that the number looked reasonable in isolation. A
+ * tint is only as visible as the difference between it and what is behind it.
+ */
 .help-center-platform-tabs button:hover {
-  background: var(--tint-soft);
+  color: var(--text-strong);
+  background: var(--tint-strong);
 }
 
 .help-center-platform-tabs button[aria-selected='true'] {
