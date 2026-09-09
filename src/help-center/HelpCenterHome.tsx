@@ -56,9 +56,15 @@ function CategoryGlyph({ categoryId }: { categoryId: string }) {
      * category panel at illustration scale, where the gear's radiating teeth
      * read as a sun rather than as a tool, and where a wrench has room to be
      * a wrench.
+     *
+     * Centred by measurement, not by eye. The first version of this path ran
+     * to x=24.31 in a 24-unit viewBox and, with half of the 1.4 stroke on top,
+     * painted to 25.01 — so the jaw was sliced off down its right edge. The
+     * shape is unchanged; it is translated by (-2.19, +0.64) so the painted
+     * box, stroke included, is centred and clears every side.
      */
     troubleshooting:
-      'M14.9 6.6a4.1 4.1 0 0 1 5.2-5.1l-2.8 2.8.8 3.2 3.2.8 2.8-2.8a4.1 4.1 0 0 1-5.1 5.2L7.7 20.9a2.2 2.2 0 0 1-3.1-3.1Z'
+      'M12.71 7.24a4.1 4.1 0 0 1 5.2-5.1l-2.8 2.8.8 3.2 3.2.8 2.8-2.8a4.1 4.1 0 0 1-5.1 5.2L5.51 21.54a2.2 2.2 0 0 1-3.1-3.1Z'
   };
 
   return (
