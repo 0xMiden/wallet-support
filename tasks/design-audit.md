@@ -199,3 +199,18 @@ interaction, and it improves affordance in body copy.
 The measurement turned up a content card the static pass missed: background `#fffdf9`, radius
 `28px`, no border. That is the reference's real content surface and is the right model for our
 category cards on the light ground.
+
+---
+
+# Decision: #efe7d8 is not a page surface (2026-09-09)
+
+**Ruled out by Ivan.** The colour is genuinely from the reference — it appears there on three
+elements — but on all three it is an *illustration* fill: `.bread-arm`, `.bread-pivot` and
+`.bread-lip`, the parts of the toaster. The reference never uses it as a page surface.
+
+It had been adopted as the support panel's and footer's ground, on the strength of being a sampled
+brand colour. Being sampled was not the whole test; how the reference *uses* it is part of the
+colour.
+
+**If a distinct surface is needed later, take it from the pastel card set** — `#a8bca3`, `#e77539`,
+`#91acc1`, `#beacd2`. Those the reference does use as panels, so they carry the right precedent.

@@ -1,3 +1,6 @@
+import { readFileSync, readdirSync } from 'node:fs';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 
 import extensionSource from '../../content-source/extension.md?raw';
@@ -578,5 +581,83 @@ describe('quotation marks', () => {
         expect(quoted(body), `${article.id} (${platform}) — bold a UI label, italicise a word-as-word`).toEqual([]);
       }
     }
+  });
+});
+
+describe('a subcategory with nothing on the selected platform', () => {
+  /*
+   * Unreachable today: every subcategory has at least one article on both
+   * platforms, so the empty branch in HelpCenter never renders. It becomes
+   * reachable the moment content goes uneven — one extension-only article
+   * added to a thin subcategory is enough — and an untested branch that only
+   * fires on a content change is one that rots quietly until it fires.
+   *
+   * This is the logic the branch turns on, not the markup: there is no DOM
+   * test stack here by Ivan's call, and Playwright cannot reach a state the
+   * content cannot produce.
+   */
+  const extensionOnly = parseArticle(
+    `---
+id: extension-only
+title: Extension only
+mainCategory: getting-started
+subcategory: setup-and-basic-use
+platforms: [extension-desktop]
+---
+
+Only on the extension.`,
+    'extension-only.md'
+  );
+
+  it('has no articles on the platform it does not declare', () => {
+    expect(articlesFor([extensionOnly], 'setup-and-basic-use', 'extension-desktop')).toHaveLength(1);
+    expect(articlesFor([extensionOnly], 'setup-and-basic-use', 'mobile')).toHaveLength(0);
+  });
+
+  it('still offers the platform choice, so the reader can see why it is empty', () => {
+    // A subcategory that silently showed nothing, with no way to tell that the
+    // other platform has pages, would read as a broken page rather than as an
+    // answer. The tabs are what make the empty state legible.
+    expect(subcategoryNeedsPlatformChoice([extensionOnly], 'setup-and-basic-use')).toBe(true);
+  });
+
+  it('is empty for a subcategory that has no articles at all', () => {
+    expect(articlesFor([extensionOnly], 'guardian-protection', 'extension-desktop')).toHaveLength(0);
+  });
+});
+
+describe('design tokens', () => {
+  /*
+   * Three of the four findings in the 2026-09-09 brand audit were the same
+   * shape: a rule written and never wired up. --measure sat in the scale
+   * unreferenced while article text ran to 88 characters; :focus-visible named
+   * a root the home page does not use; the underline-on-hover rule named
+   * .help-home-shell, a class that exists nowhere. A token defined and never
+   * read is the cheapest of those to detect, so it is detected here.
+   */
+  /*
+   * Read off disk. Vite's CSS pipeline intercepts a .css import in the node
+   * test environment and returns an empty string for ?raw, ?inline and
+   * import.meta.glob alike — measured, not assumed — so the bundler cannot
+   * show us the source at all.
+   */
+  const cssDir = fileURLToPath(new URL('.', import.meta.url));
+  const cssFiles = readdirSync(cssDir).filter(name => name.endsWith('.css'));
+  const allCss = cssFiles.map(name => readFileSync(join(cssDir, name), 'utf8')).join('\n');
+
+  it('are every one of them referenced somewhere', () => {
+    expect(cssFiles.length).toBeGreaterThan(0);
+
+    // Anywhere, not just at the start of a line. Anchoring to line starts let
+    // a token declared inline — `.x { --never-read: red; }` — walk straight
+    // past the guard, which a mutation caught. A reference reads `var(--x)`
+    // and has no colon after the name, so this cannot mistake one for a
+    // declaration.
+    const defined = [...allCss.matchAll(/(--[a-z0-9-]+)\s*:/g)].map(match => match[1] as string);
+    expect(defined.length).toBeGreaterThan(20);
+
+    const unused = [...new Set(defined)].filter(token => !allCss.includes(`var(${token})`));
+
+    expect(unused, 'defined but never read — wire it up or delete it').toEqual([]);
   });
 });

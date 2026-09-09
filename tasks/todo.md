@@ -672,3 +672,15 @@ Also unresolved, and not a casing question:
 - `21` and `22` keep quoted `"Consuming"` / `"Sending"` in their titles while the bodies bold the
   same words. Titles are escaped plain text, so bold renders literally there; removing the quotes
   means editing two titles plus their `### ` headings in `content-source/`. Ivan's call, deferred.
+
+### Not built: the SAMPLE placeholder badge
+
+Belongs with the screenshot work above, and does not exist yet. Nothing in the component tree or
+the stylesheet renders a SAMPLE badge, and no article carries an `[image removed]` marker any more
+— they were dropped at migration. The 2026-09-09 brand audit went looking for it as an existing
+element and found nothing, which is worth recording so the next person does not assume it is there
+and only styled wrongly.
+
+It becomes real work the moment the first screenshot lands: a placeholder image needs to say it is a
+placeholder, and the badge has to be legible on whatever the screenshot happens to show. Not built
+now, deliberately.
