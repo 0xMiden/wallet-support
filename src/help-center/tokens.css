@@ -166,20 +166,26 @@
   --radius-marker: 55% 55% 38% 38%;
 
   /*
-   * One colour per main category, sampled from the reference's four
-   * illustrated cards. The fifth is ours: the four hues sit at 21, 108, 206
-   * and 268 degrees, and #c8a2b9 lands in the middle of the 112-degree gap
-   * at the same saturation and lightness as the rest of the family.
+   * Two card surfaces, both Bread's own orange and green. Not one colour per
+   * category: five categories meant five colours, and a sixth category would
+   * have meant inventing a sixth. A palette that grows with the content is a
+   * palette that stops being a palette.
    *
-   * Decorative only. Every one of them measures under 4.5:1 against the page
-   * ink, so text never sits on them — the card's title and description are on
-   * the page ground, below the panel.
+   *   --card-panel   the main category card's artwork panel
+   *   --card-accent  the subcategory card's band and its numbered chip
+   *
+   * The panel is the accent at its palest tint rather than #e77537 itself,
+   * for two reasons. Five saturated orange blocks would own the page. And
+   * #e77537 is what the buttons and links wear — decoration should not carry
+   * the same colour as the primary action, or neither reads as meaning
+   * anything. The ink glyph sits on the panel at 9.29:1.
+   *
+   * The two are different colours on purpose: the main card and the
+   * subcategory card are different components and must not be mistaken for
+   * each other.
    */
-  --cat-getting-started: #a8bca3;
-  --cat-manage-wallet: #e77539;
-  --cat-privacy: #91acc1;
-  --cat-guardian: #beacd2;
-  --cat-troubleshooting: #c8a2b9;
+  --card-panel: var(--help-accent-pale);
+  --card-accent: #a8bca3;
 
   /* The reference's card panel: a large radius on a 16:9-ish artwork area. */
   --radius-panel: 1.75rem;

@@ -8,9 +8,7 @@
 }
 
 .help-center-shell {
-  background:
-    radial-gradient(circle at 94% 4%, var(--tint-soft), transparent 24rem),
-    var(--help-bg);
+  background: var(--help-bg);
   display: flex;
   flex-direction: column;
 }
@@ -65,26 +63,41 @@
   height: 100vh;
   padding: 2rem 1.25rem 1.25rem;
   border-right: 1px solid var(--help-line);
-  background: linear-gradient(180deg, var(--help-panel) 0, var(--help-panel-elevated) 55%, var(--help-panel-subtle) 100%);
+  background: var(--help-panel);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
 }
 
+/*
+ * The lockup, set to the reference's own proportions.
+ *
+ * Measured off the marketing hero: the mark stands 1.39x the wordmark's font
+ * size, the gap between them is about a tenth of the mark's height, and the
+ * wordmark is Nunito 900 in the page ink at display tracking. Those ratios are
+ * what make a lockup recognisable — more than the mark's outline does — and
+ * they are the part we can match exactly.
+ *
+ * The mark itself is still ours. The reference ships its loaf as a 158x152
+ * PNG, which cannot serve a 2x header, and tracing it was ruled out. A crisp
+ * mark at the right size beats a blurred one at the right shape.
+ */
 .help-center-brand {
+  --mark: 2rem;
   width: fit-content;
   font-family: var(--font-display);
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  font-size: var(--text-base);
-  font-weight: var(--weight-strong);
-  letter-spacing: var(--tracking-heading);
+  gap: calc(var(--mark) * 0.11);
+  color: var(--text-body);
+  font-size: calc(var(--mark) / 1.39);
+  font-weight: var(--weight-display);
+  letter-spacing: var(--tracking-display);
 }
 
 .help-center-brand img {
-  width: 2.15rem;
-  height: 2.15rem;
+  width: var(--mark);
+  height: var(--mark);
 }
 
 .help-center-brand span {
@@ -202,7 +215,7 @@
 .help-center-category-list a.is-active {
   color: var(--help-copy);
   border-color: var(--tint-strong);
-  background: linear-gradient(110deg, var(--tint-medium), var(--tint-faint));
+  background: var(--tint-soft);
 }
 
 .help-center-category-list a.is-active .help-center-icon {
@@ -242,8 +255,7 @@
 .help-center-main {
   min-width: 0;
   padding: clamp(1.5rem, 4vw, 4rem);
-  background-image: linear-gradient(90deg, var(--tint-faint) 1px, transparent 1px);
-  background-size: 5rem 100%;
+
 }
 
 .help-center-main-inner {
@@ -565,8 +577,13 @@
 }
 
 /*
- * The subcategory page's cards take the same language as the home page's:
- * the panel radius, the category's colour, and no hard border.
+ * The subcategory page's cards take the panel radius and the display face
+ * from the home page's cards, and one colour across every subcategory.
+ *
+ * They were briefly tinted per category, which meant the same card shape
+ * arrived in five different colours depending on where the reader had come
+ * from, and read as five different components rather than one. One green,
+ * everywhere.
  *
  * They do not take the home card's full artwork panel with the title
  * centred underneath. That shape is built to browse five things; this is a
@@ -580,9 +597,7 @@
   padding: var(--space-5) var(--space-5) var(--space-4);
   border: 1px solid var(--help-line);
   border-radius: var(--radius-panel);
-  background:
-    linear-gradient(180deg, var(--cat) 0 0.4rem, transparent 0.4rem),
-    var(--help-panel);
+  background: var(--help-panel);
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
@@ -598,15 +613,7 @@
   position: absolute;
   inset: 0 0 auto;
   height: 0.25rem;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--help-accent) 20%,
-    var(--help-accent-pale) 50%,
-    var(--help-accent) 80%,
-    transparent
-  );
-  opacity: 0.55;
+  background: var(--card-accent);
   content: '';
   transition: opacity 160ms ease;
 }
@@ -617,7 +624,7 @@
   border: 1px solid var(--help-line);
   border-radius: var(--radius-marker);
   color: var(--text-strong);
-  background: var(--cat);
+  background: var(--card-accent);
   display: grid;
   place-items: center;
   font-size: var(--text-2xs);
@@ -680,9 +687,7 @@
 .help-center-card:hover,
 .help-center-card:focus-within {
   border-color: var(--tint-edge);
-  background:
-    linear-gradient(180deg, var(--tint-medium), transparent 50%),
-    var(--help-panel-elevated);
+  background: var(--help-panel-elevated);
   transform: translateY(-2px);
 }
 
@@ -1023,9 +1028,7 @@
   padding: 0.7rem 0.9rem;
   border: 1px solid var(--tint-medium);
   border-radius: var(--radius-loaf);
-  background:
-    linear-gradient(135deg, var(--tint-soft), transparent 52%),
-    var(--help-panel);
+  background: var(--help-panel);
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
@@ -1042,9 +1045,7 @@
 
 .help-center-sequence-card:hover {
   border-color: var(--tint-edge);
-  background:
-    linear-gradient(135deg, var(--tint-medium), transparent 58%),
-    var(--help-panel-elevated);
+  background: var(--help-panel-elevated);
   transform: translateY(-2px);
 }
 
@@ -1245,13 +1246,9 @@
 }
 
 @media (max-width: 620px) {
+  /* One value moves the whole lockup: the wordmark is derived from it. */
   .help-center-brand {
-    font-size: var(--text-md);
-  }
-
-  .help-center-brand img {
-    width: 1.8rem;
-    height: 1.8rem;
+    --mark: 1.7rem;
   }
 
   .help-center-utility-bar {
@@ -1446,9 +1443,7 @@
   text-align: center;
   /* Warm light from above rather than the reference's decorative blobs: it
      lifts the search field off the ground without competing with it. */
-  background:
-    radial-gradient(ellipse 55% 75% at 50% 0%, var(--tint-strong), transparent 72%),
-    radial-gradient(ellipse 100% 45% at 50% 6%, var(--tint-faint), transparent 70%);
+
 }
 
 .help-home-hero h1 {
@@ -1684,21 +1679,8 @@
   display: grid;
   place-items: center;
   overflow: hidden;
-  background: var(--cat-getting-started);
+  background: var(--card-panel);
 }
-
-/*
- * One colour per main category, resolved once. Both the home page's category
- * cards and the subcategory page's article cards read --cat, so a category
- * looks the same wherever the reader meets it.
- */
-[data-category] { --cat: var(--cat-getting-started); }
-[data-category='manage-wallet'] { --cat: var(--cat-manage-wallet); }
-[data-category='privacy'] { --cat: var(--cat-privacy); }
-[data-category='guardian'] { --cat: var(--cat-guardian); }
-[data-category='troubleshooting'] { --cat: var(--cat-troubleshooting); }
-
-.help-home-card-panel { background: var(--cat); }
 
 /*
  * The artwork slot. A glyph fills it today; an <img> or an inline illustration
@@ -1775,9 +1757,7 @@
   padding: var(--space-6);
   border: 1px solid var(--tint-strong);
   border-radius: var(--radius-card);
-  background:
-    radial-gradient(circle at 8% 20%, var(--tint-soft), transparent 60%),
-    var(--help-panel-subtle);
+  background: var(--help-panel-subtle);
   display: flex;
   flex-wrap: wrap;
   align-items: center;

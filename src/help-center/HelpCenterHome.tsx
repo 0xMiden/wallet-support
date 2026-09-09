@@ -223,7 +223,7 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
                      * .help-home-card-art and nothing else — the panel, its
                      * ratio and its colour are all CSS.
                      */}
-                    <span className="help-home-card-panel" data-category={mainCategory.id}>
+                    <span className="help-home-card-panel">
                       <span className="help-home-card-art">
                         <CategoryGlyph categoryId={mainCategory.id} />
                       </span>
