@@ -3,6 +3,7 @@
 .help-center-shell,
 .help-center-home {
   min-height: 100vh;
+  font-family: var(--font-body);
   color: var(--help-copy);
 }
 
@@ -72,12 +73,13 @@
 
 .help-center-brand {
   width: fit-content;
+  font-family: var(--font-display);
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
   font-size: var(--text-base);
   font-weight: var(--weight-strong);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-heading);
 }
 
 .help-center-brand img {
@@ -452,11 +454,12 @@
 }
 
 .help-center-category h1 {
+  font-family: var(--font-display);
   max-width: 58rem;
   margin: 0;
   font-size: var(--text-2xl);
   color: var(--help-accent-pale);
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-strong);
   letter-spacing: -0.055em;
   line-height: 1.12;
   text-wrap: balance;
@@ -621,6 +624,7 @@
 }
 
 .help-center-card-title {
+  font-family: var(--font-display);
   margin: var(--space-2) 0 0;
   color: var(--text-strong);
   font-size: var(--text-lg);
@@ -854,6 +858,7 @@
 }
 
 .help-center-article-body h2 {
+  font-family: var(--font-display);
   margin: var(--space-6) 0 0;
   scroll-margin-top: var(--space-6);
   color: var(--text-strong);
@@ -1426,11 +1431,12 @@
 
 .help-home-hero h1 {
   max-width: 22ch;
+  font-family: var(--font-display);
   margin: 0 auto var(--space-4);
   font-size: clamp(2.25rem, 6vw, 3.75rem);
-  font-weight: var(--weight-strong);
-  line-height: 1.05;
-  letter-spacing: -0.035em;
+  font-weight: var(--weight-display);
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
 }
 
 .help-home-hero h1 em {
@@ -1596,9 +1602,10 @@
 
 .help-home-section-head h2 {
   margin: 0 0 var(--space-2);
+  font-family: var(--font-display);
   font-size: var(--text-2xl);
-  font-weight: var(--weight-strong);
-  letter-spacing: -0.02em;
+  font-weight: var(--weight-display);
+  letter-spacing: var(--tracking-display);
 }
 
 .help-home-section-head p {
@@ -1686,6 +1693,7 @@
 
 .help-home-card-title {
   font-size: var(--text-lg);
+  font-family: var(--font-display);
   font-weight: var(--weight-strong);
   letter-spacing: -0.01em;
 }
@@ -1741,10 +1749,11 @@
 }
 
 .help-home-support-copy h2 {
+  font-family: var(--font-display);
   margin: 0 0 var(--space-2);
   font-size: var(--text-2xl);
   font-weight: var(--weight-strong);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-heading);
 }
 
 .help-home-support-copy p {
