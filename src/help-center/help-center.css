@@ -317,8 +317,24 @@
   box-shadow: 0 0 0 3px var(--tint-strong);
 }
 
+/*
+ * Both search inputs, not just the category one.
+ *
+ * The affordance belongs to the wrapper: it is the pill the reader sees, it
+ * carries the accent border and the 3px ring on :focus-within, and it is the
+ * shape the control actually has. An outline on the input draws a rectangle
+ * inside that pill.
+ *
+ * This rule used to name .help-center-search alone, which was enough while the
+ * home page had no focus ring at all. Extending :focus-visible to
+ * .help-center-home switched one on, and the rectangle came back on a search
+ * box that had never shown one — the same rule, scoped to one root, missing
+ * the other.
+ */
 .help-center-search input:focus,
-.help-center-search input:focus-visible {
+.help-center-search input:focus-visible,
+.help-home-search input:focus,
+.help-home-search input:focus-visible {
   outline: none;
 }
 

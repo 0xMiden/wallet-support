@@ -244,3 +244,39 @@ test('back to top appears once scrolled, returns the reader, and skips the home 
   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
   await expect(button).toHaveCount(0);
 });
+
+test('a focused search box is ringed by its pill, not by a rectangle inside it', async ({ page }) => {
+  /*
+   * The affordance belongs to the wrapper on both search boxes: it is the
+   * shape the control actually has. An outline on the input draws a rectangle
+   * inside the pill, which is what this guards.
+   *
+   * It has happened twice. The rule that suppresses the input's own outline
+   * named the category search only, so extending :focus-visible to the home
+   * page switched a rectangle on inside a search box that had never shown one.
+   * Driven with real keyboard focus, because :focus-visible does not reliably
+   * fire on a programmatic .focus().
+   */
+  for (const [route, wrapper] of [
+    ['/', '.help-home-search-form'],
+    ['/#setup-and-basic-use', '.help-center-search']
+  ] as const) {
+    await page.goto(route);
+
+    const input = page.locator(`${wrapper} input`);
+    await input.click();
+
+    const outline = await input.evaluate(element => {
+      const style = getComputedStyle(element);
+      return `${style.outlineStyle} ${style.outlineWidth}`;
+    });
+    expect(outline, `${route}: the input itself must not draw a ring`).toContain('none');
+
+    // The wrapper still has to show the focus, or suppressing the input's
+    // outline would be an accessibility regression rather than a fix.
+    const shadow = await page
+      .locator(wrapper)
+      .evaluate(element => getComputedStyle(element).boxShadow);
+    expect(shadow, `${route}: the wrapper must show the focus instead`).not.toBe('none');
+  }
+});
