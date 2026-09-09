@@ -268,14 +268,24 @@
   font-size: var(--text-xs);
 }
 
+/*
+ * The category view's container, matching the home page's.
+ *
+ * These disagreed: home is --frame (1328px, the reference's container) with a
+ * --gutter of 40px, while this side capped at an unrelated 88rem and used a
+ * clamp running from 24px to 64px. Two halves of one site measuring
+ * differently is the sort of thing nobody points at and everybody feels.
+ *
+ * The vertical clamp stays — that is rhythm, not gutter, and it should go on
+ * growing with the viewport. Only the horizontal padding becomes the token.
+ */
 .help-center-main {
   min-width: 0;
-  padding: clamp(1.5rem, 4vw, 4rem);
-
+  padding: clamp(1.5rem, 4vw, 4rem) var(--gutter);
 }
 
 .help-center-main-inner {
-  width: min(100%, 88rem);
+  width: min(100%, var(--frame));
   margin: 0 auto;
 }
 
@@ -1254,8 +1264,11 @@
       visibility 0s;
   }
 
+  /* Vertical only. The horizontal padding is the gutter token at every width,
+     and restating it here as a clamp was what left the category view at 31px
+     while the home page sat at the token's 20px. */
   .help-center-main {
-    padding: clamp(1.25rem, 5vw, 2.5rem);
+    padding: clamp(1.25rem, 5vw, 2.5rem) var(--gutter);
   }
 
   .help-center-desktop-brand {
@@ -1958,7 +1971,11 @@
     display: none;
   }
 
-  .help-home-main,
+  /* The footer only. .help-home-main used to be here too, which overrode the
+     gutter token and left the home page at 16px while the category view sat
+     at the token's 20px — the same two-halves-disagreeing problem, one
+     breakpoint down. The footer keeps its tighter padding deliberately: its
+     brand sits against the page edge, and an e2e case measures that. */
   .help-center-footer {
     padding-inline: var(--space-4);
   }
