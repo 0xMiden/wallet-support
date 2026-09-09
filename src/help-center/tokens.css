@@ -51,23 +51,38 @@
     'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
   --font-display: Nunito, var(--font-body);
 
-  /* Surfaces and text roles. These still carry the dark values; the
-     inversion to the light ground is a commit of its own so that it can be
-     read, and reverted, on its own. */
-  --help-bg: #100c0a;
-  --help-panel: #211814;
-  --help-panel-elevated: #2a1e18;
-  --help-panel-subtle: #18110e;
-  --help-line: rgb(247 200 177 / 18%);
-  --help-rule: rgb(247 200 177 / 45%);
-  --help-muted: #aa9e97;
-  --help-copy: #fcfaf7;
+  /*
+   * Surfaces and text roles, on the reference's light ground.
+   *
+   * Ratios are measured against the surface each role actually sits on, not
+   * against the page ground alone, because a role that passes on #fbfbfb can
+   * fail on the callout. The worst surface is the callout at #efe7d8 and
+   * every role below clears 4.5:1 there too.
+   */
+  --help-bg: #fbfbfb;
+  --help-panel: #ffffff;
+  --help-panel-elevated: #fffdf9;
+  --help-panel-subtle: #f4f1ec;
+  --help-callout: #efe7d8;
 
-  --text-strong: #fcfaf7;
-  --text-body: #ddd2cb;
-  --text-muted: #b6a79e;
-  --text-faint: #9c8b81;
-  --ink-on-accent: #281207;
+  /* Borders stay ours: light, not the reference's hard 1px ink outline,
+     which reads heavy at article length. */
+  --help-line: rgb(72 72 72 / 12%);
+  --help-rule: rgb(72 72 72 / 26%);
+
+  --help-muted: #5f5f5f;
+  --help-copy: #484848;
+
+  --text-strong: #2e2b27;   /* 13.61:1 on the page, 11.46:1 on the callout */
+  --text-body: #484848;     /*  8.84:1 / 7.44:1  — the reference's own ink   */
+  --text-muted: #5f5f5f;    /*  6.17:1 / 5.20:1                              */
+  --text-faint: #6c6c6c;    /*  5.07:1 / 4.27:1 — page and card only         */
+  --ink-on-accent: #281207; /*  5.93:1 on the accent fill                    */
+
+  /* Shadow and scrim, restated for a light ground: black at the dark
+     theme's alphas reads as dirt on white. */
+  --shadow-ink: 24 18 14;
+  --scrim: rgb(72 72 72 / 42%);
 
   /*
    * Accent, in three steps, because one orange cannot do every job on a light
@@ -84,6 +99,26 @@
   --help-accent-deep: #bf5417;
   --help-accent-soft: #f1a47e;
   --help-accent-pale: #f7c8b1;
+
+  /*
+   * Accent-as-text. On the light ground the reference's #e77537 measures
+   * 2.90:1, which fails AA at every size — 4.5:1 for body text and even the
+   * 3:1 allowed for large. So accent text darkens to the nearest passing step
+   * of the same hue, and #e77537 keeps every job that carries no text: fills,
+   * icons, borders, tints.
+   */
+  --accent-text: #bf5417;     /* 4.51:1 on the page, passes at any size */
+  --accent-text-lg: #e65303;  /* 3.62:1, headings 24px and over only    */
+
+  /* One accent, five tints. The stylesheet previously spelled out twenty
+     different alphas of the same orange; a component asking for "a soft
+     accent wash" should not have to pick a number. */
+  --accent-rgb: 231 117 55;
+  --tint-faint: rgb(var(--accent-rgb) / 6%);
+  --tint-soft: rgb(var(--accent-rgb) / 10%);
+  --tint-medium: rgb(var(--accent-rgb) / 18%);
+  --tint-strong: rgb(var(--accent-rgb) / 28%);
+  --tint-edge: rgb(var(--accent-rgb) / 45%);
 
   /* Type scale, 16px base. The reference's 14px/1.4 body is a marketing
      measure; this is a site people read at length, so the reading sizes stay
