@@ -947,7 +947,7 @@
  * accent hover and the 3px focus ring stay.
  */
 .help-center-shell a:not(.help-center-article-body a):hover,
-.help-home-shell a:hover {
+.help-center-home a:hover {
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }

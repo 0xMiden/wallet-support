@@ -63,12 +63,10 @@
   --help-panel: #ffffff;
   --help-panel-elevated: #fffdf9;
   --help-panel-subtle: #efe7d8;  /* the reference's cream, not a mixed one */
-  --help-callout: #efe7d8;
 
   /* Borders stay ours: light, not the reference's hard 1px ink outline,
      which reads heavy at article length. */
   --help-line: rgb(72 72 72 / 12%);
-  --help-rule: rgb(72 72 72 / 26%);
 
   --help-muted: #5f5f5f;
   --help-copy: #484848;
@@ -85,20 +83,17 @@
   --scrim: rgb(72 72 72 / 42%);
 
   /*
-   * Accent, in three steps, because one orange cannot do every job on a light
-   * ground and still clear WCAG AA. The reference uses #e77537 everywhere and
-   * fails at 2.90:1 as text; these steps are the nearest passing values of the
-   * same hue, per pairing, at its real size.
+   * The accent for anything that does not carry text: fills, icons, borders,
+   * tints. The text steps live below as --accent-text and --accent-text-lg,
+   * because #e77537 measures 2.90:1 on this ground and fails at every size.
    *
-   *   --help-accent        fills, icons, and anything not carrying text
-   *   --help-accent-strong headings 24px and over        3.62:1 on the page
-   *   --help-accent-deep   body-sized text and links     4.51:1 on the page
+   * There were two more names here — --help-accent-strong and
+   * --help-accent-deep — holding the same two values as the text steps and
+   * referenced nowhere. Two names for one colour is how a palette drifts back
+   * apart.
    */
   --help-accent: #e77537;
-  --help-accent-strong: #e65303;
-  --help-accent-deep: #bf5417;
   --help-accent-soft: #f1a47e;
-  --help-accent-pale: #f7c8b1;
 
   /*
    * Accent-as-text. On the light ground the reference's #e77537 measures
@@ -135,7 +130,6 @@
 
   /* Four weights now that a variable font can render them. 900 is the
      reference's display weight and is the single strongest visual tell. */
-  --weight-body: 400;
   --weight-medium: 500;
   --weight-strong: 700;
   --weight-display: 900;
@@ -163,7 +157,6 @@
   --radius-md: 1.1rem;
   --radius-pill: 999px;
   --radius-loaf: 1.1rem 1.1rem 0.4rem 0.4rem;
-  --radius-loaf-lg: 1.75rem 1.75rem 0.6rem 0.6rem;
   --radius-card: 1.4rem 1.4rem 0.45rem 0.45rem;
   --radius-marker: 55% 55% 38% 38%;
 
@@ -199,7 +192,6 @@
    * derive from the card's green instead.
    */
   --card-accent-rgb: 145 172 193;
-  --card-tint-soft: rgb(var(--card-accent-rgb) / 30%);
   --card-tint-strong: rgb(var(--card-accent-rgb) / 62%);
   --card-edge: rgb(var(--card-accent-rgb) / 90%);
 
