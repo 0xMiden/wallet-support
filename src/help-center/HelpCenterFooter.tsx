@@ -1,4 +1,4 @@
-import breadMark from './assets/bread-mark.svg';
+import breadMark from './assets/bread-mark.png';
 import { CONTACT_SUPPORT_URL, helpCenterDownloads, helpCenterLegal, helpCenterSocials } from './links';
 import { categoryHref, homeHref } from './routing';
 import type { HelpCenterMainCategory } from './types';

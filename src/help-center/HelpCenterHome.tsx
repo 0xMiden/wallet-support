@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 
-import breadMark from './assets/bread-mark.svg';
+import breadMark from './assets/bread-mark.png';
 import { articlesInMainCategory, helpCenterArticles } from './content';
 import { HelpCenterFooter } from './HelpCenterFooter';
 import { CONTACT_SUPPORT_URL } from './links';

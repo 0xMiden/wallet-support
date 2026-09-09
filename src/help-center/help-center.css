@@ -78,9 +78,14 @@
  * what make a lockup recognisable — more than the mark's outline does — and
  * they are the part we can match exactly.
  *
- * The mark itself is still ours. The reference ships its loaf as a 158x152
- * PNG, which cannot serve a 2x header, and tracing it was ruled out. A crisp
- * mark at the right size beats a blurred one at the right shape.
+ * The mark is the brand's own loaf, the two-slice lockup the marketing site
+ * uses. It ships as a 158x152 RGBA PNG because that is the only form it
+ * exists in; at a 32px header that is 1.6x what a 3x screen asks for, so it
+ * resolves cleanly. It would not survive being scaled up to a hero, which is
+ * the one place not to use it.
+ *
+ * Width is set and height left to follow, because the loaf is 158x152 and
+ * forcing it square would squash it.
  */
 .help-center-brand {
   --mark: 2rem;
@@ -97,7 +102,7 @@
 
 .help-center-brand img {
   width: var(--mark);
-  height: var(--mark);
+  height: auto;
 }
 
 .help-center-brand span {
@@ -633,7 +638,7 @@
 }
 
 .help-center-card-context {
-  color: var(--accent-text);
+  color: var(--card-ink);
   font-size: var(--text-2xs);
   font-weight: var(--weight-medium);
   letter-spacing: var(--tracking-label);
@@ -677,7 +682,7 @@
   margin-top: auto;
   padding-top: var(--space-3);
   border-radius: var(--radius-marker);
-  color: var(--accent-text);
+  color: var(--card-ink);
   display: grid;
   place-items: center;
   box-sizing: content-box;
@@ -686,19 +691,14 @@
 
 .help-center-card:hover,
 .help-center-card:focus-within {
-  border-color: var(--tint-edge);
+  border-color: var(--card-edge);
   background: var(--help-panel-elevated);
   transform: translateY(-2px);
 }
 
-.help-center-card:hover::before,
-.help-center-card:focus-within::before {
-  opacity: 1;
-}
-
 .help-center-card:hover .help-center-card-index,
 .help-center-card:focus-within .help-center-card-index {
-  background: var(--tint-strong);
+  background: var(--card-tint-strong);
 }
 
 .help-center-card:hover .help-center-card-open,

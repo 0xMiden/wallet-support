@@ -184,8 +184,26 @@
    * subcategory card are different components and must not be mistaken for
    * each other.
    */
-  --card-panel: var(--help-accent-pale);
+  --card-panel: #91acc1;
   --card-accent: #a8bca3;
+
+  /*
+   * The subcategory card's own state colours.
+   *
+   * Every interactive tint in this stylesheet derives from the accent orange,
+   * which was fine until the card's band and chip turned green: hovering one
+   * repainted the green chip orange and drew an orange border around it. A
+   * component that carries its own colour needs its own states, so these
+   * derive from the card's green instead.
+   */
+  --card-accent-rgb: 168 188 163;
+  --card-tint-soft: rgb(var(--card-accent-rgb) / 30%);
+  --card-tint-strong: rgb(var(--card-accent-rgb) / 62%);
+  --card-edge: rgb(var(--card-accent-rgb) / 90%);
+
+  /* Deep enough to be read as text on any of our surfaces: 5.68:1 on the
+     card, 5.49:1 on the page. Same hue as the band above it. */
+  --card-ink: #47713d;
 
   /* The reference's card panel: a large radius on a 16:9-ish artwork area. */
   --radius-panel: 1.75rem;
