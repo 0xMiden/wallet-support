@@ -1780,6 +1780,7 @@
 }
 
 .help-home-support-copy .help-center-eyebrow {
+  color: var(--accent-text-deep);
   margin-bottom: var(--space-3);
 }
 
@@ -1848,11 +1849,20 @@
   stroke: none;
 }
 
+/*
+ * The footer's column headings were the last text on the site still set in
+ * the body face at an ad-hoc tracking. They are headings, so they take the
+ * display face; they are small headings, so they take the same uppercase
+ * label treatment as every other one. The footer is a single component
+ * rendered identically on every page, so this reaches all of them at once.
+ */
 .help-center-footer-links h2 {
   margin: 0 0 var(--space-3);
-  font-size: var(--text-sm);
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
   font-weight: var(--weight-strong);
-  letter-spacing: 0.02em;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
 }
 
 .help-center-footer-links ul {
@@ -1880,7 +1890,9 @@
   margin: var(--space-6) 0 0;
   padding-top: var(--space-4);
   border-top: 1px solid var(--help-line);
-  color: var(--text-faint);
+  /* Muted, not faint: the footer's ground is now the warm cream, where the
+     faint role measures 4.27:1 and the muted one 5.20:1. */
+  color: var(--text-muted);
   font-size: var(--text-xs);
 }
 

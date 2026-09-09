@@ -50,9 +50,15 @@ function CategoryGlyph({ categoryId }: { categoryId: string }) {
     'manage-wallet': 'M4 8.5h16v10H4zM4 8.5 15 5l2 3.5M15.5 13.5h1.5',
     privacy: 'M12 5c4 0 7 4 7 7s-3 7-7 7-7-4-7-7 3-7 7-7ZM4 4l16 16',
     guardian: 'M12 4l7 2.5V12c0 4-3 6.6-7 8-4-1.4-7-4-7-8V6.5L12 4Z',
-    // A gear. The wrench this replaced drew as a small diamond at 24px.
+    /*
+     * A wrench. This was a gear, because an earlier wrench drew as a small
+     * diamond at 24px — but the glyph is no longer an icon. It fills the
+     * category panel at illustration scale, where the gear's radiating teeth
+     * read as a sun rather than as a tool, and where a wrench has room to be
+     * a wrench.
+     */
     troubleshooting:
-      'M12 9.4a2.6 2.6 0 1 0 0 5.2 2.6 2.6 0 0 0 0-5.2ZM12 3.5V6M12 18v2.5M3.5 12H6M18 12h2.5M6 6l1.8 1.8M16.2 16.2 18 18M18 6l-1.8 1.8M7.8 16.2 6 18'
+      'M14.9 6.6a4.1 4.1 0 0 1 5.2-5.1l-2.8 2.8.8 3.2 3.2.8 2.8-2.8a4.1 4.1 0 0 1-5.1 5.2L7.7 20.9a2.2 2.2 0 0 1-3.1-3.1Z'
   };
 
   return (

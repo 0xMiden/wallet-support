@@ -62,7 +62,7 @@
   --help-bg: #fbfbfb;
   --help-panel: #ffffff;
   --help-panel-elevated: #fffdf9;
-  --help-panel-subtle: #f4f1ec;
+  --help-panel-subtle: #efe7d8;  /* the reference's cream, not a mixed one */
   --help-callout: #efe7d8;
 
   /* Borders stay ours: light, not the reference's hard 1px ink outline,
@@ -109,6 +109,8 @@
    */
   --accent-text: #bf5417;     /* 4.51:1 on the page, passes at any size */
   --accent-text-lg: #e65303;  /* 3.62:1, headings 24px and over only    */
+  --accent-text-deep: #a8460f;/* 4.82:1 on the cream panel, where the    */
+                              /* step above only reaches 3.80:1          */
 
   /* One accent, five tints. The stylesheet previously spelled out twenty
      different alphas of the same orange; a component asking for "a soft
@@ -184,8 +186,8 @@
    * subcategory card are different components and must not be mistaken for
    * each other.
    */
-  --card-panel: #91acc1;
-  --card-accent: #a8bca3;
+  --card-panel: #a8bca3;
+  --card-accent: #91acc1;
 
   /*
    * The subcategory card's own state colours.
@@ -196,14 +198,14 @@
    * component that carries its own colour needs its own states, so these
    * derive from the card's green instead.
    */
-  --card-accent-rgb: 168 188 163;
+  --card-accent-rgb: 145 172 193;
   --card-tint-soft: rgb(var(--card-accent-rgb) / 30%);
   --card-tint-strong: rgb(var(--card-accent-rgb) / 62%);
   --card-edge: rgb(var(--card-accent-rgb) / 90%);
 
-  /* Deep enough to be read as text on any of our surfaces: 5.68:1 on the
-     card, 5.49:1 on the page. Same hue as the band above it. */
-  --card-ink: #47713d;
+  /* Deep enough to be read as text on any of our surfaces: 7.26:1 on the
+     card, 7.02:1 on the page. Same hue as the band above it. */
+  --card-ink: #3b5a72;
 
   /* The reference's card panel: a large radius on a 16:9-ish artwork area. */
   --radius-panel: 1.75rem;
