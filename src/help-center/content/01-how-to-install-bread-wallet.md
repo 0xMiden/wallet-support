@@ -16,8 +16,8 @@ platforms: [extension-desktop, mobile]
 **Steps to install: Chrome browser**
 
 1. Visit the [Bread Wallet listing on the Chrome Web Store](https://chromewebstore.google.com/detail/miden-wallet/ablmompanofnodfdkgchkpmphailefpb?pli=1).
-2. Click the "Add to Chrome" button.
-3. On the confirmation dialog, click "Add extension."
+2. Click the **Add to Chrome** button.
+3. On the confirmation dialog, click **Add extension**.
 
 After adding the Bread Wallet extension, Bread Wallet will open automatically. To keep it easy to access, click the **jigsaw icon** in the top-right corner of your browser, then click the **pin icon** to add it to your toolbar.
 
@@ -31,6 +31,6 @@ After adding the Bread Wallet extension, Bread Wallet will open automatically. T
 **Steps to install**
 
 1. Open the App Store on iOS, or Google Play on Android, and search for "Bread Wallet".
-2. Tap "Get" or "Install" and confirm the download as you normally would.
+2. Tap **Get** or **Install** and confirm the download as you normally would.
 3. Once it's installed, open the app and follow the prompts to set up your wallet.
 4. Don't forget to back up your recovery phrase somewhere safe and offline. This is very important.

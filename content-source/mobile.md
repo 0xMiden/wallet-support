@@ -1,6 +1,6 @@
 <!--
 Source: Notion › Miden Workspace › COMMUNITY › "Bread Wallet Help Center: Mobile" (page 39f99411-cf90-80d3-b616-dc949e39b2fc), read 3 Sep 2026.
-Owner-approved corrections applied (per tasks/content-proposal.md): install title unified; store link labels read "Bread Wallet".
+Owner-approved corrections applied (per tasks/content-proposal.md): install title unified; store link labels read **Bread Wallet**.
 Images removed; each removed image is marked with a line "[image removed]".
 Format: "## " = Notion section, "### " = article title (verbatim), "> " = callout.
 -->
@@ -17,39 +17,39 @@ Format: "## " = Notion section, "### " = article title (verbatim), "> " = callou
 **Steps to install**
 
 1. Open the App Store on iOS, or Google Play on Android, and search for "Bread Wallet".
-2. Tap "Get" or "Install" and confirm the download as you normally would.
+2. Tap **Get** or **Install** and confirm the download as you normally would.
 3. Once it's installed, open the app and follow the prompts to set up your wallet.
 4. Don't forget to back up your recovery phrase somewhere safe and offline. This is very important.
 
 ### How do I create a Bread Wallet?
 
-After you install Bread Wallet, open the app. On the Welcome to Bread! screen, you'll see two options: "Get started" and "Recover your account."
+After you install Bread Wallet, open the app. On the **Welcome to Bread!** screen, you'll see two options: **Get started** and **Recover your account**.
 
 **Steps:**
 
-Open the app and you'll land on the Welcome to Bread! screen.
+Open the app and you'll land on the **Welcome to Bread!** screen.
 
-1. Tap "Get started" to create your new wallet.
+1. Tap **Get started** to create your new wallet.
    [image removed]
 2. Choose how to protect your wallet.
    - Bread asks how you'd like to lock your wallet.
-   - Since we're setting up biometrics, tap "Use Face ID or Biometric."
+   - Since we're setting up biometrics, tap **Use Face ID or Biometric**.
    [image removed]
 3. Your phone's built-in biometric setup prompt will pop up. Scan your fingerprint the way you normally would to unlock your phone.
-   - Want to use your face instead? Tap the "Face" tab at the top.
-   - Having trouble? Tap "Use PIN" to fall back to your device passcode.
-4. A green checkmark appears with the message "Confirmed! Only one more step!"
-   - Tap "Continue" to keep going.
-5. Pick your Guardian, then tap "Continue" to proceed.
+   - Want to use your face instead? Tap the **Face** tab at the top.
+   - Having trouble? Tap **Use PIN** to fall back to your device passcode.
+4. A green checkmark appears with the message **Confirmed! Only one more step!**
+   - Tap **Continue** to keep going.
+5. Pick your Guardian, then tap **Continue** to proceed.
    [image removed]
 
 > 🛡️ Think of a Guardian as a secure backup layer: it keeps a safe copy of your wallet's private info so you can recover it on a new device if you ever lose your phone — without ever holding your keys or your funds. You stay in full control the whole time.
 
-6. You'll see the "Your Wallet is ready" screen.
-   - Tap "Open wallet."
+6. You'll see the **Your Wallet is ready** screen.
+   - Tap **Open wallet**.
 7. Unlock to open your wallet
    - One last check: Bread Wallet asks you to unlock your wallet with the biometric you just set up. Scan your fingerprint and you're in.
-   - If the scan doesn't work, tap "Use PIN" to open your wallet with your device passcode instead.
+   - If the scan doesn't work, tap **Use PIN** to open your wallet with your device passcode instead.
 
 > ⚠️ **Reminder:** Your wallet is created, but it isn't fully secured yet.
 > Bread will remind you daily on the home screen until your recovery phrase is backed up. The sooner you do it, the safer you are. This phrase is the master key to your wallet, and it's the only way to get your assets back if you lose or replace your phone.
@@ -62,10 +62,10 @@ Open the app and you'll land on the Welcome to Bread! screen.
 
 Use the faucet to send testnet tokens to a wallet address. Testnet tokens are for testing only and do not have real-world value.
 
-- From the wallet homepage, tap "Explore".
-- Tap the "Faucet" card.
+- From the wallet homepage, tap **Explore**.
+- Tap the **Faucet** card.
 - On the faucet page, enter the wallet address and the amount you want to request.
-- Select the note type for your request: "Private" or "Public".
+- Select the note type for your request: **Private** or **Public**.
 
 ### How to find a token contract address in Bread Wallet?
 
@@ -110,21 +110,21 @@ Before you start, make sure you have:
 
 Steps:
 
-1. Open the Bread app. On the "Welcome to Bread!" screen, tap "Recover your account."
+1. Open the Bread app. On the **Welcome to Bread!** screen, tap **Recover your account**.
    [image removed]
 2. Choose your import type. Bread will ask how you'd like to bring your wallet back. You'll see two choices:
    - Import with Seed Phrase
    - Import with Encrypted Wallet File
-   For this guide, tap "Import with Seed Phrase."
+   For this guide, tap **Import with Seed Phrase**.
    [image removed]
-3. Enter your recovery phrase. Type it into the numbered boxes, word by word, in the exact order you wrote it down. When all the words are in, tap "Continue."
+3. Enter your recovery phrase. Type it into the numbered boxes, word by word, in the exact order you wrote it down. When all the words are in, tap **Continue**.
    [image removed]
 4. Choose your Guardian operator. Pick one from the list:
    - OpenZeppelin (US-EAST, the default)
    - Gateway Operator (EU-NORTH)
    - Lambda Class (EU-WEST)
    [image removed]
-5. Your wallet is ready! You'll see the "Your Wallet is ready!" screen. Tap "Open wallet."
+5. Your wallet is ready! You'll see the **Your Wallet is ready!** screen. Tap **Open wallet**.
    [image removed]
 6. One final check: Bread asks you to unlock with your fingerprint to open your wallet. Scan it, and you're back in!
 
@@ -263,11 +263,11 @@ Please report this directly to our [**SUPPORT**](https://miden-feedback-v2.miden
 
 ### My token is stuck on "Consuming" (receiver address)
 
-If a transaction appears stuck on the "Consuming" stage, the wallet is still working in the background and will often resolve it on its own within a few minutes. No action is needed in most cases. If it remains stuck, closing and reopening the app may prompt the wallet to resume the transaction. The wallet will cancel, mark it as failed if it cannot be completed within 30 minutes, and attempt to resume note consumption.
+If a transaction appears stuck on the **Consuming** stage, the wallet is still working in the background and will often resolve it on its own within a few minutes. No action is needed in most cases. If it remains stuck, closing and reopening the app may prompt the wallet to resume the transaction. The wallet will cancel, mark it as failed if it cannot be completed within 30 minutes, and attempt to resume note consumption.
 
 ### Send stuck in the "Sending" phase
 
-If the app closes while a send is in progress, the transaction may stay in the "Sending" state for up to 30 minutes. No funds leave the wallet. If the transaction cannot complete, it will be marked as failed and your token balance will remain the same.
+If the app closes while a send is in progress, the transaction may stay in the **Sending** state for up to 30 minutes. No funds leave the wallet. If the transaction cannot complete, it will be marked as failed and your token balance will remain the same.
 
 ### Why is my token taking so long to arrive?
 

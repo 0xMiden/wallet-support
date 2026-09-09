@@ -1,6 +1,6 @@
 <!--
 Source: Notion › Miden Workspace › COMMUNITY › "Bread Wallet Help Center" (page 28d99411-cf90-80b2-b4ac-cb1107193585), read 3 Sep 2026.
-Owner-approved corrections applied (per tasks/content-proposal.md): install title unified; "How do I restore my wallet with a recovery phrase?" body replaced with the extension flow (§6); store link labels read "Bread Wallet".
+Owner-approved corrections applied (per tasks/content-proposal.md): install title unified; "How do I restore my wallet with a recovery phrase?" body replaced with the extension flow (§6); store link labels read **Bread Wallet**.
 Images removed; each removed image is marked with a line "[image removed]".
 Format: "## " = Notion section, "### " = article title (verbatim), "> " = callout.
 -->
@@ -17,35 +17,35 @@ Format: "## " = Notion section, "### " = article title (verbatim), "> " = callou
 **Steps to install: Chrome browser**
 
 1. Visit the [Bread Wallet listing on the Chrome Web Store](https://chromewebstore.google.com/detail/miden-wallet/ablmompanofnodfdkgchkpmphailefpb?pli=1).
-2. Click the "Add to Chrome" button.
-3. On the confirmation dialog, click "Add extension."
+2. Click the **Add to Chrome** button.
+3. On the confirmation dialog, click **Add extension**.
 
 After adding the Bread Wallet extension, Bread Wallet will open automatically. To keep it easy to access, click the **jigsaw icon** in the top-right corner of your browser, then click the **pin icon** to add it to your toolbar.
 
 ### How do I create a Bread Wallet?
 
-When you install Bread Wallet, there are two options to choose between: "Create new wallet" or "I already have a wallet."
+When you install Bread Wallet, there are two options to choose between: **Create new wallet** or **I already have a wallet**.
 
 **Steps:**
 
-1. To create a new wallet, select "Create new wallet."
-2. You will be directed to the "back up your wallet" page. Your seed phrase is your recovery key used to rotate device keys, not for everyday transactions. If someone can access your recovery key, they can control your funds and assets inside the wallet. Note that you are solely responsible for securing your recovery key. Make sure to keep each of these words in your recovery phrase in its original English language and keep it somewhere safe. Click the "Continue" button.
-3. On the page to verify your seed phrase, confirm you've saved your recovery phrase. Select the first and last words from your phrase, and then click the "Continue" button.
-4. On the create password page, create a strong password with a minimum of 8 characters and at least 1 number, and then click "Continue."
+1. To create a new wallet, select **Create new wallet**.
+2. You will be directed to the **back up your wallet** page. Your seed phrase is your recovery key used to rotate device keys, not for everyday transactions. If someone can access your recovery key, they can control your funds and assets inside the wallet. Note that you are solely responsible for securing your recovery key. Make sure to keep each of these words in your recovery phrase in its original English language and keep it somewhere safe. Click the **Continue** button.
+3. On the page to verify your seed phrase, confirm you've saved your recovery phrase. Select the first and last words from your phrase, and then click the **Continue** button.
+4. On the create password page, create a strong password with a minimum of 8 characters and at least 1 number, and then click **Continue**.
 5. On the account recovery page, you can choose between two options:
    1. Guardian: This is the recommended path – comes with guardian-based recovery for your account. Note the Guardian operator can see your state, i.e., account balance and activity.
    2. Fully private: Local only, no one sees your state except you, but there is no recovery possible. Losing your device will result in permanent loss of your funds.
-   Then click "Continue" as the final stage.
-6. Click the "Open Wallet"; it will close the tab automatically after clicking the "Open Wallet" button and open the sidebar for you.
+   Then click **Continue** as the final stage.
+6. Click the **Open Wallet**; it will close the tab automatically after clicking the **Open Wallet** button and open the sidebar for you.
 
 ### How to fund your Bread Wallet?
 
 Use the faucet to send test tokens to a wallet address.
 
-1. From the wallet homepage, click "Faucet."
-2. Click "Go to faucet."
+1. From the wallet homepage, click **Faucet**.
+2. Click **Go to faucet**.
 3. On the faucet page, enter the wallet address and the amount you want to request.
-4. Select the note type for your request — "Private or Public."
+4. Select the note type for your request — **Private or Public**.
 
 ### How to find a token contract address in Bread Wallet?
 
@@ -53,7 +53,7 @@ Use the faucet to send test tokens to a wallet address.
 
 1. From the Bread Wallet homepage, select the token you want to view.
 2. Scroll down to the Token Information section.
-3. Click the "Copy icon" beside the contract address to copy the token contract address.
+3. Click the **Copy icon** beside the contract address to copy the token contract address.
 
 ### Is Bread Wallet available on mobile?
 
@@ -88,12 +88,12 @@ Before you start, make sure you have:
 
 **Steps:**
 
-1. Open Bread Wallet. On the wallet creation page, choose between "Create a new wallet" and "I already have a wallet." Select "I already have a wallet."
-2. On the choose your import type page, select "Import with Seed Phrase," then click "Continue."
-3. Enter your recovery phrase. Type it into the numbered boxes, word by word, in the exact order you wrote it down. When all the words are in, click "Continue."
-4. Create a new password. A minimum of 8 characters with at least 1 number, then click "Continue."
-5. Choose how you want to recover your account if you lose access — Guardian or Fully private — then click "Continue."
-6. Click "Open Wallet." The tab closes automatically and the wallet opens in the sidebar.
+1. Open Bread Wallet. On the wallet creation page, choose between **Create a new wallet** and **I already have a wallet**. Select **I already have a wallet**.
+2. On the choose your import type page, select **Import with Seed Phrase**, then click **Continue**.
+3. Enter your recovery phrase. Type it into the numbered boxes, word by word, in the exact order you wrote it down. When all the words are in, click **Continue**.
+4. Create a new password. A minimum of 8 characters with at least 1 number, then click **Continue**.
+5. Choose how you want to recover your account if you lose access — Guardian or Fully private — then click **Continue**.
+6. Click **Open Wallet**. The tab closes automatically and the wallet opens in the sidebar.
 
 > ⚠️ **Before you type your recovery phrase:** it's the master key to your wallet, and anyone who gets it can take everything.
 > - Only enter it in the official Bread Wallet extension — never on a website, pop-up, or form.
@@ -109,22 +109,22 @@ Things you need first before restoring the wallet account
 
 **Steps:**
 
-1. On the Bread Wallet creation page, you choose between "Create a new wallet" and "I already have a wallet." Select "I already have a wallet."
-2. On the choose your import type page, select "Import with encrypted wallet file," then click "Continue."
-3. On the import wallet page, drag and drop the file or choose from a device (enter the password you set when exporting your wallet). This will decrypt the file and restore access, then click "Continue."
-4. Create a new password. A minimum of 8 characters with at least 1 number, then click "Continue."
-5. Choose how you want to recover your account if you lose access, between "Guardian" and "Public account," and then click "Continue" and then click "Get started"; you should be able to access the homepage of the wallet and your assets.
+1. On the Bread Wallet creation page, you choose between **Create a new wallet** and **I already have a wallet**. Select **I already have a wallet**.
+2. On the choose your import type page, select **Import with encrypted wallet file**, then click **Continue**.
+3. On the import wallet page, drag and drop the file or choose from a device (enter the password you set when exporting your wallet). This will decrypt the file and restore access, then click **Continue**.
+4. Create a new password. A minimum of 8 characters with at least 1 number, then click **Continue**.
+5. Choose how you want to recover your account if you lose access, between **Guardian** and **Public account**, and then click **Continue** and then click **Get started**; you should be able to access the homepage of the wallet and your assets.
 
 ### How to download the encrypted file?
 
 This creates an encrypted backup of your wallet that you can store safely and later use to restore access.
 
-1. From the wallet homepage, open "Settings" (top-right corner).
+1. From the wallet homepage, open **Settings** (top-right corner).
 2. Go to the **Security** section.
 3. Select **Encrypted Wallet File**.
-4. Enter your wallet password, tick the "Confirmation checkbox," then click "Continue."
-5. Fill in all required fields, then click "Continue."
-6. The encrypted file downloads automatically — click "Done" to finish.
+4. Enter your wallet password, tick the **Confirmation checkbox**, then click **Continue**.
+5. Fill in all required fields, then click **Continue**.
+6. The encrypted file downloads automatically — click **Done** to finish.
 7. Locate the file in your Downloads folder and move it somewhere safe and private.
 
 Security tip: store the file offline or in an encrypted location (e.g., an encrypted drive or a reputable password manager's secure file storage), not in a synced/shared folder, and keep the password separate from the file. The backup is only as protected as where you keep it.
@@ -259,11 +259,11 @@ Please report this directly to our [**SUPPORT**](https://miden-feedback-v2.miden
 
 ### My token is stuck on "Consuming" (receiver address)
 
-If a transaction appears stuck on the "Consuming" stage, the wallet is still working in the background and will often resolve it on its own within a few minutes. No action is needed in most cases. If it remains stuck, closing and reopening the app may prompt the wallet to resume the transaction. The wallet will cancel, mark it as failed if it cannot be completed within 30 minutes, and attempt to resume note consumption.
+If a transaction appears stuck on the **Consuming** stage, the wallet is still working in the background and will often resolve it on its own within a few minutes. No action is needed in most cases. If it remains stuck, closing and reopening the app may prompt the wallet to resume the transaction. The wallet will cancel, mark it as failed if it cannot be completed within 30 minutes, and attempt to resume note consumption.
 
 ### Send stuck in the "Sending" phase
 
-If the app closes while a send is in progress, the transaction may stay in the "Sending" state for up to 30 minutes. No funds leave the wallet. If the transaction cannot complete, it will be marked as failed and your token balance will remain the same.
+If the app closes while a send is in progress, the transaction may stay in the **Sending** state for up to 30 minutes. No funds leave the wallet. If the transaction cannot complete, it will be marked as failed and your token balance will remain the same.
 
 ### Why is my token taking so long to arrive?
 

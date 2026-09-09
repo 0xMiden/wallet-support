@@ -12,7 +12,7 @@ platforms: [extension-desktop, mobile]
 
 1. From the Bread Wallet homepage, select the token you want to view.
 2. Scroll down to the Token Information section.
-3. Click the "Copy icon" beside the contract address to copy the token contract address.
+3. Click the **Copy icon** beside the contract address to copy the token contract address.
 
 <!-- platform: mobile -->
 
