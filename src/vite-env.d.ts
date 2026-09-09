@@ -22,3 +22,11 @@ declare module 'node:path' {
 declare module 'node:url' {
   export function fileURLToPath(url: URL): string;
 }
+
+declare module 'node:child_process' {
+  export function spawnSync(
+    command: string,
+    args: readonly string[],
+    options?: { readonly cwd?: string }
+  ): { readonly status: number | null };
+}

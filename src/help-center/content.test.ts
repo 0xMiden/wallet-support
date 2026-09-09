@@ -1,3 +1,4 @@
+import { spawnSync } from 'node:child_process';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -659,5 +660,68 @@ describe('design tokens', () => {
     const unused = [...new Set(defined)].filter(token => !allCss.includes(`var(${token})`));
 
     expect(unused, 'defined but never read — wire it up or delete it').toEqual([]);
+  });
+});
+
+describe('the pre-commit filter', () => {
+  /*
+   * The filter decides whether the checks run at all, so it is the one piece
+   * of logic whose failure hides every other failure. It has already been
+   * wrong once: as an allowlist of extensions it omitted .css, and every
+   * stylesheet-only commit this week skipped typecheck and unit tests
+   * silently. One of those commits broke three Playwright cases.
+   *
+   * This runs the real script rather than a copy of its rules. A test that
+   * reimplemented the predicate could agree with itself while disagreeing
+   * with the hook, which is the failure it exists to prevent.
+   */
+  const repoRoot = fileURLToPath(new URL('../..', import.meta.url));
+
+  function wouldSkip(...paths: readonly string[]) {
+    const result = spawnSync('bash', ['.githooks/skippable.sh', ...paths], { cwd: repoRoot });
+    return result.status === 0;
+  }
+
+  it.each([
+    ['a component', 'src/help-center/HelpCenter.tsx'],
+    ['the entry point', 'src/main.tsx'],
+    ['a stylesheet', 'src/help-center/help-center.css'],
+    ['the token sheet', 'src/help-center/tokens.css'],
+    ['the global sheet', 'src/styles.css'],
+    ['an article body', 'src/help-center/content/02-how-do-i-create-a-bread-wallet.md'],
+    ['a content source page', 'content-source/mobile.md'],
+    ['the manifest', 'package.json'],
+    ['the lockfile', 'yarn.lock'],
+    ['the hook itself', '.githooks/pre-commit'],
+    ['the filter itself', '.githooks/skippable.sh'],
+    ['an e2e spec', 'e2e/navigation.spec.ts'],
+    ['a font', 'src/help-center/assets/fonts/inter-latin-var.woff2']
+  ])('runs the checks for %s', (_label, path) => {
+    expect(wouldSkip(path), `${path} must not skip the checks`).toBe(false);
+  });
+
+  it('runs the checks when one shipping file is staged among docs', () => {
+    expect(wouldSkip('tasks/todo.md', 'README.md', 'src/help-center/tokens.css')).toBe(false);
+    expect(wouldSkip('tasks/notes.md', 'src/help-center/content/01-how-to-install-bread-wallet.md')).toBe(
+      false
+    );
+  });
+
+  it('runs the checks when nothing is staged, rather than assuming there is nothing to do', () => {
+    expect(wouldSkip()).toBe(false);
+  });
+
+  it.each([
+    ['a task note', 'tasks/todo.md'],
+    ['an audit report', 'tasks/brand-audit-2026-09-09.md'],
+    ['a screenshot', 'tasks/brand-audit/home-1440.jpg'],
+    ['the readme', 'README.md'],
+    ['the guidance file', 'CLAUDE.md']
+  ])('lets %s skip', (_label, path) => {
+    expect(wouldSkip(path), `${path} should not need the checks`).toBe(true);
+  });
+
+  it('lets a set of docs skip together', () => {
+    expect(wouldSkip('README.md', 'tasks/lessons.md', 'tasks/brand-audit/article-390.jpg')).toBe(true);
   });
 });
