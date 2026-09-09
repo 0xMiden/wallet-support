@@ -50,9 +50,32 @@ git config core.hooksPath .githooks
 ```
 
 The hook is local and offline: `tsc` and `vitest` come from `node_modules` and nothing contacts a
-network or an external service. Commits that stage no TypeScript, `package.json`, `yarn.lock`,
-`tsconfig.json`, or `vite.config.ts` change skip the checks, so documentation commits stay instant.
-Use `git commit --no-verify` to skip a single commit deliberately.
+network or an external service. Commits that stage no TypeScript, CSS, `package.json`, `yarn.lock`,
+`tsconfig.json`, `vite.config.ts`, or article content skip the checks, so documentation commits stay
+instant. Use `git commit --no-verify` to skip a single commit deliberately.
+
+CSS is on that list because it is load-bearing for the unit tests: one of them reads the stylesheets
+off disk and fails on a custom property that nothing references. Before it was listed, a CSS-only
+commit skipped every check.
+
+### Why the checks are split
+
+Two hooks, deliberately, because the two halves cost very different amounts:
+
+| | Runs | Wall clock |
+| --- | --- | --- |
+| `pre-commit` | typecheck + vitest | **~3.3s** |
+| `pre-push` | `yarn verify` — typecheck + vitest + Playwright + build | **~15.2s** |
+
+Playwright is ~9.4s of that, and it is consistent: four consecutive runs measured 9.55, 9.30, 9.62
+and 9.37 seconds. It costs what it costs because `webServer` deliberately runs `yarn build` first —
+reusing a stale `dist/` would let the suite pass against a page that is not the one in the tree.
+
+So the end-to-end suite runs before anything leaves the machine, and never between typing a commit
+message and getting the prompt back. `yarn verify` is the same command by hand, and is what a deploy
+should call: **nothing should be deployed that has not had `yarn verify` pass**.
+
+Skip a single push with `git push --no-verify`.
 
 ## Portability
 

@@ -49,7 +49,8 @@ Reviews implementation before work is considered complete.
 Verify:
 
 - Desktop and mobile behavior
-- Responsive layouts
+- Responsive layouts — measure values at every breakpoint and on both sides of each, not only at
+  desktop. A gutter or container that matches at one width tells you nothing about the others.
 - Accessibility and keyboard navigation
 - Search and navigation
 - Internal links

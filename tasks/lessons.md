@@ -200,3 +200,25 @@ Preventive rule:
   promise about the content beneath it, and the count of that content is one grep away.
 - Prefer a layout that needs no new copy. Deriving a card's supporting text from what is already
   written cannot drift and cannot overpromise.
+
+## A style audit measures at every breakpoint (2026-09-09)
+
+The brand audit compared containers and gutters at 1440 and called them matched. Two defects were
+sitting in plain sight at narrower widths: at 620 the category view padded to 31px against the home
+page's 20px, and below 620 the home page was pinned to 16px against the token's own 20px. Both
+surfaced only when parity was checked across seven widths during the fix — not by the audit that
+was supposed to find them.
+
+The audit did sweep 390/768/1024/1440 for overflow and clipping, and reported none. That is what
+made the gap easy to miss: responsive *behaviour* was checked everywhere, while responsive *values*
+were only read at desktop. A layout can be free of overflow at every width and still disagree with
+itself about its own spacing at all of them.
+
+Preventive rule:
+- Measure every value at every breakpoint, not only behaviour. A container, gutter, font-size or
+  radius that matches at one width tells you nothing about the others — media queries and clamps
+  exist precisely to make them differ.
+- Read the value on both sides of each breakpoint, and at the breakpoint itself. The 620px defect
+  was only visible exactly at 620.
+- When two components are meant to agree, assert the agreement across the full width range and print
+  the table. "Matches at 1440" is not a finding; "matches at 390/620/768/900/1024/1440/2560" is.
