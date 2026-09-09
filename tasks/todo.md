@@ -645,3 +645,30 @@ otherwise introduce.
   mobile branch. Correcting it needs mobile steps written and added to `content-source/mobile.md`, which is
   new copy needing approval. Left as-is deliberately.
 - Not deployed. The change is local until Ivan asks for the deploy.
+
+## Verify against wallet build
+
+The label change to bold made the articles' disagreements with themselves visible. Casing was
+deliberately **not** normalised: the wallet source yields only code comments for these strings
+(`Open wallet` 8x vs `Open Wallet` 1x, all in comments, never a rendered label), so picking one
+would have been a guess dressed as a fix. Resolve each pair against a screenshot or the rendered
+string, then correct the article **and** its `content-source/` entry together.
+
+| Label as written | Where | Conflict |
+| --- | --- | --- |
+| `Open Wallet` | `02:23` (x2), `09:23` | vs `Open wallet` below - same control, two casings |
+| `Open wallet` | `02:47`, `09:49` | vs `Open Wallet` above |
+| `Create a new wallet` | `09:18`, `10:18` | vs `Create new wallet` below - same first-run choice |
+| `Create new wallet` | `02:11`, `02:15` | vs `Create a new wallet` above |
+| `Your Wallet is ready` | `02:46` | vs `Your Wallet is ready!` - trailing "!" differs |
+| `Your Wallet is ready!` | `09:49` | vs `Your Wallet is ready` |
+| `Get started` | `02:27`, `02:33` (mobile), `10:22` (extension) | not a casing conflict: check it is the same button on both platforms, and that the extension restore flow really ends on it |
+
+Also unresolved, and not a casing question:
+
+- `02:23` reads `Click **Open Wallet**; it will close the tab automatically after clicking the
+  **Open Wallet** button` - the control is named twice in one sentence. Rewriting it is a copy
+  edit, so it waits for approval.
+- `21` and `22` keep quoted `"Consuming"` / `"Sending"` in their titles while the bodies bold the
+  same words. Titles are escaped plain text, so bold renders literally there; removing the quotes
+  means editing two titles plus their `### ` headings in `content-source/`. Ivan's call, deferred.

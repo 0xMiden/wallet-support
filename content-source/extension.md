@@ -36,7 +36,7 @@ When you install Bread Wallet, there are two options to choose between: **Create
    1. Guardian: This is the recommended path – comes with guardian-based recovery for your account. Note the Guardian operator can see your state, i.e., account balance and activity.
    2. Fully private: Local only, no one sees your state except you, but there is no recovery possible. Losing your device will result in permanent loss of your funds.
    Then click **Continue** as the final stage.
-6. Click the **Open Wallet**; it will close the tab automatically after clicking the **Open Wallet** button and open the sidebar for you.
+6. Click **Open Wallet**; it will close the tab automatically after clicking the **Open Wallet** button and open the sidebar for you.
 
 ### How to fund your Bread Wallet?
 
@@ -45,7 +45,7 @@ Use the faucet to send test tokens to a wallet address.
 1. From the wallet homepage, click **Faucet**.
 2. Click **Go to faucet**.
 3. On the faucet page, enter the wallet address and the amount you want to request.
-4. Select the note type for your request — **Private or Public**.
+4. Select the note type for your request — **Private** or **Public**.
 
 ### How to find a token contract address in Bread Wallet?
 
@@ -255,7 +255,7 @@ Recall height is the block height after which a sender can reclaim an unclaimed 
 
 ### My transfer shows as completed, but the token never arrived.
 
-Please report this directly to our [**SUPPORT**](https://miden-feedback-v2.miden-feedback-relay.workers.dev/?cb=4)**.**
+Please report this directly to our [**SUPPORT**](https://miden-feedback-v2.miden-feedback-relay.workers.dev/?cb=4).
 
 ### My token is stuck on "Consuming" (receiver address)
 
@@ -267,4 +267,4 @@ If the app closes while a send is in progress, the transaction may stay in the *
 
 ### Why is my token taking so long to arrive?
 
-We may have an issue with our infrastructure at the moment — please wait a little longer until it arrives. If there is no progress after 20 minutes, please report it directly to our [**SUPPORT**](https://miden-feedback-v2.miden-feedback-relay.workers.dev/?cb=4)**.**
+We may have an issue with our infrastructure at the moment — please wait a little longer until it arrives. If there is no progress after 20 minutes, please report it directly to our [**SUPPORT**](https://miden-feedback-v2.miden-feedback-relay.workers.dev/?cb=4).

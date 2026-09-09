@@ -20,7 +20,7 @@ When you install Bread Wallet, there are two options to choose between: **Create
    1. Guardian: This is the recommended path – comes with guardian-based recovery for your account. Note the Guardian operator can see your state, i.e., account balance and activity.
    2. Fully private: Local only, no one sees your state except you, but there is no recovery possible. Losing your device will result in permanent loss of your funds.
    Then click **Continue** as the final stage.
-6. Click the **Open Wallet**; it will close the tab automatically after clicking the **Open Wallet** button and open the sidebar for you.
+6. Click **Open Wallet**; it will close the tab automatically after clicking the **Open Wallet** button and open the sidebar for you.
 
 <!-- platform: mobile -->
 

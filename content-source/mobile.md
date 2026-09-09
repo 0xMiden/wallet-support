@@ -259,7 +259,7 @@ Recall height is the block height after which a sender can reclaim an unclaimed 
 
 ### My transfer shows as completed, but the token never arrived.
 
-Please report this directly to our [**SUPPORT**](https://miden-feedback-v2.miden-feedback-relay.workers.dev/?cb=4)**.**
+Please report this directly to our [**SUPPORT**](https://miden-feedback-v2.miden-feedback-relay.workers.dev/?cb=4).
 
 ### My token is stuck on "Consuming" (receiver address)
 
@@ -271,4 +271,4 @@ If the app closes while a send is in progress, the transaction may stay in the *
 
 ### Why is my token taking so long to arrive?
 
-We may have an issue with our infrastructure at the moment — please wait a little longer until it arrives. If there is no progress after 20 minutes, please report it directly to our [**SUPPORT**](https://miden-feedback-v2.miden-feedback-relay.workers.dev/?cb=4)**.**
+We may have an issue with our infrastructure at the moment — please wait a little longer until it arrives. If there is no progress after 20 minutes, please report it directly to our [**SUPPORT**](https://miden-feedback-v2.miden-feedback-relay.workers.dev/?cb=4).

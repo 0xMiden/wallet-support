@@ -13,7 +13,7 @@ Use the faucet to send test tokens to a wallet address.
 1. From the wallet homepage, click **Faucet**.
 2. Click **Go to faucet**.
 3. On the faucet page, enter the wallet address and the amount you want to request.
-4. Select the note type for your request — **Private or Public**.
+4. Select the note type for your request — **Private** or **Public**.
 
 <!-- platform: mobile -->
 

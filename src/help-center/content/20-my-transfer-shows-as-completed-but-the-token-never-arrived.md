@@ -6,4 +6,4 @@ subcategory: common-issues-and-support
 platforms: [extension-desktop, mobile]
 ---
 
-Please report this directly to our [**SUPPORT**](https://miden-feedback-v2.miden-feedback-relay.workers.dev/?cb=4)**.**
+Please report this directly to our [**SUPPORT**](https://miden-feedback-v2.miden-feedback-relay.workers.dev/?cb=4).
