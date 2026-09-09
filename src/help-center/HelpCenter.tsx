@@ -802,7 +802,10 @@ export function HelpCenter() {
 
                   </div>
                 ) : cards.length > 0 ? (
-                  <ul className="help-center-card-grid">
+                  /* The grid carries the main category so its cards can take
+                     that category's colour — the same colour the category's
+                     card wears on the home page. */
+                  <ul className="help-center-card-grid" data-category={entry.mainCategory.id}>
                     {cards.map((card, cardIndex) => (
                       <li key={card.id}>
                         <div className="help-center-card">

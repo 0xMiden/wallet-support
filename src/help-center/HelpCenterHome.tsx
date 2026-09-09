@@ -216,11 +216,17 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
                     className="help-home-card"
                     href={categoryHref(first ? first.id : firstCategoryId)}
                   >
-                    <span className="help-home-card-top">
-                      <span className="help-home-card-icon">
+                    {/*
+                     * The panel is the artwork area and carries the category's
+                     * own colour. It holds a glyph today; dropping a real
+                     * illustration in later means replacing what is inside
+                     * .help-home-card-art and nothing else — the panel, its
+                     * ratio and its colour are all CSS.
+                     */}
+                    <span className="help-home-card-panel" data-category={mainCategory.id}>
+                      <span className="help-home-card-art">
                         <CategoryGlyph categoryId={mainCategory.id} />
                       </span>
-                      <ArrowIcon />
                     </span>
                     <span className="help-home-card-title">{mainCategory.title}</span>
                     <span className="help-home-card-description">{mainCategory.description}</span>
