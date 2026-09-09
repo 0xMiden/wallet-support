@@ -1,75 +1,7 @@
-/*
- * One scale per dimension. Before this the stylesheet held 26 ad-hoc font
- * sizes, 8 fractional weights, 18 hardcoded text colours and 10 corner
- * treatments, so every component invented its own values and nothing could
- * agree by construction. That — not any single page — was the source of the
- * inconsistent typography, spacing and alignment.
- */
+@import './tokens.css';
+
 .help-center-shell,
 .help-center-home {
-  --help-bg: #100c0a;
-  --help-panel: #211814;
-  --help-panel-elevated: #2a1e18;
-  --help-panel-subtle: #18110e;
-  --help-line: rgb(247 200 177 / 18%);
-  --help-rule: rgb(247 200 177 / 45%);
-  --help-muted: #aa9e97;
-  --help-copy: #fcfaf7;
-  --help-accent: #e77537;
-  --help-accent-soft: #f1a47e;
-  --help-accent-pale: #fff3ec;
-
-  /* Text roles. Warm throughout: the old palette mixed neutral greys
-     (#c9c9c9, #797979, #666) into a cream system, which read as dirty. Every
-     role clears 4.5:1 on both the sidebar and the panel. */
-  --text-strong: #fcfaf7;
-  --text-body: #ddd2cb;
-  --text-muted: #b6a79e;
-  --text-faint: #9c8b81;
-  --ink-on-accent: #281207;
-
-  /* Type scale, 16px base. */
-  --text-2xs: 0.75rem;
-  --text-xs: 0.8125rem;
-  --text-sm: 0.875rem;
-  --text-md: 0.9375rem;
-  --text-base: 1rem;
-  --text-lg: 1.125rem;
-  --text-2xl: clamp(1.875rem, 3vw, 2.375rem);
-
-  /* Three real weights. A system stack cannot render eight. */
-  --weight-body: 400;
-  --weight-medium: 500;
-  --weight-strong: 700;
-
-  /* Spacing ramp, 0.25rem base. */
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.5rem;
-  --space-6: 2rem;
-  --space-7: 3rem;
-  --space-8: 4rem;
-
-  /* One loaf, two scales: domed top, squared base. Previously three
-     mutually contradictory "signature corners" disagreed about which corner
-     was odd and by how much. */
-  --radius-xs: 0.5rem;
-  --radius-sm: 0.9rem;
-  --radius-md: 1.1rem;
-  --radius-pill: 999px;
-  --radius-loaf: 1.1rem 1.1rem 0.4rem 0.4rem;
-  --radius-loaf-lg: 1.75rem 1.75rem 0.6rem 0.6rem;
-  --radius-card: 1.4rem 1.4rem 0.45rem 0.45rem;
-  --radius-marker: 55% 55% 38% 38%;
-
-  /* Reading measure, so text blocks can agree on a right edge. */
-  --measure: 68ch;
-
-  /* Page width for the full-bleed home page. The category view is measured by
-     its sidebar column instead. */
-  --frame: 78rem;
   min-height: 100vh;
   color: var(--help-copy);
 }

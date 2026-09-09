@@ -1,0 +1,144 @@
+/*
+ * Design tokens for the Help Center.
+ *
+ * Every value the interface paints with lives here, so a component rule never
+ * spells out a colour or a size. The Help Center is the same brand as the
+ * marketing site at midenxyz.webflow.io/wallet-new, and these values are
+ * measured from it — see tasks/design-audit.md for the reading and the
+ * contrast arithmetic behind every substitution.
+ *
+ * Nothing here is copied from Webflow's generated stylesheet. The reference
+ * was measured in a browser and expressed again as a scale.
+ */
+
+/*
+ * Two families, both SIL Open Font License, both self-hosted in this repo.
+ * There is no runtime dependency on Webflow, Google Fonts or any CDN.
+ *
+ * These are variable fonts with a real wght axis (verified: both files carry
+ * an fvar table), so 600 and 900 are true instances rather than a browser's
+ * synthetic emboldening. That distinction is the bug src/styles.css records —
+ * a previous pass named Inter without ever loading it, and eight fractional
+ * weights silently collapsed to whatever the fallback exposed. One file per
+ * family covers every weight we use; the latin subset is 39KB and 48KB.
+ *
+ * Nunito is the reference's display face. Söhne is its body face and is a
+ * commercial Klim licence we cannot redistribute, so Inter stands in for it —
+ * the nearest permissively licensed neo-grotesque.
+ */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 600 900;
+  font-display: swap;
+  src: url('./assets/fonts/nunito-latin-var.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('./assets/fonts/inter-latin-var.woff2') format('woff2');
+}
+
+.help-center-shell,
+.help-center-home {
+  /* Families. The fallbacks matter: with font-display: swap the page paints in
+     them first, so they are a real stack, not a formality. */
+  --font-body:
+    Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  --font-display: Nunito, var(--font-body);
+
+  /* Surfaces and text roles. These still carry the dark values; the
+     inversion to the light ground is a commit of its own so that it can be
+     read, and reverted, on its own. */
+  --help-bg: #100c0a;
+  --help-panel: #211814;
+  --help-panel-elevated: #2a1e18;
+  --help-panel-subtle: #18110e;
+  --help-line: rgb(247 200 177 / 18%);
+  --help-rule: rgb(247 200 177 / 45%);
+  --help-muted: #aa9e97;
+  --help-copy: #fcfaf7;
+
+  --text-strong: #fcfaf7;
+  --text-body: #ddd2cb;
+  --text-muted: #b6a79e;
+  --text-faint: #9c8b81;
+  --ink-on-accent: #281207;
+
+  /*
+   * Accent, in three steps, because one orange cannot do every job on a light
+   * ground and still clear WCAG AA. The reference uses #e77537 everywhere and
+   * fails at 2.90:1 as text; these steps are the nearest passing values of the
+   * same hue, per pairing, at its real size.
+   *
+   *   --help-accent        fills, icons, and anything not carrying text
+   *   --help-accent-strong headings 24px and over        3.62:1 on the page
+   *   --help-accent-deep   body-sized text and links     4.51:1 on the page
+   */
+  --help-accent: #e77537;
+  --help-accent-strong: #e65303;
+  --help-accent-deep: #bf5417;
+  --help-accent-soft: #f1a47e;
+  --help-accent-pale: #f7c8b1;
+
+  /* Type scale, 16px base. The reference's 14px/1.4 body is a marketing
+     measure; this is a site people read at length, so the reading sizes stay
+     ours and the display end takes the reference's weight and tightness. */
+  --text-2xs: 0.75rem;
+  --text-xs: 0.8125rem;
+  --text-sm: 0.875rem;
+  --text-md: 0.9375rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-2xl: clamp(1.875rem, 3vw, 2.375rem);
+
+  /* Four weights now that a variable font can render them. 900 is the
+     reference's display weight and is the single strongest visual tell. */
+  --weight-body: 400;
+  --weight-medium: 500;
+  --weight-strong: 700;
+  --weight-display: 900;
+
+  /* Display tracking. The reference sets its headings tight and negative. */
+  --tracking-display: -0.035em;
+  --tracking-heading: -0.02em;
+  --tracking-label: 0.1em;
+
+  /* Spacing ramp, 0.25rem base. Ours; the reference has no discernible one. */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  /* One loaf, two scales: domed top, squared base. Kept over the reference's
+     16/28px corners — the loaf is ours and the reference's radii belong to
+     decorative blobs, not to content cards. */
+  --radius-xs: 0.5rem;
+  --radius-sm: 0.9rem;
+  --radius-md: 1.1rem;
+  --radius-pill: 999px;
+  --radius-loaf: 1.1rem 1.1rem 0.4rem 0.4rem;
+  --radius-loaf-lg: 1.75rem 1.75rem 0.6rem 0.6rem;
+  --radius-card: 1.4rem 1.4rem 0.45rem 0.45rem;
+  --radius-marker: 55% 55% 38% 38%;
+
+  /* Reading measure, so text blocks can agree on a right edge. */
+  --measure: 68ch;
+
+  /* Page width. The reference's container is 1328px; the move from our
+     1248px is a layout change and belongs to the layout commit. */
+  --frame: 78rem;
+
+  /* Desktop gutter, from the reference's 40px. The footer keeps its own
+     tighter padding: its brand sits against the page edge by design, and an
+     e2e test measures that it does. */
+  --gutter: 2.5rem;
+}
