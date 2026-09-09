@@ -845,7 +845,22 @@
   outline-offset: 4px;
 }
 
+/*
+ * The reading measure, finally applied. Article paragraphs ran to ~88
+ * characters at 1440, well past the 60-75 where the eye still finds the next
+ * line reliably. --measure has existed since the scale was written and was
+ * referenced nowhere.
+ *
+ * It is set on the container rather than on each child, so every block shares
+ * one right edge — which is what the token was for. That means headings,
+ * lists and callouts all sit inside it: a heading wider than the prose it
+ * introduces reads as detached from it, and a callout that breaks the shared
+ * edge stops looking like part of the same column. Nothing is deliberately
+ * outside. There is no image case to decide — the renderer emits no <img> at
+ * all, and the [image removed] markers were dropped at migration.
+ */
 .help-center-article-body {
+  max-width: var(--measure);
   overflow-wrap: anywhere;
   color: var(--text-body);
   font-size: var(--text-base);
