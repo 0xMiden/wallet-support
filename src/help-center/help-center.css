@@ -444,7 +444,7 @@
   background: var(--tint-faint);
   font-size: var(--text-xs);
   font-weight: var(--weight-strong);
-  letter-spacing: 0.09em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
 }
 
@@ -536,7 +536,7 @@
   background: var(--tint-soft);
   font-size: var(--text-2xs);
   font-weight: var(--weight-strong);
-  letter-spacing: 0.05em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
 }
 
@@ -619,7 +619,7 @@
   color: var(--accent-text);
   font-size: var(--text-2xs);
   font-weight: var(--weight-medium);
-  letter-spacing: 0.04em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
 }
 
@@ -780,7 +780,7 @@
   color: var(--text-faint);
   font-size: var(--text-2xs);
   font-weight: var(--weight-strong);
-  letter-spacing: 0.08em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
 }
 
@@ -887,6 +887,18 @@
   color: var(--accent-text);
   text-decoration: underline;
   text-underline-offset: 0.15em;
+}
+
+/*
+ * Underline on hover, the reference's only considered interaction state.
+ * Everything else it does — no transition on any button, browser-default
+ * link colours in the footer — is worse than what is already here, so the
+ * accent hover and the 3px focus ring stay.
+ */
+.help-center-shell a:not(.help-center-article-body a):hover,
+.help-home-shell a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 .help-center-article-body blockquote {
@@ -1037,7 +1049,7 @@
   gap: 0.45rem;
   font-size: var(--text-2xs);
   font-weight: var(--weight-strong);
-  letter-spacing: 0.04em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
 }
 
@@ -1367,7 +1379,7 @@
   background: transparent;
   font-size: var(--text-xs);
   font-weight: var(--weight-strong);
-  letter-spacing: 0.09em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   white-space: nowrap;
   transition: color 160ms ease, border-color 160ms ease, background 160ms ease,
@@ -1710,7 +1722,7 @@
   color: var(--text-faint);
   font-size: var(--text-xs);
   font-weight: var(--weight-medium);
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
 }
 
