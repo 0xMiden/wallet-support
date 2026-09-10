@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 import { GLOSSARY_TITLE, helpCenterGlossaryEntries } from '../src/help-center/glossary';
+import { restingGapBelowStickyHeader } from './sticky-header';
 
 /**
  * The glossary, the way a reader reaches it.
@@ -54,20 +55,12 @@ test('an entry link lands below the sticky header on narrow screens', async ({ p
     await page.goto('about:blank');
     await page.goto('/#glossary-commitment');
 
-    const header = page.locator('.help-center-mobile-header');
     const term = page.locator('#glossary-commitment dt');
     await expect(term, `${width}px`).toHaveText('Commitment');
-    await expect.poll(() => page.evaluate(() => window.scrollY), { message: `${width}px` }).toBeGreaterThan(0);
-
-    await expect
-      .poll(
-        async () => {
-          const [bar, label] = await Promise.all([header.boundingBox(), term.boundingBox()]);
-          return bar && label ? label.y - (bar.y + bar.height) : Number.NEGATIVE_INFINITY;
-        },
-        { message: `${width}px: the term is under the header` }
-      )
-      .toBeGreaterThanOrEqual(0);
+    expect(
+      await restingGapBelowStickyHeader(page, term),
+      `${width}px: the term is under the header`
+    ).toBeGreaterThanOrEqual(0);
   }
 });
 

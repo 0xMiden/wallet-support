@@ -1381,9 +1381,11 @@
     --help-mobile-header: 4.8rem;
   }
 
-  /* A shared entry link lands below the header. With the desktop margin the
-     term came to rest 32px down, under a 77px header. */
-  .help-center-glossary-entry {
+  /* Every anchor jump lands below the header: a shared glossary entry link, and
+     an article's On this page links. With the desktop margin either target came
+     to rest 32px down, under a 77px header. One rule, so the two cannot drift. */
+  .help-center-glossary-entry,
+  .help-center-article-body h2 {
     scroll-margin-top: calc(var(--help-mobile-header) + var(--space-4));
   }
 

@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test';
 
+import { restingGapBelowStickyHeader } from './sticky-header';
+
 /**
  * The routing rules, exercised the way a reader meets them.
  *
@@ -399,5 +401,28 @@ test('every hover state actually changes something', async ({ page }) => {
         message: `${label} changes too little on hover to be seen`
       })
       .toBeGreaterThanOrEqual(PERCEPTIBLE);
+  }
+});
+
+test('an On this page link lands below the sticky header on narrow screens', async ({ page }) => {
+  // The same anchor jump the glossary's entry links make, on article sections.
+  // Below 900px the header sticks to the top of the viewport, and a section
+  // scrolled to the very top sat underneath it: 32px down, under a 77px header.
+  // 900 is the widest width the header sticks at. The longest article with
+  // more than one section, so the first section can be scrolled to the top.
+  for (const width of [390, 900]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto('about:blank');
+    await page.goto('/#security-and-recovery/how-do-i-keep-my-wallet-secure');
+
+    const link = page.getByRole('navigation', { name: 'On this page' }).getByRole('link').first();
+    await expect(link, `${width}px`).toBeVisible();
+    const heading = page.locator(`[id="${((await link.getAttribute('href')) ?? '').slice(1)}"]`);
+
+    await link.click();
+    expect(
+      await restingGapBelowStickyHeader(page, heading),
+      `${width}px: the section heading is under the header`
+    ).toBeGreaterThanOrEqual(0);
   }
 });
