@@ -113,6 +113,42 @@ test('the glossary shows alone, even arriving from an article with a side rail',
   await expect(page.locator('.help-center-article-body')).toBeHidden();
 });
 
+test('the filter narrows the glossary to matching entries, and says when none match', async ({ page }) => {
+  await page.goto('/#glossary');
+
+  const filter = page.locator('.help-center-glossary-filter input');
+  const terms = page.locator('.help-center-glossary dt');
+  const matching = (query: string) =>
+    helpCenterGlossaryEntries
+      .filter(entry => entry.term.toLowerCase().includes(query) || entry.definition.toLowerCase().includes(query))
+      .map(entry => entry.term);
+
+  await filter.fill('Key');
+  const expected = matching('key');
+  expect(expected.length).toBeGreaterThan(0);
+  expect(expected.length).toBeLessThan(helpCenterGlossaryEntries.length);
+  await expect(terms).toHaveText(expected);
+
+  await filter.fill('zzqx');
+  await expect(terms).toHaveCount(0);
+  await expect(page.locator('.help-center-glossary-empty')).toBeVisible();
+
+  await filter.fill('');
+  await expect(terms).toHaveCount(helpCenterGlossaryEntries.length);
+  await expect(page.locator('.help-center-glossary-empty')).toHaveCount(0);
+});
+
+test('a term links to its own entry, and the entry it points at is marked', async ({ page }) => {
+  await page.goto('/#glossary');
+  await expect(page.locator('.help-center-glossary-entry.is-current')).toHaveCount(0);
+
+  await page.locator('#glossary-hash dt a').click();
+
+  await expect(page).toHaveURL(/#glossary-hash$/);
+  await expect(page.locator('.help-center-glossary-entry.is-current')).toHaveCount(1);
+  await expect(page.locator('#glossary-hash')).toHaveClass(/is-current/);
+});
+
 test('the glossary stays out of the category tree and the reading order', async ({ page }) => {
   await page.goto('/#glossary');
 

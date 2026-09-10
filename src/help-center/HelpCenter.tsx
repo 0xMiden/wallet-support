@@ -781,7 +781,7 @@ export function HelpCenter() {
                   </ol>
                 </nav>
 
-                <HelpCenterGlossary entries={helpCenterGlossaryEntries} />
+                <HelpCenterGlossary entries={helpCenterGlossaryEntries} currentEntryId={glossaryEntryId} />
               </section>
             ) : null}
 

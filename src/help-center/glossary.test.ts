@@ -109,16 +109,20 @@ function unescapeHtml(html: string) {
     .replace(/&amp;/g, '&');
 }
 
-/** What a reader is shown, in document order. */
+/** What a reader is shown, in document order. Each term is a link to its own entry. */
 function readEntries(html: string) {
   const pattern =
-    /<div class="help-center-glossary-entry" id="([^"]*)"><dt>([\s\S]*?)<\/dt><dd>([\s\S]*?)<\/dd><\/div>/g;
+    /<div class="help-center-glossary-entry" id="([^"]*)"><dt><a href="#([^"]*)">([\s\S]*?)<\/a><\/dt><dd>([\s\S]*?)<\/dd><\/div>/g;
 
-  return [...html.matchAll(pattern)].map(match => ({
-    anchor: match[1] as string,
-    term: unescapeHtml(match[2] as string),
-    definition: unescapeHtml(match[3] as string)
-  }));
+  return [...html.matchAll(pattern)].map(match => {
+    // A term's link points at the entry it names, never at a neighbour.
+    expect(match[2]).toBe(match[1]);
+    return {
+      anchor: match[1] as string,
+      term: unescapeHtml(match[3] as string),
+      definition: unescapeHtml(match[4] as string)
+    };
+  });
 }
 
 describe('the approved glossary copy', () => {
