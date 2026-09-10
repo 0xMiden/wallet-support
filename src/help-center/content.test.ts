@@ -2,6 +2,7 @@ import { spawnSync } from 'node:child_process';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { inflateSync } from 'node:zlib';
 import { describe, expect, it } from 'vitest';
 
 import extensionSource from '../../content-source/extension.md?raw';
@@ -425,6 +426,84 @@ const FAQ_IMAGE_ALT: Readonly<Record<string, string>> = {
   'earn-across-the-privacy-line.png': 'Earn across the privacy line'
 };
 
+/**
+ * Just enough PNG decoding to compare two files by what they draw: 8-bit
+ * truecolour, with or without alpha, not interlaced, which is what the FAQ
+ * images are before and after optimisation. Anything else throws, so a format
+ * this cannot read fails loudly rather than comparing garbage. The chunks that
+ * change how pixels are shown are returned too, because identical pixels under
+ * a different colour profile are not the same picture.
+ */
+function readPng(file: Uint8Array, origin: string) {
+  const view = new DataView(file.buffer, file.byteOffset, file.byteLength);
+  const compressed: Uint8Array[] = [];
+  const colour: Record<string, string> = {};
+  let width = 0;
+  let height = 0;
+  let channels = 0;
+
+  for (let offset = 8; offset < file.length; ) {
+    const length = view.getUint32(offset);
+    const type = String.fromCharCode(...file.subarray(offset + 4, offset + 8));
+    const data = file.subarray(offset + 8, offset + 8 + length);
+
+    if (type === 'IHDR') {
+      width = view.getUint32(offset + 8);
+      height = view.getUint32(offset + 12);
+      const [depth, colourType, , , interlace] = data.subarray(8, 13);
+      if (depth !== 8 || (colourType !== 2 && colourType !== 6) || interlace !== 0) {
+        throw new Error(`${origin}: depth ${depth}, colour type ${colourType}, interlace ${interlace} is not readable here.`);
+      }
+      channels = colourType === 6 ? 4 : 3;
+    } else if (type === 'IDAT') {
+      compressed.push(data);
+    } else if (['sRGB', 'gAMA', 'cHRM', 'iCCP', 'cICP'].includes(type)) {
+      colour[type] = [...data].join(',');
+    }
+    offset += 12 + length;
+  }
+
+  const joined = new Uint8Array(compressed.reduce((total, part) => total + part.length, 0));
+  compressed.reduce((at, part) => (joined.set(part, at), at + part.length), 0);
+  const raw = inflateSync(joined);
+
+  // Undo each row's filter, in place, against the row above.
+  const stride = width * channels;
+  const pixels = new Uint8Array(stride * height);
+  for (let row = 0; row < height; row += 1) {
+    const filter = raw[row * (stride + 1)];
+    const start = row * (stride + 1) + 1;
+    const out = row * stride;
+    for (let i = 0; i < stride; i += 1) {
+      const left = i >= channels ? (pixels[out + i - channels] as number) : 0;
+      const up = row > 0 ? (pixels[out - stride + i] as number) : 0;
+      const upLeft = row > 0 && i >= channels ? (pixels[out - stride + i - channels] as number) : 0;
+      let predictor: number;
+      if (filter === 0) predictor = 0;
+      else if (filter === 1) predictor = left;
+      else if (filter === 2) predictor = up;
+      else if (filter === 3) predictor = (left + up) >> 1;
+      else if (filter === 4) {
+        const estimate = left + up - upLeft;
+        const [toLeft, toUp, toUpLeft] = [left, up, upLeft].map(value => Math.abs(estimate - value));
+        predictor = toLeft! <= toUp! && toLeft! <= toUpLeft! ? left : toUp! <= toUpLeft! ? up : upLeft;
+      } else throw new Error(`${origin}: unknown filter ${filter} on row ${row}.`);
+      pixels[out + i] = ((raw[start + i] as number) + predictor) & 0xff;
+    }
+  }
+
+  // Compared as RGBA, so dropping an alpha channel that was opaque everywhere is not a difference.
+  const rgba = new Uint8Array(width * height * 4);
+  for (let pixel = 0; pixel < width * height; pixel += 1) {
+    rgba[pixel * 4] = pixels[pixel * channels] as number;
+    rgba[pixel * 4 + 1] = pixels[pixel * channels + 1] as number;
+    rgba[pixel * 4 + 2] = pixels[pixel * channels + 2] as number;
+    rgba[pixel * 4 + 3] = channels === 4 ? (pixels[pixel * channels + 3] as number) : 255;
+  }
+
+  return { bytes: file.length, width, height, colour, rgba };
+}
+
 describe('fidelity to the FAQ', () => {
   const navigation = createHelpCenterNavigation(helpCenterMainCategories);
   const byTitle = new Map(helpCenterAllArticles.map(article => [article.title, article]));
@@ -557,7 +636,7 @@ describe('fidelity to the FAQ', () => {
     );
   });
 
-  it('ships each image exactly as delivered, at the size its own header gives', () => {
+  it('ships each image pixel for pixel as delivered, never larger, at the size its header gives', () => {
     const repoRoot = fileURLToPath(new URL('../..', import.meta.url));
     const deliveredDir = join(repoRoot, 'tasks/faq/faq-images');
     const shippedDir = join(repoRoot, 'src/help-center/assets/faq');
@@ -568,20 +647,32 @@ describe('fidelity to the FAQ', () => {
     expect(Object.keys(helpCenterArticleImages).sort()).toEqual(delivered);
 
     for (const name of delivered) {
-      const original = readFileSync(join(deliveredDir, name));
-      const shipped = readFileSync(join(shippedDir, name));
-      expect(
-        shipped.length === original.length && shipped.every((byte, index) => byte === original[index]),
-        `${name} differs from the delivered file`
-      ).toBe(true);
+      // tasks/faq/ keeps the files as delivered; what ships is losslessly optimised.
+      const original = readPng(readFileSync(join(deliveredDir, name)), `tasks/faq/faq-images/${name}`);
+      const shipped = readPng(readFileSync(join(shippedDir, name)), `src/help-center/assets/faq/${name}`);
+      // Not vacuous: a decoder that returned blank pixels would pass the comparison below.
+      expect(new Set(original.rgba).size, `${name} decoded to a blank image`).toBeGreaterThan(64);
 
-      // A PNG's IHDR chunk: width and height, big-endian, at bytes 16 and 20.
-      const header = new DataView(original.buffer, original.byteOffset, original.byteLength);
-      expect(String.fromCharCode(...original.subarray(12, 16)), name).toBe('IHDR');
-      expect([header.getUint32(16), header.getUint32(20)], name).toEqual([
+      expect(shipped.bytes, `${name} is larger than the delivered file`).toBeLessThanOrEqual(original.bytes);
+      expect([shipped.width, shipped.height], name).toEqual([original.width, original.height]);
+      expect([shipped.width, shipped.height], name).toEqual([
         helpCenterArticleImages[name]?.width,
         helpCenterArticleImages[name]?.height
       ]);
+      expect(shipped.colour, `${name}: a chunk that changes how its pixels are shown was altered`).toEqual(
+        original.colour
+      );
+
+      let differing = 0;
+      for (let at = 0; at < original.rgba.length; at += 4) {
+        for (let channel = 0; channel < 4; channel += 1) {
+          if (original.rgba[at + channel] !== shipped.rgba[at + channel]) {
+            differing += 1;
+            break;
+          }
+        }
+      }
+      expect(differing, `${name}: pixels that differ from the delivered file`).toBe(0);
     }
   });
 });

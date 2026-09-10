@@ -24,6 +24,10 @@ declare module 'node:url' {
   export function fileURLToPath(url: URL): string;
 }
 
+declare module 'node:zlib' {
+  export function inflateSync(data: Uint8Array): Uint8Array;
+}
+
 declare module 'node:child_process' {
   export function spawnSync(
     command: string,

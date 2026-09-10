@@ -46,7 +46,8 @@ keyed on subcategory **ids**, never on display titles. `content.test.ts` compare
 back against `content-source/`.
 
 The FAQ articles come from `tasks/faq/bread-faq-content.md`, and their images from
-`tasks/faq/faq-images/`, shipped as byte-identical copies in `src/help-center/assets/faq/`. Each FAQ
+`tasks/faq/faq-images/`, shipped as losslessly optimised, pixel-identical copies in
+`src/help-center/assets/faq/`. Each FAQ
 body must match its section of that file byte for byte once its links to other articles and its
 image alt text are taken back out.
 
