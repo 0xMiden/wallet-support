@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { inflateSync } from 'node:zlib';
 import { describe, expect, it } from 'vitest';
 
+import claudeGuide from '../../CLAUDE.md?raw';
 import extensionSource from '../../content-source/extension.md?raw';
 import mobileSource from '../../content-source/mobile.md?raw';
 import faqSource from '../../tasks/faq/bread-faq-content.md?raw';
@@ -988,6 +989,46 @@ describe('the key-structure vocabulary', () => {
     for (const [file, source] of Object.entries(components)) {
       expect(retired(source), file).toEqual([]);
     }
+  });
+
+  it('is the vocabulary in the glossary too', () => {
+    // The glossary is where a reader looks these terms up, and none of the
+    // checks above can see it: it is data in a .ts file. Read as raw source, as
+    // the product-name check reads it, so a field or a comment added later is
+    // covered without this test having to name it.
+    const glossary = import.meta.glob<string>('./glossary.ts', {
+      query: '?raw',
+      import: 'default',
+      eager: true
+    });
+
+    expect(Object.keys(glossary), 'glossary.ts was moved or renamed').toEqual(['./glossary.ts']);
+
+    for (const [file, source] of Object.entries(glossary)) {
+      expect(retired(source), file).toEqual([]);
+    }
+  });
+
+  it('is the vocabulary in CLAUDE.md too, which names the retired terms only to retire them', () => {
+    /*
+     * CLAUDE.md states the standard, so it has to print the retired names, and
+     * does so once: in the sentence Ivan approved on 2026-09-11, held here as a
+     * second copy the way glossary.test.ts holds the approved glossary. The file
+     * must still say it word for word, so the standard cannot be dropped or
+     * weakened without a deliberate edit here too; a scan alone would pass a
+     * file that had lost it. Everything else in the file is scanned.
+     *
+     * Read unwrapped: the file is hard-wrapped, and a line break between
+     * "recovery" and "key" would otherwise hide one.
+     */
+    const VOCABULARY =
+      'Use the house vocabulary for the account keys: everyday key (not "hot key" or "device key"), ' +
+      'emergency key (not "cold key" or "recovery key"), recovery phrase for the phrase itself ' +
+      '(never a "key"), and Guardian key (it acknowledges state updates; it does not co-sign).';
+    const guide = claudeGuide.replace(/\s+/g, ' ');
+
+    expect(guide.includes(VOCABULARY), 'CLAUDE.md no longer states the approved key vocabulary').toBe(true);
+    expect(retired(guide.replace(VOCABULARY, '')), 'CLAUDE.md').toEqual([]);
   });
 
   it('catches each retired name in every spelling, and leaves the recovery phrase alone', () => {
