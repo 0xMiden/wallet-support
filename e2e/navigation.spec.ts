@@ -484,3 +484,19 @@ test('the sidebar names its categories without numbering them', async ({ page })
   expect(labels.length).toBeGreaterThan(0);
   for (const label of labels) expect(label.trim(), `"${label}" carries a number`).not.toMatch(/^\d|\d$/);
 });
+
+test('the previous and next cards name their direction without numbering it', async ({ page }) => {
+  // Each card carried a 01, 02 or 03 beside Previous and Next. They were removed
+  // by Ivan's call on 2026-09-10; this keeps them gone on an article and on a
+  // subcategory page, whose cards are built from different positions.
+  for (const path of ['/#security-and-recovery/how-do-i-keep-my-wallet-secure', '/#security-and-recovery']) {
+    await page.goto('about:blank');
+    await page.goto(path);
+
+    const labels = page.getByRole('navigation', { name: /sequence/i }).locator('.help-center-sequence-meta');
+    await expect(labels, path).toHaveCount(2);
+    for (const label of await labels.allTextContents()) {
+      expect(label, `${path}: "${label}" carries a number`).not.toMatch(/\d/);
+    }
+  }
+});

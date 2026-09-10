@@ -1245,19 +1245,6 @@
   justify-content: flex-end;
 }
 
-.help-center-sequence-index {
-  width: 1.5rem;
-  height: 1.55rem;
-  border: 1px solid var(--tint-strong);
-  border-radius: var(--radius-marker);
-  color: var(--accent-text);
-  background: var(--tint-faint);
-  display: grid;
-  place-items: center;
-  font-size: var(--text-2xs);
-  font-variant-numeric: tabular-nums;
-}
-
 .help-center-sequence-category {
   max-width: 9rem;
   overflow: hidden;

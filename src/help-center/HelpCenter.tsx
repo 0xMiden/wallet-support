@@ -63,7 +63,6 @@ function routeFromHash(hash: string) {
 interface SequenceLink {
   href: string;
   title: string;
-  index: number;
   /** Set only when moving here leaves the current main category. */
   crossesInto?: string;
 }
@@ -465,15 +464,13 @@ export function HelpCenter() {
     ? articleIndex > 0
       ? {
           href: articleHref(entry?.category.id ?? '', (siblingArticles[articleIndex - 1] as { id: string }).id),
-          title: (siblingArticles[articleIndex - 1] as { title: string }).title,
-          index: articleIndex
+          title: (siblingArticles[articleIndex - 1] as { title: string }).title
         }
       : undefined
     : entry?.previous
       ? {
           href: categoryHref(entry.previous.category.id),
           title: entry.previous.category.title,
-          index: entry.previous.localIndex,
           ...(entry.previous.crossesMainCategory
             ? { crossesInto: entry.previous.mainCategory.title }
             : {})
@@ -484,15 +481,13 @@ export function HelpCenter() {
     ? articleIndex >= 0 && articleIndex < siblingArticles.length - 1
       ? {
           href: articleHref(entry?.category.id ?? '', (siblingArticles[articleIndex + 1] as { id: string }).id),
-          title: (siblingArticles[articleIndex + 1] as { title: string }).title,
-          index: articleIndex + 2
+          title: (siblingArticles[articleIndex + 1] as { title: string }).title
         }
       : undefined
     : entry?.next
       ? {
           href: categoryHref(entry.next.category.id),
           title: entry.next.category.title,
-          index: entry.next.localIndex,
           ...(entry.next.crossesMainCategory ? { crossesInto: entry.next.mainCategory.title } : {})
         }
       : undefined;
@@ -988,7 +983,6 @@ export function HelpCenter() {
                     </span>
                     <span className="help-center-sequence-copy">
                       <span className="help-center-sequence-meta">
-                        <span className="help-center-sequence-index">{formatIndex(previousLink.index)}</span>
                         Previous{sequenceNoun}
                         {previousLink.crossesInto ? (
                           <span className="help-center-sequence-category">{previousLink.crossesInto}</span>
@@ -1017,7 +1011,6 @@ export function HelpCenter() {
                         {nextLink.crossesInto ? (
                           <span className="help-center-sequence-category">{nextLink.crossesInto}</span>
                         ) : null}
-                        <span className="help-center-sequence-index">{formatIndex(nextLink.index)}</span>
                       </span>
                       <strong>{nextLink.title}</strong>
                     </span>
