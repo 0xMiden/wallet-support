@@ -75,10 +75,12 @@ Owns how Help Center information is organized.
 - Assign each article to the correct **main category and subcategory**.
 - Keep the structure intuitive and scalable as more articles are added.
 - Maintain clear relationships between categories, subcategories, and articles.
-- Use the house vocabulary for Guardian's account keys: **everyday key** (not "hot key") and
-  **recovery key** (not "cold key"). External sources, including the Miden blog, use the retired
-  terms; quote them only where the note is explicitly describing that source. `content.test.ts`
-  enforces this over the articles, `content-source/`, and the interface components.
+- Use the house vocabulary for the account keys: everyday key (not "hot key" or "device key"),
+  emergency key (not "cold key" or "recovery key"), recovery phrase for the phrase itself (never a
+  "key"), and Guardian key (it acknowledges state updates; it does not co-sign). External sources,
+  including the Miden blog, use the retired terms; quote them only where the note is explicitly
+  describing that source. `content.test.ts` enforces this over the articles, `content-source/`, and
+  the interface components.
 - Bold for UI labels in article bodies, punctuation outside the bold; quotes only in titles
   (plain text) and for genuine quotation.
 

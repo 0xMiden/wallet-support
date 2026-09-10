@@ -237,10 +237,11 @@
 }
 
 /*
- * One responsive token. Our breakpoints stay where they are — 620, 900 and
- * 1180 are set where this layout's sidebar grid actually breaks, whereas the
- * reference's 991/767/479 are Webflow's stock values and answer to nothing in
- * our page.
+ * One responsive token. Our breakpoints stay where they are — 620, 740 and 900
+ * are set where this layout actually breaks, whereas the reference's
+ * 991/767/479 are Webflow's stock values and answer to nothing in our page.
+ * The article rail has no breakpoint: a container query places it by the width
+ * of the content column.
  */
 @media (max-width: 620px) {
   .help-center-shell,

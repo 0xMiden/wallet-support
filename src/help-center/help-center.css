@@ -55,10 +55,11 @@
  * Hidden means hidden, on every root.
  *
  * The category section stays mounted behind the glossary and behind search
- * results, switched off with the hidden attribute. From 1180px the article
- * layout gives .has-rail display: grid, which outranks the browser's own
- * [hidden] rule, so an article with a side rail stayed on screen under the
- * glossary and under the results. No display a component sets may win over it.
+ * results, switched off with the hidden attribute. Once the content column has
+ * room for the side rail, the article layout gives .has-rail display: grid,
+ * which outranks the browser's own [hidden] rule, so an article with a side
+ * rail stayed on screen under the glossary and under the results. No display a
+ * component sets may win over it.
  */
 .help-center-shell [hidden],
 .help-center-home [hidden] {

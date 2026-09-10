@@ -926,22 +926,27 @@ describe('the product name', () => {
 
 describe('the key-structure vocabulary', () => {
   /*
-   * The house terms for Guardian's two account keys are "everyday key" and
-   * "recovery key". The Miden blog calls the same pair "hot key" and "cold
-   * key"; nothing on the site does, and this is what keeps it that way when
-   * the next article is written from the blog.
+   * A Guardian-backed account has three keys: the everyday key, the emergency
+   * key and the Guardian key. The recovery phrase is not a key; it rebuilds the
+   * emergency key. The Miden blog calls the first two "hot key" and "cold key",
+   * and the articles once said "device key" and "recovery key", which also made
+   * the phrase sound like a key. None of those appear on the site, and this is
+   * what keeps it that way when the next article is written from the blog.
    *
-   * The two patterns are deliberately NOT symmetrical. "hot key" and
+   * The hot and cold patterns are deliberately NOT symmetrical. "hot key" and
    * "hot-key" are caught; the closed "hotkey" is not, because that spelling
-   * belongs to keyboard shortcuts and this repo documents keyboard
-   * navigation. "coldkey" has no such competing sense, so the closed form
-   * stays banned there. A guard that only catches the spacing the source
-   * happened to pick is not a guard — but neither is one that fails on a
-   * word used correctly.
+   * belongs to keyboard shortcuts and this repo documents keyboard navigation.
+   * "coldkey" has no such competing sense, so the closed form stays banned
+   * there, and so do "recoverykey" and "devicekey". A guard that only catches
+   * the spacing the source happened to pick is not a guard — but neither is one
+   * that fails on a word used correctly: every pattern needs "key" straight
+   * after its first word, so "recovery phrase" never matches.
    */
   const BANNED = [
     { pattern: /hot[ \u00a0-]keys?/gi, instead: 'everyday key' },
-    { pattern: /cold[ \u00a0-]?keys?/gi, instead: 'recovery key' }
+    { pattern: /cold[ \u00a0-]?keys?/gi, instead: 'emergency key' },
+    { pattern: /recovery[ \u00a0-]?keys?/gi, instead: 'emergency key' },
+    { pattern: /device[ \u00a0-]?keys?/gi, instead: 'everyday key' }
   ] as const;
 
   function retired(text: string) {
@@ -950,7 +955,7 @@ describe('the key-structure vocabulary', () => {
     );
   }
 
-  it('is "everyday key" and "recovery key" in every article, held-back ones included', () => {
+  it('names the keys everyday, emergency and Guardian in every article, held-back ones included', () => {
     // helpCenterAllArticles, not helpCenterArticles: a held-back article is
     // one line away from publishing, so it has to comply before it gets there.
     for (const article of helpCenterAllArticles) {
@@ -982,6 +987,40 @@ describe('the key-structure vocabulary', () => {
 
     for (const [file, source] of Object.entries(components)) {
       expect(retired(source), file).toEqual([]);
+    }
+  });
+
+  it('catches each retired name in every spelling, and leaves the recovery phrase alone', () => {
+    const caught = [
+      ['hot key', 'everyday key'],
+      ['Hot-keys', 'everyday key'],
+      ['cold key', 'emergency key'],
+      ['coldkey', 'emergency key'],
+      ['recovery key', 'emergency key'],
+      ['Recovery Key', 'emergency key'],
+      ['recovery-key', 'emergency key'],
+      ['recoverykey', 'emergency key'],
+      ['recovery keys', 'emergency key'],
+      ['recovery\u00a0key', 'emergency key'],
+      ['device key', 'everyday key'],
+      ['Device Keys', 'everyday key'],
+      ['device-keys', 'everyday key'],
+      ['devicekey', 'everyday key']
+    ] as const;
+    for (const [name, instead] of caught) {
+      expect(retired(`Keep your ${name} safe.`), name).toEqual([`"${name}" — say "${instead}"`]);
+    }
+
+    // The words the site does use, the recovery phrase above all.
+    for (const sentence of [
+      'Keep your recovery phrase offline and never share it.',
+      'Your seed phrase is your recovery phrase.',
+      'Write down both recovery phrases.',
+      'an everyday key on your device, an emergency key rebuilt from your recovery phrase, and the Guardian key',
+      'Guardian keeps a backup so you can recover on another device.',
+      'Press a hotkey to open search.'
+    ]) {
+      expect(retired(sentence), sentence).toEqual([]);
     }
   });
 });
