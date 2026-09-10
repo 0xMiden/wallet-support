@@ -222,3 +222,21 @@ Preventive rule:
   was only visible exactly at 620.
 - When two components are meant to agree, assert the agreement across the full width range and print
   the table. "Matches at 1440" is not a finding; "matches at 390/620/768/900/1024/1440/2560" is.
+
+## A test that grows with the data needs a budget that grows too, and a ceiling (2026-09-11)
+
+The sidebar highlight test walks every subcategory against every other group's heading. The sixth main
+category took it from 28 pairings to 45, and it ran past Playwright's fixed 30s default at 30.9s. The
+report read as a highlight failure, because the timeout landed inside an assertion's poll; a replay that
+let each state settle found no highlight fault at all.
+
+The budget now scales with the pairings, 1.5s each. That is fine for now and wrong as a habit: the
+pairings grow with subcategories times groups, and on this single-worker run one long test holds up the
+whole suite.
+
+Preventive rule:
+- When a data-driven test times out, rule out a real fault first (replay it with settled states), then
+  check whether its work grew with the data, before touching any budget.
+- Derive a budget from the same data the loop walks, never a bare number.
+- If this test outgrows its budget again, it is doing too much per run. Split it, one test per
+  subcategory or per group, so each stays inside the default and a failure names its category.
