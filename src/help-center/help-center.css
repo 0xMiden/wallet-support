@@ -611,10 +611,13 @@
 }
 
 /*
- * The glossary, as a table of term and definition: a header row, a warm stripe
- * on every other row, and a highlight on the row under the pointer, the row
- * holding focus, and the row a link points at. Every colour is an accent tint
- * over the white panel, so the text roles keep their contrast on all of them.
+ * The glossary, as a table of term and definition: a header row, a stripe on
+ * every other row, and a highlight on the row under the pointer, the row
+ * holding focus, and the row a link points at. Every fill is a tint of the
+ * article cards' blue over the white panel, so the glossary reads as the same
+ * design, and the text roles keep their contrast on all of them. The bar on
+ * the row a shared link opened is that blue's deep ink instead: it is the only
+ * sign of which entry the link meant, so it has to be seen.
  * Below 620px each row stacks, term over definition, and the header goes.
  */
 .help-center-glossary-filter {
@@ -641,7 +644,7 @@
 .help-center-glossary-head {
   border-bottom: 1px solid var(--help-line);
   color: var(--text-muted);
-  background: var(--tint-soft);
+  background: var(--card-tint-soft);
   font-family: var(--font-display);
   font-size: var(--text-xs);
   font-weight: var(--weight-strong);
@@ -667,17 +670,17 @@
 }
 
 .help-center-glossary-entry:nth-child(even) {
-  background: var(--tint-faint);
+  background: var(--card-tint-faint);
 }
 
 .help-center-glossary-entry:hover,
 .help-center-glossary-entry:focus-within {
-  background: var(--tint-soft);
+  background: var(--card-tint-soft);
 }
 
 .help-center-glossary-entry.is-current {
-  background: var(--tint-soft);
-  box-shadow: inset 3px 0 0 var(--help-accent);
+  background: var(--card-tint-soft);
+  box-shadow: inset 3px 0 0 var(--card-ink);
 }
 
 .help-center-glossary dt {

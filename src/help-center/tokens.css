@@ -177,19 +177,20 @@
   --radius-marker: 55% 55% 38% 38%;
 
   /*
-   * Two card surfaces, both Bread's own orange and green. Not one colour per
-   * category: five categories meant five colours, and a sixth category would
-   * have meant inventing a sixth. A palette that grows with the content is a
-   * palette that stops being a palette.
+   * Two card surfaces, a sage and a blue, both sampled from the reference's
+   * illustrated cards. Not one colour per category: five categories meant
+   * five colours, and a sixth category would have meant inventing a sixth. A
+   * palette that grows with the content is a palette that stops being a
+   * palette.
    *
-   *   --card-panel   the main category card's artwork panel
-   *   --card-accent  the subcategory card's band and its numbered chip
+   *   --card-panel   the sage: the main category card's artwork panel
+   *   --card-accent  the blue: the subcategory card's band and numbered chip
    *
-   * The panel is the accent at its palest tint rather than #e77537 itself,
-   * for two reasons. Five saturated orange blocks would own the page. And
-   * #e77537 is what the buttons and links wear — decoration should not carry
-   * the same colour as the primary action, or neither reads as meaning
-   * anything. The ink glyph sits on the panel at 9.29:1.
+   * Neither is the accent orange, for two reasons. Five saturated orange
+   * blocks would own the page. And #e77537 is what the buttons and links wear
+   * — decoration should not carry the same colour as the primary action, or
+   * neither reads as meaning anything. The ink glyph sits on the sage panel
+   * at 4.79:1.
    *
    * The two are different colours on purpose: the main card and the
    * subcategory card are different components and must not be mistaken for
@@ -202,17 +203,24 @@
    * The subcategory card's own state colours.
    *
    * Every interactive tint in this stylesheet derives from the accent orange,
-   * which was fine until the card's band and chip turned green: hovering one
-   * repainted the green chip orange and drew an orange border around it. A
-   * component that carries its own colour needs its own states, so these
-   * derive from the card's green instead.
+   * which was fine until the card's band and chip took a colour of their own:
+   * hovering one repainted the chip orange and drew an orange border around
+   * it. A component that carries its own colour needs its own states, so
+   * these derive from the card's blue instead.
    */
   --card-accent-rgb: 145 172 193;
+  /* The glossary table wears the card's blue too, so it reads as the same
+     design as the article cards. Each tint is set to the lightness of the
+     orange one it replaced, 6% and 10%, so no text role loses contrast. */
+  --card-tint-faint: rgb(var(--card-accent-rgb) / 8%);
+  --card-tint-soft: rgb(var(--card-accent-rgb) / 14%);
   --card-tint-strong: rgb(var(--card-accent-rgb) / 62%);
   --card-edge: rgb(var(--card-accent-rgb) / 90%);
 
   /* Deep enough to be read as text on any of our surfaces: 7.26:1 on the
-     card, 7.02:1 on the page. Same hue as the band above it. */
+     card, 7.02:1 on the page. Same hue as the band above it. It also marks
+     the glossary row a shared link opened, at 6.52:1 on that row, where the
+     band's own blue reaches only 2.11:1. */
   --card-ink: #3b5a72;
 
   /* The reference's card panel: a large radius on a 16:9-ish artwork area. */
