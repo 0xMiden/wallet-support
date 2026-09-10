@@ -3,9 +3,10 @@ import type { FormEvent } from 'react';
 
 import breadMark from './assets/bread-mark.png';
 import { articlesInMainCategory, helpCenterArticles } from './content';
+import { GLOSSARY_DESCRIPTION, GLOSSARY_TITLE } from './glossary';
 import { HelpCenterFooter } from './HelpCenterFooter';
 import { CONTACT_SUPPORT_URL } from './links';
-import { categoryHref, homeHref } from './routing';
+import { categoryHref, glossaryHref, homeHref } from './routing';
 import type { HelpCenterMainCategory } from './types';
 
 /**
@@ -79,6 +80,20 @@ function CategoryGlyph({ categoryId }: { categoryId: string }) {
   return (
     <svg aria-hidden="true" className="help-home-card-glyph" viewBox="0 0 24 24">
       <path d={paths[categoryId] ?? 'M12 5v14M5 12h14'} />
+    </svg>
+  );
+}
+
+/*
+ * An open book with lines of text, for the glossary card. Not an entry in
+ * CategoryGlyph, because the glossary is not a category, and not that
+ * component's fallback, which is a plus sign and reads as "add". Same stroke
+ * and the same 24-unit box as the five category glyphs.
+ */
+function GlossaryGlyph() {
+  return (
+    <svg aria-hidden="true" className="help-home-card-glyph" viewBox="0 0 24 24">
+      <path d="M12 7v12.3M12 7C10.2 5.4 7.6 4.6 4 4.6v12.3c3.6 0 6.2.8 8 2.4M12 7c1.8-1.6 4.4-2.4 8-2.4v12.3c-3.6 0-6.2.8-8 2.4M6.5 9h3.2M6.5 11.5h3.2M6.5 14h3.2M14.3 9h3.2M14.3 11.5h3.2M14.3 14h3.2" />
     </svg>
   );
 }
@@ -280,6 +295,32 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
             Contact Support
             <ArrowIcon />
           </a>
+        </section>
+
+        {/*
+         * Below the support panel rather than beside the categories. That section
+         * counts articles across topics and the glossary is neither: placed just
+         * under the grid, 48px from it, it read as a sixth topic card under a line
+         * that says five. Down here alone, one card wide with the rest of the row
+         * empty, it read as left behind, so it carries a small heading of its own.
+         * The card borrows the grid class so it is exactly one category card wide
+         * at every breakpoint, and it has no count because it holds no articles.
+         */}
+        <section className="help-home-glossary" aria-labelledby="help-home-glossary-title">
+          <h2 className="help-home-glossary-title" id="help-home-glossary-title">
+            Reference
+          </h2>
+          <div className="help-home-card-grid">
+            <a className="help-home-card" href={glossaryHref()}>
+              <span className="help-home-card-panel">
+                <span className="help-home-card-art">
+                  <GlossaryGlyph />
+                </span>
+              </span>
+              <span className="help-home-card-title">{GLOSSARY_TITLE}</span>
+              <span className="help-home-card-description">{GLOSSARY_DESCRIPTION}</span>
+            </a>
+          </div>
         </section>
       </main>
 

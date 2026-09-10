@@ -684,3 +684,53 @@ and only styled wrongly.
 It becomes real work the moment the first screenshot lands: a placeholder image needs to say it is a
 placeholder, and the badge has to be legible on whatever the screenshot happens to show. Not built
 now, deliberately.
+
+## Terminology reconciliation — pending Ivan
+
+Recorded 2026-09-10 while adding the glossary. Nothing here has been changed: the glossary ships as
+approved, and the article bodies, `content-source/`, the guards and `CLAUDE.md` are Ivan's to
+reconcile in a separate approved pass on article bodies.
+
+### The drift predates the glossary
+
+The glossary names the key the recovery phrase recreates the **emergency key**, and keeps **recovery
+phrase** for the phrase itself. "emergency key" appears nowhere else in the repository.
+
+"recovery key" is the term `CLAUDE.md` prescribes and the replacement the key-structure guard
+suggests for a retired term, yet the shipped articles already use it in two incompatible senses:
+
+- `02:16` — "Your seed phrase is your recovery key": the recovery key *is* the phrase.
+- `12:23` — "an everyday key plus a separate recovery key": the recovery key is *a second key*.
+
+### Every occurrence of "recovery key" (17)
+
+Line numbers as of the glossary commit. This entry's own mentions are not counted.
+
+| Location | Count | Lines |
+| --- | --- | --- |
+| `src/help-center/content/02-how-do-i-create-a-bread-wallet.md` | 3 | 16 (x3) |
+| `src/help-center/content/12-how-do-i-keep-my-wallet-secure.md` | 1 | 23 |
+| `src/help-center/content/13-what-should-i-do-if-i-lose-my-recovery-phrase.md` | 1 | 17 |
+| `content-source/extension.md` | 5 | 32 (x3), 148, 170 |
+| `content-source/mobile.md` | 2 | 152, 174 |
+| `CLAUDE.md` | 1 | 38 |
+| `src/help-center/content.test.ts` | 3 | 515 (comment), 529 (`instead: 'recovery key'`), 538 (test name) |
+| `tasks/article-review-what-is-guardian-2026-09-07.md` | 1 | 52 |
+
+### Where the glossary contradicts a shipped article
+
+1. **Seed phrase vs `02:16`.** Glossary, Seed phrase: "The phrase is the backup used to rebuild the
+   key, rather than the key itself." Article: "Your seed phrase is your recovery key used to rotate
+   device keys". The same question, answered both ways.
+2. **Key vs `12:23`.** Glossary, Key: "Bread uses the everyday and emergency keys for wallet
+   actions". Article: "an everyday key plus a separate recovery key". The same pair, named two ways.
+
+### Not contradictions, for the same pass
+
+- **Guardian operator visibility is new disclosure, not a conflict.** Glossary, Guardian: "the
+  operator can see the state of a Guardian-backed account". No article says so and none denies it:
+  `19` rules out holding the phrase or key and moving funds, and `16` scopes its privacy claim to
+  "the network" while its own Guardian section says Guardian backs the data up. Decide whether an
+  article should say it too.
+- **offchain / off-chain is a style question.** The glossary writes "offchain" and "crosschain"; the
+  articles write "off-chain" and "on-chain". Pick one form for the site.

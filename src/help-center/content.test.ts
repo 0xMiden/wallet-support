@@ -489,6 +489,24 @@ describe('the product name', () => {
       expect(misspellings(source), file).toEqual([]);
     }
   });
+
+  it('is spelled "Bread Wallet" in the glossary too', () => {
+    // The glossary is data in a .ts file, so neither check above can see it: one
+    // reads the articles, the other only the components. Read as raw source for
+    // the reason the components are, so a field added later is covered without
+    // this test having to name it.
+    const glossary = import.meta.glob<string>('./glossary.ts', {
+      query: '?raw',
+      import: 'default',
+      eager: true
+    });
+
+    expect(Object.keys(glossary), 'glossary.ts was moved or renamed').toEqual(['./glossary.ts']);
+
+    for (const [file, source] of Object.entries(glossary)) {
+      expect(misspellings(source), file).toEqual([]);
+    }
+  });
 });
 
 describe('the key-structure vocabulary', () => {

@@ -1,9 +1,10 @@
 /**
- * Hash routing for the Help Center. Three shapes only:
+ * Hash routing for the Help Center. Four shapes only:
  *
  *   (no hash)               the home page
  *   #subcategory            the subcategory's article cards
  *   #subcategory/article    one article
+ *   #glossary               the glossary, or #glossary-<entry> at one entry
  *
  * Pure, and given its lookups rather than importing them, so the rules can be
  * tested without standing up the component. An unknown id in either position
@@ -20,23 +21,40 @@
  * with no address of its own: the bare URL opened halfway into the content and
  * the brand had nowhere to link to. It is now the home page, and every other
  * route is unchanged.
+ *
+ * The glossary is matched before any category. It is reference rather than part
+ * of the hierarchy, and an entry link has to survive being shared: as "not a
+ * route" it would open the home page on arrival instead of the definition it
+ * names.
  */
 
 export type HelpCenterRoute =
   | { readonly view: 'home' }
-  | { readonly view: 'category'; readonly categoryId: string; readonly articleId?: string };
+  | { readonly view: 'category'; readonly categoryId: string; readonly articleId?: string }
+  | { readonly view: 'glossary'; readonly entryId?: string };
 
 export interface HelpCenterRouteLookups {
   hasCategory(categoryId: string): boolean;
   hasArticle(categoryId: string, articleId: string): boolean;
+  hasGlossaryEntry(entryId: string): boolean;
 }
 
 const home: HelpCenterRoute = { view: 'home' };
+const GLOSSARY = 'glossary';
+const glossary: HelpCenterRoute = { view: 'glossary' };
 
 export function parseRoute(hash: string, lookups: HelpCenterRouteLookups): HelpCenterRoute | null {
   const [categoryPart = '', articlePart] = hash.replace(/^#\/?/, '').split('/');
 
   if (!categoryPart) return home;
+
+  if (categoryPart === GLOSSARY) return glossary;
+  if (categoryPart.startsWith(`${GLOSSARY}-`)) {
+    const entryId = categoryPart.slice(GLOSSARY.length + 1);
+    // An unknown entry opens the glossary at its top rather than guessing.
+    return lookups.hasGlossaryEntry(entryId) ? { view: 'glossary', entryId } : glossary;
+  }
+
   if (!lookups.hasCategory(categoryPart)) return null;
   if (!articlePart) return { view: 'category', categoryId: categoryPart };
 
@@ -60,6 +78,19 @@ export function categoryHref(categoryId: string) {
  */
 export function homeHref() {
   return '#';
+}
+
+export function glossaryHref() {
+  return `#${GLOSSARY}`;
+}
+
+/** The element id of one glossary entry. Its href is this with a leading "#". */
+export function glossaryEntryAnchor(entryId: string) {
+  return `${GLOSSARY}-${entryId}`;
+}
+
+export function glossaryEntryHref(entryId: string) {
+  return `#${glossaryEntryAnchor(entryId)}`;
 }
 
 /**

@@ -1,6 +1,7 @@
 import breadMark from './assets/bread-mark.png';
+import { GLOSSARY_TITLE } from './glossary';
 import { CONTACT_SUPPORT_URL, helpCenterDownloads, helpCenterLegal, helpCenterSocials } from './links';
-import { categoryHref, homeHref } from './routing';
+import { categoryHref, glossaryHref, homeHref } from './routing';
 import type { HelpCenterMainCategory } from './types';
 
 /**
@@ -85,6 +86,9 @@ export function HelpCenterFooter({ mainCategories, firstCategoryId }: HelpCenter
               <a href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">
                 Send feedback
               </a>
+            </li>
+            <li>
+              <a href={glossaryHref()}>{GLOSSARY_TITLE}</a>
             </li>
           </ul>
         </nav>

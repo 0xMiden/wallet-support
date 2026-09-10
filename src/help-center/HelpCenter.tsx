@@ -5,6 +5,7 @@ import breadMark from './assets/bread-mark.png';
 import { helpCenterMainCategories } from './categories';
 import { HelpCenterBackToTop } from './HelpCenterBackToTop';
 import { HelpCenterFooter } from './HelpCenterFooter';
+import { HelpCenterGlossary } from './HelpCenterGlossary';
 import { HelpCenterHome } from './HelpCenterHome';
 import {
   articleExcerpt,
@@ -14,6 +15,7 @@ import {
   helpCenterArticles,
   subcategoryNeedsPlatformChoice
 } from './content';
+import { GLOSSARY_TITLE, helpCenterGlossaryEntries } from './glossary';
 import { CONTACT_SUPPORT_URL } from './links';
 import { renderArticle } from './markdown';
 import { createHelpCenterNavigation } from './navigation';
@@ -22,6 +24,8 @@ import {
   articleHref,
   categoryHref,
   defaultPlatform,
+  glossaryEntryAnchor,
+  glossaryHref,
   homeHref,
   parsePlatform,
   parseRoute,
@@ -51,7 +55,8 @@ function routeFromHash(hash: string) {
   return parseRoute(hash, {
     hasCategory: categoryId => navigation.has(categoryId),
     hasArticle: (categoryId, articleId) =>
-      findArticle(helpCenterArticles, categoryId, articleId) !== undefined
+      findArticle(helpCenterArticles, categoryId, articleId) !== undefined,
+    hasGlossaryEntry: entryId => helpCenterGlossaryEntries.some(entry => entry.id === entryId)
   });
 }
 
@@ -128,11 +133,13 @@ export function HelpCenter() {
   // page the URL asked for. A hash that is not a route at all resolves to home;
   // it used to open the first subcategory, which looked like a working link to
   // a page nobody requested.
-  const [view, setView] = useState<'home' | 'category'>(
+  const [view, setView] = useState<'home' | 'category' | 'glossary'>(
     () => routeFromHash(window.location.hash)?.view ?? 'home'
   );
   const [activeCategoryId, setActiveCategoryId] = useState(defaultCategoryId);
   const [activeArticleId, setActiveArticleId] = useState<string | undefined>(undefined);
+  // The one definition a shared #glossary-<entry> link names, if any.
+  const [glossaryEntryId, setGlossaryEntryId] = useState<string | undefined>(undefined);
   const [activePlatform, setActivePlatform] = useState<HelpCenterPlatform>(
     () =>
       parsePlatform(window.location.search) ??
@@ -204,6 +211,22 @@ export function HelpCenter() {
         return;
       }
 
+      if (route.view === 'glossary') {
+        // An entry link is scrolled to its entry once the page is on screen, by
+        // the effect below, so only a plain #glossary starts from the top.
+        const key = `glossary/${route.entryId ?? ''}`;
+        if (lastRoute.current !== null && lastRoute.current !== key && route.entryId === undefined) {
+          window.scrollTo({ top: 0 });
+        }
+        lastRoute.current = key;
+
+        pinnedSection.current = null;
+        setView('glossary');
+        setGlossaryEntryId(route.entryId);
+        setIsMobileMenuOpen(false);
+        return;
+      }
+
       const nextMainCategoryId = navigation.resolve(route.categoryId)?.mainCategory.id;
 
       const key = `${route.categoryId}/${route.articleId ?? ''}`;
@@ -239,6 +262,13 @@ export function HelpCenter() {
     return () => window.removeEventListener('keydown', closeOnEscape);
   }, [isMobileMenuOpen]);
 
+  // The browser cannot scroll to a shared entry on arrival, because the entry
+  // has not rendered yet. So it is done here, once the glossary is on screen.
+  useEffect(() => {
+    if (view !== 'glossary' || glossaryEntryId === undefined) return;
+    document.getElementById(glossaryEntryAnchor(glossaryEntryId))?.scrollIntoView({ block: 'start' });
+  }, [view, glossaryEntryId]);
+
   // A verdict belongs to the article it was given about.
   useEffect(() => {
     setHelpful(null);
@@ -271,6 +301,7 @@ export function HelpCenter() {
 
   const searchQuery = query.trim();
   const isSearching = searchQuery.length > 0;
+  const isGlossary = view === 'glossary';
 
   // Only reachable if a category disappears from the hierarchy while its id is
   // still selected. The navigation module has already thrown in development and
@@ -579,7 +610,7 @@ export function HelpCenter() {
             {helpCenterMainCategories.length > 0 ? (
               helpCenterMainCategories.map(mainCategory => {
                 const isGroupOpen = openMainCategoryIds.has(mainCategory.id);
-                const isActiveGroup = mainCategory.id === entry.mainCategory.id;
+                const isActiveGroup = !isGlossary && mainCategory.id === entry.mainCategory.id;
                 const panelId = `${mainCategory.id}-subcategories`;
                 const mainCategoryIndex = navigation.mainCategoryIndex(mainCategory.id);
 
@@ -613,13 +644,16 @@ export function HelpCenter() {
                             // active search this list is filtered, and a render index
                             // would renumber the categories that survive the filter.
                             const localIndex = navigation.resolve(category.id)?.localIndex;
+                            // The glossary is not in this tree, so while it is open
+                            // nothing here is the current page.
+                            const isCurrent = !isGlossary && category.id === entry.category.id;
 
                             return (
                               <li key={category.id}>
                                 <a
-                                  className={category.id === entry.category.id ? 'is-active' : undefined}
+                                  className={isCurrent ? 'is-active' : undefined}
                                   href={`#${category.id}`}
-                                  aria-current={category.id === entry.category.id ? 'page' : undefined}
+                                  aria-current={isCurrent ? 'page' : undefined}
                                   onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                   {localIndex === undefined ? null : (
@@ -644,6 +678,17 @@ export function HelpCenter() {
             )}
           </nav>
 
+          {/* Reference, not a category: outside the numbered tree, the way Contact
+              Support sits beside search rather than inside Troubleshooting. */}
+          <a
+            className={`help-center-sidebar-utility${isGlossary ? ' is-active' : ''}`}
+            href={glossaryHref()}
+            aria-current={isGlossary ? 'page' : undefined}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <span>{GLOSSARY_TITLE}</span>
+            <ChevronIcon />
+          </a>
           </aside>
 
         <main className="help-center-main" id="help-center-content" tabIndex={-1}>
@@ -716,9 +761,35 @@ export function HelpCenter() {
               </section>
             ) : null}
 
+            {isGlossary ? (
+              <section
+                className="help-center-category"
+                hidden={isSearching}
+                aria-labelledby="help-center-glossary-title"
+              >
+                <nav className="help-center-breadcrumb" aria-label="Breadcrumb">
+                  <ol>
+                    <li>
+                      <a href={homeHref()} aria-label="Help Center home">
+                        <HomeIcon />
+                      </a>
+                    </li>
+                    <li>
+                      <ChevronIcon />
+                      <span aria-current="page">{GLOSSARY_TITLE}</span>
+                    </li>
+                  </ol>
+                </nav>
+
+                <HelpCenterGlossary entries={helpCenterGlossaryEntries} />
+              </section>
+            ) : null}
+
+            {/* Stands behind the glossary the way it stands behind search results:
+                hidden, not unmounted. */}
             <section
               className={`help-center-category${showRail ? ' has-rail' : ''}`}
-              hidden={isSearching}
+              hidden={isSearching || isGlossary}
               aria-labelledby="help-center-category-title"
             >
               {activeArticle ? (

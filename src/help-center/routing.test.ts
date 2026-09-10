@@ -1,10 +1,13 @@
 import { describe, expect, it } from 'vitest';
 
 import { helpCenterAllArticles, helpCenterArticles, findArticle } from './content';
+import { helpCenterGlossaryEntries } from './glossary';
 import {
   articleHref,
   categoryHref,
   defaultPlatform,
+  glossaryEntryHref,
+  glossaryHref,
   homeHref,
   parsePlatform,
   parseRoute,
@@ -16,7 +19,8 @@ import type { HelpCenterRouteLookups } from './routing';
 const lookups: HelpCenterRouteLookups = {
   hasCategory: categoryId => ['setup-and-basic-use', 'guardian-protection'].includes(categoryId),
   hasArticle: (categoryId, articleId) =>
-    categoryId === 'setup-and-basic-use' && articleId === 'how-to-install-bread-wallet'
+    categoryId === 'setup-and-basic-use' && articleId === 'how-to-install-bread-wallet',
+  hasGlossaryEntry: entryId => entryId === 'commitment'
 };
 
 describe('parsing a route', () => {
@@ -90,7 +94,8 @@ describe('building hrefs', () => {
     const real: HelpCenterRouteLookups = {
       hasCategory: categoryId => helpCenterArticles.some(article => article.subcategory === categoryId),
       hasArticle: (categoryId, articleId) =>
-        findArticle(helpCenterArticles, categoryId, articleId) !== undefined
+        findArticle(helpCenterArticles, categoryId, articleId) !== undefined,
+      hasGlossaryEntry: () => false
     };
 
     for (const article of helpCenterArticles) {
@@ -107,7 +112,8 @@ describe('building hrefs', () => {
     const real: HelpCenterRouteLookups = {
       hasCategory: categoryId => helpCenterArticles.some(article => article.subcategory === categoryId),
       hasArticle: (categoryId, articleId) =>
-        findArticle(helpCenterArticles, categoryId, articleId) !== undefined
+        findArticle(helpCenterArticles, categoryId, articleId) !== undefined,
+      hasGlossaryEntry: () => false
     };
 
     const held = helpCenterAllArticles.find(article => article.hidden === true);
@@ -124,7 +130,8 @@ describe('building hrefs', () => {
     const everything: HelpCenterRouteLookups = {
       hasCategory: categoryId => helpCenterAllArticles.some(a => a.subcategory === categoryId),
       hasArticle: (categoryId, articleId) =>
-        findArticle(helpCenterAllArticles, categoryId, articleId) !== undefined
+        findArticle(helpCenterAllArticles, categoryId, articleId) !== undefined,
+      hasGlossaryEntry: () => false
     };
     expect(parseRoute(href, everything)).toEqual({
       view: 'category',
@@ -216,5 +223,40 @@ describe('writing the query string', () => {
     expect(withSearchParams('?platform=mobile', { platform: 'extension-desktop' })).toBe(
       '?platform=extension-desktop'
     );
+  });
+});
+
+describe('the glossary route', () => {
+  it('opens the glossary at #glossary', () => {
+    expect(parseRoute('#glossary', lookups)).toEqual({ view: 'glossary' });
+    expect(parseRoute('#/glossary', lookups)).toEqual({ view: 'glossary' });
+    expect(parseRoute(glossaryHref(), lookups)).toEqual({ view: 'glossary' });
+  });
+
+  it('opens the glossary at one entry, so an entry link can be shared', () => {
+    // As "not a route", a cold load of this link would land on the home page.
+    expect(parseRoute('#glossary-commitment', lookups)).toEqual({
+      view: 'glossary',
+      entryId: 'commitment'
+    });
+  });
+
+  it('opens the glossary at its top, not a guess, when the entry is unknown', () => {
+    expect(parseRoute('#glossary-nonsense', lookups)).toEqual({ view: 'glossary' });
+    expect(parseRoute('#glossary-', lookups)).toEqual({ view: 'glossary' });
+  });
+
+  it('round-trips every shipped entry through its own href', () => {
+    const real: HelpCenterRouteLookups = {
+      hasCategory: () => false,
+      hasArticle: () => false,
+      hasGlossaryEntry: entryId => helpCenterGlossaryEntries.some(entry => entry.id === entryId)
+    };
+
+    for (const entry of helpCenterGlossaryEntries) {
+      const href = glossaryEntryHref(entry.id);
+      expect(href).toBe(`#${entry.anchor}`);
+      expect(parseRoute(href, real), href).toEqual({ view: 'glossary', entryId: entry.id });
+    }
   });
 });

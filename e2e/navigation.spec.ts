@@ -328,7 +328,8 @@ test('every hover state actually changes something', async ({ page }) => {
       'the unselected platform tab',
       SURFACE,
       null
-    ]
+    ],
+    ['/#setup-and-basic-use', '.help-center-sidebar-utility', 'the sidebar glossary link', SURFACE, null]
   ] as const;
 
   /*
