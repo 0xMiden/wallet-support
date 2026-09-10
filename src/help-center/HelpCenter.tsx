@@ -172,8 +172,10 @@ export function HelpCenter() {
    * holds it. A group heading is a disclosure toggle rather than a link, so
    * there is no route change to hang that on — hence one piece of state.
    *
-   * It is cleared whenever the route moves, so opening a group and then
-   * picking a page inside it leaves the page highlighted rather than both.
+   * It is cleared whenever the reader follows a link to a page, the page
+   * already open included, and whenever the route moves another way, such as
+   * the back button. So opening a group and then picking a page leaves the page
+   * highlighted rather than both.
    */
   const [selectedMainCategoryId, setSelectedMainCategoryId] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -192,6 +194,12 @@ export function HelpCenter() {
       // Not a route — an in-document anchor such as the skip link. Leave the
       // reader where they are rather than sending them to the first page.
       if (route === null) return;
+
+      // Any route move hands the highlight to the page it arrives at. This was an
+      // effect on the active category and article, which fired only when those
+      // values changed, so coming back to the category already remembered (from
+      // the glossary or the home page) left a clicked heading lit.
+      setSelectedMainCategoryId(null);
 
       if (route.view === 'home') {
         // Only on a real navigation, never on the first read of the URL: a
@@ -274,12 +282,6 @@ export function HelpCenter() {
     setHelpful(null);
     setLinkCopied(false);
   }, [activeArticleId]);
-
-  // Going somewhere hands the highlight to the page you went to, so a group
-  // opened on the way does not keep it.
-  useEffect(() => {
-    setSelectedMainCategoryId(null);
-  }, [activeCategoryId, activeArticleId]);
 
   // A reader who found the answer by searching can now send someone the
   // search. It was component state only, so the URL described the category
@@ -546,9 +548,22 @@ export function HelpCenter() {
     });
   };
 
+  /*
+   * Following a link to a page hands the highlight to that page, including a
+   * link to the page already open, which fires no hashchange and so never
+   * reaches the handler above. Checked once on the shell rather than on each
+   * link, so every route link counts: the tree's rows and Glossary link, the
+   * breadcrumb, and the footer alike. A hash that is not a route, such as an On
+   * this page anchor, leaves the highlight where it is.
+   */
+  const releaseSelectionOnRouteLink = (event: MouseEvent<HTMLDivElement>) => {
+    const link = event.target instanceof Element ? event.target.closest('a[href^="#"]') : null;
+    if (link && routeFromHash(link.getAttribute('href') ?? '') !== null) setSelectedMainCategoryId(null);
+  };
+
 
   return (
-    <div className="help-center-shell">
+    <div className="help-center-shell" onClick={releaseSelectionOnRouteLink}>
       <a
         className="help-center-skip-link"
         href="#help-center-content"

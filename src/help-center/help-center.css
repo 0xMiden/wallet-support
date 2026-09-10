@@ -194,6 +194,14 @@
   background: none;
 }
 
+/* The Glossary link sits after the tree rather than inside it, so the rule has to
+   reach it as a sibling. Without this, a heading clicked on the glossary page lit
+   up beside it. It stands down to its own resting look. */
+.help-center-navigation.has-selected-heading ~ .help-center-sidebar-utility.is-active {
+  color: var(--accent-text);
+  background: none;
+}
+
 .help-center-navigation-group + .help-center-navigation-group {
   margin-top: 0.25rem;
 }
