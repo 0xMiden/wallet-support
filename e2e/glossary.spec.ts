@@ -97,6 +97,22 @@ test('an article reaches the glossary from the sidebar and from the footer', asy
   await expect(page.locator(TITLE)).toHaveText(GLOSSARY_TITLE);
 });
 
+test('the glossary shows alone, even arriving from an article with a side rail', async ({ page }) => {
+  // The article behind the glossary stays mounted and hidden. The rail layout's
+  // display: grid used to outrank [hidden], so the article rendered underneath.
+  await page.goto('/#common-issues-and-support/my-token-is-stuck-on-consuming-receiver-address');
+  await expect(page.locator('.help-center-rail')).toBeVisible();
+
+  await page
+    .locator('.help-center-sidebar')
+    .getByRole('link', { name: GLOSSARY_TITLE, exact: true })
+    .click();
+
+  await expect(page.locator(TITLE)).toHaveText(GLOSSARY_TITLE);
+  await expect(page.locator('h1:visible')).toHaveCount(1);
+  await expect(page.locator('.help-center-article-body')).toBeHidden();
+});
+
 test('the glossary stays out of the category tree and the reading order', async ({ page }) => {
   await page.goto('/#glossary');
 

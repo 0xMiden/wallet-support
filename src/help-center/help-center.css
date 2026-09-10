@@ -51,6 +51,20 @@
   outline-offset: 3px;
 }
 
+/*
+ * Hidden means hidden, on every root.
+ *
+ * The category section stays mounted behind the glossary and behind search
+ * results, switched off with the hidden attribute. From 1180px the article
+ * layout gives .has-rail display: grid, which outranks the browser's own
+ * [hidden] rule, so an article with a side rail stayed on screen under the
+ * glossary and under the results. No display a component sets may win over it.
+ */
+.help-center-shell [hidden],
+.help-center-home [hidden] {
+  display: none !important;
+}
+
 .help-center-skip-link {
   position: fixed;
   z-index: 100;
