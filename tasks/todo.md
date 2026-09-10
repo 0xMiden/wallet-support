@@ -820,3 +820,36 @@ for the assets themselves to be served. Wait for both next time.
 - The 41-sequence highlight reproduction, which found 36 wrong before the fix, finds none wrong.
 - On `#common-issues-and-support`, clicking Getting started and then the open page leaves only that page
   lit. On `#glossary`, clicking a heading leaves only the heading lit.
+
+## Glossary card removal — preview deployment
+
+Commit `48e7713` (remove the Glossary card from the home page), deployed on 2026-09-10.
+
+### Before deploying
+
+- `yarn verify` passed on the change: 200 unit tests, 30 end-to-end tests, and the build.
+- Built with `PLACEHOLDERS_OK=1`, which nothing reads, from a clean tree: the uncommitted README update
+  was stashed for the build and the deploy, then restored.
+- Drift check was clean: the preview still served the `80568fb` baseline recorded above.
+
+### Deployment
+
+- Preview deployment ID: `ab94e0a2-bb00-41bf-bef1-75f18a774f98`.
+- Environment `Preview`, branch `help-center-shell`, source commit `48e7713`. Branch and commit were passed
+  explicitly; production has still never been deployed.
+- Atomic deployment: `https://ab94e0a2.bread-wallet-help-center-preview.pages.dev`.
+- Stable alias: HTTP 200 with `X-Robots-Tag: noindex`.
+
+### New drift-check baseline
+
+`index-DonXsder.js` and `index-DQRKyS3c.css`, byte-identical on the alias, on the atomic URL, and in the
+local build. Both assets were fetched and hashed, not only named by `index.html`:
+
+- `index-DonXsder.js` sha256 `e43fac59c43366174c95af06dfa190e414a0abc5fea442df5b91a6eeabb617e1`
+- `index-DQRKyS3c.css` sha256 `757f76a218612ae9cd0f2f786fe132e9b38d0f61012f0d306d37a1c29ba66d38`
+
+### Measured on the live alias
+
+- The home page shows the five category cards and no Glossary card or Reference heading, at 1440 and 390.
+- It ends at the support panel, 64px above the footer at both widths, with no sideways scroll.
+- The only Glossary link on the home page is the footer's.
