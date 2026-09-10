@@ -3,7 +3,10 @@
 Project guidance for anyone working on this repository, including Claude Code, is in
 [`CLAUDE.md`](CLAUDE.md). Read it before making structural changes.
 
-A category-first Help Center shell for Bread Wallet. This initial phase contains the website structure and seven approved categories, but no support articles.
+The Help Center for Bread Wallet. Readers browse main categories and subcategories, read articles
+written for Extension, Mobile, or both, search article titles and text (results can be shared as
+`?q=` links), and look up terms in the glossary. It is a standalone React, Vite and TypeScript site,
+previewed on Cloudflare Pages.
 
 ## Local commands
 
@@ -36,9 +39,11 @@ body for, or duplicating an id or title.
 
 Articles live in `src/help-center/content/` as one Markdown file per article, migrated verbatim from
 `content-source/` per `tasks/content-proposal.md`. Frontmatter carries `id`, `title`, `mainCategory`,
-`subcategory`, and `platforms`; a body that differs per platform is split with
-`<!-- platform: extension-desktop -->` markers. Articles are keyed on subcategory **ids**, never on
-display titles. `content.test.ts` compares every migrated body back against `content-source/`.
+`subcategory`, and `platforms`. An article can also carry `hidden: true` and a `hiddenReason`: it is
+then left out of the site, search and counts, while the content checks still run over it. A body
+that differs per platform is split with `<!-- platform: extension-desktop -->` markers. Articles are
+keyed on subcategory **ids**, never on display titles. `content.test.ts` compares every migrated body
+back against `content-source/`.
 
 ## Pre-commit checks
 
@@ -50,13 +55,15 @@ git config core.hooksPath .githooks
 ```
 
 The hook is local and offline: `tsc` and `vitest` come from `node_modules` and nothing contacts a
-network or an external service. Commits that stage no TypeScript, CSS, `package.json`, `yarn.lock`,
-`tsconfig.json`, `vite.config.ts`, or article content skip the checks, so documentation commits stay
-instant. Use `git commit --no-verify` to skip a single commit deliberately.
+network or an external service. It skips the checks only when every staged path is under `tasks/` or
+is Markdown other than an article body (`src/help-center/content/` and `content-source/` always run
+them), so documentation commits stay instant. Use `git commit --no-verify` to skip a single commit
+deliberately.
 
-CSS is on that list because it is load-bearing for the unit tests: one of them reads the stylesheets
-off disk and fails on a custom property that nothing references. Before it was listed, a CSS-only
-commit skipped every check.
+The rule, in `.githooks/skippable.sh`, names what does not ship rather than what does. It used to be
+a list of the file types that should run the checks, and that list left out CSS, so a stylesheet-only
+commit skipped every check even though a unit test reads the stylesheets. `content.test.ts` now
+exercises the rule directly.
 
 ### Why the checks are split
 
@@ -64,12 +71,14 @@ Two hooks, deliberately, because the two halves cost very different amounts:
 
 | | Runs | Wall clock |
 | --- | --- | --- |
-| `pre-commit` | typecheck + vitest | **~3.3s** |
-| `pre-push` | `yarn verify` — typecheck + vitest + Playwright + build | **~15.2s** |
+| `pre-commit` | typecheck + vitest | **~4.1s** |
+| `pre-push` | `yarn verify` — typecheck + vitest + Playwright + build | **~59s** |
 
-Playwright is ~9.4s of that, and it is consistent: four consecutive runs measured 9.55, 9.30, 9.62
-and 9.37 seconds. It costs what it costs because `webServer` deliberately runs `yarn build` first —
-reusing a stale `dist/` would let the suite pass against a page that is not the one in the tree.
+Playwright is ~50s of that, and it is consistent: three consecutive runs on 2026-09-10 measured 51.3,
+50.0 and 50.3 seconds, for 200 unit tests and 30 end-to-end tests. Part of the cost is deliberate:
+`webServer` runs `yarn build` first, because reusing a stale `dist/` would let the suite pass against
+a page that is not the one in the tree. The single largest cost is one test: the sidebar-highlight
+case that clicks through every category takes ~22s on its own.
 
 So the end-to-end suite runs before anything leaves the machine, and never between typing a commit
 message and getting the prompt back. `yarn verify` is the same command by hand, and is what a deploy
@@ -81,32 +90,44 @@ Skip a single push with `git push --no-verify`.
 
 The Help Center is isolated in `src/help-center/`:
 
-- `HelpCenter.tsx` contains the reusable React shell.
+- `HelpCenterHome.tsx` is the home page. `HelpCenter.tsx` is everything else: subcategories,
+  articles, the glossary and search results. `HelpCenterFooter.tsx`, `HelpCenterGlossary.tsx` and
+  `HelpCenterBackToTop.tsx` are the pieces they share or embed.
 - `navigation.ts` derives every rendered position from the category hierarchy. Nothing else may
   compute an index, a total, or a previous/next relationship.
-- `navigation.test.ts` covers those rules. It is the only file here that imports a dev dependency
-  (`vitest`); a host integrating the shell can leave it behind without affecting the component.
-- `categories.ts` contains the category navigation data.
+- `routing.ts` reads the URL: the hash picks the page, `?q=` carries a search and `?platform=` the
+  platform.
+- `categories.ts` holds the category tree and `glossary.ts` the glossary entries. Articles live in
+  `content/`; `content.ts` loads them and `markdown.ts` renders them.
+- `search.ts` matches article titles and text. `links.ts` holds every destination outside the Help
+  Center.
 - `types.ts` defines the small content contract.
-- `help-center.css` contains styles scoped under `.help-center-shell`.
-- `assets/bread-mark.svg` is the official Bread mark sourced from the Bread Wallet repository.
+- `tokens.css` holds every design value and loads the two self-hosted fonts. `help-center.css` holds
+  the component rules, scoped under `.help-center-shell` and `.help-center-home`.
+- `assets/` holds the Bread mark (`bread-mark.png`) and the Nunito and Inter font files.
+- The `*.test.ts` files are the only ones that import a dev dependency (`vitest`); a host integrating
+  the Help Center can leave them behind without affecting the components.
 
-The shell has no router, CMS, analytics, or network dependency. Categories use hash links in the standalone preview; a host website can map the category IDs to its own routing system when integrating the component.
+The Help Center has no router library, CMS, analytics, or network dependency; its only runtime
+dependencies are `react` and `react-dom`, and support, download and social destinations are plain
+links. Pages use hash links in the standalone preview; a host website can map the category, article
+and glossary ids to its own routing system when integrating the components.
 
 ## Current scope
 
-- Website shell and category navigation only
-- Extension and desktop / mobile platform tabs
-- Category search
-- Responsive navigation
-- Previous and next category navigation
-- Persistent security reminder
-
-Article records and article content will be added only after the category structure is approved.
+- Home page with the main categories, popular searches and a Contact Support panel
+- Main categories and subcategories, in a sidebar on wide screens and a drawer below 900px
+- Articles for Extension, Mobile, or both, with platform tabs where a subcategory covers both
+- Search over article titles and text, shareable as `?q=` links
+- A glossary page, with a shareable link to each entry
+- Previous and next links through the reading order
+- On each article, a Was this helpful? prompt (nothing is recorded; answering No links to Contact
+  Support) and a Copy link button
+- A security reminder on every page except the home page
 
 ## Temporary review deployment
 
-The category shell is available as a non-production Cloudflare Pages preview:
+The Help Center is available as a non-production Cloudflare Pages preview:
 
 <https://help-center-shell.bread-wallet-help-center-preview.pages.dev>
 
