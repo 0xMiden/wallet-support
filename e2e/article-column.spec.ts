@@ -38,6 +38,11 @@ const widths = [...new Set([...sweep, ...breakpoints.flatMap(width => [width - 1
  * and takes a column of its own, 21rem at most. Each is allowed only the width
  * its own change takes, and only at that step. Anywhere else, or by more, a
  * narrower column is a fault.
+ *
+ * Ruled by Ivan on 2026-09-11: both stay. They are the layout working, the
+ * margin doubling and then the sidebar arriving, and text narrowing because a
+ * sidebar appeared is expected. The 1180px case was a defect precisely because
+ * nothing appeared. Do not move either breakpoint to make these go away.
  */
 const CHROME_STEPS: ReadonlyMap<number, { readonly maxDrop: number; readonly reason: string }> = new Map([
   [621, { maxDrop: 40, reason: 'the gutter doubles from 1.25rem to 2.5rem a side' }],

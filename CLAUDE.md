@@ -35,7 +35,8 @@ them are in `tasks/design-audit.md` and `tasks/brand-audit-2026-09-09.md`.
 - **Decorative objects.** None ship today. If one is added, it goes in the home hero only, never on
   any other page, and never overlaps text at any width.
 - **Layout.** Use `--frame` and `--gutter` as shipped, so the home and category views keep matching.
-  The breakpoints are ours (620, 740, 900 and 1180), not Webflow's (991, 767, 479).
+  The breakpoints are ours (620, 740 and 900), not Webflow's (991, 767, 479); the article rail is
+  placed by a container query on the content column, not a viewport breakpoint.
 - **No Webflow CSS.** Never import, paste or hotlink generated CSS, fonts or images from the
   reference. Measure it in a browser and express what you take as tokens.
 - **Article content.** Articles inherit the shipped typography and spacing; nothing gets bespoke
