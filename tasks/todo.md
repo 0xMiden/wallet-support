@@ -778,3 +778,45 @@ page overflow at 621–655px), deployed together on 2026-09-10.
 4. A long article's On this page link at 900 (`how-do-i-keep-my-wallet-secure`, first section): the heading
    rests 16.2px below the sticky header.
 5. The home page at 630: no sideways scroll, pills hidden, and the button inside the header's padding.
+
+## Sidebar numbers and highlight — preview deployment
+
+Commits `78a9fec` (the sidebar names categories without numbering them) and `80568fb` (the sidebar
+highlight follows the last thing clicked, every time), deployed together on 2026-09-10.
+
+### Before deploying
+
+- `yarn verify` passed on each commit's own tree: 25 end-to-end tests on `78a9fec`, 30 on `80568fb`, and
+  200 unit tests on both.
+- Built with `PLACEHOLDERS_OK=1`, which nothing reads.
+- Drift check was clean: the preview still served the `879338f` baseline recorded above.
+
+### Deployment
+
+- Preview deployment ID: `7853efa2-26d9-482e-b367-33aca21b6b59`.
+- Environment `Preview`, branch `help-center-shell`, source commit `80568fb`. Branch and commit were passed
+  explicitly; production has still never been deployed.
+- Atomic deployment: `https://7853efa2.bread-wallet-help-center-preview.pages.dev`.
+- Stable alias: HTTP 200 with `X-Robots-Tag: noindex`.
+
+### New drift-check baseline
+
+`index-TEvPQeWx.js` and `index-a0XNijHB.css`, byte-identical on the alias, on the atomic URL, and in the
+local build:
+
+- `index-TEvPQeWx.js` sha256 `a72c8de8d57a69fca40c10a04b6cb3a27814a6d5281905e9074d37af0ee9dd8d`
+- `index-a0XNijHB.css` sha256 `97fb9a8a82949b790ac2d4aaaaba60628b10cbba729f70d633e4577b18e1efe9`
+
+### A false alarm worth knowing about
+
+The first post-deploy hash check of the CSS failed. What it had downloaded was the site's HTML fallback,
+served for the stylesheet's path in the seconds before the new file reached that edge; fresh fetches from
+the alias and the atomic URL both matched. The check waited for `index.html` to name the new assets, not
+for the assets themselves to be served. Wait for both next time.
+
+### Measured on the live alias
+
+- No number badges, in the served bundle or in the rendered sidebar.
+- The 41-sequence highlight reproduction, which found 36 wrong before the fix, finds none wrong.
+- On `#common-issues-and-support`, clicking Getting started and then the open page leaves only that page
+  lit. On `#glossary`, clicking a heading leaves only the heading lit.
