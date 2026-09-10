@@ -979,3 +979,55 @@ The five diagrams on the alias match the local build byte for byte:
   visible heading.
 - The article column on What is Guardian? is 680px at 1179, 1180, 1200 and 1383px with the rail below it,
   and 680px at 1384, 1440 and 1600px with the rail beside it.
+
+## Key terminology reconciliation — preview deployment
+
+Commits `a2a7b1f` to `38bfb3c`, deployed on 2026-09-11:
+
+- `a2a7b1f` docs: correct the breakpoint list after the container-query fix
+- `e354731` content: reconcile key terminology to the three-key standard
+- `38bfb3c` test: guard retires recovery key and device key
+
+### Before deploying
+
+- Each article change was built from the committed file with only the approved replacement applied, and
+  the word diff showed nothing else: 02 (Extension step 2) with `content-source/extension.md`, and 12 and
+  13 with both source pages.
+- The guard was mutation-tested before its commit. Recovery key injected into article 12 and both source
+  pages, and device-keys into a component, each failed the guard while fidelity stayed green. Each new
+  pattern, weakened by one spelling or widened past key, failed its case.
+- `yarn verify` passed on `38bfb3c`: typecheck, 231 unit tests, 45 end-to-end tests, and the build.
+- Built with `PLACEHOLDERS_OK=1`, which nothing reads, from a clean tree.
+- Drift check was clean twice, the second immediately before deploying: the preview still served the
+  `215908c` baseline recorded above.
+- Deployed with the cached wrangler 4.130.0 binary, as for `215908c`.
+
+### Deployment
+
+- Preview deployment ID: `4e987ea0-e97d-416f-a51a-79311d14d92b`.
+- Environment `Preview`, branch `help-center-shell`, source commit `38bfb3c`. Branch and commit were passed
+  explicitly; production has still never been deployed.
+- Atomic deployment: `https://4e987ea0.bread-wallet-help-center-preview.pages.dev`.
+- Stable alias: HTTP 200 with `X-Robots-Tag: noindex`.
+
+### New drift-check baseline
+
+`index-DrjAaeDE.js` and `index-MI-99V1I.css`, byte-identical on the alias, on the atomic URL, and in the
+local build. Both assets were fetched and hashed, not only named by `index.html`. The stylesheet is the
+same file as at `215908c`, because its only edits were comments, which the build strips; the five diagrams
+are unchanged too.
+
+- `index-DrjAaeDE.js` sha256 `334c7e084c98f46572d995faf0ccbaa818ee200e5786ddb7bebd348d5ec7f476`
+- `index-MI-99V1I.css` sha256 `e9a52be714f96d9759b18ae4a8aab05f48d86afb14eb5b75b561cafdd469ecfe`
+
+### Measured on the live alias
+
+- How do I create a Bread Wallet?, Extension tab, step 2: the approved sentences, and no retired key name.
+- How do I keep my wallet secure? and What should I do if I lose my recovery phrase?, with
+  `?platform=extension-desktop` at 1440px and `?platform=mobile` at 390px: the approved wording on both, no
+  retired key name, and the platform kept in the URL. Neither shows platform tabs, by design: an article
+  offers them only when its text differs by platform.
+- What are the three keys in a Guardian-backed account? names the everyday, emergency and Guardian keys,
+  for comparison.
+- The first checklist run expected tabs on 12 and 13 and failed those four checks, with the wording on them
+  already right. The corrected checklist passed 7 of 7.
