@@ -154,8 +154,8 @@
  * subcategory rows had — both tokens are #484848 on this ground.
  *
  * The active group stays weaker than its active child, which carries an
- * accent border and a solid number on top of its own tint. A parent that
- * shouts as loudly as the page you are on is a parent competing with it.
+ * accent border on top of its own tint. A parent that shouts as loudly as the
+ * page you are on is a parent competing with it.
  */
 .help-center-navigation-heading:hover {
   color: var(--text-strong);
@@ -194,23 +194,13 @@
   background: none;
 }
 
-.help-center-navigation.has-selected-heading
-  .help-center-category-list
-  a.is-active
-  .help-center-category-number {
-  border-color: var(--tint-strong);
-  color: var(--text-faint);
-  background: none;
-}
-
 .help-center-navigation-group + .help-center-navigation-group {
   margin-top: 0.25rem;
 }
 
 /*
  * The glossary link. It is reference rather than a category, so it sits below
- * the numbered tree with a rule between them, takes a group heading's row, and
- * carries no number — the number is what marks a row as part of the hierarchy.
+ * the category tree with a rule between them and takes a group heading's row.
  */
 .help-center-sidebar-utility {
   position: relative;
@@ -246,21 +236,6 @@
 
 .help-center-main-category-label {
   min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-}
-
-.help-center-main-category-number {
-  width: 1.65rem;
-  height: 1.75rem;
-  border: 1px solid var(--tint-strong);
-  border-radius: var(--radius-marker);
-  color: var(--text-faint);
-  display: grid;
-  place-items: center;
-  font-size: var(--text-2xs);
-  font-variant-numeric: tabular-nums;
 }
 
 .help-center-icon,
@@ -298,7 +273,7 @@
   border-radius: var(--radius-md);
   color: var(--text-body);
   display: grid;
-  grid-template-columns: 1.7rem minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 0.55rem;
   font-size: var(--text-md);
@@ -336,24 +311,6 @@
 
 .help-center-category-list a.is-active .help-center-icon {
   color: var(--accent-text);
-}
-
-.help-center-category-number {
-  width: 1.6rem;
-  height: 1.7rem;
-  border: 1px solid var(--tint-strong);
-  border-radius: var(--radius-marker);
-  color: var(--text-faint);
-  display: grid;
-  place-items: center;
-  font-size: var(--text-2xs);
-  font-variant-numeric: tabular-nums;
-}
-
-.help-center-category-list a.is-active .help-center-category-number {
-  border-color: var(--help-accent);
-  color: var(--ink-on-accent);
-  background: var(--help-accent);
 }
 
 .help-center-no-results {

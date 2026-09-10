@@ -471,3 +471,16 @@ test('the home header fits every width: no sideways scroll, pills centred or hid
     }
   }
 });
+
+test('the sidebar names its categories without numbering them', async ({ page }) => {
+  // Every group heading carried a 01–05 badge and every subcategory row a 01.
+  // They were removed by Ivan's call on 2026-09-10; this keeps them gone.
+  await page.goto('/#guardian-protection/what-is-guardian');
+
+  const tree = page.getByRole('navigation', { name: 'Help Center categories' });
+  await expect(tree).toBeVisible();
+
+  const labels = await tree.locator('button, a').allTextContents();
+  expect(labels.length).toBeGreaterThan(0);
+  for (const label of labels) expect(label.trim(), `"${label}" carries a number`).not.toMatch(/^\d|\d$/);
+});

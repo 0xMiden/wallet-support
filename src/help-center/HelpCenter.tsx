@@ -612,7 +612,6 @@ export function HelpCenter() {
                 const isGroupOpen = openMainCategoryIds.has(mainCategory.id);
                 const isActiveGroup = !isGlossary && mainCategory.id === entry.mainCategory.id;
                 const panelId = `${mainCategory.id}-subcategories`;
-                const mainCategoryIndex = navigation.mainCategoryIndex(mainCategory.id);
 
                 return (
                   <section className="help-center-navigation-group" key={mainCategory.id}>
@@ -625,14 +624,7 @@ export function HelpCenter() {
                       aria-controls={panelId}
                       onClick={() => toggleMainCategory(mainCategory.id)}
                     >
-                      <span className="help-center-main-category-label">
-                        {mainCategoryIndex === undefined ? null : (
-                          <span className="help-center-main-category-number">
-                            {formatIndex(mainCategoryIndex)}
-                          </span>
-                        )}
-                        <span>{mainCategory.title}</span>
-                      </span>
+                      <span className="help-center-main-category-label">{mainCategory.title}</span>
                       <ChevronIcon direction={isGroupOpen ? 'down' : 'right'} />
                     </button>
 
@@ -640,10 +632,6 @@ export function HelpCenter() {
                       {mainCategory.subcategories.length > 0 ? (
                         <ol className="help-center-category-list">
                           {mainCategory.subcategories.map(category => {
-                            // Read from the hierarchy, not from this list: under an
-                            // active search this list is filtered, and a render index
-                            // would renumber the categories that survive the filter.
-                            const localIndex = navigation.resolve(category.id)?.localIndex;
                             // The glossary is not in this tree, so while it is open
                             // nothing here is the current page.
                             const isCurrent = !isGlossary && category.id === entry.category.id;
@@ -656,9 +644,6 @@ export function HelpCenter() {
                                   aria-current={isCurrent ? 'page' : undefined}
                                   onClick={() => setIsMobileMenuOpen(false)}
                                 >
-                                  {localIndex === undefined ? null : (
-                                    <span className="help-center-category-number">{formatIndex(localIndex)}</span>
-                                  )}
                                   <span>{category.title}</span>
                                   <ChevronIcon />
                                 </a>
@@ -678,7 +663,7 @@ export function HelpCenter() {
             )}
           </nav>
 
-          {/* Reference, not a category: outside the numbered tree, the way Contact
+          {/* Reference, not a category: outside the category tree, the way Contact
               Support sits beside search rather than inside Troubleshooting. */}
           <a
             className={`help-center-sidebar-utility${isGlossary ? ' is-active' : ''}`}
