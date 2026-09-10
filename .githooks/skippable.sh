@@ -21,9 +21,11 @@ set -uo pipefail
 
 # Article bodies are .md and absolutely do ship: the fidelity test compares
 # them against content-source/, so a change to either side must re-run it.
+# CLAUDE.md does not ship, but the terminology guard reads it, so a commit that
+# touched only CLAUDE.md skipped the guard: the .css gap again.
 is_shipping_markdown() {
   case "$1" in
-    src/help-center/content/*|content-source/*) return 0 ;;
+    src/help-center/content/*|content-source/*|CLAUDE.md) return 0 ;;
     *) return 1 ;;
   esac
 }

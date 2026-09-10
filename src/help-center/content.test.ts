@@ -977,6 +977,13 @@ describe('the key-structure vocabulary', () => {
     expect(retired(mobileSource), 'content-source/mobile.md').toEqual([]);
   });
 
+  it('is the vocabulary in the FAQ source too, for the same reason', () => {
+    // The FAQ articles are held to tasks/faq/bread-faq-content.md byte for byte,
+    // so a retired term left there would make correcting one of them fail the
+    // FAQ fidelity check instead.
+    expect(retired(faqSource), 'tasks/faq/bread-faq-content.md').toEqual([]);
+  });
+
   it('is the vocabulary in the interface too, not only the articles', () => {
     const components = import.meta.glob<string>('./*.tsx', {
       query: '?raw',
@@ -1211,7 +1218,8 @@ describe('the pre-commit filter', () => {
     ['a font', 'src/help-center/assets/fonts/inter-latin-var.woff2'],
     ['a shipped article image', 'src/help-center/assets/faq/three-keys-always-in-control.png'],
     ['the FAQ source', 'tasks/faq/bread-faq-content.md'],
-    ['a delivered FAQ image', 'tasks/faq/faq-images/three-keys-always-in-control.png']
+    ['a delivered FAQ image', 'tasks/faq/faq-images/three-keys-always-in-control.png'],
+    ['the guidance file, which the terminology guard reads', 'CLAUDE.md']
   ])('runs the checks for %s', (_label, path) => {
     expect(wouldSkip(path), `${path} must not skip the checks`).toBe(false);
   });
@@ -1222,6 +1230,7 @@ describe('the pre-commit filter', () => {
       false
     );
     expect(wouldSkip('tasks/todo.md', 'tasks/faq/bread-faq-content.md')).toBe(false);
+    expect(wouldSkip('README.md', 'CLAUDE.md')).toBe(false);
   });
 
   it('runs the checks when nothing is staged, rather than assuming there is nothing to do', () => {
@@ -1232,8 +1241,7 @@ describe('the pre-commit filter', () => {
     ['a task note', 'tasks/todo.md'],
     ['an audit report', 'tasks/brand-audit-2026-09-09.md'],
     ['a screenshot', 'tasks/brand-audit/home-1440.jpg'],
-    ['the readme', 'README.md'],
-    ['the guidance file', 'CLAUDE.md']
+    ['the readme', 'README.md']
   ])('lets %s skip', (_label, path) => {
     expect(wouldSkip(path), `${path} should not need the checks`).toBe(true);
   });

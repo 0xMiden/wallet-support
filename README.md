@@ -62,14 +62,14 @@ git config core.hooksPath .githooks
 
 The hook is local and offline: `tsc` and `vitest` come from `node_modules` and nothing contacts a
 network or an external service. It skips the checks only when every staged path is under `tasks/` or
-is Markdown other than an article body (`src/help-center/content/`, `content-source/` and the FAQ
-source in `tasks/faq/` always run them), so documentation commits stay instant. Use `git commit --no-verify` to skip a single commit
+is Markdown that no test reads (`src/help-center/content/`, `content-source/`, `CLAUDE.md` and the
+FAQ source in `tasks/faq/` always run them), so documentation commits stay instant. Use `git commit --no-verify` to skip a single commit
 deliberately.
 
 The rule, in `.githooks/skippable.sh`, names what does not ship rather than what does. It used to be
 a list of the file types that should run the checks, and that list left out CSS, so a stylesheet-only
-commit skipped every check even though a unit test reads the stylesheets. `content.test.ts` now
-exercises the rule directly.
+commit skipped every check even though a unit test reads the stylesheets. `CLAUDE.md` was the same
+gap once the terminology guard began reading it. `content.test.ts` now exercises the rule directly.
 
 ### Why the checks are split
 
