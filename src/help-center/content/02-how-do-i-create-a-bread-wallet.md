@@ -13,7 +13,7 @@ When you install Bread Wallet, there are two options to choose between: **Create
 **Steps:**
 
 1. To create a new wallet, select **Create new wallet**.
-2. You will be directed to the **back up your wallet** page. Your seed phrase is your recovery key used to rotate device keys, not for everyday transactions. If someone can access your recovery key, they can control your funds and assets inside the wallet. Note that you are solely responsible for securing your recovery key. Make sure to keep each of these words in your recovery phrase in its original English language and keep it somewhere safe. Click the **Continue** button.
+2. You will be directed to the **back up your wallet** page. Your seed phrase is your recovery phrase. It rebuilds your emergency key on a new device and is not used for everyday transactions. If someone can access your recovery phrase, they can control your funds and assets inside the wallet. Note that you are solely responsible for securing your recovery phrase. Make sure to keep each of these words in your recovery phrase in its original English language and keep it somewhere safe. Click the **Continue** button.
 3. On the page to verify your seed phrase, confirm you've saved your recovery phrase. Select the first and last words from your phrase, and then click the **Continue** button.
 4. On the create password page, create a strong password with a minimum of 8 characters and at least 1 number, and then click **Continue**.
 5. On the account recovery page, you can choose between two options:

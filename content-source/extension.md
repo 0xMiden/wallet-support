@@ -29,7 +29,7 @@ When you install Bread Wallet, there are two options to choose between: **Create
 **Steps:**
 
 1. To create a new wallet, select **Create new wallet**.
-2. You will be directed to the **back up your wallet** page. Your seed phrase is your recovery key used to rotate device keys, not for everyday transactions. If someone can access your recovery key, they can control your funds and assets inside the wallet. Note that you are solely responsible for securing your recovery key. Make sure to keep each of these words in your recovery phrase in its original English language and keep it somewhere safe. Click the **Continue** button.
+2. You will be directed to the **back up your wallet** page. Your seed phrase is your recovery phrase. It rebuilds your emergency key on a new device and is not used for everyday transactions. If someone can access your recovery phrase, they can control your funds and assets inside the wallet. Note that you are solely responsible for securing your recovery phrase. Make sure to keep each of these words in your recovery phrase in its original English language and keep it somewhere safe. Click the **Continue** button.
 3. On the page to verify your seed phrase, confirm you've saved your recovery phrase. Select the first and last words from your phrase, and then click the **Continue** button.
 4. On the create password page, create a strong password with a minimum of 8 characters and at least 1 number, and then click **Continue**.
 5. On the account recovery page, you can choose between two options:
@@ -145,7 +145,7 @@ Here are some best practices:
 
 **If Guardian is enabled:**
 
-Guardian adds a recovery layer; it keeps a backup of your private account data so you can get back into your wallet on a new device if your current one is lost or broken. Guardian's design also supports protecting an account with more than one key (for example, an everyday key plus a separate recovery key, with Guardian co-signing based on rules), so a single stolen key may not be enough for someone to move your funds on its own. Guardian never holds your keys and can never move your funds by itself.
+Guardian adds a recovery layer; it keeps a backup of your private account data so you can get back into your wallet on a new device if your current one is lost or broken. Guardian's design protects an account with three keys: an everyday key on your device, an emergency key rebuilt from your recovery phrase, and the Guardian key, which acknowledges state updates. Moving funds takes two of the three, so a single stolen key is not enough for someone to move your funds on its own. Guardian never holds your keys and can never move your funds by itself.
 
 **If Guardian is not enabled:**
 
@@ -167,7 +167,7 @@ Whether you can recover depends on your wallet setup, whether Guardian is on, an
 
 **If Guardian is enabled:**
 
-Guardian keeps a backup of your account data and is designed so you can recover on another device using your keys. So if you've lost your recovery phrase but still have your encrypted wallet file recovery key, you may be able to regain access, and your account data can come back through Guardian. But Guardian cannot restore your wallet on its own; it never holds your keys and can't act without the required signatures, so if you've lost *all* your keys and backups, Guardian alone won't bring your wallet back.
+Guardian keeps a backup of your account data and is designed so you can recover on another device using your keys. So if you've lost your recovery phrase but still have your encrypted wallet file, you may be able to regain access, and your account data can come back through Guardian. But Guardian cannot restore your wallet on its own; it never holds your keys and can't act without the required signatures, so if you've lost *all* your keys and backups, Guardian alone won't bring your wallet back.
 
 **If Guardian is not enabled:**
 

@@ -149,7 +149,7 @@ Here are some best practices:
 
 **If Guardian is enabled:**
 
-Guardian adds a recovery layer; it keeps a backup of your private account data so you can get back into your wallet on a new device if your current one is lost or broken. Guardian's design also supports protecting an account with more than one key (for example, an everyday key plus a separate recovery key, with Guardian co-signing based on rules), so a single stolen key may not be enough for someone to move your funds on its own. Guardian never holds your keys and can never move your funds by itself.
+Guardian adds a recovery layer; it keeps a backup of your private account data so you can get back into your wallet on a new device if your current one is lost or broken. Guardian's design protects an account with three keys: an everyday key on your device, an emergency key rebuilt from your recovery phrase, and the Guardian key, which acknowledges state updates. Moving funds takes two of the three, so a single stolen key is not enough for someone to move your funds on its own. Guardian never holds your keys and can never move your funds by itself.
 
 **If Guardian is not enabled:**
 
@@ -171,7 +171,7 @@ Whether you can recover depends on your wallet setup, whether Guardian is on, an
 
 **If Guardian is enabled:**
 
-Guardian keeps a backup of your account data and is designed so you can recover on another device using your keys. So if you've lost your recovery phrase but still have your encrypted wallet file recovery key, you may be able to regain access, and your account data can come back through Guardian. But Guardian cannot restore your wallet on its own; it never holds your keys and can't act without the required signatures, so if you've lost *all* your keys and backups, Guardian alone won't bring your wallet back.
+Guardian keeps a backup of your account data and is designed so you can recover on another device using your keys. So if you've lost your recovery phrase but still have your encrypted wallet file, you may be able to regain access, and your account data can come back through Guardian. But Guardian cannot restore your wallet on its own; it never holds your keys and can't act without the required signatures, so if you've lost *all* your keys and backups, Guardian alone won't bring your wallet back.
 
 **If Guardian is not enabled:**
 
