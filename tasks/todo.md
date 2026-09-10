@@ -853,3 +853,37 @@ local build. Both assets were fetched and hashed, not only named by `index.html`
 - The home page shows the five category cards and no Glossary card or Reference heading, at 1440 and 390.
 - It ends at the support panel, 64px above the footer at both widths, with no sideways scroll.
 - The only Glossary link on the home page is the footer's.
+
+## Previous and next numbers — preview deployment
+
+Commit `a7ae53c` (the previous and next cards name their direction without numbering it), deployed on
+2026-09-10.
+
+### Before deploying
+
+- `yarn verify` passed on the change: 200 unit tests, 31 end-to-end tests, and the build. The new test
+  failed first, on `03Previous article`.
+- Built with `PLACEHOLDERS_OK=1`, which nothing reads, from a clean tree.
+- Drift check was clean: the preview still served the `48e7713` baseline recorded above.
+
+### Deployment
+
+- Preview deployment ID: `668e6c66-cb30-4ee0-9bae-d60d6bf65f63`.
+- Environment `Preview`, branch `help-center-shell`, source commit `a7ae53c`. Branch and commit were passed
+  explicitly; production has still never been deployed.
+- Atomic deployment: `https://668e6c66.bread-wallet-help-center-preview.pages.dev`.
+- Stable alias: HTTP 200 with `X-Robots-Tag: noindex`.
+
+### New drift-check baseline
+
+`index-D8hjvt4e.js` and `index-BfpqgW7m.css`, byte-identical on the alias, on the atomic URL, and in the
+local build. Both assets were fetched and hashed, not only named by `index.html`:
+
+- `index-D8hjvt4e.js` sha256 `981df8f51c6796f2c8434e0d1248f4d40004288018e2a65190c5b75e4d634dcc`
+- `index-BfpqgW7m.css` sha256 `63aae4e2dd91f63c1853dc6ebb11c95ad0970b264d101c6cc291b8fc4f9fa8d4`
+
+### Measured on the live alias
+
+- On `how-do-i-keep-my-wallet-secure` and on `#security-and-recovery`, at 1440 and 390, the Previous and
+  Next labels carry no number. Titles, the category marker and the arrows are unchanged.
+- The cards measure 83px on the article and 68px on the subcategory page at 1440, with no sideways scroll.
