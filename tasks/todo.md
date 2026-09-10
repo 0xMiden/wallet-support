@@ -1031,3 +1031,64 @@ are unchanged too.
   for comparison.
 - The first checklist run expected tabs on 12 and 13 and failed those four checks, with the wording on them
   already right. The corrected checklist passed 7 of 7.
+
+## Category split, grid rule and glossary colours — preview deployment
+
+Commits `f898007` to `3c07f90`, deployed on 2026-09-11:
+
+- `f898007` test: terminology guard covers the glossary and CLAUDE.md
+- `96a05ee` fix: CLAUDE.md commits run the checks
+- `f9506b8` style: glossary takes the article cards' blue
+- `31bbad6` feat: Cross-chain and Earn become two categories
+- `3c07f90` docs: the enforcement sentence names the FAQ source
+
+### Before deploying
+
+- Each new guard lens was mutation-tested before its commit. A retired term in a new glossary entry, a
+  glossary comment, CLAUDE.md prose (also split across a line break) and the FAQ source's header each
+  passed the suite before its lens existed and failed only that lens after. Deleting or weakening the
+  approved vocabulary sentence failed the CLAUDE.md lens; reverting the filter line failed the moved row.
+- The grid rule was mutation-tested. Dropping the three- or two-column rule failed the centring test;
+  widening either to every last card, or dropping either reset, failed the full-row test.
+- The split changed no article prose. All 40 article bodies and all 17 FAQ bodies hash identically before
+  and after; article frontmatter changed only in five `mainCategory` lines, and the FAQ source only in its
+  placement table, line 27 and five `Category:` lines.
+- `yarn verify` passed on `3c07f90`: typecheck, 234 unit tests, 53 end-to-end tests, and the build.
+- Built with `PLACEHOLDERS_OK=1`, which nothing reads, from a clean tree.
+- Drift check was clean twice, the second immediately before deploying: the preview still served the
+  `38bfb3c` baseline recorded above.
+- Deployed with the cached wrangler 4.130.0 binary, as for `38bfb3c`.
+
+### Deployment
+
+- Preview deployment ID: `1d8a5a2d-440e-46fd-8aa2-bc6da9d8da57`.
+- Environment `Preview`, branch `help-center-shell`, source commit `3c07f90`. Branch and commit were passed
+  explicitly; production has still never been deployed.
+- Atomic deployment: `https://1d8a5a2d.bread-wallet-help-center-preview.pages.dev`.
+- Stable alias: HTTP 200 with `X-Robots-Tag: noindex`.
+
+### New drift-check baseline
+
+`index-COfNRdII.js` and `index-Cyg1-008.css`, byte-identical on the alias, on the atomic URL, and in the
+local build. Both assets were fetched and hashed, not only named by `index.html`. The five diagrams are
+unchanged.
+
+- `index-COfNRdII.js` sha256 `7f3a8278ebd2aabd765fb802453d832467bed5de488e26a00261c16e3373ab05`
+- `index-Cyg1-008.css` sha256 `63dde1addd7d8a0a0855e9e97401ace23c049e914857cda102e3e79327f4048c`
+
+### Measured on the live alias
+
+- Home grid: seven cards in rows of 3+3+1 at 1440px and 2+2+2+1 at 800px, the lone card 0.0px off the
+  grid's centre and as wide as the rest; one column at 390px. The heading reads 39 articles across 7
+  topics, which the cards' own counts add up to: the held-back article is not counted.
+- Cross-chain card: the approved description, 3 articles, the passing arrows; it opens Moving across
+  chains. Earn card: the approved description, 2 articles, the new icon; it opens Earning yield.
+- On `#earn` the sidebar's last two groups are Cross-chain and Earn, with Earning yield shown, current and
+  highlighted.
+- The `#earn` link in the body of Can I earn yield in Bread? leads to Are my funds private while they
+  earn?, at 1440px, and at 390px on Mobile with the platform kept.
+- Glossary: header and linked row `rgba(145, 172, 193, 0.14)`, stripe `0.08`, and the linked row's bar
+  `rgb(59, 90, 114)`.
+- The first checklist run passed 7 of 10, on two wrong expectations: 40 articles in the heading, which
+  counts published articles only, and an article title read the moment the hash moved, before the page
+  had rendered. Corrected, it passed 10 of 10; the title settled 55ms after the hash.
