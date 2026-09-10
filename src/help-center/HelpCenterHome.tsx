@@ -17,12 +17,12 @@ import type { HelpCenterMainCategory } from './types';
  * design tokens, the brand, and the support intake — nothing else.
  *
  * Nothing here is decorative-only. The hero exists to hold the search field,
- * the cards exist to name the five topics, and the panel at the bottom exists
+ * the cards exist to name the topics, and the panel at the bottom exists
  * because a reader who did not find an answer needs somewhere to go.
  */
 
 /**
- * The chips under the search field: one route into each of the five main
+ * The chips under the search field: one route into each of the first five main
  * categories, phrased the way a reader would ask.
  *
  * Each is a real query run through the same search the field uses, and
@@ -73,7 +73,14 @@ function CategoryGlyph({ categoryId }: { categoryId: string }) {
      * box, stroke included, is centred and clears every side.
      */
     troubleshooting:
-      'M12.71 7.24a4.1 4.1 0 0 1 5.2-5.1l-2.8 2.8.8 3.2 3.2.8 2.8-2.8a4.1 4.1 0 0 1-5.1 5.2L5.51 21.54a2.2 2.2 0 0 1-3.1-3.1Z'
+      'M12.71 7.24a4.1 4.1 0 0 1 5.2-5.1l-2.8 2.8.8 3.2 3.2.8 2.8-2.8a4.1 4.1 0 0 1-5.1 5.2L5.51 21.54a2.2 2.2 0 0 1-3.1-3.1Z',
+    /*
+     * Two arrows passing in opposite directions: funds going out to another
+     * chain and coming back, which is what both subcategories describe — a
+     * transfer or swap across, and the round trip to earn. Painted bounds
+     * 3.30..20.70 x 3.30..20.70, centred and inside the viewBox on every side.
+     */
+    'cross-chain-and-earn': 'M4 8h14M14 4l4 4-4 4M20 16H6M10 12l-4 4 4 4'
   };
 
   return (

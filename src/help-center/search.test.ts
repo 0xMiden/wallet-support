@@ -26,6 +26,13 @@ describe('searching the Help Center', () => {
     expect(results.some(r => !r.matchedTitle)).toBe(true);
   });
 
+  it('reads past image markup rather than searching or quoting it', () => {
+    // An image line's alt text describes a picture; it is not a sentence in
+    // the article. Read as a link, it used to reach snippets as "!Three keys".
+    expect(find('always in control')).toEqual([]);
+    for (const result of find('keys')) expect(result.snippet).not.toMatch(/!|\]\(|\.png/);
+  });
+
   it('returns a snippet showing why the result matched', () => {
     const [first] = find('jigsaw');
     expect(first?.snippet.toLocaleLowerCase()).toContain('jigsaw');

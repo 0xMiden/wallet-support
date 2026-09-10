@@ -3,6 +3,10 @@
  * articles use: paragraphs, bold, italic, links, ordered and unordered lists
  * including nesting, and blockquote callouts.
  *
+ * The FAQ articles added two constructs, and only in the shape they use them:
+ * an image on a line of its own, named by a file the caller supplies, and a
+ * link to another article, written as its hash route.
+ *
  * The subset was derived by scanning content-source/ rather than declared in
  * advance — italic is in it because two sentences in "What should I do if I
  * lose my recovery phrase?" turn on emphasised words ("*all* your keys").
@@ -39,6 +43,32 @@ const UNSUPPORTED_BLOCK = /^\s*(#{1,6}\s|```|\||(-{3,}|\*{3,}|_{3,})\s*$)/;
    lead inside a callout or a list item is emphasis, not document structure. */
 const SECTION_LABEL = /^\*\*([^*]+)\*\*$/;
 
+/*
+ * A link to another article is its hash route: #subcategory/article, or
+ * #subcategory. Held to that shape so a typo fails here instead of shipping as
+ * a link that goes nowhere. It stays in the tab: the reader is still inside
+ * the Help Center, and the query string, which carries the platform, is kept.
+ */
+const INTERNAL_HREF = /^#[a-z0-9]+(?:-[a-z0-9]+)*(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)?$/;
+
+/*
+ * An image is a line of its own: ![alt](file.png). Alt text is required, and
+ * the file must be one the caller supplied, so an unknown name throws rather
+ * than rendering a broken image. Width and height go on the tag, so the page
+ * keeps its layout while a lazy image loads and an anchor below it still lands
+ * where it points.
+ */
+const IMAGE_BLOCK = /^!\[([^\]]*)\]\(([^)\s]+)\)$/;
+
+/** An image an article may show, looked up by the filename its Markdown names. */
+export interface ArticleImage {
+  readonly src: string;
+  readonly width: number;
+  readonly height: number;
+}
+
+export type ArticleImages = Readonly<Record<string, ArticleImage>>;
+
 function escapeText(text: string) {
   return text.replace(/[&<>"']/g, character => ESCAPES[character] as string);
 }
@@ -48,10 +78,10 @@ function fail(origin: string, reason: string, line: string): never {
 }
 
 function renderLink(label: string, href: string, origin: string, line: string) {
-  if (!/^https?:\/\//.test(href) && !href.startsWith('mailto:')) {
+  const external = /^https?:\/\//.test(href);
+  if (!external && !href.startsWith('mailto:') && !INTERNAL_HREF.test(href)) {
     fail(origin, `link scheme is not supported ("${href}")`, line);
   }
-  const external = /^https?:\/\//.test(href);
   const attributes = external ? ' target="_blank" rel="noopener noreferrer"' : '';
   return `<a href="${escapeText(href)}"${attributes}>${renderInline(label, origin, line)}</a>`;
 }
@@ -137,7 +167,8 @@ export function renderBlocks(
   lines: readonly string[],
   origin: string,
   depth = 0,
-  headings?: ArticleHeading[]
+  headings?: ArticleHeading[],
+  images: ArticleImages = {}
 ): string {
   const output: string[] = [];
   let index = 0;
@@ -183,6 +214,22 @@ export function renderBlocks(
       continue;
     }
 
+    // Top level only. Inside a list item or a callout an image line falls
+    // through to inline rendering, which refuses it.
+    const image = depth === 0 ? IMAGE_BLOCK.exec(line.trim()) : null;
+    if (image) {
+      const alt = (image[1] as string).trim();
+      const name = image[2] as string;
+      if (!alt) fail(origin, 'an image needs alt text', line);
+      const file = images[name];
+      if (!file) fail(origin, `no image named "${name}"`, line);
+      output.push(
+        `<figure><img src="${escapeText(file.src)}" alt="${escapeText(alt)}" width="${file.width}" height="${file.height}" loading="lazy" decoding="async"></figure>`
+      );
+      index += 1;
+      continue;
+    }
+
     const paragraph: string[] = [];
     while (index < lines.length) {
       const candidate = lines[index] as string;
@@ -211,8 +258,8 @@ export function renderBlocks(
   return output.join('');
 }
 
-export function renderMarkdown(source: string, origin: string): string {
-  return renderBlocks(source.split('\n'), origin);
+export function renderMarkdown(source: string, origin: string, images?: ArticleImages): string {
+  return renderBlocks(source.split('\n'), origin, 0, undefined, images);
 }
 
 /**
@@ -222,9 +269,10 @@ export function renderMarkdown(source: string, origin: string): string {
  */
 export function renderArticle(
   source: string,
-  origin: string
+  origin: string,
+  images?: ArticleImages
 ): { html: string; headings: readonly ArticleHeading[] } {
   const headings: ArticleHeading[] = [];
-  const html = renderBlocks(source.split('\n'), origin, 0, headings);
+  const html = renderBlocks(source.split('\n'), origin, 0, headings, images);
   return { html, headings };
 }

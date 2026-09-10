@@ -6,6 +6,7 @@ import { describe, expect, it } from 'vitest';
 
 import extensionSource from '../../content-source/extension.md?raw';
 import mobileSource from '../../content-source/mobile.md?raw';
+import faqSource from '../../tasks/faq/bread-faq-content.md?raw';
 
 import { helpCenterMainCategories } from './categories';
 import {
@@ -16,12 +17,14 @@ import {
   coverageReport,
   coverageWarnings,
   helpCenterAllArticles,
+  helpCenterArticleImages,
   helpCenterArticles,
   loadArticles,
   parseArticle,
   subcategoryNeedsPlatformChoice,
   validationErrors
 } from './content';
+import { createHelpCenterNavigation } from './navigation';
 import type { HelpCenterArticle, HelpCenterPlatform } from './types';
 
 const SHARED = `---
@@ -188,6 +191,56 @@ describe('coverage', () => {
     expect(articlesFor([extensionOnly], 'guardian-protection', 'extension-desktop')).toHaveLength(1);
     expect(articlesFor([extensionOnly], 'guardian-protection', 'mobile')).toHaveLength(0);
   });
+
+  /*
+   * The totals, written down rather than derived, so adding a category or an
+   * article is a decision this file has to be told about.
+   */
+  it('spans 6 main categories, 9 subcategories and 40 articles', () => {
+    const navigation = createHelpCenterNavigation(helpCenterMainCategories);
+    expect(navigation.mainCategories).toHaveLength(6);
+    expect(navigation.categories).toHaveLength(9);
+    expect(helpCenterAllArticles).toHaveLength(40);
+  });
+
+  it('resolves every article to exactly one position, through navigation.ts', () => {
+    // The position the pages show: main category, subcategory within it, and
+    // article within that. navigation.ts owns the first two; the third is the
+    // article's place in its subcategory's listing.
+    const navigation = createHelpCenterNavigation(helpCenterMainCategories);
+    const taken = new Map<string, string>();
+
+    for (const article of helpCenterAllArticles) {
+      const entry = navigation.resolve(article.subcategory);
+      expect(entry, `${article.id}: "${article.subcategory}" is not a category`).toBeDefined();
+      expect(entry?.mainCategory.id, `${article.id}: filed under the wrong main category`).toBe(
+        article.mainCategory
+      );
+
+      const listedUnder = navigation.categories.filter(category =>
+        articlesInSubcategory(helpCenterAllArticles, category.id).some(candidate => candidate.id === article.id)
+      );
+      expect(listedUnder.map(category => category.id), article.id).toEqual([article.subcategory]);
+
+      const siblings = articlesInSubcategory(helpCenterAllArticles, article.subcategory);
+      expect(siblings.filter(candidate => candidate.id === article.id), article.id).toHaveLength(1);
+
+      const position = `${entry?.mainCategoryIndex}.${entry?.localIndex}.${siblings.indexOf(article) + 1}`;
+      expect(taken.get(position), `${article.id} shares position ${position}`).toBeUndefined();
+      taken.set(position, article.id);
+    }
+
+    expect(taken.size).toBe(40);
+  });
+
+  it('keeps Activity and transaction status in the hierarchy, with no FAQ article added', () => {
+    // The FAQ files nothing here. It holds the one article filed before the FAQ.
+    const navigation = createHelpCenterNavigation(helpCenterMainCategories);
+    expect(navigation.has('activity-and-transaction-status')).toBe(true);
+    expect(
+      articlesInSubcategory(helpCenterAllArticles, 'activity-and-transaction-status').map(article => article.id)
+    ).toEqual(['what-is-delegate-proof-generation']);
+  });
 });
 
 /**
@@ -236,11 +289,61 @@ function normalise(text: string) {
     .trim();
 }
 
+/**
+ * The approved FAQ, read by a parser of its own for the reason content-source
+ * is: two derivations of one text, not a round trip through the migration.
+ * The file holds a placement table, then one section per article — a numbered
+ * title, a Category line, a blank line and the body.
+ */
+interface FaqEntry {
+  readonly number: number;
+  readonly title: string;
+  readonly mainCategory: string;
+  readonly subcategory: string;
+  readonly body: string;
+}
+
+function readFaq(text: string) {
+  const [head = '', articles = ''] = text.split('\n## Articles\n');
+
+  const placement = [...head.matchAll(/^\| (\d+) \| (.+?) \| (.+?) \| (.+?) \|$/gm)].map(row => ({
+    number: Number(row[1]),
+    title: row[2] as string,
+    mainCategory: row[3] as string,
+    subcategory: row[4] as string
+  }));
+
+  const entries: readonly FaqEntry[] = articles
+    .split(/\n(?=### \d+\. )/)
+    .slice(1)
+    .map(section => {
+      const match = /^### (\d+)\. (.+)\nCategory: (.+) › (.+)\n\n([\s\S]+?)\n*$/.exec(section);
+      if (!match) throw new Error(`Cannot read the FAQ section starting "${section.slice(0, 60)}".`);
+      return {
+        number: Number(match[1]),
+        title: match[2] as string,
+        mainCategory: match[3] as string,
+        subcategory: match[4] as string,
+        body: match[5] as string
+      };
+    });
+
+  return { placement, entries };
+}
+
+const FAQ = readFaq(faqSource);
+const FAQ_TITLES: ReadonlySet<string> = new Set(FAQ.entries.map(entry => entry.title));
+
 describe('fidelity to content-source', () => {
   const sources = {
     'extension-desktop': readSource('extension-desktop'),
     mobile: readSource('mobile')
   } as const;
+
+  // The FAQ articles have a source of their own and are held to it below.
+  // Every other article is held to content-source here, and "draws every
+  // article from exactly one approved source" stops one escaping both checks.
+  const migrated = helpCenterAllArticles.filter(article => !FAQ_TITLES.has(article.title));
 
   it('reads the expected article counts out of content-source', () => {
     expect(sources['extension-desktop'].size).toBe(23);
@@ -248,7 +351,8 @@ describe('fidelity to content-source', () => {
   });
 
   it('carries every migrated body verbatim, image placeholders aside', () => {
-    for (const article of helpCenterAllArticles) {
+    expect(migrated).toHaveLength(23);
+    for (const article of migrated) {
       for (const platform of article.platforms) {
         const expected = sources[platform].get(article.title);
         expect(expected, `${article.id}: "${article.title}" is not on the ${platform} source page`).toBeDefined();
@@ -260,13 +364,224 @@ describe('fidelity to content-source', () => {
   });
 
   it('declares a platform only where the source page carries the title', () => {
-    for (const article of helpCenterAllArticles) {
+    for (const article of migrated) {
       for (const platform of ['extension-desktop', 'mobile'] as const) {
         expect(
           article.platforms.includes(platform),
           `${article.id}: platform declaration disagrees with the ${platform} source page`
         ).toBe(sources[platform].has(article.title));
       }
+    }
+  });
+});
+
+describe('article sources', () => {
+  it('draws every article from exactly one approved source', () => {
+    const pages = new Set([...readSource('extension-desktop').keys(), ...readSource('mobile').keys()]);
+
+    for (const article of helpCenterAllArticles) {
+      const sources = [
+        ...(pages.has(article.title) ? ['content-source'] : []),
+        ...(FAQ_TITLES.has(article.title) ? ['tasks/faq'] : [])
+      ];
+      expect(sources, `${article.id}: "${article.title}"`).toHaveLength(1);
+    }
+
+    expect(helpCenterAllArticles.filter(article => pages.has(article.title))).toHaveLength(23);
+    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(17);
+  });
+});
+
+/**
+ * Fidelity to the approved FAQ, and stricter than the check above: nothing is
+ * normalised. Once link and image markup is taken back out, each body equals
+ * its section of tasks/faq/bread-faq-content.md byte for byte. The migration
+ * may do exactly two things — wrap a referenced title in a link to the article
+ * it names, and give an image its alt text — and the tests after the
+ * comparison hold it to those two.
+ */
+function withoutMigrationMarkup(body: string) {
+  return body
+    .replace(/\[([^\]]+)\]\(#[^)\s]+\)/g, '$1')
+    .replace(/^!\[[^\]]*\]\(([^)\s]+)\)$/gm, '![]($1)');
+}
+
+/** Written out by hand from the placement table: FAQ numbers, in reading order. */
+const FAQ_PLACEMENT: Readonly<Record<string, readonly number[]>> = {
+  'setup-and-basic-use': [1],
+  'security-and-recovery': [10, 11, 12],
+  'public-and-private-transactions': [9],
+  'guardian-protection': [2, 3, 4, 5, 6, 7, 8],
+  'moving-across-chains': [13, 14, 15],
+  earn: [16, 17]
+};
+
+/** Alt text for each image, taken from the heading drawn inside it. */
+const FAQ_IMAGE_ALT: Readonly<Record<string, string>> = {
+  'guardian-backed-or-more-private.png': 'Guardian-backed, or more private',
+  'three-keys-always-in-control.png': 'Three keys, always in control',
+  'private-from-other-users.png': 'Private from other users',
+  'across-chains-two-routes.png': 'Across chains, two routes',
+  'earn-across-the-privacy-line.png': 'Earn across the privacy line'
+};
+
+describe('fidelity to the FAQ', () => {
+  const navigation = createHelpCenterNavigation(helpCenterMainCategories);
+  const byTitle = new Map(helpCenterAllArticles.map(article => [article.title, article]));
+  const faqArticle = (entry: FaqEntry) => {
+    const article = byTitle.get(entry.title);
+    if (!article) throw new Error(`FAQ ${entry.number}: no article is titled "${entry.title}".`);
+    return article;
+  };
+
+  it('reads seventeen articles, numbered in order, that agree with the placement table', () => {
+    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 17 }, (_, index) => index + 1));
+    expect(FAQ.placement).toEqual(
+      FAQ.entries.map(({ number, title, mainCategory, subcategory }) => ({ number, title, mainCategory, subcategory }))
+    );
+  });
+
+  it('carries all seventeen titles and bodies byte for byte, link and image markup aside', () => {
+    // The title is matched exactly by the lookup, so a changed character in
+    // one fails here as a missing article.
+    for (const entry of FAQ.entries) {
+      const article = faqArticle(entry);
+      for (const platform of article.platforms) {
+        expect(withoutMigrationMarkup(article.bodies[platform] ?? ''), `${article.id} (${platform})`).toBe(
+          entry.body
+        );
+      }
+    }
+  });
+
+  it('gives every FAQ article both platforms and one body, with no platform sections', () => {
+    const files = import.meta.glob<string>('./content/*.md', { query: '?raw', import: 'default', eager: true });
+
+    for (const entry of FAQ.entries) {
+      const article = faqArticle(entry);
+      expect(article.platforms, article.id).toEqual(['extension-desktop', 'mobile']);
+      expect(article.bodies.mobile, article.id).toBe(article.bodies['extension-desktop']);
+
+      const file = Object.values(files).filter(source => source.includes(`\nid: ${article.id}\n`));
+      expect(file, article.id).toHaveLength(1);
+      expect(file[0], article.id).not.toMatch(/<!--\s*platform:/);
+    }
+  });
+
+  it('files each FAQ article where the placement table says, through navigation.ts', () => {
+    for (const row of FAQ.placement) {
+      const article = byTitle.get(row.title) as HelpCenterArticle;
+      const entry = navigation.resolve(article.subcategory);
+      expect(entry?.mainCategory.title, article.id).toBe(row.mainCategory);
+      expect(entry?.category.title, article.id).toBe(row.subcategory);
+      expect(article.mainCategory, article.id).toBe(entry?.mainCategory.id);
+    }
+  });
+
+  it('appends FAQ articles after the existing ones in each subcategory, in FAQ order', () => {
+    const numberOf = new Map(FAQ.entries.map(entry => [entry.title, entry.number]));
+
+    for (const category of navigation.categories) {
+      const listed = articlesInSubcategory(helpCenterAllArticles, category.id);
+      const firstFaq = listed.findIndex(article => numberOf.has(article.title));
+      const tail = firstFaq === -1 ? [] : listed.slice(firstFaq);
+
+      // An existing article after the first FAQ one shows up here as undefined.
+      expect(tail.map(article => numberOf.get(article.title)), category.id).toEqual(
+        FAQ_PLACEMENT[category.id] ?? []
+      );
+    }
+
+    expect(articlesInSubcategory(helpCenterAllArticles, 'moving-across-chains')).toHaveLength(3);
+    expect(articlesInSubcategory(helpCenterAllArticles, 'earn')).toHaveLength(2);
+  });
+
+  it('links each referenced title to the published article it names, or leaves it italic', () => {
+    // A title in italics is a reference. One that names a published article is
+    // a link to it; one that names nothing stays plain italic and is collected
+    // here, so it is reported rather than shipped quietly as emphasis.
+    const REFERENCE = /(\[)?(?<!\*)\*([^*]+)\*(?!\*)(?:\]\(#([a-z0-9-]+)\/([a-z0-9-]+)\))?/g;
+    const unresolved: string[] = [];
+    let linked = 0;
+
+    for (const entry of FAQ.entries) {
+      const article = faqArticle(entry);
+
+      for (const match of (article.bodies['extension-desktop'] as string).matchAll(REFERENCE)) {
+        const title = match[2] as string;
+        const target = helpCenterArticles.find(candidate => candidate.title === title);
+
+        if (!target) {
+          expect(match[1] ?? match[3], `${article.id}: "${title}" names no article but is linked`).toBeUndefined();
+          unresolved.push(`${article.id}: ${title}`);
+          continue;
+        }
+
+        expect([match[1], match[3], match[4]], `${article.id}: "${title}"`).toEqual([
+          '[',
+          target.subcategory,
+          target.id
+        ]);
+        linked += 1;
+      }
+    }
+
+    expect(unresolved).toEqual([]);
+    expect(linked).toBe(25);
+  });
+
+  it('points every internal link at a published article, labelled with its title', () => {
+    for (const article of helpCenterAllArticles) {
+      for (const platform of article.platforms) {
+        for (const match of (article.bodies[platform] as string).matchAll(/\[([^\]]+)\]\(#([^)]*)\)/g)) {
+          const [subcategory = '', id = ''] = (match[2] as string).split('/');
+          const target = findArticle(helpCenterArticles, subcategory, id);
+          expect(target, `${article.id} (${platform}): #${match[2]} is not a published article`).toBeDefined();
+          expect(match[1], `${article.id} (${platform}): link label`).toBe(`*${target?.title}*`);
+        }
+      }
+    }
+  });
+
+  it('shows each image where the FAQ places it, with its heading as alt text', () => {
+    const shown = helpCenterAllArticles.flatMap(article =>
+      [...(article.bodies['extension-desktop'] ?? '').matchAll(/^!\[([^\]]*)\]\(([^)\s]+)\)$/gm)].map(
+        match => [match[2] as string, match[1] as string] as const
+      )
+    );
+
+    expect(shown).toHaveLength(5);
+    expect(Object.fromEntries(shown)).toEqual(FAQ_IMAGE_ALT);
+    expect([...faqSource.matchAll(/^!\[\]\(([^)\s]+)\)$/gm)].map(match => match[1]).sort()).toEqual(
+      Object.keys(FAQ_IMAGE_ALT).sort()
+    );
+  });
+
+  it('ships each image exactly as delivered, at the size its own header gives', () => {
+    const repoRoot = fileURLToPath(new URL('../..', import.meta.url));
+    const deliveredDir = join(repoRoot, 'tasks/faq/faq-images');
+    const shippedDir = join(repoRoot, 'src/help-center/assets/faq');
+    const delivered = [...readdirSync(deliveredDir)].sort();
+
+    expect(delivered).toEqual(Object.keys(FAQ_IMAGE_ALT).sort());
+    expect([...readdirSync(shippedDir)].sort()).toEqual(delivered);
+    expect(Object.keys(helpCenterArticleImages).sort()).toEqual(delivered);
+
+    for (const name of delivered) {
+      const original = readFileSync(join(deliveredDir, name));
+      const shipped = readFileSync(join(shippedDir, name));
+      expect(
+        shipped.length === original.length && shipped.every((byte, index) => byte === original[index]),
+        `${name} differs from the delivered file`
+      ).toBe(true);
+
+      // A PNG's IHDR chunk: width and height, big-endian, at bytes 16 and 20.
+      const header = new DataView(original.buffer, original.byteOffset, original.byteLength);
+      expect(String.fromCharCode(...original.subarray(12, 16)), name).toBe('IHDR');
+      expect([header.getUint32(16), header.getUint32(20)], name).toEqual([
+        helpCenterArticleImages[name]?.width,
+        helpCenterArticleImages[name]?.height
+      ]);
     }
   });
 });
@@ -278,13 +593,13 @@ describe('fidelity to content-source', () => {
  */
 describe('the migrated article set', () => {
   it('carries every article in the approved mapping', () => {
-    expect(helpCenterAllArticles).toHaveLength(23);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(23);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(21);
+    expect(helpCenterAllArticles).toHaveLength(40);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(40);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(38);
   });
 
   it('publishes every article except the ones held back', () => {
-    expect(helpCenterArticles).toHaveLength(22);
+    expect(helpCenterArticles).toHaveLength(39);
     expect(helpCenterArticles.map(article => article.id)).not.toContain(
       'how-to-restore-the-wallet-using-an-encrypted-file'
     );
@@ -406,6 +721,15 @@ describe('card excerpts', () => {
     expect(articleExcerpt(body)).toBe('Steps: From the homepage, select the token you want to view.');
   });
 
+  it('passes over an image, which is not a sentence, and leaves no mark of it', () => {
+    const body =
+      '![Three keys, always in control](keys.png)\n\nEvery action needs two of the three keys, so no single key moves funds.';
+    expect(articleExcerpt(body)).toBe('Every action needs two of the three keys, so no single key moves funds.');
+    expect(articleExcerpt('Short lead:\n\n![Keys](keys.png)\n\n- A first list item that follows the image.')).toBe(
+      'Short lead: A first list item that follows the image.'
+    );
+  });
+
   it('strips bold, italic and link syntax but keeps the words', () => {
     const body = 'Report it to our [**SUPPORT**](https://example.com/) desk and wait *a little* longer.';
     expect(articleExcerpt(body)).toBe('Report it to our SUPPORT desk and wait a little longer.');
@@ -431,11 +755,11 @@ describe('card excerpts', () => {
 
 describe('finding articles', () => {
   it('lists every published article in a subcategory regardless of platform', () => {
-    expect(articlesInSubcategory(helpCenterArticles, 'security-and-recovery')).toHaveLength(6);
+    expect(articlesInSubcategory(helpCenterArticles, 'security-and-recovery')).toHaveLength(9);
   });
 
   it('keeps the held-back article out of its subcategory listing', () => {
-    expect(articlesInSubcategory(helpCenterAllArticles, 'security-and-recovery')).toHaveLength(7);
+    expect(articlesInSubcategory(helpCenterAllArticles, 'security-and-recovery')).toHaveLength(10);
   });
 
   it('finds an article only inside its own subcategory', () => {
@@ -713,7 +1037,10 @@ describe('the pre-commit filter', () => {
     ['the hook itself', '.githooks/pre-commit'],
     ['the filter itself', '.githooks/skippable.sh'],
     ['an e2e spec', 'e2e/navigation.spec.ts'],
-    ['a font', 'src/help-center/assets/fonts/inter-latin-var.woff2']
+    ['a font', 'src/help-center/assets/fonts/inter-latin-var.woff2'],
+    ['a shipped article image', 'src/help-center/assets/faq/three-keys-always-in-control.png'],
+    ['the FAQ source', 'tasks/faq/bread-faq-content.md'],
+    ['a delivered FAQ image', 'tasks/faq/faq-images/three-keys-always-in-control.png']
   ])('runs the checks for %s', (_label, path) => {
     expect(wouldSkip(path), `${path} must not skip the checks`).toBe(false);
   });
@@ -723,6 +1050,7 @@ describe('the pre-commit filter', () => {
     expect(wouldSkip('tasks/notes.md', 'src/help-center/content/01-how-to-install-bread-wallet.md')).toBe(
       false
     );
+    expect(wouldSkip('tasks/todo.md', 'tasks/faq/bread-faq-content.md')).toBe(false);
   });
 
   it('runs the checks when nothing is staged, rather than assuming there is nothing to do', () => {

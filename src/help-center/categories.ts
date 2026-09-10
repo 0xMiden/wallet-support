@@ -94,5 +94,23 @@ export const helpCenterMainCategories: readonly HelpCenterMainCategory[] = [
         description: 'A route to common fixes and the appropriate support channel.'
       }
     ]
+  },
+  {
+    id: 'cross-chain-and-earn',
+    title: 'Cross-chain and Earn',
+    description:
+      'Send and swap across chains, compare the routes, and see how earning yield affects privacy.',
+    subcategories: [
+      {
+        id: 'moving-across-chains',
+        title: 'Moving across chains',
+        description: 'Help for sending and swapping funds between Miden and other chains.'
+      },
+      {
+        id: 'earn',
+        title: 'Earn',
+        description: 'How earning yield works in Bread Wallet, and what is visible while funds earn.'
+      }
+    ]
   }
 ] as const;

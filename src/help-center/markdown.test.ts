@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { helpCenterAllArticles } from './content';
+import { helpCenterAllArticles, helpCenterArticleImages } from './content';
 import { renderMarkdown } from './markdown';
 
 const render = (source: string) => renderMarkdown(source, 'test.md');
@@ -31,6 +31,20 @@ describe('inline markup', () => {
 
   it('refuses a link scheme outside http, https and mailto', () => {
     expect(() => render('[x](javascript:alert(1))')).toThrow(/link scheme is not supported/);
+  });
+
+  it('links to another article by its hash route, in the same tab', () => {
+    // No target: the reader stays in the Help Center, and a hash link keeps the
+    // query string, so the platform they are reading on comes with them.
+    expect(render('See [*What is Guardian?*](#guardian-protection/what-is-guardian)')).toBe(
+      '<p>See <a href="#guardian-protection/what-is-guardian"><em>What is Guardian?</em></a></p>'
+    );
+  });
+
+  it('refuses a hash link that is not the shape of a route', () => {
+    for (const href of ['#Guardian', '#guardian_protection', '#a/b/c', '#', '/guardian-protection']) {
+      expect(() => render(`[x](${href})`), href).toThrow(/link scheme is not supported/);
+    }
   });
 });
 
@@ -140,23 +154,65 @@ describe('refusing what it does not understand', () => {
   });
 });
 
+describe('images', () => {
+  const images = { 'keys.png': { src: '/assets/keys-abc.png', width: 1024, height: 396 } };
+
+  it('renders an image line as a figure, with its alt text and size', () => {
+    expect(renderMarkdown('![Three keys, always in control](keys.png)', 'test.md', images)).toBe(
+      '<figure><img src="/assets/keys-abc.png" alt="Three keys, always in control" width="1024" height="396" loading="lazy" decoding="async"></figure>'
+    );
+  });
+
+  it('refuses an image with no alt text', () => {
+    expect(() => renderMarkdown('![](keys.png)', 'test.md', images)).toThrow(/needs alt text/);
+  });
+
+  it('refuses an image it was not given, external addresses included', () => {
+    expect(() => renderMarkdown('![Keys](other.png)', 'test.md', images)).toThrow(/no image named "other\.png"/);
+    expect(() => renderMarkdown('![Keys](https://example.com/keys.png)', 'test.md', images)).toThrow(
+      /no image named/
+    );
+  });
+
+  it('refuses an image inside a sentence, a list item or a callout', () => {
+    for (const source of ['see ![Keys](keys.png) here', '- ![Keys](keys.png)', '> ![Keys](keys.png)']) {
+      expect(() => renderMarkdown(source, 'test.md', images), source).toThrow(/images are not supported/);
+    }
+  });
+});
+
 describe('the migrated articles', () => {
-  it('renders all 44 platform bodies without throwing', () => {
+  it('renders all 78 platform bodies without throwing', () => {
     let rendered = 0;
     for (const article of helpCenterAllArticles) {
       for (const platform of article.platforms) {
-        const html = renderMarkdown(article.bodies[platform] as string, `${article.id} (${platform})`);
+        const html = renderMarkdown(
+          article.bodies[platform] as string,
+          `${article.id} (${platform})`,
+          helpCenterArticleImages
+        );
         expect(html.length, `${article.id} (${platform}) rendered empty`).toBeGreaterThan(0);
         rendered += 1;
       }
     }
-    expect(rendered).toBe(44);
+    expect(rendered).toBe(78);
+  });
+
+  it('shows every supplied image, each exactly once', () => {
+    const shown = helpCenterAllArticles.flatMap(article =>
+      [
+        ...renderMarkdown(article.bodies['extension-desktop'] ?? '', article.id, helpCenterArticleImages).matchAll(
+          /<img src="([^"]+)"/g
+        )
+      ].map(match => match[1])
+    );
+    expect(shown.sort()).toEqual(Object.values(helpCenterArticleImages).map(image => image.src).sort());
   });
 
   it('leaves no unrendered markdown markers in the output', () => {
     for (const article of helpCenterAllArticles) {
       for (const platform of article.platforms) {
-        const html = renderMarkdown(article.bodies[platform] as string, article.id);
+        const html = renderMarkdown(article.bodies[platform] as string, article.id, helpCenterArticleImages);
         expect(html, `${article.id} (${platform})`).not.toMatch(/\*\*|\]\(/);
       }
     }
@@ -183,7 +239,7 @@ describe('section labels', () => {
   it('gives the shipped articles a real outline', () => {
     const headings = helpCenterAllArticles.flatMap(article =>
       article.platforms.flatMap(platform =>
-        [...renderMarkdown(article.bodies[platform] as string, article.id).matchAll(/<h2>/g)]
+        [...renderMarkdown(article.bodies[platform] as string, article.id, helpCenterArticleImages).matchAll(/<h2>/g)]
       )
     );
     expect(headings.length).toBeGreaterThan(20);

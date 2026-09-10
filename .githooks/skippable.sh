@@ -31,8 +31,11 @@ is_shipping_markdown() {
 skippable_path() {
   local path="$1"
 
-  # Everything under tasks/ is notes, reports and screenshots.
+  # Everything under tasks/ is notes, reports and screenshots, except the FAQ
+  # source: content.test.ts compares the FAQ articles and their images against
+  # tasks/faq/ byte for byte, so a change there has to re-run it.
   case "$path" in
+    tasks/faq/*) return 1 ;;
     tasks/*) return 0 ;;
   esac
 

@@ -1014,8 +1014,9 @@
  * lists and callouts all sit inside it: a heading wider than the prose it
  * introduces reads as detached from it, and a callout that breaks the shared
  * edge stops looking like part of the same column. Nothing is deliberately
- * outside. There is no image case to decide — the renderer emits no <img> at
- * all, and the [image removed] markers were dropped at migration.
+ * outside, images included: an FAQ diagram scales down to the measure rather
+ * than breaking out of it. The [image removed] markers were dropped at
+ * migration.
  */
 .help-center-article-body {
   max-width: var(--measure);
@@ -1075,6 +1076,22 @@
   color: var(--accent-text);
   text-decoration: underline;
   text-underline-offset: 0.15em;
+}
+
+/*
+ * An FAQ diagram. It scales down to the column and never up past its own
+ * size; the width and height the renderer writes on the tag hold its space
+ * while it loads lazily, so the page does not jump under the reader.
+ */
+.help-center-article-body figure {
+  margin: var(--space-5) 0 0;
+}
+
+.help-center-article-body img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
 }
 
 /*

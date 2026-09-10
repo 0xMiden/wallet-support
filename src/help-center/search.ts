@@ -10,8 +10,9 @@ import type { HelpCenterArticle, HelpCenterMainCategory, HelpCenterPlatform } fr
  * typing produced no visible change at all. Results are a view of their own
  * now, in the main column, reachable at every width.
  *
- * Deliberately plain substring matching: 23 articles do not need an index, and
- * a scoring model nobody can predict is worse than one everybody can.
+ * Deliberately plain substring matching: a few dozen articles do not need an
+ * index, and a scoring model nobody can predict is worse than one everybody
+ * can.
  */
 
 export interface HelpCenterSearchResult {
@@ -26,7 +27,10 @@ export interface HelpCenterSearchResult {
 const SNIPPET_RADIUS = 90;
 
 function flatten(text: string) {
+  // Images first: the link pattern below would otherwise read ![alt](file.png)
+  // as a link and leave "!alt" in a snippet, and a search for "png" would match.
   return text
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
     .replace(/^\s*>\s?/gm, '')
     .replace(/^\s*(?:\d+\.|[-*+])\s+/gm, '')
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')

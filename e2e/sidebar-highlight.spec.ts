@@ -50,6 +50,15 @@ const row = (page: Page, id: string) => tree(page).locator(`a[href="#${id}"]`);
 test('clicking the page already open takes the highlight back from a heading, in every category', async ({
   page
 }) => {
+  // Every subcategory against every other group's heading: the work grows with
+  // the category data, so the time it is given has to grow with it too. The
+  // fixed 30s default ran out at 45 pairings, when a sixth group was added.
+  const pairings = helpCenterMainCategories.reduce(
+    (total, group) => total + group.subcategories.length * (helpCenterMainCategories.length - 1),
+    0
+  );
+  test.setTimeout(pairings * 1_500);
+
   for (const group of helpCenterMainCategories) {
     for (const subcategory of group.subcategories) {
       await page.goto(`/#${subcategory.id}`);
