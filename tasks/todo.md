@@ -921,3 +921,61 @@ local build. Both assets were fetched and hashed, not only named by `index.html`
 - From `my-token-is-stuck-on-consuming-receiver-address` to the glossary, at 1440 and 2000, and after back
   and forward: one visible heading, Glossary, and no article body. No `hidden` element is displayed.
 - From the same article to a search for guardian: the results alone, with no article body.
+
+## FAQ, glossary table, full-size diagrams, optimised images and article column — preview deployment
+
+Commits `70b4b67` to `215908c`, deployed on 2026-09-11:
+
+- `70b4b67` feat: add the 17 approved FAQ articles and the Cross-chain and Earn category
+- `c808a85` feat: the glossary reads as an interactive table with a filter
+- `5a8f694` feat: diagrams open full size
+- `239ff6d` perf: losslessly optimise FAQ diagrams
+- `2cdfd2d` fix: article column narrows between 1180px and 1440px
+- `215908c` docs: note when the sidebar highlight test has outgrown one run
+
+### Before deploying
+
+- `yarn verify` passed on `215908c`: typecheck, 230 unit tests, 45 end-to-end tests, and the build. The new
+  article column test failed first, at 1180px, where the column fell from 680px to 476px.
+- Built with `PLACEHOLDERS_OK=1`, which nothing reads, from a clean tree.
+- Drift check was clean: the preview still served the `6ffb185` baseline recorded above.
+- `npx --no-install wrangler` no longer runs: npx now resolves wrangler 4.131.0 from the registry and will
+  not fetch it. The deploy ran the cached wrangler 4.130.0 binary directly, the version the previous
+  deployments used, so nothing was downloaded.
+
+### Deployment
+
+- Preview deployment ID: `0e7db3d8-4614-4eb1-b437-aecb4482dc03`.
+- Environment `Preview`, branch `help-center-shell`, source commit `215908c`. Branch and commit were passed
+  explicitly; production has still never been deployed.
+- Atomic deployment: `https://0e7db3d8.bread-wallet-help-center-preview.pages.dev`.
+- Stable alias: HTTP 200 with `X-Robots-Tag: noindex`.
+
+### New drift-check baseline
+
+`index-BnBz5jmv.js` and `index-MI-99V1I.css`, byte-identical on the alias, on the atomic URL, and in the
+local build. Both assets were fetched and hashed, not only named by `index.html`:
+
+- `index-BnBz5jmv.js` sha256 `dd9a0194ceb50153600742f796a8a2e8239877ff514d4ce73c69faaba70b43e5`
+- `index-MI-99V1I.css` sha256 `e9a52be714f96d9759b18ae4a8aab05f48d86afb14eb5b75b561cafdd469ecfe`
+
+The five diagrams on the alias match the local build byte for byte:
+
+- `across-chains-two-routes-DwxXL67v.png` sha256 `c9d13ce161a0d9d775cf51ac7fd12beea3a49b09f1419346ac510d8e3fc19908`
+- `earn-across-the-privacy-line-BCCd4NFD.png` sha256 `f7f78bf566d1b6c02def52782da9ff97ed185c79b24bedcc2d0d3489dd1d9df4`
+- `guardian-backed-or-more-private-Ms5sfsCs.png` sha256 `713222abba2fc26efe1d52fc359356ba0c0e3d6a155cc1293eff9a8bd9d9eee0`
+- `private-from-other-users-XakPte1D.png` sha256 `961be0e5b83a46dee16ad083b50fec5d26e5ccaaac21f7c525ab02fdc751dde6`
+- `three-keys-always-in-control-Dx4AEGwR.png` sha256 `fc42a88be1b62e32d3197304ea0622daa1e88c07b34e220a70be40cb99345518`
+
+### Measured on the live alias
+
+- The solver route article at 390px and 1440px: the diagram loads at its 1024px natural width and renders
+  at 350px and 680px with no sideways scroll. Its full-size link opens in a new tab and serves the PNG, 200.
+- On Mobile, the How to install Bread Wallet reference in What is Bread Wallet? keeps `?platform=mobile` and
+  opens the mobile instructions.
+- The Cross-chain and Earn card shows its approved description and 5 articles, and opens Moving across
+  chains. Earn shows its approved description, with Bread Wallet.
+- The glossary shows 12 terms, 3 for a filter of key, the empty state for a term with no match, and one
+  visible heading.
+- The article column on What is Guardian? is 680px at 1179, 1180, 1200 and 1383px with the rail below it,
+  and 680px at 1384, 1440 and 1600px with the rail beside it.
