@@ -1,7 +1,7 @@
 ---
 id: can-i-swap-tokens-across-chains
 title: Can I swap tokens across chains?
-mainCategory: cross-chain-and-earn
+mainCategory: cross-chain
 subcategory: moving-across-chains
 platforms: [extension-desktop, mobile]
 ---

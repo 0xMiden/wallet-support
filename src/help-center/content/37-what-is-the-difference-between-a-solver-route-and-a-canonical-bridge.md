@@ -1,7 +1,7 @@
 ---
 id: what-is-the-difference-between-a-solver-route-and-a-canonical-bridge
 title: What is the difference between a solver route and a canonical bridge?
-mainCategory: cross-chain-and-earn
+mainCategory: cross-chain
 subcategory: moving-across-chains
 platforms: [extension-desktop, mobile]
 ---

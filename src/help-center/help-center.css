@@ -1986,6 +1986,18 @@
 }
 
 /*
+ * A card left alone on the last row is centred under the row above. At the
+ * left edge it read as left behind, which is what a seventh topic did. A rule,
+ * not a layout: it keys on the count, so it holds as topics come and go, and
+ * only a lone card moves. A full last row, or two under three, stays where the
+ * grid puts it. The 900px block restates it for two columns and the 620px
+ * block turns it off for one; e2e/home-grid.spec.ts holds all three.
+ */
+.help-home-card-grid > li:last-child:nth-child(3n + 1) {
+  grid-column: 2;
+}
+
+/*
  * The reference's card is not a bordered box with text inside it. It is a
  * solid colour panel holding the artwork, and then the title and description
  * sit below it on the page ground, centred. No border, no card background.
@@ -2229,6 +2241,18 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  /* Two columns. The three-column rule stops here, and a lone card is now the
+     odd one out: it spans both columns and is centred at one column's width. */
+  .help-home-card-grid > li:last-child:nth-child(3n + 1) {
+    grid-column: auto;
+  }
+
+  .help-home-card-grid > li:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc((100% - var(--space-5)) / 2);
+  }
+
   .help-center-footer-inner {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2305,6 +2329,13 @@
   .help-home-card-grid,
   .help-center-footer-inner {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* One column: every row is full, so nothing is centred. */
+  .help-home-card-grid > li:last-child:nth-child(odd) {
+    grid-column: auto;
+    justify-self: auto;
+    width: auto;
   }
 }
 

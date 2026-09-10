@@ -1,17 +1,26 @@
 import { expect, test } from '@playwright/test';
+import type { Page } from '@playwright/test';
 
 /**
- * The FAQ articles, the way a reader meets them: a main category reached from
- * the home page, two subcategories under it, diagrams inside the reading
- * column, and references that are links to the articles they name.
+ * The FAQ articles, the way a reader meets them: main categories reached from
+ * the home page, diagrams inside the reading column, and references that are
+ * links to the articles they name.
  */
 
 const TITLE = '#help-center-category-title';
 const BODY = '.help-center-article-body';
 
-test('the Cross-chain and Earn card opens its first subcategory, and Earn routes', async ({ page }) => {
+// By its title: "Earn" alone would also match the Guardian card's "Learn".
+const homeCard = (page: Page, title: string) =>
+  page.locator('.help-home-card').filter({
+    has: page.locator('.help-home-card-title', { hasText: new RegExp(`^${title}$`) })
+  });
+
+test('the Cross-chain and Earn cards each open their own subcategory, and the sidebar reaches Earn', async ({
+  page
+}) => {
   await page.goto('/');
-  await page.locator('.help-home-card', { hasText: 'Cross-chain and Earn' }).click();
+  await homeCard(page, 'Cross-chain').click();
 
   await expect(page).toHaveURL(/#moving-across-chains$/);
   await expect(page.locator(TITLE)).toHaveText('Moving across chains');
@@ -21,14 +30,26 @@ test('the Cross-chain and Earn card opens its first subcategory, and Earn routes
     'Can I swap tokens across chains?'
   ]);
 
-  await page.locator('.help-center-category-list a', { hasText: 'Earn' }).click();
+  // Earn is a group of its own, so its row is reached through its heading. A
+  // heading is a toggle: if the group was already open, the click closed it.
+  const tree = page.getByRole('navigation', { name: 'Help Center categories' });
+  const earnHeading = tree.getByRole('button', { name: 'Earn', exact: true });
+  const earningYield = tree.locator('a[href="#earn"]');
+  await earnHeading.click();
+  if (!(await earningYield.isVisible())) await earnHeading.click();
+  await earningYield.click();
 
   await expect(page).toHaveURL(/#earn$/);
-  await expect(page.locator(TITLE)).toHaveText('Earn');
+  await expect(page.locator(TITLE)).toHaveText('Earning yield');
   await expect(page.locator('.help-center-card-link')).toHaveText([
     'Can I earn yield in Bread?',
     'Are my funds private while they earn?'
   ]);
+
+  await page.goto('/');
+  await homeCard(page, 'Earn').click();
+  await expect(page).toHaveURL(/#earn$/);
+  await expect(page.locator(TITLE)).toHaveText('Earning yield');
 });
 
 test('Activity and transaction status still routes, and gains no FAQ article', async ({ page }) => {

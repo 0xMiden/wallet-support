@@ -1,7 +1,7 @@
 ---
 id: can-i-earn-yield-in-bread
 title: Can I earn yield in Bread?
-mainCategory: cross-chain-and-earn
+mainCategory: earning
 subcategory: earn
 platforms: [extension-desktop, mobile]
 ---

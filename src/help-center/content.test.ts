@@ -198,9 +198,9 @@ describe('coverage', () => {
    * The totals, written down rather than derived, so adding a category or an
    * article is a decision this file has to be told about.
    */
-  it('spans 6 main categories, 9 subcategories and 40 articles', () => {
+  it('spans 7 main categories, 9 subcategories and 40 articles', () => {
     const navigation = createHelpCenterNavigation(helpCenterMainCategories);
-    expect(navigation.mainCategories).toHaveLength(6);
+    expect(navigation.mainCategories).toHaveLength(7);
     expect(navigation.categories).toHaveLength(9);
     expect(helpCenterAllArticles).toHaveLength(40);
   });

@@ -1,7 +1,7 @@
 ---
 id: can-i-send-funds-to-another-blockchain
 title: Can I send funds to another blockchain?
-mainCategory: cross-chain-and-earn
+mainCategory: cross-chain
 subcategory: moving-across-chains
 platforms: [extension-desktop, mobile]
 ---

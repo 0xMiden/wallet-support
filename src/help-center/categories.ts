@@ -96,19 +96,25 @@ export const helpCenterMainCategories: readonly HelpCenterMainCategory[] = [
     ]
   },
   {
-    id: 'cross-chain-and-earn',
-    title: 'Cross-chain and Earn',
-    description:
-      'Send and swap across chains, compare the routes, and see how earning yield affects privacy.',
+    id: 'cross-chain',
+    title: 'Cross-chain',
+    description: 'Send and swap across chains, and compare the routes.',
     subcategories: [
       {
         id: 'moving-across-chains',
         title: 'Moving across chains',
         description: 'Help for sending and swapping funds between Miden and other chains.'
-      },
+      }
+    ]
+  },
+  {
+    id: 'earning',
+    title: 'Earn',
+    description: 'See how earning yield works in Bread Wallet, and how it affects privacy.',
+    subcategories: [
       {
         id: 'earn',
-        title: 'Earn',
+        title: 'Earning yield',
         description: 'How earning yield works in Bread Wallet, and what is visible while funds earn.'
       }
     ]

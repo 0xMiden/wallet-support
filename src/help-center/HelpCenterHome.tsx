@@ -76,11 +76,18 @@ function CategoryGlyph({ categoryId }: { categoryId: string }) {
       'M12.71 7.24a4.1 4.1 0 0 1 5.2-5.1l-2.8 2.8.8 3.2 3.2.8 2.8-2.8a4.1 4.1 0 0 1-5.1 5.2L5.51 21.54a2.2 2.2 0 0 1-3.1-3.1Z',
     /*
      * Two arrows passing in opposite directions: funds going out to another
-     * chain and coming back, which is what both subcategories describe — a
-     * transfer or swap across, and the round trip to earn. Painted bounds
+     * chain and coming back, a transfer or a swap across. Painted bounds
      * 3.30..20.70 x 3.30..20.70, centred and inside the viewBox on every side.
      */
-    'cross-chain-and-earn': 'M4 8h14M14 4l4 4-4 4M20 16H6M10 12l-4 4 4 4'
+    'cross-chain': 'M4 8h14M14 4l4 4-4 4M20 16H6M10 12l-4 4 4 4',
+    /*
+     * A line that rises, dips and climbs again to an arrowhead: funds put to
+     * work and coming back with more. Not a percent sign, which is a circle
+     * with a diagonal through it, the shape the privacy glyph moved away from.
+     * Painted bounds 2.80..21.20 x 6.30..17.70, centred and inside the viewBox
+     * on every side.
+     */
+    earning: 'M3.5 17 9 11.5l3.5 3.5 8-8M15 7h5.5v5.5'
   };
 
   return (

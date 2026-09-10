@@ -83,8 +83,8 @@ Two hooks, deliberately, because the two halves cost very different amounts:
 Playwright is ~50s of that, and it is consistent: three consecutive runs on 2026-09-10 measured 51.3,
 50.0 and 50.3 seconds, for 200 unit tests and 30 end-to-end tests. Part of the cost is deliberate:
 `webServer` runs `yarn build` first, because reusing a stale `dist/` would let the suite pass against
-a page that is not the one in the tree. The single largest cost is one test: the sidebar-highlight
-case that clicks through every category takes ~22s on its own.
+a page that is not the one in the tree. The single largest cost was one test: the sidebar-highlight
+case that clicked through every category, ~22s on its own. It now runs as one test per group.
 
 So the end-to-end suite runs before anything leaves the machine, and never between typing a commit
 message and getting the prompt back. `yarn verify` is the same command by hand, and is what a deploy

@@ -1,7 +1,7 @@
 ---
 id: are-my-funds-private-while-they-earn
 title: Are my funds private while they earn?
-mainCategory: cross-chain-and-earn
+mainCategory: earning
 subcategory: earn
 platforms: [extension-desktop, mobile]
 ---

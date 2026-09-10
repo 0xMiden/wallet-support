@@ -18,13 +18,13 @@ Seventeen articles. Platform: both Extension and Mobile, one body each. Text is 
 | 10 | Can I get my wallet back if I lose my device? | Manage wallet | Security and recovery |
 | 11 | What does Guardian back up? | Manage wallet | Security and recovery |
 | 12 | How does recovery work with Guardian? | Manage wallet | Security and recovery |
-| 13 | Can I send funds to another blockchain? | Cross-chain and Earn | Moving across chains |
-| 14 | What is the difference between a solver route and a canonical bridge? | Cross-chain and Earn | Moving across chains |
-| 15 | Can I swap tokens across chains? | Cross-chain and Earn | Moving across chains |
-| 16 | Can I earn yield in Bread? | Cross-chain and Earn | Earn |
-| 17 | Are my funds private while they earn? | Cross-chain and Earn | Earn |
+| 13 | Can I send funds to another blockchain? | Cross-chain | Moving across chains |
+| 14 | What is the difference between a solver route and a canonical bridge? | Cross-chain | Moving across chains |
+| 15 | Can I swap tokens across chains? | Cross-chain | Moving across chains |
+| 16 | Can I earn yield in Bread? | Earn | Earning yield |
+| 17 | Are my funds private while they earn? | Earn | Earning yield |
 
-New main category: Cross-chain and Earn (last in category order), with subcategories Moving across chains (articles 13–15) and Earn (16–17). Within every subcategory, new articles go after the existing ones, in the order above. Activity and transaction status stays empty.
+New main categories, last in category order: Cross-chain, with the subcategory Moving across chains (articles 13–15), then Earn, with the subcategory Earning yield (16–17). Within every subcategory, new articles go after the existing ones, in the order above. Activity and transaction status stays empty.
 
 ## Images
 
@@ -188,7 +188,7 @@ The device drives recovery, Guardian acknowledges the recovery update, and only 
 For the in-app steps, see *How do I restore my wallet with a recovery phrase?*
 
 ### 13. Can I send funds to another blockchain?
-Category: Cross-chain and Earn › Moving across chains
+Category: Cross-chain › Moving across chains
 
 Yes. Bread moves funds between your private account on Miden and the chains people already use, all from one place.
 
@@ -197,7 +197,7 @@ Sending to an Ethereum address bridges your assets to Ethereum.
 Bread can use several routes, depending on the asset and whether it needs to be swapped along the way. See *What is the difference between a solver route and a canonical bridge?*
 
 ### 14. What is the difference between a solver route and a canonical bridge?
-Category: Cross-chain and Earn › Moving across chains
+Category: Cross-chain › Moving across chains
 
 Bread can use several routes across chains, and the real difference is how funds are handled along the way.
 
@@ -208,19 +208,19 @@ For direct transfers, Bread uses canonical bridges: CCTP for USDCx, and Agglayer
 ![](across-chains-two-routes.png)
 
 ### 15. Can I swap tokens across chains?
-Category: Cross-chain and Earn › Moving across chains
+Category: Cross-chain › Moving across chains
 
 Yes. Crosschain swaps use the fast solver route through an intent-based protocol like Epoch or NEAR Intents. The solver can swap the token in transit and deliver the equivalent on the other side. Availability is limited to a fixed list of tokens. Swaps within Miden use Miden-native Swap.
 
 ### 16. Can I earn yield in Bread?
-Category: Cross-chain and Earn › Earn
+Category: Earn › Earning yield
 
 Yes – but the feature is not available yet in Bread Beta version. Earning yield happens inside the wallet. Your funds are deposited from Bread, routed across to a lending market on Ethereum where they earn yield, and then returned to Bread on withdrawal. Bread handles the round trip for you.
 
 There's one privacy point worth knowing: the funds are private on Miden, become visible on Ethereum while they earn, and return to your private account on the way back. See *Are my funds private while they earn?*
 
 ### 17. Are my funds private while they earn?
-Category: Cross-chain and Earn › Earn
+Category: Earn › Earning yield
 
 Not while they earn. The privacy line is simple:
 
