@@ -21,9 +21,6 @@ import { glossaryEntryAnchor } from './routing';
 /** The page's title, and the label every link to the page uses. */
 export const GLOSSARY_TITLE = 'Glossary';
 
-/** One line for the reader, used on the home page's glossary card. */
-export const GLOSSARY_DESCRIPTION = 'Definitions of the terms used in Bread Wallet and on Miden.';
-
 export interface HelpCenterGlossaryEntry {
   readonly term: string;
   readonly definition: string;

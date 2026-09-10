@@ -64,32 +64,16 @@ test('an entry link lands below the sticky header on narrow screens', async ({ p
   }
 });
 
-test('the home card opens the glossary, from below the support panel', async ({ page }) => {
+test('the home page reaches the glossary through its footer, not a card', async ({ page }) => {
   await page.goto('/');
 
-  // Not among the categories: that section counts articles across topics.
-  await expect(
-    page.locator('.help-home-categories').getByText(GLOSSARY_TITLE, { exact: true })
-  ).toHaveCount(0);
+  // The home card was removed by Ivan's call 2026-09-10; the footer is the way in from here.
+  await expect(page.locator('.help-home-main a[href="#glossary"]')).toHaveCount(0);
 
-  const card = page.locator('.help-home-glossary .help-home-card');
-  await expect(card).toHaveCount(1);
-  // It holds no articles, so it states no count.
-  await expect(card.locator('.help-home-card-count')).toHaveCount(0);
-
-  // Under a small heading of its own, so a lone card does not read as left behind.
-  await expect(page.getByRole('region', { name: 'Reference' }).locator('.help-home-card')).toHaveCount(1);
-
-  // Placed after the support panel, where it cannot read as a sixth topic.
-  const [panel, cardBox] = await Promise.all([
-    page.locator('.help-home-support').boundingBox(),
-    card.boundingBox()
-  ]);
-  if (panel === null || cardBox === null) throw new Error('the support panel or the card did not render');
-  expect(cardBox.y).toBeGreaterThan(panel.y + panel.height);
-
-  await card.click();
-
+  await page
+    .locator('.help-center-footer')
+    .getByRole('link', { name: GLOSSARY_TITLE, exact: true })
+    .click();
   await expect(page).toHaveURL(/#glossary$/);
   await expect(page.locator(TITLE)).toHaveText(GLOSSARY_TITLE);
 });

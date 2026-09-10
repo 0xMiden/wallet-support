@@ -1946,21 +1946,6 @@
   text-transform: uppercase;
 }
 
-/*
- * The glossary card's section. The card sits in the category grid's class, so it
- * is one category card wide at every breakpoint; this only spaces the section.
- * It closes the page now, so it leaves the gap before the footer that the
- * support panel used to leave. Its heading takes the footer's small-heading
- * type (see .help-center-footer-links h2); only the gap to the card is its own.
- */
-.help-home-glossary {
-  padding-bottom: var(--space-8);
-}
-
-.help-home-glossary .help-home-glossary-title {
-  margin-bottom: var(--space-4);
-}
-
 /* ---- support panel ------------------------------------------------------- */
 .help-home-support {
   margin: 0 0 var(--space-8);
@@ -2066,8 +2051,7 @@
  * label treatment as every other one. The footer is a single component
  * rendered identically on every page, so this reaches all of them at once.
  */
-.help-center-footer-links h2,
-.help-home-glossary-title {
+.help-center-footer-links h2 {
   margin: 0 0 var(--space-3);
   font-family: var(--font-display);
   font-size: var(--text-xs);
