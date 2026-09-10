@@ -366,6 +366,9 @@
 .help-center-main-inner {
   width: min(100%, var(--frame));
   margin: 0 auto;
+  /* A query container, so the article rail is placed by the width this column
+     actually has rather than by the window. See .help-center-rail. */
+  container: help-center-content / inline-size;
 }
 
 .help-center-utility-bar {
@@ -969,6 +972,15 @@
  *
  * The rail is a column of the page, not of the body, so it starts level with
  * the title instead of below the platform tabs.
+ *
+ * It moves beside the article only once the content column can hold the full
+ * reading measure next to it: 68ch (--measure), the 3rem gap (--space-7) and
+ * the 15rem rail. This was a 1180px viewport breakpoint, but the sidebar and
+ * the gutters stand between the window and this column: at 1180px the rail
+ * went in while the column had 764px, the article fell from 680px to 476px,
+ * and it did not recover until about 1384px. A container condition cannot
+ * read custom properties, so the three values are written out, and
+ * e2e/article-column.spec.ts fails if the column narrows as the window widens.
  */
 .help-center-rail {
   margin-top: var(--space-6);
@@ -976,7 +988,7 @@
   gap: var(--space-6);
 }
 
-@media (min-width: 1180px) {
+@container help-center-content (min-width: calc(68ch + 3rem + 15rem)) {
   .help-center-category.has-rail {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 15rem;

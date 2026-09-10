@@ -511,8 +511,11 @@ test('the previous and next cards name their direction without numbering it', as
 test('search results show alone, even over an article with a side rail', async ({ page }) => {
   // Same cause as on the glossary: the hidden article behind the results used to
   // stay on screen because the rail layout's display: grid outranked [hidden].
+  // Wide enough for the rail to sit beside the article, so that grid is in play.
+  await page.setViewportSize({ width: 1600, height: 900 });
   await page.goto('/#common-issues-and-support/my-token-is-stuck-on-consuming-receiver-address');
   await expect(page.locator('.help-center-rail')).toBeVisible();
+  await expect(page.locator('.help-center-category.has-rail')).toHaveCSS('display', 'grid');
 
   await page.locator('.help-center-search input').fill('guardian');
 

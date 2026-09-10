@@ -100,8 +100,11 @@ test('an article reaches the glossary from the sidebar and from the footer', asy
 test('the glossary shows alone, even arriving from an article with a side rail', async ({ page }) => {
   // The article behind the glossary stays mounted and hidden. The rail layout's
   // display: grid used to outrank [hidden], so the article rendered underneath.
+  // Wide enough for the rail to sit beside the article, so that grid is in play.
+  await page.setViewportSize({ width: 1600, height: 900 });
   await page.goto('/#common-issues-and-support/my-token-is-stuck-on-consuming-receiver-address');
   await expect(page.locator('.help-center-rail')).toBeVisible();
+  await expect(page.locator('.help-center-category.has-rail')).toHaveCSS('display', 'grid');
 
   await page
     .locator('.help-center-sidebar')
