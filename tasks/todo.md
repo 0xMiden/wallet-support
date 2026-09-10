@@ -887,3 +887,37 @@ local build. Both assets were fetched and hashed, not only named by `index.html`
 - On `how-do-i-keep-my-wallet-secure` and on `#security-and-recovery`, at 1440 and 390, the Previous and
   Next labels carry no number. Titles, the category marker and the arrows are unchanged.
 - The cards measure 83px on the article and 68px on the subcategory page at 1440, with no sideways scroll.
+
+## Hidden article under the glossary and search — preview deployment
+
+Commit `6ffb185` (the glossary and search results show alone, never over a hidden article), deployed on
+2026-09-10.
+
+### Before deploying
+
+- `yarn verify` passed on the change: 200 unit tests, 33 end-to-end tests, and the build. Both new tests
+  failed first: two visible page headings on the glossary, and the article body visible under results.
+- Built with `PLACEHOLDERS_OK=1`, which nothing reads, from a clean tree.
+- Drift check was clean: the preview still served the `a7ae53c` baseline recorded above.
+
+### Deployment
+
+- Preview deployment ID: `91f9ed47-5e82-42c8-928f-81f060a298d3`.
+- Environment `Preview`, branch `help-center-shell`, source commit `6ffb185`. Branch and commit were passed
+  explicitly; production has still never been deployed.
+- Atomic deployment: `https://91f9ed47.bread-wallet-help-center-preview.pages.dev`.
+- Stable alias: HTTP 200 with `X-Robots-Tag: noindex`.
+
+### New drift-check baseline
+
+`index-BkMyQeYo.js` and `index-DpKKABVZ.css`, byte-identical on the alias, on the atomic URL, and in the
+local build. Both assets were fetched and hashed, not only named by `index.html`:
+
+- `index-BkMyQeYo.js` sha256 `981df8f51c6796f2c8434e0d1248f4d40004288018e2a65190c5b75e4d634dcc`
+- `index-DpKKABVZ.css` sha256 `b2188faa156c3996b344ec56ca7c3c89832917c6d1db5ed44b04d175f911a338`
+
+### Measured on the live alias
+
+- From `my-token-is-stuck-on-consuming-receiver-address` to the glossary, at 1440 and 2000, and after back
+  and forward: one visible heading, Glossary, and no article body. No `hidden` element is displayed.
+- From the same article to a search for guardian: the results alone, with no article body.
