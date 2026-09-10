@@ -734,3 +734,47 @@ Line numbers as of the glossary commit. This entry's own mentions are not counte
   article should say it too.
 - **offchain / off-chain is a style question.** The glossary writes "offchain" and "crosschain"; the
   articles write "off-chain" and "on-chain". Pick one form for the site.
+
+## Glossary, anchor offsets and header overflow — preview deployment
+
+Commits `8b40137` (glossary), `d75b56f` (On this page links under the sticky header) and `879338f` (home
+page overflow at 621–655px), deployed together on 2026-09-10.
+
+### Before deploying
+
+- `yarn verify` passed on `879338f` with a clean tree: typecheck, 200 unit tests, 24 end-to-end tests, build.
+- Built with `PLACEHOLDERS_OK=1`. Nothing in the repository or its history reads that variable, so the build
+  is identical without it; there is no placeholder guard to satisfy yet (see the SAMPLE badge note above).
+- Drift check was clean. The preview served `index-BdXWbtZo.js` and `index-DdiDnrTb.css`, the same pair a
+  fresh build of `5281a82` produces, and Cloudflare's latest deployment (`f32707ad`) named `5281a82` as its
+  source, so nobody deployed underneath this work. The last baseline recorded here (`index-Cu-L4AIR.js` /
+  `index-CV0MyHVA.css`) was out of date: the deploys after it never wrote theirs down.
+
+### Deployment
+
+- Preview deployment ID: `bdf256df-d58b-4405-9439-4b5731688f5f`.
+- Environment `Preview`, branch `help-center-shell`, source commit `879338f`. Branch and commit were passed
+  explicitly; production has still never been deployed.
+- Atomic deployment: `https://bdf256df.bread-wallet-help-center-preview.pages.dev`.
+- Stable alias: `https://help-center-shell.bread-wallet-help-center-preview.pages.dev`, HTTP 200 with
+  `X-Robots-Tag: noindex`.
+- The feedback Worker health check that earlier deploys ran was not run: it is outside the Help Center.
+
+### New drift-check baseline
+
+`index-Ctm-NWe6.js` and `index-jUdAmq4h.css`, byte-identical on the alias and in the local build:
+
+- `index-Ctm-NWe6.js` sha256 `ee9f87d7c5faf5644f5d81df39235f3240e75fb88f01ef9f182da408fff07d03`
+- `index-jUdAmq4h.css` sha256 `e37bece1f06d72e21c5e6614bb0856ff68f3a100a6817ad161ae4b2b026346b7`
+
+### Checklist — measured on the alias, awaiting Ivan's eye
+
+1. `#glossary` at 1440: 12 terms from Private account to Bridge, the curly apostrophe in Solver, and the
+   sidebar link marked as the current page.
+2. A shared `#glossary-commitment` on a cold load: at 1440 the term rests 31.8px from the top of the
+   viewport; at 390 it rests 16.5px below the sticky header.
+3. The home card in placement B at 1440: below the support panel, under the Reference heading, with no
+   count. Whether it looks right is a judgment, not a measurement.
+4. A long article's On this page link at 900 (`how-do-i-keep-my-wallet-secure`, first section): the heading
+   rests 16.2px below the sticky header.
+5. The home page at 630: no sideways scroll, pills hidden, and the button inside the header's padding.
