@@ -158,9 +158,19 @@ describe('images', () => {
   const images = { 'keys.png': { src: '/assets/keys-abc.png', width: 1024, height: 396 } };
 
   it('renders an image line as a figure, with its alt text and size', () => {
-    expect(renderMarkdown('![Three keys, always in control](keys.png)', 'test.md', images)).toBe(
-      '<figure><img src="/assets/keys-abc.png" alt="Three keys, always in control" width="1024" height="396" loading="lazy" decoding="async"></figure>'
+    expect(renderMarkdown('![Three keys, always in control](keys.png)', 'test.md', images)).toContain(
+      '<img src="/assets/keys-abc.png" alt="Three keys, always in control" width="1024" height="396" loading="lazy" decoding="async">'
     );
+  });
+
+  it('makes the figure a link to the image at full size, in a new tab, named after the diagram', () => {
+    const html = renderMarkdown('![Three keys, "always" in control](keys.png)', 'test.md', images);
+    expect(html.startsWith(
+      '<figure><a href="/assets/keys-abc.png" target="_blank" rel="noopener noreferrer" ' +
+        'aria-label="Open diagram full size: Three keys, &quot;always&quot; in control"><img '
+    )).toBe(true);
+    // The visible label is the start of the accessible name, and the icon beside it is decoration.
+    expect(html).toMatch(/<span>Open diagram full size<svg aria-hidden="true"[^>]*>.*<\/svg><\/span><\/a><\/figure>$/);
   });
 
   it('refuses an image with no alt text', () => {

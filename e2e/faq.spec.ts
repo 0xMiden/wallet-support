@@ -65,6 +65,28 @@ for (const { route, alt } of [
   });
 }
 
+test('at phone width a diagram opens full size in a new tab', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/#moving-across-chains/what-is-the-difference-between-a-solver-route-and-a-canonical-bridge');
+
+  const link = page.getByRole('link', { name: 'Open diagram full size: Across chains, two routes' });
+  await link.scrollIntoViewIfNeeded();
+  await expect(link).toBeVisible();
+  await expect(link.getByText('Open diagram full size')).toBeVisible();
+  await expect(link).toHaveAttribute('target', '_blank');
+  await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+
+  // It points at the image the article shows, and that address serves it.
+  const href = (await link.getAttribute('href')) ?? '';
+  await expect(link.locator('img')).toHaveAttribute('src', href);
+  const response = await page.request.get(href);
+  expect(response.status()).toBe(200);
+  expect(response.headers()['content-type']).toBe('image/png');
+
+  const [popup] = await Promise.all([page.waitForEvent('popup'), link.click()]);
+  await expect(popup).toHaveURL(new URL(href, page.url()).href);
+});
+
 test('a See reference is a link to the article it names, in the same tab', async ({ page }) => {
   await page.goto('/#moving-across-chains/can-i-send-funds-to-another-blockchain');
 

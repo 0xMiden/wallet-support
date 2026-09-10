@@ -331,7 +331,14 @@ test('every hover state actually changes something', async ({ page }) => {
       SURFACE,
       null
     ],
-    ['/#setup-and-basic-use', '.help-center-sidebar-utility', 'the sidebar glossary link', SURFACE, null]
+    ['/#setup-and-basic-use', '.help-center-sidebar-utility', 'the sidebar glossary link', SURFACE, null],
+    [
+      '/#moving-across-chains/what-is-the-difference-between-a-solver-route-and-a-canonical-bridge',
+      '.help-center-article-body figure > a',
+      'a diagram link',
+      TEXT,
+      null
+    ]
   ] as const;
 
   /*

@@ -60,6 +60,17 @@ const INTERNAL_HREF = /^#[a-z0-9]+(?:-[a-z0-9]+)*(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)?
  */
 const IMAGE_BLOCK = /^!\[([^\]]*)\]\(([^)\s]+)\)$/;
 
+/*
+ * Every image is a diagram, and at phone width a diagram renders at a third of
+ * its size, too small to read its labels. So the figure is a plain link to the
+ * file itself, opened in a new tab where it can be seen and zoomed at full
+ * size. No lightbox: the browser already is one. The visible label repeats the
+ * start of the accessible name, so what is read out matches what is on screen.
+ */
+const OPEN_FULL_SIZE = 'Open diagram full size';
+const OPEN_ICON =
+  '<svg aria-hidden="true" class="help-center-icon" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg>';
+
 /** An image an article may show, looked up by the filename its Markdown names. */
 export interface ArticleImage {
   readonly src: string;
@@ -223,8 +234,12 @@ export function renderBlocks(
       if (!alt) fail(origin, 'an image needs alt text', line);
       const file = images[name];
       if (!file) fail(origin, `no image named "${name}"`, line);
+      const src = escapeText(file.src);
+      const label = escapeText(alt);
       output.push(
-        `<figure><img src="${escapeText(file.src)}" alt="${escapeText(alt)}" width="${file.width}" height="${file.height}" loading="lazy" decoding="async"></figure>`
+        `<figure><a href="${src}" target="_blank" rel="noopener noreferrer" aria-label="${OPEN_FULL_SIZE}: ${label}">` +
+          `<img src="${src}" alt="${label}" width="${file.width}" height="${file.height}" loading="lazy" decoding="async">` +
+          `<span>${OPEN_FULL_SIZE}${OPEN_ICON}</span></a></figure>`
       );
       index += 1;
       continue;
