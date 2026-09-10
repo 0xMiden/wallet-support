@@ -2161,6 +2161,28 @@
   }
 }
 
+/*
+ * The header's pills hide at 740px and below, not only at 620. Brand, pills and
+ * button cannot shrink below 175.9, 273.5 and 150.2px at the shipped fonts, and
+ * the pills sit on the page's centre line only when both outer tracks are as
+ * wide as the wider of the other two: 175.9 + 273.5 + 175.9, two 16px gaps and
+ * two 24px paddings come to 705.3px. Below that the grid gave up the centre
+ * line and ran the button into the padding, and from 621 to 655px it pushed the
+ * page wider than the screen. 740 leaves about 5% for text to render wider on
+ * another platform. Recompute when a label or a font changes; the e2e sweep
+ * across these widths fails if the band reopens.
+ *
+ * The button is the one action worth keeping at these widths. "All topics" is
+ * one tap away on every card below it, and a link to the page the reader is
+ * already on is not worth crushing the brand for. The nav element stays:
+ * dropping it would leave the grid two tracks and unpin the button.
+ */
+@media (max-width: 740px) {
+  .help-home-nav a {
+    display: none;
+  }
+}
+
 @media (max-width: 620px) {
   .help-home-header {
     padding: var(--space-3) var(--space-4);
@@ -2168,14 +2190,6 @@
 
   .help-home-nav {
     gap: var(--space-4);
-  }
-
-  /* The button is the one action worth keeping at this width. "All topics" is
-     one tap away on every card below it, and a link to the page the reader is
-     already on is not worth crushing the brand for. The nav element stays:
-     dropping it would leave the grid two tracks and unpin the button. */
-  .help-home-nav a {
-    display: none;
   }
 
   /* The footer only. .help-home-main used to be here too, which overrode the

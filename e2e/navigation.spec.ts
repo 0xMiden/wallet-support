@@ -426,3 +426,48 @@ test('an On this page link lands below the sticky header on narrow screens', asy
     ).toBeGreaterThanOrEqual(0);
   }
 });
+
+test('the home header fits every width: no sideways scroll, pills centred or hidden', async ({ page }) => {
+  /*
+   * From 621 to 655px the page scrolled sideways, 35px at 621. Brand, pills
+   * and button need 705px to sit with the pills centred, but the pills only
+   * hid at 620 and below, so across the band the grid pushed the button past
+   * the edge; up to 705 it also pulled the pills off the centre line and ran
+   * the button into the header's padding.
+   *
+   * A sweep rather than a few points, so a longer label or a wider font fails
+   * here instead of quietly reopening a band nobody measures. Either of the
+   * header's two states passes: pills hidden, or pills centred with the button
+   * inside the padding.
+   */
+  await page.goto('/');
+
+  const widths = [
+    ...Array.from({ length: 761 - 600 }, (_, i) => 600 + i),
+    ...Array.from({ length: 34 }, (_, i) => 780 + i * 20)
+  ];
+
+  for (const width of widths) {
+    await page.setViewportSize({ width, height: 900 });
+    const state = await page.evaluate(() => {
+      const header = document.querySelector('.help-home-header') as HTMLElement;
+      const inner = header.getBoundingClientRect().right - parseFloat(getComputedStyle(header).paddingRight);
+      const nav = (document.querySelector('.help-home-nav') as HTMLElement).getBoundingClientRect();
+      const button = (document.querySelector('.help-home-header-action') as HTMLElement).getBoundingClientRect();
+      return {
+        overflow: document.documentElement.scrollWidth - window.innerWidth,
+        pillsShown: [...document.querySelectorAll('.help-home-nav a')].some(
+          pill => getComputedStyle(pill).display !== 'none'
+        ),
+        offCentre: Math.abs(nav.left + nav.width / 2 - document.documentElement.clientWidth / 2),
+        intoPadding: button.right - inner
+      };
+    });
+
+    expect(state.overflow, `${width}px: the page scrolls sideways`).toBeLessThanOrEqual(0);
+    if (state.pillsShown) {
+      expect(state.offCentre, `${width}px: the pills are off the centre line`).toBeLessThan(2);
+      expect(state.intoPadding, `${width}px: the button runs into the padding`).toBeLessThanOrEqual(0.5);
+    }
+  }
+});
