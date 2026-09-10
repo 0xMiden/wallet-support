@@ -80,7 +80,7 @@ Owns how Help Center information is organized.
   "key"), and Guardian key (it acknowledges state updates; it does not co-sign). External sources,
   including the Miden blog, use the retired terms; quote them only where the note is explicitly
   describing that source. `content.test.ts` enforces this over the articles, `content-source/`, the
-  interface components, the glossary, and this file.
+  FAQ source, the interface components, the glossary, and this file.
 - Bold for UI labels in article bodies, punctuation outside the bold; quotes only in titles
   (plain text) and for genuine quotation.
 
