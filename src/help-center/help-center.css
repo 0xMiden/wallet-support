@@ -2081,17 +2081,17 @@
 }
 
 /*
- * Artwork supplied at its own scale keeps its own stroke: the wallet is drawn
- * at 35.3 units in a 300-unit box, where the traced glyphs are 1.4 in 24. Its
- * clasp is a solid dot, so that path fills with the ink instead of stroking.
+ * The supplied drawings (wallet, cross-chain, earning) keep their own stroke
+ * weights, set inline with their geometry, where the traced glyphs are 1.4
+ * in 24. Solid parts fill with the ink instead of stroking.
  *
- * It is white, and solid, as the artwork was supplied: the app draws its
- * wallet white on these hues. On the blue that is 2.37:1, under the 3:1 a
- * graphic is held to; accepted as the brand's own drawing, by Utkarsh's call.
+ * They are white, and solid, as supplied: the app draws these white on these
+ * hues. On the blue that is 2.37:1 and on the lavender 2.10:1, under the 3:1
+ * a graphic is held to; accepted as the brand's own drawings, by Utkarsh's
+ * call.
  */
 .help-home-card-glyph-artwork {
   --card-panel-ink: var(--help-panel);
-  stroke-width: 35.3;
   opacity: 1;
 }
 

@@ -72,48 +72,90 @@ function CategoryGlyph({ categoryId }: { categoryId: string }) {
      * box, stroke included, is centred and clears every side.
      */
     troubleshooting:
-      'M12.71 7.24a4.1 4.1 0 0 1 5.2-5.1l-2.8 2.8.8 3.2 3.2.8 2.8-2.8a4.1 4.1 0 0 1-5.1 5.2L5.51 21.54a2.2 2.2 0 0 1-3.1-3.1Z',
-    /*
-     * Two arrows passing in opposite directions: funds going out to another
-     * chain and coming back, a transfer or a swap across. Painted bounds
-     * 3.30..20.70 x 3.30..20.70, centred and inside the viewBox on every side.
-     */
-    'cross-chain': 'M4 8h14M14 4l4 4-4 4M20 16H6M10 12l-4 4 4 4',
-    /*
-     * A line that rises, dips and climbs again to an arrowhead: funds put to
-     * work and coming back with more. Not a percent sign, which is a circle
-     * with a diagonal through it, the shape the privacy glyph moved away from.
-     * Painted bounds 2.80..21.20 x 6.30..17.70, centred and inside the viewBox
-     * on every side.
-     */
-    earning: 'M3.5 17 9 11.5l3.5 3.5 8-8M15 7h5.5v5.5'
+      'M12.71 7.24a4.1 4.1 0 0 1 5.2-5.1l-2.8 2.8.8 3.2 3.2.8 2.8-2.8a4.1 4.1 0 0 1-5.1 5.2L5.51 21.54a2.2 2.2 0 0 1-3.1-3.1Z'
   };
 
-  if (categoryId === 'manage-wallet') {
-    /*
-     * The wallet is the brand's own drawing, supplied as artwork rather than
-     * traced in the 24-unit stroke style: a card with a fold and a clasp, in
-     * strokes a seventh the width of its box. It keeps its own geometry and
-     * weight (the stroke and the solid clasp are set in the stylesheet);
-     * colour comes from the panel ink like every other glyph.
-     *
-     * The painted box, stroke included, is 0..250.3 x 0..246.5. The viewBox
-     * is padded so that box fills 83% of it — the share the 24-unit glyphs
-     * paint of theirs (20 of 24) — so the wallet sits at the same visual size
-     * as its neighbours rather than a fifth larger.
-     */
+  /*
+   * Three categories carry the brand's own drawings, supplied as artwork
+   * rather than traced in the 24-unit stroke style. Each keeps its own
+   * geometry and, where it strokes, its own weight; solid paths fill with
+   * the ink instead. Colour and opacity are the stylesheet's.
+   *
+   * Every viewBox is padded so the painted box (stroke included) fills 83%
+   * of it — the share the traced glyphs paint of theirs, 20 of 24 — so the
+   * drawings sit at the same visual size as their neighbours rather than a
+   * fifth larger. The painted boxes were measured by sampling the curves,
+   * not read off the file's width and height.
+   */
+  const artwork: Record<
+    string,
+    { viewBox: string; strokeWidth?: number; paths: readonly { d: string; solid?: boolean }[] }
+  > = {
+    // A card with a fold and a solid clasp. Painted 0..250.3 x 0..246.5.
+    'manage-wallet': {
+      viewBox: '-24.85 -26.75 300 300',
+      strokeWidth: 35.3,
+      paths: [
+        {
+          d: 'M17.6514 53.4843C17.6514 33.694 33.6943 17.6512 53.4845 17.6512H196.817C216.607 17.6512 232.65 33.694 232.65 53.4843V193.045C232.65 212.835 216.607 228.878 196.817 228.878H53.4845C33.6943 228.878 17.6514 212.835 17.6514 193.045V53.4843Z'
+        },
+        {
+          d: 'M17.6514 85.546H204.361C217.901 85.546 228.878 96.5232 228.878 110.063V170.414C228.878 183.954 217.901 194.932 204.361 194.932H17.6514'
+        },
+        {
+          d: 'M182.67 156.268C191.524 156.268 198.701 149.091 198.701 140.238C198.701 131.384 191.524 124.207 182.67 124.207C173.817 124.207 166.64 131.384 166.64 140.238C166.64 149.091 173.817 156.268 182.67 156.268Z',
+          solid: true
+        }
+      ]
+    },
+    // Two arrows passing in opposite directions. Painted 0..285.1 x 0..256.3.
+    'cross-chain': {
+      viewBox: '-28.51 -42.89 342 342',
+      strokeWidth: 40.5,
+      paths: [
+        { d: 'M20.2578 68.2123H233.646' },
+        { d: 'M195.284 20.2579L245.634 68.2102L195.284 116.163' },
+        { d: 'M264.808 188.091H51.4199' },
+        { d: 'M89.7903 140.138L39.4404 188.09L89.7903 236.043' }
+      ]
+    },
+    // A sprout in a pot: funds put to work and growing. All solid. Painted
+    // 0..256.3 x 0..249.5.
+    earning: {
+      viewBox: '-25.63 -29.05 308 308',
+      paths: [
+        {
+          d: 'M128.155 86.6766C128.155 48.953 110.068 20.531 78.5458 7.09522C51.1574 -4.27354 23.769 -0.656207 5.16558 8.64551C1.03148 10.7126 -1.03557 15.3634 0.51472 19.4975C8.26615 45.8524 28.4199 65.4894 55.2915 74.7911C80.0961 83.576 104.901 78.9252 128.155 86.6766Z',
+          solid: true
+        },
+        {
+          d: 'M128.152 86.678C128.152 48.9544 146.239 20.5324 177.762 7.09663C205.15 -4.27214 232.538 -0.654804 251.142 8.64691C255.276 10.714 257.343 15.3648 255.793 19.4989C248.041 45.8538 227.887 65.4908 201.016 74.7925C176.211 83.5774 151.407 78.9266 128.152 86.678Z',
+          solid: true
+        },
+        {
+          d: 'M143.657 87.1924C143.657 78.6304 136.716 71.6895 128.154 71.6895C119.592 71.6895 112.651 78.6304 112.651 87.1924V148.17C112.651 156.732 119.592 163.673 128.154 163.673C136.716 163.673 143.657 156.732 143.657 148.17V87.1924Z',
+          solid: true
+        },
+        {
+          d: 'M35.1396 134.221C35.1396 124.919 42.3743 117.685 51.676 117.685H204.638C213.939 117.685 221.174 124.919 221.174 134.221V165.227C221.174 211.735 183.45 249.459 136.942 249.459H119.372C72.8633 249.459 35.1396 211.735 35.1396 165.227V134.221Z',
+          solid: true
+        }
+      ]
+    }
+  };
+
+  const art = artwork[categoryId];
+  if (art) {
     return (
       <svg
         aria-hidden="true"
         className="help-home-card-glyph help-home-card-glyph-artwork"
-        viewBox="-24.85 -26.75 300 300"
+        viewBox={art.viewBox}
+        style={art.strokeWidth === undefined ? undefined : { strokeWidth: art.strokeWidth }}
       >
-        <path d="M17.6514 53.4843C17.6514 33.694 33.6943 17.6512 53.4845 17.6512H196.817C216.607 17.6512 232.65 33.694 232.65 53.4843V193.045C232.65 212.835 216.607 228.878 196.817 228.878H53.4845C33.6943 228.878 17.6514 212.835 17.6514 193.045V53.4843Z" />
-        <path d="M17.6514 85.546H204.361C217.901 85.546 228.878 96.5232 228.878 110.063V170.414C228.878 183.954 217.901 194.932 204.361 194.932H17.6514" />
-        <path
-          className="help-home-card-glyph-solid"
-          d="M182.67 156.268C191.524 156.268 198.701 149.091 198.701 140.238C198.701 131.384 191.524 124.207 182.67 124.207C173.817 124.207 166.64 131.384 166.64 140.238C166.64 149.091 173.817 156.268 182.67 156.268Z"
-        />
+        {art.paths.map(path => (
+          <path key={path.d} className={path.solid ? 'help-home-card-glyph-solid' : undefined} d={path.d} />
+        ))}
       </svg>
     );
   }
