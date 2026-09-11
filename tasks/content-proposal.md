@@ -165,3 +165,62 @@ Before you start, make sure you have:
 
 
 Note: subcategory names above match categories.ts display titles; the migration keys articles on subcategory **ids** (e.g. `sending-receiving-and-claiming`), never on titles.
+
+---
+
+## 7. Screenshot plan (owner-approved positions — placeholders now, real captures later)
+
+Principle: a screenshot goes where the reader has to find something on screen (a button, a page, a menu) — not on concept or FAQ articles. "Notion" = a screenshot existed at that position in the original Mobile page.
+
+### Getting started › Setup and basic use
+
+| Article | Platform | Step | Shows | Source |
+|---|---|---|---|---|
+| How to install Bread Wallet | Ext | 2 | Chrome Web Store listing with "Add to Chrome" | new |
+| How to install Bread Wallet | Ext | after 3 | Browser toolbar: jigsaw icon and pin icon | new |
+| How to install Bread Wallet | Mob | 2 | App Store listing with "Get" | new |
+| How do I create a Bread Wallet? | Ext | 1 | "Create new wallet" / "I already have a wallet" page | new |
+| How do I create a Bread Wallet? | Ext | 2 | Back up your wallet page (seed phrase blurred/sample) | new |
+| How do I create a Bread Wallet? | Ext | 4 | Create password page | new |
+| How do I create a Bread Wallet? | Ext | 5 | Account recovery: Guardian vs Fully private | new |
+| How do I create a Bread Wallet? | Mob | 1 | Welcome to Bread! with "Get started" | Notion |
+| How do I create a Bread Wallet? | Mob | 2 | Choose how to protect your wallet (biometrics) | Notion |
+| How do I create a Bread Wallet? | Mob | 5 | Pick your Guardian | Notion |
+| How to fund your Bread Wallet? | Ext | 1 | Wallet homepage with "Faucet" | new |
+| How to fund your Bread Wallet? | Ext | 3–4 | Faucet page: address, amount, Private/Public | new |
+| How to fund your Bread Wallet? | Mob | 1 | Explore tab | new |
+| How to fund your Bread Wallet? | Mob | 2 | Faucet card | new |
+| How to fund your Bread Wallet? | Mob | 3–4 | Faucet page: address, amount, Private/Public | new |
+| How to find a token contract address in Bread Wallet? | Ext | 2 | Token Information section with copy icon | new |
+| How to find a token contract address in Bread Wallet? | Mob | 1 | Homepage, selecting a token | Notion |
+| How to find a token contract address in Bread Wallet? | Mob | 2 | Token Information section | Notion |
+
+No screenshots: Is Bread Wallet available on mobile?; What are the supported browsers for Bread Wallet?
+
+### Manage wallet › Security and recovery
+
+| Article | Platform | Step | Shows | Source |
+|---|---|---|---|---|
+| How do I restore my wallet with a recovery phrase? | Ext | 1 | "I already have a wallet" selection | new |
+| How do I restore my wallet with a recovery phrase? | Ext | 2 | Import type: Seed Phrase / Encrypted Wallet File | new |
+| How do I restore my wallet with a recovery phrase? | Ext | 3 | Numbered recovery-phrase entry boxes (sample words) | new |
+| How do I restore my wallet with a recovery phrase? | Ext | 5 | Recovery choice: Guardian vs Fully private | new |
+| How do I restore my wallet with a recovery phrase? | Mob | 1 | Welcome to Bread! with "Recover your account" | Notion |
+| How do I restore my wallet with a recovery phrase? | Mob | 2 | Import type choice | Notion |
+| How do I restore my wallet with a recovery phrase? | Mob | 3 | Recovery-phrase entry | Notion |
+| How do I restore my wallet with a recovery phrase? | Mob | 4 | Guardian operator list | Notion |
+| How do I restore my wallet with a recovery phrase? | Mob | 5 | "Your Wallet is ready!" | Notion |
+| How to restore the wallet using an encrypted file? | Ext | 2 | Import type: "Import with encrypted wallet file" | new |
+| How to restore the wallet using an encrypted file? | Ext | 3 | Import wallet page: drag-and-drop + password | new |
+| How to download the encrypted file? | Ext | 2 | Settings › Security | new |
+| How to download the encrypted file? | Ext | 3 | "Encrypted Wallet File" option | new |
+| How to download the encrypted file? | Ext | 6 | Download complete / "Done" | new |
+
+No screenshots: Can I recover stolen assets?; How do I keep my wallet secure?; What should I do if I lose my recovery phrase?; What is the difference between a recovery phrase and an encrypted wallet file?
+
+### Everything else
+No screenshots for Sending/receiving/claiming, Activity, Privacy, Guardian (all concept articles). Optional later: one screenshot of the Activity view showing a "Consuming"/"Sending" status, attached to the two "stuck" Troubleshooting articles — worth it once real captures are being made.
+
+**Totals:** 32 positions (10 from Notion, 22 new). Extension 20, Mobile 12. Every one starts as the SAMPLE placeholder.
+
+Capture guidance for real screenshots: never show a real recovery phrase, password, or full address — use a throwaway test wallet; crop to the relevant control; same device/browser theme across a platform so the set looks consistent.
