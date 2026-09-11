@@ -2112,6 +2112,9 @@
 
 .help-home-card-description {
   max-width: 34ch;
+  /* A step closer to its title than the card's gap: the two are one thought,
+     the count below is another. */
+  margin-top: calc(-1 * var(--space-1));
   color: var(--text-muted);
   font-family: var(--font-display);
   font-size: var(--text-md);
