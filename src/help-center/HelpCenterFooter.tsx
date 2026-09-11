@@ -1,4 +1,4 @@
-import breadMark from './assets/bread-mark.svg';
+import breadLockup from './assets/bread-lockup.png';
 import { GLOSSARY_TITLE } from './glossary';
 import { CONTACT_SUPPORT_URL, helpCenterDownloads, helpCenterLegal, helpCenterSocials } from './links';
 import { categoryHref, glossaryHref, homeHref } from './routing';
@@ -28,8 +28,8 @@ export function HelpCenterFooter({ mainCategories, firstCategoryId }: HelpCenter
       <div className="help-center-footer-inner">
         <div className="help-center-footer-brand">
           <a className="help-center-brand" href={homeHref()}>
-            <img src={breadMark} alt="" />
-            <span>Bread Wallet</span>
+            <img src={breadLockup} alt="" />
+            <span className="help-center-visually-hidden">Bread Wallet</span>
           </a>
 
           <ul className="help-center-socials">

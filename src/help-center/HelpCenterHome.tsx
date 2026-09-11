@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 
-import breadMark from './assets/bread-mark.svg';
+import breadLockup from './assets/bread-lockup.png';
 import { articlesInMainCategory, helpCenterArticles } from './content';
 import { HelpCenterFooter } from './HelpCenterFooter';
 import { CONTACT_SUPPORT_URL } from './links';
@@ -157,8 +157,8 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
 
       <header className="help-home-header">
         <a className="help-center-brand" href={homeHref()} aria-label="Bread Wallet Help Center">
-          <img src={breadMark} alt="" />
-            <span>Bread Wallet</span>
+          <img src={breadLockup} alt="" />
+          <span className="help-center-visually-hidden">Bread Wallet</span>
         </a>
 
         {/* Its own element, outside the nav, so the links can sit on the

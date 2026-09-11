@@ -96,46 +96,31 @@
 }
 
 /*
- * The lockup, set to the reference's own proportions.
+ * The lockup, as the brand ships it.
  *
- * Measured off the marketing hero: the mark stands 1.39x the wordmark's font
- * size, the gap between them is about a tenth of the mark's height, and the
- * wordmark is Nunito 900 in the page ink at display tracking. Those ratios are
- * what make a lockup recognisable — more than the mark's outline does — and
- * they are the part we can match exactly.
+ * One image carries the mark and the wordmark, so their proportions — the
+ * loaf's height against the letters, the gap between them — are the brand's
+ * own and never drift with a font stack or a rounding of the type scale. It
+ * is a 600x160 PNG, five times the header's 2rem, so it stays crisp on a 3x
+ * screen; the grain in the slice is part of the artwork, not compression.
  *
- * The mark is the wallet app's own: the single slice that the app icon, the
- * splash, Welcome and Unlock all carry (public/misc/brand/new-bread.svg in
- * 0xMiden/wallet), so a reader arriving from the app meets the same mark
- * here. The marketing site still shows a two-slice loaf; the app is the
- * identity people hold in their hand, so it wins. It ships as the app's SVG,
- * which resolves at any size, hero included.
+ * The wordmark reads "Bread". The text after it says "Bread Wallet" for
+ * assistive technology and is visually hidden, so the link keeps its name
+ * and the product-name guard keeps its coverage.
  *
- * Width is set and height left to follow: the slice is 211x214, and forcing
- * it square would squash it.
+ * Height is set and width left to follow, so one value moves the whole
+ * lockup.
  */
 .help-center-brand {
   --mark: 2rem;
   width: fit-content;
-  font-family: var(--font-display);
   display: inline-flex;
   align-items: center;
-  gap: calc(var(--mark) * 0.11);
-  color: var(--text-body);
-  font-size: calc(var(--mark) / 1.39);
-  font-weight: var(--weight-display);
-  letter-spacing: var(--tracking-display);
 }
 
 .help-center-brand img {
-  width: var(--mark);
-  height: auto;
-}
-
-.help-center-brand span {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
+  height: var(--mark);
+  width: auto;
 }
 
 
@@ -1583,7 +1568,7 @@
 }
 
 @media (max-width: 620px) {
-  /* One value moves the whole lockup: the wordmark is derived from it. */
+  /* One value moves the whole lockup: mark and wordmark are one image. */
   .help-center-brand {
     --mark: 1.7rem;
   }
@@ -1708,11 +1693,6 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-}
-
-/* The brand is the one thing in the header that must never wrap. */
-.help-home-header .help-center-brand span {
-  white-space: nowrap;
 }
 
 .help-home-nav a {

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
 
-import breadMark from './assets/bread-mark.svg';
+import breadLockup from './assets/bread-lockup.png';
 import { helpCenterMainCategories } from './categories';
 import { HelpCenterBackToTop } from './HelpCenterBackToTop';
 import { HelpCenterFooter } from './HelpCenterFooter';
@@ -577,8 +577,8 @@ export function HelpCenter() {
 
       <header className="help-center-mobile-header">
         <a className="help-center-brand" href={homeHref()} aria-label="Bread Wallet Help Center home">
-          <img src={breadMark} alt="" />
-            <span>Bread Wallet</span>
+          <img src={breadLockup} alt="" />
+          <span className="help-center-visually-hidden">Bread Wallet</span>
         </a>
         <button
           className="help-center-menu-button"
@@ -612,8 +612,8 @@ export function HelpCenter() {
           aria-label="Help Center navigation"
         >
           <a className="help-center-brand help-center-desktop-brand" href={homeHref()}>
-            <img src={breadMark} alt="" />
-              <span>Bread Wallet</span>
+            <img src={breadLockup} alt="" />
+            <span className="help-center-visually-hidden">Bread Wallet</span>
           </a>
 
           <nav
