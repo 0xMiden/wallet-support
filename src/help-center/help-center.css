@@ -791,10 +791,11 @@
  * card. The outer panel keeps its spacing but loses its fill, border and
  * shadow, so the cards are the only surface and read as discrete items.
  *
- * The shape is Bread's: a tin loaf, domed at the top and squared at the base,
- * with a warm crust along the top edge. Neither reference is copied — one uses
- * a uniform rounded rectangle, the other a clipped corner this project has
- * already removed once as a borrowed motif.
+ * The shape is Bread's: a tin loaf, domed at the top and squared at the base.
+ * It had a crust along the top edge in the card's blue; that went, so the
+ * numbered chip is the only blue on the card. Neither reference is copied —
+ * one uses a uniform rounded rectangle, the other a clipped corner this
+ * project has already removed once as a borrowed motif.
  *
  * A flex column with the chevron on margin-top:auto pins it to the card's
  * bottom edge, so every chevron in a row lands at the same height however long
@@ -840,16 +841,6 @@
     border-color 160ms ease,
     background 160ms ease,
     transform 160ms ease;
-}
-
-/* The crust. */
-.help-center-card::before {
-  position: absolute;
-  inset: 0 0 auto;
-  height: 0.25rem;
-  background: var(--card-accent);
-  content: '';
-  transition: opacity 160ms ease;
 }
 
 .help-center-card-index {
