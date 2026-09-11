@@ -29,7 +29,11 @@
 @font-face {
   font-family: 'Nunito';
   font-style: normal;
-  font-weight: 600 900;
+  /* 500 joined 600–900 when the sidebar moved to the display face and kept
+     its medium links: the file carries the whole axis, and a request outside
+     the declared range is clamped to its nearest end, so 500 had to be let
+     in to render as 500. */
+  font-weight: 500 900;
   font-display: swap;
   src: url('./assets/fonts/nunito-latin-var.woff2') format('woff2');
 }

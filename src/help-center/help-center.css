@@ -124,6 +124,13 @@
 }
 
 
+/* The sidebar is set in the display face at the weights it already had:
+   700 on the group headings and the glossary, 500 on the subcategory links. */
+.help-center-navigation,
+.help-center-sidebar-utility {
+  font-family: var(--font-display);
+}
+
 .help-center-navigation {
   margin-top: 3rem;
 }
@@ -890,6 +897,8 @@
 }
 
 .help-center-card-excerpt {
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
   margin: 0;
   color: var(--text-muted);
   font-size: var(--text-md);
