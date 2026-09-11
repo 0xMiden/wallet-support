@@ -41,56 +41,44 @@ export const POPULAR_SEARCHES: readonly string[] = [
 ];
 
 function CategoryGlyph({ categoryId }: { categoryId: string }) {
-  // One glyph per main category, drawn in the stroke style the rest of the
-  // page uses. Differentiation is by shape, not by hue: five unrelated colours
-  // would read as five unrelated products.
-  const paths: Record<string, string> = {
-    // A flag planted at the start, not a bare plus — which read as "add".
-    'getting-started': 'M6 4v16M6 4.5h11l-2.2 3.5L17 11.5H6',
-    /*
-     * An eye with a slash. This was a bare circle with a line through it,
-     * which at panel scale reads as "prohibited" rather than as anything to
-     * do with seeing — and it sat one grid cell away from a compass-shaped
-     * candidate for another category, which would have made two circles with
-     * diagonals in one view. Painted bounds 1.90..22.10 x 3.50..20.50, inside
-     * the viewBox on every side.
-     */
-    privacy:
-      'M2.6 12s3.7-6.2 9.4-6.2S21.4 12 21.4 12s-3.7 6.2-9.4 6.2S2.6 12 2.6 12ZM12 9.4a2.6 2.6 0 1 0 0 5.2 2.6 2.6 0 0 0 0-5.2ZM4.2 4.2 19.8 19.8',
-    guardian: 'M12 4l7 2.5V12c0 4-3 6.6-7 8-4-1.4-7-4-7-8V6.5L12 4Z',
-    /*
-     * A wrench. This was a gear, because an earlier wrench drew as a small
-     * diamond at 24px — but the glyph is no longer an icon. It fills the
-     * category panel at illustration scale, where the gear's radiating teeth
-     * read as a sun rather than as a tool, and where a wrench has room to be
-     * a wrench.
-     *
-     * Centred by measurement, not by eye. The first version of this path ran
-     * to x=24.31 in a 24-unit viewBox and, with half of the 1.4 stroke on top,
-     * painted to 25.01 — so the jaw was sliced off down its right edge. The
-     * shape is unchanged; it is translated by (-2.19, +0.64) so the painted
-     * box, stroke included, is centred and clears every side.
-     */
-    troubleshooting:
-      'M12.71 7.24a4.1 4.1 0 0 1 5.2-5.1l-2.8 2.8.8 3.2 3.2.8 2.8-2.8a4.1 4.1 0 0 1-5.1 5.2L5.51 21.54a2.2 2.2 0 0 1-3.1-3.1Z'
-  };
-
   /*
-   * Three categories carry the brand's own drawings, supplied as artwork
-   * rather than traced in the 24-unit stroke style. Each keeps its own
-   * geometry and, where it strokes, its own weight; solid paths fill with
-   * the ink instead. Colour and opacity are the stylesheet's.
+   * One drawing per main category, in the brand's own thick, rounded style:
+   * white on the panel, strokes about a seventh the width of the box, solid
+   * where a shape wants to be solid. Differentiation is by shape, not by
+   * hue: seven unrelated colours would read as seven unrelated products.
+   *
+   * Three were supplied as artwork (the wallet, the arrows, the sprout) and
+   * keep their geometry and stroke weights as drawn. The other four are
+   * drawn here in a 24-unit box at a 3.4 stroke to match. Solid paths fill
+   * with the ink; filled paths fill and keep the stroke, which rounds their
+   * corners and fattens them.
    *
    * Every viewBox is padded so the painted box (stroke included) fills 83%
-   * of it — the share the traced glyphs paint of theirs, 20 of 24 — so the
-   * drawings sit at the same visual size as their neighbours rather than a
-   * fifth larger. The painted boxes were measured by sampling the curves,
-   * not read off the file's width and height.
+   * of it — 20 of 24 — so the drawings sit at one visual size. The painted
+   * boxes were measured with getBBox and by sampling the supplied curves,
+   * not read off a file's width and height.
    */
   const artwork: Record<
     string,
-    { viewBox: string; strokeWidth?: number; paths: readonly { d: string; solid?: boolean }[] }
+    {
+      viewBox: string;
+      strokeWidth: number;
+      paths: readonly { d: string; solid?: boolean; filled?: boolean }[];
+    }
   > = {
+    // A flag planted at the start: a pole and a solid pennant. Painted
+    // 3.80..18.42 x 0.80..23.20.
+    'getting-started': {
+      viewBox: '-2.33 -1.44 26.88 26.88',
+      strokeWidth: 3.4,
+      paths: [
+        { d: 'M5.5 2.5V21.5' },
+        {
+          d: 'M5.5 3.5H17.5C18.3 3.5 18.7 4.4 18.2 5L15.8 8L18.2 11C18.7 11.6 18.3 12.5 17.5 12.5H5.5Z',
+          solid: true
+        }
+      ]
+    },
     // A card with a fold and a solid clasp. Painted 0..250.3 x 0..246.5.
     'manage-wallet': {
       viewBox: '-24.85 -26.75 300 300',
@@ -105,6 +93,43 @@ function CategoryGlyph({ categoryId }: { categoryId: string }) {
         {
           d: 'M182.67 156.268C191.524 156.268 198.701 149.091 198.701 140.238C198.701 131.384 191.524 124.207 182.67 124.207C173.817 124.207 166.64 131.384 166.64 140.238C166.64 149.091 173.817 156.268 182.67 156.268Z',
           solid: true
+        }
+      ]
+    },
+    // An eye with a solid pupil and a slash through it. Painted
+    // 0.90..23.10 x 2.80..21.20.
+    privacy: {
+      viewBox: '-1.32 -1.32 26.64 26.64',
+      strokeWidth: 3.4,
+      paths: [
+        {
+          d: 'M2.6 12C2.6 12 6.3 5.8 12 5.8C17.7 5.8 21.4 12 21.4 12C21.4 12 17.7 18.2 12 18.2C6.3 18.2 2.6 12 2.6 12Z'
+        },
+        {
+          d: 'M12 9.2C13.55 9.2 14.8 10.45 14.8 12C14.8 13.55 13.55 14.8 12 14.8C10.45 14.8 9.2 13.55 9.2 12C9.2 10.45 10.45 9.2 12 9.2Z',
+          solid: true
+        },
+        { d: 'M4.5 4.5L19.5 19.5' }
+      ]
+    },
+    // A shield. Painted 2.80..21.20 x 1.10..22.50.
+    guardian: {
+      viewBox: '-0.84 -1.04 25.68 25.68',
+      strokeWidth: 3.4,
+      paths: [
+        { d: 'M12 2.8L19.5 5.5V11.8C19.5 16.1 16.3 19.2 12 20.8C7.7 19.2 4.5 16.1 4.5 11.8V5.5L12 2.8Z' }
+      ]
+    },
+    // A wrench, the silhouette the traced glyph outlined, now filled and
+    // given a 1.6 stroke of the same ink to round its corners. Painted
+    // 1.09..22.92 x 1.13..22.86.
+    troubleshooting: {
+      viewBox: '-1.10 -1.11 26.2 26.2',
+      strokeWidth: 1.6,
+      paths: [
+        {
+          d: 'M12.71 7.24a4.1 4.1 0 0 1 5.2-5.1l-2.8 2.8.8 3.2 3.2.8 2.8-2.8a4.1 4.1 0 0 1-5.1 5.2L5.51 21.54a2.2 2.2 0 0 1-3.1-3.1Z',
+          filled: true
         }
       ]
     },
@@ -123,6 +148,7 @@ function CategoryGlyph({ categoryId }: { categoryId: string }) {
     // 0..256.3 x 0..249.5.
     earning: {
       viewBox: '-25.63 -29.05 308 308',
+      strokeWidth: 3.4,
       paths: [
         {
           d: 'M128.155 86.6766C128.155 48.953 110.068 20.531 78.5458 7.09522C51.1574 -4.27354 23.769 -0.656207 5.16558 8.64551C1.03148 10.7126 -1.03557 15.3634 0.51472 19.4975C8.26615 45.8524 28.4199 65.4894 55.2915 74.7911C80.0961 83.576 104.901 78.9252 128.155 86.6766Z',
@@ -144,25 +170,33 @@ function CategoryGlyph({ categoryId }: { categoryId: string }) {
     }
   };
 
-  const art = artwork[categoryId];
-  if (art) {
-    return (
-      <svg
-        aria-hidden="true"
-        className="help-home-card-glyph help-home-card-glyph-artwork"
-        viewBox={art.viewBox}
-        style={art.strokeWidth === undefined ? undefined : { strokeWidth: art.strokeWidth }}
-      >
-        {art.paths.map(path => (
-          <path key={path.d} className={path.solid ? 'help-home-card-glyph-solid' : undefined} d={path.d} />
-        ))}
-      </svg>
-    );
-  }
+  // A plus, in the same weight, for a category id the map does not know.
+  const art = artwork[categoryId] ?? {
+    viewBox: '-1.3 -1.3 26.6 26.6',
+    strokeWidth: 3.4,
+    paths: [{ d: 'M12 3.5V20.5M3.5 12H20.5' }]
+  };
 
   return (
-    <svg aria-hidden="true" className="help-home-card-glyph" viewBox="0 0 24 24">
-      <path d={paths[categoryId] ?? 'M12 5v14M5 12h14'} />
+    <svg
+      aria-hidden="true"
+      className="help-home-card-glyph"
+      viewBox={art.viewBox}
+      style={{ strokeWidth: art.strokeWidth }}
+    >
+      {art.paths.map(path => (
+        <path
+          key={path.d}
+          className={
+            path.solid
+              ? 'help-home-card-glyph-solid'
+              : path.filled
+                ? 'help-home-card-glyph-filled'
+                : undefined
+          }
+          d={path.d}
+        />
+      ))}
     </svg>
   );
 }

@@ -2015,8 +2015,7 @@
  * The cycle. Sage, blue, lavender, slate, then round again, set by position
  * rather than by category so the data carries no colour and an eighth
  * category needs no decision. At three columns no row repeats a tint and no
- * column stacks one; at two it still alternates. The slate is the dark one
- * and hands its glyph the light ink — see the panel tokens for the ratios.
+ * column stacks one; at two it still alternates.
  */
 .help-home-card-grid > li:nth-child(4n + 1) {
   --card-panel: var(--panel-sage);
@@ -2032,7 +2031,6 @@
 
 .help-home-card-grid > li:nth-child(4n) {
   --card-panel: var(--panel-slate);
-  --card-panel-ink: var(--help-panel);
 }
 
 /*
@@ -2065,39 +2063,32 @@
 
 /*
  * The glyph is standing in for an illustration, so it is drawn at the size an
- * illustration would be rather than as an icon. It takes the panel's ink,
- * which is the page ink on the three light tints and the light surface on
- * the slate, so it holds on all four.
+ * illustration would be rather than as an icon. White on every panel, as the
+ * app draws its own: the stroke weight travels with each drawing's geometry
+ * (set inline in CategoryGlyph), solid parts fill with the same white, and
+ * filled parts fill and keep their stroke.
+ *
+ * White measures 2.02:1 on the sage, 2.37:1 on the blue, 2.10:1 on the
+ * lavender and 4.53:1 on the slate — three of the four under the 3:1 a
+ * graphic is held to. Accepted as the brand's own drawings, by Utkarsh's
+ * call, and reported in the pull request rather than quietly.
  */
 .help-home-card-glyph {
   width: 100%;
   height: auto;
   fill: none;
-  stroke: var(--card-panel-ink);
+  stroke: var(--help-panel);
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-width: 1.4;
-  opacity: 0.82;
-}
-
-/*
- * The supplied drawings (wallet, cross-chain, earning) keep their own stroke
- * weights, set inline with their geometry, where the traced glyphs are 1.4
- * in 24. Solid parts fill with the ink instead of stroking.
- *
- * They are white, and solid, as supplied: the app draws these white on these
- * hues. On the blue that is 2.37:1 and on the lavender 2.10:1, under the 3:1
- * a graphic is held to; accepted as the brand's own drawings, by Utkarsh's
- * call.
- */
-.help-home-card-glyph-artwork {
-  --card-panel-ink: var(--help-panel);
-  opacity: 1;
 }
 
 .help-home-card-glyph-solid {
-  fill: var(--card-panel-ink);
+  fill: var(--help-panel);
   stroke: none;
+}
+
+.help-home-card-glyph-filled {
+  fill: var(--help-panel);
 }
 
 .help-home-card-title {

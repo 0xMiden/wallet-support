@@ -191,14 +191,14 @@
    *
    *   --panel-blue      #91acc1
    *   --panel-sage      #a8bca3   (the panel colour before there were four)
-   *   --panel-slate     #777487   (the dark one; it takes a light glyph)
+   *   --panel-slate     #777487
    *   --panel-lavender  #beacd2
    *
-   * The glyph is drawn in ink at 82% opacity, so its contrast is measured on
-   * the composited colour, not the ink: 4.27:1 on the blue, 4.80:1 on the
-   * sage, 4.68:1 on the lavender. On the slate the ink reaches only 2.56:1,
-   * so that panel switches the glyph to the white surface, 3.65:1. All four
-   * clear the 3:1 that a graphic needs.
+   * The glyphs are white on all four, as the app draws its own on these
+   * hues: 2.02:1 on the sage, 2.37:1 on the blue, 2.10:1 on the lavender,
+   * 4.53:1 on the slate. Three of the four sit under the 3:1 a graphic is
+   * held to; accepted as the brand's drawings, by Utkarsh's call, and
+   * reported in the pull request. See the glyph rule in help-center.css.
    *
    * None of them is the accent orange: #e77537 is what the buttons and links
    * wear, and decoration should not carry the colour of the primary action.
@@ -214,7 +214,6 @@
 
   /* What a panel paints with unless the cycle says otherwise. */
   --card-panel: var(--panel-sage);
-  --card-panel-ink: var(--text-strong);
 
   --card-accent: #91acc1;
 
