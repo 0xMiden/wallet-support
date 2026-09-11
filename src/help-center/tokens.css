@@ -173,6 +173,7 @@
   --radius-xs: 0.5rem;
   --radius-sm: 0.9rem;
   --radius-md: 1.1rem;
+  --radius-lg: 1.25rem;  /* 20px; the support panel */
   --radius-pill: 999px;
   --radius-loaf: 1.1rem 1.1rem 0.4rem 0.4rem;
   --radius-card: 1.4rem 1.4rem 0.45rem 0.45rem;
