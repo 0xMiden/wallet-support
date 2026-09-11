@@ -544,8 +544,7 @@ an endpoint — a Worker plus KV or D1 — and is a separate decision.
 - Step screenshots. The plan is §7 of `tasks/content-proposal.md`: 32 positions across 7 articles, ten of
   them where the Notion pages had a screenshot. Blocked on the captures, which Ivan takes against the
   store release. The renderer now shows an image only at the top level: inside a list item, where a step
-  screenshot would sit, it still refuses one. Tracked in the screenshot capture list at the end of this
-  file.
+  screenshot would sit, it still refuses one. Tracked in the screenshot capture list below.
 - Attaching the article title to a "No" report. The support form's accepted parameters are not known
   here, so nothing is appended rather than guessing at another service's API.
 
@@ -593,7 +592,7 @@ had promised "how to manage it", and the only article under Guardian explains wh
 ### Still open
 
 - Step screenshots. 32 positions across 7 articles, per §7 of `tasks/content-proposal.md`; see the
-  screenshot capture list at the end of this file.
+  screenshot capture list below.
 - Footer links with no destination: Documentation, About, Blog, Careers, Status, and the legal pages are
   absent rather than dead. They need real URLs.
 - No DOM-level unit tests. The unit suite stays in node; component behaviour is covered by Playwright
@@ -687,6 +686,54 @@ and only styled wrongly.
 It becomes real work the moment the first screenshot lands: a placeholder image needs to say it is a
 placeholder, and the badge has to be legible on whatever the screenshot happens to show. Not built
 now, deliberately.
+
+## Screenshot capture list
+
+The 32 positions of §7 in `tasks/content-proposal.md`, for Ivan to capture against the store release,
+Bread Wallet 1.16.0, on both platforms. `tasks/screenshot-capture-sheet.md` has them in flow order, with
+what each screen must show and the labels to read for the seven conflicts under Verify against wallet
+build.
+
+§7's totals line reads Extension 20, Mobile 12, but its tables list 18 Extension and 14 Mobile. This list
+follows the tables until Ivan settles which is right.
+
+### Extension, 18
+
+- [ ] E01 · How to install Bread Wallet · step 2 · Chrome Web Store listing with "Add to Chrome"
+- [ ] E02 · How to install Bread Wallet · step after 3 · Browser toolbar: jigsaw icon and pin icon
+- [ ] E03 · How do I create a Bread Wallet? · step 1 · "Create new wallet" / "I already have a wallet" page
+- [ ] E04 · How do I create a Bread Wallet? · step 2 · Back up your wallet page (seed phrase blurred/sample)
+- [ ] E05 · How do I create a Bread Wallet? · step 4 · Create password page
+- [ ] E06 · How do I create a Bread Wallet? · step 5 · Account recovery: Guardian vs Fully private
+- [ ] E07 · How to fund your Bread Wallet? · step 1 · Wallet homepage with "Faucet"
+- [ ] E08 · How to fund your Bread Wallet? · step 3–4 · Faucet page: address, amount, Private/Public
+- [ ] E09 · How to find a token contract address in Bread Wallet? · step 2 · Token Information section with copy icon
+- [ ] E10 · How to download the encrypted file? · step 2 · Settings › Security
+- [ ] E11 · How to download the encrypted file? · step 3 · "Encrypted Wallet File" option
+- [ ] E12 · How to download the encrypted file? · step 6 · Download complete / "Done"
+- [ ] E13 · How do I restore my wallet with a recovery phrase? · step 1 · "I already have a wallet" selection
+- [ ] E14 · How do I restore my wallet with a recovery phrase? · step 2 · Import type: Seed Phrase / Encrypted Wallet File
+- [ ] E15 · How do I restore my wallet with a recovery phrase? · step 3 · Numbered recovery-phrase entry boxes (sample words)
+- [ ] E16 · How do I restore my wallet with a recovery phrase? · step 5 · Recovery choice: Guardian vs Fully private
+- [ ] E17 · How to restore the wallet using an encrypted file? · step 2 · Import type: "Import with encrypted wallet file"
+- [ ] E18 · How to restore the wallet using an encrypted file? · step 3 · Import wallet page: drag-and-drop + password
+
+### Mobile, 14
+
+- [ ] M01 · How to install Bread Wallet · step 2 · App Store listing with "Get"
+- [ ] M02 · How do I create a Bread Wallet? · step 1 · Welcome to Bread! with "Get started"
+- [ ] M03 · How do I create a Bread Wallet? · step 2 · Choose how to protect your wallet (biometrics)
+- [ ] M04 · How do I create a Bread Wallet? · step 5 · Pick your Guardian
+- [ ] M05 · How to fund your Bread Wallet? · step 1 · Explore tab
+- [ ] M06 · How to fund your Bread Wallet? · step 2 · Faucet card
+- [ ] M07 · How to fund your Bread Wallet? · step 3–4 · Faucet page: address, amount, Private/Public
+- [ ] M08 · How to find a token contract address in Bread Wallet? · step 1 · Homepage, selecting a token
+- [ ] M09 · How to find a token contract address in Bread Wallet? · step 2 · Token Information section
+- [ ] M10 · How do I restore my wallet with a recovery phrase? · step 1 · Welcome to Bread! with "Recover your account"
+- [ ] M11 · How do I restore my wallet with a recovery phrase? · step 2 · Import type choice
+- [ ] M12 · How do I restore my wallet with a recovery phrase? · step 3 · Recovery-phrase entry
+- [ ] M13 · How do I restore my wallet with a recovery phrase? · step 4 · Guardian operator list
+- [ ] M14 · How do I restore my wallet with a recovery phrase? · step 5 · "Your Wallet is ready!"
 
 ## Terminology reconciliation — pending Ivan
 
@@ -1095,51 +1142,3 @@ unchanged.
 - The first checklist run passed 7 of 10, on two wrong expectations: 40 articles in the heading, which
   counts published articles only, and an article title read the moment the hash moved, before the page
   had rendered. Corrected, it passed 10 of 10; the title settled 55ms after the hash.
-
-## Screenshot capture list
-
-The 32 positions of §7 in `tasks/content-proposal.md`, for Ivan to capture against the store release,
-Bread Wallet 1.16.0, on both platforms. `tasks/screenshot-capture-sheet.md` has them in flow order, with
-what each screen must show and the labels to read for the seven conflicts under Verify against wallet
-build.
-
-§7's totals line reads Extension 20, Mobile 12, but its tables list 18 Extension and 14 Mobile. This list
-follows the tables until Ivan settles which is right.
-
-### Extension, 18
-
-- [ ] E01 · How to install Bread Wallet · step 2 · Chrome Web Store listing with "Add to Chrome"
-- [ ] E02 · How to install Bread Wallet · step after 3 · Browser toolbar: jigsaw icon and pin icon
-- [ ] E03 · How do I create a Bread Wallet? · step 1 · "Create new wallet" / "I already have a wallet" page
-- [ ] E04 · How do I create a Bread Wallet? · step 2 · Back up your wallet page (seed phrase blurred/sample)
-- [ ] E05 · How do I create a Bread Wallet? · step 4 · Create password page
-- [ ] E06 · How do I create a Bread Wallet? · step 5 · Account recovery: Guardian vs Fully private
-- [ ] E07 · How to fund your Bread Wallet? · step 1 · Wallet homepage with "Faucet"
-- [ ] E08 · How to fund your Bread Wallet? · step 3–4 · Faucet page: address, amount, Private/Public
-- [ ] E09 · How to find a token contract address in Bread Wallet? · step 2 · Token Information section with copy icon
-- [ ] E10 · How to download the encrypted file? · step 2 · Settings › Security
-- [ ] E11 · How to download the encrypted file? · step 3 · "Encrypted Wallet File" option
-- [ ] E12 · How to download the encrypted file? · step 6 · Download complete / "Done"
-- [ ] E13 · How do I restore my wallet with a recovery phrase? · step 1 · "I already have a wallet" selection
-- [ ] E14 · How do I restore my wallet with a recovery phrase? · step 2 · Import type: Seed Phrase / Encrypted Wallet File
-- [ ] E15 · How do I restore my wallet with a recovery phrase? · step 3 · Numbered recovery-phrase entry boxes (sample words)
-- [ ] E16 · How do I restore my wallet with a recovery phrase? · step 5 · Recovery choice: Guardian vs Fully private
-- [ ] E17 · How to restore the wallet using an encrypted file? · step 2 · Import type: "Import with encrypted wallet file"
-- [ ] E18 · How to restore the wallet using an encrypted file? · step 3 · Import wallet page: drag-and-drop + password
-
-### Mobile, 14
-
-- [ ] M01 · How to install Bread Wallet · step 2 · App Store listing with "Get"
-- [ ] M02 · How do I create a Bread Wallet? · step 1 · Welcome to Bread! with "Get started"
-- [ ] M03 · How do I create a Bread Wallet? · step 2 · Choose how to protect your wallet (biometrics)
-- [ ] M04 · How do I create a Bread Wallet? · step 5 · Pick your Guardian
-- [ ] M05 · How to fund your Bread Wallet? · step 1 · Explore tab
-- [ ] M06 · How to fund your Bread Wallet? · step 2 · Faucet card
-- [ ] M07 · How to fund your Bread Wallet? · step 3–4 · Faucet page: address, amount, Private/Public
-- [ ] M08 · How to find a token contract address in Bread Wallet? · step 1 · Homepage, selecting a token
-- [ ] M09 · How to find a token contract address in Bread Wallet? · step 2 · Token Information section
-- [ ] M10 · How do I restore my wallet with a recovery phrase? · step 1 · Welcome to Bread! with "Recover your account"
-- [ ] M11 · How do I restore my wallet with a recovery phrase? · step 2 · Import type choice
-- [ ] M12 · How do I restore my wallet with a recovery phrase? · step 3 · Recovery-phrase entry
-- [ ] M13 · How do I restore my wallet with a recovery phrase? · step 4 · Guardian operator list
-- [ ] M14 · How do I restore my wallet with a recovery phrase? · step 5 · "Your Wallet is ready!"

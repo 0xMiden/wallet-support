@@ -1,7 +1,7 @@
 # Screenshot capture sheet
 
 For Ivan's capture run against the store release, **Bread Wallet 1.16.0**, on both platforms. The positions
-are §7 of `tasks/content-proposal.md`; tick them off in the screenshot capture list at the end of
+are §7 of `tasks/content-proposal.md`; tick them off in the screenshot capture list in
 `tasks/todo.md`.
 
 > **Settle before capturing.** §7's tables list **18 Extension and 14 Mobile** positions; its totals line
