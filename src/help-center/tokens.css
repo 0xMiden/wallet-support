@@ -227,6 +227,15 @@
   --panel-slate-rgb: 119 116 135;
   --panel-lavender-rgb: 190 172 210;
 
+  /* A deep step of each, for the card's chevron on the white card: the
+     app's own --card-green-deep and --card-purple-deep for the sage and the
+     lavender; the blue keeps the ink this file already measured; the slate
+     is its own deep, as it is in the app. On white: 7.3:1, 7.0:1, 7.6:1,
+     and 4.2:1 for the slate, which clears the 3:1 a graphic needs. */
+  --panel-sage-deep: #50634c;
+  --panel-blue-deep: #3b5a72;
+  --panel-lavender-deep: #5d5368;
+
   /* What a panel paints with unless the cycle says otherwise. */
   --card-panel: var(--panel-sage);
 
@@ -259,7 +268,7 @@
      card, 7.02:1 on the page. Same hue as the band above it. It also marks
      the glossary row a shared link opened, at 6.52:1 on that row, where the
      band's own blue reaches only 2.11:1. */
-  --card-ink: #3b5a72;
+  --card-ink: var(--panel-blue-deep);
 
   /* The reference's card panel: a large radius on a 16:9-ish artwork area. */
   --radius-panel: 1.75rem;

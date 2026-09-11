@@ -928,7 +928,7 @@
 .help-center-card:hover,
 .help-center-card:focus-within {
   border-color: var(--card-edge);
-  background: var(--help-panel-elevated);
+  background: var(--card-tint-faint);
   transform: translateY(-2px);
 }
 
@@ -2021,31 +2021,49 @@
  * chips and hover edges wear the colour its panel wears here: --card-accent
  * and its triplet follow the tint, and the tints and edge follow them.
  */
+/*
+ * The values derived from the triplet — the tints, the edge — resolve where
+ * they are declared, not where they are used, so declaring the triplet here
+ * would leave them at the root's blue. They are declared again on the same
+ * element as the triplet, and follow it.
+ */
+[data-panel-tint] {
+  --card-tint-faint: rgb(var(--card-accent-rgb) / 8%);
+  --card-tint-soft: rgb(var(--card-accent-rgb) / 14%);
+  --card-tint-strong: rgb(var(--card-accent-rgb) / 62%);
+  --card-edge: rgb(var(--card-accent-rgb) / 90%);
+}
+
 [data-panel-tint='sage'] {
   --card-panel: var(--panel-sage);
   --card-accent: var(--panel-sage);
   --card-accent-rgb: var(--panel-sage-rgb);
+  --card-ink: var(--panel-sage-deep);
 }
 
 [data-panel-tint='blue'] {
   --card-panel: var(--panel-blue);
   --card-accent: var(--panel-blue);
   --card-accent-rgb: var(--panel-blue-rgb);
+  --card-ink: var(--panel-blue-deep);
 }
 
 [data-panel-tint='lavender'] {
   --card-panel: var(--panel-lavender);
   --card-accent: var(--panel-lavender);
   --card-accent-rgb: var(--panel-lavender-rgb);
+  --card-ink: var(--panel-lavender-deep);
 }
 
 /* The dark one: its chip takes the white surface, and stays solid on hover
-   because white on the lighter hover tint would not hold. */
+   because white on the lighter hover tint would not hold. It is its own
+   deep for the chevron. */
 [data-panel-tint='slate'] {
   --card-panel: var(--panel-slate);
   --card-accent: var(--panel-slate);
   --card-accent-rgb: var(--panel-slate-rgb);
   --card-chip-ink: var(--help-panel);
+  --card-ink: var(--panel-slate);
 }
 
 [data-panel-tint='slate'] .help-center-card:hover .help-center-card-index,
