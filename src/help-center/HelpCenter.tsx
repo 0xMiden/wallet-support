@@ -12,6 +12,7 @@ import {
   articlesFor,
   articlesInSubcategory,
   findArticle,
+  helpCenterArticleImages,
   helpCenterArticles,
   subcategoryNeedsPlatformChoice
 } from './content';
@@ -334,7 +335,11 @@ export function HelpCenter() {
   const rendered = useMemo(
     () =>
       activeArticle
-        ? renderArticle(activeArticle.bodies[bodyPlatform] ?? '', `${activeArticle.id} (${bodyPlatform})`)
+        ? renderArticle(
+            activeArticle.bodies[bodyPlatform] ?? '',
+            `${activeArticle.id} (${bodyPlatform})`,
+            helpCenterArticleImages
+          )
         : { html: '', headings: [] },
     [activeArticle?.id, bodyPlatform]
   );
@@ -776,7 +781,7 @@ export function HelpCenter() {
                   </ol>
                 </nav>
 
-                <HelpCenterGlossary entries={helpCenterGlossaryEntries} />
+                <HelpCenterGlossary entries={helpCenterGlossaryEntries} currentEntryId={glossaryEntryId} />
               </section>
             ) : null}
 
@@ -1023,8 +1028,8 @@ export function HelpCenter() {
                 )}
               </nav>
 
-              {/* Only 4 of 23 articles carry more than one section, so a
-                  contents-only rail would sit empty beside the other 19.
+              {/* Only 5 of 40 articles carry more than one section, so a
+                  contents-only rail would sit empty beside the other 35.
                   It also offers the rest of the subcategory and a way to
                   ask a person, so the column is never dead space. */}
               {showRail ? (

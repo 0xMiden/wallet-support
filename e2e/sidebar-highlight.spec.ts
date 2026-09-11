@@ -47,10 +47,16 @@ const tree = (page: Page) => page.getByRole('navigation', { name: 'Help Center c
 const heading = (page: Page, title: string) => tree(page).getByRole('button', { name: title, exact: true });
 const row = (page: Page, id: string) => tree(page).locator(`a[href="#${id}"]`);
 
-test('clicking the page already open takes the highlight back from a heading, in every category', async ({
-  page
-}) => {
-  for (const group of helpCenterMainCategories) {
+/*
+ * One test per group: that group's subcategories against every other group's
+ * heading. As a single test the work grew with subcategories times groups and
+ * needed a budget scaled to match (see tasks/lessons.md); split, each group
+ * stays inside the default timeout and a failure names the group it is in.
+ */
+for (const group of helpCenterMainCategories) {
+  test(`clicking the page already open takes the highlight back from a heading, in ${group.title}`, async ({
+    page
+  }) => {
     for (const subcategory of group.subcategories) {
       await page.goto(`/#${subcategory.id}`);
 
@@ -68,8 +74,8 @@ test('clicking the page already open takes the highlight back from a heading, in
         );
       }
     }
-  }
-});
+  });
+}
 
 test('on the glossary a clicked heading holds the highlight alone, and a link hands it on', async ({ page }) => {
   for (const group of helpCenterMainCategories) {

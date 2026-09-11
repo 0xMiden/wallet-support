@@ -1,11 +1,14 @@
 import { helpCenterMainCategories } from './categories';
+import type { ArticleImages } from './markdown';
 import type { HelpCenterArticle, HelpCenterMainCategory, HelpCenterPlatform } from './types';
 
 /**
  * Articles are Markdown files with frontmatter, migrated verbatim from
- * content-source/. Nothing here rewrites, trims, or summarises a body: the
- * only transformation the migration is permitted to make is dropping the
- * "[image removed]" placeholder lines, and content.test.ts proves it.
+ * content-source/, or for the FAQ articles from tasks/faq/bread-faq-content.md.
+ * Nothing here rewrites, trims, or summarises a body. The migration may drop
+ * "[image removed]" placeholder lines, and in the FAQ articles may turn a
+ * referenced title into a link and give an image its alt text; content.test.ts
+ * proves it did nothing else.
  *
  * A body that differs per platform is split with HTML comment markers rather
  * than headings, so a delimiter can never collide with article prose.
@@ -119,6 +122,31 @@ export function loadArticles(modules: Readonly<Record<string, string>>): readonl
  */
 export const helpCenterAllArticles: readonly HelpCenterArticle[] = loadArticles(
   import.meta.glob<string>('./content/*.md', { query: '?raw', import: 'default', eager: true })
+);
+
+/**
+ * The images articles may show, by filename. Width and height are written down
+ * rather than read at runtime, because the browser needs them before the file
+ * arrives; content.test.ts reads each file's own header and fails if a size
+ * here disagrees with it, or if a file is missing from the table.
+ */
+const ARTICLE_IMAGE_SIZES: Readonly<Record<string, readonly [number, number]>> = {
+  'across-chains-two-routes.png': [1024, 444],
+  'earn-across-the-privacy-line.png': [1024, 393],
+  'guardian-backed-or-more-private.png': [1024, 434],
+  'private-from-other-users.png': [916, 535],
+  'three-keys-always-in-control.png': [1026, 396]
+};
+
+export const helpCenterArticleImages: ArticleImages = Object.fromEntries(
+  Object.entries(
+    import.meta.glob<string>('./assets/faq/*.png', { query: '?url', import: 'default', eager: true })
+  ).map(([path, src]) => {
+    const name = path.slice(path.lastIndexOf('/') + 1);
+    const size = ARTICLE_IMAGE_SIZES[name];
+    if (!size) throw new Error(`${name}: add its width and height to ARTICLE_IMAGE_SIZES.`);
+    return [name, { src, width: size[0], height: size[1] }];
+  })
 );
 
 /**
@@ -264,6 +292,7 @@ export function findArticle(
 
 function stripMarkdown(text: string) {
   return text
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
     .replace(/^\s*>\s?/gm, '')
     .replace(/^\s*(?:\d+\.|[-*+])\s+/gm, '')
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
@@ -283,10 +312,12 @@ function stripMarkdown(text: string) {
  * instead of being shown alone — "Steps:" is not a summary of anything.
  */
 export function articleExcerpt(body: string, limit = 150): string {
+  // An image line is not a sentence, and its alt text describes a picture
+  // rather than summarising the article.
   const blocks = body
     .split(/\n\s*\n/)
     .map(block => block.trim())
-    .filter(Boolean);
+    .filter(block => block !== '' && !/^!\[[^\]]*\]\([^)\s]*\)$/.test(block));
 
   const isQuote = (block: string) => block.trimStart().startsWith('>');
   const isList = (block: string) => /^\s*(?:\d+\.|[-*+])\s/.test(block);

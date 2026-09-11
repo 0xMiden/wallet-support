@@ -45,6 +45,12 @@ that differs per platform is split with `<!-- platform: extension-desktop -->` m
 keyed on subcategory **ids**, never on display titles. `content.test.ts` compares every migrated body
 back against `content-source/`.
 
+The FAQ articles come from `tasks/faq/bread-faq-content.md`, and their images from
+`tasks/faq/faq-images/`, shipped as losslessly optimised, pixel-identical copies in
+`src/help-center/assets/faq/`. Each FAQ
+body must match its section of that file byte for byte once its links to other articles and its
+image alt text are taken back out.
+
 ## Pre-commit checks
 
 `.githooks/pre-commit` runs `yarn typecheck` and the test suite before each commit. It is tracked in
@@ -56,14 +62,14 @@ git config core.hooksPath .githooks
 
 The hook is local and offline: `tsc` and `vitest` come from `node_modules` and nothing contacts a
 network or an external service. It skips the checks only when every staged path is under `tasks/` or
-is Markdown other than an article body (`src/help-center/content/` and `content-source/` always run
-them), so documentation commits stay instant. Use `git commit --no-verify` to skip a single commit
+is Markdown that no test reads (`src/help-center/content/`, `content-source/`, `CLAUDE.md` and the
+FAQ source in `tasks/faq/` always run them), so documentation commits stay instant. Use `git commit --no-verify` to skip a single commit
 deliberately.
 
 The rule, in `.githooks/skippable.sh`, names what does not ship rather than what does. It used to be
 a list of the file types that should run the checks, and that list left out CSS, so a stylesheet-only
-commit skipped every check even though a unit test reads the stylesheets. `content.test.ts` now
-exercises the rule directly.
+commit skipped every check even though a unit test reads the stylesheets. `CLAUDE.md` was the same
+gap once the terminology guard began reading it. `content.test.ts` now exercises the rule directly.
 
 ### Why the checks are split
 
@@ -77,8 +83,8 @@ Two hooks, deliberately, because the two halves cost very different amounts:
 Playwright is ~50s of that, and it is consistent: three consecutive runs on 2026-09-10 measured 51.3,
 50.0 and 50.3 seconds, for 200 unit tests and 30 end-to-end tests. Part of the cost is deliberate:
 `webServer` runs `yarn build` first, because reusing a stale `dist/` would let the suite pass against
-a page that is not the one in the tree. The single largest cost is one test: the sidebar-highlight
-case that clicks through every category takes ~22s on its own.
+a page that is not the one in the tree. The single largest cost was one test: the sidebar-highlight
+case that clicked through every category, ~22s on its own. It now runs as one test per group.
 
 So the end-to-end suite runs before anything leaves the machine, and never between typing a commit
 message and getting the prompt back. `yarn verify` is the same command by hand, and is what a deploy

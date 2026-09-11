@@ -33,7 +33,7 @@ describe('the home page promises', () => {
 
   it('shows a count on every card that adds up to the whole library', () => {
     // If an article is filed under a main category that no card represents,
-    // the five counts stop summing and the article is unreachable from home.
+    // the counts stop summing and the article is unreachable from home.
     const counted = helpCenterMainCategories.reduce(
       (total, mainCategory) =>
         total + articlesInMainCategory(helpCenterArticles, mainCategory.id).length,

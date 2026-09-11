@@ -331,7 +331,14 @@ test('every hover state actually changes something', async ({ page }) => {
       SURFACE,
       null
     ],
-    ['/#setup-and-basic-use', '.help-center-sidebar-utility', 'the sidebar glossary link', SURFACE, null]
+    ['/#setup-and-basic-use', '.help-center-sidebar-utility', 'the sidebar glossary link', SURFACE, null],
+    [
+      '/#moving-across-chains/what-is-the-difference-between-a-solver-route-and-a-canonical-bridge',
+      '.help-center-article-body figure > a',
+      'a diagram link',
+      TEXT,
+      null
+    ]
   ] as const;
 
   /*
@@ -499,4 +506,19 @@ test('the previous and next cards name their direction without numbering it', as
       expect(label, `${path}: "${label}" carries a number`).not.toMatch(/\d/);
     }
   }
+});
+
+test('search results show alone, even over an article with a side rail', async ({ page }) => {
+  // Same cause as on the glossary: the hidden article behind the results used to
+  // stay on screen because the rail layout's display: grid outranked [hidden].
+  // Wide enough for the rail to sit beside the article, so that grid is in play.
+  await page.setViewportSize({ width: 1600, height: 900 });
+  await page.goto('/#common-issues-and-support/my-token-is-stuck-on-consuming-receiver-address');
+  await expect(page.locator('.help-center-rail')).toBeVisible();
+  await expect(page.locator('.help-center-category.has-rail')).toHaveCSS('display', 'grid');
+
+  await page.locator('.help-center-search input').fill('guardian');
+
+  await expect(page.locator(RESULTS)).toBeVisible();
+  await expect(page.locator('.help-center-article-body')).toBeHidden();
 });

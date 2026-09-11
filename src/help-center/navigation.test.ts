@@ -179,7 +179,9 @@ const EXPECTED = [
   { id: 'activity-and-transaction-status', mainCategory: 'manage-wallet', mainIndex: 2, local: 3, siblings: 3 },
   { id: 'public-and-private-transactions', mainCategory: 'privacy', mainIndex: 3, local: 1, siblings: 1 },
   { id: 'guardian-protection', mainCategory: 'guardian', mainIndex: 4, local: 1, siblings: 1 },
-  { id: 'common-issues-and-support', mainCategory: 'troubleshooting', mainIndex: 5, local: 1, siblings: 1 }
+  { id: 'common-issues-and-support', mainCategory: 'troubleshooting', mainIndex: 5, local: 1, siblings: 1 },
+  { id: 'moving-across-chains', mainCategory: 'cross-chain', mainIndex: 6, local: 1, siblings: 1 },
+  { id: 'earn', mainCategory: 'earning', mainIndex: 7, local: 1, siblings: 1 }
 ] as const;
 
 const EXPECTED_CROSSINGS = [
@@ -188,7 +190,9 @@ const EXPECTED_CROSSINGS = [
   { from: 'sending-receiving-and-claiming', to: 'activity-and-transaction-status', crosses: false },
   { from: 'activity-and-transaction-status', to: 'public-and-private-transactions', crosses: true },
   { from: 'public-and-private-transactions', to: 'guardian-protection', crosses: true },
-  { from: 'guardian-protection', to: 'common-issues-and-support', crosses: true }
+  { from: 'guardian-protection', to: 'common-issues-and-support', crosses: true },
+  { from: 'common-issues-and-support', to: 'moving-across-chains', crosses: true },
+  { from: 'moving-across-chains', to: 'earn', crosses: true }
 ] as const;
 
 describe('the shipped hierarchy', () => {
