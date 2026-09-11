@@ -47,7 +47,6 @@ function CategoryGlyph({ categoryId }: { categoryId: string }) {
   const paths: Record<string, string> = {
     // A flag planted at the start, not a bare plus — which read as "add".
     'getting-started': 'M6 4v16M6 4.5h11l-2.2 3.5L17 11.5H6',
-    'manage-wallet': 'M4 8.5h16v10H4zM4 8.5 15 5l2 3.5M15.5 13.5h1.5',
     /*
      * An eye with a slash. This was a bare circle with a line through it,
      * which at panel scale reads as "prohibited" rather than as anything to
@@ -89,6 +88,35 @@ function CategoryGlyph({ categoryId }: { categoryId: string }) {
      */
     earning: 'M3.5 17 9 11.5l3.5 3.5 8-8M15 7h5.5v5.5'
   };
+
+  if (categoryId === 'manage-wallet') {
+    /*
+     * The wallet is the brand's own drawing, supplied as artwork rather than
+     * traced in the 24-unit stroke style: a card with a fold and a clasp, in
+     * strokes a seventh the width of its box. It keeps its own geometry and
+     * weight (the stroke and the solid clasp are set in the stylesheet);
+     * colour comes from the panel ink like every other glyph.
+     *
+     * The painted box, stroke included, is 0..250.3 x 0..246.5. The viewBox
+     * is padded so that box fills 83% of it — the share the 24-unit glyphs
+     * paint of theirs (20 of 24) — so the wallet sits at the same visual size
+     * as its neighbours rather than a fifth larger.
+     */
+    return (
+      <svg
+        aria-hidden="true"
+        className="help-home-card-glyph help-home-card-glyph-artwork"
+        viewBox="-24.85 -26.75 300 300"
+      >
+        <path d="M17.6514 53.4843C17.6514 33.694 33.6943 17.6512 53.4845 17.6512H196.817C216.607 17.6512 232.65 33.694 232.65 53.4843V193.045C232.65 212.835 216.607 228.878 196.817 228.878H53.4845C33.6943 228.878 17.6514 212.835 17.6514 193.045V53.4843Z" />
+        <path d="M17.6514 85.546H204.361C217.901 85.546 228.878 96.5232 228.878 110.063V170.414C228.878 183.954 217.901 194.932 204.361 194.932H17.6514" />
+        <path
+          className="help-home-card-glyph-solid"
+          d="M182.67 156.268C191.524 156.268 198.701 149.091 198.701 140.238C198.701 131.384 191.524 124.207 182.67 124.207C173.817 124.207 166.64 131.384 166.64 140.238C166.64 149.091 173.817 156.268 182.67 156.268Z"
+        />
+      </svg>
+    );
+  }
 
   return (
     <svg aria-hidden="true" className="help-home-card-glyph" viewBox="0 0 24 24">
