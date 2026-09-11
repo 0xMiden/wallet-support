@@ -870,6 +870,11 @@ describe('the product name', () => {
    * The hyphenated form is a different thing: store URLs, the Android package
    * id and the article ids all contain "bread-wallet" and must not change. The
    * space in the pattern is what keeps them out.
+   *
+   * It reads the same files as the key-structure vocabulary check below: every
+   * article, held-back ones included, content-source/, the FAQ source, the
+   * interface, the glossary and CLAUDE.md. The two once read different sets,
+   * which was history rather than design.
    */
   const NAMED = /bread[ \u00a0]+wallet/gi;
   const CORRECT = 'Bread Wallet';
@@ -878,8 +883,10 @@ describe('the product name', () => {
     return (text.match(NAMED) ?? []).filter(match => match !== CORRECT);
   }
 
-  it('is spelled "Bread Wallet" in every article title and body', () => {
-    for (const article of helpCenterArticles) {
+  it('is spelled "Bread Wallet" in every article title and body, held-back ones included', () => {
+    // helpCenterAllArticles, not helpCenterArticles: a held-back article is one
+    // line away from publishing, so it has to comply before it gets there.
+    for (const article of helpCenterAllArticles) {
       expect(misspellings(article.title), `${article.id} title`).toEqual([]);
 
       for (const platform of article.platforms) {
@@ -889,9 +896,22 @@ describe('the product name', () => {
     }
   });
 
+  it('is spelled "Bread Wallet" on the content-source pages too, so fidelity cannot pull it back', () => {
+    // The migrated articles are held to content-source verbatim, so a misspelling
+    // left there would make correcting an article fail the fidelity check
+    // instead. The two files have to move together.
+    expect(misspellings(extensionSource), 'content-source/extension.md').toEqual([]);
+    expect(misspellings(mobileSource), 'content-source/mobile.md').toEqual([]);
+  });
+
+  it('is spelled "Bread Wallet" in the FAQ source too, for the same reason', () => {
+    // The FAQ articles are held to tasks/faq/bread-faq-content.md byte for byte.
+    expect(misspellings(faqSource), 'tasks/faq/bread-faq-content.md').toEqual([]);
+  });
+
   it('is spelled "Bread Wallet" in the interface too, not only the articles', () => {
-    // The article check above cannot see the home page's lede: it reads
-    // helpCenterArticles, and the interface's own copy lives in the components.
+    // The article check above cannot see the home page's lede: it reads the
+    // articles, and the interface's own copy lives in the components.
     // "Uniform to all" has to mean both.
     const components = import.meta.glob<string>('./*.tsx', {
       query: '?raw',
@@ -922,6 +942,15 @@ describe('the product name', () => {
     for (const [file, source] of Object.entries(glossary)) {
       expect(misspellings(source), file).toEqual([]);
     }
+  });
+
+  it('is spelled "Bread Wallet" in CLAUDE.md too', () => {
+    // The guidance file sets the standard the articles are written to, so it
+    // cannot carry a misspelling itself. Read with its line breaks joined: the
+    // file is hard-wrapped, and a break between the two words would hide one.
+    // Only the breaks, so every other character reads as it does in the
+    // articles' check.
+    expect(misspellings(claudeGuide.replace(/[ \t]*\n[ \t]*/g, ' ')), 'CLAUDE.md').toEqual([]);
   });
 });
 
