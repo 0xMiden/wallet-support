@@ -1,4 +1,4 @@
-import breadMark from './assets/bread-mark.png';
+import breadMark from './assets/bread-mark.svg';
 import { GLOSSARY_TITLE } from './glossary';
 import { CONTACT_SUPPORT_URL, helpCenterDownloads, helpCenterLegal, helpCenterSocials } from './links';
 import { categoryHref, glossaryHref, homeHref } from './routing';

@@ -104,14 +104,15 @@
  * what make a lockup recognisable — more than the mark's outline does — and
  * they are the part we can match exactly.
  *
- * The mark is the brand's own loaf, the two-slice lockup the marketing site
- * uses. It ships as a 158x152 RGBA PNG because that is the only form it
- * exists in; at a 32px header that is 1.6x what a 3x screen asks for, so it
- * resolves cleanly. It would not survive being scaled up to a hero, which is
- * the one place not to use it.
+ * The mark is the wallet app's own: the single slice that the app icon, the
+ * splash, Welcome and Unlock all carry (public/misc/brand/new-bread.svg in
+ * 0xMiden/wallet), so a reader arriving from the app meets the same mark
+ * here. The marketing site still shows a two-slice loaf; the app is the
+ * identity people hold in their hand, so it wins. It ships as the app's SVG,
+ * which resolves at any size, hero included.
  *
- * Width is set and height left to follow, because the loaf is 158x152 and
- * forcing it square would squash it.
+ * Width is set and height left to follow: the slice is 211x214, and forcing
+ * it square would squash it.
  */
 .help-center-brand {
   --mark: 2rem;
@@ -459,17 +460,25 @@
   color: var(--text-faint);
 }
 
+/*
+ * The primary action, in the wallet app's own shape: a full pill set in the
+ * display face at the strong weight, which is what every primary button in
+ * the app wears (src/components/Button.tsx in 0xMiden/wallet: rounded-full,
+ * font-heading, font-bold). The ink stays dark rather than the app's white,
+ * because white on the accent measures 3.02:1 and fails AA at this size.
+ */
 .help-center-contact-button {
   min-height: 3.35rem;
-  padding: 0.75rem 1.15rem;
+  padding: 0.75rem 1.35rem;
   border: 1px solid var(--tint-medium);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-pill);
   color: var(--ink-on-accent) !important;
   background: var(--help-accent);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
+  font-family: var(--font-display);
   font-size: var(--text-md);
   font-weight: var(--weight-strong);
   white-space: nowrap;

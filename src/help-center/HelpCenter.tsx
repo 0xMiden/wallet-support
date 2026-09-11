@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
 
-import breadMark from './assets/bread-mark.png';
+import breadMark from './assets/bread-mark.svg';
 import { helpCenterMainCategories } from './categories';
 import { HelpCenterBackToTop } from './HelpCenterBackToTop';
 import { HelpCenterFooter } from './HelpCenterFooter';
