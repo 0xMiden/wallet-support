@@ -2056,7 +2056,7 @@
 }
 
 .help-home-card-title {
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   font-family: var(--font-display);
   /* The display weight, set solid: these are the page's five headings, not
      labels, so they carry the hero's weight and none of the label tracking. */

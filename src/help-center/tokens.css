@@ -142,6 +142,7 @@
   --text-md: 0.9375rem;
   --text-base: 1rem;
   --text-lg: 1.125rem;
+  --text-xl: 1.5rem;  /* the home category titles; the scale had nothing between 18 and 30 */
   --text-2xl: clamp(1.875rem, 3vw, 2.375rem);
 
   /* Four weights now that a variable font can render them. 900 is the
