@@ -33,7 +33,7 @@ export const helpCenterDownloads: readonly HelpCenterDownload[] = [
   {
     id: 'extension',
     label: 'Chrome extension',
-    href: 'https://chromewebstore.google.com/detail/miden-wallet/ablmompanofnodfdkgchkpmphailefpb?pli=1'
+    href: 'https://chromewebstore.google.com/detail/bread-wallet-by-miden/coajhopfooegmaifelglfboehacldcbo'
   }
 ] as const;
 

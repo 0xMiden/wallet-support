@@ -12,11 +12,11 @@ Format: "## " = Notion section, "### " = article title (verbatim), "> " = callou
 > ⚠️ Caution: Only download Bread Wallet from official links.
 > - iOS — [App Store](https://apps.apple.com/ch/app/bread-wallet-by-miden/id6789341854?l=en-GB)
 > - Android — [Google Play](https://play.google.com/store/apps/details?id=com.miden.wallet)
-> - Chrome — [Chrome Web Store](https://chromewebstore.google.com/detail/miden-wallet/ablmompanofnodfdkgchkpmphailefpb?pli=1)
+> - Chrome — [Chrome Web Store](https://chromewebstore.google.com/detail/bread-wallet-by-miden/coajhopfooegmaifelglfboehacldcbo)
 
 **Steps to install: Chrome browser**
 
-1. Visit the [Bread Wallet listing on the Chrome Web Store](https://chromewebstore.google.com/detail/miden-wallet/ablmompanofnodfdkgchkpmphailefpb?pli=1).
+1. Visit the [Bread Wallet listing on the Chrome Web Store](https://chromewebstore.google.com/detail/bread-wallet-by-miden/coajhopfooegmaifelglfboehacldcbo).
 2. Click the **Add to Chrome** button.
 3. On the confirmation dialog, click **Add extension**.
 
