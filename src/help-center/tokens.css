@@ -148,6 +148,7 @@
   /* Four weights now that a variable font can render them. 900 is the
      reference's display weight and is the single strongest visual tell. */
   --weight-medium: 500;
+  --weight-semibold: 600;  /* the home card descriptions, in the display face */
   --weight-strong: 700;
   --weight-display: 900;
 
