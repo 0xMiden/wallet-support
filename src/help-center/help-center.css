@@ -719,26 +719,34 @@
   }
 }
 
+/*
+ * The platform switch, in the wallet app's own segmented-control clothes
+ * (SegmentedActionBar in 0xMiden/wallet): a quiet neutral trough, and the
+ * selected segment a white pill with a hairline shadow, set in the display
+ * face at the strong weight. The accent stays out of it — it belongs to the
+ * primary action, and a filter is not one.
+ */
 .help-center-platform-tabs {
   width: fit-content;
   margin-top: var(--space-6);
-  padding: 0.35rem;
-  border: 1px solid var(--tint-strong);
+  padding: 0.25rem;
   border-radius: var(--radius-pill);
-  background: var(--tint-faint);
+  background: var(--help-track);
   display: inline-flex;
-  gap: 0.35rem;
+  gap: 0.25rem;
 }
 
 .help-center-platform-tabs button {
-  min-height: 3.2rem;
-  padding: 0.7rem 1.65rem;
+  min-height: 2.6rem;
+  padding: 0.55rem 1.4rem;
   border-radius: var(--radius-pill);
+  color: var(--text-muted);
   background: transparent;
   cursor: pointer;
-  font-size: var(--text-md);
-  font-weight: var(--weight-medium);
-  transition: color 160ms ease, background 160ms ease;
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-strong);
+  transition: color 160ms ease, background 160ms ease, box-shadow 160ms ease;
 }
 
 /*
@@ -749,13 +757,12 @@
  */
 .help-center-platform-tabs button:hover {
   color: var(--text-strong);
-  background: var(--tint-strong);
 }
 
 .help-center-platform-tabs button[aria-selected='true'] {
-  color: var(--ink-on-accent);
-  background: var(--help-accent);
-  box-shadow: 0 0.35rem 1.2rem rgb(var(--shadow-ink) / 14%);
+  color: var(--text-strong);
+  background: var(--help-panel);
+  box-shadow: 0 1px 2px rgb(var(--shadow-ink) / 8%);
 }
 
 .help-center-content-panel {
@@ -1586,14 +1593,12 @@
 
   .help-center-platform-tabs {
     width: 100%;
-    padding: 0.5rem;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .help-center-platform-tabs button {
-    min-height: 3.6rem;
-    font-size: var(--text-sm);
+    min-height: 3rem;
   }
 
   .help-center-content-panel {

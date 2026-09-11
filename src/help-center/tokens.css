@@ -71,6 +71,7 @@
   /* Borders stay ours: light, not the reference's hard 1px ink outline,
      which reads heavy at article length. */
   --help-line: rgb(72 72 72 / 12%);
+  --help-track: rgb(72 72 72 / 7%);  /* the segmented control's trough */
 
   --help-muted: #5f5f5f;
   --help-copy: #484848;
