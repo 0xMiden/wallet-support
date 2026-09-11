@@ -2012,6 +2012,30 @@
 }
 
 /*
+ * The cycle. Sage, blue, lavender, slate, then round again, set by position
+ * rather than by category so the data carries no colour and an eighth
+ * category needs no decision. At three columns no row repeats a tint and no
+ * column stacks one; at two it still alternates. The slate is the dark one
+ * and hands its glyph the light ink — see the panel tokens for the ratios.
+ */
+.help-home-card-grid > li:nth-child(4n + 1) {
+  --card-panel: var(--panel-sage);
+}
+
+.help-home-card-grid > li:nth-child(4n + 2) {
+  --card-panel: var(--panel-blue);
+}
+
+.help-home-card-grid > li:nth-child(4n + 3) {
+  --card-panel: var(--panel-lavender);
+}
+
+.help-home-card-grid > li:nth-child(4n) {
+  --card-panel: var(--panel-slate);
+  --card-panel-ink: var(--help-panel);
+}
+
+/*
  * The artwork slot. A glyph fills it today; an <img> or an inline illustration
  * dropped in here inherits the sizing and needs no other change.
  */
@@ -2041,14 +2065,15 @@
 
 /*
  * The glyph is standing in for an illustration, so it is drawn at the size an
- * illustration would be rather than as an icon. Ink, not accent: it sits on
- * five different category colours and has to hold on all of them.
+ * illustration would be rather than as an icon. It takes the panel's ink,
+ * which is the page ink on the three light tints and the light surface on
+ * the slate, so it holds on all four.
  */
 .help-home-card-glyph {
   width: 100%;
   height: auto;
   fill: none;
-  stroke: var(--text-strong);
+  stroke: var(--card-panel-ink);
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 1.4;
