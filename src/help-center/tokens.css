@@ -126,7 +126,11 @@
    * wrong, so there is no longer a separate one.
    */
   --accent-text: #a8460f;
-  --accent-text-lg: #e65303;  /* 3.62:1, headings 24px and over only */
+  /* The brand orange itself on the large headings — the hero's "help?" and
+     the page titles — by Utkarsh's call. It measures 2.90:1 on the page,
+     under the 3:1 large text is held to; it was #e65303 at 3.62:1. Reported
+     in the pull request rather than quietly. */
+  --accent-text-lg: #e77537;
 
   /* One accent, five tints. The stylesheet previously spelled out twenty
      different alphas of the same orange; a component asking for "a soft
