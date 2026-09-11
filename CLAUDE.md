@@ -120,6 +120,9 @@ Interaction must serve a purpose. Do not add features simply to make the site lo
 
 ## Engineering Workflow
 
+Every change goes through GitHub: a branch for the change, pushed, and a pull request into `main`.
+Nothing is committed to `main` locally or pushed to it directly, and no work stays local-only.
+
 For meaningful features or structural changes:
 
 1. Inspect the existing implementation first.
