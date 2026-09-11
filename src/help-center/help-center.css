@@ -855,7 +855,7 @@
   height: 2.05rem;
   border: 1px solid var(--help-line);
   border-radius: var(--radius-marker);
-  color: var(--text-strong);
+  color: var(--card-chip-ink);
   background: var(--card-accent);
   display: grid;
   place-items: center;
@@ -2012,25 +2012,45 @@
 }
 
 /*
- * The cycle. Sage, blue, lavender, slate, then round again, set by position
- * rather than by category so the data carries no colour and an eighth
- * category needs no decision. At three columns no row repeats a tint and no
- * column stacks one; at two it still alternates.
+ * The tints. Sage, blue, lavender, slate, then round again, set by position
+ * (panelTint.ts) rather than by category so the data carries no colour and
+ * an eighth category needs no decision. At three columns no row repeats a
+ * tint and no column stacks one; at two it still alternates.
+ *
+ * The same attribute sits on the category view, so a category's numbered
+ * chips and hover edges wear the colour its panel wears here: --card-accent
+ * and its triplet follow the tint, and the tints and edge follow them.
  */
-.help-home-card-grid > li:nth-child(4n + 1) {
+[data-panel-tint='sage'] {
   --card-panel: var(--panel-sage);
+  --card-accent: var(--panel-sage);
+  --card-accent-rgb: var(--panel-sage-rgb);
 }
 
-.help-home-card-grid > li:nth-child(4n + 2) {
+[data-panel-tint='blue'] {
   --card-panel: var(--panel-blue);
+  --card-accent: var(--panel-blue);
+  --card-accent-rgb: var(--panel-blue-rgb);
 }
 
-.help-home-card-grid > li:nth-child(4n + 3) {
+[data-panel-tint='lavender'] {
   --card-panel: var(--panel-lavender);
+  --card-accent: var(--panel-lavender);
+  --card-accent-rgb: var(--panel-lavender-rgb);
 }
 
-.help-home-card-grid > li:nth-child(4n) {
+/* The dark one: its chip takes the white surface, and stays solid on hover
+   because white on the lighter hover tint would not hold. */
+[data-panel-tint='slate'] {
   --card-panel: var(--panel-slate);
+  --card-accent: var(--panel-slate);
+  --card-accent-rgb: var(--panel-slate-rgb);
+  --card-chip-ink: var(--help-panel);
+}
+
+[data-panel-tint='slate'] .help-center-card:hover .help-center-card-index,
+[data-panel-tint='slate'] .help-center-card:focus-within .help-center-card-index {
+  background: var(--card-accent);
 }
 
 /*

@@ -18,6 +18,7 @@ import {
 } from './content';
 import { GLOSSARY_TITLE, helpCenterGlossaryEntries } from './glossary';
 import { CONTACT_SUPPORT_URL } from './links';
+import { panelTintFor } from './panelTint';
 import { renderArticle } from './markdown';
 import { createHelpCenterNavigation } from './navigation';
 import { searchHelpCenter } from './search';
@@ -789,6 +790,9 @@ export function HelpCenter() {
                 hidden, not unmounted. */}
             <section
               className={`help-center-category${showRail ? ' has-rail' : ''}`}
+              data-panel-tint={panelTintFor(
+                helpCenterMainCategories.findIndex(mainCategory => mainCategory.id === entry.mainCategory.id)
+              )}
               hidden={isSearching || isGlossary}
               aria-labelledby="help-center-category-title"
             >

@@ -5,6 +5,7 @@ import breadLockup from './assets/bread-lockup.png';
 import { articlesInMainCategory, helpCenterArticles } from './content';
 import { HelpCenterFooter } from './HelpCenterFooter';
 import { CONTACT_SUPPORT_URL } from './links';
+import { panelTintFor } from './panelTint';
 import { categoryHref, homeHref } from './routing';
 import type { HelpCenterMainCategory } from './types';
 
@@ -342,7 +343,7 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
           </div>
 
           <ul className="help-home-card-grid">
-            {mainCategories.map(mainCategory => {
+            {mainCategories.map((mainCategory, index) => {
               // The destination is the first subcategory because a main
               // category is a grouping, not a route. Reading order is array
               // order, the same rule the sidebar follows.
@@ -350,7 +351,7 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
               const count = articlesInMainCategory(helpCenterArticles, mainCategory.id).length;
 
               return (
-                <li key={mainCategory.id}>
+                <li key={mainCategory.id} data-panel-tint={panelTintFor(index)}>
                   <a
                     className="help-home-card"
                     href={categoryHref(first ? first.id : firstCategoryId)}

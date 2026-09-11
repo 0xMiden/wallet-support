@@ -208,17 +208,31 @@
    * None of them is the accent orange: #e77537 is what the buttons and links
    * wear, and decoration should not carry the colour of the primary action.
    *
-   * --card-accent is the subcategory card's band and numbered chip. It is
-   * the same blue as --panel-blue, so one home panel in four shares it; the
-   * two components differ in shape and size enough not to be mistaken.
+   * --card-accent is the article card's numbered chip and its hover edge.
+   * On a category page it follows the category: the chips wear the tint the
+   * category's panel wears on the home page (set per tint in help-center.css
+   * from data-panel-tint). Search results and the glossary, which span
+   * categories, keep the blue below.
    */
   --panel-blue: #91acc1;
   --panel-sage: #a8bca3;
   --panel-slate: #777487;
   --panel-lavender: #beacd2;
 
+  /* The same four as triplets, for the alpha tints a chip's hover and a
+     card's edge are built from. */
+  --panel-blue-rgb: 145 172 193;
+  --panel-sage-rgb: 168 188 163;
+  --panel-slate-rgb: 119 116 135;
+  --panel-lavender-rgb: 190 172 210;
+
   /* What a panel paints with unless the cycle says otherwise. */
   --card-panel: var(--panel-sage);
+
+  /* The chip's number: the page ink on the three light tints (6.97:1 on the
+     sage, 5.95:1 on the blue, 6.72:1 on the lavender), the white surface on
+     the slate (4.53:1), where the ink would reach only 3.11:1. */
+  --card-chip-ink: var(--text-strong);
 
   --card-accent: #91acc1;
 
@@ -231,7 +245,7 @@
    * it. A component that carries its own colour needs its own states, so
    * these derive from the card's blue instead.
    */
-  --card-accent-rgb: 145 172 193;
+  --card-accent-rgb: var(--panel-blue-rgb);
   /* The glossary table wears the card's blue too, so it reads as the same
      design as the article cards. Each tint is set to the lightness of the
      orange one it replaced, 6% and 10%, so no text role loses contrast. */
