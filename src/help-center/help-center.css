@@ -2058,8 +2058,10 @@
 .help-home-card-title {
   font-size: var(--text-lg);
   font-family: var(--font-display);
-  font-weight: var(--weight-strong);
-  letter-spacing: var(--tracking-label);
+  /* The display weight, set solid: these are the page's five headings, not
+     labels, so they carry the hero's weight and none of the label tracking. */
+  font-weight: var(--weight-display);
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
