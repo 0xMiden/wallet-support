@@ -1343,11 +1343,12 @@
 }
 
 .help-center-sequence-card {
-  min-height: 4.25rem;
-  padding: 0.7rem 0.9rem;
+  min-height: 5rem;
+  padding: 0.95rem 1.1rem;
   border: 1px solid var(--tint-medium);
-  border-radius: var(--radius-loaf);
+  border-radius: var(--radius-lg);
   background: var(--help-panel);
+  font-family: var(--font-display);
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
