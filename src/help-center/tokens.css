@@ -1,0 +1,309 @@
+/*
+ * Design tokens for the Help Center.
+ *
+ * Every value the interface paints with lives here, so a component rule never
+ * spells out a colour or a size. The Help Center is the same brand as the
+ * marketing site at midenxyz.webflow.io/wallet-new, and these values are
+ * measured from it — see tasks/design-audit.md for the reading and the
+ * contrast arithmetic behind every substitution.
+ *
+ * Nothing here is copied from Webflow's generated stylesheet. The reference
+ * was measured in a browser and expressed again as a scale.
+ */
+
+/*
+ * Two families, both SIL Open Font License, both self-hosted in this repo.
+ * There is no runtime dependency on Webflow, Google Fonts or any CDN.
+ *
+ * These are variable fonts with a real wght axis (verified: both files carry
+ * an fvar table), so 600 and 900 are true instances rather than a browser's
+ * synthetic emboldening. That distinction is the bug src/styles.css records —
+ * a previous pass named Inter without ever loading it, and eight fractional
+ * weights silently collapsed to whatever the fallback exposed. One file per
+ * family covers every weight we use; the latin subset is 39KB and 48KB.
+ *
+ * Nunito is the reference's display face. Söhne is its body face and is a
+ * commercial Klim licence we cannot redistribute, so Inter stands in for it —
+ * the nearest permissively licensed neo-grotesque.
+ */
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  /* 500 joined 600–900 when the sidebar moved to the display face and kept
+     its medium links: the file carries the whole axis, and a request outside
+     the declared range is clamped to its nearest end, so 500 had to be let
+     in to render as 500. */
+  font-weight: 500 900;
+  font-display: swap;
+  src: url('./assets/fonts/nunito-latin-var.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('./assets/fonts/inter-latin-var.woff2') format('woff2');
+}
+
+.help-center-shell,
+.help-center-home {
+  /* Families. The fallbacks matter: with font-display: swap the page paints in
+     them first, so they are a real stack, not a formality. */
+  --font-body:
+    Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  --font-display: Nunito, var(--font-body);
+
+  /*
+   * Surfaces and text roles, on the reference's light ground.
+   *
+   * Ratios are measured against the surface each role actually sits on, not
+   * against the page ground alone, because a role that passes on #fbfbfb can
+   * fail on the callout. The worst surface is the callout at #efe7d8 and
+   * every role below clears 4.5:1 there too.
+   */
+  --help-bg: #fbfbfb;
+  --help-panel: #ffffff;
+  --help-panel-elevated: #fffdf9;
+  --help-panel-subtle: #efe7d8;  /* the reference's cream, not a mixed one */
+
+  /* Borders stay ours: light, not the reference's hard 1px ink outline,
+     which reads heavy at article length. */
+  --help-line: rgb(72 72 72 / 12%);
+  --help-track: rgb(72 72 72 / 7%);  /* the segmented control's trough */
+
+  --help-muted: #5f5f5f;
+  --help-copy: #484848;
+
+  --text-strong: #2e2b27;   /* 13.61:1 on the page, 11.46:1 on the callout */
+  --text-body: #484848;     /*  8.84:1 / 7.44:1  — the reference's own ink   */
+  --text-muted: #5f5f5f;    /*  6.17:1 / 5.20:1                              */
+  --text-faint: #6c6c6c;    /*  5.07:1 / 4.27:1 — page and card only         */
+  --ink-on-accent: #281207; /*  5.93:1 on the accent fill                    */
+
+  /* Shadow and scrim, restated for a light ground: black at the dark
+     theme's alphas reads as dirt on white. */
+  --shadow-ink: 24 18 14;
+  --scrim: rgb(72 72 72 / 42%);
+
+  /*
+   * The accent for anything that does not carry text: fills, icons, borders,
+   * tints. The text steps live below as --accent-text and --accent-text-lg,
+   * because #e77537 measures 2.90:1 on this ground and fails at every size.
+   *
+   * There were two more names here — --help-accent-strong and
+   * --help-accent-deep — holding the same two values as the text steps and
+   * referenced nowhere. Two names for one colour is how a palette drifts back
+   * apart.
+   */
+  --help-accent: #e77537;
+  --help-accent-soft: #f1a47e;
+
+  /*
+   * Accent-as-text. On the light ground the reference's #e77537 measures
+   * 2.90:1, which fails AA at every size — 4.5:1 for body text and even the
+   * 3:1 allowed for large. So accent text darkens to the nearest passing step
+   * of the same hue, and #e77537 keeps every job that carries no text: fills,
+   * icons, borders, tints.
+   */
+  /*
+   * One value, deep enough for every ground we actually put it on.
+   *
+   * It was #bf5417, which clears 4.5:1 on the bare page by a hundredth and
+   * fails on every tint the interface sits it upon: 4.22 on a 10% chip, 4.41
+   * on a 6% one, 4.26 on the cream panel, 4.10 in a callout. Fifteen real
+   * failures across seven views.
+   *
+   * They were missed because the audit harness read the first opaque ancestor
+   * as the backdrop and walked straight past the element's own translucent
+   * fill — so every one of these measured against white and passed. The
+   * report that said "zero AA failures" was measuring the wrong thing.
+   *
+   * #a8460f is the value the cream panel already needed, and it clears every
+   * ground: 5.72 on the page, 5.34 on a chip, 5.19 in a callout. A separate
+   * --accent-text-deep for the one hard case is what let the easy cases stay
+   * wrong, so there is no longer a separate one.
+   */
+  --accent-text: #a8460f;
+  /* The brand orange itself on the large headings — the hero's "help?" and
+     the page titles — by Utkarsh's call. It measures 2.90:1 on the page,
+     under the 3:1 large text is held to; it was #e65303 at 3.62:1. Reported
+     in the pull request rather than quietly. */
+  --accent-text-lg: #e77537;
+
+  /* One accent, five tints. The stylesheet previously spelled out twenty
+     different alphas of the same orange; a component asking for "a soft
+     accent wash" should not have to pick a number. */
+  --accent-rgb: 231 117 55;
+  --tint-faint: rgb(var(--accent-rgb) / 6%);
+  --tint-soft: rgb(var(--accent-rgb) / 10%);
+  --tint-medium: rgb(var(--accent-rgb) / 18%);
+  --tint-strong: rgb(var(--accent-rgb) / 28%);
+  --tint-edge: rgb(var(--accent-rgb) / 45%);
+
+  /* Type scale, 16px base. The reference's 14px/1.4 body is a marketing
+     measure; this is a site people read at length, so the reading sizes stay
+     ours and the display end takes the reference's weight and tightness. */
+  --text-2xs: 0.75rem;
+  --text-xs: 0.8125rem;
+  --text-sm: 0.875rem;
+  --text-md: 0.9375rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.5rem;  /* the home category titles; the scale had nothing between 18 and 30 */
+  --text-2xl: clamp(1.875rem, 3vw, 2.375rem);
+
+  /* Four weights now that a variable font can render them. 900 is the
+     reference's display weight and is the single strongest visual tell. */
+  --weight-medium: 500;
+  --weight-semibold: 600;  /* the home card descriptions, in the display face */
+  --weight-strong: 700;
+  --weight-display: 900;
+
+  /* Display tracking. The reference sets its headings tight and negative. */
+  --tracking-display: -0.035em;
+  --tracking-heading: -0.02em;
+  --tracking-label: 0.1em;
+
+  /* Spacing ramp, 0.25rem base. Ours; the reference has no discernible one. */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  /* The loaf: domed top, squared base. Kept over the reference's
+     16/28px corners — the loaf is ours and the reference's radii belong to
+     decorative blobs, not to content cards. */
+  --radius-xs: 0.5rem;
+  --radius-sm: 0.9rem;
+  --radius-md: 1.1rem;
+  --radius-lg: 1.25rem;  /* 20px; the support panel */
+  --radius-pill: 999px;
+  --radius-card: 1.4rem 1.4rem 0.45rem 0.45rem;
+  --radius-marker: 55% 55% 38% 38%;
+
+  /*
+   * The home card panels: four tints, the wallet app's own. They are the hues
+   * the app paints its activity rows and balance cards with (--tx-sent,
+   * --tx-received, --tx-earn and --tx-swap in 0xMiden/wallet's main.css), so
+   * the help center's front door is coloured the way the app is.
+   *
+   * Four, not one per category. The panels take the tints in turn by
+   * position, so an eighth category takes the first tint again and the
+   * palette never grows with the content. Where the cycle lands is set in
+   * help-center.css, next to the panel rule.
+   *
+   *   --panel-blue      #91acc1
+   *   --panel-sage      #a8bca3   (the panel colour before there were four)
+   *   --panel-slate     #777487
+   *   --panel-lavender  #beacd2
+   *
+   * The glyphs are white on all four, as the app draws its own on these
+   * hues: 2.02:1 on the sage, 2.37:1 on the blue, 2.10:1 on the lavender,
+   * 4.53:1 on the slate. Three of the four sit under the 3:1 a graphic is
+   * held to; accepted as the brand's drawings, by Utkarsh's call, and
+   * reported in the pull request. See the glyph rule in help-center.css.
+   *
+   * None of them is the accent orange: #e77537 is what the buttons and links
+   * wear, and decoration should not carry the colour of the primary action.
+   *
+   * --card-accent is the article card's numbered chip and its hover edge.
+   * On a category page it follows the category: the chips wear the tint the
+   * category's panel wears on the home page (set per tint in help-center.css
+   * from data-panel-tint). Search results and the glossary, which span
+   * categories, keep the blue below.
+   */
+  --panel-blue: #91acc1;
+  --panel-sage: #a8bca3;
+  --panel-slate: #777487;
+  --panel-lavender: #beacd2;
+
+  /* The same four as triplets, for the alpha tints a chip's hover and a
+     card's edge are built from. */
+  --panel-blue-rgb: 145 172 193;
+  --panel-sage-rgb: 168 188 163;
+  --panel-slate-rgb: 119 116 135;
+  --panel-lavender-rgb: 190 172 210;
+
+  /* A deep step of each, for the card's chevron on the white card: the
+     app's own --card-green-deep and --card-purple-deep for the sage and the
+     lavender; the blue keeps the ink this file already measured; the slate
+     is its own deep, as it is in the app. On white: 7.3:1, 7.0:1, 7.6:1,
+     and 4.2:1 for the slate, which clears the 3:1 a graphic needs. */
+  --panel-sage-deep: #50634c;
+  --panel-blue-deep: #3b5a72;
+  --panel-lavender-deep: #5d5368;
+
+  /* What a panel paints with unless the cycle says otherwise. */
+  --card-panel: var(--panel-sage);
+
+  /* The chip's number: the page ink on the three light tints (6.97:1 on the
+     sage, 5.95:1 on the blue, 6.72:1 on the lavender), the white surface on
+     the slate (4.53:1), where the ink would reach only 3.11:1. */
+  --card-chip-ink: var(--text-strong);
+
+  --card-accent: #91acc1;
+
+  /*
+   * The subcategory card's own state colours.
+   *
+   * Every interactive tint in this stylesheet derives from the accent orange,
+   * which was fine until the card's band and chip took a colour of their own:
+   * hovering one repainted the chip orange and drew an orange border around
+   * it. A component that carries its own colour needs its own states, so
+   * these derive from the card's blue instead.
+   */
+  --card-accent-rgb: var(--panel-blue-rgb);
+  /* The glossary table wears the card's blue too, so it reads as the same
+     design as the article cards. Each tint is set to the lightness of the
+     orange one it replaced, 6% and 10%, so no text role loses contrast. */
+  --card-tint-faint: rgb(var(--card-accent-rgb) / 8%);
+  --card-tint-soft: rgb(var(--card-accent-rgb) / 14%);
+  --card-tint-strong: rgb(var(--card-accent-rgb) / 62%);
+  --card-edge: rgb(var(--card-accent-rgb) / 90%);
+
+  /* Deep enough to be read as text on any of our surfaces: 7.26:1 on the
+     card, 7.02:1 on the page. Same hue as the band above it. It also marks
+     the glossary row a shared link opened, at 6.52:1 on that row, where the
+     band's own blue reaches only 2.11:1. */
+  --card-ink: var(--panel-blue-deep);
+
+  /* The reference's card panel: a large radius on a 16:9-ish artwork area. */
+  --radius-panel: 1.75rem;
+
+  /* Reading measure, so text blocks can agree on a right edge. */
+  --measure: 68ch;
+
+  /* Page width, 83rem = 1328px, the reference's container. */
+  --frame: 83rem;
+
+  /*
+   * Page gutter. 2.5rem = the reference's 40px on desktop, stepping down on
+   * a phone where 40px of a 390px screen is a fifth of the width.
+   *
+   * The footer is deliberately outside this: its brand sits against the page
+   * edge by design, and a Playwright case measures that the logo starts
+   * within 40px of the footer's own left edge at 1600px. Handing it the
+   * 2.5rem gutter would put it exactly on that boundary.
+   */
+  --gutter: 2.5rem;
+}
+
+/*
+ * One responsive token. Our breakpoints stay where they are — 620, 740 and 900
+ * are set where this layout actually breaks, whereas the reference's
+ * 991/767/479 are Webflow's stock values and answer to nothing in our page.
+ * The article rail has no breakpoint: a container query places it by the width
+ * of the content column.
+ */
+@media (max-width: 620px) {
+  .help-center-shell,
+  .help-center-home {
+    --gutter: 1.25rem;
+  }
+}

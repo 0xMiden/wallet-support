@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+#
+# Runs the checks that would otherwise only be run by hand. Everything here is
+# local and offline: tsc and vitest come from node_modules, and nothing contacts
+# a network or an external service.
+#
+# Enable once per clone (see README):
+#   git config core.hooksPath .githooks
+#
+# Skip a single commit with `git commit --no-verify`.
+
+set -euo pipefail
+
+cd "$(git rev-parse --show-toplevel)"
+
+# Skip only when everything staged is a doc or a non-shipping asset. The
+# decision lives in skippable.sh so the test suite can exercise it directly;
+# see the comment there for why it is a denylist rather than a list of
+# extensions that matter.
+staged="$(git diff --cached --name-only --diff-filter=ACMR)"
+
+if [ -n "$staged" ] && bash "$(dirname "$0")/skippable.sh" $staged; then
+  echo "pre-commit: skipping checks — every staged path is a doc or a non-shipping asset:"
+  printf '%s\n' "$staged" | sed 's/^/  /'
+  exit 0
+fi
+
+if [ ! -x node_modules/.bin/tsc ] || [ ! -x node_modules/.bin/vitest ]; then
+  echo "pre-commit: node_modules is missing or incomplete. Run 'yarn install' first." >&2
+  exit 1
+fi
+
+echo "pre-commit: typecheck"
+yarn typecheck
+
+echo "pre-commit: tests"
+# --no-file-parallelism is deliberate: this project's suite is small and pure, and
+# an unbounded worker pool is the failure mode this host has been bitten by.
+NODE_OPTIONS=--max-old-space-size=1536 ./node_modules/.bin/vitest run --no-file-parallelism
+
+echo "pre-commit: ok"
