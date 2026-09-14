@@ -29,7 +29,11 @@
 @font-face {
   font-family: 'Nunito';
   font-style: normal;
-  font-weight: 600 900;
+  /* 500 joined 600–900 when the sidebar moved to the display face and kept
+     its medium links: the file carries the whole axis, and a request outside
+     the declared range is clamped to its nearest end, so 500 had to be let
+     in to render as 500. */
+  font-weight: 500 900;
   font-display: swap;
   src: url('./assets/fonts/nunito-latin-var.woff2') format('woff2');
 }
@@ -67,6 +71,7 @@
   /* Borders stay ours: light, not the reference's hard 1px ink outline,
      which reads heavy at article length. */
   --help-line: rgb(72 72 72 / 12%);
+  --help-track: rgb(72 72 72 / 7%);  /* the segmented control's trough */
 
   --help-muted: #5f5f5f;
   --help-copy: #484848;
@@ -121,7 +126,11 @@
    * wrong, so there is no longer a separate one.
    */
   --accent-text: #a8460f;
-  --accent-text-lg: #e65303;  /* 3.62:1, headings 24px and over only */
+  /* The brand orange itself on the large headings — the hero's "help?" and
+     the page titles — by Utkarsh's call. It measures 2.90:1 on the page,
+     under the 3:1 large text is held to; it was #e65303 at 3.62:1. Reported
+     in the pull request rather than quietly. */
+  --accent-text-lg: #e77537;
 
   /* One accent, five tints. The stylesheet previously spelled out twenty
      different alphas of the same orange; a component asking for "a soft
@@ -142,11 +151,13 @@
   --text-md: 0.9375rem;
   --text-base: 1rem;
   --text-lg: 1.125rem;
+  --text-xl: 1.5rem;  /* the home category titles; the scale had nothing between 18 and 30 */
   --text-2xl: clamp(1.875rem, 3vw, 2.375rem);
 
   /* Four weights now that a variable font can render them. 900 is the
      reference's display weight and is the single strongest visual tell. */
   --weight-medium: 500;
+  --weight-semibold: 600;  /* the home card descriptions, in the display face */
   --weight-strong: 700;
   --weight-display: 900;
 
@@ -165,38 +176,77 @@
   --space-7: 3rem;
   --space-8: 4rem;
 
-  /* One loaf, two scales: domed top, squared base. Kept over the reference's
+  /* The loaf: domed top, squared base. Kept over the reference's
      16/28px corners — the loaf is ours and the reference's radii belong to
      decorative blobs, not to content cards. */
   --radius-xs: 0.5rem;
   --radius-sm: 0.9rem;
   --radius-md: 1.1rem;
+  --radius-lg: 1.25rem;  /* 20px; the support panel */
   --radius-pill: 999px;
-  --radius-loaf: 1.1rem 1.1rem 0.4rem 0.4rem;
   --radius-card: 1.4rem 1.4rem 0.45rem 0.45rem;
   --radius-marker: 55% 55% 38% 38%;
 
   /*
-   * Two card surfaces, a sage and a blue, both sampled from the reference's
-   * illustrated cards. Not one colour per category: five categories meant
-   * five colours, and a sixth category would have meant inventing a sixth. A
-   * palette that grows with the content is a palette that stops being a
-   * palette.
+   * The home card panels: four tints, the wallet app's own. They are the hues
+   * the app paints its activity rows and balance cards with (--tx-sent,
+   * --tx-received, --tx-earn and --tx-swap in 0xMiden/wallet's main.css), so
+   * the help center's front door is coloured the way the app is.
    *
-   *   --card-panel   the sage: the main category card's artwork panel
-   *   --card-accent  the blue: the subcategory card's band and numbered chip
+   * Four, not one per category. The panels take the tints in turn by
+   * position, so an eighth category takes the first tint again and the
+   * palette never grows with the content. Where the cycle lands is set in
+   * help-center.css, next to the panel rule.
    *
-   * Neither is the accent orange, for two reasons. Five saturated orange
-   * blocks would own the page. And #e77537 is what the buttons and links wear
-   * — decoration should not carry the same colour as the primary action, or
-   * neither reads as meaning anything. The ink glyph sits on the sage panel
-   * at 4.79:1.
+   *   --panel-blue      #91acc1
+   *   --panel-sage      #a8bca3   (the panel colour before there were four)
+   *   --panel-slate     #777487
+   *   --panel-lavender  #beacd2
    *
-   * The two are different colours on purpose: the main card and the
-   * subcategory card are different components and must not be mistaken for
-   * each other.
+   * The glyphs are white on all four, as the app draws its own on these
+   * hues: 2.02:1 on the sage, 2.37:1 on the blue, 2.10:1 on the lavender,
+   * 4.53:1 on the slate. Three of the four sit under the 3:1 a graphic is
+   * held to; accepted as the brand's drawings, by Utkarsh's call, and
+   * reported in the pull request. See the glyph rule in help-center.css.
+   *
+   * None of them is the accent orange: #e77537 is what the buttons and links
+   * wear, and decoration should not carry the colour of the primary action.
+   *
+   * --card-accent is the article card's numbered chip and its hover edge.
+   * On a category page it follows the category: the chips wear the tint the
+   * category's panel wears on the home page (set per tint in help-center.css
+   * from data-panel-tint). Search results and the glossary, which span
+   * categories, keep the blue below.
    */
-  --card-panel: #a8bca3;
+  --panel-blue: #91acc1;
+  --panel-sage: #a8bca3;
+  --panel-slate: #777487;
+  --panel-lavender: #beacd2;
+
+  /* The same four as triplets, for the alpha tints a chip's hover and a
+     card's edge are built from. */
+  --panel-blue-rgb: 145 172 193;
+  --panel-sage-rgb: 168 188 163;
+  --panel-slate-rgb: 119 116 135;
+  --panel-lavender-rgb: 190 172 210;
+
+  /* A deep step of each, for the card's chevron on the white card: the
+     app's own --card-green-deep and --card-purple-deep for the sage and the
+     lavender; the blue keeps the ink this file already measured; the slate
+     is its own deep, as it is in the app. On white: 7.3:1, 7.0:1, 7.6:1,
+     and 4.2:1 for the slate, which clears the 3:1 a graphic needs. */
+  --panel-sage-deep: #50634c;
+  --panel-blue-deep: #3b5a72;
+  --panel-lavender-deep: #5d5368;
+
+  /* What a panel paints with unless the cycle says otherwise. */
+  --card-panel: var(--panel-sage);
+
+  /* The chip's number: the page ink on the three light tints (6.97:1 on the
+     sage, 5.95:1 on the blue, 6.72:1 on the lavender), the white surface on
+     the slate (4.53:1), where the ink would reach only 3.11:1. */
+  --card-chip-ink: var(--text-strong);
+
   --card-accent: #91acc1;
 
   /*
@@ -208,7 +258,7 @@
    * it. A component that carries its own colour needs its own states, so
    * these derive from the card's blue instead.
    */
-  --card-accent-rgb: 145 172 193;
+  --card-accent-rgb: var(--panel-blue-rgb);
   /* The glossary table wears the card's blue too, so it reads as the same
      design as the article cards. Each tint is set to the lightness of the
      orange one it replaced, 6% and 10%, so no text role loses contrast. */
@@ -221,7 +271,7 @@
      card, 7.02:1 on the page. Same hue as the band above it. It also marks
      the glossary row a shared link opened, at 6.52:1 on that row, where the
      band's own blue reaches only 2.11:1. */
-  --card-ink: #3b5a72;
+  --card-ink: var(--panel-blue-deep);
 
   /* The reference's card panel: a large radius on a 16:9-ish artwork area. */
   --radius-panel: 1.75rem;

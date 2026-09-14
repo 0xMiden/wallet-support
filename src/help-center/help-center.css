@@ -96,47 +96,40 @@
 }
 
 /*
- * The lockup, set to the reference's own proportions.
+ * The lockup, as the brand ships it.
  *
- * Measured off the marketing hero: the mark stands 1.39x the wordmark's font
- * size, the gap between them is about a tenth of the mark's height, and the
- * wordmark is Nunito 900 in the page ink at display tracking. Those ratios are
- * what make a lockup recognisable — more than the mark's outline does — and
- * they are the part we can match exactly.
+ * One image carries the mark and the wordmark, so their proportions — the
+ * loaf's height against the letters, the gap between them — are the brand's
+ * own and never drift with a font stack or a rounding of the type scale. It
+ * is a 600x160 PNG, five times the header's 2rem, so it stays crisp on a 3x
+ * screen; the grain in the slice is part of the artwork, not compression.
  *
- * The mark is the brand's own loaf, the two-slice lockup the marketing site
- * uses. It ships as a 158x152 RGBA PNG because that is the only form it
- * exists in; at a 32px header that is 1.6x what a 3x screen asks for, so it
- * resolves cleanly. It would not survive being scaled up to a hero, which is
- * the one place not to use it.
+ * The wordmark reads "Bread". The text after it says "Bread Wallet" for
+ * assistive technology and is visually hidden, so the link keeps its name
+ * and the product-name guard keeps its coverage.
  *
- * Width is set and height left to follow, because the loaf is 158x152 and
- * forcing it square would squash it.
+ * Height is set and width left to follow, so one value moves the whole
+ * lockup.
  */
 .help-center-brand {
   --mark: 2rem;
   width: fit-content;
-  font-family: var(--font-display);
   display: inline-flex;
   align-items: center;
-  gap: calc(var(--mark) * 0.11);
-  color: var(--text-body);
-  font-size: calc(var(--mark) / 1.39);
-  font-weight: var(--weight-display);
-  letter-spacing: var(--tracking-display);
 }
 
 .help-center-brand img {
-  width: var(--mark);
-  height: auto;
+  height: var(--mark);
+  width: auto;
 }
 
-.help-center-brand span {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-}
 
+/* The sidebar is set in the display face at the weights it already had:
+   700 on the group headings and the glossary, 500 on the subcategory links. */
+.help-center-navigation,
+.help-center-sidebar-utility {
+  font-family: var(--font-display);
+}
 
 .help-center-navigation {
   margin-top: 3rem;
@@ -380,6 +373,7 @@
 }
 
 .help-center-search {
+  font-family: var(--font-display);
   width: min(100%, 34rem);
   max-width: 34rem;
   flex: 1 1 26rem;
@@ -459,17 +453,25 @@
   color: var(--text-faint);
 }
 
+/*
+ * The primary action, in the wallet app's own shape: a full pill set in the
+ * display face at the strong weight, which is what every primary button in
+ * the app wears (src/components/Button.tsx in 0xMiden/wallet: rounded-full,
+ * font-heading, font-bold). The ink stays dark rather than the app's white,
+ * because white on the accent measures 3.02:1 and fails AA at this size.
+ */
 .help-center-contact-button {
   min-height: 3.35rem;
-  padding: 0.75rem 1.15rem;
+  padding: 0.75rem 1.35rem;
   border: 1px solid var(--tint-medium);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-pill);
   color: var(--ink-on-accent) !important;
   background: var(--help-accent);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
+  font-family: var(--font-display);
   font-size: var(--text-md);
   font-weight: var(--weight-strong);
   white-space: nowrap;
@@ -718,26 +720,34 @@
   }
 }
 
+/*
+ * The platform switch, in the wallet app's own segmented-control clothes
+ * (SegmentedActionBar in 0xMiden/wallet): a quiet neutral trough, and the
+ * selected segment a white pill with a hairline shadow, set in the display
+ * face at the strong weight. The accent stays out of it — it belongs to the
+ * primary action, and a filter is not one.
+ */
 .help-center-platform-tabs {
   width: fit-content;
   margin-top: var(--space-6);
-  padding: 0.35rem;
-  border: 1px solid var(--tint-strong);
+  padding: 0.25rem;
   border-radius: var(--radius-pill);
-  background: var(--tint-faint);
+  background: var(--help-track);
   display: inline-flex;
-  gap: 0.35rem;
+  gap: 0.25rem;
 }
 
 .help-center-platform-tabs button {
-  min-height: 3.2rem;
-  padding: 0.7rem 1.65rem;
+  min-height: 2.6rem;
+  padding: 0.55rem 1.4rem;
   border-radius: var(--radius-pill);
+  color: var(--text-muted);
   background: transparent;
   cursor: pointer;
-  font-size: var(--text-md);
-  font-weight: var(--weight-medium);
-  transition: color 160ms ease, background 160ms ease;
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-strong);
+  transition: color 160ms ease, background 160ms ease, box-shadow 160ms ease;
 }
 
 /*
@@ -748,13 +758,12 @@
  */
 .help-center-platform-tabs button:hover {
   color: var(--text-strong);
-  background: var(--tint-strong);
 }
 
 .help-center-platform-tabs button[aria-selected='true'] {
-  color: var(--ink-on-accent);
-  background: var(--help-accent);
-  box-shadow: 0 0.35rem 1.2rem rgb(var(--shadow-ink) / 14%);
+  color: var(--text-strong);
+  background: var(--help-panel);
+  box-shadow: 0 1px 2px rgb(var(--shadow-ink) / 8%);
 }
 
 .help-center-content-panel {
@@ -797,10 +806,11 @@
  * card. The outer panel keeps its spacing but loses its fill, border and
  * shadow, so the cards are the only surface and read as discrete items.
  *
- * The shape is Bread's: a tin loaf, domed at the top and squared at the base,
- * with a warm crust along the top edge. Neither reference is copied — one uses
- * a uniform rounded rectangle, the other a clipped corner this project has
- * already removed once as a borrowed motif.
+ * The shape is Bread's: a tin loaf, domed at the top and squared at the base.
+ * It had a crust along the top edge in the card's blue; that went, so the
+ * numbered chip is the only blue on the card. Neither reference is copied —
+ * one uses a uniform rounded rectangle, the other a clipped corner this
+ * project has already removed once as a borrowed motif.
  *
  * A flex column with the chevron on margin-top:auto pins it to the card's
  * bottom edge, so every chevron in a row lands at the same height however long
@@ -848,22 +858,12 @@
     transform 160ms ease;
 }
 
-/* The crust. */
-.help-center-card::before {
-  position: absolute;
-  inset: 0 0 auto;
-  height: 0.25rem;
-  background: var(--card-accent);
-  content: '';
-  transition: opacity 160ms ease;
-}
-
 .help-center-card-index {
   width: 2rem;
   height: 2.05rem;
   border: 1px solid var(--help-line);
   border-radius: var(--radius-marker);
-  color: var(--text-strong);
+  color: var(--card-chip-ink);
   background: var(--card-accent);
   display: grid;
   place-items: center;
@@ -905,6 +905,8 @@
 }
 
 .help-center-card-excerpt {
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
   margin: 0;
   color: var(--text-muted);
   font-size: var(--text-md);
@@ -927,7 +929,7 @@
 .help-center-card:hover,
 .help-center-card:focus-within {
   border-color: var(--card-edge);
-  background: var(--help-panel-elevated);
+  background: var(--card-tint-faint);
   transform: translateY(-2px);
 }
 
@@ -1108,7 +1110,9 @@
   max-width: var(--measure);
   overflow-wrap: anywhere;
   color: var(--text-body);
+  font-family: var(--font-display);
   font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
   line-height: 1.7;
 }
 
@@ -1138,7 +1142,7 @@
   scroll-margin-top: var(--space-6);
   color: var(--text-strong);
   font-size: var(--text-lg);
-  font-weight: var(--weight-medium);
+  font-weight: var(--weight-strong);
   line-height: 1.3;
   letter-spacing: -0.01em;
 }
@@ -1155,7 +1159,9 @@
 
 .help-center-article-body strong {
   color: var(--help-copy);
-  font-weight: var(--weight-medium);
+  /* Strong, not medium: the body is semibold now, so a label lighter than
+     the prose around it would read as de-emphasis. */
+  font-weight: var(--weight-strong);
 }
 
 .help-center-article-body a {
@@ -1222,29 +1228,20 @@
 }
 
 /*
- * The callout carries the scam warnings, and it was carrying them quietly.
- * Its fill was the 6% tint, which renders twenty-one channel steps from the
- * page — the same invisible value the sidebar hovers had — and its rule was
- * 45% accent, a pale peach rather than a bar. The block read as a slightly
- * warm paragraph.
- *
- * The rule is now the accent at full strength, and the fill steps up to where
- * it can be seen. The bar does most of the work deliberately: 18% orange
- * behind five lines of warning is a heavy thing to read through, where a
- * strong edge and a light wash say the same and stay legible. Body text on
- * the new fill measures 8.28:1.
- *
- * The other small faint surfaces — the back button, the sequence index — keep
- * theirs. They are chips a couple of centimetres across with their own
- * borders, where the fill is a hint and the border is the shape; this is a
- * block, where the fill is most of what you see.
+ * The callout carries the scam warnings. It wore an accent bar down its left
+ * edge and an orange wash; it now wears the same clothes as the home support
+ * panel — the white surface, the 20px corner, a hairline shadow — so it
+ * lifts off the page as a card rather than colouring it. The warning itself
+ * is in the text, which opens with its own mark; the block's job is to set
+ * it apart, and a raised white card on the off-white ground does that
+ * without a second colour. Body text on the white measures 9.15:1.
  */
 .help-center-article-body blockquote {
   margin: 1.2rem 0 0;
-  padding: 0.85rem 1.05rem;
-  border-left: 3px solid var(--help-accent);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  background: var(--tint-soft);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--help-panel);
+  box-shadow: 0 1px 2px rgb(var(--shadow-ink) / 8%);
 }
 
 .help-center-article-body blockquote > :first-child {
@@ -1347,11 +1344,12 @@
 }
 
 .help-center-sequence-card {
-  min-height: 4.25rem;
-  padding: 0.7rem 0.9rem;
+  min-height: 5rem;
+  padding: 0.95rem 1.1rem;
   border: 1px solid var(--tint-medium);
-  border-radius: var(--radius-loaf);
+  border-radius: var(--radius-lg);
   background: var(--help-panel);
+  font-family: var(--font-display);
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
@@ -1574,7 +1572,7 @@
 }
 
 @media (max-width: 620px) {
-  /* One value moves the whole lockup: the wordmark is derived from it. */
+  /* One value moves the whole lockup: mark and wordmark are one image. */
   .help-center-brand {
     --mark: 1.7rem;
   }
@@ -1592,14 +1590,12 @@
 
   .help-center-platform-tabs {
     width: 100%;
-    padding: 0.5rem;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .help-center-platform-tabs button {
-    min-height: 3.6rem;
-    font-size: var(--text-sm);
+    min-height: 3rem;
   }
 
   .help-center-content-panel {
@@ -1699,11 +1695,6 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-}
-
-/* The brand is the one thing in the header that must never wrap. */
-.help-home-header .help-center-brand span {
-  white-space: nowrap;
 }
 
 .help-home-nav a {
@@ -1818,6 +1809,7 @@
 }
 
 .help-home-search {
+  font-family: var(--font-display);
   flex: 1;
   min-width: 0;
   display: flex;
@@ -1893,6 +1885,7 @@
 }
 
 .help-home-popular {
+  font-family: var(--font-display);
   margin: var(--space-5) 0 0;
   display: flex;
   flex-wrap: wrap;
@@ -2023,6 +2016,66 @@
 }
 
 /*
+ * The tints. Sage, blue, lavender, slate, then round again, set by position
+ * (panelTint.ts) rather than by category so the data carries no colour and
+ * an eighth category needs no decision. At three columns no row repeats a
+ * tint and no column stacks one; at two it still alternates.
+ *
+ * The same attribute sits on the category view, so a category's numbered
+ * chips and hover edges wear the colour its panel wears here: --card-accent
+ * and its triplet follow the tint, and the tints and edge follow them.
+ */
+/*
+ * The values derived from the triplet — the tints, the edge — resolve where
+ * they are declared, not where they are used, so declaring the triplet here
+ * would leave them at the root's blue. They are declared again on the same
+ * element as the triplet, and follow it.
+ */
+[data-panel-tint] {
+  --card-tint-faint: rgb(var(--card-accent-rgb) / 8%);
+  --card-tint-soft: rgb(var(--card-accent-rgb) / 14%);
+  --card-tint-strong: rgb(var(--card-accent-rgb) / 62%);
+  --card-edge: rgb(var(--card-accent-rgb) / 90%);
+}
+
+[data-panel-tint='sage'] {
+  --card-panel: var(--panel-sage);
+  --card-accent: var(--panel-sage);
+  --card-accent-rgb: var(--panel-sage-rgb);
+  --card-ink: var(--panel-sage-deep);
+}
+
+[data-panel-tint='blue'] {
+  --card-panel: var(--panel-blue);
+  --card-accent: var(--panel-blue);
+  --card-accent-rgb: var(--panel-blue-rgb);
+  --card-ink: var(--panel-blue-deep);
+}
+
+[data-panel-tint='lavender'] {
+  --card-panel: var(--panel-lavender);
+  --card-accent: var(--panel-lavender);
+  --card-accent-rgb: var(--panel-lavender-rgb);
+  --card-ink: var(--panel-lavender-deep);
+}
+
+/* The dark one: its chip takes the white surface, and stays solid on hover
+   because white on the lighter hover tint would not hold. It is its own
+   deep for the chevron. */
+[data-panel-tint='slate'] {
+  --card-panel: var(--panel-slate);
+  --card-accent: var(--panel-slate);
+  --card-accent-rgb: var(--panel-slate-rgb);
+  --card-chip-ink: var(--help-panel);
+  --card-ink: var(--panel-slate);
+}
+
+[data-panel-tint='slate'] .help-center-card:hover .help-center-card-index,
+[data-panel-tint='slate'] .help-center-card:focus-within .help-center-card-index {
+  background: var(--card-accent);
+}
+
+/*
  * The artwork slot. A glyph fills it today; an <img> or an inline illustration
  * dropped in here inherits the sizing and needs no other change.
  */
@@ -2052,39 +2105,69 @@
 
 /*
  * The glyph is standing in for an illustration, so it is drawn at the size an
- * illustration would be rather than as an icon. Ink, not accent: it sits on
- * five different category colours and has to hold on all of them.
+ * illustration would be rather than as an icon. White on every panel, as the
+ * app draws its own: the stroke weight travels with each drawing's geometry
+ * (set inline in CategoryGlyph), solid parts fill with the same white, and
+ * filled parts fill and keep their stroke.
+ *
+ * White measures 2.02:1 on the sage, 2.37:1 on the blue, 2.10:1 on the
+ * lavender and 4.53:1 on the slate — three of the four under the 3:1 a
+ * graphic is held to. Accepted as the brand's own drawings, by Utkarsh's
+ * call, and reported in the pull request rather than quietly.
  */
 .help-home-card-glyph {
   width: 100%;
   height: auto;
   fill: none;
-  stroke: var(--text-strong);
+  stroke: var(--help-panel);
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-width: 1.4;
-  opacity: 0.82;
+}
+
+.help-home-card-glyph-solid {
+  fill: var(--help-panel);
+  stroke: none;
+}
+
+.help-home-card-glyph-filled {
+  fill: var(--help-panel);
 }
 
 .help-home-card-title {
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   font-family: var(--font-display);
-  font-weight: var(--weight-strong);
-  letter-spacing: var(--tracking-label);
+  /* The display weight, set solid: these are the page's five headings, not
+     labels, so they carry the hero's weight and none of the label tracking. */
+  font-weight: var(--weight-display);
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
 .help-home-card-description {
   max-width: 34ch;
+  /* A step closer to its title than the card's gap: the two are one thought,
+     the count below is another. */
+  margin-top: calc(-1 * var(--space-1));
   color: var(--text-muted);
+  font-family: var(--font-display);
   font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
   line-height: 1.5;
 }
 
+/*
+ * The count wears the popular-search chip: same pill, same cream, same
+ * hairline, so the page has one small pill rather than two. Muted ink rather
+ * than faint, because faint reaches only 4.27:1 on the cream; muted clears
+ * it at 5.20:1.
+ */
 .help-home-card-count {
   margin-top: auto;
-  padding-top: var(--space-1);
-  color: var(--text-faint);
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--help-line);
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+  background: var(--help-panel-subtle);
   font-size: var(--text-xs);
   font-weight: var(--weight-medium);
   letter-spacing: var(--tracking-label);
@@ -2095,9 +2178,8 @@
 .help-home-support {
   margin: 0 0 var(--space-8);
   padding: var(--space-6);
-  border: 1px solid var(--tint-strong);
-  border-radius: var(--radius-card);
-  background: var(--help-panel-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--help-panel);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -2215,6 +2297,7 @@
 }
 
 .help-center-footer-links a {
+  font-family: var(--font-display);
   color: var(--text-muted) !important;
   font-size: var(--text-sm);
   transition: color 160ms ease;
