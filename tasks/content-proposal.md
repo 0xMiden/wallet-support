@@ -221,6 +221,6 @@ No screenshots: Can I recover stolen assets?; How do I keep my wallet secure?; W
 ### Everything else
 No screenshots for Sending/receiving/claiming, Activity, Privacy, Guardian (all concept articles). Optional later: one screenshot of the Activity view showing a "Consuming"/"Sending" status, attached to the two "stuck" Troubleshooting articles — worth it once real captures are being made.
 
-**Totals:** 32 positions (10 from Notion, 22 new). Extension 20, Mobile 12. Every one starts as the SAMPLE placeholder.
+**Totals:** 32 positions (10 from Notion, 22 new). Extension 18, Mobile 14. Every one starts as the SAMPLE placeholder.
 
 Capture guidance for real screenshots: never show a real recovery phrase, password, or full address — use a throwaway test wallet; crop to the relevant control; same device/browser theme across a platform so the set looks consistent.

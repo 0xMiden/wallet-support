@@ -694,9 +694,6 @@ Bread Wallet 1.16.0, on both platforms. `tasks/screenshot-capture-sheet.md` has 
 what each screen must show and the labels to read for the seven conflicts under Verify against wallet
 build.
 
-§7's totals line reads Extension 20, Mobile 12, but its tables list 18 Extension and 14 Mobile. This list
-follows the tables until Ivan settles which is right.
-
 ### Extension, 18
 
 - [ ] E01 · How to install Bread Wallet · step 2 · Chrome Web Store listing with "Add to Chrome"

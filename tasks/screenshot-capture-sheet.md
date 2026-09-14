@@ -4,10 +4,6 @@ For Ivan's capture run against the store release, **Bread Wallet 1.16.0**, on bo
 are §7 of `tasks/content-proposal.md`; tick them off in the screenshot capture list in
 `tasks/todo.md`.
 
-> **Settle before capturing.** §7's tables list **18 Extension and 14 Mobile** positions; its totals line
-> says Extension 20, Mobile 12. This sheet follows the tables, so if positions are missing from them, they
-> are missing here too.
-
 ## Before you start
 
 - Confirm **Settings** shows **Version 1.16.0** in the extension and on the phone (Q1 at the end).
