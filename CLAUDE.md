@@ -136,6 +136,9 @@ Interaction must serve a purpose. Do not add features simply to make the site lo
 
 Every change goes through GitHub: a branch for the change, pushed, and a pull request into `main`.
 Nothing is committed to `main` locally or pushed to it directly, and no work stays local-only.
+The `main` ruleset requires the `verify` check and, by decision while the repository has one
+maintainer, no approving review; the README's On GitHub section has the reasoning. Do not add a
+review requirement until there is a second reviewer.
 
 A preview is deployed from the pull request's branch before it merges, so the live page is reviewed
 first, and its deploy record is committed to the same pull request.
