@@ -1092,3 +1092,42 @@ unchanged.
 - The first checklist run passed 7 of 10, on two wrong expectations: 40 articles in the heading, which
   counts published articles only, and an article title read the moment the hash moved, before the page
   had rendered. Corrected, it passed 10 of 10; the title settled 55ms after the hash.
+
+## Chrome Web Store link — preview deployment
+
+Commit `8cce73e` on `fix-chrome-store-link`, pull request #8, deployed on 2026-09-11 for review before it
+merges.
+
+### Before deploying
+
+- `yarn verify` passed on `8cce73e` in the pre-push hook: typecheck, 237 unit tests, 53 end-to-end tests,
+  build.
+- Built with `PLACEHOLDERS_OK=1`, as before, and deployed with the cached wrangler 4.130.0 binary.
+- Drift check was clean. The alias served `index-COfNRdII.js` and `index-Cyg1-008.css` with the sha256
+  recorded for `1d8a5a2d` above, and its `index.html` matched the build of `ae76cb0`, which differs from
+  `main` only under `tasks/`. Nobody deployed underneath this work.
+
+### Deployment
+
+- Preview deployment ID: `de6ee6d1-4283-44d2-93a7-a1ccf53b1587`.
+- Environment `Preview`, branch `help-center-shell`, source commit `8cce73e`. Branch and commit were passed
+  explicitly; production has still never been deployed.
+- Atomic deployment: `https://de6ee6d1.bread-wallet-help-center-preview.pages.dev`.
+- Stable alias: HTTP 200 with `X-Robots-Tag: noindex`.
+
+### New drift-check baseline
+
+`index-DDyvGMGX.js` and `index-Cyg1-008.css`, byte-identical on the alias, on the atomic URL, and in the
+local build. Only the script changed; the stylesheet is the one `1d8a5a2d` served.
+
+- `index-DDyvGMGX.js` sha256 `bee33716e1b5b1c4c6957721fe321c89fa1891d8471e4ae6e347f86edb08d961`
+- `index-Cyg1-008.css` sha256 `63dde1addd7d8a0a0855e9e97401ace23c049e914857cda102e3e79327f4048c`
+
+### Measured on the live alias
+
+- How to install Bread Wallet, Extension: both Chrome Web Store links in the body go to the live listing.
+- How to install Bread Wallet, Mobile: its one Chrome Web Store link goes to the live listing.
+- Home footer: one Chrome Web Store download, to the live listing.
+- No link on either page carries the old ID, and the served `index-DDyvGMGX.js` holds it 0 times, against
+  4 for the live listing's URL.
+- 4 of 4 checks passed on the first run.
