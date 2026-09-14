@@ -1,0 +1,13 @@
+# Security headers for every response, served by Cloudflare Pages and mirrored
+# by `vite preview` (see vite.config.ts) so the e2e suite runs under them.
+#
+# The policy allows only what the built site loads: its own module script,
+# stylesheet, fonts and images, plus the four SVG data URIs the stylesheet
+# carries. Links to other sites are navigations, which a CSP does not govern.
+# No X-Robots-Tag here: Cloudflare adds noindex to preview deployments itself,
+# and a line here would follow the site to production.
+/*
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; object-src 'none'
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

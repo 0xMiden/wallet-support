@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+#
+# The slow half of the split. Pre-commit keeps commits instant with typecheck
+# and unit tests; this runs everything, including Playwright, so nothing leaves
+# the machine on a red end-to-end suite.
+#
+# Enabled by the same one-off as pre-commit (see README):
+#   git config core.hooksPath .githooks
+#
+# Skip a single push with `git push --no-verify`.
+#
+# Local and offline like the rest: Playwright drives the cached chromium and
+# `yarn e2e` starts its own preview server against a fresh build.
+
+set -euo pipefail
+
+cd "$(git rev-parse --show-toplevel)"
+
+echo "pre-push: verify (typecheck, unit, e2e, build)"
+yarn verify
+echo "pre-push: ok"
