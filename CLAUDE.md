@@ -10,7 +10,9 @@ Do not write to MEMORY.md or memory memos unless Ivan explicitly asks in the cur
 
 Binding on every change: edits, new articles, new pages, new components and design changes. It is
 not advisory. The values live in `src/help-center/tokens.css`; the measurements and decisions behind
-them are in `tasks/design-audit.md` and `tasks/brand-audit-2026-09-09.md`.
+them are in `tasks/design-audit.md` and `tasks/brand-audit-2026-09-09.md`. Pull request #9 (merged
+2026-09-14) is the source of truth for the design and supersedes both audits where they differ; do
+not revert its choices.
 
 - **Tokens only.** Colours, font sizes, weights, radii and spacing come from the custom properties in
   `tokens.css`. Component rules in `src/help-center/help-center.css` never hardcode a value, new
@@ -18,20 +20,32 @@ them are in `tasks/design-audit.md` and `tasks/brand-audit-2026-09-09.md`.
   reuse a value already in the stylesheet. `src/styles.css` is the host page and only repeats token
   values it cannot reach.
 - **Type.** Nunito for display and Inter for body, both self-hosted in `src/help-center/assets/fonts/`.
-  The weights in use are 400, 500, 700 and 900. No new family or weight without approval.
+  Since #9, Nunito also sets the article bodies and excerpts, the home card descriptions, the
+  sidebar, the search fields and popular chips, the platform switch, the previous/next cards, the
+  footer links and Contact Support; Inter is the base face for everything else. The weights in use
+  are 400, 500, 600, 700 and 900. No new family or weight without approval.
 - **Colour.** The light ground is `--help-bg` (`#fbfbfb`). The Bread accent `--help-accent`
-  (`#e77537`) is for fills, icons and borders, never text. Accent text uses the deeper
-  `--accent-text` (`#a8460f`); `--accent-text-lg` (`#e65303`) is for headings 24px and over only.
-  Hues come from the reference. When a pairing fails WCAG AA at its real size and weight, darken
-  within the same hue rather than switching to a different colour.
+  (`#e77537`) is for fills, icons and borders; as text it appears only through `--accent-text-lg`.
+  Accent text uses the deeper `--accent-text` (`#a8460f`). `--accent-text-lg` is the brand orange
+  itself (`#e77537`, since #9) and is for the large headings only: the hero's "help?" and the page
+  titles. Hues come from the reference, except the home panel tints, which are the wallet app's
+  activity hues. When a new pairing fails WCAG AA at its real size and weight, darken within the
+  same hue rather than switching to a different colour.
 - **Accessibility floor.** Every text pairing meets WCAG AA against its real backdrop, translucent
-  fills included. Every interactive element gets the 3px accent focus ring; the search field shows
-  its focus on the pill around it. Decorative elements are `aria-hidden`. Reduced motion is
-  respected: new motion gets a reset in the `prefers-reduced-motion` rules.
-- **Components.** Home category cards follow the reference pattern: a pastel `--card-panel` panel
-  with `--radius-panel`, the uppercase title below it, and a centred description. Buttons and links
-  reuse the shipped treatments and their states: rest, hover, focus-visible, and current or selected
-  where that applies. The article body stays capped at `--measure`.
+  fills included. Two exceptions came with #9 as the brand's own choices and stay as they are:
+  `--accent-text-lg` measures 2.90:1 on the page, under the 3:1 for large text, and the white
+  category glyphs measure 2.02:1 on the sage panel, 2.37:1 on the blue and 2.10:1 on the lavender,
+  under the 3:1 for graphics. Every interactive element gets the 3px accent focus ring; the search
+  field shows its focus on the pill around it. Decorative elements are `aria-hidden`. Reduced motion
+  is respected: new motion gets a reset in the `prefers-reduced-motion` rules.
+- **Components.** Home category cards follow the reference pattern as #9 set it: a `--radius-panel`
+  panel tinted in turn with the wallet app's four card hues (`--panel-sage`, `--panel-blue`,
+  `--panel-lavender`, `--panel-slate`, ordered in `panelTint.ts`) carrying a white category glyph,
+  the uppercase title below it at `--text-xl` and `--weight-display`, a centred description, and the
+  article count in a pill. A category's page wears the same tint on its chips, hover edge and
+  chevron. Buttons and links reuse the shipped treatments and their states: rest, hover,
+  focus-visible, and current or selected where that applies. The article body stays capped at
+  `--measure`.
 - **Decorative objects.** None ship today. If one is added, it goes in the home hero only, never on
   any other page, and never overlaps text at any width.
 - **Layout.** Use `--frame` and `--gutter` as shipped, so the home and category views keep matching.
