@@ -22,10 +22,10 @@
     "@types/react-dom": "18.0.6",
     "@vitejs/plugin-react": "6.1.1",
     "typescript": "5.9.3",
-    "vite": "8.0.8",
+    "vite": "8.0.16",
     "vitest": "4.1.11"
   },
   "resolutions": {
-    "vite": "8.0.8"
+    "vite": "8.0.16"
   }
 }
