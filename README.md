@@ -92,6 +92,13 @@ should call: **nothing should be deployed that has not had `yarn verify` pass**.
 
 Skip a single push with `git push --no-verify`.
 
+### On GitHub
+
+`.github/workflows/verify.yml` runs the same `yarn verify` on every pull request and every push to
+`main`, after `yarn install --frozen-lockfile`, which fails when `yarn.lock` does not match
+`package.json`. The hooks can be skipped or never enabled; the workflow cannot, so it is the check a
+merge waits for.
+
 ## Portability
 
 The Help Center is isolated in `src/help-center/`:
