@@ -1178,3 +1178,39 @@ local build. Only the script changed; the stylesheet is the one `1d8a5a2d` serve
 - No link on either page carries the old ID, and the served `index-DDyvGMGX.js` holds it 0 times, against
   4 for the live listing's URL.
 - 4 of 4 checks passed on the first run.
+
+## Security headers — preview deployment
+
+Commit `d8ae80f` on `security/csp-headers`, for issue #3, deployed on 2026-09-14 for review before it
+merges. The branch sits on `f91a0aa` (issue #4, Vite 8.0.16), so this bundle is built with the patched Vite.
+
+### Before deploying
+
+- `yarn verify` passed on `d8ae80f`: typecheck, 237 unit tests, 56 end-to-end tests (53 before, plus the
+  three in `e2e/security-headers.spec.ts`), build.
+- Built from a clean tree with Vite 8.0.16; `dist/_headers` present.
+- Deployed to its own branch alias, `security-csp-headers`, so `help-center-shell` kept serving `main`.
+
+### Deployment
+
+- Preview deployment ID: `99ced49f`, environment `Preview`, branch `security-csp-headers`, commit hash
+  passed explicitly. Production has still never been deployed.
+- Atomic deployment: `https://99ced49f.bread-wallet-help-center-preview.pages.dev`.
+- Branch alias: `https://security-csp-headers.bread-wallet-help-center-preview.pages.dev`.
+- `index-MNhCComl.js` and `index-BNQdlkJT.css`, byte-identical on the alias, on the atomic URL and in the
+  local build.
+  - `index-MNhCComl.js` sha256 `b6e4645395102b2225010a96c4640f78d50cfdf3d743b0beb8b413096baa4a6e`
+  - `index-BNQdlkJT.css` sha256 `db71805b8239a8391b90bbd23d320a6b99035b54acda865b435135c590538cc4`
+
+### Measured on the preview
+
+- The document response carries the `Content-Security-Policy`, `X-Frame-Options: DENY`,
+  `X-Content-Type-Options: nosniff` and `Referrer-Policy: strict-origin-when-cross-origin` declared in
+  `public/_headers`, and Cloudflare's own `X-Robots-Tag: noindex`.
+- Chromium on home, a subcategory (`#setup-and-basic-use`), an article with diagrams (What are the three
+  keys in a Guardian-backed account?), the glossary, a shared search link and a search typed on home: no
+  CSP violation, no console error or warning, no failed request; Nunito and Inter loaded, no broken
+  image, stylesheet applied.
+- Framed from another page, the Help Center does not render.
+- The same check reports an inline script and an off-site image injected into the page as blocked, so a
+  clean run is not a detector that sees nothing.
