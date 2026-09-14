@@ -141,3 +141,11 @@ Cloudflare project: `bread-wallet-help-center-preview`
 Preview branch: `help-center-shell`
 
 This project is separate from the `miden-feedback-v2` Cloudflare Worker and does not use any of its bindings or routes.
+
+`public/_headers` sets the security headers on every response: a Content-Security-Policy that allows
+only the site's own scripts, styles, fonts and images, `frame-ancestors 'none'` with
+`X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff` and
+`Referrer-Policy: strict-origin-when-cross-origin`. The build copies it into `dist/`, and
+`vite preview` serves the same headers, so `yarn e2e` runs the built page under the policy and
+`e2e/security-headers.spec.ts` fails on any violation. Anything the site newly loads from somewhere
+else needs a matching change to the policy.
