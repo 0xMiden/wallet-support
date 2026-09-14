@@ -141,7 +141,9 @@ maintainer, no approving review; the README's On GitHub section has the reasonin
 review requirement until there is a second reviewer.
 
 A preview is deployed from the pull request's branch before it merges, so the live page is reviewed
-first, and its deploy record is committed to the same pull request.
+first, and its deploy record is committed to the same pull request. Deploy only with
+`yarn deploy:preview <preview-branch>`: it writes the record itself, and the line it adds to
+`tasks/deployments.jsonl` is what gets committed. Never write or edit a deploy record by hand.
 
 For meaningful features or structural changes:
 

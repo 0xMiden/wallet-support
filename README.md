@@ -158,6 +158,27 @@ Preview branch: `help-center-shell`
 
 This project is separate from the `miden-feedback-v2` Cloudflare Worker and does not use any of its bindings or routes.
 
+### Deploying a preview
+
+```bash
+yarn deploy:preview <preview-branch>
+```
+
+Run it from a clean checkout of a commit that is already on GitHub. It runs `yarn verify`, deploys
+`dist/` to that branch of the Pages project with the commit passed explicitly, and refuses `main`,
+the production branch. The same run writes the deploy record, so no record is typed by hand:
+
+- **`/deploy-record.json` on the deployment itself:** the commit, its subject, when it was built and
+  the sha256 of every built file. What a preview is serving can be read from the preview.
+- **One line in `tasks/deployments.jsonl`:** that record, plus the deployment id, URL, alias,
+  environment and timestamp that Wrangler reports, and the result of fetching every built file and
+  the security headers back from the new deployment and comparing them with the build. Commit it in
+  the pull request being previewed; a deploy of `main` to `help-center-shell` gets a pull request of
+  its own.
+
+The command exits non-zero when anything does not match, after writing the record, so a mismatch is
+recorded rather than lost. The prose deploy records in `tasks/todo.md` end on 2026-09-14.
+
 `public/_headers` sets the security headers on every response: a Content-Security-Policy that allows
 only the site's own scripts, styles, fonts and images, `frame-ancestors 'none'` with
 `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff` and

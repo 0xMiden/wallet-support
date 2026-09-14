@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest run --no-file-parallelism",
     "verify": "yarn typecheck && yarn test && yarn e2e && yarn build",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "deploy:preview": "node scripts/deploy-preview.mjs"
   },
   "dependencies": {
     "react": "18.2.0",
