@@ -1,0 +1,40 @@
+name: Verify
+
+# The same `yarn verify` the pre-push hook runs (typecheck, unit tests,
+# end-to-end tests, production build), on every pull request and every push to
+# main. The hooks can be skipped or never enabled; this cannot.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      # Actions are pinned to full commit SHAs, with the release tag beside each.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: yarn
+
+      # Fails when yarn.lock does not match package.json instead of rewriting it.
+      - run: yarn install --frozen-lockfile
+
+      # The browser build matching the pinned @playwright/test, with its system libraries.
+      - run: yarn playwright install --with-deps chromium
+
+      - run: yarn verify
