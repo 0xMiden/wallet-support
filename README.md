@@ -99,6 +99,15 @@ Skip a single push with `git push --no-verify`.
 `package.json`. The hooks can be skipped or never enabled; the workflow cannot, so it is the check a
 merge waits for.
 
+`main` is protected by a repository ruleset: a change arrives only through a pull
+request, merged with a merge commit, and only once the `verify` check has passed; `main` cannot be
+force-pushed or deleted, and nobody is on the bypass list.
+
+The ruleset requires **no approving review**, deliberately. The repository has one maintainer, and
+GitHub does not let an author approve their own pull request, so a review requirement would block
+every pull request and end with the rule being switched off. Add the review requirement when there is
+a second reviewer, not before (Ivan, 2026-09-14).
+
 ## Portability
 
 The Help Center is isolated in `src/help-center/`:
