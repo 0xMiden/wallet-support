@@ -39,7 +39,7 @@ Open the app and you'll land on the **Welcome to Bread!** screen.
    - Having trouble? Tap **Use PIN** to fall back to your device passcode.
 4. A green checkmark appears with the message **Confirmed! Only one more step!**
    - Tap **Continue** to keep going.
-5. Pick your Guardian, then tap **Continue** to proceed.
+5. Pick your Guardian, then tap **Continue** to proceed. Note the Guardian operator can see your state, i.e., account balance and activity.
 
 > 🛡️ Think of a Guardian as a secure backup layer: it keeps a safe copy of your wallet's private info so you can recover it on a new device if you ever lose your phone — without ever holding your keys or your funds. You stay in full control the whole time.
 
