@@ -11,6 +11,12 @@ import { glossaryEntryAnchor } from './routing';
  * rewrites it, and it never passes through the Markdown renderer: it is prose
  * for a reader, so it reaches the page as plain text.
  *
+ * Two spellings here differ from the articles on purpose. The glossary writes
+ * "offchain" and "crosschain"; the articles write "off-chain", "on-chain" and
+ * "cross-chain". The articles took the hyphenated forms on 2026-09-11 and the
+ * glossary kept its text as supplied, so the difference is deliberate: do not
+ * bring either side into line with the other.
+ *
  * An entry's id is derived from its term rather than stored beside it, for the
  * reason categories.ts gives for not storing positions: a second answer is free
  * to disagree with the first. The consequence worth knowing is that renaming a

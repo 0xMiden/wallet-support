@@ -183,7 +183,7 @@ The full round trip across your device, Guardian, and Miden:
 3. Your device generates a new everyday key and proposes the key update, signed by the emergency key.
 4. Guardian validates the key update, then acknowledges it.
 5. Your device submits the proof for the new state to Miden.
-The device drives recovery, Guardian acknowledges the recovery update, and only a commitment lands onchain. Guardian keeps the backup, and the emergency key keeps control.
+The device drives recovery, Guardian acknowledges the recovery update, and only a commitment lands on-chain. Guardian keeps the backup, and the emergency key keeps control.
 
 For the in-app steps, see *How do I restore my wallet with a recovery phrase?*
 
@@ -210,7 +210,7 @@ For direct transfers, Bread uses canonical bridges: CCTP for USDCx, and Agglayer
 ### 15. Can I swap tokens across chains?
 Category: Cross-chain › Moving across chains
 
-Yes. Crosschain swaps use the fast solver route through an intent-based protocol like Epoch or NEAR Intents. The solver can swap the token in transit and deliver the equivalent on the other side. Availability is limited to a fixed list of tokens. Swaps within Miden use Miden-native Swap.
+Yes. Cross-chain swaps use the fast solver route through an intent-based protocol like Epoch or NEAR Intents. The solver can swap the token in transit and deliver the equivalent on the other side. Availability is limited to a fixed list of tokens. Swaps within Miden use Miden-native Swap.
 
 ### 16. Can I earn yield in Bread?
 Category: Earn › Earning yield

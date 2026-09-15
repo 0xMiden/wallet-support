@@ -778,9 +778,13 @@ Line numbers as of the glossary commit. This entry's own mentions are not counte
   operator can see the state of a Guardian-backed account". No article says so and none denies it:
   `19` rules out holding the phrase or key and moving funds, and `16` scopes its privacy claim to
   "the network" while its own Guardian section says Guardian backs the data up. Decide whether an
-  article should say it too.
+  article should say it too. Settled 2026-09-11: the Mobile steps of How do I create a Bread Wallet? now
+  carry the sentence its Extension steps already had.
 - **offchain / off-chain is a style question.** The glossary writes "offchain" and "crosschain"; the
-  articles write "off-chain" and "on-chain". Pick one form for the site.
+  articles write "off-chain" and "on-chain". Pick one form for the site. Settled 2026-09-11: the articles
+  use off-chain, on-chain and cross-chain. The glossary keeps "offchain" and "crosschain" deliberately,
+  because its text ships as supplied, and `glossary.ts` says so. The Earn diagram keeps "Crosschain
+  route" until it is redrawn.
 
 ## Glossary, anchor offsets and header overflow — preview deployment
 
