@@ -184,10 +184,41 @@ describe('images', () => {
     );
   });
 
-  it('refuses an image inside a sentence, a list item or a callout', () => {
+  it("refuses an image inside a sentence, as a list item's own text, or in a callout", () => {
     for (const source of ['see ![Keys](keys.png) here', '- ![Keys](keys.png)', '> ![Keys](keys.png)']) {
       expect(() => renderMarkdown(source, 'test.md', images), source).toThrow(/images are not supported/);
     }
+  });
+
+  // Where a step screenshot goes: its own line in the block under the step, not
+  // the step's text. §7 of tasks/content-proposal.md places every one at a step.
+  it("shows an image in a step's own block, inside the step it illustrates", () => {
+    const html = renderMarkdown(
+      ['1. Open **Settings**.', '', '   ![Settings, open at Security](keys.png)', '', '2. Pick the file.'].join('\n'),
+      'test.md',
+      images
+    );
+    expect(html).toContain('<figure>');
+    expect(html.indexOf('<figure>')).toBeGreaterThan(html.indexOf('<li>'));
+    expect(html.indexOf('</li>')).toBeGreaterThan(html.indexOf('</figure>'));
+    // The step numbering survives the figure sitting between the two items.
+    expect(html.match(/<li>/g)).toHaveLength(2);
+  });
+
+  // A callout is prose. Nesting a list in one must not smuggle a figure inside.
+  it('refuses an image in a list nested inside a callout', () => {
+    const source = ['> Caution:', '>', '> 1. Open it.', '>', '>    ![Keys](keys.png)'].join('\n');
+    expect(() => renderMarkdown(source, 'test.md', images)).toThrow(/images are not supported/);
+  });
+
+  it('calls a screenshot a screenshot, and leaves the shipped diagram label alone', () => {
+    const shots = { 'step.png': { src: '/assets/step-abc.png', width: 1280, height: 800, kind: 'screenshot' as const } };
+    const html = renderMarkdown('![Settings, open at Security](step.png)', 'test.md', shots);
+    expect(html).toContain('aria-label="Open screenshot full size: Settings, open at Security"');
+    expect(html).toContain('<span>Open screenshot full size');
+    expect(html).not.toContain('diagram');
+    // An untagged image is a diagram, which is what the five FAQ images are.
+    expect(renderMarkdown('![Keys](keys.png)', 'test.md', images)).toContain('Open diagram full size');
   });
 });
 

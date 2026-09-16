@@ -1,5 +1,5 @@
 import { helpCenterMainCategories } from './categories';
-import type { ArticleImages } from './markdown';
+import type { ArticleImage, ArticleImages } from './markdown';
 import type { HelpCenterArticle, HelpCenterMainCategory, HelpCenterPlatform } from './types';
 
 /**
@@ -138,16 +138,48 @@ const ARTICLE_IMAGE_SIZES: Readonly<Record<string, readonly [number, number]>> =
   'three-keys-always-in-control.png': [1026, 396]
 };
 
-export const helpCenterArticleImages: ArticleImages = Object.fromEntries(
-  Object.entries(
-    import.meta.glob<string>('./assets/faq/*.png', { query: '?url', import: 'default', eager: true })
-  ).map(([path, src]) => {
+/**
+ * The same table for step screenshots, which live in their own directory
+ * because they are captured against a wallet release rather than drawn, and
+ * are replaced whenever the screen they show changes. Filenames come from
+ * `tasks/screenshot-capture-sheet.md`; §7 of `tasks/content-proposal.md` says
+ * where each one goes. Empty until the first capture lands — a position is
+ * only real once its file is.
+ */
+const SCREENSHOT_SIZES: Readonly<Record<string, readonly [number, number]>> = {};
+
+function registerImages(
+  files: Readonly<Record<string, string>>,
+  sizes: Readonly<Record<string, readonly [number, number]>>,
+  table: string,
+  kind?: ArticleImage['kind']
+) {
+  return Object.entries(files).map(([path, src]) => {
     const name = path.slice(path.lastIndexOf('/') + 1);
-    const size = ARTICLE_IMAGE_SIZES[name];
-    if (!size) throw new Error(`${name}: add its width and height to ARTICLE_IMAGE_SIZES.`);
-    return [name, { src, width: size[0], height: size[1] }];
-  })
-);
+    const size = sizes[name];
+    if (!size) {
+      throw new Error(
+        `${name}: add its width and height to ${table}, as '${name}': [width, height]. ` +
+          'They are written down because the browser needs them before the file arrives.'
+      );
+    }
+    return [name, kind ? { src, width: size[0], height: size[1], kind } : { src, width: size[0], height: size[1] }];
+  });
+}
+
+export const helpCenterArticleImages: ArticleImages = Object.fromEntries([
+  ...registerImages(
+    import.meta.glob<string>('./assets/faq/*.png', { query: '?url', import: 'default', eager: true }),
+    ARTICLE_IMAGE_SIZES,
+    'ARTICLE_IMAGE_SIZES'
+  ),
+  ...registerImages(
+    import.meta.glob<string>('./assets/screenshots/*.png', { query: '?url', import: 'default', eager: true }),
+    SCREENSHOT_SIZES,
+    'SCREENSHOT_SIZES',
+    'screenshot'
+  )
+]);
 
 /**
  * What the site renders, searches, counts and routes to. A hidden article is

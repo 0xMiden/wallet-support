@@ -543,8 +543,10 @@ an endpoint — a Worker plus KV or D1 — and is a separate decision.
 
 - Step screenshots. The plan is §7 of `tasks/content-proposal.md`: 32 positions across 7 articles, ten of
   them where the Notion pages had a screenshot. Blocked on the captures, which Ivan takes against the
-  store release. The renderer now shows an image only at the top level: inside a list item, where a step
-  screenshot would sit, it still refuses one. Tracked in the screenshot capture list below.
+  store release. The renderer takes one now: an image on its own line inside a step's block renders in
+  that step, and a screenshot is labelled "Open screenshot full size" rather than as a diagram. A capture
+  drops into `src/help-center/assets/screenshots/` and needs one size entry in `SCREENSHOT_SIZES` beside
+  the diagrams' table, for the reason given there. Tracked in the screenshot capture list below.
 - Attaching the article title to a "No" report. The support form's accepted parameters are not known
   here, so nothing is appended rather than guessing at another service's API.
 
