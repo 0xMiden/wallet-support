@@ -543,8 +543,10 @@ an endpoint — a Worker plus KV or D1 — and is a separate decision.
 
 - Step screenshots. The plan is §7 of `tasks/content-proposal.md`: 32 positions across 7 articles, ten of
   them where the Notion pages had a screenshot. Blocked on the captures, which Ivan takes against the
-  store release. The renderer now shows an image only at the top level: inside a list item, where a step
-  screenshot would sit, it still refuses one. Tracked in the screenshot capture list below.
+  store release. The renderer takes one now: an image on its own line inside a step's block renders in
+  that step, and a screenshot is labelled "Open screenshot full size" rather than as a diagram. A capture
+  drops into `src/help-center/assets/screenshots/` and needs one size entry in `SCREENSHOT_SIZES` beside
+  the diagrams' table, for the reason given there. Tracked in the screenshot capture list below.
 - Attaching the article title to a "No" report. The support form's accepted parameters are not known
   here, so nothing is appended rather than guessing at another service's API.
 
@@ -683,9 +685,19 @@ the stylesheet renders a SAMPLE badge, and no article carries an `[image removed
 element and found nothing, which is worth recording so the next person does not assume it is there
 and only styled wrongly.
 
-It becomes real work the moment the first screenshot lands: a placeholder image needs to say it is a
-placeholder, and the badge has to be legible on whatever the screenshot happens to show. Not built
-now, deliberately.
+It may never become real work. Ivan ruled on 2026-09-16 that no SAMPLE placeholders ship at all: the
+positions stay empty until a real capture fills them, so there is nothing for a badge to mark. If that
+is ever reversed, a placeholder image needs to say it is a placeholder, and the badge has to be legible
+on whatever the screenshot happens to show.
+
+**`PLACEHOLDERS_OK` is not a gate and never was.** The deploy entries below record builds run with
+`PLACEHOLDERS_OK=1`, which reads as though something checked it. Nothing does: the name appears only in
+this file's prose, never in the source, the config or any workflow, on any commit in this repository's
+history — searched across every ref on 2026-09-16, not inferred. Setting it, unsetting it and misspelling
+it all produce the same build.
+
+So there is no automated placeholder gate on production, and nothing would stop a placeholder shipping.
+Whether the page is ready to publish is a human decision, made by looking at it.
 
 ## Screenshot capture list
 
@@ -1153,7 +1165,7 @@ merges.
 
 - `yarn verify` passed on `8cce73e` in the pre-push hook: typecheck, 237 unit tests, 53 end-to-end tests,
   build.
-- Built with `PLACEHOLDERS_OK=1`, as before, and deployed with the cached wrangler 4.130.0 binary.
+- Built with `PLACEHOLDERS_OK=1`, which nothing reads, and deployed with the cached wrangler 4.130.0 binary.
 - Drift check was clean. The alias served `index-COfNRdII.js` and `index-Cyg1-008.css` with the sha256
   recorded for `1d8a5a2d` above, and its `index.html` matched the build of `ae76cb0`, which differs from
   `main` only under `tasks/`. Nobody deployed underneath this work.

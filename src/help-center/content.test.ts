@@ -637,6 +637,32 @@ describe('fidelity to the FAQ', () => {
     );
   });
 
+  /**
+   * The step screenshots of §7. There are none yet: this is the guard that
+   * starts working the moment the first capture is dropped into the directory,
+   * so a capture needs no change here — only its one size entry in
+   * SCREENSHOT_SIZES, which this test then holds to the file's own header.
+   */
+  it('registers every step screenshot on disk, at the size its header gives', () => {
+    const repoRoot = fileURLToPath(new URL('../..', import.meta.url));
+    const dir = join(repoRoot, 'src/help-center/assets/screenshots');
+    const onDisk = [...readdirSync(dir)].filter(name => name.endsWith('.png')).sort();
+
+    const registered = Object.entries(helpCenterArticleImages)
+      .filter(([, image]) => image.kind === 'screenshot')
+      .map(([name]) => name)
+      .sort();
+    expect(registered).toEqual(onDisk);
+
+    for (const name of onDisk) {
+      const file = readPng(readFileSync(join(dir, name)), `src/help-center/assets/screenshots/${name}`);
+      expect([file.width, file.height], name).toEqual([
+        helpCenterArticleImages[name]?.width,
+        helpCenterArticleImages[name]?.height
+      ]);
+    }
+  });
+
   it('ships each image pixel for pixel as delivered, never larger, at the size its header gives', () => {
     const repoRoot = fileURLToPath(new URL('../..', import.meta.url));
     const deliveredDir = join(repoRoot, 'tasks/faq/faq-images');
@@ -645,7 +671,14 @@ describe('fidelity to the FAQ', () => {
 
     expect(delivered).toEqual(Object.keys(FAQ_IMAGE_ALT).sort());
     expect([...readdirSync(shippedDir)].sort()).toEqual(delivered);
-    expect(Object.keys(helpCenterArticleImages).sort()).toEqual(delivered);
+    // Step screenshots register from their own directory and are checked by the
+    // test below. Every other image must still be exactly these five diagrams:
+    // dropping one from the registry has to fail here, and still does.
+    expect(
+      Object.keys(helpCenterArticleImages)
+        .filter(name => helpCenterArticleImages[name]?.kind !== 'screenshot')
+        .sort()
+    ).toEqual(delivered);
 
     for (const name of delivered) {
       // tasks/faq/ keeps the files as delivered; what ships is losslessly optimised.

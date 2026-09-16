@@ -61,21 +61,40 @@ const INTERNAL_HREF = /^#[a-z0-9]+(?:-[a-z0-9]+)*(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)?
 const IMAGE_BLOCK = /^!\[([^\]]*)\]\(([^)\s]+)\)$/;
 
 /*
- * Every image is a diagram, and at phone width a diagram renders at a third of
- * its size, too small to read its labels. So the figure is a plain link to the
- * file itself, opened in a new tab where it can be seen and zoomed at full
- * size. No lightbox: the browser already is one. The visible label repeats the
- * start of the accessible name, so what is read out matches what is on screen.
+ * At phone width an image renders at a third of its size: a diagram's labels
+ * and a screenshot's controls are both too small to read. So the figure is a
+ * plain link to the file itself, opened in a new tab where it can be seen and
+ * zoomed at full size. No lightbox: the browser already is one. The visible
+ * label repeats the start of the accessible name, so what is read out matches
+ * what is on screen.
+ *
+ * The label names what the reader is about to open, because on a phone it is
+ * the only clue they get. A diagram and a screenshot are not the same thing to
+ * a reader looking for a button, so they are not called the same thing here.
  */
-const OPEN_FULL_SIZE = 'Open diagram full size';
+const OPEN_FULL_SIZE: Readonly<Record<ArticleImageKind, string>> = {
+  diagram: 'Open diagram full size',
+  screenshot: 'Open screenshot full size'
+};
 const OPEN_ICON =
   '<svg aria-hidden="true" class="help-center-icon" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg>';
+
+/**
+ * What an image is, which decides the label under it. A diagram explains an
+ * idea; a screenshot shows a screen the reader has to find something on.
+ */
+export type ArticleImageKind = 'diagram' | 'screenshot';
 
 /** An image an article may show, looked up by the filename its Markdown names. */
 export interface ArticleImage {
   readonly src: string;
   readonly width: number;
   readonly height: number;
+  /**
+   * Absent means a diagram: the five FAQ diagrams predate step screenshots and
+   * their shipped label is unchanged by this field arriving.
+   */
+  readonly kind?: ArticleImageKind;
 }
 
 export type ArticleImages = Readonly<Record<string, ArticleImage>>;
@@ -131,7 +150,13 @@ function dedent(lines: readonly string[], amount: number) {
   return lines.map(line => (line.trim() === '' ? '' : line.slice(amount)));
 }
 
-function renderList(lines: readonly string[], origin: string, depth: number): string {
+function renderList(
+  lines: readonly string[],
+  origin: string,
+  depth: number,
+  images: ArticleImages,
+  imagesAllowed: boolean
+): string {
   const first = LIST_ITEM.exec(lines[0] as string) as RegExpExecArray;
   const baseIndent = first[1].length;
   const ordered = ORDERED_ITEM.test(lines[0] as string);
@@ -147,7 +172,16 @@ function renderList(lines: readonly string[], origin: string, depth: number): st
     .map(item => {
       const rest = item.rest.filter(line => line.trim() !== '' || item.rest.length > 1);
       const nested =
-        rest.length > 0 ? renderBlocks(dedent(rest, indentOf(rest[0] as string)), origin, depth + 1) : '';
+        rest.length > 0
+          ? renderBlocks(
+              dedent(rest, indentOf(rest[0] as string)),
+              origin,
+              depth + 1,
+              undefined,
+              images,
+              imagesAllowed
+            )
+          : '';
       return `<li>${renderInline(item.text, origin)}${nested}</li>`;
     })
     .join('');
@@ -179,7 +213,13 @@ export function renderBlocks(
   origin: string,
   depth = 0,
   headings?: ArticleHeading[],
-  images: ArticleImages = {}
+  images: ArticleImages = {},
+  /**
+   * A callout turns this off for everything inside it. Depth alone cannot
+   * decide it: a step's indented block is depth 1 and is exactly where a step
+   * screenshot belongs, while a list nested in a callout is still in a callout.
+   */
+  imagesAllowed = true
 ): string {
   const output: string[] = [];
   let index = 0;
@@ -199,7 +239,9 @@ export function renderBlocks(
         quoted.push((BLOCK_QUOTE.exec(lines[index] as string) as RegExpExecArray)[1]);
         index += 1;
       }
-      output.push(`<blockquote>${renderBlocks(quoted, origin, depth + 1)}</blockquote>`);
+      output.push(
+        `<blockquote>${renderBlocks(quoted, origin, depth + 1, undefined, images, false)}</blockquote>`
+      );
       continue;
     }
 
@@ -221,13 +263,15 @@ export function renderBlocks(
         block.push(candidate);
         index += 1;
       }
-      output.push(renderList(block, origin, depth));
+      output.push(renderList(block, origin, depth, images, imagesAllowed));
       continue;
     }
 
-    // Top level only. Inside a list item or a callout an image line falls
-    // through to inline rendering, which refuses it.
-    const image = depth === 0 ? IMAGE_BLOCK.exec(line.trim()) : null;
+    // Anywhere images are legal, which is the article's flow and a step's own
+    // indented block. Inside a callout, and as the text of a list item rather
+    // than a block under it, an image line falls through to inline rendering,
+    // which refuses it.
+    const image = imagesAllowed ? IMAGE_BLOCK.exec(line.trim()) : null;
     if (image) {
       const alt = (image[1] as string).trim();
       const name = image[2] as string;
@@ -236,10 +280,11 @@ export function renderBlocks(
       if (!file) fail(origin, `no image named "${name}"`, line);
       const src = escapeText(file.src);
       const label = escapeText(alt);
+      const open = OPEN_FULL_SIZE[file.kind ?? 'diagram'];
       output.push(
-        `<figure><a href="${src}" target="_blank" rel="noopener noreferrer" aria-label="${OPEN_FULL_SIZE}: ${label}">` +
+        `<figure><a href="${src}" target="_blank" rel="noopener noreferrer" aria-label="${open}: ${label}">` +
           `<img src="${src}" alt="${label}" width="${file.width}" height="${file.height}" loading="lazy" decoding="async">` +
-          `<span>${OPEN_FULL_SIZE}${OPEN_ICON}</span></a></figure>`
+          `<span>${open}${OPEN_ICON}</span></a></figure>`
       );
       index += 1;
       continue;
