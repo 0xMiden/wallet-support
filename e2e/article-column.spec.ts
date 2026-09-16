@@ -49,6 +49,21 @@ const CHROME_STEPS: ReadonlyMap<number, { readonly maxDrop: number; readonly rea
   [901, { maxDrop: 336, reason: 'the navigation sidebar takes its own column' }]
 ]);
 
+/*
+ * The third place it may narrow, and the reason it is not in the map above:
+ * the rail is placed by a container query, not a media query, so it has no
+ * breakpoint in any stylesheet to key on and it lands wherever the sweep's
+ * 16px step happens to cross it. It is keyed on the rail itself arriving.
+ *
+ * Allowed once, and only for what the rail and its gap take: 15rem + 3rem.
+ * This is the 901px case again by Ivan's 2026-09-11 reasoning — text narrowing
+ * because something appeared is the layout working. Ivan asked for it on
+ * 2026-09-16, choosing 52ch as the measure floor below which the rail goes
+ * under the article instead. If the rail ever takes more than its own width,
+ * or takes it where it did not just arrive, that is still a fault.
+ */
+const RAIL_STEP = 288;
+
 for (const { label, route } of [
   { label: 'an article with a side rail', route: '/#guardian-protection/what-is-guardian' },
   { label: 'an article without one', route: '/#activity-and-transaction-status/what-is-delegate-proof-generation' }
@@ -60,16 +75,22 @@ for (const { label, route } of [
     const body = page.locator('.help-center-article-body');
     await expect(body).toBeVisible();
 
-    const measured: { width: number; column: number }[] = [];
+    const measured: { width: number; column: number; railBeside: boolean }[] = [];
     for (const width of widths) {
       await page.setViewportSize({ width, height: 900 });
-      const column = await body.evaluate(
+      const frame = await body.evaluate(
         element =>
-          new Promise<number>(resolve =>
-            requestAnimationFrame(() => requestAnimationFrame(() => resolve(element.getBoundingClientRect().width)))
+          new Promise<{ column: number; railBeside: boolean }>(resolve =>
+            requestAnimationFrame(() =>
+              requestAnimationFrame(() => {
+                const box = element.getBoundingClientRect();
+                const rail = document.querySelector('.help-center-rail')?.getBoundingClientRect();
+                resolve({ column: box.width, railBeside: rail !== undefined && rail.left >= box.right - 1 });
+              })
+            )
           )
       );
-      measured.push({ width, column });
+      measured.push({ width, ...frame });
     }
 
     const narrowings = measured.flatMap((row, index) => {
@@ -79,12 +100,52 @@ for (const { label, route } of [
       const step = CHROME_STEPS.get(row.width);
       const drop = previous.column - row.column;
       if (step && previous.width === row.width - 1 && drop <= step.maxDrop + 0.5) return [];
+      if (!previous.railBeside && row.railBeside && drop <= RAIL_STEP + 0.5) return [];
 
       return [`${previous.width}px -> ${row.width}px: ${Math.round(previous.column)}px -> ${Math.round(row.column)}px`];
     });
     expect(narrowings, 'the article column got narrower as the window got wider').toEqual([]);
   });
 }
+
+/*
+ * The floor itself, which the narrowing guard above cannot express: that one
+ * allows the rail its own width wherever it arrives, so it would still pass if
+ * the threshold were dropped to 20ch and the article left at 200px. This is
+ * the number Ivan chose on 2026-09-16 and the reason the rail goes under the
+ * article at all, so it is pinned here rather than only in the stylesheet.
+ */
+test('the rail never leaves the article below the 52ch floor', async ({ page }) => {
+  await page.goto('/#guardian-protection/what-is-guardian');
+  await expect(page.locator('.help-center-article-body')).toBeVisible();
+
+  let narrowestBeside = Number.POSITIVE_INFINITY;
+  let besideFrom = Number.POSITIVE_INFINITY;
+  for (let width = 1000; width <= 1600; width += 8) {
+    await page.setViewportSize({ width, height: 900 });
+    const frame = await page.locator('.help-center-article-body').evaluate(
+      element =>
+        new Promise<{ column: number; railBeside: boolean }>(resolve =>
+          requestAnimationFrame(() =>
+            requestAnimationFrame(() => {
+              const box = element.getBoundingClientRect();
+              const rail = document.querySelector('.help-center-rail')?.getBoundingClientRect();
+              resolve({ column: box.width, railBeside: rail !== undefined && rail.left >= box.right - 1 });
+            })
+          )
+        )
+    );
+    if (!frame.railBeside) continue;
+    besideFrom = Math.min(besideFrom, width);
+    narrowestBeside = Math.min(narrowestBeside, frame.column);
+  }
+
+  // 52ch, at the 10px per character this stylesheet's type gives.
+  expect(narrowestBeside, 'the rail squeezed the article below 52ch').toBeGreaterThanOrEqual(519.5);
+  // What Ivan reported: at his window the strip beside the article sat empty
+  // and the rail was below it. It is beside well before the old ~1400px.
+  expect(besideFrom, 'the rail arrives later than the 52ch threshold implies').toBeLessThanOrEqual(1240);
+});
 
 test('on a wide window the rail still sits beside the column, not below it', async ({ page }) => {
   await page.setViewportSize({ width: 1600, height: 900 });
