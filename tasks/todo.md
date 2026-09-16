@@ -1165,7 +1165,7 @@ merges.
 
 - `yarn verify` passed on `8cce73e` in the pre-push hook: typecheck, 237 unit tests, 53 end-to-end tests,
   build.
-- Built with `PLACEHOLDERS_OK=1`, as before, and deployed with the cached wrangler 4.130.0 binary.
+- Built with `PLACEHOLDERS_OK=1`, which nothing reads, and deployed with the cached wrangler 4.130.0 binary.
 - Drift check was clean. The alias served `index-COfNRdII.js` and `index-Cyg1-008.css` with the sha256
   recorded for `1d8a5a2d` above, and its `index.html` matched the build of `ae76cb0`, which differs from
   `main` only under `tasks/`. Nobody deployed underneath this work.
