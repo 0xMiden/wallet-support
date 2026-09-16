@@ -701,12 +701,30 @@ Whether the page is ready to publish is a human decision, made by looking at it.
 
 ## Screenshot capture list
 
-The 32 positions of §7 in `tasks/content-proposal.md`, for Ivan to capture against the store release,
-Bread Wallet 1.16.0, on both platforms. `tasks/screenshot-capture-sheet.md` has them in flow order, with
-what each screen must show and the labels to read for the seven conflicts under Verify against wallet
+The 33 positions for Ivan to capture: the 32 of §7 in `tasks/content-proposal.md`, plus E01a, added
+2026-09-16 for the **Add extension** dialog at step 3, which §7 had no position for. It is a 33rd
+position rather than a renumbering, so every ID below keeps the number the capture sheet gave it.
+`tasks/screenshot-capture-sheet.md` has them in flow order, with the image spec, the annotation spec,
+what each screen must show, and the labels to read for the seven conflicts under Verify against wallet
 build.
 
-### Extension, 18
+**Version is recorded per run, not once.** The extension run is against **1.16.1** (what Settings
+reports in the build being captured; the 1.16.0 previously recorded here came from the store listing and
+was wrong). The mobile run happens later on a different build — record its version when it starts.
+
+### Waiting on the mobile run
+
+- **The every-image-used test will fail on the first mobile screenshot, and the image will be fine.**
+  `markdown.test.ts`, "shows every supplied image, each exactly once", renders only each article's
+  `extension-desktop` body and then requires that set to equal the whole image registry. A screenshot
+  used solely in a mobile body is registered but never rendered by that test, so it reports a correct
+  image as missing. Not fixed now, deliberately: nothing can exercise the fix until a mobile capture
+  exists, and an untestable fix sitting in the tree is worth less than this note. Fix it in the same
+  change as the first mobile capture, by rendering both platform bodies there.
+
+### Extension, 19
+
+- [ ] E01a · How to install Bread Wallet · step 3 · Chrome's "Add extension" confirmation dialog
 
 - [ ] E01 · How to install Bread Wallet · step 2 · Chrome Web Store listing with "Add to Chrome"
 - [ ] E02 · How to install Bread Wallet · step after 3 · Browser toolbar: jigsaw icon and pin icon

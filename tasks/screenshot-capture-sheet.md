@@ -1,12 +1,109 @@
 # Screenshot capture sheet
 
-For Ivan's capture run against the store release, **Bread Wallet 1.16.0**, on both platforms. The positions
-are §7 of `tasks/content-proposal.md`; tick them off in the screenshot capture list in
-`tasks/todo.md`.
+For Ivan's capture run, on both platforms. The positions are §7 of `tasks/content-proposal.md`; tick them
+off in the screenshot capture list in `tasks/todo.md`.
+
+**Version captured against, per run.** The two runs happen at different times on different builds, so the
+version is recorded once per run rather than once for the sheet: a reader needs to know which build a
+given screenshot came from, and "the store release" stops meaning anything as soon as the store moves.
+
+| Run | Version | State |
+|---|---|---|
+| Extension | **1.16.1** | in progress, from 2026-09-16 |
+| Mobile | record it from Settings when the run starts | not started; separate run, later build |
+
+1.16.1 is what Settings reports in the build being captured. It supersedes the 1.16.0 this sheet carried,
+which came from the store listing — the installed build is the authority, not the listing.
+
+## Image spec — keep this open while capturing
+
+**Every capture is 2x: twice the width it will be shown at.** That one rule is what makes the set look
+like a set. It is crisp on a modern display, and a 6px annotation box always lands at 3px on screen,
+whatever the capture is of.
+
+The article column is at most **680px** (68ch, `--measure`) and never wider, so 680px is the widest any
+image is ever shown. An image wider than the column is scaled down to fit it; an image narrower than the
+column is shown at its own size. That is why a narrow capture looks small and out of step beside a wide
+one — it is not being scaled at all.
+
+### Two categories, decided by how wide the surface naturally is
+
+Not by who owns it. Bread Wallet's sidebar is a narrow panel like a Chrome menu, not like a full tab.
+
+| | **A · Fills a browser tab** | **B · A narrow panel, menu or dialog** |
+|---|---|---|
+| What | The Chrome Web Store listing; any Bread Wallet screen that opens as a full page in a tab | Chrome's jigsaw menu and **Add extension** dialog; Bread Wallet's sidebar or popup |
+| How | Chrome DevTools, device toolbar, width **1360**, DPR **1** | OS screenshot at **200%** Windows display scaling, cropped tight to the surface |
+| Capture width | exactly **1360px** | whatever the surface comes to at 2x, **560–1200px** |
+| Shown at | 680px — the full column, identical for every one | half the capture, so it appears at life size |
+
+**Why 1360 at DPR 1 and not 680 at DPR 2.** Both give 1360 device pixels, which is what the 2x rule
+needs. But a page laid out for a 680px viewport is the site's *narrow* layout — the Chrome Web Store at
+680px is not the listing anyone sees, and E01 exists to make the right listing recognisable among
+lookalikes. 1360 CSS pixels is a desktop viewport, so the capture shows the desktop layout, and the
+1360 device pixels still land exactly 2x on a 680px render.
+
+A tab-width surface gets one fixed width because you choose it: a page reflows to whatever viewport is
+set, so there is no reason for two of them to differ. A narrow surface cannot — a menu is the size it
+is, and stretching it to 1360px would show it at twice life size, which looks crude beside the real
+thing. Forcing both into a single width is what would look wrong here, not the two categories.
+
+### How small a surface can still clear the floor
+
+At 200% scaling a surface W CSS pixels wide captures at 2W, so the **560px floor needs a surface at
+least 280 CSS pixels wide**. Everything in this run clears that:
+
+| Surface | Roughly, CSS px | At 200% | Floor |
+|---|---|---|---|
+| Chrome's jigsaw menu (E02) | 310–370 | 620–740 | clears 560 |
+| Chrome's **Add extension** dialog (E01a) | ~400 | ~800 | clears 560 |
+| Bread Wallet's sidebar | ~400 | ~800 | clears 560 |
+
+The floor is 560 and not 800 for exactly this reason: the jigsaw menu is the smallest thing in the run
+and lands near 620 at 200%, so an 800px floor would have made E02 impossible to shoot to spec. 560 is
+still high enough to catch the mistake it exists to catch — the same menu captured at 1x lands near
+310, and even a 400px dialog at 1x lands at 400, both well under it.
+
+If a surface ever comes out under 560, raise Windows scaling past 200% for that shot rather than
+upscaling the file afterwards.
+
+**Each position below is pre-tagged A or B.** The pattern is simple: everything before the wallet opens
+is onboarding in a browser tab, so it is A; everything inside the running wallet is the sidebar, so it
+is B. A few are marked **you decide** where the step text does not settle it — each says what to look
+at. If a pre-tagged one turns out wrong when you see it, the tag is a starting point, not a ruling.
+
+### The rest of the rules
+
+- **Height: free, up to 1.3× the width.** Content decides how tall a screen is. Past that the image
+  dominates the article on a phone, where it already runs the full width — split it into two captures.
+- **Format: PNG.** Lossless, and UI is flat colour so it compresses well: a 1786px capture came to 160 KB.
+  Not WebP — the test suite's PNG reader would need extending, for no saving worth having at these sizes.
+- **Ceiling: 400 KB a file.** Nothing captured so far is close. Each article loads only its own images,
+  lazily, so the run's total is not what any reader pays.
+- **Never upscale to reach a width.** An enlarged small capture is visibly soft, which is worse than
+  showing it small.
+
+### Annotation
+
+Read off the first three captures, so every later one matches without eyeballing it:
+
+- **Colour:** `#E61B1B` — rgb(230, 27, 27)
+- **Stroke:** **6px**, the same on all four edges
+- **Corners:** square, no radius
+- **Drawn last**, on the final image at its capture size, so it scales down with everything else to 3px
+
+One box per capture, unless a step genuinely has two controls to point at.
+
+### If a capture misses the spec
+
+`content.test.ts` fails the build and names the file and the number it found: a page capture that is not
+exactly 1360px wide, a chrome capture outside 800–1200px, any image taller than 1.3× its width, or any
+file over 400 KB. None of it is left to spot by eye.
 
 ## Before you start
 
-- Confirm **Settings** shows **Version 1.16.0** in the extension and on the phone (Q1 at the end).
+- Confirm **Settings** shows the version for the run you are doing — **1.16.1** for the extension; for
+  the mobile run, read it and record it in the table above (Q1 at the end).
 - From §7: never show a real recovery phrase, password, or full address — use a throwaway test wallet; crop
   to the relevant control; keep one device and one theme for each platform.
 - Keep the throwaway wallet's recovery phrase (E04) and its encrypted wallet file (E12) until both runs are
@@ -28,22 +125,33 @@ are §7 of `tasks/content-proposal.md`; tick them off in the screenshot capture 
   `![alt text](E01-install-web-store.png)`. Alt text is required. Mirror the same line into
   `content-source/` or the fidelity test fails.
 
-## Extension run: Chrome, 18 positions
+## Extension run: Chrome, 19 positions
 
 ### A. Install
 
 #### E01 · How to install Bread Wallet · Ext · step 2
 - **Must show:** the Chrome Web Store listing for **Bread Wallet by Miden**, with **Add to Chrome**.
-- The Help Center's Chrome link still points at a dead listing. Open the live one directly:
-  `https://chromewebstore.google.com/detail/bread-wallet-by-miden/coajhopfooegmaifelglfboehacldcbo`
+- The article's Chrome link is correct and live — it points at
+  `bread-wallet-by-miden/coajhopfooegmaifelglfboehacldcbo`, so open it from the article. (This position
+  once warned the link was dead; that was fixed before the run began.)
 - **Save as:** `E01-install-web-store.png`
-- **Then register:** `'E01-install-web-store.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Capture as:** **A · fills a tab** — DevTools device toolbar, width 1360, DPR 1
+- **Then register:** `'E01-install-web-store.png': [1360, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+
+#### E01a · How to install Bread Wallet · Ext · step 3
+- **Must show:** Chrome's confirmation dialog, **Add "Bread Wallet by Miden"?**, with **Add extension**.
+- Added 2026-09-16 on Ivan's call, after the capture run began: §7 had no position for step 3. It is a
+  33rd position, not a renumbering — E02 onwards keep the IDs this sheet already gave them.
+- **Save as:** `E01a-install-add-extension.png`
+- **Capture as:** **B · narrow surface** — OS screenshot at 200% scaling, cropped tight
+- **Then register:** `'E01a-install-add-extension.png': [width, height, 'narrow'],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### E02 · How to install Bread Wallet · Ext · step after 3
 - **Must show:** the browser toolbar, with the **jigsaw icon** menu open and the **pin icon** beside Bread
   Wallet.
 - **Save as:** `E02-install-pin.png`
-- **Then register:** `'E02-install-pin.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Capture as:** **B · narrow surface** — OS screenshot at 200% scaling, cropped tight
+- **Then register:** `'E02-install-pin.png': [width, height, 'narrow'],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 ### B. Create a wallet
 
@@ -51,36 +159,42 @@ are §7 of `tasks/content-proposal.md`; tick them off in the screenshot capture 
 - **Must show:** the first page, with the option to create a new wallet and **I already have a wallet**.
 - **Read L3 and L4:** the exact wording of the create option.
 - **Save as:** `E03-create-first-page.png`
-- **Then register:** `'E03-create-first-page.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Capture as:** **A · fills a tab** — DevTools device toolbar, width 1360, DPR 1
+- **Then register:** `'E03-create-first-page.png': [1360, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### E04 · How do I create a Bread Wallet? · Ext · step 2
 - **Must show:** the **back up your wallet** page, with the seed phrase blurred or replaced by sample words.
 - **Save as:** `E04-create-back-up.png`
-- **Then register:** `'E04-create-back-up.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Capture as:** **A · fills a tab** — DevTools device toolbar, width 1360, DPR 1
+- **Then register:** `'E04-create-back-up.png': [1360, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### E05 · How do I create a Bread Wallet? · Ext · step 4
 - **Must show:** the create password page, with the fields empty or masked.
 - **Save as:** `E05-create-password.png`
-- **Then register:** `'E05-create-password.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Capture as:** **A · fills a tab** — DevTools device toolbar, width 1360, DPR 1
+- **Then register:** `'E05-create-password.png': [1360, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### E06 · How do I create a Bread Wallet? · Ext · step 5
 - **Must show:** the account recovery page, with **Guardian** and **Fully private**.
 - **Read L1:** on the screen after it, the exact label of the button that opens the wallet.
 - **Save as:** `E06-create-recovery-choice.png`
-- **Then register:** `'E06-create-recovery-choice.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Capture as:** **A · fills a tab** — DevTools device toolbar, width 1360, DPR 1
+- **Then register:** `'E06-create-recovery-choice.png': [1360, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 ### C. Fund the wallet
 
 #### E07 · How to fund your Bread Wallet? · Ext · step 1
 - **Must show:** the wallet homepage, with **Faucet**.
 - **Save as:** `E07-fund-homepage.png`
-- **Then register:** `'E07-fund-homepage.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Capture as:** **B · narrow surface** — OS screenshot at 200% scaling, cropped tight
+- **Then register:** `'E07-fund-homepage.png': [width, height, 'narrow'],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### E08 · How to fund your Bread Wallet? · Ext · step 3–4
 - **Must show:** the faucet page with the address, the amount, and the **Private** / **Public** choice. Mask
   all but a few characters of the address.
 - **Save as:** `E08-fund-faucet-page.png`
-- **Then register:** `'E08-fund-faucet-page.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Capture as:** **you decide** — the faucet may open in its own tab rather than inside the sidebar — if it fills a tab it is A, if it is in the sidebar it is B
+- **Then register:** A -> `'E08-fund-faucet-page.png': [1360, height],` · B -> `'E08-fund-faucet-page.png': [width, height, 'narrow'],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 ### D. Find a token contract address
 
@@ -89,24 +203,28 @@ Token Information needs a token in the wallet; the faucet request in C should pr
 #### E09 · How to find a token contract address in Bread Wallet? · Ext · step 2
 - **Must show:** the Token Information section, with the copy icon.
 - **Save as:** `E09-token-information.png`
-- **Then register:** `'E09-token-information.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Capture as:** **B · narrow surface** — OS screenshot at 200% scaling, cropped tight
+- **Then register:** `'E09-token-information.png': [width, height, 'narrow'],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 ### E. Download the encrypted file
 
 #### E10 · How to download the encrypted file? · Ext · step 2
 - **Must show:** Settings, open at **Security**.
 - **Save as:** `E10-download-security.png`
-- **Then register:** `'E10-download-security.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Capture as:** **B · narrow surface** — OS screenshot at 200% scaling, cropped tight
+- **Then register:** `'E10-download-security.png': [width, height, 'narrow'],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### E11 · How to download the encrypted file? · Ext · step 3
 - **Must show:** the **Encrypted Wallet File** option.
 - **Save as:** `E11-download-option.png`
-- **Then register:** `'E11-download-option.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Capture as:** **B · narrow surface** — OS screenshot at 200% scaling, cropped tight
+- **Then register:** `'E11-download-option.png': [width, height, 'narrow'],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### E12 · How to download the encrypted file? · Ext · step 6
 - **Must show:** the download complete screen, with **Done**.
 - **Save as:** `E12-download-done.png`
-- **Then register:** `'E12-download-done.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Capture as:** **B · narrow surface** — OS screenshot at 200% scaling, cropped tight
+- **Then register:** `'E12-download-done.png': [width, height, 'narrow'],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 ### F. Restore with a recovery phrase
 
@@ -116,7 +234,8 @@ Start fresh first: remove the extension or open a new Chrome profile, then insta
 - **Must show:** the first page, with **I already have a wallet** selected.
 - **Read L3 and L4 again:** the create option, which should read as it did at E03.
 - **Save as:** `E13-restore-first-page.png`
-- **Then register:** `'E13-restore-first-page.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Capture as:** **A · fills a tab** — DevTools device toolbar, width 1360, DPR 1
+- **Then register:** `'E13-restore-first-page.png': [1360, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### E14 · How do I restore my wallet with a recovery phrase? · Ext · step 2
 - **Must show:** the import type page, with every option it offers.
@@ -124,18 +243,21 @@ Start fresh first: remove the extension or open a new Chrome profile, then insta
   checked when How to restore the wallet using an encrypted file? was held back had no such import. If it is
   not offered, capture the page as it is, skip E17 and E18, and say so in Q2.
 - **Save as:** `E14-restore-import-type.png`
-- **Then register:** `'E14-restore-import-type.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Capture as:** **A · fills a tab** — DevTools device toolbar, width 1360, DPR 1
+- **Then register:** `'E14-restore-import-type.png': [1360, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### E15 · How do I restore my wallet with a recovery phrase? · Ext · step 3
 - **Must show:** the numbered recovery-phrase boxes, with the words blurred or replaced by sample words.
 - **Save as:** `E15-restore-phrase-boxes.png`
-- **Then register:** `'E15-restore-phrase-boxes.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Capture as:** **A · fills a tab** — DevTools device toolbar, width 1360, DPR 1
+- **Then register:** `'E15-restore-phrase-boxes.png': [1360, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### E16 · How do I restore my wallet with a recovery phrase? · Ext · step 5
 - **Must show:** the recovery choice, with **Guardian** and **Fully private**.
 - **Read L1 again:** on the screen after it, the exact label of the button that opens the wallet.
 - **Save as:** `E16-restore-recovery-choice.png`
-- **Then register:** `'E16-restore-recovery-choice.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Capture as:** **A · fills a tab** — DevTools device toolbar, width 1360, DPR 1
+- **Then register:** `'E16-restore-recovery-choice.png': [1360, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 ### G. Restore with an encrypted file
 
@@ -145,13 +267,15 @@ wallet** and the encrypted wallet file.
 #### E17 · How to restore the wallet using an encrypted file? · Ext · step 2
 - **Must show:** the import type page, with **Import with encrypted wallet file** selected.
 - **Save as:** `E17-file-restore-import-type.png`
-- **Then register:** `'E17-file-restore-import-type.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Capture as:** **A · fills a tab** — DevTools device toolbar, width 1360, DPR 1
+- **Then register:** `'E17-file-restore-import-type.png': [1360, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### E18 · How to restore the wallet using an encrypted file? · Ext · step 3
 - **Must show:** the import wallet page, with the drag-and-drop area and the password field empty or masked.
 - **Read L7, Extension half:** finish the flow and read the label of its last button.
 - **Save as:** `E18-file-restore-import-page.png`
-- **Then register:** `'E18-file-restore-import-page.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Capture as:** **A · fills a tab** — DevTools device toolbar, width 1360, DPR 1
+- **Then register:** `'E18-file-restore-import-page.png': [1360, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 ## Mobile run: phone, 14 positions
 
@@ -161,6 +285,7 @@ wallet** and the encrypted wallet file.
 - **Must show:** the App Store listing, with **Get**.
 - §7 names the App Store, so on an Android phone this is the one position that needs an iPhone.
 - **Save as:** `M01-install-app-store.png`
+- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
 - **Then register:** `'M01-install-app-store.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 ### B. Create a wallet
@@ -169,11 +294,13 @@ wallet** and the encrypted wallet file.
 - **Must show:** the **Welcome to Bread!** screen, with both of its options.
 - **Read L7, Mobile half:** the exact label of the create button.
 - **Save as:** `M02-create-welcome.png`
+- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
 - **Then register:** `'M02-create-welcome.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M03 · How do I create a Bread Wallet? · Mob · step 2
 - **Must show:** the screen for choosing how to protect the wallet, with the biometric option.
 - **Save as:** `M03-create-protect.png`
+- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
 - **Then register:** `'M03-create-protect.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M04 · How do I create a Bread Wallet? · Mob · step 5
@@ -181,6 +308,7 @@ wallet** and the encrypted wallet file.
 - **Read L2 and L5:** on the screen after it, its exact title and the label of the button that opens the
   wallet.
 - **Save as:** `M04-create-guardian.png`
+- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
 - **Then register:** `'M04-create-guardian.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 ### C. Fund the wallet
@@ -188,17 +316,20 @@ wallet** and the encrypted wallet file.
 #### M05 · How to fund your Bread Wallet? · Mob · step 1
 - **Must show:** the **Explore** tab.
 - **Save as:** `M05-fund-explore.png`
+- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
 - **Then register:** `'M05-fund-explore.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M06 · How to fund your Bread Wallet? · Mob · step 2
 - **Must show:** the **Faucet** card.
 - **Save as:** `M06-fund-faucet-card.png`
+- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
 - **Then register:** `'M06-fund-faucet-card.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M07 · How to fund your Bread Wallet? · Mob · step 3–4
 - **Must show:** the faucet page with the address, the amount, and the **Private** / **Public** choice. Mask
   all but a few characters of the address.
 - **Save as:** `M07-fund-faucet-page.png`
+- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
 - **Then register:** `'M07-fund-faucet-page.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 ### D. Find a token contract address
@@ -206,11 +337,13 @@ wallet** and the encrypted wallet file.
 #### M08 · How to find a token contract address in Bread Wallet? · Mob · step 1
 - **Must show:** the homepage, with a token being selected.
 - **Save as:** `M08-token-homepage.png`
+- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
 - **Then register:** `'M08-token-homepage.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M09 · How to find a token contract address in Bread Wallet? · Mob · step 2
 - **Must show:** the Token Information section.
 - **Save as:** `M09-token-information.png`
+- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
 - **Then register:** `'M09-token-information.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 ### E. The encrypted file on Mobile
@@ -229,27 +362,32 @@ use the one from E04.
 #### M10 · How do I restore my wallet with a recovery phrase? · Mob · step 1
 - **Must show:** the **Welcome to Bread!** screen, with **Recover your account**.
 - **Save as:** `M10-restore-welcome.png`
+- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
 - **Then register:** `'M10-restore-welcome.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M11 · How do I restore my wallet with a recovery phrase? · Mob · step 2
 - **Must show:** the import type choice.
 - **Save as:** `M11-restore-import-type.png`
+- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
 - **Then register:** `'M11-restore-import-type.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M12 · How do I restore my wallet with a recovery phrase? · Mob · step 3
 - **Must show:** the recovery-phrase entry, with the words blurred or replaced by sample words.
 - **Save as:** `M12-restore-phrase.png`
+- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
 - **Then register:** `'M12-restore-phrase.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M13 · How do I restore my wallet with a recovery phrase? · Mob · step 4
 - **Must show:** the Guardian operator list, with every operator and region visible.
 - **Save as:** `M13-restore-operators.png`
+- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
 - **Then register:** `'M13-restore-operators.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M14 · How do I restore my wallet with a recovery phrase? · Mob · step 5
 - **Must show:** the ready screen at the end of the restore.
 - **Read L2 and L6:** its exact title and the label of the button that opens the wallet.
 - **Save as:** `M14-restore-ready.png`
+- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
 - **Then register:** `'M14-restore-ready.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 ## Answers
@@ -271,6 +409,6 @@ If G could not be run, leave the Extension half of L7 blank.
 
 | | Check | Answer |
 | --- | --- | --- |
-| Q1 | Settings shows Version 1.16.0: in the extension, on the phone | |
+| Q1 | Settings version — extension (expect 1.16.1); phone (record it, mobile run) | |
 | Q2 | At E14, the import type page offers an encrypted wallet file | |
 | Q3 | Settings on the phone offers an encrypted wallet file export: menu path and labels | |
