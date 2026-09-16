@@ -979,14 +979,25 @@
  * The rail is a column of the page, not of the body, so it starts level with
  * the title instead of below the platform tabs.
  *
- * It moves beside the article only once the content column can hold the full
- * reading measure next to it: 68ch (--measure), the 3rem gap (--space-7) and
- * the 15rem rail. This was a 1180px viewport breakpoint, but the sidebar and
- * the gutters stand between the window and this column: at 1180px the rail
- * went in while the column had 764px, the article fell from 680px to 476px,
- * and it did not recover until about 1384px. A container condition cannot
- * read custom properties, so the three values are written out, and
- * e2e/article-column.spec.ts fails if the column narrows as the window widens.
+ * It moves beside the article once the content column can hold 52ch of reading
+ * measure next to it, plus the 3rem gap (--space-7) and the 15rem rail. A
+ * container condition cannot read custom properties, so the values are written
+ * out, and e2e/article-column.spec.ts fails if the column narrows as the window
+ * widens anywhere the rail did not just arrive.
+ *
+ * This was the full 68ch (--measure), which put the rail in only from about a
+ * 1400px window. Between roughly 1096px and 1400px the article was already
+ * capped at its 680px measure, so the up-to-288px strip beside it sat empty
+ * while the rail was pushed below the article, under the sequence links. Ivan
+ * reported that on 2026-09-16, with the wallet extension panel open taking the
+ * width: an empty column on the right and the subcategory list down by the
+ * footer. The reference is MetaMask's help centre, where the rail stays beside
+ * the article and the text gives up the width.
+ *
+ * 52ch is the floor Ivan chose for that trade: above it the rail is worth more
+ * than the extra characters a line, below it the article keeps the column to
+ * itself and the rail goes under. The earlier 1180px arrangement is not what
+ * this restores — that one left a 476px article, well under this floor.
  */
 .help-center-rail {
   margin-top: var(--space-6);
@@ -994,7 +1005,7 @@
   gap: var(--space-6);
 }
 
-@container help-center-content (min-width: calc(68ch + 3rem + 15rem)) {
+@container help-center-content (min-width: calc(52ch + 3rem + 15rem)) {
   .help-center-category.has-rail {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 15rem;
