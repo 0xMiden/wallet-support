@@ -685,9 +685,19 @@ the stylesheet renders a SAMPLE badge, and no article carries an `[image removed
 element and found nothing, which is worth recording so the next person does not assume it is there
 and only styled wrongly.
 
-It becomes real work the moment the first screenshot lands: a placeholder image needs to say it is a
-placeholder, and the badge has to be legible on whatever the screenshot happens to show. Not built
-now, deliberately.
+It may never become real work. Ivan ruled on 2026-09-16 that no SAMPLE placeholders ship at all: the
+positions stay empty until a real capture fills them, so there is nothing for a badge to mark. If that
+is ever reversed, a placeholder image needs to say it is a placeholder, and the badge has to be legible
+on whatever the screenshot happens to show.
+
+**`PLACEHOLDERS_OK` is not a gate and never was.** The deploy entries below record builds run with
+`PLACEHOLDERS_OK=1`, which reads as though something checked it. Nothing does: the name appears only in
+this file's prose, never in the source, the config or any workflow, on any commit in this repository's
+history — searched across every ref on 2026-09-16, not inferred. Setting it, unsetting it and misspelling
+it all produce the same build.
+
+So there is no automated placeholder gate on production, and nothing would stop a placeholder shipping.
+Whether the page is ready to publish is a human decision, made by looking at it.
 
 ## Screenshot capture list
 
