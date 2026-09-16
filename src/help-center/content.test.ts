@@ -20,6 +20,7 @@ import {
   coverageWarnings,
   helpCenterAllArticles,
   helpCenterArticleImages,
+  SCREENSHOT_SIZES,
   helpCenterArticles,
   loadArticles,
   parseArticle,
@@ -643,6 +644,49 @@ describe('fidelity to the FAQ', () => {
    * so a capture needs no change here — only its one size entry in
    * SCREENSHOT_SIZES, which this test then holds to the file's own header.
    */
+  /**
+   * The image spec in tasks/screenshot-capture-sheet.md, enforced rather than
+   * left to the eye. Every capture is 2x the width it is shown at, which is
+   * what keeps the set consistent and a 6px annotation box at 3px on screen.
+   *
+   * Vacuous until the first capture lands, like the test below it. It is here
+   * so the rule is checked from the first file rather than after thirty.
+   */
+  it('holds every step screenshot to the capture spec', () => {
+    const repoRoot = fileURLToPath(new URL('../..', import.meta.url));
+    const dir = join(repoRoot, 'src/help-center/assets/screenshots');
+
+    for (const name of [...readdirSync(dir)].filter(file => file.endsWith('.png')).sort()) {
+      const bytes = readFileSync(join(dir, name));
+      const file = readPng(bytes, `src/help-center/assets/screenshots/${name}`);
+      const entry = SCREENSHOT_SIZES[name];
+      expect(entry, `${name}: missing from SCREENSHOT_SIZES`).toBeDefined();
+
+      if ((entry as readonly unknown[])[2] === 'narrow') {
+        /*
+         * A panel, menu or dialog: whatever the surface is at 2x. The floor is
+         * 560 rather than 800 because the smallest surface in the run, Chrome's
+         * jigsaw menu, is about 310–370 CSS px and lands near 620 at 200%
+         * scaling; an 800 floor would have made that position unshootable. 560
+         * still catches what the floor is for, a capture taken at 1x, which for
+         * these surfaces lands between 310 and 400.
+         */
+        expect(file.width, `${name}: a narrow-surface capture should be 560–1200px wide at 2x`)
+          .toBeGreaterThanOrEqual(560);
+        expect(file.width, `${name}: a narrow-surface capture should be 560–1200px wide at 2x`)
+          .toBeLessThanOrEqual(1200);
+      } else {
+        // Fills a tab: DevTools device toolbar at width 1360, DPR 1.
+        expect(file.width, `${name}: a tab-width capture must be exactly 1360px wide (viewport 1360, DPR 1)`)
+          .toBe(1360);
+      }
+
+      expect(file.height, `${name}: taller than 1.3x its width, so it dominates the article`)
+        .toBeLessThanOrEqual(Math.round(file.width * 1.3));
+      expect(bytes.length, `${name}: over the 400 KB ceiling`).toBeLessThanOrEqual(400 * 1024);
+    }
+  });
+
   it('registers every step screenshot on disk, at the size its header gives', () => {
     const repoRoot = fileURLToPath(new URL('../..', import.meta.url));
     const dir = join(repoRoot, 'src/help-center/assets/screenshots');

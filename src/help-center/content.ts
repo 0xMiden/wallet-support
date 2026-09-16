@@ -145,12 +145,22 @@ const ARTICLE_IMAGE_SIZES: Readonly<Record<string, readonly [number, number]>> =
  * `tasks/screenshot-capture-sheet.md`; §7 of `tasks/content-proposal.md` says
  * where each one goes. Empty until the first capture lands — a position is
  * only real once its file is.
+ *
+ * A third element marks a narrow surface — a panel, menu or dialog, which is
+ * the size it is and cannot be captured to a set width. That covers Chrome's
+ * own menus and Bread Wallet's sidebar alike: what decides it is how wide the
+ * surface naturally is, not who owns it. Everything else fills a browser tab
+ * and is captured at exactly 1360px, so it is shown at the full 680px column.
+ * The image spec in the capture sheet has the reasoning; content.test.ts holds
+ * each file to whichever rule applies.
  */
-const SCREENSHOT_SIZES: Readonly<Record<string, readonly [number, number]>> = {};
+export type ScreenshotSize = readonly [number, number] | readonly [number, number, 'narrow'];
+
+export const SCREENSHOT_SIZES: Readonly<Record<string, ScreenshotSize>> = {};
 
 function registerImages(
   files: Readonly<Record<string, string>>,
-  sizes: Readonly<Record<string, readonly [number, number]>>,
+  sizes: Readonly<Record<string, ScreenshotSize>>,
   table: string,
   kind?: ArticleImage['kind']
 ) {
