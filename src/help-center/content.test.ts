@@ -24,6 +24,7 @@ import {
   helpCenterArticles,
   loadArticles,
   parseArticle,
+  registerImages,
   subcategoryNeedsPlatformChoice,
   validationErrors
 } from './content';
@@ -691,6 +692,14 @@ describe('fidelity to the FAQ', () => {
         .toBeLessThanOrEqual(Math.round(file.width * 1.3));
       expect(bytes.length, `${name}: over the 400 KB ceiling`).toBeLessThanOrEqual(400 * 1024);
     }
+  });
+
+  it('carries the narrow tag through to the image the renderer gets', () => {
+    const files = { './assets/screenshots/menu.png': '/menu.png', './assets/screenshots/page.png': '/page.png' };
+    const sizes = { 'menu.png': [620, 380, 'narrow'], 'page.png': [1360, 900] } as const;
+    const images = Object.fromEntries(registerImages(files, sizes, 'SIZES', 'screenshot'));
+    expect(images['menu.png']).toEqual({ src: '/menu.png', width: 620, height: 380, kind: 'screenshot', narrow: true });
+    expect(images['page.png']).toEqual({ src: '/page.png', width: 1360, height: 900, kind: 'screenshot' });
   });
 
   it('registers every step screenshot on disk, at the size its header gives', () => {

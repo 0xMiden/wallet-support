@@ -712,15 +712,13 @@ build.
 reports in the build being captured; the 1.16.0 previously recorded here came from the store listing and
 was wrong). The mobile run happens later on a different build — record its version when it starts.
 
-### Open: narrow captures are not shown at half size (blocks E01a, E02)
+### Resolved 2026-09-17: narrow captures are shown at half size
 
-- The capture sheet says a narrow-surface capture is shown at half its width, so it appears at life size.
-  The page does not do that. `registerImages` in `content.ts` drops the `'narrow'` flag, `markdown.ts`
-  writes the file's own width into the `<img>`, and the only sizing CSS is `max-width: 100%`. An ~800px
-  E01a would show at 680px and a ~620px E02 at 620px, about twice life size. Showing them at half is a
-  user-visible sizing change, so it is Ivan's call. The answer also settles B's capture rule: all of
-  Ivan's captures so far were taken at 150% scaling, where Chrome's jigsaw menu lands at about 465–555px,
-  under B's 560 floor.
+- The capture sheet said a narrow-surface capture is shown at half its width, so it appears at life
+  size, but `registerImages` dropped the `'narrow'` tag and the page showed every capture at its own
+  width up to the column, about twice life size for a menu or dialog. Ivan chose to build the halving:
+  the tag now reaches the renderer, which writes half the width and height into the `<img>`. The file
+  and its full-size link are unchanged. Narrow captures stay at **200%** scaling.
 
 ### Waiting on the mobile run
 

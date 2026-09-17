@@ -161,12 +161,12 @@ export const SCREENSHOT_SIZES: Readonly<Record<string, ScreenshotSize>> = {
   'E01-install-web-store.png': [1783, 363]
 };
 
-function registerImages(
+export function registerImages(
   files: Readonly<Record<string, string>>,
   sizes: Readonly<Record<string, ScreenshotSize>>,
   table: string,
   kind?: ArticleImage['kind']
-) {
+): [string, ArticleImage][] {
   return Object.entries(files).map(([path, src]) => {
     const name = path.slice(path.lastIndexOf('/') + 1);
     const size = sizes[name];
@@ -176,7 +176,16 @@ function registerImages(
           'They are written down because the browser needs them before the file arrives.'
       );
     }
-    return [name, kind ? { src, width: size[0], height: size[1], kind } : { src, width: size[0], height: size[1] }];
+    const image: ArticleImage = {
+      src,
+      width: size[0],
+      height: size[1],
+      ...(kind ? { kind } : {}),
+      // The renderer shows a narrow surface at half size; dropping this flag
+      // here is what once left every narrow capture at twice life size.
+      ...(size.length === 3 && size[2] === 'narrow' ? { narrow: true as const } : {})
+    };
+    return [name, image];
   });
 }
 

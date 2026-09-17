@@ -35,7 +35,7 @@ Not by who owns it. Bread Wallet's sidebar is a narrow panel like a Chrome menu,
 | What | A page in a browser tab — the whole tab, or the part of it that matters (E01: the top of the Chrome Web Store listing); any Bread Wallet screen that opens as a full page in a tab | Chrome's jigsaw menu and **Add extension** dialog; Bread Wallet's sidebar or popup |
 | How | **Whole tab:** Chrome DevTools, device toolbar, width **1360**, DPR **1**. **Part of a tab:** OS screenshot at **150%** Windows display scaling, cropped to the part that matters | OS screenshot at **200%** Windows display scaling, cropped tight to the surface |
 | Capture width | **Whole tab:** exactly **1360px**. **Part of a tab:** **1360–2040px** | whatever the surface comes to at 2x, **560–1200px** |
-| Shown at | 680px — the full column, identical for every one | intended: half the capture, so it appears at life size. **Not built yet** — today the page shows it at its own width up to 680px; open in `todo.md` |
+| Shown at | 680px — the full column, identical for every one | half the capture, so it appears at life size — the `'narrow'` tag is what tells the page to halve it |
 
 **Why 1360 at DPR 1 and not 680 at DPR 2.** Both give 1360 device pixels, which is what the 2x rule
 needs. But a page laid out for a 680px viewport is the site's *narrow* layout — the Chrome Web Store at
@@ -97,8 +97,7 @@ Read off the first three captures, so every later one matches without eyeballing
 - **Colour:** `#E61B1B` — rgb(230, 27, 27)
 - **Stroke:** **3px on screen**, the same on all four edges. Set it from the capture's width: **capture
   width × 3 ÷ 680**, rounded. A 1360px capture takes **6px**; E01, at 1783px, takes **8px**. A
-  narrow-surface capture is meant to be shown at half its width, which would make it **6px** whatever
-  its width; that waits on the open question in `todo.md`.
+  narrow-surface capture is shown at half its width, so it takes **6px** whatever its width.
 - **Corners:** square, no radius
 - **Drawn last**, on the final image at its capture size, so it scales down with everything else to 3px
 
@@ -162,8 +161,10 @@ not exactly 1360px, or a stroke that is not 3px on screen, is still yours to che
 - **Then register:** `'E01a-install-add-extension.png': [width, height, 'narrow'],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### E02 · How to install Bread Wallet · Ext · step after 3
-- **Must show:** the browser toolbar, with the **jigsaw icon** menu open and the **pin icon** beside Bread
-  Wallet.
+- **Must show:** Chrome's **Extensions** menu, open, with the **pin icon** beside Bread Wallet — taken
+  before pinning, so the pin is the plain one the reader will see.
+- **The toolbar and jigsaw icon are optional** (Ivan, 2026-09-17): the step text already says where the
+  menu opens from, and MetaMask's own help shows the menu alone.
 - **Save as:** `E02-install-pin.png`
 - **Capture as:** **B · narrow surface** — OS screenshot at 200% scaling, cropped tight
 - **Then register:** `'E02-install-pin.png': [width, height, 'narrow'],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`

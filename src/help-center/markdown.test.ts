@@ -220,6 +220,21 @@ describe('images', () => {
     // An untagged image is a diagram, which is what the five FAQ images are.
     expect(renderMarkdown('![Keys](keys.png)', 'test.md', images)).toContain('Open diagram full size');
   });
+
+  // Captured at 2x, so half the file is life size. The link still opens the
+  // file itself, at full size.
+  it('shows a narrow capture at half its size, and anything else at its own', () => {
+    const shots = {
+      'dialog.png': { src: '/assets/dialog.png', width: 870, height: 486, kind: 'screenshot' as const, narrow: true as const },
+      'odd.png': { src: '/assets/odd.png', width: 621, height: 381, kind: 'screenshot' as const, narrow: true as const },
+      'page.png': { src: '/assets/page.png', width: 1360, height: 900, kind: 'screenshot' as const }
+    };
+    const dialog = renderMarkdown('![Add extension](dialog.png)', 'test.md', shots);
+    expect(dialog).toContain('width="435" height="243"');
+    expect(dialog).toContain('href="/assets/dialog.png"');
+    expect(renderMarkdown('![Pin](odd.png)', 'test.md', shots)).toContain('width="311" height="191"');
+    expect(renderMarkdown('![Listing](page.png)', 'test.md', shots)).toContain('width="1360" height="900"');
+  });
 });
 
 describe('the migrated articles', () => {
