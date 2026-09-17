@@ -98,6 +98,14 @@ if (git('branch', '--remotes', '--contains', commit) === '') {
 const subject = git('log', '-1', '--format=%s', commit);
 const gitRef = git('rev-parse', '--abbrev-ref', 'HEAD');
 
+// The record names a commit, so the build has to be one anyone can repeat from
+// it. A local install that had drifted from yarn.lock once shipped Vite 8.0.8
+// for days after the lockfile moved to 8.0.16: same commit, different JavaScript.
+console.log('deploy:preview: yarn install --frozen-lockfile');
+if (run('yarn', ['install', '--frozen-lockfile'], { stdio: 'inherit' }).status !== 0) {
+  fail('yarn install --frozen-lockfile failed; nothing was deployed');
+}
+
 console.log(`deploy:preview: yarn verify on ${commit.slice(0, 7)} (typecheck, unit, e2e, build)`);
 if (run('yarn', ['verify'], { stdio: 'inherit' }).status !== 0) fail('yarn verify failed; nothing was deployed');
 
