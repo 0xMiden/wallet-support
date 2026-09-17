@@ -1201,9 +1201,15 @@
  * The whole figure is a link to the image at full size, because at phone width
  * a diagram's labels are too small to read. The label under it is what says
  * so; it takes the article link's colour and underline, and darkens on hover.
+ *
+ * The link is as wide as its image, so the label ends at the image's right
+ * edge rather than the column's. That only shows on a narrow capture, which is
+ * drawn at life size; anything wider still fills the column.
  */
 .help-center-article-body figure > a {
   display: block;
+  width: fit-content;
+  max-width: 100%;
   border-radius: var(--radius-sm);
   color: var(--accent-text);
   text-decoration: none;

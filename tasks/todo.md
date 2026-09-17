@@ -712,6 +712,14 @@ build.
 reports in the build being captured; the 1.16.0 previously recorded here came from the store listing and
 was wrong). The mobile run happens later on a different build — record its version when it starts.
 
+### Resolved 2026-09-17: narrow captures are shown at half size
+
+- The capture sheet said a narrow-surface capture is shown at half its width, so it appears at life
+  size, but `registerImages` dropped the `'narrow'` tag and the page showed every capture at its own
+  width up to the column, about twice life size for a menu or dialog. Ivan chose to build the halving:
+  the tag now reaches the renderer, which writes half the width and height into the `<img>`. The file
+  and its full-size link are unchanged. Narrow captures stay at **200%** scaling.
+
 ### Waiting on the mobile run
 
 - **The every-image-used test will fail on the first mobile screenshot, and the image will be fine.**
@@ -724,10 +732,10 @@ was wrong). The mobile run happens later on a different build — record its ver
 
 ### Extension, 19
 
-- [ ] E01a · How to install Bread Wallet · step 3 · Chrome's "Add extension" confirmation dialog
+- [x] E01a · How to install Bread Wallet · step 3 · Chrome's "Add extension" confirmation dialog — 870 × 486 (2026-09-17)
 
-- [ ] E01 · How to install Bread Wallet · step 2 · Chrome Web Store listing with "Add to Chrome"
-- [ ] E02 · How to install Bread Wallet · step after 3 · Browser toolbar: jigsaw icon and pin icon
+- [x] E01 · How to install Bread Wallet · step 2 · Chrome Web Store listing with "Add to Chrome" — top of the listing, 1783 × 363 (2026-09-17)
+- [x] E02 · How to install Bread Wallet · step after 3 · Extensions menu and pin icon (toolbar optional) — 616 × 300 (2026-09-17)
 - [ ] E03 · How do I create a Bread Wallet? · step 1 · "Create new wallet" / "I already have a wallet" page
 - [ ] E04 · How do I create a Bread Wallet? · step 2 · Back up your wallet page (seed phrase blurred/sample)
 - [ ] E05 · How do I create a Bread Wallet? · step 4 · Create password page

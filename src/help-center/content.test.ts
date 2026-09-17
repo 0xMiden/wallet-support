@@ -24,6 +24,7 @@ import {
   helpCenterArticles,
   loadArticles,
   parseArticle,
+  registerImages,
   subcategoryNeedsPlatformChoice,
   validationErrors
 } from './content';
@@ -625,11 +626,15 @@ describe('fidelity to the FAQ', () => {
   });
 
   it('shows each image where the FAQ places it, with its heading as alt text', () => {
-    const shown = helpCenterAllArticles.flatMap(article =>
-      [...(article.bodies['extension-desktop'] ?? '').matchAll(/^!\[([^\]]*)\]\(([^)\s]+)\)$/gm)].map(
-        match => [match[2] as string, match[1] as string] as const
+    // Step screenshots are placed by the capture sheet, not the FAQ. Most sit
+    // indented under a step and never matched, but one between paragraphs does.
+    const shown = helpCenterAllArticles
+      .flatMap(article =>
+        [...(article.bodies['extension-desktop'] ?? '').matchAll(/^!\[([^\]]*)\]\(([^)\s]+)\)$/gm)].map(
+          match => [match[2] as string, match[1] as string] as const
+        )
       )
-    );
+      .filter(([name]) => helpCenterArticleImages[name]?.kind !== 'screenshot');
 
     expect(shown).toHaveLength(5);
     expect(Object.fromEntries(shown)).toEqual(FAQ_IMAGE_ALT);
@@ -639,18 +644,15 @@ describe('fidelity to the FAQ', () => {
   });
 
   /**
-   * The step screenshots of §7. There are none yet: this is the guard that
-   * starts working the moment the first capture is dropped into the directory,
-   * so a capture needs no change here — only its one size entry in
-   * SCREENSHOT_SIZES, which this test then holds to the file's own header.
+   * The step screenshots of §7. A capture needs no change here — only its one
+   * size entry in SCREENSHOT_SIZES, which this test then holds to the file's
+   * own header.
    */
   /**
    * The image spec in tasks/screenshot-capture-sheet.md, enforced rather than
-   * left to the eye. Every capture is 2x the width it is shown at, which is
-   * what keeps the set consistent and a 6px annotation box at 3px on screen.
-   *
-   * Vacuous until the first capture lands, like the test below it. It is here
-   * so the rule is checked from the first file rather than after thirty.
+   * left to the eye. Every capture is at least 2x the width it is shown at,
+   * which is what keeps the set crisp and consistent. The annotation stroke is
+   * set from the width so it lands at 3px on screen; that one is checked by eye.
    */
   it('holds every step screenshot to the capture spec', () => {
     const repoRoot = fileURLToPath(new URL('../..', import.meta.url));
@@ -676,15 +678,32 @@ describe('fidelity to the FAQ', () => {
         expect(file.width, `${name}: a narrow-surface capture should be 560–1200px wide at 2x`)
           .toBeLessThanOrEqual(1200);
       } else {
-        // Fills a tab: DevTools device toolbar at width 1360, DPR 1.
-        expect(file.width, `${name}: a tab-width capture must be exactly 1360px wide (viewport 1360, DPR 1)`)
-          .toBe(1360);
+        /*
+         * Fills the column: a whole tab from the DevTools device toolbar at
+         * width 1360, DPR 1, or the part of a tab that matters, cropped from an
+         * OS screenshot at 150% scaling. 1360 is the floor because anything
+         * narrower is under 2x on the 680px column. 2040 is the ceiling because
+         * at 150% that is 1360 CSS px of page, as much as a whole-tab capture
+         * holds; any wider and the page shows smaller than a whole tab does.
+         */
+        const rule = `${name}: a column-width capture should be 1360–2040px wide ` +
+          '(a whole tab at viewport 1360, DPR 1, or part of one at 150% scaling)';
+        expect(file.width, rule).toBeGreaterThanOrEqual(1360);
+        expect(file.width, rule).toBeLessThanOrEqual(2040);
       }
 
       expect(file.height, `${name}: taller than 1.3x its width, so it dominates the article`)
         .toBeLessThanOrEqual(Math.round(file.width * 1.3));
       expect(bytes.length, `${name}: over the 400 KB ceiling`).toBeLessThanOrEqual(400 * 1024);
     }
+  });
+
+  it('carries the narrow tag through to the image the renderer gets', () => {
+    const files = { './assets/screenshots/menu.png': '/menu.png', './assets/screenshots/page.png': '/page.png' };
+    const sizes = { 'menu.png': [620, 380, 'narrow'], 'page.png': [1360, 900] } as const;
+    const images = Object.fromEntries(registerImages(files, sizes, 'SIZES', 'screenshot'));
+    expect(images['menu.png']).toEqual({ src: '/menu.png', width: 620, height: 380, kind: 'screenshot', narrow: true });
+    expect(images['page.png']).toEqual({ src: '/page.png', width: 1360, height: 900, kind: 'screenshot' });
   });
 
   it('registers every step screenshot on disk, at the size its header gives', () => {

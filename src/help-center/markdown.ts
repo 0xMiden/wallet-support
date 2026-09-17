@@ -95,6 +95,12 @@ export interface ArticleImage {
    * their shipped label is unchanged by this field arriving.
    */
   readonly kind?: ArticleImageKind;
+  /**
+   * A panel, menu or dialog, captured at 2x. It is shown at half its width and
+   * height, so it appears at life size; stretched to the column it would look
+   * twice as big as the real thing. Width and height stay the file's own.
+   */
+  readonly narrow?: true;
 }
 
 export type ArticleImages = Readonly<Record<string, ArticleImage>>;
@@ -281,9 +287,12 @@ export function renderBlocks(
       const src = escapeText(file.src);
       const label = escapeText(alt);
       const open = OPEN_FULL_SIZE[file.kind ?? 'diagram'];
+      const scale = file.narrow ? 2 : 1;
+      const width = Math.round(file.width / scale);
+      const height = Math.round(file.height / scale);
       output.push(
         `<figure><a href="${src}" target="_blank" rel="noopener noreferrer" aria-label="${open}: ${label}">` +
-          `<img src="${src}" alt="${label}" width="${file.width}" height="${file.height}" loading="lazy" decoding="async">` +
+          `<img src="${src}" alt="${label}" width="${width}" height="${height}" loading="lazy" decoding="async">` +
           `<span>${open}${OPEN_ICON}</span></a></figure>`
       );
       index += 1;

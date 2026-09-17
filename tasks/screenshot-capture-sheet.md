@@ -17,31 +17,38 @@ which came from the store listing — the installed build is the authority, not 
 
 ## Image spec — keep this open while capturing
 
-**Every capture is 2x: twice the width it will be shown at.** That one rule is what makes the set look
-like a set. It is crisp on a modern display, and a 6px annotation box always lands at 3px on screen,
-whatever the capture is of.
+**Every capture is at least 2x: at least twice the width it will be shown at.** That one rule is what
+makes the set look like a set. It is crisp on a modern display, and with the stroke set by the
+capture's width (under Annotation) the box always lands at 3px on screen, whatever the capture is of.
 
 The article column is at most **680px** (68ch, `--measure`) and never wider, so 680px is the widest any
 image is ever shown. An image wider than the column is scaled down to fit it; an image narrower than the
-column is shown at its own size. That is why a narrow capture looks small and out of step beside a wide
-one — it is not being scaled at all.
+column is shown at its own size. A capture tagged `'narrow'` is the exception: it is shown at half its
+width, which is life size for a 200% capture.
 
 ### Two categories, decided by how wide the surface naturally is
 
 Not by who owns it. Bread Wallet's sidebar is a narrow panel like a Chrome menu, not like a full tab.
 
-| | **A · Fills a browser tab** | **B · A narrow panel, menu or dialog** |
+| | **A · Fills the column** | **B · A narrow panel, menu or dialog** |
 |---|---|---|
-| What | The Chrome Web Store listing; any Bread Wallet screen that opens as a full page in a tab | Chrome's jigsaw menu and **Add extension** dialog; Bread Wallet's sidebar or popup |
-| How | Chrome DevTools, device toolbar, width **1360**, DPR **1** | OS screenshot at **200%** Windows display scaling, cropped tight to the surface |
-| Capture width | exactly **1360px** | whatever the surface comes to at 2x, **560–1200px** |
-| Shown at | 680px — the full column, identical for every one | half the capture, so it appears at life size |
+| What | A page in a browser tab — the whole tab, or the part of it that matters (E01: the top of the Chrome Web Store listing); any Bread Wallet screen that opens as a full page in a tab | Chrome's jigsaw menu and **Add extension** dialog; Bread Wallet's sidebar or popup |
+| How | **Whole tab:** Chrome DevTools, device toolbar, width **1360**, DPR **1**. **Part of a tab:** OS screenshot at **150%** Windows display scaling, cropped to the part that matters | OS screenshot at **200%** Windows display scaling, cropped tight to the surface |
+| Capture width | **Whole tab:** exactly **1360px**. **Part of a tab:** **1360–2040px** | whatever the surface comes to at 2x, **560–1200px** |
+| Shown at | 680px — the full column, identical for every one | half the capture, so it appears at life size — the `'narrow'` tag is what tells the page to halve it |
 
 **Why 1360 at DPR 1 and not 680 at DPR 2.** Both give 1360 device pixels, which is what the 2x rule
 needs. But a page laid out for a 680px viewport is the site's *narrow* layout — the Chrome Web Store at
-680px is not the listing anyone sees, and E01 exists to make the right listing recognisable among
-lookalikes. 1360 CSS pixels is a desktop viewport, so the capture shows the desktop layout, and the
-1360 device pixels still land exactly 2x on a 680px render.
+680px is not the listing anyone sees on a desktop. 1360 CSS pixels is a desktop viewport, so the capture
+shows the desktop layout, and the 1360 device pixels still land exactly 2x on a 680px render.
+
+**Part of a tab, and why 1360–2040.** When only one region of a page matters, crop to it instead of
+shooting the whole tab — E01 shows the top of the listing, where the icon, the name **Bread Wallet by
+Miden** and **Add to Chrome** sit together. Take it with the OS screenshot tool at 150%, the scaling this
+run's display already uses. Every file under 1360px is under 2x on the 680px column, so that is the floor
+— at 150% it means a region at least about 910 CSS px wide. 2040px at 150% is 1360 CSS px of page, as
+much as a whole-tab capture holds, so that is the ceiling: any wider and the page shows smaller than a
+whole tab does. A region that wide should be a whole-tab capture instead.
 
 A tab-width surface gets one fixed width because you choose it: a page reflows to whatever viewport is
 set, so there is no reason for two of them to differ. A narrow surface cannot — a menu is the size it
@@ -88,7 +95,9 @@ at. If a pre-tagged one turns out wrong when you see it, the tag is a starting p
 Read off the first three captures, so every later one matches without eyeballing it:
 
 - **Colour:** `#E61B1B` — rgb(230, 27, 27)
-- **Stroke:** **6px**, the same on all four edges
+- **Stroke:** **3px on screen**, the same on all four edges. Set it from the capture's width: **capture
+  width × 3 ÷ 680**, rounded. A 1360px capture takes **6px**; E01, at 1783px, takes **8px**. A
+  narrow-surface capture is shown at half its width, so it takes **6px** whatever its width.
 - **Corners:** square, no radius
 - **Drawn last**, on the final image at its capture size, so it scales down with everything else to 3px
 
@@ -96,9 +105,10 @@ One box per capture, unless a step genuinely has two controls to point at.
 
 ### If a capture misses the spec
 
-`content.test.ts` fails the build and names the file and the number it found: a page capture that is not
-exactly 1360px wide, a chrome capture outside 800–1200px, any image taller than 1.3× its width, or any
-file over 400 KB. None of it is left to spot by eye.
+`content.test.ts` fails the build and names the file and the number it found: a column-width capture
+outside 1360–2040px, a narrow-surface capture outside 560–1200px, any image taller than 1.3× its width, or
+any file over 400 KB. The test cannot tell a whole tab from part of one, so a whole-tab capture that is
+not exactly 1360px, or a stroke that is not 3px on screen, is still yours to check.
 
 ## Before you start
 
@@ -134,22 +144,32 @@ file over 400 KB. None of it is left to spot by eye.
 - The article's Chrome link is correct and live — it points at
   `bread-wallet-by-miden/coajhopfooegmaifelglfboehacldcbo`, so open it from the article. (This position
   once warned the link was dead; that was fixed before the run began.)
+- **Framing (Ivan, 2026-09-17):** the top of the listing, not the whole page — the icon, the name, the
+  rating and **Add to Chrome**. This replaces the earlier whole-page framing.
 - **Save as:** `E01-install-web-store.png`
-- **Capture as:** **A · fills a tab** — DevTools device toolbar, width 1360, DPR 1
-- **Then register:** `'E01-install-web-store.png': [1360, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Capture as:** **A · part of a tab** — OS screenshot at 150% scaling, cropped to the top of the listing
+- **Captured:** 1783 × 363, 8px box. The 8px is Ivan's 6px box thickened inward by 2px, so its outer
+  edge is where he drew it.
+- **Then register:** `'E01-install-web-store.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### E01a · How to install Bread Wallet · Ext · step 3
 - **Must show:** Chrome's confirmation dialog, **Add "Bread Wallet by Miden"?**, with **Add extension**.
 - Added 2026-09-16 on Ivan's call, after the capture run began: §7 had no position for step 3. It is a
   33rd position, not a renumbering — E02 onwards keep the IDs this sheet already gave them.
 - **Save as:** `E01a-install-add-extension.png`
+- **Captured 2026-09-17:** 870 × 486 at 200%, shown at 435 × 243. The box is 8px, so 4px on screen, and
+  **Cancel** shows Chrome's focus ring; Ivan accepted both.
 - **Capture as:** **B · narrow surface** — OS screenshot at 200% scaling, cropped tight
 - **Then register:** `'E01a-install-add-extension.png': [width, height, 'narrow'],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### E02 · How to install Bread Wallet · Ext · step after 3
-- **Must show:** the browser toolbar, with the **jigsaw icon** menu open and the **pin icon** beside Bread
-  Wallet.
+- **Must show:** Chrome's **Extensions** menu, open, with the **pin icon** beside Bread Wallet — taken
+  before pinning, so the pin is the plain one the reader will see.
+- **The toolbar and jigsaw icon are optional** (Ivan, 2026-09-17): the step text already says where the
+  menu opens from, and MetaMask's own help shows the menu alone.
 - **Save as:** `E02-install-pin.png`
+- **Captured 2026-09-17:** 616 × 300 at 200%, the menu alone, before pinning; shown at 308 × 150. The box is
+  8px, so 4px on screen; Ivan accepted it.
 - **Capture as:** **B · narrow surface** — OS screenshot at 200% scaling, cropped tight
 - **Then register:** `'E02-install-pin.png': [width, height, 'narrow'],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
