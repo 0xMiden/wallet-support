@@ -23,7 +23,11 @@ Format: "## " = Notion section, "### " = article title (verbatim), "> " = callou
 
 3. On the confirmation dialog, click **Add extension**.
 
+   ![Chrome's confirmation dialog for Bread Wallet by Miden, with the Add extension button highlighted](E01a-install-add-extension.png)
+
 After adding the Bread Wallet extension, Bread Wallet will open automatically. To keep it easy to access, click the **jigsaw icon** in the top-right corner of your browser, then click the **pin icon** to add it to your toolbar.
+
+![Chrome's Extensions menu, opened from the jigsaw icon, with the pin icon beside Bread Wallet highlighted](E02-install-pin.png)
 
 ### How do I create a Bread Wallet?
 

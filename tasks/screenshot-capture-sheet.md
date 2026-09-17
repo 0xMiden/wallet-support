@@ -23,8 +23,8 @@ capture's width (under Annotation) the box always lands at 3px on screen, whatev
 
 The article column is at most **680px** (68ch, `--measure`) and never wider, so 680px is the widest any
 image is ever shown. An image wider than the column is scaled down to fit it; an image narrower than the
-column is shown at its own size. That is why a narrow capture looks small and out of step beside a wide
-one — it is not being scaled at all.
+column is shown at its own size. A capture tagged `'narrow'` is the exception: it is shown at half its
+width, which is life size for a 200% capture.
 
 ### Two categories, decided by how wide the surface naturally is
 
@@ -157,6 +157,8 @@ not exactly 1360px, or a stroke that is not 3px on screen, is still yours to che
 - Added 2026-09-16 on Ivan's call, after the capture run began: §7 had no position for step 3. It is a
   33rd position, not a renumbering — E02 onwards keep the IDs this sheet already gave them.
 - **Save as:** `E01a-install-add-extension.png`
+- **Captured 2026-09-17:** 870 × 486 at 200%, shown at 435 × 243. The box is 8px, so 4px on screen, and
+  **Cancel** shows Chrome's focus ring; Ivan accepted both.
 - **Capture as:** **B · narrow surface** — OS screenshot at 200% scaling, cropped tight
 - **Then register:** `'E01a-install-add-extension.png': [width, height, 'narrow'],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
@@ -166,6 +168,8 @@ not exactly 1360px, or a stroke that is not 3px on screen, is still yours to che
 - **The toolbar and jigsaw icon are optional** (Ivan, 2026-09-17): the step text already says where the
   menu opens from, and MetaMask's own help shows the menu alone.
 - **Save as:** `E02-install-pin.png`
+- **Captured 2026-09-17:** 616 × 300 at 200%, the menu alone, before pinning; shown at 308 × 150. The box is
+  8px, so 4px on screen; Ivan accepted it.
 - **Capture as:** **B · narrow surface** — OS screenshot at 200% scaling, cropped tight
 - **Then register:** `'E02-install-pin.png': [width, height, 'narrow'],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 

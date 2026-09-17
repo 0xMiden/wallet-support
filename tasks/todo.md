@@ -732,10 +732,10 @@ was wrong). The mobile run happens later on a different build — record its ver
 
 ### Extension, 19
 
-- [ ] E01a · How to install Bread Wallet · step 3 · Chrome's "Add extension" confirmation dialog
+- [x] E01a · How to install Bread Wallet · step 3 · Chrome's "Add extension" confirmation dialog — 870 × 486 (2026-09-17)
 
 - [x] E01 · How to install Bread Wallet · step 2 · Chrome Web Store listing with "Add to Chrome" — top of the listing, 1783 × 363 (2026-09-17)
-- [ ] E02 · How to install Bread Wallet · step after 3 · Browser toolbar: jigsaw icon and pin icon
+- [x] E02 · How to install Bread Wallet · step after 3 · Extensions menu and pin icon (toolbar optional) — 616 × 300 (2026-09-17)
 - [ ] E03 · How do I create a Bread Wallet? · step 1 · "Create new wallet" / "I already have a wallet" page
 - [ ] E04 · How do I create a Bread Wallet? · step 2 · Back up your wallet page (seed phrase blurred/sample)
 - [ ] E05 · How do I create a Bread Wallet? · step 4 · Create password page

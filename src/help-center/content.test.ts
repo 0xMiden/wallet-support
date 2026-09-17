@@ -626,11 +626,15 @@ describe('fidelity to the FAQ', () => {
   });
 
   it('shows each image where the FAQ places it, with its heading as alt text', () => {
-    const shown = helpCenterAllArticles.flatMap(article =>
-      [...(article.bodies['extension-desktop'] ?? '').matchAll(/^!\[([^\]]*)\]\(([^)\s]+)\)$/gm)].map(
-        match => [match[2] as string, match[1] as string] as const
+    // Step screenshots are placed by the capture sheet, not the FAQ. Most sit
+    // indented under a step and never matched, but one between paragraphs does.
+    const shown = helpCenterAllArticles
+      .flatMap(article =>
+        [...(article.bodies['extension-desktop'] ?? '').matchAll(/^!\[([^\]]*)\]\(([^)\s]+)\)$/gm)].map(
+          match => [match[2] as string, match[1] as string] as const
+        )
       )
-    );
+      .filter(([name]) => helpCenterArticleImages[name]?.kind !== 'screenshot');
 
     expect(shown).toHaveLength(5);
     expect(Object.fromEntries(shown)).toEqual(FAQ_IMAGE_ALT);

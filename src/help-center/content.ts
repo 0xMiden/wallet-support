@@ -158,7 +158,9 @@ const ARTICLE_IMAGE_SIZES: Readonly<Record<string, readonly [number, number]>> =
 export type ScreenshotSize = readonly [number, number] | readonly [number, number, 'narrow'];
 
 export const SCREENSHOT_SIZES: Readonly<Record<string, ScreenshotSize>> = {
-  'E01-install-web-store.png': [1783, 363]
+  'E01-install-web-store.png': [1783, 363],
+  'E01a-install-add-extension.png': [870, 486, 'narrow'],
+  'E02-install-pin.png': [616, 300, 'narrow']
 };
 
 export function registerImages(
