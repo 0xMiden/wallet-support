@@ -6,8 +6,10 @@
  *
  * Deploying the shared preview is a manual step, and nothing said when it was
  * missed: PRs #7 to #9 sat merged for days while help-center-shell still served
- * PR #3. This is what says so. It needs no Cloudflare credentials — the link is
- * public, and every deployment serves its own record at /deploy-record.json.
+ * PR #3. Keeping it current is the maintainer's own job, done without issues or
+ * alerts, and this is the verdict it runs on before and after a deploy. It needs
+ * no Cloudflare credentials — the link is public, and every deployment serves
+ * its own record at /deploy-record.json.
  *
  * It compares built files, not commits. Each deploy's record reaches main in a
  * pull request of its own, so main moves past the deployed commit without one
@@ -21,14 +23,14 @@
  * Exit 1  it does not
  * Exit 2  the check could not be made: no build, or no readable record
  *
- * --report writes the outcome as Markdown, for the workflow to put in an issue.
- * In GitHub Actions it also sets the step output `result` to match, behind or
- * unchecked. The workflow reads that, not the exit code: a crash also exits 1,
- * and must not pass for "behind".
+ * --report also writes the outcome as Markdown.
+ *
+ * Comparing files is what caught a deploy built from a stale local Vite: its
+ * commit matched main, its JavaScript did not.
  */
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { appendFileSync, existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -47,18 +49,8 @@ function option(name) {
 const link = (option('--url') ?? SHARED_LINK).replace(/\/+$/, '');
 const reportFile = option('--report');
 
-const run = process.env.GITHUB_RUN_ID
-  ? `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`
-  : null;
-
 function finish(code, summary, markdown) {
-  const footer = run ? `\n\nChecked by the [Preview freshness run](${run}).\n` : '\n';
-  const body = `${markdown.trim()}${footer}`;
-  if (reportFile) writeFileSync(reportFile, body);
-  if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, body);
-  if (process.env.GITHUB_OUTPUT) {
-    appendFileSync(process.env.GITHUB_OUTPUT, `result=${['match', 'behind', 'unchecked'][code]}\n`);
-  }
+  if (reportFile) writeFileSync(reportFile, `${markdown.trim()}\n`);
   (code === 0 ? console.log : console.error)(`check:preview-freshness: ${summary}`);
   process.exit(code);
 }
@@ -186,7 +178,7 @@ finish(1, `${link} does not serve what ${here.commit} builds (${differing} files
   ...list('Changed', changed),
   ...list('Only in main', onlyBuilt),
   ...list('Only on the link', onlyServed),
-  '**To fix it:** from an up-to-date `main`, run `yarn deploy:preview help-center-shell`, then commit the record it writes in a pull request. This issue closes itself at the next check once the link matches.',
+  '**To fix it:** from an up-to-date `main`, run `yarn deploy:preview help-center-shell`, and commit the record it writes with the next pull request.',
   '',
   `Link: ${link}`
 ].join('\n'));
