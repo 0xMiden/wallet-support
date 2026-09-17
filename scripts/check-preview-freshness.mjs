@@ -22,6 +22,9 @@
  * Exit 2  the check could not be made: no build, or no readable record
  *
  * --report writes the outcome as Markdown, for the workflow to put in an issue.
+ * In GitHub Actions it also sets the step output `result` to match, behind or
+ * unchecked. The workflow reads that, not the exit code: a crash also exits 1,
+ * and must not pass for "behind".
  */
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -53,6 +56,9 @@ function finish(code, summary, markdown) {
   const body = `${markdown.trim()}${footer}`;
   if (reportFile) writeFileSync(reportFile, body);
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, body);
+  if (process.env.GITHUB_OUTPUT) {
+    appendFileSync(process.env.GITHUB_OUTPUT, `result=${['match', 'behind', 'unchecked'][code]}\n`);
+  }
   (code === 0 ? console.log : console.error)(`check:preview-freshness: ${summary}`);
   process.exit(code);
 }

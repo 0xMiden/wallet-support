@@ -10,7 +10,8 @@ name: Preview freshness
 # well, as the reminder while it stays behind, and because GitHub disables a
 # schedule in a quiet public repository after 60 days; the push trigger keeps
 # working either way. On a pull request that changes the check, to test the
-# check itself; that run reports in the pull request and never touches the issue.
+# check itself: that run fails only if the check is broken, not because the link
+# is behind, and never touches the issue.
 
 on:
   push:
@@ -36,7 +37,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     outputs:
-      outcome: ${{ steps.result.outputs.outcome }}
+      result: ${{ steps.result.outputs.result }}
       report: ${{ steps.result.outputs.report }}
     steps:
       # Actions are pinned to full commit SHAs, with the release tag beside each.
@@ -53,6 +54,8 @@ jobs:
 
       - run: yarn build
 
+      # Sets the step output `result`: match, behind or unchecked. A crash sets
+      # nothing, which is why the exit code is not what gets read.
       - name: Compare the link with this build
         id: check
         continue-on-error: true
@@ -62,7 +65,7 @@ jobs:
         id: result
         if: always()
         env:
-          OUTCOME: ${{ steps.check.outcome }}
+          RESULT: ${{ steps.check.outputs.result }}
         run: |
           report="$RUNNER_TEMP/freshness.md"
           if [ ! -s "$report" ]; then
@@ -70,21 +73,23 @@ jobs:
           fi
           delimiter="REPORT_$(openssl rand -hex 16)"
           {
-            echo "outcome=${OUTCOME:-failure}"
+            echo "result=${RESULT:-error}"
             echo "report<<$delimiter"
             cat "$report"
             echo "$delimiter"
           } >> "$GITHUB_OUTPUT"
 
-      - name: Fail the pull request's run while the link does not match
-        if: github.event_name == 'pull_request' && steps.check.outcome != 'success'
+      # A link that is behind is not this pull request's doing; a check that
+      # cannot run is.
+      - name: Fail the pull request's run if the check itself is broken
+        if: github.event_name == 'pull_request' && steps.check.outputs.result != 'match' && steps.check.outputs.result != 'behind'
         run: exit 1
 
   # Keeps one issue in step with the result. Holds the write token, so it runs
   # no repository code: no checkout, only the GitHub CLI and the check's report.
   issue:
     needs: check
-    if: always() && github.event_name != 'pull_request' && needs.check.outputs.outcome != ''
+    if: always() && github.event_name != 'pull_request' && needs.check.outputs.result != ''
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     permissions:
@@ -94,18 +99,19 @@ jobs:
       GH_REPO: ${{ github.repository }}
       ISSUE_TITLE: The shared preview link doesn't match main
       ASSIGNEE: Ivanlomoljo26
-      OUTCOME: ${{ needs.check.outputs.outcome }}
+      RESULT: ${{ needs.check.outputs.result }}
       REPORT: ${{ needs.check.outputs.report }}
     steps:
-      # Found by title among the bot's open issues: edited while the link stays
+      # Found by title alone among open issues, so a filter that matched too
+      # narrowly cannot open a new issue every day. Edited while the link stays
       # behind, closed once it catches up. Editing a body sends no notification,
       # so a stale link is announced once, when the issue opens, not every day.
       - name: Open, update or close the issue
         run: |
           printf '%s\n' "$REPORT" > "$RUNNER_TEMP/freshness.md"
-          open=$(gh issue list --state open --author app/github-actions --limit 100 \
-            --json number,title --jq 'map(select(.title == env.ISSUE_TITLE)) | .[0].number // empty')
-          if [ "$OUTCOME" = success ]; then
+          open=$(gh issue list --state open --limit 200 --json number,title \
+            --jq 'map(select(.title == env.ISSUE_TITLE)) | .[0].number // empty')
+          if [ "$RESULT" = match ]; then
             if [ -n "$open" ]; then
               gh issue close "$open" --comment "The link matches main again, as of ${GITHUB_SHA::7}."
             fi
@@ -116,5 +122,5 @@ jobs:
           fi
 
       - name: Fail the run while the link does not match
-        if: env.OUTCOME != 'success'
+        if: env.RESULT != 'match'
         run: exit 1
