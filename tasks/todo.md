@@ -736,11 +736,11 @@ was wrong). The mobile run happens later on a different build — record its ver
 
 - [x] E01 · How to install Bread Wallet · step 2 · Chrome Web Store listing with "Add to Chrome" — top of the listing, 1783 × 363 (2026-09-17)
 - [x] E02 · How to install Bread Wallet · step after 3 · Extensions menu and pin icon (toolbar optional) — 616 × 300 (2026-09-17)
-- [x] E03 · How do I create a Bread Wallet? · step 1 · **Welcome to Bread!** with **Get started** — 820 × 902 (2026-09-17)
-- [x] E04 · How do I create a Bread Wallet? · step 2 · Miden Testnet notice with **I understand** — 817 × 1010 (2026-09-17)
-- [x] E05 · How do I create a Bread Wallet? · step 3 · **Create password** — 824 × 878 (2026-09-17)
-- [x] E06 · How do I create a Bread Wallet? · step 4 · **Choose your Guardian** — 819 × 972 (2026-09-17)
-- [x] E06a · How do I create a Bread Wallet? · step 5 · **Your Wallet is ready!** with **Open wallet** — 821 × 601 (2026-09-17)
+- [x] E03 · How do I create a Bread Wallet? · step 1 · **Welcome to Bread!** with **Get started** — 820 × 903 (2026-09-17)
+- [x] E04 · How do I create a Bread Wallet? · step 2 · Miden Testnet notice with **I understand** — 817 × 991 (2026-09-17)
+- [x] E05 · How do I create a Bread Wallet? · step 3 · **Create password** — 824 × 879 (2026-09-17)
+- [x] E06 · How do I create a Bread Wallet? · step 4 · **Choose your Guardian** — 819 × 953 (2026-09-17)
+- [x] E06a · How do I create a Bread Wallet? · step 5 · **Your Wallet is ready!** with **Open wallet** — 821 × 582 (2026-09-17)
 - [ ] E07 · How to fund your Bread Wallet? · step 1 · Wallet homepage with "Faucet"
 - [ ] E08 · How to fund your Bread Wallet? · step 3–4 · Faucet page: address, amount, Private/Public
 - [ ] E09 · How to find a token contract address in Bread Wallet? · step 2 · Token Information section with copy icon

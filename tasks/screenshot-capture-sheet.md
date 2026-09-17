@@ -101,7 +101,8 @@ Read off the first three captures, so every later one matches without eyeballing
 - **Corners:** square, no radius
 - **Drawn last**, on the final image at its capture size, so it scales down with everything else to 3px
 
-One box per capture, unless a step genuinely has two controls to point at.
+**Only the Chrome install screenshots (E01, E01a, E02) get a box** — Ivan, 2026-09-17. Screenshots of
+Bread Wallet's own screens carry none. Nothing is drawn on a delivered capture without Ivan asking.
 
 ### If a capture misses the spec
 
@@ -179,31 +180,31 @@ The wallet's onboarding changed before this position was shot: there is no longe
 Guardian-or-Fully-private choice while creating a wallet, and the article's steps were rewritten to
 match (Ivan, 2026-09-17). E03 to E06 keep their numbers but now show the new screens, and E06a is a
 34th position for the last one. All five were taken at 150% and are tagged narrow, so they show at
-half their width: about three-quarters of life size, which Ivan accepted. Each carries
-a 6px box around the button its step names, added after capture; only the box's pixels differ from
-the file as delivered, and the empty space below the content was cropped.
+half their width: about three-quarters of life size, which Ivan accepted. They carry **no box**:
+boxes are for the Chrome install screenshots only (Ivan, 2026-09-17, after boxes were added here
+without asking and looked messy). Only the empty space below the content was cropped, to meet the
+height rule; every remaining pixel is the file as delivered.
 
 #### E03 · How do I create a Bread Wallet? · Ext · step 1
-- **Shows:** **Welcome to Bread!**, with **Get started** boxed.
-- **File:** `E03-create-get-started.png`, 820 × 902, narrow
+- **Shows:** **Welcome to Bread!**, with **Get started**.
+- **File:** `E03-create-get-started.png`, 820 × 903, narrow
 
 #### E04 · How do I create a Bread Wallet? · Ext · step 2
-- **Shows:** the Miden Testnet notice (*You are using Bread on Miden Testnet*), with **I understand**
-  boxed. The article calls it the Acknowledgment Screen page, by Ivan's choice. Retaken once to lose
+- **Shows:** the Miden Testnet notice (*You are using Bread on Miden Testnet*), with **I understand**. The article calls it the Acknowledgment Screen page, by Ivan's choice. Retaken once to lose
   the mouse pointer.
-- **File:** `E04-create-testnet-notice.png`, 817 × 1010, narrow
+- **File:** `E04-create-testnet-notice.png`, 817 × 991, narrow
 
 #### E05 · How do I create a Bread Wallet? · Ext · step 3
-- **Shows:** **Create password**, fields masked, with **Continue** boxed.
-- **File:** `E05-create-password.png`, 824 × 878, narrow
+- **Shows:** **Create password**, fields masked.
+- **File:** `E05-create-password.png`, 824 × 879, narrow
 
 #### E06 · How do I create a Bread Wallet? · Ext · step 4
-- **Shows:** **Choose your Guardian**, with **Continue** boxed.
-- **File:** `E06-create-guardian.png`, 819 × 972, narrow
+- **Shows:** **Choose your Guardian**, with the four operators.
+- **File:** `E06-create-guardian.png`, 819 × 953, narrow
 
 #### E06a · How do I create a Bread Wallet? · Ext · step 5
-- **Shows:** **Your Wallet is ready!**, with **Open wallet** boxed.
-- **File:** `E06a-create-wallet-ready.png`, 821 × 601, narrow
+- **Shows:** **Your Wallet is ready!**, with **Open wallet**.
+- **File:** `E06a-create-wallet-ready.png`, 821 × 582, narrow
 
 ### C. Fund the wallet
 
