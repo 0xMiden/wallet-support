@@ -17,6 +17,9 @@ platforms: [extension-desktop, mobile]
 
 1. Visit the [Bread Wallet listing on the Chrome Web Store](https://chromewebstore.google.com/detail/bread-wallet-by-miden/coajhopfooegmaifelglfboehacldcbo).
 2. Click the **Add to Chrome** button.
+
+   ![The Bread Wallet by Miden listing on the Chrome Web Store, with the Add to Chrome button highlighted](E01-install-web-store.png)
+
 3. On the confirmation dialog, click **Add extension**.
 
 After adding the Bread Wallet extension, Bread Wallet will open automatically. To keep it easy to access, click the **jigsaw icon** in the top-right corner of your browser, then click the **pin icon** to add it to your toolbar.

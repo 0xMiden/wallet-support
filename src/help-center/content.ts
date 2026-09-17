@@ -143,20 +143,23 @@ const ARTICLE_IMAGE_SIZES: Readonly<Record<string, readonly [number, number]>> =
  * because they are captured against a wallet release rather than drawn, and
  * are replaced whenever the screen they show changes. Filenames come from
  * `tasks/screenshot-capture-sheet.md`; §7 of `tasks/content-proposal.md` says
- * where each one goes. Empty until the first capture lands — a position is
- * only real once its file is.
+ * where each one goes. A position is only real once its file is, so an entry
+ * lands with its capture, never ahead of it.
  *
  * A third element marks a narrow surface — a panel, menu or dialog, which is
  * the size it is and cannot be captured to a set width. That covers Chrome's
  * own menus and Bread Wallet's sidebar alike: what decides it is how wide the
- * surface naturally is, not who owns it. Everything else fills a browser tab
- * and is captured at exactly 1360px, so it is shown at the full 680px column.
- * The image spec in the capture sheet has the reasoning; content.test.ts holds
- * each file to whichever rule applies.
+ * surface naturally is, not who owns it. Everything else fills the 680px
+ * column: a whole browser tab captured at exactly 1360px, or the part of one
+ * that matters, cropped from a 150% screenshot to 1360–2040px. The image spec
+ * in the capture sheet has the reasoning; content.test.ts holds each file to
+ * whichever rule applies.
  */
 export type ScreenshotSize = readonly [number, number] | readonly [number, number, 'narrow'];
 
-export const SCREENSHOT_SIZES: Readonly<Record<string, ScreenshotSize>> = {};
+export const SCREENSHOT_SIZES: Readonly<Record<string, ScreenshotSize>> = {
+  'E01-install-web-store.png': [1783, 363]
+};
 
 function registerImages(
   files: Readonly<Record<string, string>>,

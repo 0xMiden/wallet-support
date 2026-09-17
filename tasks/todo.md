@@ -712,6 +712,16 @@ build.
 reports in the build being captured; the 1.16.0 previously recorded here came from the store listing and
 was wrong). The mobile run happens later on a different build — record its version when it starts.
 
+### Open: narrow captures are not shown at half size (blocks E01a, E02)
+
+- The capture sheet says a narrow-surface capture is shown at half its width, so it appears at life size.
+  The page does not do that. `registerImages` in `content.ts` drops the `'narrow'` flag, `markdown.ts`
+  writes the file's own width into the `<img>`, and the only sizing CSS is `max-width: 100%`. An ~800px
+  E01a would show at 680px and a ~620px E02 at 620px, about twice life size. Showing them at half is a
+  user-visible sizing change, so it is Ivan's call. The answer also settles B's capture rule: all of
+  Ivan's captures so far were taken at 150% scaling, where Chrome's jigsaw menu lands at about 465–555px,
+  under B's 560 floor.
+
 ### Waiting on the mobile run
 
 - **The every-image-used test will fail on the first mobile screenshot, and the image will be fine.**
@@ -726,7 +736,7 @@ was wrong). The mobile run happens later on a different build — record its ver
 
 - [ ] E01a · How to install Bread Wallet · step 3 · Chrome's "Add extension" confirmation dialog
 
-- [ ] E01 · How to install Bread Wallet · step 2 · Chrome Web Store listing with "Add to Chrome"
+- [x] E01 · How to install Bread Wallet · step 2 · Chrome Web Store listing with "Add to Chrome" — top of the listing, 1783 × 363 (2026-09-17)
 - [ ] E02 · How to install Bread Wallet · step after 3 · Browser toolbar: jigsaw icon and pin icon
 - [ ] E03 · How do I create a Bread Wallet? · step 1 · "Create new wallet" / "I already have a wallet" page
 - [ ] E04 · How do I create a Bread Wallet? · step 2 · Back up your wallet page (seed phrase blurred/sample)
