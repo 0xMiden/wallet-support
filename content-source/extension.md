@@ -37,23 +37,23 @@ When you install Bread Wallet, there are two options to choose between: **Get st
 
 1. To create a new wallet, select **Get started**.
 
-   ![Bread Wallet's Welcome to Bread! page, with the Get started button highlighted](E03-create-get-started.png)
+   ![Bread Wallet's Welcome to Bread! page, with the Get started button](E03-create-get-started.png)
 
 2. You will be directed to the Acknowledgment Screen page. Click **I understand**.
 
-   ![Bread Wallet's Miden Testnet notice, with the I understand button highlighted](E04-create-testnet-notice.png)
+   ![Bread Wallet's Miden Testnet notice, with the I understand button](E04-create-testnet-notice.png)
 
 3. On the create password page, create a strong password with a minimum of 8 characters and at least 1 number, and then click **Continue**.
 
-   ![Bread Wallet's Create password page, with the Continue button highlighted](E05-create-password.png)
+   ![Bread Wallet's Create password page, with the Continue button](E05-create-password.png)
 
 4. On the **Choose your Guardian** page, you can select a Guardian operator and then click **Continue**.
 
-   ![Bread Wallet's Choose your Guardian page, with the Continue button highlighted](E06-create-guardian.png)
+   ![Bread Wallet's Choose your Guardian page, with the Continue button](E06-create-guardian.png)
 
 5. Congrats, your wallet is ready! Click the **Open wallet** button; it will close the tab automatically and open the sidebar for you.
 
-   ![Bread Wallet's Your Wallet is ready screen, with the Open wallet button highlighted](E06a-create-wallet-ready.png)
+   ![Bread Wallet's Your Wallet is ready screen, with the Open wallet button](E06a-create-wallet-ready.png)
 
 ### How to fund your Bread Wallet?
 
