@@ -143,7 +143,8 @@ const onlyServed = Object.keys(assets).filter(file => !(file in built)).sort();
 const differing = changed.length + onlyBuilt.length + onlyServed.length;
 
 // A commit subject is free text; a stray pipe would split its table cell.
-const cell = text => String(text ?? '').replace(/\|/g, '\\|');
+// Backslashes first, or a subject ending in one would unescape the pipe after it.
+const cell = text => String(text ?? '').replace(/\\/g, '\\\\').replace(/\|/g, '\\|');
 const builtAt = typeof served.builtAt === 'string' ? ` (built ${served.builtAt.slice(0, 16).replace('T', ' ')} UTC)` : '';
 const table = [
   '| | Commit | |',
