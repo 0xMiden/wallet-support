@@ -135,7 +135,7 @@ not exactly 1360px, or a stroke that is not 3px on screen, is still yours to che
   `![alt text](E01-install-web-store.png)`. Alt text is required. Mirror the same line into
   `content-source/` or the fidelity test fails.
 
-## Extension run: Chrome, 19 positions
+## Extension run: Chrome, 20 positions
 
 ### A. Install
 
@@ -175,31 +175,35 @@ not exactly 1360px, or a stroke that is not 3px on screen, is still yours to che
 
 ### B. Create a wallet
 
+The wallet's onboarding changed before this position was shot: there is no longer a back-up page or a
+Guardian-or-Fully-private choice while creating a wallet, and the article's steps were rewritten to
+match (Ivan, 2026-09-17). E03 to E06 keep their numbers but now show the new screens, and E06a is a
+34th position for the last one. All five were taken at 150% and are tagged narrow, so they show at
+half their width: about three-quarters of life size, which Ivan accepted. Each carries
+a 6px box around the button its step names, added after capture; only the box's pixels differ from
+the file as delivered, and the empty space below the content was cropped.
+
 #### E03 · How do I create a Bread Wallet? · Ext · step 1
-- **Must show:** the first page, with the option to create a new wallet and **I already have a wallet**.
-- **Read L3 and L4:** the exact wording of the create option.
-- **Save as:** `E03-create-first-page.png`
-- **Capture as:** **A · fills a tab** — DevTools device toolbar, width 1360, DPR 1
-- **Then register:** `'E03-create-first-page.png': [1360, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Shows:** **Welcome to Bread!**, with **Get started** boxed.
+- **File:** `E03-create-get-started.png`, 820 × 902, narrow
 
 #### E04 · How do I create a Bread Wallet? · Ext · step 2
-- **Must show:** the **back up your wallet** page, with the seed phrase blurred or replaced by sample words.
-- **Save as:** `E04-create-back-up.png`
-- **Capture as:** **A · fills a tab** — DevTools device toolbar, width 1360, DPR 1
-- **Then register:** `'E04-create-back-up.png': [1360, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Shows:** the Miden Testnet notice (*You are using Bread on Miden Testnet*), with **I understand**
+  boxed. The article calls it the Acknowledgment Screen page, by Ivan's choice. Retaken once to lose
+  the mouse pointer.
+- **File:** `E04-create-testnet-notice.png`, 817 × 1010, narrow
 
-#### E05 · How do I create a Bread Wallet? · Ext · step 4
-- **Must show:** the create password page, with the fields empty or masked.
-- **Save as:** `E05-create-password.png`
-- **Capture as:** **A · fills a tab** — DevTools device toolbar, width 1360, DPR 1
-- **Then register:** `'E05-create-password.png': [1360, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+#### E05 · How do I create a Bread Wallet? · Ext · step 3
+- **Shows:** **Create password**, fields masked, with **Continue** boxed.
+- **File:** `E05-create-password.png`, 824 × 878, narrow
 
-#### E06 · How do I create a Bread Wallet? · Ext · step 5
-- **Must show:** the account recovery page, with **Guardian** and **Fully private**.
-- **Read L1:** on the screen after it, the exact label of the button that opens the wallet.
-- **Save as:** `E06-create-recovery-choice.png`
-- **Capture as:** **A · fills a tab** — DevTools device toolbar, width 1360, DPR 1
-- **Then register:** `'E06-create-recovery-choice.png': [1360, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+#### E06 · How do I create a Bread Wallet? · Ext · step 4
+- **Shows:** **Choose your Guardian**, with **Continue** boxed.
+- **File:** `E06-create-guardian.png`, 819 × 972, narrow
+
+#### E06a · How do I create a Bread Wallet? · Ext · step 5
+- **Shows:** **Your Wallet is ready!**, with **Open wallet** boxed.
+- **File:** `E06a-create-wallet-ready.png`, 821 × 601, narrow
 
 ### C. Fund the wallet
 

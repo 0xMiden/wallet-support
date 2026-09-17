@@ -11,17 +11,21 @@ import { expect, test } from '@playwright/test';
 
 const BODY = '.help-center-article-body';
 const INSTALL = '/#setup-and-basic-use/how-to-install-bread-wallet';
+const CREATE = '/#setup-and-basic-use/how-do-i-create-a-bread-wallet';
 
-for (const { name, width } of [
+for (const { article, route, count } of [
+  { article: 'install', route: INSTALL, count: 3 },
+  { article: 'create', route: CREATE, count: 5 }
+]) for (const { name, width } of [
   { name: 'desktop', width: 1321 },
   { name: 'phone', width: 390 }
 ]) {
-  test(`every step screenshot is centred in its space, with its label at its edge (${name})`, async ({ page }) => {
+  test(`every ${article} screenshot is centred in its space, with its label at its edge (${name})`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
-    await page.goto(INSTALL);
+    await page.goto(route);
 
     const figures = page.locator(`${BODY} figure`);
-    await expect(figures).toHaveCount(3);
+    await expect(figures).toHaveCount(count);
 
     for (const figure of await figures.all()) {
       const image = figure.locator('img');
