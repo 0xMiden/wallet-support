@@ -24,9 +24,9 @@ platforms: [extension-desktop, mobile]
 
    ![Chrome's confirmation dialog for Bread Wallet by Miden, with the Add extension button highlighted](E01a-install-add-extension.png)
 
-After adding the Bread Wallet extension, Bread Wallet will open automatically. To keep it easy to access, click the **jigsaw icon** in the top-right corner of your browser, then click the **pin icon** to add it to your toolbar.
+After adding the Bread Wallet extension, Bread Wallet will open automatically. To keep it easy to access, click the **puzzle icon** in the top-right corner of your browser, then click the **pin icon** to add it to your toolbar.
 
-![Chrome's Extensions menu, opened from the jigsaw icon, with the pin icon beside Bread Wallet highlighted](E02-install-pin.png)
+![Chrome's Extensions menu, opened from the puzzle icon, with the pin icon beside Bread Wallet highlighted](E02-install-pin.png)
 
 <!-- platform: mobile -->
 

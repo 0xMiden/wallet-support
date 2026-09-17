@@ -160,7 +160,12 @@ export type ScreenshotSize = readonly [number, number] | readonly [number, numbe
 export const SCREENSHOT_SIZES: Readonly<Record<string, ScreenshotSize>> = {
   'E01-install-web-store.png': [1783, 363],
   'E01a-install-add-extension.png': [870, 486, 'narrow'],
-  'E02-install-pin.png': [616, 300, 'narrow']
+  'E02-install-pin.png': [616, 300, 'narrow'],
+  'E03-create-get-started.png': [820, 902, 'narrow'],
+  'E04-create-testnet-notice.png': [817, 1010, 'narrow'],
+  'E05-create-password.png': [824, 878, 'narrow'],
+  'E06-create-guardian.png': [819, 972, 'narrow'],
+  'E06a-create-wallet-ready.png': [821, 601, 'narrow']
 };
 
 export function registerImages(

@@ -1203,13 +1203,15 @@
  * so; it takes the article link's colour and underline, and darkens on hover.
  *
  * The link is as wide as its image, so the label ends at the image's right
- * edge rather than the column's. That only shows on a narrow capture, which is
- * drawn at life size; anything wider still fills the column.
+ * edge rather than the column's, and it sits in the middle of its space rather
+ * than against the left edge (Ivan, 2026-09-17). Both only show on a narrow
+ * capture, which is drawn at life size; anything wider still fills the column.
  */
 .help-center-article-body figure > a {
   display: block;
   width: fit-content;
   max-width: 100%;
+  margin-inline: auto;
   border-radius: var(--radius-sm);
   color: var(--accent-text);
   text-decoration: none;

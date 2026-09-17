@@ -34,8 +34,8 @@ describe('searching the Help Center', () => {
   });
 
   it('returns a snippet showing why the result matched', () => {
-    const [first] = find('jigsaw');
-    expect(first?.snippet.toLocaleLowerCase()).toContain('jigsaw');
+    const [first] = find('puzzle');
+    expect(first?.snippet.toLocaleLowerCase()).toContain('puzzle');
     expect(first?.snippet).not.toMatch(/\*\*|\]\(|<!--/);
   });
 
