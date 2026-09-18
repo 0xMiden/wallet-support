@@ -227,6 +227,9 @@ uncropped, so they are exempt from the height ceiling in `content.test.ts` by na
 
 ### D. Find a token contract address
 
+**On hold (2026-09-18):** the article is hidden by Ivan's call; Token Information is not visible in the
+wallet at the moment. Skip this section until the article is published again.
+
 Token Information needs a token in the wallet; the faucet request in C should provide one once it arrives.
 
 #### E09 · How to find a token contract address in Bread Wallet? · Ext · step 2
@@ -362,6 +365,9 @@ wallet** and the encrypted wallet file.
 - **Then register:** `'M07-fund-faucet-page.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 ### D. Find a token contract address
+
+**On hold (2026-09-18):** the article is hidden by Ivan's call; Token Information is not visible in the
+wallet at the moment. Skip this section until the article is published again.
 
 #### M08 · How to find a token contract address in Bread Wallet? · Mob · step 1
 - **Must show:** the homepage, with a token being selected.

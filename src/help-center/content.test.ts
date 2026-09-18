@@ -795,14 +795,14 @@ describe('the migrated article set', () => {
   });
 
   it('publishes every article except the ones held back', () => {
-    expect(helpCenterArticles).toHaveLength(39);
-    expect(helpCenterArticles.map(article => article.id)).not.toContain(
-      'how-to-restore-the-wallet-using-an-encrypted-file'
-    );
+    expect(helpCenterArticles).toHaveLength(38);
+    const published = helpCenterArticles.map(article => article.id);
+    expect(published).not.toContain('how-to-restore-the-wallet-using-an-encrypted-file');
+    expect(published).not.toContain('how-to-find-a-token-contract-address-in-bread-wallet');
   });
 
   it('splits bodies exactly where the source pages diverge', () => {
-    const variants = helpCenterArticles.filter(
+    const variants = helpCenterAllArticles.filter(
       article =>
         article.platforms.length === 2 &&
         article.bodies['extension-desktop'] !== article.bodies.mobile
@@ -820,7 +820,7 @@ describe('the migrated article set', () => {
   });
 
   it('keeps no image placeholders in migrated bodies', () => {
-    for (const article of helpCenterArticles) {
+    for (const article of helpCenterAllArticles) {
       for (const platform of article.platforms) {
         expect(article.bodies[platform], `${article.id} (${platform})`).not.toContain('[image removed]');
       }

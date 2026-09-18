@@ -4,6 +4,8 @@ title: How to find a token contract address in Bread Wallet?
 mainCategory: getting-started
 subcategory: setup-and-basic-use
 platforms: [extension-desktop, mobile]
+hidden: true
+hiddenReason: Token Information is not visible in the wallet at the moment (Ivan, 2026-09-18). Publish again once it is.
 ---
 
 <!-- platform: extension-desktop -->
