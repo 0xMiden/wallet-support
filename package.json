@@ -11,6 +11,7 @@
     "test": "vitest run --no-file-parallelism",
     "verify": "yarn typecheck && yarn test && yarn e2e && yarn build",
     "e2e": "playwright test",
+    "check:links": "node scripts/check-external-links.mjs",
     "deploy:preview": "node scripts/deploy-preview.mjs",
     "check:preview-freshness": "node scripts/check-preview-freshness.mjs"
   },
