@@ -100,17 +100,17 @@ Never share your recovery phrase or backup password with anyone offering to *rec
 
 Before you start, make sure you have:
 
-- Your recovery phrase, written down and ready to enter.
+- Your recovery phrase (sometimes called a seed phrase), written down and ready to enter.
 - A fresh install of Bread Wallet in your Chrome browser.
 
 **Steps:**
 
-1. Open Bread Wallet. On the wallet creation page, choose between **Create a new wallet** and **I already have a wallet**. Select **I already have a wallet**.
-2. On the choose your import type page, select **Import with Seed Phrase**, then click **Continue**.
-3. Enter your recovery phrase. Type it into the numbered boxes, word by word, in the exact order you wrote it down. When all the words are in, click **Continue**.
-4. Create a new password. A minimum of 8 characters with at least 1 number, then click **Continue**.
-5. Choose how you want to recover your account if you lose access — Guardian or Fully private — then click **Continue**.
-6. Click **Open Wallet**. The tab closes automatically and the wallet opens in the sidebar.
+1. Open Bread Wallet. On the **Welcome to Bread!** screen, select **Recover your account**.
+2. Read the Miden testnet notice, then select **I understand**.
+3. Enter your recovery phrase in the exact order you wrote it down, then select **Continue**.
+4. Create a new password with at least 8 characters and 1 number, then select **Continue**.
+5. Follow the account-recovery prompts shown for your wallet setup.
+6. Select **Open Wallet** when recovery is complete.
 
 > ⚠️ **Before you type your recovery phrase:** it's the master key to your wallet, and anyone who gets it can take everything.
 > - Only enter it in the official Bread Wallet extension — never on a website, pop-up, or form.
