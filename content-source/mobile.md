@@ -163,48 +163,48 @@ Think of your recovery phrase as the master key to a safe; whoever holds it owns
 
 ### What should I do if I lose my recovery phrase?
 
-The most important thing to know: if your wallet is still unlocked and working on your device, you haven't truly lost access yet, so back up your recovery phrase again right away and export an encrypted wallet file too, while you still can.
+If your wallet is still unlocked and working, keep that device secure and check whether Bread lets you display or back up your recovery phrase again. Do not reset the wallet or remove the app until you have confirmed a supported recovery path.
 
-**There's an important detail here:** your recovery phrase restores your public account, but a private account also needs its own backup, your encrypted wallet file (or Guardian). So *losing your recovery phrase* and *losing your private account backup* are two different problems, and it's worth protecting against both.
+Your recovery phrase restores your keys. A private account also needs its latest off-chain account state, which Guardian can back up. The current Bread Wallet UI can export an encrypted wallet file but cannot import one, so that file is not currently a supported restoration path.
 
 Whether you can recover depends on your wallet setup, whether Guardian is on, and which backups you still have.
 
 **If Guardian is enabled:**
 
-Guardian keeps a backup of your account data and is designed so you can recover on another device using your keys. So if you've lost your recovery phrase but still have your encrypted wallet file, you may be able to regain access, and your account data can come back through Guardian. But Guardian cannot restore your wallet on its own; it never holds your keys and can't act without the required signatures, so if you've lost *all* your keys and backups, Guardian alone won't bring your wallet back.
+Guardian keeps a backup of your account data, but it does not keep your recovery phrase or control your keys. If you lose the recovery phrase and every device that still holds your keys, Guardian alone cannot restore the wallet.
 
 **If Guardian is not enabled:**
 
-Your recovery phrase and encrypted wallet file are your only backups.
+Your recovery phrase restores your keys, but a more-private account also needs its locally stored account state.
 
-- If you still have your encrypted wallet file (and its password), you can use it to restore; this also brings back your private account.
-- If you've lost your recovery phrase, your encrypted wallet file, *and* access to your device, there is generally no way to restore that wallet. Bread Wallet does not keep a copy of your keys or your private account data for you.
+- Bread Wallet does not currently offer encrypted-file import.
+- If you lose your recovery phrase and access to every device holding the wallet, there is generally no supported way to restore it.
 
 **Important note:**
 
-No one from Bread Wallet or your Guardian operator can reset or recover your recovery phrase for you. And remember: your recovery phrase alone does not bring back a private account; keep your encrypted wallet file (and/or Guardian) for that. Anyone claiming they can *recover* your lost phrase is running a scam.
+No one from Bread Wallet or your Guardian operator can reset or recover your recovery phrase for you. Anyone claiming they can recover a lost phrase is running a scam.
 
 ### What is the difference between a recovery phrase and an encrypted wallet file?
 
-Both are ways to back up and restore your wallet. Bread Wallet lets you import or export your wallet using either a recovery phrase or an encrypted wallet file.
+They contain different wallet information, and only recovery-phrase import is available in the current Bread Wallet UI.
 
 - A **recovery phrase** is a list of ordinary words that represents your wallet. It's easy to write on paper, but it's only as safe as where you keep it. Anyone who reads those words can restore your wallet.
-- An **encrypted wallet file** is a backup saved as a password-protected file. Because it's scrambled, it's unreadable to anyone without the password and safer to store digitally. But if you forget the password, the file can't be opened.
+- An **encrypted wallet file** is a password-protected export of wallet data. The current app can export this file but cannot import it, so do not rely on it as a working restoration method.
 
 **A simple way to picture it:** a recovery phrase is like your key written in plain handwriting, while an encrypted wallet file is like that key locked in a box that needs a password to open.
 
 **If Guardian is enabled:**
 
-Guardian is a different kind of backup. Your recovery phrase and encrypted wallet file back up your keys and wallet access; Guardian backs up your account data so you can recover it on a new device. Guardian does not replace your recovery phrase or encrypted wallet file; you still need one of those to control your wallet.
+Guardian backs up account state so supported recovery can restore it on a new device. Guardian does not replace your recovery phrase; you still need your own keys to control the wallet.
 
 **If Guardian is not enabled:**
 
-Your encrypted wallet file is the only backup of your private account data. If you lose it — and you have no Guardian backup — a private account generally cannot be recovered, even if you still have your recovery phrase.
+Without Guardian, a private account's state remains on the device. Because encrypted-file import is unavailable, losing that device can make the private account unrecoverable even if you still have the recovery phrase.
 
 **What this means for you:**
 
 - If you only use a public account, your recovery phrase is your key backup. Keep it safe.
-- If you use a private account, back up both: your recovery phrase and your encrypted wallet file. Guardian adds another recovery layer.
+- If you use a private account, keep the device and recovery phrase secure. Enable Guardian if you want the currently supported account-state recovery path.
 
 ## Key concepts
 
@@ -225,7 +225,7 @@ On Miden, an account can be public or private, and the difference is about where
 - With a private account, only a small cryptographic *commitment* (the fingerprint of your data) is stored on the public blockchain, while the full account data stays with you, off-chain. This gives you strong privacy; the network can confirm your account is valid without seeing its contents, like your balances.
 - With a public account, the full account data is stored on-chain and is visible to everyone.
 
-Because a private account's data lives only with you, your recovery phrase alone won't bring it back; you recover a private account from your encrypted wallet file or Guardian, not from the recovery phrase alone.
+Because a private account's data lives off-chain, a recovery phrase alone does not restore its latest state. Guardian provides the supported account-state recovery path in the current wallet.
 
 **If Guardian is enabled:**
 
@@ -233,7 +233,7 @@ Guardian backs up and syncs your private account data, so a lost or broken devic
 
 **If Guardian is not enabled:**
 
-You are solely responsible for backing up your private account data; your encrypted wallet file is that backup. If you lose it and have no Guardian backup, you can lose access to that account's funds. So keep secure backups of both your recovery phrase and encrypted wallet file.
+You are solely responsible for the account state stored on your device. Although Bread can export an encrypted wallet file, the current UI cannot import it. If you lose the device and have no Guardian backup, the private account may be unrecoverable.
 
 ### What is a public note?
 
