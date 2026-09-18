@@ -107,21 +107,18 @@ Never share your recovery phrase or backup password with anyone offering to *rec
 
 Before you start, make sure you have:
 
-- Your recovery phrase, written down and ready to enter.
+- Your recovery phrase (sometimes called a seed phrase), written down and ready to enter.
 - A fresh install of Bread Wallet on your new device or browser.
 
 Steps:
 
 1. Open the Bread app. On the **Welcome to Bread!** screen, tap **Recover your account**.
    [image removed]
-2. Choose your import type. Bread will ask how you'd like to bring your wallet back. You'll see two choices:
-   - Import with Seed Phrase
-   - Import with Encrypted Wallet File
-   For this guide, tap **Import with Seed Phrase**.
+2. Read the Miden testnet notice, then tap **I understand**.
    [image removed]
-3. Enter your recovery phrase. Type it into the numbered boxes, word by word, in the exact order you wrote it down. When all the words are in, tap **Continue**.
+3. Enter your recovery phrase in the exact order you wrote it down, then tap **Continue**.
    [image removed]
-4. Choose your Guardian operator. Pick one from the list:
+4. If prompted, choose your Guardian operator. Pick one from the list:
    - OpenZeppelin (US-EAST, the default)
    - Gateway Operator (EU-NORTH)
    - Lambda Class (EU-WEST)
