@@ -165,7 +165,9 @@ export const SCREENSHOT_SIZES: Readonly<Record<string, ScreenshotSize>> = {
   'E04-create-testnet-notice.png': [817, 991, 'narrow'],
   'E05-create-password.png': [824, 879, 'narrow'],
   'E06-create-guardian.png': [819, 953, 'narrow'],
-  'E06a-create-wallet-ready.png': [821, 582, 'narrow']
+  'E06a-create-wallet-ready.png': [821, 582, 'narrow'],
+  'E07-fund-homepage.png': [547, 909, 'narrow'],
+  'E08-fund-activity.png': [549, 1305, 'narrow']
 };
 
 export function registerImages(

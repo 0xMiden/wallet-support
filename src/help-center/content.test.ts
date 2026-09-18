@@ -655,6 +655,13 @@ describe('fidelity to the FAQ', () => {
    * set from the width so it lands at 3px on screen; that one is checked by eye.
    */
   it('holds every step screenshot to the capture spec', () => {
+    /*
+     * Used exactly as captured, not cropped, by Ivan's call (2026-09-18), so
+     * they are let past the height ceiling. Every other capture is held to it.
+     */
+    const FULL_HEIGHT_BY_IVAN = new Set(['E07-fund-homepage.png', 'E08-fund-activity.png']);
+    for (const name of FULL_HEIGHT_BY_IVAN) expect(SCREENSHOT_SIZES[name], `${name}: not a registered screenshot`).toBeDefined();
+
     const repoRoot = fileURLToPath(new URL('../..', import.meta.url));
     const dir = join(repoRoot, 'src/help-center/assets/screenshots');
 
@@ -666,16 +673,15 @@ describe('fidelity to the FAQ', () => {
 
       if ((entry as readonly unknown[])[2] === 'narrow') {
         /*
-         * A panel, menu or dialog: whatever the surface is at 2x. The floor is
-         * 560 rather than 800 because the smallest surface in the run, Chrome's
-         * jigsaw menu, is about 310–370 CSS px and lands near 620 at 200%
-         * scaling; an 800 floor would have made that position unshootable. 560
-         * still catches what the floor is for, a capture taken at 1x, which for
-         * these surfaces lands between 310 and 400.
+         * A panel, menu or dialog. The floor is 540 because Bread Wallet's
+         * sidebar is about 365 CSS px and Ivan captures it at 150% scaling,
+         * which comes to about 547 (E07, E08; 2026-09-18). It still catches
+         * what the floor is for, a capture taken at 1x: Chrome's menus and
+         * dialogs and the sidebar land between 310 and 435 at 1x.
          */
-        expect(file.width, `${name}: a narrow-surface capture should be 560–1200px wide at 2x`)
-          .toBeGreaterThanOrEqual(560);
-        expect(file.width, `${name}: a narrow-surface capture should be 560–1200px wide at 2x`)
+        expect(file.width, `${name}: a narrow-surface capture should be 540–1200px wide`)
+          .toBeGreaterThanOrEqual(540);
+        expect(file.width, `${name}: a narrow-surface capture should be 540–1200px wide`)
           .toBeLessThanOrEqual(1200);
       } else {
         /*
@@ -692,8 +698,10 @@ describe('fidelity to the FAQ', () => {
         expect(file.width, rule).toBeLessThanOrEqual(2040);
       }
 
-      expect(file.height, `${name}: taller than 1.3x its width, so it dominates the article`)
-        .toBeLessThanOrEqual(Math.round(file.width * 1.3));
+      if (!FULL_HEIGHT_BY_IVAN.has(name)) {
+        expect(file.height, `${name}: taller than 1.3x its width, so it dominates the article`)
+          .toBeLessThanOrEqual(Math.round(file.width * 1.3));
+      }
       expect(bytes.length, `${name}: over the 400 KB ceiling`).toBeLessThanOrEqual(400 * 1024);
     }
   });

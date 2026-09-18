@@ -34,7 +34,7 @@ Not by who owns it. Bread Wallet's sidebar is a narrow panel like a Chrome menu,
 |---|---|---|
 | What | A page in a browser tab — the whole tab, or the part of it that matters (E01: the top of the Chrome Web Store listing); any Bread Wallet screen that opens as a full page in a tab | Chrome's jigsaw menu and **Add extension** dialog; Bread Wallet's sidebar or popup |
 | How | **Whole tab:** Chrome DevTools, device toolbar, width **1360**, DPR **1**. **Part of a tab:** OS screenshot at **150%** Windows display scaling, cropped to the part that matters | OS screenshot at **200%** Windows display scaling, cropped tight to the surface |
-| Capture width | **Whole tab:** exactly **1360px**. **Part of a tab:** **1360–2040px** | whatever the surface comes to at 2x, **560–1200px** |
+| Capture width | **Whole tab:** exactly **1360px**. **Part of a tab:** **1360–2040px** | whatever the surface comes to at 2x, **540–1200px** (floor lowered 2026-09-18, see below) |
 | Shown at | 680px — the full column, identical for every one | half the capture, so it appears at life size — the `'narrow'` tag is what tells the page to halve it |
 
 **Why 1360 at DPR 1 and not 680 at DPR 2.** Both give 1360 device pixels, which is what the 2x rule
@@ -74,6 +74,10 @@ still high enough to catch the mistake it exists to catch — the same menu capt
 If a surface ever comes out under 560, raise Windows scaling past 200% for that shot rather than
 upscaling the file afterwards.
 
+**Floor lowered to 540 (2026-09-18).** Ivan captures Bread Wallet's sidebar at 150% scaling, where it
+comes to about 547px (E07, E08). 540 still catches a 1x capture: the menus, dialogs and sidebar land
+between 310 and 435 at 1x.
+
 **Each position below is pre-tagged A or B.** The pattern is simple: everything before the wallet opens
 is onboarding in a browser tab, so it is A; everything inside the running wallet is the sidebar, so it
 is B. A few are marked **you decide** where the step text does not settle it — each says what to look
@@ -107,7 +111,7 @@ Bread Wallet's own screens carry none. Nothing is drawn on a delivered capture w
 ### If a capture misses the spec
 
 `content.test.ts` fails the build and names the file and the number it found: a column-width capture
-outside 1360–2040px, a narrow-surface capture outside 560–1200px, any image taller than 1.3× its width, or
+outside 1360–2040px, a narrow-surface capture outside 540–1200px, any image taller than 1.3× its width, or
 any file over 400 KB. The test cannot tell a whole tab from part of one, so a whole-tab capture that is
 not exactly 1360px, or a stroke that is not 3px on screen, is still yours to check.
 
@@ -208,18 +212,18 @@ height rule; every remaining pixel is the file as delivered.
 
 ### C. Fund the wallet
 
-#### E07 · How to fund your Bread Wallet? · Ext · step 1
-- **Must show:** the wallet homepage, with **Faucet**.
-- **Save as:** `E07-fund-homepage.png`
-- **Capture as:** **B · narrow surface** — OS screenshot at 200% scaling, cropped tight
-- **Then register:** `'E07-fund-homepage.png': [width, height, 'narrow'],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+The article's extension steps were rewritten by Ivan on 2026-09-18 to match build 1.16.1: there is no
+**Faucet** button or **Go to faucet** page in the extension; funding is the **Fund your wallet** card on
+Home (**Fund now**), tracked on **Activity**. Both captures are used exactly as Ivan took them, at 150%,
+uncropped, so they are exempt from the height ceiling in `content.test.ts` by name.
 
-#### E08 · How to fund your Bread Wallet? · Ext · step 3–4
-- **Must show:** the faucet page with the address, the amount, and the **Private** / **Public** choice. Mask
-  all but a few characters of the address.
-- **Save as:** `E08-fund-faucet-page.png`
-- **Capture as:** **you decide** — the faucet may open in its own tab rather than inside the sidebar — if it fills a tab it is A, if it is in the sidebar it is B
-- **Then register:** A -> `'E08-fund-faucet-page.png': [1360, height],` · B -> `'E08-fund-faucet-page.png': [width, height, 'narrow'],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+#### E07 · How to fund your Bread Wallet? · Ext · step 2
+- **Shows:** Home, with the **Fund your wallet** card. Ivan's own red box on the card.
+- **File:** `E07-fund-homepage.png`, 547 × 909, narrow
+
+#### E08 · How to fund your Bread Wallet? · Ext · step 5
+- **Shows:** **Activity**, with a **Faucet Request** of 100 MIDEN, **Confirmed**.
+- **File:** `E08-fund-activity.png`, 549 × 1305, narrow
 
 ### D. Find a token contract address
 
