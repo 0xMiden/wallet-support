@@ -1135,7 +1135,8 @@
 
 .help-center-article-body ol,
 .help-center-article-body ul {
-  padding-left: 1.35rem;
+  --list-indent: 1.35rem;
+  padding-left: var(--list-indent);
 }
 
 .help-center-article-body li {
@@ -1188,6 +1189,16 @@
  */
 .help-center-article-body figure {
   margin: var(--space-5) 0 0;
+}
+
+/*
+ * A screenshot inside a step reaches back over the step's indent, so it is
+ * centred on the article column like every other image rather than on the
+ * step's text. Centred on the text, it sat 11px right of a top-level image of
+ * the same width and their edges missed (Ivan, 2026-09-18).
+ */
+.help-center-article-body li > figure {
+  margin-left: calc(-1 * var(--list-indent));
 }
 
 .help-center-article-body img {

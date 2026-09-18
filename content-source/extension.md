@@ -57,12 +57,18 @@ When you install Bread Wallet, there are two options to choose between: **Get st
 
 ### How to fund your Bread Wallet?
 
-Use the faucet to send test tokens to a wallet address.
+Use the faucet to receive test MIDEN tokens in your wallet.
 
-1. From the wallet homepage, click **Faucet**.
-2. Click **Go to faucet**.
-3. On the faucet page, enter the wallet address and the amount you want to request.
-4. Select the note type for your request — **Private** or **Public**.
+1. Open the wallet **Home** page.
+2. Find the **Fund your wallet** section.
+
+   ![Bread Wallet's Home page, with the Fund your wallet section highlighted](E07-fund-homepage.png)
+
+3. Select **Fund now**.
+4. The faucet will automatically send test tokens to your wallet address.
+5. Open the **Activity** page to track the request. The tokens are ready to use once the status changes to **Confirmed**.
+
+   ![Bread Wallet's Activity page, with a confirmed Faucet Request for 100 MIDEN](E08-fund-activity.png)
 
 ### How to find a token contract address in Bread Wallet?
 
@@ -82,7 +88,7 @@ Use the faucet to send test tokens to a wallet address.
 
 ### What are the supported browsers for Bread Wallet?
 
-Currently, we only support the Chrome browser. Other browsers, such as Brave, Edge, and Firefox, are not on the roadmap yet.
+Currently, we support the Chrome and Brave browsers. Other browsers, such as Edge and Firefox, are not on the roadmap yet.
 
 ## Backup, restore, and security
 
