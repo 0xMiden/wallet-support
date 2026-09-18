@@ -190,43 +190,49 @@ For the in-app steps, see *How do I restore my wallet with a recovery phrase?*
 ### 13. Can I send funds to another blockchain?
 Category: Cross-chain › Moving across chains
 
-Yes. Bread moves funds between your private account on Miden and the chains people already use, all from one place.
+Bread Beta can move supported test assets between Miden testnet and Ethereum Sepolia.
 
-Sending to an Ethereum address bridges your assets to Ethereum.
+> ⚠️ **Test funds only:** connect an Ethereum Sepolia wallet and use only testnet assets. Never send funds from Ethereum mainnet or any other network with real assets.
 
-Bread can use several routes, depending on the asset and whether it needs to be swapped along the way. See *What is the difference between a solver route and a canonical bridge?*
+The routes and assets available in Bread depend on the current Beta configuration. The wallet shows only the routes it can use for that transfer. See *What is the difference between a solver route and a canonical bridge?*
 
 ### 14. What is the difference between a solver route and a canonical bridge?
 Category: Cross-chain › Moving across chains
 
-Bread can use several routes across chains, and the real difference is how funds are handled along the way.
+Bread Beta runs on Miden testnet and Ethereum Sepolia. Use test funds only; never connect a wallet holding real assets for a bridge transfer.
 
-The fast route uses a solver, as is typical of intent-based protocols like Epoch or NEAR Intents. The solver briefly holds the funds and delivers the equivalent on the other side. This route is quick and can swap the token in transit. The trade-off is trusting the solver for those few seconds, and availability being limited to a fixed list of tokens.
+Bread may offer several routes across those test networks, and the difference is how funds are handled along the way. The wallet shows a route only when it is configured for the selected asset and destination.
 
-For direct transfers, Bread uses canonical bridges: CCTP for USDCx, and Agglayer for other assets. These routes transfer the specified asset without using a solver: funds are claimed on arrival, with no swap in transit.
+When available, the fast route uses a solver, as is typical of intent-based protocols like Epoch or NEAR Intents. The solver briefly holds the test funds and delivers the equivalent on the other side. This route can swap the token in transit, but it may be unavailable and supports only configured tokens.
+
+For a configured direct transfer, a canonical bridge transfers the specified test asset without a solver: funds are claimed on arrival, with no swap in transit.
 
 ![](across-chains-two-routes.png)
 
 ### 15. Can I swap tokens across chains?
 Category: Cross-chain › Moving across chains
 
-Yes. Cross-chain swaps use the fast solver route through an intent-based protocol like Epoch or NEAR Intents. The solver can swap the token in transit and deliver the equivalent on the other side. Availability is limited to a fixed list of tokens. Swaps within Miden use Miden-native Swap.
+Cross-chain swaps are available only when Bread Beta shows a configured fast route for the selected test asset and destination. When available, a solver can swap the token in transit and deliver the equivalent on the other side. Use only Miden testnet and Ethereum Sepolia test funds; never use assets from Ethereum mainnet or another real network.
+
+Swaps within Miden use Miden-native Swap.
 
 ### 16. Can I earn yield in Bread?
 Category: Earn › Earning yield
 
-Yes – but the feature is not available yet in Bread Beta version. Earning yield happens inside the wallet. Your funds are deposited from Bread, routed across to a lending market on Ethereum where they earn yield, and then returned to Bread on withdrawal. Bread handles the round trip for you.
+Not yet. Earn is unavailable in the current Bread Beta. Do not send real funds to test this feature.
+
+When Earn becomes available, the wallet will show the supported test networks, assets, and lending route. Funds will be routed from Bread to the displayed lending market and returned to Bread on withdrawal.
 
 There's one privacy point worth knowing: the funds are private on Miden, become visible on Ethereum while they earn, and return to your private account on the way back. See *Are my funds private while they earn?*
 
 ### 17. Are my funds private while they earn?
 Category: Earn › Earning yield
 
-Not while they earn. The privacy line is simple:
+Earn is unavailable in the current Bread Beta. When it becomes available, funds will not be private while they earn:
 
 - **On Miden:** your balance and activity are hidden.
-- **While they earn:** the funds sit in a lending market on Ethereum, where the amount and the yield are visible.
+- **While they earn:** the funds sit in the displayed lending market, where the amount and the yield are visible.
 - **On the way back:** the funds return to your private account on Miden.
-Bread handles the round trip for you.
+Use only the test networks and test assets shown in the wallet.
 
 ![](earn-across-the-privacy-line.png)
