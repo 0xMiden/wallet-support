@@ -88,7 +88,7 @@ Use the faucet to receive test MIDEN tokens in your wallet.
 
 ### What are the supported browsers for Bread Wallet?
 
-Currently, we only support the Chrome browser. Other browsers, such as Brave, Edge, and Firefox, are not on the roadmap yet.
+Currently, we support the Chrome and Brave browsers. Other browsers, such as Edge and Firefox, are not on the roadmap yet.
 
 ## Backup, restore, and security
 
