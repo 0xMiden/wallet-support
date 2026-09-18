@@ -57,6 +57,11 @@ not revert its choices.
   styling. Bold for UI labels, with punctuation outside the bold; quotes only in titles and for
   genuine quotation. Use the canonical terms from the glossary and the terminology guard in
   `content.test.ts`, and ask Ivan where the two disagree.
+- **Images line up.** Every image in every article, screenshot or diagram, top-level or inside a
+  step, is centred on the article column, so all images share one centre line on every page (Ivan,
+  2026-09-18: misaligned images look messy). A step's screenshot reaches back over the list indent
+  rather than centring on the step's text. `e2e/image-alignment.spec.ts` checks every article that
+  has an image; a new placement (a nested list, a callout) must pass it too.
 - **Changing the system.** A changed token value, a new token, font, weight, breakpoint or component
   pattern needs Ivan's approval first, reported with before and after values and contrast ratios.
   Matching the reference is not self-authorising.
