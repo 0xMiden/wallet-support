@@ -82,7 +82,9 @@ Use the faucet to send test tokens to a wallet address.
 
 ### What are the supported browsers for Bread Wallet?
 
-Currently, we only support the Chrome browser. Other browsers, such as Brave, Edge, and Firefox, are not on the roadmap yet.
+Bread Wallet supports browser extensions for **Chrome** and **Firefox**.
+
+Bread is also available as a desktop app for macOS, Windows, and Linux, and as a mobile app for iOS and Android. Brave and Edge are not currently listed as officially supported browser-extension targets.
 
 ## Backup, restore, and security
 
