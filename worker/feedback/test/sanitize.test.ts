@@ -29,6 +29,12 @@ describe('sanitize', () => {
     expect(stripHtml('<img src=x onerror=alert(1)>hello</img>')).toBe('hello');
   });
 
+  it('cannot reveal a script tag by removing a nested tag', () => {
+    const out = stripHtml('<<script>script>alert(1)<</script>/script>');
+    expect(out.toLowerCase()).not.toContain('<script');
+    expect(out).not.toMatch(/[<>]/);
+  });
+
   it('caps length before anything reaches a model or an issue', () => {
     const out = truncate('x'.repeat(9000));
     expect(out.length).toBeLessThan(9000);

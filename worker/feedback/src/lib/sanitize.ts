@@ -26,7 +26,11 @@ export function defangIssueUrls(text: string): string {
 }
 
 export function stripHtml(text: string): string {
-  return text.replace(/<\/?[a-zA-Z][^>]*>/g, '');
+  const withoutTags = text.replace(/<\/?[a-zA-Z][^>]*>/g, '');
+  // Removing one tag can join its surrounding characters into a new tag
+  // (`<<script>script>` becomes `<script>`). Drop every residual delimiter so
+  // the output cannot be interpreted as HTML regardless of that overlap.
+  return withoutTags.replace(/[<>]/g, '');
 }
 
 /** Cap length before it ever reaches a model or an issue body. */
