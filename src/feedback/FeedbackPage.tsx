@@ -11,6 +11,10 @@ const MAX_FILE_BYTES = 10 * 1024 * 1024;
 
 interface LocalReport { id: string; title: string; created: number; status: PublicFeedbackStatus; issue?: number | null; repo?: string; }
 
+function issueHref(report: LocalReport): string {
+  return 'https://github.com/' + report.repo + '/issues/' + report.issue;
+}
+
 function loadReports(): LocalReport[] {
   try { return JSON.parse(localStorage.getItem(HISTORY_KEY) ?? '[]') as LocalReport[]; } catch { return []; }
 }
@@ -119,7 +123,7 @@ export function FeedbackPage() {
           </form>
           <aside className="feedback-history" aria-labelledby="feedback-history-title">
             <p className="help-center-eyebrow">This browser</p><h2 id="feedback-history-title">Your reports</h2>
-            {reports.length ? <ol>{reports.map(report => <li key={report.id}><div><strong>{report.title}</strong><span>{statusLabel[report.status]}</span></div>{report.issue && report.repo ? <a href={`https://github.com/${report.repo}/issues/${report.issue}`} target="_blank" rel="noopener noreferrer">View issue #{report.issue}</a> : <small>Submitted {new Date(report.created).toLocaleDateString()}</small>}</li>)}</ol> : <p>Reports sent from this browser will appear here with their review status.</p>}
+            {reports.length ? <ol>{reports.map(report => <li key={report.id}><div><strong>{report.title}</strong><span>{statusLabel[report.status]}</span></div>{report.issue && report.repo ? <a href={issueHref(report)} target="_blank" rel="noopener noreferrer">View issue #{report.issue}</a> : <small>Submitted {new Date(report.created).toLocaleDateString()}</small>}</li>)}</ol> : <p>Reports sent from this browser will appear here with their review status.</p>}
           </aside>
         </div>
       </main>
