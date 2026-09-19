@@ -1,0 +1,28 @@
+-- 0013 — only the most recently started run may write the checkpoint.
+--
+-- A cycle is derived from the clock, which stops a SECOND PASS opening beside
+-- an existing one. It does nothing about two INVOCATIONS running at the same
+-- time against the same cursor, which Cloudflare can deliver: a cron tick that
+-- runs long is still running when the next fires, and a retry is another.
+--
+-- Nothing was lost when that happened — upsertReview is idempotent, so the
+-- reviews are written once either way — but the CHECKPOINT could go backwards:
+--
+--   * a slow run that read cursor A finishing after two newer runs had reached
+--     cursor C would store A's successor, B, re-walking pages already stored;
+--   * the same run would store the pass memory as it was when IT read the row,
+--     dropping the fingerprints the newer runs had added and weakening cycle
+--     detection for the rest of the pass;
+--   * a run that read a mid-pass cursor could store it after another run had
+--     COMPLETED the pass, reopening a pass that was finished and leaving a
+--     "complete" pass holding a live cursor.
+--
+-- So every run claims the row when it starts, and a checkpoint write applies
+-- only while that claim still stands. A run overtaken by a newer one finds its
+-- claim gone and discards its checkpoint write; the reviews it collected are
+-- already stored, so nothing is lost by discarding it.
+--
+-- Newest wins, deliberately: the newest run is the one that read the freshest
+-- cursor. A claim needs no expiry and cannot get stuck, because it is replaced
+-- rather than released — a run that dies mid-flight holds nothing.
+ALTER TABLE store_sync_state ADD COLUMN run_id TEXT;

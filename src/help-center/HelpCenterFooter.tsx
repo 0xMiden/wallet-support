@@ -1,7 +1,7 @@
 import breadLockup from './assets/bread-lockup.png';
 import { GLOSSARY_TITLE } from './glossary';
 import { CONTACT_SUPPORT_URL, helpCenterDownloads, helpCenterLegal, helpCenterSocials } from './links';
-import { categoryHref, glossaryHref, homeHref } from './routing';
+import { categoryHref, glossaryHref } from './routing';
 import type { HelpCenterMainCategory } from './types';
 
 /**
@@ -27,7 +27,7 @@ export function HelpCenterFooter({ mainCategories, firstCategoryId }: HelpCenter
     <footer className="help-center-footer">
       <div className="help-center-footer-inner">
         <div className="help-center-footer-brand">
-          <a className="help-center-brand" href={homeHref()}>
+          <a className="help-center-brand" href="/">
             <img src={breadLockup} alt="" />
             <span className="help-center-visually-hidden">Bread Wallet</span>
           </a>
@@ -54,7 +54,7 @@ export function HelpCenterFooter({ mainCategories, firstCategoryId }: HelpCenter
               const [first] = mainCategory.subcategories;
               return (
                 <li key={mainCategory.id}>
-                  <a href={categoryHref(first ? first.id : firstCategoryId)}>{mainCategory.title}</a>
+                  <a href={`/${categoryHref(first ? first.id : firstCategoryId)}`}>{mainCategory.title}</a>
                 </li>
               );
             })}
@@ -78,17 +78,17 @@ export function HelpCenterFooter({ mainCategories, firstCategoryId }: HelpCenter
           <h2>Support</h2>
           <ul>
             <li>
-              <a href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">
+              <a href={CONTACT_SUPPORT_URL}>
                 Contact Support
               </a>
             </li>
             <li>
-              <a href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">
+              <a href={CONTACT_SUPPORT_URL}>
                 Send feedback
               </a>
             </li>
             <li>
-              <a href={glossaryHref()}>{GLOSSARY_TITLE}</a>
+              <a href={`/${glossaryHref()}`}>{GLOSSARY_TITLE}</a>
             </li>
           </ul>
         </nav>

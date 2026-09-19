@@ -127,12 +127,14 @@ test('the header links sit on the centre line of the page', async ({ page }) => 
   expect(Math.abs(navCentre - width / 2)).toBeLessThan(2);
 });
 
-test('the logo carries no Help Center label', async ({ page }) => {
+test('the persistent brand carries the Help Center product label once', async ({ page }) => {
   for (const route of ['/', '/#setup-and-basic-use']) {
     await page.goto(route);
-    const brands = page.locator('.help-center-brand');
-    for (let i = 0; i < (await brands.count()); i++) {
-      await expect(brands.nth(i), route).toHaveText('Bread Wallet');
+    await expect(page.locator('.public-brand'), route).toHaveText('Bread WalletHelp Center');
+    await expect(page.locator('.public-product-name'), route).toHaveText('Help Center');
+    const remainingBrands = page.locator('.help-center-brand:not(.public-brand)');
+    for (let i = 0; i < (await remainingBrands.count()); i++) {
+      await expect(remainingBrands.nth(i), route).toHaveText('Bread Wallet');
     }
   }
 });

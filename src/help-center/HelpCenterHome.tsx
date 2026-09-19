@@ -273,14 +273,12 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
           <a href={homeHref()} aria-current="page">
             Help Center
           </a>
-          <a href={categoryHref(firstCategoryId)}>All topics</a>
+          <a href="/topics">All topics</a>
         </nav>
 
         <a
           className="help-center-contact-button help-home-header-action"
           href={CONTACT_SUPPORT_URL}
-          target="_blank"
-          rel="noopener noreferrer"
         >
           Contact Support
         </a>
@@ -336,7 +334,7 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
                 question lives.
               </p>
             </div>
-            <a className="help-home-section-link" href={categoryHref(firstCategoryId)}>
+            <a className="help-home-section-link" href="/topics">
               View all topics
               <ArrowIcon />
             </a>
@@ -393,8 +391,6 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
           <a
             className="help-center-contact-button"
             href={CONTACT_SUPPORT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
           >
             Contact Support
             <ArrowIcon />
