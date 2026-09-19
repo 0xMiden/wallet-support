@@ -13,6 +13,7 @@
  */
 
 import { isRateLimit, retryAfterMs, permissionHint } from './gh-status';
+import { assertWalletTarget } from './github-auth';
 import { sniffType } from './sniff';
 
 const UA = 'bread-feedback-form';
@@ -65,6 +66,7 @@ export interface IssueSpec {
 }
 
 export async function createIssue(repo: string, token: string, spec: IssueSpec): Promise<number> {
+  assertWalletTarget(repo);
   const data = await gh(`/repos/${repo}/issues`, token, {
     method: 'POST',
     body: JSON.stringify(spec),
@@ -73,6 +75,7 @@ export async function createIssue(repo: string, token: string, spec: IssueSpec):
 }
 
 export async function createComment(repo: string, token: string, issue: number, body: string): Promise<number> {
+  assertWalletTarget(repo);
   const data = await gh(`/repos/${repo}/issues/${issue}/comments`, token, {
     method: 'POST',
     body: JSON.stringify({ body }),
@@ -81,6 +84,7 @@ export async function createComment(repo: string, token: string, issue: number, 
 }
 
 export async function updateComment(repo: string, token: string, commentId: number, body: string): Promise<void> {
+  assertWalletTarget(repo);
   await gh(`/repos/${repo}/issues/comments/${commentId}`, token, {
     method: 'PATCH',
     body: JSON.stringify({ body }),
@@ -89,6 +93,7 @@ export async function updateComment(repo: string, token: string, commentId: numb
 
 /** Additive only. Never replaces or removes labels the pipeline did not set. */
 export async function addLabels(repo: string, token: string, issue: number, labels: string[]): Promise<void> {
+  assertWalletTarget(repo);
   if (labels.length === 0) return;
   await gh(`/repos/${repo}/issues/${issue}/labels`, token, {
     method: 'POST',
@@ -121,6 +126,7 @@ export async function uploadAttachment(
   repo: string,
   token: string
 ): Promise<{ url: string; video: boolean } | null> {
+  assertWalletTarget(repo);
   try {
     const kind = sniffType(bytes);
     if (!kind) return null;

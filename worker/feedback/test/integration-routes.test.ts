@@ -26,8 +26,10 @@ describe('combined support routes', () => {
 
   it('adds Turnstile allowances only to the feedback page policy', async () => {
     const feedback = await callWorker(new Request('https://support.miden.xyz/feedback'));
+    const feedbackSlash = await callWorker(new Request('https://support.miden.xyz/feedback/'));
     const ordinary = await callWorker(new Request('https://support.miden.xyz/not-real'));
     expect(feedback.headers.get('content-security-policy')).toContain('https://challenges.cloudflare.com');
+    expect(feedbackSlash.headers.get('content-security-policy')).toContain('https://challenges.cloudflare.com');
     expect(ordinary.headers.get('content-security-policy')).not.toContain('https://challenges.cloudflare.com');
   });
 });
