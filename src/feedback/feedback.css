@@ -25,7 +25,7 @@
 .feedback-layout { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(17rem, .65fr); gap: var(--space-5); align-items: start; }
 .feedback-form,
 .feedback-history { border: 1px solid var(--help-line); background: var(--help-panel); border-radius: var(--radius-lg) var(--radius-lg) var(--radius-lg) var(--radius-xs); }
-.feedback-form { padding: clamp(1.25rem, 3vw, 2.25rem); display: grid; gap: 1.25rem; }
+.feedback-form { padding: clamp(1.25rem, 3vw, 2.25rem); display: grid; gap: var(--space-5); }
 .feedback-form label { display: grid; gap: .55rem; color: var(--help-copy); font-size: var(--text-sm); font-weight: var(--weight-strong); }
 .feedback-form label span { color: var(--help-muted); font-weight: var(--weight-regular); }
 .feedback-form input,
@@ -39,9 +39,9 @@
 .feedback-warning { padding: 1rem 1.1rem; border: 1px solid var(--tint-edge); border-radius: var(--radius-md); color: var(--accent-text); background: var(--tint-soft); line-height: 1.55; }
 .feedback-form small,
 .feedback-turnstile p { margin: 0; color: var(--help-muted); font-weight: var(--weight-regular); }
-.feedback-error { margin: 0; color: #a43d20; }
+.feedback-error { margin: 0; color: var(--help-danger); }
 .feedback-submit { min-height: 3.5rem; border: 0; border-radius: var(--radius-md); background: var(--help-accent); color: var(--ink-on-accent); font: var(--weight-strong) var(--text-md)/1 var(--font-display); cursor: pointer; transition: background 160ms ease, transform 160ms ease; }
-.feedback-submit:hover:not(:disabled) { background: #c95a21; }
+.feedback-submit:hover:not(:disabled) { background: var(--help-accent-hover); }
 .feedback-submit:active:not(:disabled) { transform: scale(.985); }
 .feedback-submit:disabled { opacity: .55; cursor: wait; }
 .feedback-history { position: sticky; top: 7rem; padding: 1.4rem; }

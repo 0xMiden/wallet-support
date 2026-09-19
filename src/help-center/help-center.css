@@ -34,7 +34,7 @@
 .public-nav a:hover { color: var(--accent-text); background: var(--tint-soft); transform: translateY(-1px); }
 .public-nav a[aria-current='page'] { color: var(--accent-text); background: var(--tint-soft); box-shadow: inset 3px 0 0 var(--help-accent); }
 .public-nav .public-feedback-link { color: var(--ink-on-accent); background: var(--help-accent); }
-.public-nav .public-feedback-link:hover { color: var(--ink-on-accent); background: #c95a21; }
+.public-nav .public-feedback-link:hover { color: var(--ink-on-accent); background: var(--help-accent-hover); }
 .public-shell :focus-visible { outline: 3px solid var(--help-accent); outline-offset: 3px; }
 .public-not-found { padding: 4rem; font-family: system-ui, sans-serif; }
 

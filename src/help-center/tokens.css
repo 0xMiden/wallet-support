@@ -99,6 +99,8 @@
    */
   --help-accent: #e77537;
   --help-accent-soft: #f1a47e;
+  --help-accent-hover: #c95a21;
+  --help-danger: #a43d20;
 
   /*
    * Accent-as-text. On the light ground the reference's #e77537 measures
