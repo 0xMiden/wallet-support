@@ -1,0 +1,281 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Miden-owned Worker for support.miden.xyz. Renaming it creates a new
+  // Worker and requires an explicit secrets, bindings, and domain migration.
+  "name": "wallet-support",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-01",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // Serve the Vite build through the Worker so public pages, feedback APIs,
+  // admin consoles, scheduled jobs, and route-aware headers share one origin.
+  "assets": {
+    "directory": "../../dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": true
+  },
+
+  // EVERY secret this Worker needs, by name. Values live only in Cloudflare.
+  //
+  // Cloudflare's current documentation states that `wrangler deploy` and
+  // `wrangler versions upload` validate `secrets.required` and FAIL when a
+  // required secret is missing. It also warns in local dev and supplies the
+  // names to `wrangler types`.
+  //
+  // THAT BEHAVIOUR HAS NOT BEEN INDEPENDENTLY EXERCISED against the Wrangler
+  // version pinned in this repository. The schema summary bundled with that
+  // version describes only the local-dev warning and type generation, which is
+  // why an earlier revision of this comment claimed the field does not stop a
+  // deploy. Treat the bundled summary as incomplete, and this note as citing
+  // documentation rather than reporting a test.
+  //
+  // scripts/deploy.sh keeps a SEPARATE preflight, as defence in depth. It:
+  //   - checks the exact canonical Worker named above, before upload
+  //   - verifies remote secret NAMES explicitly
+  //   - produces a controlled list of any that are missing
+  //   - never retrieves or prints a secret VALUE
+  //   - keeps protecting the release if Wrangler's behaviour or its
+  //     diagnostics change
+  "secrets": {
+    "required": [
+      "TURNSTILE_SECRET",
+      "INGEST_HMAC_KEY",
+      "BACKFILL_TOKEN",
+      "GITHUB_APP_ID",
+      "GITHUB_APP_INSTALLATION_ID",
+      "GITHUB_APP_PRIVATE_KEY",
+      "LLM_API_KEY_PRIMARY",
+      "LLM_API_KEY_FALLBACK",
+      "ADMIN_SESSION_SECRET",
+      "GOOGLE_OAUTH_CLIENT_ID",
+      "GOOGLE_OAUTH_CLIENT_SECRET",
+      // The Google Play service-account key file, pasted whole. A secret,
+      // never a var: this file is public. Read by src/store/auth/google.ts.
+      "GOOGLE_PLAY_SERVICE_ACCOUNT_JSON"
+    ]
+  },
+
+  "vars": {
+    "TARGET_REPO": "0xMiden/wallet",
+    "PIPELINE_VERSION": "v2",
+    "MARKER_PREFIX": "mfv2",
+
+    // Public base URL for the R2 bucket. Used as the attachment fallback when
+    // GitHub's undocumented upload endpoint fails. Leave empty to disable.
+    "R2_PUBLIC_BASE": "",
+
+    // KILL SWITCH. Set to "false" and redeploy to halt every GitHub write
+    // immediately. Ingest, dedup and storage keep running; nothing is lost.
+    // Covers BOTH write paths — new issues and rolling comments on folds.
+    // Live against 0xMiden/wallet since 2026-08-14.
+    "PUBLISH_ENABLED": "false",
+
+    // Volume caps on NEW ISSUE creation. Duplicates fold into an existing
+    // issue as a comment and consume nothing, so they are never capped.
+    // Exceeding a cap defers the submission; it never drops it.
+    //
+    // GLOBAL — the circuit breaker, across every reporter. Sized so a real
+    // campaign never reaches it and a runaway still hits a wall in minutes:
+    // 100 reporters filing 100 issues in an hour uses half of it. It cannot
+    // be replaced by the per-reporter caps below, which have no ceiling —
+    // 100 reporters at 20/hour is 2,000/hour, about 4x what GitHub's
+    // secondary limits (~500 content-creating requests/hour) allow before it
+    // throttles the ACCOUNT the write token belongs to, at which point
+    // nothing files for anyone.
+    //
+    // Raised from 1/hour, 3/day on 2026-08-20. Those were day-one training
+    // wheels and they showed: a genuine report waited 65 minutes behind one
+    // filed six minutes earlier, with the form showing only "Received".
+    "CAP_PER_HOUR": "200",
+    "CAP_PER_DAY": "800",
+
+    // PER REPORTER — fairness between honest reporters, keyed on the hashed
+    // install id (or IP when the form sends none). NOT an abuse control:
+    // install_id is a UUID the browser generates and can clear at will, so a
+    // determined flooder simply rotates it. The global caps are what hold.
+    "REPORTER_CAP_PER_HOUR": "20",
+    "REPORTER_CAP_PER_DAY": "50",
+
+    // Match gates. DUP_THRESHOLD is gone: it meant both "this is a duplicate"
+    // and "you may write about it in public", and conflating those is how a
+    // 0.61 guess earned the right to comment on someone else's thread.
+    //
+    // Below REVIEW_THRESHOLD a match is not mentioned at all.
+    "REVIEW_THRESHOLD": "0.60",
+
+    // AUTHORISATION — the only number that lets this service write on an issue
+    // it does not own.
+    //
+    //   >= this + issue OPEN   -> comment on that issue
+    //   >= this + issue CLOSED -> new issue, real #N cross-reference
+    //   <  this (either)       -> new issue, plain-text mention, no cross-reference
+    "AUTO_ACTION_THRESHOLD": "0.85",
+    // There is no comment threshold. A match against an OPEN issue comments on
+    // it immediately; a match against a CLOSED one is not a duplicate at all
+    // and becomes a new issue referencing it. See src/pipeline.ts.
+
+    // Drain loop. Submissions claimed per tick — the free plan allows 50
+    // subrequests per invocation and one submission can spend six or seven,
+    // so this stays small. Raise only with that ceiling in mind.
+    //
+    // 5/tick x 60 ticks = 300 issues/hour, above CAP_PER_HOUR (200) so the cap
+    // is the binding limit rather than the drain. 5 x ~8 = ~40 subrequests
+    // (the per-reporter gate added one), leaving room for the mirror cron and
+    // retries; 7 per tick would sit on the 50 wall.
+    "DRAIN_BATCH_SIZE": "5",
+    // Error retries before a submission is parked in state `failed`.
+    // Deferrals (cap closed, classifier down, GitHub rate limited) do not
+    // count against it.
+    "MAX_ATTEMPTS": "5",
+
+    // Accepted submissions per hour, per install id (per IP when no install
+    // id is sent). Counts only submissions that PASSED Turnstile — a rejected
+    // challenge costs nothing. This bounds casual flooding; Turnstile is the
+    // real gate and CAP_PER_HOUR is the hard ceiling on GitHub writes.
+    "RATE_LIMIT_PER_HOUR": "20",
+
+    // Sign-in STARTS allowed per IP per 10 minutes. Read by the RateLimiter
+    // Durable Object from its own env, never from a request -- see the note on
+    // that class. Sized so a whole office behind one NAT egress cannot lock
+    // itself out by signing in normally, while an automated burst still hits a
+    // wall. Exceeding it delays sign-in; it never disables an account.
+    "ADMIN_AUTH_PER_WINDOW": "30",
+
+    // Spam layer. LIVE since 2026-08-25 on Ivan's explicit approval.
+    //
+    // The flood check and normalized_hash have always run; this var only ever
+    // decided whether a flagged report is ENFORCED. Flipping it back to
+    // "false" and redeploying disables enforcement immediately and keeps
+    // everything else -- that is the fast rollback, in preference to reverting
+    // the deployment, which would also lose the review page.
+    //
+    // Held reports are read and released at /admin/review, which since
+    // 2026-09-02 requires a signed-in session (Google, against the
+    // admin_allowed list). Overdue alerting is off (no OPS_ALERT_WEBHOOK), so
+    // nothing announces a waiting queue -- someone has to look.
+    "SPAM_GATE_ENABLED": "true",
+
+    // The Nth substantially identical submission from one reporter inside the
+    // window is flagged. Floored at 2 in code, so it can never be configured
+    // to flag a first submission.
+    "FLOOD_THRESHOLD": "4",
+    "FLOOD_WINDOW_MS": "3600000",
+
+    // Hours a suspected report may wait before it is surfaced, then escalated.
+    // Escalation is forced strictly later than the warning in code, or both
+    // tiers fire at once and stop meaning anything.
+    "SPAM_REVIEW_OVERDUE_H": "24",
+    "SPAM_REVIEW_OVERDUE_ESCALATE_H": "48",
+
+    // Days after which a CONFIRMED spam row's attachments are deleted from R2.
+    // Suspected reports are never purged while they await review.
+    "SPAM_ATTACHMENT_RETENTION_DAYS": "30",
+
+    // Store Reviews sync. SHIPS OFF: anything but the literal "true" means no
+    // store is contacted. It is turned on deliberately -- a committed change to
+    // this line, then a deploy -- only after production and its configuration
+    // are verified. A dashboard edit would not stick: a deploy rewrites vars
+    // from this file.
+    //
+    // Once it is on, turning it off is DATA-DESTRUCTIVE, unlike every other
+    // switch here: Google serves only the last 7 days of reviews. See
+    // SAFETY-CONTROLS.md section 12. Reads GOOGLE_PLAY_SERVICE_ACCOUNT_JSON.
+    "STORE_SYNC_ENABLED": "false",
+
+    // The Android app whose reviews are collected. Public -- it is in the Play
+    // Store listing URL -- so a var, not a secret.
+    "GOOGLE_PLAY_PACKAGE_NAME": "com.miden.wallet",
+
+    // App Store review sync. Needs STORE_SYNC_ENABLED as well -- both must be
+    // the literal "true" -- so Google can run while Apple stays off. Turning it
+    // off loses nothing: App Store Connect does not limit reviews to the last
+    // 7 days. Reads APPLE_ASC_KEY_ID, APPLE_ASC_ISSUER_ID and
+    // APPLE_ASC_PRIVATE_KEY; while this is "true", all three must also be in
+    // secrets.required above (test AS21).
+    "APP_STORE_SYNC_ENABLED": "false",
+
+    // The iOS app whose reviews are collected. Public, so a var. App Store
+    // Connect's own ID for the app is looked up from this on every run
+    // (src/store/sync/apple.ts), never configured.
+    "APP_STORE_BUNDLE_ID": "com.miden.bread",
+
+    // Store Reviews reply sending. OFF: anything but the literal "true" means no
+    // reply is ever sent to Google Play or the App Store. Safe to disable at any
+    // time -- drafts and approvals persist in the console and nothing is lost;
+    // approved replies simply wait. Turning it on publishes public text under
+    // Bread Wallet's developer account, and a published reply cannot be
+    // withdrawn by us, so it is turned on by a committed change after the store
+    // permissions are confirmed. See SAFETY-CONTROLS.md section 12.
+    "STORE_REPLY_ENABLED": "false",
+
+    // Whether an eligible store review can be sent into the feedback pipeline.
+    // A handoff becomes a report the drain files as a PUBLIC GitHub issue, so
+    // this is turned on by a committed change, with an explicit go. While off,
+    // decisions are saved and no submissions row is written. See
+    // SAFETY-CONTROLS.md sections 10 and 12.
+    "STORE_HANDOFF_ENABLED": "false",
+
+    // Optional domain fence on top of the allowlist. Belt and braces: the
+    // allowlist is what grants access, and this stops a typo in it from ever
+    // granting access to an address outside the team.
+    "ADMIN_EMAIL_DOMAINS": "miden.team"
+
+    // ADMIN SIGN-IN. /admin/review took no credential at all between
+    // 2026-08-25 and 2026-09-02 -- a deliberate decision, made when the
+    // repository was private and one person used it. The repository is public
+    // and the team is bigger, so it is now behind Google sign-in against an
+    // allowlist of email addresses (migration 0008, src/lib/admin-auth.ts).
+    //
+    // Three SECRETS, never vars, because a client secret in this file would be
+    // a client secret in a public repository:
+    //
+    //   wrangler secret put ADMIN_SESSION_SECRET        (any long random string)
+    //   wrangler secret put GOOGLE_OAUTH_CLIENT_ID
+    //   wrangler secret put GOOGLE_OAUTH_CLIENT_SECRET
+    //
+    // It FAILS CLOSED: with any of them missing, nobody signs in -- a missing
+    // secret must lock the door, not remove it.
+    //
+    // Tests 38/38b used to pin the OPEN behaviour so a refactor could not
+    // reinstate a credential quietly. They now pin the opposite, deliberately.
+    //
+    // OPS_ALERT_WEBHOOK is a secret -- a Slack webhook URL is a credential.
+    // Alerting is OFF while it is unset, and off means alertOverdue returns
+    // immediately rather than marking rows it cannot announce. Queue counts
+    // stay on /admin/quarantined regardless.
+  },
+
+  "d1_databases": [
+    { "binding": "DB", "database_name": "wallet-support-feedback", "database_id": "REPLACE_WITH_MIDEN_D1_DATABASE_ID" }
+  ],
+
+  // No "queues" block: Queues requires the paid Workers plan. The drain cron
+  // below replaces it, with retries and the DLQ kept in D1 columns instead.
+  // Queues mfv2-triage + mfv2-dlq still exist on the account, unused, ready
+  // for a revert to tag `queue-design` if this upgrades to Workers Paid.
+
+  // Workers AI — embeddings for paraphrase-aware dedup (@cf/baai/bge-small-en-v1.5,
+  // 384 dims). On the free tier: 10,000 Neurons/day, and this model costs 1,841
+  // Neurons per million input tokens. No extra key, no extra dependency.
+  "ai": { "binding": "AI" },
+
+  "r2_buckets": [{ "binding": "ATTACHMENTS", "bucket_name": "wallet-support-feedback-attachments" }],
+
+  "durable_objects": {
+    "bindings": [
+      { "name": "RATE_LIMITER", "class_name": "RateLimiter" },
+      { "name": "PUBLISH_GATE", "class_name": "PublishGate" }
+    ]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["RateLimiter", "PublishGate"] }],
+
+  // Every minute: drain pending submissions. Every 15: sync the issue mirror.
+  // Every 5: one Store Reviews phase (src/store/cron.ts).
+  // src/crons.ts holds the strings scheduled() dispatches on; they must match
+  // these character for character, and test GP14 compares the two.
+  // The store trigger is two four-hour windows a day, not a clock: 04:00 and
+  // 16:00 UTC are 12:00 and 00:00 in Asia/Manila. See src/crons.ts.
+  "triggers": { "crons": ["* * * * *", "*/15 * * * *", "*/5 4-7,16-19 * * *"] },
+  "observability": { "enabled": true }
+}

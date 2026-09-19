@@ -3,5 +3,7 @@ dist/
 .vite/
 *.local
 .wrangler/
+.dev.vars
+.dev.vars.*
 test-results/
 playwright-report/

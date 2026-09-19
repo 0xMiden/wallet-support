@@ -5,8 +5,8 @@ Project guidance for anyone working on this repository, including Claude Code, i
 
 The Help Center for Bread Wallet. Readers browse main categories and subcategories, read articles
 written for Extension, Mobile, or both, search article titles and text (results can be shared as
-`?q=` links), and look up terms in the glossary. It is a standalone React, Vite and TypeScript site,
-previewed on Cloudflare Pages.
+`?q=` links), look up terms in the glossary, and send feedback. React and Vite build the public
+application; a Cloudflare Worker serves it alongside feedback APIs and protected operations pages.
 
 ## Local commands
 
@@ -14,6 +14,7 @@ previewed on Cloudflare Pages.
 yarn install
 yarn dev
 yarn build
+yarn verify:all
 ```
 
 Run the tests with the binary directly rather than `yarn test`, which trips this host's Jest worker
@@ -94,10 +95,43 @@ Skip a single push with `git push --no-verify`.
 
 ### On GitHub
 
-`.github/workflows/verify.yml` runs the same `yarn verify` on every pull request and every push to
-`main`, after `yarn install --frozen-lockfile`, which fails when `yarn.lock` does not match
-`package.json`. The hooks can be skipped or never enabled; the workflow cannot, so it is the check a
-merge waits for.
+`.github/workflows/verify.yml` runs the public application and Worker suites on every pull request
+and every push to `main`. It validates the feedback database migration chain, typechecks both
+packages, runs their unit suites and browser tests, and builds the production assets.
+
+## Feedback Worker
+
+The imported feedback service lives in `worker/feedback/`. It keeps its D1 migrations, R2 attachment
+quarantine, Durable Object rate limits, review consoles, store-review pipeline, and regression suite
+separate from the public React package.
+
+Public submissions use `/api/feedback/submit`; status checks use `/api/feedback/status`. `/submit`
+and `/status` are temporary compatibility aliases. Unknown `/api/*` and `/admin/*` paths return 404
+from the Worker and never fall through to the public SPA.
+
+Production GitHub access uses a GitHub App installed only on `0xMiden/wallet`, with repository
+metadata read and issues read/write permissions. Configure `GITHUB_APP_ID`,
+`GITHUB_APP_INSTALLATION_ID`, and `GITHUB_APP_PRIVATE_KEY` as Cloudflare secrets. The pipeline
+rejects any `TARGET_REPO` other than `0xMiden/wallet` before processing or publishing. The static
+`GITHUB_WRITE_TOKEN` path exists only for hermetic tests and is not a required production secret.
+
+The checked-in Worker configuration contains no live Cloudflare resource IDs. Replace the D1
+placeholder only while provisioning the Miden-owned environment. Keep these flags set to `false`
+through initial deployment and data verification:
+
+- `PUBLISH_ENABLED`
+- `STORE_SYNC_ENABLED`
+- `APP_STORE_SYNC_ENABLED`
+- `STORE_REPLY_ENABLED`
+- `STORE_HANDOFF_ENABLED`
+
+Run Worker checks with Node 22 or newer:
+
+```bash
+npm ci --prefix worker/feedback
+npm --prefix worker/feedback run typecheck
+npm --prefix worker/feedback test
+```
 
 `main` is protected by a repository ruleset: a change arrives only through a pull
 request, merged with a merge commit, and only once the `verify` check has passed; `main` cannot be
@@ -156,7 +190,7 @@ The Help Center is available as a non-production Cloudflare Pages preview:
 Cloudflare project: `bread-wallet-help-center-preview`  
 Preview branch: `help-center-shell`
 
-This project is separate from the `miden-feedback-v2` Cloudflare Worker and does not use any of its bindings or routes.
+This Pages project predates the combined Worker deployment and remains a temporary visual-review target only.
 
 ### Deploying a preview
 

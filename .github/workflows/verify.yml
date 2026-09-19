@@ -34,7 +34,13 @@ jobs:
       # Fails when yarn.lock does not match package.json instead of rewriting it.
       - run: yarn install --frozen-lockfile
 
+      - run: npm ci --prefix worker/feedback
+
       # The browser build matching the pinned @playwright/test, with its system libraries.
       - run: yarn playwright install --with-deps chromium
 
       - run: yarn verify
+
+      - run: npm --prefix worker/feedback run typecheck
+
+      - run: npm --prefix worker/feedback test
