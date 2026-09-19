@@ -9,12 +9,14 @@
 import { env } from 'cloudflare:test';
 import { beforeAll, afterEach, describe, expect, it } from 'vitest';
 import {
-  callWorker, installFetchStub, restoreFetch, mockTurnstile, submitRequest,
-  getSubmission, countSubmissions, pngFile, jpegFile, mp4File, fileOf,
+  callWorker, installFetchStub, restoreFetch, mockTurnstile, route, submitRequest,
+  getSubmission, countSubmissions, callsTo, pngFile, jpegFile, mp4File, fileOf,
   PNG_BYTES, JPEG_BYTES, MP4_BYTES, JUNK_BYTES,
 } from './helpers';
 import { sniffType } from '../src/lib/sniff';
-import { admitBytes, validateFile, storeAttachment, MAX_BYTES } from '../src/lib/attachments';
+import {
+  admitBytes, validateFile, storeAttachment, publishAttachment, MAX_BYTES,
+} from '../src/lib/attachments';
 
 beforeAll(() => installFetchStub());
 afterEach(() => { restoreFetch(); installFetchStub(); });
@@ -116,6 +118,18 @@ describe('attachment admission', () => {
     expect(stored.video).toBe(true);
   });
 
+  it('47d2. keeps attachments private during ingestion and makes no GitHub request', async () => {
+    const { id, res } = await submitWith(pngFile());
+
+    expect(res.status).toBe(202);
+    expect(callsTo('api.github.com')).toHaveLength(0);
+
+    const row = await getSubmission(id);
+    const stored = JSON.parse(JSON.parse(row.attachment_keys)[0]);
+    expect(stored.githubUrl).toBe(null);
+    expect(stored.r2Url).toBe(null);
+  });
+
   it('47e. the size check still runs first, and still answers 413', async () => {
     // Unchanged behaviour, and it must stay ahead of the byte read: a 10 MB
     // body should be refused on size without ever being buffered.
@@ -165,6 +179,41 @@ describe('sniffType', () => {
     expect(stored.type).toBe('image/png');
     const obj = await env.ATTACHMENTS.get(stored.key);
     expect(obj!.httpMetadata!.contentType).toBe('image/png');
+  });
+
+  it('47i2. publishes a stored attachment only when the publish pipeline asks', async () => {
+    const id = crypto.randomUUID();
+    const file = pngFile();
+    const stored = await storeAttachment(
+      file, PNG_BYTES, { mime: 'image/png', name: 'screenshot.png', video: false },
+      id, env as any
+    );
+
+    route({
+      match: (u, m) => u.host === 'api.github.com' && m === 'GET'
+        && u.pathname === '/repos/0xMiden/wallet',
+      respond: () => Response.json({ id: 123 }),
+    });
+    route({
+      match: (u, m) => u.host === 'uploads.github.com' && m === 'POST'
+        && u.pathname === '/user-attachments/assets',
+      respond: () => Response.json(
+        { url: 'https://github.com/user-attachments/assets/test' },
+        { status: 201 }
+      ),
+    });
+
+    const published = await publishAttachment(stored, {
+      ATTACHMENTS: env.ATTACHMENTS,
+      TARGET_REPO: '0xMiden/wallet',
+      GITHUB_WRITE_TOKEN: 'test-token',
+      R2_PUBLIC_BASE: 'https://files.example',
+    });
+
+    expect(published.githubUrl).toBe('https://github.com/user-attachments/assets/test');
+    expect(published.r2Url).toBe(`https://files.example/${stored.key}`);
+    expect(callsTo('api.github.com')).toHaveLength(1);
+    expect(callsTo('uploads.github.com')).toHaveLength(1);
   });
 
   it('47j. rejects an HTML polyglot wearing an ftyp marker', async () => {

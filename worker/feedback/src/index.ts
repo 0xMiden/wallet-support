@@ -222,7 +222,6 @@ const worker = {
 
   async fetchRaw(req: Request, env: Env, _ctx: ExecutionContext): Promise<Response> {
     assertWalletTarget(env.TARGET_REPO);
-    if (!env.GITHUB_WRITE_TOKEN && env.GITHUB_APP_ID) env.GITHUB_WRITE_TOKEN = await getGitHubToken(env);
     const url = new URL(req.url);
     const requestedPath = url.pathname;
     if (requestedPath === '/submit' || requestedPath === '/status') {

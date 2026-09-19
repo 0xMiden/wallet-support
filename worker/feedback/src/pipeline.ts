@@ -25,7 +25,7 @@ import {
   createIssue, createComment, updateComment,
   markerAlreadyPublished, RateLimited,
 } from './lib/publish';
-import { renderAttachment, type StoredAttachment } from './lib/attachments';
+import { publishAttachment, renderAttachment, type StoredAttachment } from './lib/attachments';
 import { similarIssues } from './lib/embed';
 import { sanitize } from './lib/sanitize';
 import { assertWalletTarget } from './lib/github-auth';
@@ -828,10 +828,13 @@ export async function processSubmission(env: Env, sub: SubmissionRow, from: stri
       }));
     }
 
+    const publishedAttachments = await Promise.all(
+      attachments.map((attachment) => publishAttachment(attachment, env))
+    );
     const title = titleFor(sub, verdict.title);
     const number = await createIssue(env.TARGET_REPO, env.GITHUB_WRITE_TOKEN, {
       title,
-      body: issueBody(sub, env, attachments, related, origin),
+      body: issueBody(sub, env, publishedAttachments, related, origin),
       labels: [...new Set(labels)],
     });
 

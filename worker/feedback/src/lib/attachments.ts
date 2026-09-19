@@ -1,8 +1,8 @@
 /**
- * Attachment handling: GitHub upload with R2 fallback.
+ * Attachment handling: private R2 ingest, then GitHub upload at publication.
  *
- * Files are uploaded to GitHub so they render inline in the issue, per the
- * product requirement. R2 is the durable copy and the fallback path.
+ * R2 is the durable private copy. Files are uploaded to GitHub only after the
+ * publish guard succeeds so ingestion never performs a public write.
  *
  * IMPORTANT — the GitHub attachment endpoint is UNDOCUMENTED. It is not in
  * GitHub's REST reference, has no SLA, and no deprecation notice. It is known
@@ -24,8 +24,8 @@ export interface StoredAttachment {
   /** The SNIFFED type. Admission guarantees it equals what was declared. */
   type: string;
   size: number;
-  githubUrl: string | null;  // set when the GitHub upload succeeded
-  r2Url: string | null;      // public R2 URL, when R2_PUBLIC_BASE is configured
+  githubUrl: string | null;  // set only by the publication pipeline
+  r2Url: string | null;      // public fallback set only at publication
   video: boolean;            // from magic bytes; decides bare-URL vs image markup
 }
 
@@ -107,12 +107,9 @@ async function uploadToGitHub(
 }
 
 /**
- * `bytes` is passed in rather than read here, and that is the point: the
- * caller already buffered the file to sniff it, and the GitHub upload path
- * needed a buffer anyway. Reading it once and feeding R2, the sniff and the
- * upload from the same array REMOVES a double read rather than adding one.
- * The file's stream is also already consumed by then, so re-reading it would
- * not have worked.
+ * `bytes` is passed in rather than read here because the caller already
+ * buffered and admitted the file. R2 receives exactly the bytes that passed
+ * the magic-byte check, without trusting or re-reading the client stream.
  */
 export async function storeAttachment(
   file: File,
@@ -121,9 +118,6 @@ export async function storeAttachment(
   submissionId: string,
   env: {
     ATTACHMENTS: R2Bucket;
-    TARGET_REPO: string;
-    GITHUB_WRITE_TOKEN: string;
-    R2_PUBLIC_BASE?: string;
   }
 ): Promise<StoredAttachment> {
   const name = safeName(file.name);
@@ -139,19 +133,44 @@ export async function storeAttachment(
     customMetadata: { submissionId, originalName: file.name },
   });
 
-  const uploaded = await uploadToGitHub(bytes, env.TARGET_REPO, env.GITHUB_WRITE_TOKEN);
-  const r2Url = env.R2_PUBLIC_BASE ? `${env.R2_PUBLIC_BASE.replace(/\/$/, '')}/${key}` : null;
-
   return {
     key,
     name,
     type: sniffed.mime,
     size: file.size,
-    githubUrl: uploaded?.url ?? null,
+    githubUrl: null,
     // From the bytes, and now known even when the GitHub upload failed — it
     // used to fall back to the declared type, so a mislabelled video rendered
     // as a broken image whenever that endpoint was down.
     video: sniffed.video,
+    r2Url: null,
+  };
+}
+
+/** Publish a privately stored attachment after the GitHub write guard passes. */
+export async function publishAttachment(
+  attachment: StoredAttachment,
+  env: {
+    ATTACHMENTS: R2Bucket;
+    TARGET_REPO: string;
+    GITHUB_WRITE_TOKEN: string;
+    R2_PUBLIC_BASE?: string;
+  }
+): Promise<StoredAttachment> {
+  if (attachment.githubUrl) return attachment;
+
+  const object = await env.ATTACHMENTS.get(attachment.key);
+  if (!object) return attachment;
+
+  const bytes = new Uint8Array(await object.arrayBuffer());
+  const uploaded = await uploadToGitHub(bytes, env.TARGET_REPO, env.GITHUB_WRITE_TOKEN);
+  const r2Url = env.R2_PUBLIC_BASE
+    ? `${env.R2_PUBLIC_BASE.replace(/\/$/, '')}/${attachment.key}`
+    : null;
+
+  return {
+    ...attachment,
+    githubUrl: uploaded?.url ?? null,
     r2Url,
   };
 }
