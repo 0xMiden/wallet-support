@@ -49,7 +49,7 @@ const SECTION_LABEL = /^\*\*([^*]+)\*\*$/;
  * a link that goes nowhere. It stays in the tab: the reader is still inside
  * the Help Center, and the query string, which carries the platform, is kept.
  */
-const INTERNAL_HREF = /^#[a-z0-9]+(?:-[a-z0-9]+)*(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)?$/;
+const INTERNAL_HREF = /^(?:\/feedback|#[a-z0-9]+(?:-[a-z0-9]+)*(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)?)$/;
 
 /*
  * An image is a line of its own: ![alt](file.png). Alt text is required, and
@@ -113,7 +113,10 @@ function fail(origin: string, reason: string, line: string): never {
   throw new Error(`${origin}: ${reason} — ${line.trim().slice(0, 80)}`);
 }
 
-function renderLink(label: string, href: string, origin: string, line: string) {
+function renderLink(label: string, originalHref: string, origin: string, line: string) {
+  const href = originalHref.startsWith('https://miden-feedback-v2.miden-feedback-relay.workers.dev/')
+    ? '/feedback'
+    : originalHref;
   const external = /^https?:\/\//.test(href);
   if (!external && !href.startsWith('mailto:') && !INTERNAL_HREF.test(href)) {
     fail(origin, `link scheme is not supported ("${href}")`, line);

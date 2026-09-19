@@ -10,8 +10,7 @@
  */
 
 /** Approved destination for the support intake (content proposal §3A). */
-export const CONTACT_SUPPORT_URL =
-  'https://miden-feedback-v2.miden-feedback-relay.workers.dev/';
+export const CONTACT_SUPPORT_URL = '/feedback';
 
 export interface HelpCenterDownload {
   readonly id: string;

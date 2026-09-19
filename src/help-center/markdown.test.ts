@@ -29,6 +29,12 @@ describe('inline markup', () => {
     expect(render('[**SUPPORT**](https://example.com/)')).toContain('<strong>SUPPORT</strong>');
   });
 
+  it('routes the retired feedback worker URL through the integrated support form', () => {
+    const html = render('[Support](https://miden-feedback-v2.miden-feedback-relay.workers.dev/?cb=4)');
+    expect(html).toContain('<a href="/feedback">Support</a>');
+    expect(html).not.toContain('workers.dev');
+  });
+
   it('refuses a link scheme outside http, https and mailto', () => {
     expect(() => render('[x](javascript:alert(1))')).toThrow(/link scheme is not supported/);
   });
