@@ -239,8 +239,9 @@ The existing database and attachments must be preserved:
 1. Set GitHub publication and store replies off on the existing deployment.
 2. Export the existing D1 database.
 3. Create Miden-owned D1, R2, Durable Object, and Turnstile resources.
-4. Apply all migrations to an empty Miden D1 database.
-5. Import the export and verify table counts and critical state rows.
+4. Initialize the empty Miden D1 database once from `schema.sql`; do not replay
+   numbered migrations on top of that final schema.
+5. Import a data-only export and verify table counts and critical state rows.
 6. Copy referenced R2 objects and verify object counts and checksums.
 7. Provision new secrets without reading or copying secret values from source
    control.
@@ -250,6 +251,10 @@ The existing database and attachments must be preserved:
 10. Attach support.miden.xyz.
 11. Keep publication, store sync, replies, and store-to-issue handoff disabled
     until their individual production checks pass.
+
+The executable account-safe procedure, including the separate fresh,
+data-migration, and incremental-upgrade paths, lives in
+`worker/feedback/docs/MIDEN-CUTOVER.md`.
 
 The existing Worker remains intact until the new domain and data have been
 verified. DNS cutover is the rollback boundary.

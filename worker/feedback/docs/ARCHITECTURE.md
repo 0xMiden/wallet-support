@@ -5,6 +5,12 @@
 **Supersedes:** v1, v2
 **Scope:** this repository. The existing Bread Wallet feedback form and its relay are **out of scope and untouched.**
 
+> **Historical imported ADR.** The combined Miden support deployment now
+> includes the feedback form and relay, uses a repository-scoped GitHub App,
+> and keeps attachments private until guarded publication. For current
+> ownership, provisioning, migration, and rollback instructions, use
+> [MIDEN-CUTOVER.md](./MIDEN-CUTOVER.md) and the repository design spec.
+
 ---
 
 ## 0. Credential policy — fixed, not up for discussion
@@ -363,4 +369,3 @@ written only by a human. See `SAFETY-CONTROLS.md` §11.
 7 hardening. Phase 1 is sequenced first among the functional phases because
 Google serves only the last 7 days of reviews: every day without sync is a day
 of Android reviews lost permanently.
-

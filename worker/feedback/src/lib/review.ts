@@ -4,13 +4,11 @@
  * This page exists so the spam layer is not a black hole. Nothing is ever
  * auto-released; a suspected report waits here until someone decides.
  *
- * ACCESS: OPEN. No token, no session, no cookie. Ivan decided on 2026-08-25
- * that the queue must be readable at any time without a credential, and that
- * decision is recorded here rather than argued with. What follows from it:
- * anyone who has the URL can read every held report and its attachments, and
- * can press Release or Confirm spam. There is no CSRF token because there is
- * no session to bind one to, and none would add anything -- a request that
- * needs no credential can be made directly.
+ * ACCESS: AUTHENTICATED. Every `/admin/review` route passes through the shared
+ * Google OAuth allowlist in index.ts before it reaches this module. Mutating
+ * forms bind a CSRF token to that signed-in session. Attachments are served by
+ * the same protected route family and never exposed through a public R2 URL
+ * while the report is awaiting review.
  *
  * It still renders attacker-controlled text, so two rules hold throughout:
  *
@@ -113,8 +111,8 @@ function renderRow(row: any, csrf: string): string {
        row.attempts ? `\n       <span class="sep">\u00b7</span> attempt <b>${esc(String(row.attempts))}</b> of 5` : ''}</p>`;
 
   // WHY it is stuck, which is the only reason to open the deferred tab. The
-  // page takes no credential, so this is truncated and never rendered as
-  // markup — upstream error bodies are attacker-adjacent text like any other.
+  // This is truncated and never rendered as markup — upstream error bodies
+  // are attacker-adjacent text like any other.
   const stuck = (row.state === 'deferred' || row.state === 'failed') && row.last_error
     ? `<p class="note">Last error: ${esc(String(row.last_error).slice(0, 160))}</p>`
     : '';

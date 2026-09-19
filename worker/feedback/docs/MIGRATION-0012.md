@@ -1,5 +1,9 @@
 # Migration 0012 — `pass_tokens`, `cycle_at`, `last_pass_at`
 
+> **Historical source-service note.** Do not run the account, database, or
+> deployment commands below for Miden. Follow [MIDEN-CUTOVER.md](./MIDEN-CUTOVER.md),
+> which separates fresh initialization, data migration, and incremental upgrade.
+
 `migrations/0012_store_sync_pass.sql` adds three nullable columns to
 `store_sync_state` so that a paging PASS — which spans many runs — can be
 recognised as a thing with a beginning and an end.

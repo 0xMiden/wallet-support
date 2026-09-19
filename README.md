@@ -13,9 +13,14 @@ application; a Cloudflare Worker serves it alongside feedback APIs and protected
 ```bash
 yarn install
 yarn dev
-yarn build
-yarn verify:all
+VITE_TURNSTILE_SITE_KEY=<public-site-key> yarn build
+VITE_TURNSTILE_SITE_KEY=<public-site-key> yarn verify:all
 ```
+
+Production builds fail unless `VITE_TURNSTILE_SITE_KEY` is set. Configure the
+public Turnstile site key for `support.miden.xyz` in the build environment; its
+matching `TURNSTILE_SECRET` remains a Worker secret. Local browser tests inject
+Cloudflare's public always-pass test key and never need the production value.
 
 Run the tests with the binary directly rather than `yarn test`, which trips this host's Jest worker
 guard:
@@ -101,8 +106,8 @@ packages, runs their unit suites and browser tests, and builds the production as
 
 ## Feedback Worker
 
-The imported feedback service lives in `worker/feedback/`. It keeps its D1 migrations, R2 attachment
-quarantine, Durable Object rate limits, review consoles, store-review pipeline, and regression suite
+The imported feedback service lives in `worker/feedback/`. It keeps its D1 migrations, private R2
+attachment storage, Durable Object rate limits, review consoles, store-review pipeline, and regression suite
 separate from the public React package.
 
 Public submissions use `/api/feedback/submit`; status checks use `/api/feedback/status`. `/submit`
@@ -124,6 +129,11 @@ through initial deployment and data verification:
 - `APP_STORE_SYNC_ENABLED`
 - `STORE_REPLY_ENABLED`
 - `STORE_HANDOFF_ENABLED`
+
+Use [`worker/feedback/docs/MIDEN-CUTOVER.md`](worker/feedback/docs/MIDEN-CUTOVER.md)
+for fresh setup, source-data migration, incremental upgrades, verification, and
+rollback. Imported migration notes contain historical source-account commands
+and are not the Miden deployment procedure.
 
 Run Worker checks with Node 22 or newer:
 

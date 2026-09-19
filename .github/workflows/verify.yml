@@ -20,6 +20,10 @@ jobs:
   verify:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
+    env:
+      # Cloudflare's documented always-pass public test key. Production
+      # deployments must provide the support.miden.xyz site key instead.
+      VITE_TURNSTILE_SITE_KEY: 1x00000000000000000000AA
     steps:
       # Actions are pinned to full commit SHAs, with the release tag beside each.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

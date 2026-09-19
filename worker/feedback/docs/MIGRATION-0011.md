@@ -1,5 +1,9 @@
 # Migration 0011 — `defer_until`, `paused_at`, `paused_reason`
 
+> **Historical source-service note.** Do not run the account, database, or
+> deployment commands below for Miden. Follow [MIDEN-CUTOVER.md](./MIDEN-CUTOVER.md),
+> which separates fresh initialization, data migration, and incremental upgrade.
+
 `migrations/0011_store_sync_defer_pause.sql` adds three nullable columns to
 `store_sync_state`, so a sync can be WAITING or PAUSED rather than only failing.
 

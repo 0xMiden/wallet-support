@@ -50,6 +50,18 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
+if [ -z "${VITE_TURNSTILE_SITE_KEY:-}" ]; then
+  echo "refusing: VITE_TURNSTILE_SITE_KEY is required for the public feedback form." >&2
+  echo "  Set the public site key for support.miden.xyz, rebuild, then deploy." >&2
+  exit 1
+fi
+
+if ! grep -R -F -q -- "${VITE_TURNSTILE_SITE_KEY}" ../../dist/assets/*.js 2>/dev/null; then
+  echo "refusing: dist/ was not built with the supplied VITE_TURNSTILE_SITE_KEY." >&2
+  echo "  Run the root deploy:worker command so the build and Worker deploy use one key." >&2
+  exit 1
+fi
+
 if ! git rev-parse --git-dir >/dev/null 2>&1; then
   echo "refusing: not a git repository, so nothing can be traced to a commit" >&2
   exit 1
