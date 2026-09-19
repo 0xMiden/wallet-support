@@ -175,8 +175,8 @@ export async function alertOverdue(env: AlertEnv, now = Date.now()): Promise<Ale
   // return a stamped row for that tier again. Without this guard a deployment
   // with no webhook silently burns each row's warn and escalate tiers against
   // a destination that does not exist, so if a webhook is ever added later it
-  // has nothing left to announce. Ivan turned alerting off on 2026-08-25; the
-  // queue counts stay on /admin/quarantined either way.
+  // has nothing left to announce. The queue counts stay on
+  // /admin/quarantined either way.
   if (!env.OPS_ALERT_WEBHOOK) return result;
 
   for (const [tier, ms, hours] of [

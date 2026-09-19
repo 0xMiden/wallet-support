@@ -9,12 +9,10 @@
  * reached from this file at all. Classification is Phase 4; the reply and
  * handoff ACTIONS are Phases 5 and 6, and they arrive with their own guard.
  *
- * ACCESS. These pages inherit /admin/review's open access, which is safe while
- * they are read-only. Admin authentication is a known open item, deferred by
- * the maintainer; the actions in Phases 5 and 6 are what turn it from an
- * improvement into a prerequisite, because approving a reply publishes public
- * text under Bread Wallet's developer account and the handoff opens a public
- * issue on a third-party repository.
+ * ACCESS. These pages pass through the shared Google OAuth allowlist in
+ * index.ts. Mutating actions also require the CSRF token bound to the signed-in
+ * session. Authentication remains mandatory even for the read surface because
+ * reviews, moderation state, and publication history are operational data.
  *
  * Every rule review.ts renders under holds here too, and for the same reason:
  * a store review is a stranger's text from a public listing. Zero JavaScript,

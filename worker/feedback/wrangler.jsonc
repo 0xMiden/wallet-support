@@ -68,7 +68,8 @@
     // KILL SWITCH. Set to "false" and redeploy to halt every GitHub write
     // immediately. Ingest, dedup and storage keep running; nothing is lost.
     // Covers BOTH write paths — new issues and rolling comments on folds.
-    // Live against 0xMiden/wallet since 2026-08-14.
+    // Keep disabled through Miden's dry-run validation; enable only through
+    // the staged cutover in docs/MIDEN-CUTOVER.md.
     "PUBLISH_ENABLED": "false",
 
     // Volume caps on NEW ISSUE creation. Duplicates fold into an existing
@@ -142,7 +143,8 @@
     // wall. Exceeding it delays sign-in; it never disables an account.
     "ADMIN_AUTH_PER_WINDOW": "30",
 
-    // Spam layer. LIVE since 2026-08-25 on Ivan's explicit approval.
+    // Spam layer. Enabled in the checked-in policy so suspected reports wait
+    // for an authenticated human decision instead of entering publication.
     //
     // The flood check and normalized_hash have always run; this var only ever
     // decided whether a flagged report is ENFORCED. Flipping it back to

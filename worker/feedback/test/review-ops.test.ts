@@ -61,8 +61,8 @@ describe('overdue signals', () => {
   });
 
   it('43b. with no webhook configured, alerting is OFF and burns no tier', async () => {
-    // Ivan turned alerting off on 2026-08-25. "Off" has to mean the job leaves
-    // no trace, not that it runs and drops the message on the floor: markAlerted
+    // "Off" has to mean the job leaves no trace, not that it runs and drops
+    // the message on the floor: markAlerted
     // stamps overdue_alert_tier BEFORE the send, and a stamped tier never comes
     // back from newlyOverdue. Without the guard, every row silently spends both
     // its tiers against a destination that does not exist, so turning alerting

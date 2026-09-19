@@ -101,8 +101,8 @@ export function parseQuery(params: URLSearchParams): StoreQuery {
   const flaggedRaw = params.get('flagged');
   const flagged = flaggedRaw === 'yes' ? true : flaggedRaw === 'no' ? false : null;
 
-  // Collapsed whitespace and a hard length cap. The cap is not politeness: an
-  // unbounded LIKE term is an unbounded scan on a page that takes no credential.
+  // Collapsed whitespace and a hard length cap. Authentication does not make
+  // an unbounded LIKE scan safe or affordable.
   const searchRaw = (params.get('q') ?? '').replace(/\s+/g, ' ').trim().slice(0, MAX_SEARCH);
 
   const pageRaw = Number(params.get('page'));

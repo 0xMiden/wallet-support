@@ -2,10 +2,9 @@
  * Phase 3 — the console read surface: filters, search, sorting, paging, and
  * the per-review detail page.
  *
- * This page takes no credential and renders a stranger's text from a public
- * listing, and it now accepts nine parameters from the query string. So the
- * tests that matter most are the ones about what a caller can reach: nothing
- * from the URL may become SQL, and nothing may become markup.
+ * This authenticated page renders a stranger's text from a public listing and
+ * accepts nine parameters from the query string. Nothing from the URL may
+ * become SQL, and nothing may become markup.
  *
  * The second theme is quieter and just as damaging: a filter that silently
  * does not apply, or a pager that shows one row twice and another never. Both

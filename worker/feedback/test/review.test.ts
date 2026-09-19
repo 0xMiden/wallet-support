@@ -1,11 +1,9 @@
 /**
  * Plan §10 tests 30-42 — the review queue (Phase 6).
  *
- * ACCESS IS OPEN by Ivan's decision of 2026-08-25: no token, no session, no
- * CSRF. The authorization tests that used to live here are gone because the
- * thing they tested is gone. Test 38 now pins the OPPOSITE property, so that
- * if a credential ever reappears on this page it is because someone chose it,
- * not because a refactor quietly reinstated one.
+ * ACCESS IS AUTHENTICATED. The authorization tests pin the Google OAuth
+ * session gate and CSRF protection so a refactor cannot quietly expose the
+ * queue or its actions.
  *
  * What survives is everything that is still true and still matters: the page
  * renders attacker-controlled text, so no submitter text may reach it as
