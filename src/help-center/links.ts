@@ -10,8 +10,7 @@
  */
 
 /** Approved destination for the support intake (content proposal §3A). */
-export const CONTACT_SUPPORT_URL =
-  'https://miden-feedback-v2.miden-feedback-relay.workers.dev/';
+export const CONTACT_SUPPORT_URL = '/feedback';
 
 export interface HelpCenterDownload {
   readonly id: string;
@@ -70,14 +69,10 @@ export const helpCenterSocials: readonly HelpCenterSocial[] = [
   }
 ] as const;
 
-/**
- * Terms of Service and Privacy Policy both point at the privacy page, as
- * given. There is one published document and two names for it in the footer;
- * when a separate terms page exists, only this href changes.
- */
-const LEGAL_URL = 'https://0xmiden.github.io/wallet/privacy/';
-
 export const helpCenterLegal: readonly HelpCenterDownload[] = [
-  { id: 'terms', label: 'Terms of Service', href: LEGAL_URL },
-  { id: 'privacy', label: 'Privacy Policy', href: LEGAL_URL }
+  {
+    id: 'privacy',
+    label: 'Privacy Policy',
+    href: 'https://0xmiden.github.io/wallet/privacy/'
+  }
 ] as const;

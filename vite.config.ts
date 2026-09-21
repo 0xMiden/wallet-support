@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vitest/config';
+import { loadEnv } from 'vite';
 
 /*
  * The headers Cloudflare Pages serves, read from public/_headers (the build
@@ -36,15 +37,24 @@ function pagesHeaders(): Record<string, string> {
   return headers;
 }
 
-export default defineConfig({
-  plugins: [react()],
-  build: {
-    target: 'es2022'
-  },
-  preview: {
-    headers: pagesHeaders()
-  },
-  test: {
+export default defineConfig(({ command, mode }) => {
+  if (command === 'build') {
+    const env = loadEnv(mode, fileURLToPath(new URL('.', import.meta.url)), 'VITE_');
+    const siteKey = env.VITE_TURNSTILE_SITE_KEY;
+    if (!siteKey?.trim()) {
+      throw new Error('VITE_TURNSTILE_SITE_KEY is required for production builds. Configure the public key for support.miden.xyz.');
+    }
+  }
+
+  return {
+    plugins: [react()],
+    build: {
+      target: 'es2022'
+    },
+    preview: {
+      headers: pagesHeaders()
+    },
+    test: {
     /*
      * Named explicitly. Vitest's default include also matches *.spec.ts, which
      * would pick up the Playwright specs in e2e/ and run them in the node
@@ -52,6 +62,7 @@ export default defineConfig({
      * the two suites apart would make the next e2e file the one that breaks
      * the unit run.
      */
-    include: ['src/**/*.test.ts']
-  }
+      include: ['src/**/*.test.ts']
+    }
+  };
 });

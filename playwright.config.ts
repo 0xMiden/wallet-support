@@ -26,6 +26,11 @@ export default defineConfig({
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
     command: `yarn build && yarn vite preview --port ${PORT} --strictPort`,
+    env: {
+      // Cloudflare's documented always-pass test key. Browser tests verify
+      // layout and CSP without binding a production widget to localhost.
+      VITE_TURNSTILE_SITE_KEY: '1x00000000000000000000AA',
+    },
     url: `http://localhost:${PORT}`,
     /*
      * Always start a fresh server. Reusing one already on the port would let a

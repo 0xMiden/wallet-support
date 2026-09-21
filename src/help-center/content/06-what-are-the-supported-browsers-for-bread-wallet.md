@@ -6,4 +6,6 @@ subcategory: setup-and-basic-use
 platforms: [extension-desktop, mobile]
 ---
 
-Currently, we support the Chrome and Brave browsers. Other browsers, such as Edge and Firefox, are not on the roadmap yet.
+Bread Wallet supports browser extensions for **Chrome** and **Firefox**.
+
+Bread is also available as a desktop app for macOS, Windows, and Linux, and as a mobile app for iOS and Android. Brave and Edge are not currently listed as officially supported browser-extension targets.

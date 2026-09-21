@@ -6,8 +6,8 @@ subcategory: moving-across-chains
 platforms: [extension-desktop, mobile]
 ---
 
-Yes. Bread moves funds between your private account on Miden and the chains people already use, all from one place.
+Bread Beta can move supported test assets between Miden testnet and Ethereum Sepolia.
 
-Sending to an Ethereum address bridges your assets to Ethereum.
+> ⚠️ **Test funds only:** connect an Ethereum Sepolia wallet and use only testnet assets. Never send funds from Ethereum mainnet or any other network with real assets.
 
-Bread can use several routes, depending on the asset and whether it needs to be swapped along the way. See [*What is the difference between a solver route and a canonical bridge?*](#moving-across-chains/what-is-the-difference-between-a-solver-route-and-a-canonical-bridge)
+The routes and assets available in Bread depend on the current Beta configuration. The wallet shows only the routes it can use for that transfer. See [*What is the difference between a solver route and a canonical bridge?*](#moving-across-chains/what-is-the-difference-between-a-solver-route-and-a-canonical-bridge)

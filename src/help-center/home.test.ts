@@ -65,11 +65,8 @@ describe('the home page promises', () => {
     }
   });
 
-  it('names both legal documents, and points them where they were given', () => {
-    // One published document, two names for it in the footer. If a separate
-    // terms page ever exists, this test is where the change is declared.
+  it('links only to legal documents that are actually published', () => {
     expect(helpCenterLegal.map(document => [document.label, document.href])).toEqual([
-      ['Terms of Service', 'https://0xmiden.github.io/wallet/privacy/'],
       ['Privacy Policy', 'https://0xmiden.github.io/wallet/privacy/']
     ]);
   });

@@ -712,8 +712,6 @@ export function HelpCenter() {
               <a
                 className="help-center-contact-button"
                 href={CONTACT_SUPPORT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
               >
                 <span>Contact Support</span>
                 <SupportIcon />
@@ -957,7 +955,7 @@ export function HelpCenter() {
                       ) : (
                         <>
                           Sorry about that.{' '}
-                          <a href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">
+                          <a href={CONTACT_SUPPORT_URL}>
                             Tell us what was missing
                           </a>
                           .

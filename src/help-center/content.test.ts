@@ -1297,7 +1297,8 @@ describe('design tokens', () => {
    */
   const cssDir = fileURLToPath(new URL('.', import.meta.url));
   const cssFiles = readdirSync(cssDir).filter(name => name.endsWith('.css'));
-  const allCss = cssFiles.map(name => readFileSync(join(cssDir, name), 'utf8')).join('\n');
+  const feedbackCss = readFileSync(fileURLToPath(new URL('../feedback/feedback.css', import.meta.url)), 'utf8');
+  const allCss = `${cssFiles.map(name => readFileSync(join(cssDir, name), 'utf8')).join('\n')}\n${feedbackCss}`;
 
   it('are every one of them referenced somewhere', () => {
     expect(cssFiles.length).toBeGreaterThan(0);
