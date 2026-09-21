@@ -17,7 +17,8 @@ import { verifyTurnstile, verifyHmac, sha256Hex, isUuidV4, timingSafeEqual } fro
 import { scanForSecrets } from './lib/secret-scan';
 import { sanitize } from './lib/sanitize';
 import { inferErrorCode, fingerprint } from './lib/fingerprint';
-import { storeAttachment, validateFile, admitBytes } from './lib/attachments';
+import { serveAttachment } from './lib/media';
+import { storeAttachment, validateFile, admitBytes, MAX_ATTACHMENTS, MAX_BYTES } from './lib/attachments';
 import { floodHash, reporterKind, floodConfig, spamGateEnabled, checkFlood } from './lib/spam-signals';
 import { handleReview } from './lib/review';
 import { handleStore } from './store/admin';
@@ -51,7 +52,8 @@ export interface Env {
   GITHUB_APP_ID?: string;
   GITHUB_APP_INSTALLATION_ID?: string;
   GITHUB_APP_PRIVATE_KEY?: string;
-  R2_PUBLIC_BASE?: string;
+  /** HTTPS origin serving this Worker; media remains in a private R2 bucket. */
+  FEEDBACK_PUBLIC_ORIGIN?: string;
   LLM_API_KEY_PRIMARY: string;
   LLM_API_KEY_FALLBACK: string;
   TARGET_REPO: string;
@@ -235,6 +237,8 @@ const worker = {
     }
     if (requestedPath === '/api/feedback/submit') url.pathname = '/submit';
     if (requestedPath === '/api/feedback/status') url.pathname = '/status';
+
+    if (requestedPath.startsWith('/api/feedback/media/')) return serveAttachment(req, env);
 
     if (url.pathname === '/health') {
       // Exposes cap consumption so the kill switch and volume budget are
@@ -610,7 +614,7 @@ const worker = {
       return env.ASSETS ? env.ASSETS.fetch(req) : json({ error: 'not found' }, 404);
     }
 
-    // multipart/form-data: text fields plus at most one attachment
+    // multipart/form-data: text fields plus up to three attachments (10 MiB total).
     let form: FormData;
     try { form = await req.formData(); } catch { return json({ error: 'bad form data' }, 400); }
 
@@ -648,8 +652,14 @@ const worker = {
       }
     }
 
-    const attachment = form.get('attachment');
-    if (attachment instanceof File && attachment.size > 0) {
+    const values = form.getAll('attachment');
+    if (values.some((value) => !(value instanceof File))) return json({ error: 'bad attachment' }, 400);
+    const attachments = values.filter((value): value is File => value instanceof File && value.size > 0);
+    if (values.length > MAX_ATTACHMENTS) return json({ error: `at most ${MAX_ATTACHMENTS} attachments` }, 413);
+    if (attachments.reduce((sum, file) => sum + file.size, 0) > MAX_BYTES) {
+      return json({ error: 'attachments exceed 10 MB total' }, 413);
+    }
+    for (const attachment of attachments) {
       const bad = validateFile(attachment);
       if (bad) return json({ error: bad }, 413);
     }
@@ -743,7 +753,8 @@ const worker = {
 
     // 6. Attachment — only after the text passed the secret scan.
     //    The user was warned twice in the form; we still keep a durable copy
-    //    in R2 so a leaked file can be revoked even after it reaches GitHub.
+    //    in R2. Media URLs require a confirmed GitHub write and recheck access
+    //    on every request; R2 is never exposed as a public bucket.
     //
     //    Skipped for a flagged flood, and only there. Suspected reports keep
     //    their attachments (a reviewer needs to see what was sent) — but the
@@ -753,11 +764,9 @@ const worker = {
     //    state_log so a reviewer sees why a file is missing rather than
     //    wondering whether one was ever sent.
     //
-    //    THE BYTES ARE READ HERE, not at the top with the size check. Reading
-    //    10 MB before Turnstile and the rate limiter would let an unverified
-    //    request make this Worker buffer 10 MB, which is a cheaper attack than
-    //    the one the sniff prevents. By this point the request has passed the
-    //    challenge, the limiter and the secret scan.
+    //    Multipart parsing has already buffered the request. Additional file
+    //    byte copies and storage wait until the challenge, limiter and secret
+    //    scan pass; aggregate admission keeps those copies within 10 MiB.
     //    VALIDATION RUNS FOR EVERYONE. Only the R2 STORE is skipped for a
     //    flagged flood.
     //
@@ -768,27 +777,21 @@ const worker = {
     //    the raw state from /status — the visible state was neutral while a
     //    side channel answered the identical question. Any branch on `flagged`
     //    that changes what the reporter SEES reintroduces it.
-    let attachmentKeys: string[] = [];
-    let attachmentSkipped = false;
-    if (attachment instanceof File && attachment.size > 0) {
+    const attachmentKeys: string[] = [];
+    const admitted = [];
+    // Admit the complete batch before the first write: a bad last file must
+    // not leave earlier files behind on a rejected submission.
+    for (const attachment of attachments) {
       const bytes = new Uint8Array(await attachment.arrayBuffer());
       const sniffed = admitBytes(bytes, attachment.type);
-      if ('error' in sniffed) {
-        // 415, and NOTHING is written: no row, no R2 object. The report is
-        // refused whole rather than filed without the evidence it referred
-        // to, which would leave a maintainer reading about a screenshot
-        // that does not exist.
-        return json({ error: sniffed.error }, 415);
-      }
-      if (flagged) {
-        // The Nth identical submission's attachment is redundant by
-        // definition — the first N-1 already stored theirs — so a flooder
-        // gets no unbounded R2. The bytes were still read and validated, so
-        // the response is byte-identical to the clean path.
-        attachmentSkipped = true;
-      } else {
-        const stored = await storeAttachment(attachment, bytes, sniffed, submission_id, env as any);
-        attachmentKeys = [JSON.stringify(stored)];
+      if ('error' in sniffed) return json({ error: sniffed.error }, 415);
+      admitted.push({ attachment, bytes, sniffed });
+    }
+    const attachmentSkipped = flagged && admitted.length > 0;
+    if (!flagged) {
+      for (const { attachment, bytes, sniffed } of admitted) {
+        const stored = await storeAttachment(attachment, bytes, sniffed, submission_id, env);
+        attachmentKeys.push(JSON.stringify(stored));
       }
     }
 
@@ -820,7 +823,12 @@ const worker = {
     ).run();
 
     // Already seen — a retry, not a new report. Do not re-enqueue.
-    if (res.meta.changes === 0) return json({ ok: true, submission_id, status: 'duplicate_submission' }, 200);
+    if (res.meta.changes === 0) {
+      // A concurrent retry may have won the INSERT. Its recorded objects are
+      // untouched; this request's random-key objects are no longer referenced.
+      if (attachmentKeys.length) await env.ATTACHMENTS.delete(attachmentKeys.map((a) => JSON.parse(a).key));
+      return json({ ok: true, submission_id, status: 'duplicate_submission' }, 200);
+    }
 
     const detail = flagged
       ? `${fp} flood_repeat prior=${flood.priorCount}${attachmentSkipped ? ' attachment_skipped' : ''}`

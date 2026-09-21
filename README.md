@@ -114,6 +114,12 @@ Public submissions use `/api/feedback/submit`; status checks use `/api/feedback/
 and `/status` are temporary compatibility aliases. Unknown `/api/*` and `/admin/*` paths return 404
 from the Worker and never fall through to the public SPA.
 
+The feedback form supports up to three PNG/JPEG screenshots or MP4 recordings (10 MiB combined),
+with drag-and-drop, screenshot paste, previews, and removal before submission. Files stay in private
+R2 storage until the report is published to GitHub. Issues embed pictures and link to videos through
+the Worker. Set `FEEDBACK_PUBLIC_ORIGIN` to the combined Worker origin; see
+[`worker/feedback/MEDIA.md`](worker/feedback/MEDIA.md) for media access and deployment details.
+
 Production GitHub access uses a GitHub App installed only on `0xMiden/wallet`, with repository
 metadata read and issues read/write permissions. Configure `GITHUB_APP_ID`,
 `GITHUB_APP_INSTALLATION_ID`, and `GITHUB_APP_PRIVATE_KEY` as Cloudflare secrets. The pipeline

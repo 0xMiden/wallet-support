@@ -91,7 +91,8 @@ for (const width of [390, 1280]) {
       await expect
         .poll(() =>
           page
-            .locator('main [style]')
+            // The upload library intentionally hides its native file input.
+            .locator('main [style]:not(input[type="file"])')
             .evaluateAll((elements) =>
               elements.every((element) => getComputedStyle(element).opacity === '1')
             )

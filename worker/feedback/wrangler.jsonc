@@ -61,9 +61,9 @@
     "PIPELINE_VERSION": "v2",
     "MARKER_PREFIX": "mfv2",
 
-    // Public base URL for the R2 bucket. Used only during publication as the
-    // attachment fallback when GitHub's undocumented endpoint fails.
-    "R2_PUBLIC_BASE": "",
+    // Origin of this combined Worker. Keep R2 private: /api/feedback/media/
+    // serves only attachments whose issue/comment write has succeeded.
+    "FEEDBACK_PUBLIC_ORIGIN": "https://support.miden.xyz",
 
     // KILL SWITCH. Set to "false" and redeploy to halt every GitHub write
     // immediately. Ingest, dedup and storage keep running; nothing is lost.

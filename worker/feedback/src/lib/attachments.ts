@@ -1,20 +1,8 @@
-/**
- * Attachment handling: private R2 ingest, then GitHub upload at publication.
- *
- * R2 is the durable private copy. Files are uploaded to GitHub only after the
- * publish guard succeeds so ingestion never performs a public write.
- *
- * IMPORTANT — the GitHub attachment endpoint is UNDOCUMENTED. It is not in
- * GitHub's REST reference, has no SLA, and no deprecation notice. It is known
- * to return 201 for personal access tokens. Because it can break without
- * warning, every upload writes to R2 first and falls back to an R2 link if
- * GitHub rejects the upload. An issue never fails to file because an
- * attachment failed to upload.
- */
+/** Private R2 media. Public URLs are gated by confirmed GitHub publication. */
 
-import { uploadAttachment } from './publish';
 import { sniffType, type SniffedType } from './sniff';
 
+export const MAX_ATTACHMENTS = 3;
 export const MAX_BYTES = 10 * 1024 * 1024;
 export const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'video/mp4'] as const;
 
@@ -24,16 +12,15 @@ export interface StoredAttachment {
   /** The SNIFFED type. Admission guarantees it equals what was declared. */
   type: string;
   size: number;
-  githubUrl: string | null;  // set only by the publication pipeline
-  r2Url: string | null;      // public fallback set only at publication
-  video: boolean;            // from magic bytes; decides bare-URL vs image markup
+  githubUrl: string | null;  // legacy GitHub-hosted URL; new uploads stay in R2
+  r2Url: string | null;      // legacy URL or publication-gated Worker URL
+  video: boolean;            // from magic bytes; decides video-link vs image markup
 }
 
 /**
  * Cheap checks, before anything is read into memory.
  *
- * Runs at the very top of /submit, so a 10 MB body is rejected on size without
- * being buffered. The declared type is checked here too — it is free, and it
+ * Runs after multipart parsing and before any additional byte reads or writes. The declared type is checked here too — it is free, and it
  * catches an honest client sending the wrong thing without paying for a read.
  * It is NOT a security control: see admitBytes.
  */
@@ -48,8 +35,8 @@ export function validateFile(file: File): string | null {
  *
  * Admission requires BOTH that the bytes are a supported format AND that they
  * match what the client declared. The first half is the security property —
- * the stored object is provably a PNG, JPEG or MP4, so it cannot be served as
- * something executable from our own origin. The second half is a deliberate
+ * the stored object has a PNG, JPEG or MP4 signature. This is format admission,
+ * not malware scanning; nosniff and sandbox headers prevent document execution. The second half is a deliberate
  * strictness: a client whose declaration disagrees with its own payload is
  * either broken or lying, and neither is worth storing.
  *
@@ -82,31 +69,6 @@ export function safeName(name: string): string {
 }
 
 /**
- * Upload to GitHub's user-attachments store.
- *
- * The request itself lives in publish.ts — it is a GitHub write, and every
- * GitHub write lives in that module. This wrapper only turns a File into the
- * bytes that request needs and keeps the null-on-failure contract:
- *
- *   - resolves to a URL string on success
- *   - resolves to null on ANY failure (never throws)
- * The caller falls back to R2. A broken attachment must never block an issue.
- */
-async function uploadToGitHub(
-  bytes: Uint8Array,
-  repo: string,
-  token: string
-): Promise<{ url: string; video: boolean } | null> {
-  try {
-    if (bytes.byteLength > MAX_BYTES) return null;
-    return await uploadAttachment(bytes, repo, token);
-  } catch (err) {
-    console.warn('github attachment upload failed, falling back to R2', err);
-    return null;
-  }
-}
-
-/**
  * `bytes` is passed in rather than read here because the caller already
  * buffered and admitted the file. R2 receives exactly the bytes that passed
  * the magic-byte check, without trusting or re-reading the client stream.
@@ -120,11 +82,16 @@ export async function storeAttachment(
     ATTACHMENTS: R2Bucket;
   }
 ): Promise<StoredAttachment> {
-  const name = safeName(file.name);
+  // Unique names also keep the admin's name-based attachment links unambiguous.
+  const sourceName = safeName(file.name);
+  const suffix = crypto.randomUUID();
+  const dot = sourceName.lastIndexOf('.');
+  const name = dot > 0
+    ? `${sourceName.slice(0, dot)}-${suffix}${sourceName.slice(dot)}`
+    : `${sourceName}-${suffix}`;
   const key = `attachments/${submissionId}/${name}`;
 
-  // Durable copy first. If GitHub's undocumented endpoint disappears
-  // tomorrow, the file still exists and old links can be repointed.
+  // The private durable copy is the source for both review and published media.
   await env.ATTACHMENTS.put(key, bytes, {
     // The SNIFFED type, never the declared one. This is the header R2 serves
     // the object with, so trusting the client here would be handing an
@@ -139,51 +106,53 @@ export async function storeAttachment(
     type: sniffed.mime,
     size: file.size,
     githubUrl: null,
-    // From the bytes, and now known even when the GitHub upload failed — it
-    // used to fall back to the declared type, so a mislabelled video rendered
-    // as a broken image whenever that endpoint was down.
+    // Sniffed rather than declared: pictures and video get different markup.
     video: sniffed.video,
     r2Url: null,
   };
 }
 
-/** Publish a privately stored attachment after the GitHub write guard passes. */
-export async function publishAttachment(
-  attachment: StoredAttachment,
-  env: {
-    ATTACHMENTS: R2Bucket;
-    TARGET_REPO: string;
-    GITHUB_WRITE_TOKEN: string;
-    R2_PUBLIC_BASE?: string;
-  }
-): Promise<StoredAttachment> {
-  if (attachment.githubUrl) return attachment;
-
-  const object = await env.ATTACHMENTS.get(attachment.key);
-  if (!object) return attachment;
-
-  const bytes = new Uint8Array(await object.arrayBuffer());
-  const uploaded = await uploadToGitHub(bytes, env.TARGET_REPO, env.GITHUB_WRITE_TOKEN);
-  const r2Url = env.R2_PUBLIC_BASE
-    ? `${env.R2_PUBLIC_BASE.replace(/\/$/, '')}/${attachment.key}`
-    : null;
-
-  return {
-    ...attachment,
-    githubUrl: uploaded?.url ?? null,
-    r2Url,
-  };
+/** Parse the existing JSON-of-JSON representation without trusting malformed rows. */
+export function storedAttachments(raw: string | null): StoredAttachment[] {
+  try {
+    const values: unknown = JSON.parse(raw ?? '[]');
+    if (!Array.isArray(values)) return [];
+    return values.flatMap((value) => {
+      try {
+        const a = typeof value === 'string' ? JSON.parse(value) : null;
+        return a && typeof a.key === 'string' && typeof a.name === 'string'
+          && ALLOWED_TYPES.includes(a.type) && Number.isSafeInteger(a.size) && a.size > 0
+          ? [a as StoredAttachment] : [];
+      } catch { return []; }
+    });
+  } catch { return []; }
 }
 
-/** Markdown for the issue body. Images render inline; MP4 renders as a player on GitHub. */
+/** URL construction never changes visibility; the media route checks D1 on every request. */
+export function attachmentUrl(attachment: StoredAttachment, origin: string | undefined): string {
+  if (!origin) throw new Error('FEEDBACK_PUBLIC_ORIGIN is required to publish attachments');
+  const base = new URL(origin);
+  if (base.protocol !== 'https:' || base.username || base.password || base.search || base.hash || base.pathname !== '/') {
+    throw new Error('FEEDBACK_PUBLIC_ORIGIN must be an HTTPS origin');
+  }
+  return `${base.origin}/api/feedback/media/${attachment.key.split('/').slice(1).map(encodeURIComponent).join('/')}`;
+}
+
+/** Prepare a link after the write guard, without making private media public. */
+export async function publishAttachment(
+  attachment: StoredAttachment,
+  env: { FEEDBACK_PUBLIC_ORIGIN?: string }
+): Promise<StoredAttachment> {
+  if (attachment.githubUrl) return attachment; // Preserve existing GitHub-hosted evidence.
+  return { ...attachment, r2Url: attachmentUrl(attachment, env.FEEDBACK_PUBLIC_ORIGIN) };
+}
+
+/** Images embed inline. Externally hosted videos are explicit playable/downloadable links. */
 export function renderAttachment(a: StoredAttachment): string {
   const url = a.githubUrl ?? a.r2Url;
-  if (!url) {
-    return `- \`${a.name}\` (${(a.size / 1048576).toFixed(1)} MB) — upload failed; stored internally as \`${a.key}\``;
-  }
-  // GitHub renders a video ONLY from a bare URL on its own line. Wrapping one
-  // in link or image syntax yields a dead link instead of a player (v1,
-  // worker.js:470-473).
-  if (a.video) return url;
-  return `![${a.name}](${url})`;
+  const name = safeName(a.name);
+  if (!url) return `- \`${name}\` — attachment unavailable`;
+  if (a.video && a.githubUrl) return url; // Legacy GitHub uploads retain their native rendering.
+  if (a.video) return `[Watch or download ${name}](${url})`;
+  return `![${name}](${url})`;
 }

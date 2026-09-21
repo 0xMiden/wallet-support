@@ -203,6 +203,7 @@ export interface SubmitOverrides {
   install_id?: string | null;
   meta?: Record<string, unknown>;
   attachment?: File;
+  attachments?: File[];
 }
 
 export function submitRequest(over: SubmitOverrides = {}): Request {
@@ -219,6 +220,7 @@ export function submitRequest(over: SubmitOverrides = {}): Request {
   form.set('meta', JSON.stringify(meta));
 
   if (over.attachment) form.set('attachment', over.attachment);
+  for (const attachment of over.attachments ?? []) form.append('attachment', attachment);
 
   return new Request('https://mfv2.test/submit', { method: 'POST', body: form });
 }

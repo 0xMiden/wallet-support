@@ -18,6 +18,9 @@ not already been applied.
   widget, Google OAuth client, and repository-scoped GitHub App.
 - `VITE_TURNSTILE_SITE_KEY` set to the public widget key for
   `support.miden.xyz`; `TURNSTILE_SECRET` stored as a Worker secret.
+- `FEEDBACK_PUBLIC_ORIGIN` set to the HTTPS origin serving the combined Worker
+  (production: `https://support.miden.xyz`). Keep the `ATTACHMENTS` R2 bucket
+  private; no public bucket URL is required. See [Feedback media](../MEDIA.md).
 - Every external-write switch remains `false` in `wrangler.jsonc`.
 
 Confirm account context before every remote command:
@@ -122,11 +125,21 @@ write switch still disabled and verify:
 - `/health`, `/feedback`, `/feedback/`, submit, and status routes;
 - Google sign-in, review queue, attachment proxy, and store console;
 - `/admin/whoami` reports the GitHub App installed only on `0xMiden/wallet`;
-- a dry-run submission stores data without a GitHub request;
+- a dry-run submission with PNG/JPEG/MP4 evidence stores data without a GitHub
+  request; its `/api/feedback/media/<submission-id>/<stored-name>` URLs remain
+  404 while unpublished, including HEAD requests;
+- migrated published attachments load only for their exact recorded keys;
+  verify image MIME/nosniff/sandbox headers, MP4 playback and `Range: bytes=0-7`
+  (206), and confirm an unrecorded key still returns 404;
 - no unknown `/api/*` or `/admin/*` path reaches the SPA.
 
 Attach `support.miden.xyz` only after those checks pass. Enable publication,
 store sync, replies, and handoff separately after their own production checks.
+When publication is explicitly enabled, verify an authorized report appears on
+`0xMiden/wallet` with inline images and working video links, and that a matching
+follow-up's evidence appears in the rolling duplicate comment. Use existing
+published evidence or an explicitly approved test report; do not enable writes
+or create a test issue merely to complete deployment smoke checks.
 
 ## Rollback
 

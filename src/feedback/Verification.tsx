@@ -72,7 +72,7 @@ export function Verification({ siteKey }: { siteKey: string }) {
     };
   }, [siteKey, attempt]);
   return (
-    <div className="feedback-turnstile" aria-label="Human verification">
+    <div className="feedback-turnstile" role="group" aria-label="Human verification">
       <div ref={container} data-sitekey={siteKey} className="cf-turnstile" />
       <input type="hidden" name="bread-verification-token" value={token} />
       {failed && (

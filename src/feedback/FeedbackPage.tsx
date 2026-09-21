@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import { helpCenterMainCategories } from '../help-center/categories';
 import { HelpCenterFooter } from '../help-center/HelpCenterFooter';
@@ -9,8 +9,7 @@ import {
   CheckCircle2,
   Inbox,
   ShieldCheck,
-  LoaderCircle,
-  Paperclip
+  LoaderCircle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -27,9 +26,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Container, PageHeader } from '@/components/support/layout';
 import { Verification } from './Verification';
+import { MediaUploader } from './MediaUploader';
 
 const HISTORY_KEY = 'bread.feedback.reports.v2';
-const MAX_FILE_BYTES = 10 * 1024 * 1024;
 
 interface LocalReport {
   id: string;
@@ -62,10 +61,11 @@ function installId() {
 }
 
 export function FeedbackPage() {
+  const formRef = useRef<HTMLFormElement>(null);
   const [reports, setReports] = useState<LocalReport[]>(loadReports);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
-  const [fileError, setFileError] = useState('');
+  const [files, setFiles] = useState<File[]>([]);
   const [receipt, setReceipt] = useState('');
   const [formVersion, setFormVersion] = useState(0);
   const [verificationVersion, setVerificationVersion] = useState(0);
@@ -111,18 +111,14 @@ export function FeedbackPage() {
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError('');
-    setFileError('');
     setReceipt('');
     const form = event.currentTarget;
     const data = new FormData(form);
     const description = String(data.get('description') ?? '').trim();
     const title = String(data.get('title') ?? '').trim();
-    const file = data.get('attachment');
     const challenge = String(data.get('bread-verification-token') ?? '');
     if (description.length < 10)
       return setError('Add at least 10 characters so the team can understand the issue.');
-    if (file instanceof File && file.size > MAX_FILE_BYTES)
-      return setFileError('Attachments must be 10 MB or smaller.');
     if (turnstileSiteKey && !challenge)
       return setError('Complete the verification check before sending.');
     const id = crypto.randomUUID();
@@ -144,12 +140,13 @@ export function FeedbackPage() {
         route: window.location.pathname
       })
     );
-    if (file instanceof File && file.size > 0) payload.set('attachment', file, file.name);
+    for (const file of files) payload.append('attachment', file, file.name);
     setBusy(true);
     try {
       await submitFeedback(payload);
       setReports((current) => [{ id, title, created: Date.now(), status: 'received' }, ...current]);
       form.reset();
+      setFiles([]);
       setFormVersion((value) => value + 1);
       setReceipt(title);
     } catch (cause) {
@@ -201,6 +198,7 @@ export function FeedbackPage() {
                   </div>
                 )}
                 <form
+                  ref={formRef}
                   onSubmit={submit}
                   key={formVersion}
                   className="space-y-6"
@@ -274,31 +272,8 @@ export function FeedbackPage() {
                         className="sm:max-w-xs"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="feedback-attachment">
-                        <Paperclip className="size-4" aria-hidden="true" />
-                        Screenshot or video{' '}
-                        <span className="font-normal text-muted-foreground">(optional)</span>
-                      </Label>
-                      <Input
-                        id="feedback-attachment"
-                        name="attachment"
-                        type="file"
-                        accept="image/png,image/jpeg,video/mp4"
-                        className="h-auto rounded-xl border-dashed bg-secondary/40 py-4 file:mr-3 file:rounded-full file:bg-background file:px-3"
-                        aria-describedby="attachment-hint"
-                        aria-invalid={!!fileError}
-                      />
-                      <p id="attachment-hint" className="type-caption text-muted-foreground">
-                        PNG, JPEG, or MP4. Maximum 10 MB. Remove any personal information first.
-                      </p>
-                    </div>
+                    <MediaUploader formRef={formRef} files={files} onChange={setFiles} disabled={busy} />
                   </fieldset>
-                  {fileError && (
-                    <p role="alert" className="text-sm text-destructive">
-                      {fileError}
-                    </p>
-                  )}
                   <Verification key={verificationVersion} siteKey={turnstileSiteKey} />
                   {error && (
                     <p role="alert" className="rounded-xl bg-accent p-4 text-sm text-destructive">
