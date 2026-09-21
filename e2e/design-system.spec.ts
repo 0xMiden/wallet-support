@@ -152,7 +152,8 @@ test('feedback retains failed input, retries with fresh verification, and shows 
   await page.route('**/api/feedback/status?*', (route) =>
     route.fulfill({ json: { repo: '0xMiden/wallet', results: {} } })
   );
-  await page.goto('/feedback');
+  await page.goto('/');
+  await page.getByRole('navigation', { name: 'Primary navigation', exact: true }).getByRole('link', { name: 'Send feedback' }).click();
   await page.getByRole('combobox', { name: 'Platform', exact: true }).click();
   await page.getByRole('option', { name: 'Extension', exact: true }).click();
   await page.getByRole('textbox', { name: 'Title', exact: true }).fill('Preview feedback test');

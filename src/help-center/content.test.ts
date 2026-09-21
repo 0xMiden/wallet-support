@@ -1311,7 +1311,9 @@ describe('design tokens', () => {
     const defined = [...allCss.matchAll(/(--[a-z0-9-]+)\s*:/g)].map(match => match[1] as string);
     expect(defined.length).toBeGreaterThan(20);
 
-    const unused = [...new Set(defined)].filter(token => !token.startsWith('--color-') && !token.startsWith('--radius-') && !token.startsWith('--font-') && !allCss.includes(`var(${token})`));
+    // Tailwind and tw-animate-css consume these namespaces in generated utilities/keyframes.
+    const frameworkTokens = new Set(['--default-transition-duration', '--default-transition-timing-function', '--tw-enter-scale', '--tw-exit-scale']);
+    const unused = [...new Set(defined)].filter(token => !frameworkTokens.has(token) && !token.startsWith('--color-') && !token.startsWith('--radius-') && !token.startsWith('--font-') && !allCss.includes(`var(${token})`));
 
     expect(unused, 'defined but never read — wire it up or delete it').toEqual([]);
   });

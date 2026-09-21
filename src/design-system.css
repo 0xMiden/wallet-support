@@ -28,10 +28,10 @@
   --font-heading: Nunito, var(--font-sans);
   --success: #4f6549;
   --success-tint: #e8eee5;
-  --motion-fast: 160ms;
-  --motion-standard: 220ms;
 }
 @theme inline {
+  --default-transition-duration: var(--motion-fast);
+  --default-transition-timing-function: var(--motion-ease);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -64,6 +64,7 @@
   }
   html {
     min-width: 320px;
+    scrollbar-gutter: stable;
     scroll-padding-top: 6rem;
   }
   body {
@@ -176,27 +177,8 @@
     background: #efeaf2;
     color: #746585;
   }
-  [data-slot='button'],
-  [data-slot='input'],
-  [data-slot='select-trigger'] {
-    transition-duration: var(--motion-fast);
-  }
-  [data-slot='dialog-content'],
-  [data-slot='sheet-content'],
-  [data-slot='select-content'] {
-    animation-duration: var(--motion-standard);
-  }
-  .support-nav-link[aria-current='page'] {
-    background: var(--secondary);
-    color: var(--foreground);
-  }
-  .support-nav-link[aria-current='page']::after {
-    content: '';
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: var(--accent-foreground);
-  }
+  .support-nav-link[aria-current='page'] { color: var(--foreground); }
+
 }
 /* Compatibility layer while the article renderer retains its content-specific styles. */
 .help-center-shell,
@@ -307,3 +289,38 @@
 .help-center-shell :focus-visible {
   outline-color: var(--ring);
 }
+
+/* Same wallet curves for CSS-based shadcn primitives and legacy article interactions. */
+@layer base {
+  *, *::before, *::after {
+    transition-duration: var(--motion-fast);
+    transition-timing-function: var(--motion-ease);
+  }
+}
+[data-slot='button'] {
+  transition: background-color var(--motion-fast) var(--motion-ease),
+    color var(--motion-fast) var(--motion-ease), box-shadow var(--motion-fast) var(--motion-ease),
+    transform var(--motion-press-duration) var(--motion-press-easing);
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-slot='button']:active { transform: scale(var(--motion-press-scale)); }
+}
+[data-slot='dialog-content'], [data-slot='select-content'] {
+  animation-duration: var(--motion-pop-duration);
+  animation-timing-function: var(--motion-pop-easing);
+  --tw-enter-scale: var(--motion-pop-enter-scale);
+  --tw-exit-scale: var(--motion-pop-exit-scale);
+}
+[data-slot='dialog-overlay'] {
+  animation-duration: var(--motion-fast);
+  animation-timing-function: var(--motion-ease);
+}
+[data-slot='sheet-content'], [data-slot='sheet-overlay'] {
+  animation-duration: var(--sheet-open-duration);
+  animation-timing-function: var(--sheet-open-easing);
+}
+[data-slot='sheet-content'][data-state='closed'], [data-slot='sheet-overlay'][data-state='closed'] {
+  animation-duration: var(--sheet-close-duration);
+  animation-timing-function: var(--sheet-close-easing);
+}
+.motion-safe\:animate-spin { animation-duration: var(--motion-pending-duration); }

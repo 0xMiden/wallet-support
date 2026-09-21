@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import { ArrowUpRight } from 'lucide-react';
 import { Container } from '@/components/support/layout';
 import { Separator } from '@/components/ui/separator';
@@ -50,9 +51,9 @@ export function HelpCenterFooter({ mainCategories, firstCategoryId }: HelpCenter
       <Container className="py-12">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.5fr_1.2fr_1fr_1fr_1fr]">
           <div>
-            <a href="/" className="inline-block rounded-lg" aria-label="Bread Wallet home">
+            <Link to="/" className="inline-block rounded-lg" aria-label="Bread Wallet home">
               <img src={breadLockup} alt="Bread Wallet" className="w-28" />
-            </a>
+            </Link>
             <p className="mt-4 max-w-44 text-sm leading-6 text-muted-foreground">
               A little guidance.
               <br />
@@ -82,15 +83,15 @@ export function HelpCenterFooter({ mainCategories, firstCategoryId }: HelpCenter
               <ul>
                 {group.links.map((link) => (
                   <li key={link.href}>
-                    <a
-                      href={link.href}
+                    <Link
+                      to={link.href}
                       target={link.external ? '_blank' : undefined}
                       rel={link.external ? 'noopener noreferrer' : undefined}
                       className="inline-flex min-h-11 items-center gap-1 py-2 text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
                     >
                       {link.label}
                       {link.external && <ArrowUpRight className="size-3" aria-hidden="true" />}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

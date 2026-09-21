@@ -1,5 +1,5 @@
 import type { ComponentProps, ReactNode } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import { Link, useLocation } from 'react-router';
 import {
   ArrowUpRight,
   BookOpen,
@@ -12,23 +12,9 @@ import {
   Sprout
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { enter } from '@/lib/motion';
 
 export function Container({ className, ...props }: ComponentProps<'div'>) {
   return <div className={cn('support-container', className)} {...props} />;
-}
-export function Reveal({ children, className }: { children: ReactNode; className?: string }) {
-  const reduced = useReducedMotion();
-  return (
-    <motion.div
-      className={className}
-      initial={reduced ? false : 'hidden'}
-      animate="visible"
-      variants={enter}
-    >
-      {children}
-    </motion.div>
-  );
 }
 export function PageHeader({
   eyebrow,
@@ -106,9 +92,13 @@ export function ArticleRow({
   title: string;
   detail?: string;
 }) {
+  const location = useLocation();
+  const to = href.startsWith('#')
+    ? { pathname: location.pathname, search: location.search, hash: href }
+    : href;
   return (
-    <a
-      href={href}
+    <Link
+      to={to}
       className="group flex min-h-14 items-center gap-3 rounded-xl px-3 py-3 text-sm leading-6 transition-colors hover:bg-secondary focus-visible:bg-secondary"
     >
       <BookOpen className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
@@ -120,6 +110,6 @@ export function ArticleRow({
         className="size-4 shrink-0 text-muted-foreground transition-transform motion-safe:group-hover:-translate-y-0.5 motion-safe:group-hover:translate-x-0.5"
         aria-hidden="true"
       />
-    </a>
+    </Link>
   );
 }

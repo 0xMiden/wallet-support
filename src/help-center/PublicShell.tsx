@@ -1,7 +1,11 @@
+import { Link, useNavigate } from 'react-router';
+import { motion } from 'framer-motion';
+import { Highlight, HighlightItem } from '@/components/ui/animate/highlight';
+import { useTabBarMotion } from '@/lib/animation';
 import { useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { BookOpen, Menu, Search, ArrowUpRight, MessageSquare } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import {
   Command,
@@ -27,12 +31,15 @@ import { searchHelpCenter } from './search';
 import { articleHref } from './routing';
 import type { PublicRoute } from './publicRoute';
 
+const MotionLink = motion.create(Link);
 const navigation = [
   { href: '/', label: 'Help Center', route: 'help' },
   { href: '/topics', label: 'All topics', route: 'topics' },
   { href: '/feedback', label: 'Send feedback', route: 'feedback' }
 ];
 export function PublicShell({ active, children }: { active: PublicRoute; children: ReactNode }) {
+  const routerNavigate = useNavigate();
+  const tabMotion = useTabBarMotion();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
   const opener = useRef<HTMLElement | null>(null);
@@ -61,7 +68,7 @@ export function PublicShell({ active, children }: { active: PublicRoute; childre
   );
   const navigate = (href: string) => {
     setOpen(false);
-    window.location.assign(href);
+    routerNavigate(href);
   };
   return (
     <div className="public-shell min-h-dvh bg-background text-foreground">
@@ -77,31 +84,44 @@ export function PublicShell({ active, children }: { active: PublicRoute; childre
       </a>
       <header className="public-header sticky top-0 z-40 border-b bg-background/95 backdrop-blur-md">
         <Container className="flex h-20 items-center justify-between gap-4">
-          <a
+          <Link
             className="public-brand flex shrink-0 items-center gap-3"
-            href="/"
+            to="/"
             aria-label="Bread Wallet Help Center home"
           >
             <img src={breadLockup} className="h-auto w-24" alt="Bread Wallet" />
             <span className="type-caption hidden border-l pl-3 text-muted-foreground sm:block">
               Help Center
             </span>
-          </a>
+          </Link>
           <nav
             className="public-nav hidden items-center gap-1 lg:flex"
             aria-label="Primary navigation"
           >
-            {navigation.map((item) => (
-              <Button key={item.href} variant="ghost" asChild>
-                <a
-                  className="support-nav-link"
-                  href={item.href}
-                  aria-current={active === item.route ? 'page' : undefined}
-                >
-                  {item.label}
-                </a>
-              </Button>
-            ))}
+            <Highlight
+              controlledItems
+              value={active}
+              click={false}
+              exitDelay={0}
+              transition={tabMotion.highlight}
+              className="inset-0 rounded-full bg-secondary"
+            >
+              {navigation.map((item) => (
+                <HighlightItem key={item.href} value={item.route} asChild as="span">
+                  <MotionLink
+                    className={buttonVariants({
+                      variant: 'ghost',
+                      className: 'support-nav-link transition-colors aria-[current=page]:hover:bg-transparent hover:text-foreground'
+                    })}
+                    to={item.href}
+                    aria-current={active === item.route ? 'page' : undefined}
+                    {...tabMotion.press}
+                  >
+                    {item.label}
+                  </MotionLink>
+                </HighlightItem>
+              ))}
+            </Highlight>
           </nav>
           <div className="flex items-center gap-1">
             <Button
@@ -140,13 +160,13 @@ export function PublicShell({ active, children }: { active: PublicRoute; childre
                         variant={active === item.route ? 'secondary' : 'ghost'}
                         className="justify-between"
                       >
-                        <a
-                          href={item.href}
+                        <Link
+                          to={item.href}
                           aria-current={active === item.route ? 'page' : undefined}
                         >
                           {item.label}
                           <ArrowUpRight aria-hidden="true" />
-                        </a>
+                        </Link>
                       </Button>
                     </SheetClose>
                   ))}
@@ -155,12 +175,12 @@ export function PublicShell({ active, children }: { active: PublicRoute; childre
                   <p className="type-label mb-3 text-muted-foreground">Explore topics</p>
                   {helpCenterMainCategories.map((category) => (
                     <SheetClose asChild key={category.id}>
-                      <a
+                      <Link
                         className="block rounded-xl px-3 py-3 text-sm hover:bg-secondary"
-                        href={`/#${category.subcategories[0]?.id}`}
+                        to={`/#${category.subcategories[0]?.id}`}
                       >
                         {category.title}
-                      </a>
+                      </Link>
                     </SheetClose>
                   ))}
                 </div>

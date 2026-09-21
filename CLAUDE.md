@@ -8,9 +8,9 @@ Do not write to MEMORY.md or memory memos unless Ivan explicitly asks in the cur
 
 ## Brand and design system — standing rule
 
-The current design system follows wallet PR #1047 at `9e6c69ca7cac6ae8cc12d657613e4b4db490293b`, the reviewed tip of its design-system PR stack. See `tasks/design-system-upgrade.md` for the audit and scope. This approved direction supersedes the earlier PR #9 presentation rules.
+The current design system follows wallet PR #1047 at `9e6c69ca7cac6ae8cc12d657613e4b4db490293b`, the reviewed tip of its design-system PR stack. See `tasks/design-system-upgrade.md` for the audit and scope. Motion follows the newer wallet PR #1054 at `02337f752720e9929c6e9afcd4945f2fd296a8d4`; see `src/lib/animation/README.md`. This approved direction supersedes the earlier PR #9 presentation rules.
 
-- Use source-owned shadcn/Radix primitives in `src/components/ui`, layout compositions in `src/components/support`, and shared motion in `src/lib/motion.ts`.
+- Use source-owned shadcn/Radix primitives in `src/components/ui`, layout compositions in `src/components/support`, and the copied wallet motion library in `src/lib/animation` and its CSS bridge `src/lib/animation-css.ts`.
 - Semantic tokens and named typography live in `src/design-system.css`. Legacy article-renderer tokens remain in `src/help-center/tokens.css`; do not create new page-specific control systems.
 - Nunito for headings/actions, Inter for reading and form fields. Fonts are self-hosted.
 - White page, warm secondary fills, flat 16px cards, pill actions. Use dark accent ink for text; brand orange is a fill/icon role.

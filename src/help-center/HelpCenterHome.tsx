@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { ArrowRight, Search, MessageSquare, ChevronRight } from 'lucide-react';
@@ -6,7 +7,6 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   Container,
-  Reveal,
   SectionHeader,
   CategoryIcon,
   ArticleRow
@@ -42,7 +42,7 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
     <div className="help-center-home">
       <main id="help-center-content" tabIndex={-1} className="outline-none">
         <Container>
-          <Reveal className="grid items-center gap-10 py-12 md:py-20 lg:grid-cols-[1.5fr_1fr] lg:gap-16">
+          <div className="grid items-center gap-10 py-12 md:py-20 lg:grid-cols-[1.5fr_1fr] lg:gap-16">
             <section aria-labelledby="help-home-title">
               <p className="type-label mb-5 flex items-center gap-2 text-accent-foreground">
                 <span className="size-1.5 rounded-full bg-primary" />A little help. A lot of
@@ -113,7 +113,7 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
                 </Button>
               </CardContent>
             </Card>
-          </Reveal>
+          </div>
           <section
             className="border-t pb-12 pt-10 md:pb-20"
             aria-labelledby="help-home-categories-title"
@@ -124,10 +124,10 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
               description={`${helpCenterArticles.length} guides. ${mainCategories.length} topics. One place to feel more confident.`}
             >
               <Button variant="ghost" asChild>
-                <a href="/topics">
+                <Link to="/topics">
                   View all topics
                   <ArrowRight aria-hidden="true" />
-                </a>
+                </Link>
               </Button>
             </SectionHeader>
             <ul className="help-home-card-grid grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -168,10 +168,10 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
                       Can’t find your answer? Tell us what’s on your mind.
                     </p>
                     <Button asChild variant="secondary" className="mt-6 w-full">
-                      <a href="/feedback">
+                      <Link to="/feedback">
                         Contact Support
                         <ArrowRight aria-hidden="true" />
-                      </a>
+                      </Link>
                     </Button>
                   </CardContent>
                 </Card>

@@ -76,7 +76,7 @@
   background: var(--help-accent-soft);
   border-radius: var(--radius-xs);
   transform: translateY(-200%);
-  transition: transform 160ms ease;
+  transition: transform var(--motion-press-duration) var(--motion-press-easing);
 }
 
 .help-center-skip-link:focus {
@@ -149,7 +149,7 @@
   border-radius: var(--radius-sm);
   font-weight: var(--weight-strong);
   text-align: left;
-  transition: color 160ms ease, background 160ms ease;
+  transition: color var(--motion-fast) var(--motion-ease), background var(--motion-fast) var(--motion-ease);
 }
 
 /*
@@ -230,7 +230,7 @@
   gap: 1rem;
   color: var(--accent-text);
   font-weight: var(--weight-strong);
-  transition: color 160ms ease, background 160ms ease;
+  transition: color var(--motion-fast) var(--motion-ease), background var(--motion-fast) var(--motion-ease);
 }
 
 .help-center-sidebar-utility::before {
@@ -267,7 +267,7 @@
   width: 1.1rem;
   min-width: 1.1rem;
   height: 1.1rem;
-  transition: transform 160ms ease;
+  transition: transform var(--motion-press-duration) var(--motion-press-easing);
 }
 
 .help-center-category-list {
@@ -295,7 +295,7 @@
   font-size: var(--text-md);
   font-weight: var(--weight-medium);
   line-height: 1.3;
-  transition: color 160ms ease, background 160ms ease;
+  transition: color var(--motion-fast) var(--motion-ease), background var(--motion-fast) var(--motion-ease);
 }
 
 /*
@@ -385,7 +385,7 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  transition: border-color 160ms ease, background 160ms ease;
+  transition: border-color var(--motion-fast) var(--motion-ease), background var(--motion-fast) var(--motion-ease);
 }
 
 .help-center-search:focus-within {
@@ -529,7 +529,7 @@
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  transition: color 160ms ease;
+  transition: color var(--motion-fast) var(--motion-ease);
 }
 
 .help-center-breadcrumb a:hover,
@@ -664,7 +664,7 @@
 
 .help-center-glossary-entry {
   scroll-margin-top: var(--space-6);
-  transition: background 160ms ease, box-shadow 160ms ease;
+  transition: background var(--motion-fast) var(--motion-ease), box-shadow var(--motion-fast) var(--motion-ease);
 }
 
 .help-center-glossary-entry + .help-center-glossary-entry {
@@ -747,7 +747,7 @@
   font-family: var(--font-display);
   font-size: var(--text-sm);
   font-weight: var(--weight-strong);
-  transition: color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+  transition: color var(--motion-fast) var(--motion-ease), background var(--motion-fast) var(--motion-ease), box-shadow var(--motion-fast) var(--motion-ease);
 }
 
 /*
@@ -853,9 +853,9 @@
   gap: var(--space-2);
   overflow: hidden;
   transition:
-    border-color 160ms ease,
-    background 160ms ease,
-    transform 160ms ease;
+    border-color var(--motion-fast) var(--motion-ease),
+    background var(--motion-fast) var(--motion-ease),
+    transform var(--motion-press-duration) var(--motion-press-easing);
 }
 
 .help-center-card-index {
@@ -869,7 +869,7 @@
   place-items: center;
   font-size: var(--text-2xs);
   font-variant-numeric: tabular-nums;
-  transition: background 160ms ease;
+  transition: background var(--motion-fast) var(--motion-ease);
 }
 
 .help-center-card-context {
@@ -923,7 +923,7 @@
   display: grid;
   place-items: center;
   box-sizing: content-box;
-  transition: transform 160ms ease;
+  transition: transform var(--motion-press-duration) var(--motion-press-easing);
 }
 
 .help-center-card:hover,
@@ -961,8 +961,8 @@
   place-items: center;
   text-decoration: none;
   transition:
-    background 160ms ease,
-    border-color 160ms ease;
+    background var(--motion-fast) var(--motion-ease),
+    border-color var(--motion-fast) var(--motion-ease);
 }
 
 .help-center-back:hover,
@@ -1039,7 +1039,7 @@
   gap: var(--space-2);
   font-size: var(--text-sm);
   text-decoration: none;
-  transition: color 160ms ease;
+  transition: color var(--motion-fast) var(--motion-ease);
 }
 
 .help-center-rail-support a:hover,
@@ -1072,7 +1072,7 @@
   line-height: 1.35;
   text-decoration: none;
   display: block;
-  transition: color 160ms ease;
+  transition: color var(--motion-fast) var(--motion-ease);
 }
 
 .help-center-contents a:hover,
@@ -1320,8 +1320,8 @@
   font-size: var(--text-md);
   cursor: pointer;
   transition:
-    background 160ms ease,
-    border-color 160ms ease;
+    background var(--motion-fast) var(--motion-ease),
+    border-color var(--motion-fast) var(--motion-ease);
 }
 
 .help-center-helpful button:hover,
@@ -1353,7 +1353,7 @@
   gap: var(--space-2);
   font-size: var(--text-md);
   cursor: pointer;
-  transition: color 160ms ease;
+  transition: color var(--motion-fast) var(--motion-ease);
 }
 
 .help-center-copy-link:hover,
@@ -1385,9 +1385,9 @@
   align-items: center;
   gap: 0.75rem;
   transition:
-    border-color 160ms ease,
-    background 160ms ease,
-    transform 160ms ease;
+    border-color var(--motion-fast) var(--motion-ease),
+    background var(--motion-fast) var(--motion-ease),
+    transform var(--motion-press-duration) var(--motion-press-easing);
 }
 
 .help-center-sequence-card.is-next {
@@ -1569,7 +1569,7 @@
     transform: translateX(-105%);
     visibility: hidden;
     transition:
-      transform 240ms ease,
+      transform var(--motion-press-duration) var(--motion-press-easing),
       visibility 0s linear 240ms;
   }
 
@@ -1577,7 +1577,7 @@
     transform: translateX(0);
     visibility: visible;
     transition:
-      transform 240ms ease,
+      transform var(--motion-press-duration) var(--motion-press-easing),
       visibility 0s;
   }
 
@@ -1707,16 +1707,16 @@
   visibility: hidden;
   transform: translateY(0.5rem);
   box-shadow: 0 0.75rem 1.75rem rgb(var(--shadow-ink) / 12%);
-  transition: opacity 180ms ease, transform 180ms ease, visibility 0s linear 180ms,
-    border-color 160ms ease, background 160ms ease, color 160ms ease;
+  transition: opacity var(--motion-fast) var(--motion-ease), transform var(--motion-press-duration) var(--motion-press-easing), visibility 0s linear var(--motion-fast),
+    border-color var(--motion-fast) var(--motion-ease), background var(--motion-fast) var(--motion-ease), color var(--motion-fast) var(--motion-ease);
 }
 
 .help-center-to-top.is-visible {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
-  transition: opacity 180ms ease, transform 180ms ease, visibility 0s,
-    border-color 160ms ease, background 160ms ease, color 160ms ease;
+  transition: opacity var(--motion-fast) var(--motion-ease), transform var(--motion-press-duration) var(--motion-press-easing), visibility 0s,
+    border-color var(--motion-fast) var(--motion-ease), background var(--motion-fast) var(--motion-ease), color var(--motion-fast) var(--motion-ease);
 }
 
 .help-center-to-top:hover,

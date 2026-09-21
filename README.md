@@ -196,12 +196,14 @@ and glossary ids to its own routing system when integrating the components.
 The public site uses source-owned shadcn/Radix components in `src/components/ui`, shared layouts in
 `src/components/support`, and semantic tokens in `src/design-system.css`. The reference is wallet
 PR [#1047](https://github.com/0xMiden/wallet/pull/1047), pinned at `9e6c69ca7cac6ae8cc12d657613e4b4db490293b`.
+Motion uses the copied library and Highlight primitive from wallet [#1054](https://github.com/0xMiden/wallet/pull/1054), commit `02337f7`, with the same Framer Motion dependency. See `src/lib/animation/README.md` for provenance.
+React Router keeps the shell mounted across public tabs; page content swaps without replaying entrance animations.
 Article-specific styles remain in `src/help-center/help-center.css`; new controls use the shared primitives.
 
 Deploy the **combined Worker and assets** for this UI. The Worker adds a fresh style nonce to each
 public HTML response so Radix dialogs/selects can insert their required styles under the strict CSP.
 HTML is not cached; fingerprinted assets keep their existing caching. Scripts still require an approved
-source, and arbitrary inline styles remain blocked. `yarn preview` mirrors this behavior for browser tests.
+source, and arbitrary inline styles remain blocked. All public entry documents permit the same Turnstile origin so feedback verification works after client-side navigation; admin/API policies remain separate. `yarn preview` mirrors this behavior for browser tests.
 A raw static-only upload does not provide nonce injection or the feedback API.
 
 ## Temporary review deployment

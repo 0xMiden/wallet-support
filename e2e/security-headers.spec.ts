@@ -51,7 +51,7 @@ test('the document carries the declared security headers', async ({ page }) => {
 
   const policy = directives(declared['content-security-policy'] as string);
   expect(policy.get('default-src')).toEqual(["'none'"]);
-  expect(policy.get('script-src')).toEqual(["'self'"]);
+  expect(policy.get('script-src')).toEqual(["'self'", "https://challenges.cloudflare.com"]);
   expect(policy.get('style-src')).toEqual(["'self'"]);
   expect(policy.get('frame-ancestors')).toEqual(["'none'"]);
   expect(policy.get('object-src')).toEqual(["'none'"]);

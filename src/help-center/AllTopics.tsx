@@ -8,7 +8,6 @@ import {
   PageHeader,
   CategoryIcon,
   ArticleRow,
-  Reveal
 } from '@/components/support/layout';
 import { helpCenterMainCategories } from './categories';
 import { articlesInSubcategory, helpCenterArticles } from './content';
@@ -35,13 +34,13 @@ export function AllTopics() {
     <div className="help-center-home">
       <main id="help-center-content" tabIndex={-1} className="outline-none">
         <Container>
-          <Reveal>
+          <div>
             <PageHeader
               eyebrow="The whole library"
               title="All topics"
               description="A guide for every next step. Explore the essentials or go a little deeper."
             />
-          </Reveal>
+          </div>
           <div className="mb-16 grid items-start gap-10 lg:grid-cols-[14rem_minmax(0,1fr)]">
             <aside className="lg:sticky lg:top-28">
               <label className="relative block">

@@ -19,16 +19,16 @@ describe('public support style nonces', () => {
       nonces.push(nonce!);
       const policy = result.headers.get('content-security-policy')!;
       expect(policy).toContain(`style-src 'self' 'nonce-${nonce}'`);
-      expect(policy).toContain("script-src 'self';");
+      expect(policy).toContain("script-src 'self' https://challenges.cloudflare.com;");
       expect(policy).not.toContain('unsafe-inline');
       expect(result.headers.get('cache-control')).toBe('private, no-store');
       expect(result.headers.has('etag')).toBe(false);
     }
     expect(nonces[0]).not.toBe(nonces[1]);
   });
-  it('retains feedback verification allowances', async () => {
+  it.each(['/', '/topics', '/feedback/'])('retains feedback verification allowances for SPA entry %s', async (path) => {
     const result = withRouteSecurityHeaders(
-      new Request('https://support.example/feedback/'),
+      new Request(`https://support.example${path}`),
       html()
     );
     expect(result.headers.get('content-security-policy')).toContain(
@@ -45,5 +45,7 @@ describe('public support style nonces', () => {
     );
     expect(await api.json()).toEqual({ ok: true });
     expect(api.headers.get('content-security-policy')).not.toContain('nonce-');
+    expect(api.headers.get('content-security-policy')).not.toContain('challenges.cloudflare.com');
+    expect(admin.headers.get('content-security-policy')).not.toContain('challenges.cloudflare.com');
   });
 });

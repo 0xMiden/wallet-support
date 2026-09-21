@@ -25,7 +25,7 @@ import {
 } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Container, PageHeader, Reveal } from '@/components/support/layout';
+import { Container, PageHeader } from '@/components/support/layout';
 import { Verification } from './Verification';
 
 const HISTORY_KEY = 'bread.feedback.reports.v2';
@@ -164,13 +164,13 @@ export function FeedbackPage() {
     <div className="help-center-home">
       <main id="help-center-content" tabIndex={-1} className="outline-none">
         <Container>
-          <Reveal>
+          <div>
             <PageHeader
               eyebrow="We’re listening"
               title="Help us improve Bread Wallet"
               description="Report a problem or share an idea. Your submission is reviewed before anything is published."
             />
-          </Reveal>
+          </div>
           <div className="mb-16 grid items-start gap-8 lg:grid-cols-[minmax(0,1.65fr)_minmax(0,1fr)]">
             <Card className="py-6 sm:py-8">
               <CardContent className="px-5 sm:px-8">

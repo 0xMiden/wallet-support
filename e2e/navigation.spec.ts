@@ -148,7 +148,7 @@ test('the header links are pills that highlight on hover', async ({ page }) => {
       .evaluate(element => getComputedStyle(element).backgroundColor);
 
   // The page the reader is on carries a tint at rest; the other does not.
-  expect(await background('Help Center')).not.toBe('rgba(0, 0, 0, 0)');
+  expect(await page.locator('.public-nav [data-slot="motion-highlight"]').evaluate(element => getComputedStyle(element).backgroundColor)).toBe('rgb(243, 240, 236)');
   expect(await background('All topics')).toBe('rgba(0, 0, 0, 0)');
 
   await page.locator('.public-nav a', { hasText: 'All topics' }).hover();

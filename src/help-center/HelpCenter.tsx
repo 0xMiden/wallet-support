@@ -1,3 +1,5 @@
+import { Link, useLocation, useNavigate } from 'react-router';
+import { useLayoutEffect } from 'react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -34,7 +36,6 @@ import {
   homeHref,
   parsePlatform,
   parseRoute,
-  parseSearchQuery,
   withSearchParams
 } from './routing';
 import type { HelpCenterPlatform } from './types';
@@ -117,6 +118,8 @@ function SupportIcon() {
 }
 
 export function HelpCenter() {
+  const location = useLocation();
+  const navigate = useNavigate();
   // Read here rather than left to the mount effect, so the first paint is the
   // page the URL asked for. A hash that is not a route at all resolves to home;
   // it used to open the first subcategory, which looked like a working link to
@@ -128,26 +131,24 @@ export function HelpCenter() {
   const [activeArticleId, setActiveArticleId] = useState<string | undefined>(undefined);
   // The one definition a shared #glossary-<entry> link names, if any.
   const [glossaryEntryId, setGlossaryEntryId] = useState<string | undefined>(undefined);
-  const [activePlatform, setActivePlatform] = useState<HelpCenterPlatform>(
-    () =>
-      parsePlatform(window.location.search) ??
-      defaultPlatform(window.matchMedia?.('(pointer: coarse)').matches ?? false)
+  const [platformFallback] = useState<HelpCenterPlatform>(() =>
+    defaultPlatform(window.matchMedia?.('(pointer: coarse)').matches ?? false)
   );
+  const activePlatform = parsePlatform(location.search) ?? platformFallback;
 
   /**
    * The platform choice and the search query share the query string, so both
-   * are written through one merge rather than by rebuilding it. replaceState
-   * rather than pushState: neither is a navigation the back button should have
+   * are written through one merge rather than by rebuilding it. Router replace
+   * rather than push: neither is a navigation the back button should have
    * to step through on the way out of an article.
    */
   const writeSearch = (changes: Readonly<Record<string, string | null>>) => {
     const next = withSearchParams(window.location.search, changes);
-    window.history.replaceState(null, '', `${window.location.pathname}${next}${window.location.hash}`);
+    navigate(`${window.location.pathname}${next}${window.location.hash}`, { replace: true });
   };
 
   const choosePlatform = (platform: HelpCenterPlatform) => {
-    setActivePlatform(platform);
-    writeSearch({ platform: platform === 'extension-desktop' ? null : platform });
+    writeSearch({ platform });
   };
   const [openMainCategoryIds, setOpenMainCategoryIds] = useState<ReadonlySet<string>>(
     () => new Set(defaultMainCategoryId ? [defaultMainCategoryId] : [])
@@ -167,14 +168,15 @@ export function HelpCenter() {
    */
   const [selectedMainCategoryId, setSelectedMainCategoryId] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [query, setQuery] = useState(() => parseSearchQuery(window.location.search));
+  const query = new URLSearchParams(location.search).get('q') ?? '';
+  const setQuery = (value: string) => writeSearch({ q: value || null });
   const [helpful, setHelpful] = useState<'yes' | 'no' | null>(null);
   const [linkCopied, setLinkCopied] = useState(false);
   const lastRoute = useRef<string | null>(null);
   // The section the reader explicitly asked for, held until they scroll again.
   const pinnedSection = useRef<string | null>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handleHashChange = () => {
       const route = routeFromHash(window.location.hash);
       // Not a route — an in-document anchor such as the skip link. Leave the
@@ -236,9 +238,7 @@ export function HelpCenter() {
     };
 
     handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
+  }, [location.hash]);
 
   // The browser cannot scroll to a shared entry on arrival, because the entry
   // has not rendered yet. So it is done here, once the glossary is on screen.
@@ -252,14 +252,6 @@ export function HelpCenter() {
     setHelpful(null);
     setLinkCopied(false);
   }, [activeArticleId]);
-
-  // A reader who found the answer by searching can now send someone the
-  // search. It was component state only, so the URL described the category
-  // behind the results rather than the results.
-  useEffect(() => {
-    writeSearch({ q: query.trim() || null });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query]);
 
   const copyArticleLink = async () => {
     try {
@@ -628,13 +620,13 @@ export function HelpCenter() {
                 />
               </label>
 
-              <a
+              <Link
                 className="help-center-contact-button"
-                href={CONTACT_SUPPORT_URL}
+                to={CONTACT_SUPPORT_URL}
               >
                 <span>Contact Support</span>
                 <SupportIcon />
-              </a>
+              </Link>
             </div>
 
             {isSearching ? (
@@ -858,9 +850,9 @@ export function HelpCenter() {
                       ) : (
                         <>
                           Sorry about that.{' '}
-                          <a href={CONTACT_SUPPORT_URL}>
+                          <Link to={CONTACT_SUPPORT_URL}>
                             Tell us what was missing
-                          </a>
+                          </Link>
                           .
                         </>
                       )}
