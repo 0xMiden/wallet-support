@@ -1758,9 +1758,7 @@
   .help-home-card:focus-visible,
   .help-home-card:hover .help-home-arrow,
   .help-home-section-link:hover .help-home-arrow,
-  .help-home-popular button:hover,
-  .help-home-nav a:hover,
-  .help-home-nav a:focus-visible {
+  .help-home-popular button:hover {
     transform: none;
   }
 }
@@ -1783,80 +1781,6 @@
 .help-center-home a {
   color: inherit;
   text-decoration: none;
-}
-
-.help-home-header {
-  position: sticky;
-  z-index: 30;
-  top: 0;
-  padding: var(--space-4) var(--space-5);
-  border-bottom: 1px solid var(--help-line);
-  background: color-mix(in srgb, var(--help-bg) 92%, transparent);
-  backdrop-filter: blur(10px);
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: var(--space-4);
-}
-
-.help-home-header .help-center-brand {
-  justify-self: start;
-}
-
-.help-home-header-action {
-  justify-self: end;
-}
-
-.help-home-nav {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.help-home-nav a {
-  padding: 0.5rem 1.05rem;
-  border: 1px solid var(--help-line);
-  border-radius: var(--radius-pill);
-  color: var(--text-muted);
-  background: transparent;
-  font-size: var(--text-xs);
-  font-weight: var(--weight-strong);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  white-space: nowrap;
-  transition: color 160ms ease, border-color 160ms ease, background 160ms ease,
-    transform 160ms ease;
-}
-
-.help-home-nav a:hover,
-.help-home-nav a:focus-visible {
-  transform: translateY(-1px);
-  border-color: var(--tint-edge);
-  color: var(--accent-text);
-  background: var(--tint-soft);
-}
-
-/*
- * The reader is on this page. A filled pill would make two solid accent
- * shapes in one header and put the Contact Support button in competition
- * with a link; the tint says "here" and leaves the button the only call.
- */
-.help-home-nav a[aria-current='page'] {
-  border-color: var(--tint-edge);
-  color: var(--accent-text);
-  background: var(--tint-soft);
-}
-
-.help-home-nav a[aria-current='page']:hover,
-.help-home-nav a[aria-current='page']:focus-visible {
-  border-color: var(--tint-edge);
-  background: var(--tint-medium);
-}
-
-.help-home-header-action {
-  min-height: 2.85rem;
-  padding: 0.55rem 1.1rem;
-  font-size: var(--text-sm);
 }
 
 .help-home-main {
@@ -2466,37 +2390,7 @@
   }
 }
 
-/*
- * The header's pills hide at 740px and below, not only at 620. Brand, pills and
- * button cannot shrink below 175.9, 273.5 and 150.2px at the shipped fonts, and
- * the pills sit on the page's centre line only when both outer tracks are as
- * wide as the wider of the other two: 175.9 + 273.5 + 175.9, two 16px gaps and
- * two 24px paddings come to 705.3px. Below that the grid gave up the centre
- * line and ran the button into the padding, and from 621 to 655px it pushed the
- * page wider than the screen. 740 leaves about 5% for text to render wider on
- * another platform. Recompute when a label or a font changes; the e2e sweep
- * across these widths fails if the band reopens.
- *
- * The button is the one action worth keeping at these widths. "All topics" is
- * one tap away on every card below it, and a link to the page the reader is
- * already on is not worth crushing the brand for. The nav element stays:
- * dropping it would leave the grid two tracks and unpin the button.
- */
-@media (max-width: 740px) {
-  .help-home-nav a {
-    display: none;
-  }
-}
-
 @media (max-width: 620px) {
-  .help-home-header {
-    padding: var(--space-3) var(--space-4);
-  }
-
-  .help-home-nav {
-    gap: var(--space-4);
-  }
-
   /* The footer only. .help-home-main used to be here too, which overrode the
      gutter token and left the home page at 16px while the category view sat
      at the token's 20px — the same two-halves-disagreeing problem, one

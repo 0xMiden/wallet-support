@@ -1257,3 +1257,85 @@ merges. The branch sits on `f91a0aa` (issue #4, Vite 8.0.16), so this bundle is 
 - Framed from another page, the Help Center does not render.
 - The same check reports an inline script and an off-site image injected into the page as blocked, so a
   clean run is not a detector that sees nothing.
+
+
+---
+
+# Remove the duplicate Help Center home header — 2026-09-21
+
+## Why it is showing at all
+Brian already tried to hide it. `help-center.css:41-44`:
+
+```css
+/* The application header now owns this chrome across every public view. */
+.help-home-header,
+.help-center-utility-bar,
+.help-center-desktop-brand { display: none; }
+```
+
+That rule is **dead for two of its three targets**. Same specificity, later in
+the file wins:
+- `.help-home-header` → `display: grid` at **line 1796** — the header Ivan boxed
+- `.help-center-utility-bar` → `display: flex` at **line 454** (top level)
+- `.help-center-desktop-brand` → no conflicting top-level rule, so it stays hidden
+
+So the duplicate is not a missing rule; it is an overridden one.
+
+## Approach
+Delete the legacy markup rather than strengthen the hide rule. A `display:none`
+over live markup is the mask hack the hard rules forbid, and it would leave dead
+CSS plus four e2e tests measuring an invisible element.
+
+Scope: the one header Ivan boxed. The utility-bar override is the same bug class
+but a different element — report it, do not fix it unasked.
+
+## Checklist
+- [ ] Branch off current `main` (protected; PR required)
+- [ ] `HelpCenterHome.tsx` — remove `<header className="help-home-header">` (263-286)
+- [ ] Confirm `breadLockup`, `CONTACT_SUPPORT_URL`, `homeHref` still used elsewhere
+      in the file (2/3/3 refs now, so no orphaned imports expected)
+- [ ] `help-center.css:42` — drop `.help-home-header,` from the hide list, keep the other two
+- [ ] `help-center.css` — delete dead rules: `.help-home-header` (~1788),
+      `.help-home-header-action` (~1806), `.help-home-nav` (~1810-1860),
+      hover block (~1762), media blocks (~2486, ~2492)
+- [ ] `e2e/navigation.spec.ts` — delete `the header links sit on the centre line of the page`
+- [ ] `e2e/navigation.spec.ts` — delete `the header links are pills that highlight on hover`
+- [ ] `e2e/navigation.spec.ts` — drop the `.help-home-nav a:not([aria-current])` row
+      from `every hover state actually changes something`
+- [ ] `e2e/navigation.spec.ts` — width sweep `the home header fits every width`: **decision needed**
+- [ ] `yarn typecheck`, bounded vitest, `npx playwright test`
+- [ ] Screenshot to Ivan's Downloads for his eye before PR
+- [ ] Push branch + open PR (each write its own approval)
+
+## Decision needed from Ivan
+The width sweep at `navigation.spec.ts:439` walks 600→1440px asserting three
+things about the removed header: no sideways scroll, pills centred, button
+inside the padding. Two of the three die with the markup. The **no sideways
+scroll** assertion is still a real guarantee and is not header-specific.
+
+## Review / results
+Done on `design/remove-duplicate-home-header`.
+
+- Removed our `<header className="help-home-header">` from `HelpCenterHome.tsx`
+  and all 107 lines of its CSS. Blame on `main` confirms every deleted CSS line,
+  and all 62 deleted e2e lines, were Ivan's.
+- **Reverted my edit to Brian's hide-list.** I had dropped `.help-home-header,`
+  from it; `49ee333` is his, so it is restored verbatim per Ivan's instruction
+  not to change his work. It now names a class with no markup — harmless, his call.
+- The one Brian-authored line inside our header (`<a href="/topics">All topics</a>`,
+  an href he updated in `49ee333`) goes with the header. His own hide rule already
+  said this header should not render.
+- `article-column.spec.ts` expected breakpoints `[620, 740, 900]`. The 740 was our
+  header's `@media (max-width: 740px)`; with it gone the stylesheet has
+  `[620, 700, 900, 1000]`, so the assertion is now `[620, 900]`. That line is
+  Ivan's (`2cdfd2d`). CHROME_STEPS keys on 621 and 901 and is untouched.
+- Width sweep kept as the overflow-only guard, per Ivan's choice.
+
+Verified: `yarn typecheck` pass, vitest 254/254, playwright **78/78** — including
+Brian's `unified-shell.spec.ts`. Screenshots in Ivan's Downloads
+(`helpcenter-header-after-desktop.png`, `-phone.png`, `helpcenter-home-after-full.png`).
+
+### Left alone deliberately
+`.help-center-utility-bar` has the same dead-rule bug: Brian's `display: none`
+at line 42 is overridden by `display: flex` at line 454 (both top level). Not
+touched — different element, and it is his rule. Flagged, not fixed.
