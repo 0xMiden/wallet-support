@@ -114,6 +114,12 @@ Public submissions use `/api/feedback/submit`; status checks use `/api/feedback/
 and `/status` are temporary compatibility aliases. Unknown `/api/*` and `/admin/*` paths return 404
 from the Worker and never fall through to the public SPA.
 
+The feedback form supports up to three PNG/JPEG screenshots or MP4 recordings (10 MiB combined),
+with drag-and-drop, screenshot paste, previews, and removal before submission. Files stay in private
+R2 storage until the report is published to GitHub. Issues embed pictures and link to videos through
+the Worker. Set `FEEDBACK_PUBLIC_ORIGIN` to the combined Worker origin; see
+[`worker/feedback/MEDIA.md`](worker/feedback/MEDIA.md) for media access and deployment details.
+
 Production GitHub access uses a GitHub App installed only on `0xMiden/wallet`, with repository
 metadata read and issues read/write permissions. Configure `GITHUB_APP_ID`,
 `GITHUB_APP_INSTALLATION_ID`, and `GITHUB_APP_PRIVATE_KEY` as Cloudflare secrets. The pipeline
@@ -191,6 +197,21 @@ and glossary ids to its own routing system when integrating the components.
   Support) and a Copy link button
 - A security reminder on every page except the home page
 
+## Shared UI system
+
+The public site uses source-owned shadcn/Radix components in `src/components/ui`, shared layouts in
+`src/components/support`, and semantic tokens in `src/design-system.css`. The reference is wallet
+PR [#1047](https://github.com/0xMiden/wallet/pull/1047), pinned at `9e6c69ca7cac6ae8cc12d657613e4b4db490293b`.
+Motion uses the copied library and Highlight primitive from wallet [#1054](https://github.com/0xMiden/wallet/pull/1054), commit `02337f7`, with the same Framer Motion dependency. See `src/lib/animation/README.md` for provenance.
+React Router keeps the shell mounted across public tabs; page content swaps without replaying entrance animations.
+Article-specific styles remain in `src/help-center/help-center.css`; new controls use the shared primitives.
+
+Deploy the **combined Worker and assets** for this UI. The Worker adds a fresh style nonce to each
+public HTML response so Radix dialogs/selects can insert their required styles under the strict CSP.
+HTML is not cached; fingerprinted assets keep their existing caching. Scripts still require an approved
+source, and arbitrary inline styles remain blocked. All public entry documents permit the same Turnstile origin so feedback verification works after client-side navigation; admin/API policies remain separate. `yarn preview` mirrors this behavior for browser tests.
+A raw static-only upload does not provide nonce injection or the feedback API.
+
 ## Temporary review deployment
 
 The Help Center is available as a non-production Cloudflare Pages preview:
@@ -200,7 +221,7 @@ The Help Center is available as a non-production Cloudflare Pages preview:
 Cloudflare project: `bread-wallet-help-center-preview`  
 Preview branch: `help-center-shell`
 
-This Pages project predates the combined Worker deployment and remains a temporary visual-review target only.
+This Pages project predates the combined Worker deployment. It cannot fully exercise the current Radix controls because it lacks per-response style nonces; use the combined Worker for current UI review.
 
 ### Deploying a preview
 

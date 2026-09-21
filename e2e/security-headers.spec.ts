@@ -46,12 +46,12 @@ test('the document carries the declared security headers', async ({ page }) => {
     'x-frame-options'
   ]);
   for (const [name, value] of Object.entries(declared)) {
-    expect(served[name], name).toBe(value);
+    expect(name === 'content-security-policy' ? served[name]?.replace(/ 'nonce-[^']+'/g, '') : served[name], name).toBe(value);
   }
 
   const policy = directives(declared['content-security-policy'] as string);
   expect(policy.get('default-src')).toEqual(["'none'"]);
-  expect(policy.get('script-src')).toEqual(["'self'"]);
+  expect(policy.get('script-src')).toEqual(["'self'", "https://challenges.cloudflare.com"]);
   expect(policy.get('style-src')).toEqual(["'self'"]);
   expect(policy.get('frame-ancestors')).toEqual(["'none'"]);
   expect(policy.get('object-src')).toEqual(["'none'"]);
@@ -136,4 +136,25 @@ test('the page refuses to be framed', async ({ page, baseURL }) => {
   await page.setContent(`<iframe src="${baseURL}/" title="framed"></iframe>`, { waitUntil: 'load' });
 
   await expect(page.frameLocator('iframe[title="framed"]').locator('#root')).toHaveCount(0);
+});
+
+test('Radix dialogs, drawers, and selects work under nonce CSP without style violations', async ({ page }) => {
+  const violations = await collectViolations(page);
+  await page.goto('/');
+  const firstNonce = await page.locator('meta[name="style-nonce"]').getAttribute('content');
+  await page.getByRole('button', { name: 'Search help articles' }).click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await expect.poll(() => page.evaluate(() => getComputedStyle(document.body).overflow)).toBe('hidden');
+  await page.keyboard.press('Escape');
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.getByRole('button', { name: 'Open site navigation' }).click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await page.keyboard.press('Escape');
+  await page.route('https://challenges.cloudflare.com/**', route => route.abort());
+  await page.goto('/feedback');
+  expect(await page.locator('meta[name="style-nonce"]').getAttribute('content')).not.toBe(firstNonce);
+  await page.getByRole('combobox', { name: 'Platform', exact: true }).click();
+  await expect(page.getByRole('option', { name: 'Extension', exact: true })).toBeVisible();
+  await page.keyboard.press('Escape');
+  expect(violations).toEqual([]);
 });

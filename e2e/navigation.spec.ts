@@ -46,7 +46,7 @@ test('subcategory to article to home, by the brand mark', async ({ page }) => {
   await page.locator('.help-center-card-link').first().click();
   await expect(page.locator(TITLE)).toHaveText('How to install Bread Wallet');
 
-  await page.locator('.help-center-desktop-brand').click();
+  await page.locator('.public-brand').click();
 
   await expect(page.locator(HOME)).toBeVisible();
 });
@@ -57,7 +57,7 @@ test('the brand mark is a way out of search results', async ({ page }) => {
   await page.locator('.help-home-popular button', { hasText: 'Guardian' }).click();
   await expect(page.locator(RESULTS)).toContainText('results for');
 
-  await page.locator('.help-center-desktop-brand').click();
+  await page.locator('.public-brand').click();
 
   // The regression this guards: the hash changed and nothing else, so the one
   // control promising a way out of the results kept rendering them.
@@ -113,35 +113,48 @@ test('the footer is on every page, not only the home page', async ({ page }) => 
   }
 });
 
-test('the persistent brand carries the Help Center product label once', async ({ page }) => {
+test('the shared header has one brand and one desktop navigation', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('header.public-header')).toHaveCount(1);
+  await expect(page.locator('.public-header nav')).toBeVisible();
+  await expect(page.locator('.help-home-header')).toHaveCount(0);
+});
+
+test('the persistent brand identifies the product on home and articles', async ({ page }) => {
   for (const route of ['/', '/#setup-and-basic-use']) {
     await page.goto(route);
-    await expect(page.locator('.public-brand'), route).toHaveText('Bread WalletHelp Center');
-    await expect(page.locator('.public-product-name'), route).toHaveText('Help Center');
-    const remainingBrands = page.locator('.help-center-brand:not(.public-brand)');
-    for (let i = 0; i < (await remainingBrands.count()); i++) {
-      await expect(remainingBrands.nth(i), route).toHaveText('Bread Wallet');
-    }
+    await expect(page.locator('.public-brand')).toHaveAccessibleName('Bread Wallet Help Center home');
+    await expect(page.locator('.public-brand')).toContainText('Help Center');
   }
 });
 
-test('the footer brand sits at the left edge of the page, not in from it', async ({ page }) => {
-  // Capped and centred, the frame left a wide gap before the logo — 183px
-  // inside the content column at 1950, and 351px on the home page.
+test('the footer uses the same content frame as the header', async ({ page }) => {
   await page.setViewportSize({ width: 1600, height: 900 });
-
-  for (const [route, container] of [
-    ['/', '.help-center-footer'],
-    ['/#setup-and-basic-use', '.help-center-footer']
-  ] as const) {
+  for (const route of ['/', '/#setup-and-basic-use']) {
     await page.goto(route);
-    const footer = await page.locator(container).boundingBox();
-    const logo = await page.locator('.help-center-footer .help-center-brand').boundingBox();
-    if (footer === null || logo === null) throw new Error(`no footer on ${route}`);
-
-    // Within the footer's own padding, and nowhere near its middle.
-    expect(logo.x - footer.x, route).toBeLessThan(40);
+    const header = await page.locator('.public-brand').boundingBox();
+    const footer = await page.locator('.help-center-footer a[aria-label="Bread Wallet home"]').boundingBox();
+    expect(header).not.toBeNull(); expect(footer).not.toBeNull();
+    expect(Math.abs(header!.x - footer!.x)).toBeLessThan(2);
   }
+});
+
+test('the header links are pills that highlight on hover', async ({ page }) => {
+  await page.goto('/');
+
+  const background = (name: string) =>
+    page
+      .locator('.public-nav a', { hasText: name })
+      .evaluate(element => getComputedStyle(element).backgroundColor);
+
+  // The page the reader is on carries a tint at rest; the other does not.
+  expect(await page.locator('.public-nav [data-slot="motion-highlight"]').evaluate(element => getComputedStyle(element).backgroundColor)).toBe('rgb(243, 240, 236)');
+  expect(await background('All topics')).toBe('rgba(0, 0, 0, 0)');
+
+  await page.locator('.public-nav a', { hasText: 'All topics' }).hover();
+  await expect
+    .poll(() => background('All topics'))
+    .not.toBe('rgba(0, 0, 0, 0)');
 });
 
 test('the footer is byte-for-byte the same markup on every page', async ({ page }) => {
@@ -274,7 +287,8 @@ test('every hover state actually changes something', async ({ page }) => {
 
   const targets = [
     ['/', '.help-home-card', 'a home category card', SURFACE, null],
-    ['/', '.help-home-section-link', 'the View all topics link', TEXT, null],
+    ['/', 'main a[href="/topics"]', 'the View all topics link', SURFACE, null],
+    ['/', '.public-nav a:not([aria-current])', 'a header nav pill', SURFACE, null],
     ['/#setup-and-basic-use', '.help-center-card', 'a subcategory article card', SURFACE, null],
     [
       '/#setup-and-basic-use',
@@ -403,30 +417,13 @@ test('an On this page link lands below the sticky header on narrow screens', asy
   }
 });
 
-test('the page never scrolls sideways at any width', async ({ page }) => {
-  /*
-   * From 621 to 655px the page scrolled sideways, 35px at 621. That was the
-   * home page's own header, which is gone — the application header owns this
-   * chrome now. The sweep stays because the failure it caught is not specific
-   * to that header: any element wide enough to push past the viewport reopens
-   * the band, and nothing else here would notice.
-   *
-   * A sweep rather than a few points, so a longer label or a wider font fails
-   * here instead of quietly reopening a band nobody measures.
-   */
+test('the shared header fits desktop, tablet, and phone widths', async ({ page }) => {
   await page.goto('/');
-
-  const widths = [
-    ...Array.from({ length: 761 - 600 }, (_, i) => 600 + i),
-    ...Array.from({ length: 34 }, (_, i) => 780 + i * 20)
-  ];
-
-  for (const width of widths) {
+  for (const width of [320, 390, 620, 700, 800, 900, 1024, 1280, 1600]) {
     await page.setViewportSize({ width, height: 900 });
-    const overflow = await page.evaluate(
-      () => document.documentElement.scrollWidth - window.innerWidth
-    );
-    expect(overflow, `${width}px: the page scrolls sideways`).toBeLessThanOrEqual(0);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth), `${width}px`).toBeLessThanOrEqual(0);
+    if (width < 1024) await expect(page.getByRole('button', { name: 'Open site navigation' })).toBeVisible();
+    else await expect(page.locator('.public-nav')).toBeVisible();
   }
 });
 
@@ -472,4 +469,31 @@ test('search results show alone, even over an article with a side rail', async (
 
   await expect(page.locator(RESULTS)).toBeVisible();
   await expect(page.locator('.help-center-article-body')).toBeHidden();
+});
+
+test('the page never scrolls sideways at any width', async ({ page }) => {
+  /*
+   * From 621 to 655px the page scrolled sideways, 35px at 621. That was the
+   * home page's own header, which is gone — the application header owns this
+   * chrome now. The sweep stays because the failure it caught is not specific
+   * to that header: any element wide enough to push past the viewport reopens
+   * the band, and nothing else here would notice.
+   *
+   * A sweep rather than a few points, so a longer label or a wider font fails
+   * here instead of quietly reopening a band nobody measures.
+   */
+  await page.goto('/');
+
+  const widths = [
+    ...Array.from({ length: 761 - 600 }, (_, i) => 600 + i),
+    ...Array.from({ length: 34 }, (_, i) => 780 + i * 20)
+  ];
+
+  for (const width of widths) {
+    await page.setViewportSize({ width, height: 900 });
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - window.innerWidth
+    );
+    expect(overflow, `${width}px: the page scrolls sideways`).toBeLessThanOrEqual(0);
+  }
 });

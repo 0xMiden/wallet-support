@@ -181,39 +181,16 @@ describe('sniffType', () => {
     expect(obj!.httpMetadata!.contentType).toBe('image/png');
   });
 
-  it('47i2. publishes a stored attachment only when the publish pipeline asks', async () => {
+  it('47i2. prepares a Worker URL without uploading to GitHub or exposing R2', async () => {
     const id = crypto.randomUUID();
-    const file = pngFile();
     const stored = await storeAttachment(
-      file, PNG_BYTES, { mime: 'image/png', name: 'screenshot.png', video: false },
-      id, env as any
+      pngFile(), PNG_BYTES, { mime: 'image/png', name: 'screenshot.png', video: false }, id, env
     );
-
-    route({
-      match: (u, m) => u.host === 'api.github.com' && m === 'GET'
-        && u.pathname === '/repos/0xMiden/wallet',
-      respond: () => Response.json({ id: 123 }),
-    });
-    route({
-      match: (u, m) => u.host === 'uploads.github.com' && m === 'POST'
-        && u.pathname === '/user-attachments/assets',
-      respond: () => Response.json(
-        { url: 'https://github.com/user-attachments/assets/test' },
-        { status: 201 }
-      ),
-    });
-
-    const published = await publishAttachment(stored, {
-      ATTACHMENTS: env.ATTACHMENTS,
-      TARGET_REPO: '0xMiden/wallet',
-      GITHUB_WRITE_TOKEN: 'test-token',
-      R2_PUBLIC_BASE: 'https://files.example',
-    });
-
-    expect(published.githubUrl).toBe('https://github.com/user-attachments/assets/test');
-    expect(published.r2Url).toBe(`https://files.example/${stored.key}`);
-    expect(callsTo('api.github.com')).toHaveLength(1);
-    expect(callsTo('uploads.github.com')).toHaveLength(1);
+    const published = await publishAttachment(stored, { FEEDBACK_PUBLIC_ORIGIN: 'https://support.miden.xyz' });
+    expect(published.githubUrl).toBeNull();
+    expect(published.r2Url).toBe(`https://support.miden.xyz/api/feedback/media/${id}/${stored.name}`);
+    expect(callsTo('api.github.com')).toHaveLength(0);
+    expect(callsTo('uploads.github.com')).toHaveLength(0);
   });
 
   it('47j. rejects an HTML polyglot wearing an ftyp marker', async () => {

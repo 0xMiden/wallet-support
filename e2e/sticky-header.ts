@@ -28,7 +28,7 @@ export async function restingGapBelowStickyHeader(page: Page, target: Locator): 
     .toBe(true);
 
   const [bar, box] = await Promise.all([
-    page.locator('.help-center-mobile-header').boundingBox(),
+    page.locator('.public-header').boundingBox(),
     target.boundingBox()
   ]);
   if (bar === null || box === null) throw new Error('the sticky header or the target did not render');

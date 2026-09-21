@@ -104,6 +104,9 @@ export async function addLabels(repo: string, token: string, issue: number, labe
 /**
  * Upload a file to GitHub's user-attachments store.
  *
+ * @deprecated Retained for compatibility only. New feedback uses the Worker
+ * media route backed by private R2 and never calls this undocumented endpoint.
+ *
  * PORTED VERBATIM from the v1 relay (worker.js:477-528), which is the only
  * implementation known to return 201 with a PAT. The endpoint is UNDOCUMENTED,
  * so the details below are load-bearing and were each a bug once:

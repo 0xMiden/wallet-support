@@ -8,63 +8,14 @@ Do not write to MEMORY.md or memory memos unless Ivan explicitly asks in the cur
 
 ## Brand and design system — standing rule
 
-Binding on every change: edits, new articles, new pages, new components and design changes. It is
-not advisory. The values live in `src/help-center/tokens.css`; the measurements and decisions behind
-them are in `tasks/design-audit.md` and `tasks/brand-audit-2026-09-09.md`. Pull request #9 (merged
-2026-09-14) is the source of truth for the design and supersedes both audits where they differ; do
-not revert its choices.
+The current design system follows wallet PR #1047 at `9e6c69ca7cac6ae8cc12d657613e4b4db490293b`, the reviewed tip of its design-system PR stack. See `tasks/design-system-upgrade.md` for the audit and scope. Motion follows the newer wallet PR #1054 at `02337f752720e9929c6e9afcd4945f2fd296a8d4`; see `src/lib/animation/README.md`. This approved direction supersedes the earlier PR #9 presentation rules.
 
-- **Tokens only.** Colours, font sizes, weights, radii and spacing come from the custom properties in
-  `tokens.css`. Component rules in `src/help-center/help-center.css` never hardcode a value, new
-  components included; older raw spacing is not a precedent. Line-height has no token scale yet, so
-  reuse a value already in the stylesheet. `src/styles.css` is the host page and only repeats token
-  values it cannot reach.
-- **Type.** Nunito for display and Inter for body, both self-hosted in `src/help-center/assets/fonts/`.
-  Since #9, Nunito also sets the article bodies and excerpts, the home card descriptions, the
-  sidebar, the search fields and popular chips, the platform switch, the previous/next cards, the
-  footer links and Contact Support; Inter is the base face for everything else. The weights in use
-  are 400, 500, 600, 700 and 900. No new family or weight without approval.
-- **Colour.** The light ground is `--help-bg` (`#fbfbfb`). The Bread accent `--help-accent`
-  (`#e77537`) is for fills, icons and borders; as text it appears only through `--accent-text-lg`.
-  Accent text uses the deeper `--accent-text` (`#a8460f`). `--accent-text-lg` is the brand orange
-  itself (`#e77537`, since #9) and is for the large headings only: the hero's "help?" and the page
-  titles. Hues come from the reference, except the home panel tints, which are the wallet app's
-  activity hues. When a new pairing fails WCAG AA at its real size and weight, darken within the
-  same hue rather than switching to a different colour.
-- **Accessibility floor.** Every text pairing meets WCAG AA against its real backdrop, translucent
-  fills included. Two exceptions came with #9 as the brand's own choices and stay as they are:
-  `--accent-text-lg` measures 2.90:1 on the page, under the 3:1 for large text, and the white
-  category glyphs measure 2.02:1 on the sage panel, 2.37:1 on the blue and 2.10:1 on the lavender,
-  under the 3:1 for graphics. Every interactive element gets the 3px accent focus ring; the search
-  field shows its focus on the pill around it. Decorative elements are `aria-hidden`. Reduced motion
-  is respected: new motion gets a reset in the `prefers-reduced-motion` rules.
-- **Components.** Home category cards follow the reference pattern as #9 set it: a `--radius-panel`
-  panel tinted in turn with the wallet app's four card hues (`--panel-sage`, `--panel-blue`,
-  `--panel-lavender`, `--panel-slate`, ordered in `panelTint.ts`) carrying a white category glyph,
-  the uppercase title below it at `--text-xl` and `--weight-display`, a centred description, and the
-  article count in a pill. A category's page wears the same tint on its chips, hover edge and
-  chevron. Buttons and links reuse the shipped treatments and their states: rest, hover,
-  focus-visible, and current or selected where that applies. The article body stays capped at
-  `--measure`.
-- **Decorative objects.** None ship today. If one is added, it goes in the home hero only, never on
-  any other page, and never overlaps text at any width.
-- **Layout.** Use `--frame` and `--gutter` as shipped, so the home and category views keep matching.
-  The breakpoints are ours (620, 740 and 900), not Webflow's (991, 767, 479); the article rail is
-  placed by a container query on the content column, not a viewport breakpoint.
-- **No Webflow CSS.** Never import, paste or hotlink generated CSS, fonts or images from the
-  reference. Measure it in a browser and express what you take as tokens.
-- **Article content.** Articles inherit the shipped typography and spacing; nothing gets bespoke
-  styling. Bold for UI labels, with punctuation outside the bold; quotes only in titles and for
-  genuine quotation. Use the canonical terms from the glossary and the terminology guard in
-  `content.test.ts`, and ask Ivan where the two disagree.
-- **Images line up.** Every image in every article, screenshot or diagram, top-level or inside a
-  step, is centred on the article column, so all images share one centre line on every page (Ivan,
-  2026-09-18: misaligned images look messy). A step's screenshot reaches back over the list indent
-  rather than centring on the step's text. `e2e/image-alignment.spec.ts` checks every article that
-  has an image; a new placement (a nested list, a callout) must pass it too.
-- **Changing the system.** A changed token value, a new token, font, weight, breakpoint or component
-  pattern needs Ivan's approval first, reported with before and after values and contrast ratios.
-  Matching the reference is not self-authorising.
+- Use source-owned shadcn/Radix primitives in `src/components/ui`, layout compositions in `src/components/support`, and the copied wallet motion library in `src/lib/animation` and its CSS bridge `src/lib/animation-css.ts`.
+- Semantic tokens and named typography live in `src/design-system.css`. Legacy article-renderer tokens remain in `src/help-center/tokens.css`; do not create new page-specific control systems.
+- Nunito for headings/actions, Inter for reading and form fields. Fonts are self-hosted.
+- White page, warm secondary fills, flat 16px cards, pill actions. Use dark accent ink for text; brand orange is a fill/icon role.
+- Keyboard navigation, focus restoration, minimum 44px touch targets, responsive overflow checks, and reduced motion are required. Use Radix dialogs/sheets/selects rather than implementing focus management manually.
+- Article copy and security/privacy behavior must not change as a side effect of visual work.
 
 ## Roles
 

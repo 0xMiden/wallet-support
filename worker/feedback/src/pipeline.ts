@@ -25,7 +25,7 @@ import {
   createIssue, createComment, updateComment,
   markerAlreadyPublished, RateLimited,
 } from './lib/publish';
-import { publishAttachment, renderAttachment, type StoredAttachment } from './lib/attachments';
+import { publishAttachment, renderAttachment, storedAttachments, type StoredAttachment } from './lib/attachments';
 import { similarIssues } from './lib/embed';
 import { sanitize } from './lib/sanitize';
 import { assertWalletTarget } from './lib/github-auth';
@@ -345,6 +345,7 @@ ${storeSection}${environment}${attach}
 
 /** One folded report, as the comment needs it. */
 interface FoldedReport {
+  attachments?: StoredAttachment[];
   platform: string | null;
   body: string;
   confidence: number | null;
@@ -388,7 +389,8 @@ function rollingComment(total: number, reports: FoldedReport[], storeTotal = 0):
       r.confidence != null ? `matched at ${r.confidence.toFixed(2)}` : null,
     ].filter(Boolean).join(' · ');
     // Full text, never clipped mid-sentence.
-    const entry = `**${i + 1}.** ${meta}\n\n${quote(r.body)}`;
+    const media = r.attachments?.length ? `\n\n${r.attachments.map(renderAttachment).join('\n\n')}` : '';
+    const entry = `**${i + 1}.** ${meta}\n\n${quote(r.body)}${media}`;
     if (used + entry.length > COMMENT_CHAR_BUDGET) break;
     rendered.push(entry);
     used += entry.length;
@@ -449,13 +451,13 @@ async function attachToIssue(
   // must not be until the write lands, so it is added in memory instead.
   // LIMIT 9, not 10: this report takes the tenth slot.
   const prior = await env.DB.prepare(
-    `SELECT s.platform, s.body_sanitized AS body, d.confidence, d.linked_at,
+    `SELECT s.platform, s.body_sanitized AS body, s.attachment_keys, d.confidence, d.linked_at,
             s.reporter_kind, sr.source AS store_source, sr.rating AS store_rating
        FROM dup_links d JOIN submissions s ON s.submission_id = d.submission_id
        LEFT JOIN store_reviews sr ON sr.handoff_submission_id = s.submission_id
       WHERE d.issue_number = ?
       ORDER BY d.linked_at DESC LIMIT 9`
-  ).bind(issueNumber).all<FoldedReport & { reporter_kind: string | null; store_source: string | null; store_rating: number | null }>();
+  ).bind(issueNumber).all<FoldedReport & { attachment_keys: string | null; reporter_kind: string | null; store_source: string | null; store_rating: number | null }>();
 
   const totals = await env.DB.prepare(
     `SELECT COUNT(*) AS n, COUNT(CASE WHEN s.reporter_kind = 'store' THEN 1 END) AS store
@@ -464,13 +466,18 @@ async function attachToIssue(
   ).bind(issueNumber).first<{ n: number; store: number }>();
 
   const linkedAt = Date.now();
+  const withMedia = (raw: string | null) => Promise.all(
+    storedAttachments(raw).map((attachment) => publishAttachment(attachment, env))
+  );
   const reports: FoldedReport[] = [
-    { platform: sub.platform, body: sub.body_sanitized, confidence, linked_at: linkedAt, origin },
-    ...(prior.results ?? []).map((p) => ({
+    { platform: sub.platform, body: sub.body_sanitized, confidence, linked_at: linkedAt, origin,
+      attachments: await withMedia(sub.attachment_keys) },
+    ...await Promise.all((prior.results ?? []).map(async (p) => ({
+      attachments: await withMedia(p.attachment_keys),
       platform: p.platform, body: p.body, confidence: p.confidence, linked_at: p.linked_at,
       origin: p.reporter_kind === 'store'
         ? { store: storeName(p.store_source, p.platform), rating: validRating(p.store_rating) } : null,
-    })),
+    }))),
   ];
   const count = (totals?.n ?? 0) + 1;
   const storeCount = (totals?.store ?? 0) + (origin ? 1 : 0);
@@ -788,10 +795,7 @@ export async function processSubmission(env: Env, sub: SubmissionRow, from: stri
       };
     }
 
-    const attachments: StoredAttachment[] =
-      (JSON.parse(sub.attachment_keys ?? '[]') as string[])
-        .map((j) => { try { return JSON.parse(j) as StoredAttachment; } catch { return null; } })
-        .filter((a): a is StoredAttachment => a !== null);
+    const attachments = storedAttachments(sub.attachment_keys);
     // Platform, error code and confidence are all in the issue body's
     // Environment table, so dropping their labels loses no information — it
     // just stops restating it in the label row.

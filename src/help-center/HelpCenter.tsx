@@ -1,7 +1,12 @@
+import { Link, useLocation, useNavigate } from 'react-router';
+import { useLayoutEffect } from 'react';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { ArticleNavigation } from '@/components/support/article-navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
 
-import breadLockup from './assets/bread-lockup.png';
 import { helpCenterMainCategories } from './categories';
 import { HelpCenterBackToTop } from './HelpCenterBackToTop';
 import { HelpCenterFooter } from './HelpCenterFooter';
@@ -31,11 +36,10 @@ import {
   homeHref,
   parsePlatform,
   parseRoute,
-  parseSearchQuery,
   withSearchParams
 } from './routing';
 import type { HelpCenterPlatform } from './types';
-import './help-center.css';
+
 
 /**
  * Positions are never computed in this file. Every index, total, and
@@ -88,22 +92,6 @@ function ChevronIcon({ direction = 'right' }: { direction?: 'down' | 'left' | 'r
   );
 }
 
-function MenuIcon() {
-  return (
-    <svg aria-hidden="true" className="help-center-menu-icon" viewBox="0 0 24 24">
-      <path d="M4 7h16M4 12h16M4 17h16" />
-    </svg>
-  );
-}
-
-function CloseIcon() {
-  return (
-    <svg aria-hidden="true" className="help-center-menu-icon" viewBox="0 0 24 24">
-      <path d="m6 6 12 12M18 6 6 18" />
-    </svg>
-  );
-}
-
 function HomeIcon() {
   return (
     <svg aria-hidden="true" className="help-center-crumb-icon" viewBox="0 0 24 24">
@@ -130,6 +118,8 @@ function SupportIcon() {
 }
 
 export function HelpCenter() {
+  const location = useLocation();
+  const navigate = useNavigate();
   // Read here rather than left to the mount effect, so the first paint is the
   // page the URL asked for. A hash that is not a route at all resolves to home;
   // it used to open the first subcategory, which looked like a working link to
@@ -141,26 +131,24 @@ export function HelpCenter() {
   const [activeArticleId, setActiveArticleId] = useState<string | undefined>(undefined);
   // The one definition a shared #glossary-<entry> link names, if any.
   const [glossaryEntryId, setGlossaryEntryId] = useState<string | undefined>(undefined);
-  const [activePlatform, setActivePlatform] = useState<HelpCenterPlatform>(
-    () =>
-      parsePlatform(window.location.search) ??
-      defaultPlatform(window.matchMedia?.('(pointer: coarse)').matches ?? false)
+  const [platformFallback] = useState<HelpCenterPlatform>(() =>
+    defaultPlatform(window.matchMedia?.('(pointer: coarse)').matches ?? false)
   );
+  const activePlatform = parsePlatform(location.search) ?? platformFallback;
 
   /**
    * The platform choice and the search query share the query string, so both
-   * are written through one merge rather than by rebuilding it. replaceState
-   * rather than pushState: neither is a navigation the back button should have
+   * are written through one merge rather than by rebuilding it. Router replace
+   * rather than push: neither is a navigation the back button should have
    * to step through on the way out of an article.
    */
   const writeSearch = (changes: Readonly<Record<string, string | null>>) => {
     const next = withSearchParams(window.location.search, changes);
-    window.history.replaceState(null, '', `${window.location.pathname}${next}${window.location.hash}`);
+    navigate(`${window.location.pathname}${next}${window.location.hash}`, { replace: true });
   };
 
   const choosePlatform = (platform: HelpCenterPlatform) => {
-    setActivePlatform(platform);
-    writeSearch({ platform: platform === 'extension-desktop' ? null : platform });
+    writeSearch({ platform });
   };
   const [openMainCategoryIds, setOpenMainCategoryIds] = useState<ReadonlySet<string>>(
     () => new Set(defaultMainCategoryId ? [defaultMainCategoryId] : [])
@@ -180,16 +168,15 @@ export function HelpCenter() {
    */
   const [selectedMainCategoryId, setSelectedMainCategoryId] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [query, setQuery] = useState(() => parseSearchQuery(window.location.search));
+  const query = new URLSearchParams(location.search).get('q') ?? '';
+  const setQuery = (value: string) => writeSearch({ q: value || null });
   const [helpful, setHelpful] = useState<'yes' | 'no' | null>(null);
   const [linkCopied, setLinkCopied] = useState(false);
   const lastRoute = useRef<string | null>(null);
   // The section the reader explicitly asked for, held until they scroll again.
   const pinnedSection = useRef<string | null>(null);
-  const sidebar = useRef<HTMLElement>(null);
-  const menuButton = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handleHashChange = () => {
       const route = routeFromHash(window.location.hash);
       // Not a route — an in-document anchor such as the skip link. Leave the
@@ -251,25 +238,7 @@ export function HelpCenter() {
     };
 
     handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
-
-  useEffect(() => {
-    if (!isMobileMenuOpen) return;
-
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key !== 'Escape') return;
-      setIsMobileMenuOpen(false);
-      menuButton.current?.focus();
-    };
-
-    window.addEventListener('keydown', closeOnEscape);
-    // Not the first focusable in the DOM: that is the desktop brand link, which
-    // is display:none at drawer widths and silently refuses focus.
-    sidebar.current?.querySelector<HTMLElement>('.help-center-navigation-heading')?.focus();
-    return () => window.removeEventListener('keydown', closeOnEscape);
-  }, [isMobileMenuOpen]);
+  }, [location.hash]);
 
   // The browser cannot scroll to a shared entry on arrival, because the entry
   // has not rendered yet. So it is done here, once the glossary is on screen.
@@ -283,14 +252,6 @@ export function HelpCenter() {
     setHelpful(null);
     setLinkCopied(false);
   }, [activeArticleId]);
-
-  // A reader who found the answer by searching can now send someone the
-  // search. It was component state only, so the URL described the category
-  // behind the results rather than the results.
-  useEffect(() => {
-    writeSearch({ q: query.trim() || null });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query]);
 
   const copyArticleLink = async () => {
     try {
@@ -565,58 +526,8 @@ export function HelpCenter() {
 
   return (
     <div className="help-center-shell" onClick={releaseSelectionOnRouteLink}>
-      <a
-        className="help-center-skip-link"
-        href="#help-center-content"
-        onClick={event => {
-          event.preventDefault();
-          document.getElementById('help-center-content')?.focus();
-        }}
-      >
-        Skip to content
-      </a>
-
-      <header className="help-center-mobile-header">
-        <a className="help-center-brand" href={homeHref()} aria-label="Bread Wallet Help Center home">
-          <img src={breadLockup} alt="" />
-          <span className="help-center-visually-hidden">Bread Wallet</span>
-        </a>
-        <button
-          className="help-center-menu-button"
-          type="button"
-          ref={menuButton}
-          aria-controls="help-center-sidebar"
-          aria-expanded={isMobileMenuOpen}
-          aria-label={isMobileMenuOpen ? 'Close navigation' : 'Open navigation'}
-          onClick={() => setIsMobileMenuOpen(current => !current)}
-        >
-          {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
-        </button>
-      </header>
-
-      <button
-        aria-label="Close navigation"
-        className={`help-center-backdrop${isMobileMenuOpen ? ' is-visible' : ''}`}
-        type="button"
-        onClick={() => setIsMobileMenuOpen(false)}
-      />
-
-      {/* The sidebar and the content are the grid; the footer is not.
-          It used to be a third grid item spanning both columns, and the
-          sidebar — sticky and 100vh — overflowed its row by 287px and
-          painted straight over it. */}
       <div className="help-center-body">
-        <aside
-          className={`help-center-sidebar${isMobileMenuOpen ? ' is-open' : ''}`}
-          id="help-center-sidebar"
-          ref={sidebar}
-          aria-label="Help Center navigation"
-        >
-          <a className="help-center-brand help-center-desktop-brand" href={homeHref()}>
-            <img src={breadLockup} alt="" />
-            <span className="help-center-visually-hidden">Bread Wallet</span>
-          </a>
-
+        <ArticleNavigation open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
           <nav
             aria-label="Help Center categories"
             className={`help-center-navigation${
@@ -690,7 +601,7 @@ export function HelpCenter() {
             <span>{GLOSSARY_TITLE}</span>
             <ChevronIcon />
           </a>
-          </aside>
+        </ArticleNavigation>
 
         <main className="help-center-main" id="help-center-content" tabIndex={-1}>
           <div className="help-center-main-inner">
@@ -701,7 +612,7 @@ export function HelpCenter() {
                   <circle cx="11" cy="11" r="6.5" />
                   <path d="m16 16 4 4" />
                 </svg>
-                <input
+                <Input
                   type="search"
                   value={query}
                   onChange={event => setQuery(event.target.value)}
@@ -709,13 +620,13 @@ export function HelpCenter() {
                 />
               </label>
 
-              <a
+              <Link
                 className="help-center-contact-button"
-                href={CONTACT_SUPPORT_URL}
+                to={CONTACT_SUPPORT_URL}
               >
                 <span>Contact Support</span>
                 <SupportIcon />
-              </a>
+              </Link>
             </div>
 
             {isSearching ? (
@@ -846,28 +757,12 @@ export function HelpCenter() {
               )}
 
               {showPlatformTabs ? (
-                <div className="help-center-platform-tabs" role="tablist" aria-label="Platform">
-                  <button
-                    id="extension-desktop-tab"
-                    type="button"
-                    role="tab"
-                    aria-selected={activePlatform === 'extension-desktop'}
-                    aria-controls="category-content-panel"
-                    onClick={() => choosePlatform('extension-desktop')}
-                  >
-                    Extension
-                  </button>
-                  <button
-                    id="mobile-tab"
-                    type="button"
-                    role="tab"
-                    aria-selected={activePlatform === 'mobile'}
-                    aria-controls="category-content-panel"
-                    onClick={() => choosePlatform('mobile')}
-                  >
-                    Mobile
-                  </button>
-                </div>
+                <Tabs value={activePlatform} onValueChange={value => choosePlatform(value as HelpCenterPlatform)}>
+                  <TabsList aria-label="Platform" className="help-center-platform-tabs rounded-full p-1 !h-12">
+                    <TabsTrigger value="extension-desktop" id="extension-desktop-tab" aria-controls="category-content-panel" className="type-action rounded-full px-5">Extension</TabsTrigger>
+                    <TabsTrigger value="mobile" id="mobile-tab" aria-controls="category-content-panel" className="type-action rounded-full px-5">Mobile</TabsTrigger>
+                  </TabsList>
+                </Tabs>
               ) : null}
 
               {activeArticle && activeArticle.platforms.length === 1 ? (
@@ -933,20 +828,20 @@ export function HelpCenter() {
                   {helpful === null ? (
                     <div className="help-center-helpful">
                       <span id="help-center-helpful-label">Was this helpful?</span>
-                      <button
+                      <Button variant="secondary" size="sm"
                         type="button"
                         aria-describedby="help-center-helpful-label"
                         onClick={() => setHelpful('yes')}
                       >
                         Yes
-                      </button>
-                      <button
+                      </Button>
+                      <Button variant="secondary" size="sm"
                         type="button"
                         aria-describedby="help-center-helpful-label"
                         onClick={() => setHelpful('no')}
                       >
                         No
-                      </button>
+                      </Button>
                     </div>
                   ) : (
                     <p className="help-center-helpful-reply" role="status">
@@ -955,19 +850,19 @@ export function HelpCenter() {
                       ) : (
                         <>
                           Sorry about that.{' '}
-                          <a href={CONTACT_SUPPORT_URL}>
+                          <Link to={CONTACT_SUPPORT_URL}>
                             Tell us what was missing
-                          </a>
+                          </Link>
                           .
                         </>
                       )}
                     </p>
                   )}
 
-                  <button className="help-center-copy-link" type="button" onClick={copyArticleLink}>
+                  <Button variant="ghost" className="help-center-copy-link" type="button" onClick={copyArticleLink}>
                     <LinkIcon />
                     <span>{linkCopied ? 'Link copied' : 'Copy link'}</span>
-                  </button>
+                  </Button>
                 </div>
               ) : null}
 
@@ -1069,7 +964,7 @@ export function HelpCenter() {
                   </nav>
                 ) : null}
 
-                </aside>
+              </aside>
               ) : null}
             </section>
 
