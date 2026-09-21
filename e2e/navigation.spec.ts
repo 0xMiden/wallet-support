@@ -113,20 +113,6 @@ test('the footer is on every page, not only the home page', async ({ page }) => 
   }
 });
 
-test('the header links sit on the centre line of the page', async ({ page }) => {
-  // Centred by a three-track grid with equal outer columns, not by pushing
-  // them out of the way of the button: with `space-between` the links landed
-  // wherever the brand and the button happened to leave room.
-  await page.goto('/');
-
-  const nav = await page.locator('.help-home-nav').boundingBox();
-  const width = await page.evaluate(() => document.documentElement.clientWidth);
-  if (nav === null) throw new Error('the header nav was not rendered');
-
-  const navCentre = nav.x + nav.width / 2;
-  expect(Math.abs(navCentre - width / 2)).toBeLessThan(2);
-});
-
 test('the persistent brand carries the Help Center product label once', async ({ page }) => {
   for (const route of ['/', '/#setup-and-basic-use']) {
     await page.goto(route);
@@ -156,24 +142,6 @@ test('the footer brand sits at the left edge of the page, not in from it', async
     // Within the footer's own padding, and nowhere near its middle.
     expect(logo.x - footer.x, route).toBeLessThan(40);
   }
-});
-
-test('the header links are pills that highlight on hover', async ({ page }) => {
-  await page.goto('/');
-
-  const background = (name: string) =>
-    page
-      .locator('.help-home-nav a', { hasText: name })
-      .evaluate(element => getComputedStyle(element).backgroundColor);
-
-  // The page the reader is on carries a tint at rest; the other does not.
-  expect(await background('Help Center')).not.toBe('rgba(0, 0, 0, 0)');
-  expect(await background('All topics')).toBe('rgba(0, 0, 0, 0)');
-
-  await page.locator('.help-home-nav a', { hasText: 'All topics' }).hover();
-  await expect
-    .poll(() => background('All topics'))
-    .not.toBe('rgba(0, 0, 0, 0)');
 });
 
 test('the footer is byte-for-byte the same markup on every page', async ({ page }) => {
@@ -307,7 +275,6 @@ test('every hover state actually changes something', async ({ page }) => {
   const targets = [
     ['/', '.help-home-card', 'a home category card', SURFACE, null],
     ['/', '.help-home-section-link', 'the View all topics link', TEXT, null],
-    ['/', '.help-home-nav a:not([aria-current])', 'a header nav pill', SURFACE, null],
     ['/#setup-and-basic-use', '.help-center-card', 'a subcategory article card', SURFACE, null],
     [
       '/#setup-and-basic-use',
@@ -436,18 +403,16 @@ test('an On this page link lands below the sticky header on narrow screens', asy
   }
 });
 
-test('the home header fits every width: no sideways scroll, pills centred or hidden', async ({ page }) => {
+test('the page never scrolls sideways at any width', async ({ page }) => {
   /*
-   * From 621 to 655px the page scrolled sideways, 35px at 621. Brand, pills
-   * and button need 705px to sit with the pills centred, but the pills only
-   * hid at 620 and below, so across the band the grid pushed the button past
-   * the edge; up to 705 it also pulled the pills off the centre line and ran
-   * the button into the header's padding.
+   * From 621 to 655px the page scrolled sideways, 35px at 621. That was the
+   * home page's own header, which is gone — the application header owns this
+   * chrome now. The sweep stays because the failure it caught is not specific
+   * to that header: any element wide enough to push past the viewport reopens
+   * the band, and nothing else here would notice.
    *
    * A sweep rather than a few points, so a longer label or a wider font fails
-   * here instead of quietly reopening a band nobody measures. Either of the
-   * header's two states passes: pills hidden, or pills centred with the button
-   * inside the padding.
+   * here instead of quietly reopening a band nobody measures.
    */
   await page.goto('/');
 
@@ -458,26 +423,10 @@ test('the home header fits every width: no sideways scroll, pills centred or hid
 
   for (const width of widths) {
     await page.setViewportSize({ width, height: 900 });
-    const state = await page.evaluate(() => {
-      const header = document.querySelector('.help-home-header') as HTMLElement;
-      const inner = header.getBoundingClientRect().right - parseFloat(getComputedStyle(header).paddingRight);
-      const nav = (document.querySelector('.help-home-nav') as HTMLElement).getBoundingClientRect();
-      const button = (document.querySelector('.help-home-header-action') as HTMLElement).getBoundingClientRect();
-      return {
-        overflow: document.documentElement.scrollWidth - window.innerWidth,
-        pillsShown: [...document.querySelectorAll('.help-home-nav a')].some(
-          pill => getComputedStyle(pill).display !== 'none'
-        ),
-        offCentre: Math.abs(nav.left + nav.width / 2 - document.documentElement.clientWidth / 2),
-        intoPadding: button.right - inner
-      };
-    });
-
-    expect(state.overflow, `${width}px: the page scrolls sideways`).toBeLessThanOrEqual(0);
-    if (state.pillsShown) {
-      expect(state.offCentre, `${width}px: the pills are off the centre line`).toBeLessThan(2);
-      expect(state.intoPadding, `${width}px: the button runs into the padding`).toBeLessThanOrEqual(0.5);
-    }
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - window.innerWidth
+    );
+    expect(overflow, `${width}px: the page scrolls sideways`).toBeLessThanOrEqual(0);
   }
 });
 

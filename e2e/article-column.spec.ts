@@ -69,7 +69,7 @@ for (const { label, route } of [
   { label: 'an article without one', route: '/#activity-and-transaction-status/what-is-delegate-proof-generation' }
 ]) {
   test(`${label}: the column never narrows as the window widens`, async ({ page }) => {
-    expect(breakpoints).toEqual(expect.arrayContaining([620, 740, 900]));
+    expect(breakpoints).toEqual(expect.arrayContaining([620, 900]));
 
     await page.goto(route);
     const body = page.locator('.help-center-article-body');

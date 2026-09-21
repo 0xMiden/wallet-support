@@ -260,30 +260,6 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
         Skip to content
       </a>
 
-      <header className="help-home-header">
-        <a className="help-center-brand" href={homeHref()} aria-label="Bread Wallet Help Center">
-          <img src={breadLockup} alt="" />
-          <span className="help-center-visually-hidden">Bread Wallet</span>
-        </a>
-
-        {/* Its own element, outside the nav, so the links can sit on the
-            page's centre line rather than the centre of what is left over
-            after the button. */}
-        <nav className="help-home-nav" aria-label="Help Center">
-          <a href={homeHref()} aria-current="page">
-            Help Center
-          </a>
-          <a href="/topics">All topics</a>
-        </nav>
-
-        <a
-          className="help-center-contact-button help-home-header-action"
-          href={CONTACT_SUPPORT_URL}
-        >
-          Contact Support
-        </a>
-      </header>
-
       <main className="help-home-main" id="help-center-content" tabIndex={-1}>
         <section className="help-home-hero" aria-labelledby="help-home-title">
           <h1 id="help-home-title">
