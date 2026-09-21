@@ -1,0 +1,309 @@
+@layer theme, base, legacy, components, utilities;
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import './help-center/help-center.css' layer(legacy);
+
+/* Wallet PR1047: semantic color roles; controls use ink, never small orange text. */
+:root {
+  --background: #fff;
+  --foreground: #3f3f3f;
+  --card: #fff;
+  --card-foreground: #3f3f3f;
+  --popover: #fff;
+  --popover-foreground: #3f3f3f;
+  --primary: #e77537;
+  --primary-foreground: #281207;
+  --secondary: #f3f0ec;
+  --secondary-foreground: #3f3f3f;
+  --muted: #f3f0ec;
+  --muted-foreground: #6b6b6b;
+  --accent: #fdeee5;
+  --accent-foreground: #a84a18;
+  --destructive: #9b4638;
+  --border: #3f3f3f1a;
+  --input: #3f3f3f29;
+  --ring: #a84a18;
+  --radius: 1rem;
+  --font-sans: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: Nunito, var(--font-sans);
+  --success: #4f6549;
+  --success-tint: #e8eee5;
+  --motion-fast: 160ms;
+  --motion-standard: 220ms;
+}
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-success-tint: var(--success-tint);
+  --font-display: var(--font-heading);
+  --radius-sm: calc(var(--radius) - 8px);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 8px);
+}
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    min-width: 320px;
+    scroll-padding-top: 6rem;
+  }
+  body {
+    margin: 0;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']) {
+    cursor: pointer;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 4px;
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
+}
+/* Closed typography roles mirror the wallet; responsive display is web-specific. */
+@utility type-display {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.08;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+@utility type-page {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.12;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+@utility type-section {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  line-height: 1.3;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+@utility type-title {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  line-height: 1.35;
+  font-weight: 800;
+}
+@utility type-action {
+  font-family: var(--font-heading);
+  font-size: 0.9375rem;
+  line-height: 1.35;
+  font-weight: 800;
+}
+@utility type-label {
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  font-weight: 600;
+}
+@utility type-caption {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+@layer components {
+  .support-container {
+    width: 100%;
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 3rem);
+  }
+  .category-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.875rem;
+    background: var(--secondary);
+    color: var(--foreground);
+  }
+  .category-icon[data-tone='orange'] {
+    background: #fdeee5;
+    color: #a84a18;
+  }
+  .category-icon[data-tone='slate'] {
+    background: #eeecf2;
+    color: #635e72;
+  }
+  .category-icon[data-tone='blue'] {
+    background: #eaf0f4;
+    color: #506c82;
+  }
+  .category-icon[data-tone='green'] {
+    background: #e8eee5;
+    color: #4f6549;
+  }
+  .category-icon[data-tone='purple'] {
+    background: #efeaf2;
+    color: #746585;
+  }
+  [data-slot='button'],
+  [data-slot='input'],
+  [data-slot='select-trigger'] {
+    transition-duration: var(--motion-fast);
+  }
+  [data-slot='dialog-content'],
+  [data-slot='sheet-content'],
+  [data-slot='select-content'] {
+    animation-duration: var(--motion-standard);
+  }
+  .support-nav-link[aria-current='page'] {
+    background: var(--secondary);
+    color: var(--foreground);
+  }
+  .support-nav-link[aria-current='page']::after {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent-foreground);
+  }
+}
+/* Compatibility layer while the article renderer retains its content-specific styles. */
+.help-center-shell,
+.help-center-home,
+.article-drawer-content {
+  --help-bg: var(--background);
+  --help-panel: var(--card);
+  --help-copy: var(--foreground);
+  --text-body: var(--foreground);
+  --text-strong: var(--foreground);
+  --help-muted: var(--muted-foreground);
+  --text-muted: var(--muted-foreground);
+  --help-line: var(--border);
+  --accent-text: var(--accent-foreground);
+  --accent-text-lg: var(--foreground);
+  --font-body: var(--font-sans);
+  --font-display: var(--font-heading);
+  --frame: 76rem;
+  --gutter: clamp(1rem, 4vw, 3rem);
+}
+.help-center-body {
+  max-width: 76rem;
+  margin-inline: auto;
+  width: 100%;
+}
+.help-center-desktop-brand {
+  display: none;
+}
+.help-center-sidebar {
+  top: 5rem;
+  height: calc(100dvh - 5rem);
+}
+.help-center-card,
+.help-center-sequence-card {
+  border-radius: 1rem;
+  box-shadow: none;
+}
+.help-center-category > h1,
+.help-center-article-header h1 {
+  letter-spacing: -0.025em;
+}
+.help-center-article-body {
+  line-height: 1.8;
+}
+.help-center-utility-bar .help-center-contact-button {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+.article-drawer-content .help-center-navigation {
+  margin: 0;
+}
+.article-drawer-content .help-center-navigation-heading {
+  min-height: 3rem;
+  width: 100%;
+}
+.article-drawer-content .help-center-subcategories a {
+  min-height: 2.75rem;
+}
+.help-center-body {
+  grid-template-columns: 16rem minmax(0, 1fr);
+}
+.help-center-sidebar {
+  padding-top: 2rem;
+}
+.help-center-navigation {
+  margin-top: 0;
+}
+.help-center-main {
+  padding-top: 2rem;
+}
+.help-center-category {
+  padding-top: 2rem;
+}
+.help-center-search input {
+  border: 0;
+  background: transparent;
+}
+@media (max-width: 900px) {
+  .help-center-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.help-center-article-body,
+.help-center-article-excerpt {
+  font-family: var(--font-sans);
+}
+.help-home-search-form input {
+  background: transparent;
+  outline: none;
+}
+.help-center-search:focus-within {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 25%, transparent);
+}
+.help-center-search input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+.help-center-home :focus-visible,
+.help-center-shell :focus-visible {
+  outline-color: var(--ring);
+}

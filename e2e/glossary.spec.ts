@@ -42,7 +42,7 @@ test('#glossary-commitment opens the glossary scrolled to that entry, from a col
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
   await expect
     .poll(async () => (await entry.boundingBox())?.y ?? Number.POSITIVE_INFINITY)
-    .toBeLessThan(80);
+    .toBeLessThan(160);
 });
 
 test('an entry link lands below the sticky header on narrow screens', async ({ page }) => {

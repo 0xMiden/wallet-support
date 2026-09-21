@@ -1297,8 +1297,8 @@ describe('design tokens', () => {
    */
   const cssDir = fileURLToPath(new URL('.', import.meta.url));
   const cssFiles = readdirSync(cssDir).filter(name => name.endsWith('.css'));
-  const feedbackCss = readFileSync(fileURLToPath(new URL('../feedback/feedback.css', import.meta.url)), 'utf8');
-  const allCss = `${cssFiles.map(name => readFileSync(join(cssDir, name), 'utf8')).join('\n')}\n${feedbackCss}`;
+  const systemCss = readFileSync(fileURLToPath(new URL('../design-system.css', import.meta.url)), 'utf8');
+  const allCss = `${cssFiles.map(name => readFileSync(join(cssDir, name), 'utf8')).join('\n')}\n${systemCss}`;
 
   it('are every one of them referenced somewhere', () => {
     expect(cssFiles.length).toBeGreaterThan(0);
@@ -1311,7 +1311,7 @@ describe('design tokens', () => {
     const defined = [...allCss.matchAll(/(--[a-z0-9-]+)\s*:/g)].map(match => match[1] as string);
     expect(defined.length).toBeGreaterThan(20);
 
-    const unused = [...new Set(defined)].filter(token => !allCss.includes(`var(${token})`));
+    const unused = [...new Set(defined)].filter(token => !token.startsWith('--color-') && !token.startsWith('--radius-') && !token.startsWith('--font-') && !allCss.includes(`var(${token})`));
 
     expect(unused, 'defined but never read — wire it up or delete it').toEqual([]);
   });

@@ -18,7 +18,7 @@ import { expect, test } from '@playwright/test';
 const root = fileURLToPath(new URL('..', import.meta.url));
 const breakpoints = [
   ...new Set(
-    ['src/help-center/help-center.css', 'src/help-center/tokens.css', 'src/styles.css'].flatMap(file =>
+    ['src/help-center/help-center.css', 'src/help-center/tokens.css', 'src/design-system.css'].flatMap(file =>
       [...readFileSync(join(root, file), 'utf8').matchAll(/@media[^{]*?\((?:min|max)-width:\s*(\d+)px\)/g)].map(
         match => Number(match[1])
       )

@@ -13,7 +13,7 @@ const BODY = '.help-center-article-body';
 // By its title: "Earn" alone would also match the Guardian card's "Learn".
 const homeCard = (page: Page, title: string) =>
   page.locator('.help-home-card').filter({
-    has: page.locator('.help-home-card-title', { hasText: new RegExp(`^${title}$`) })
+    has: page.locator('h3', { hasText: new RegExp(`^${title}$`) })
   });
 
 test('the Cross-chain and Earn cards each open their own subcategory, and the sidebar reaches Earn', async ({
