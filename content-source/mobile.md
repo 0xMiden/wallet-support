@@ -208,7 +208,7 @@ Without Guardian, a private account's state remains on the device. Because encry
 
 ### What is delegate proof generation?
 
-Delegated proof generation lets Bread Wallet use a remote prover to handle heavy computation. Your device still signs transactions with your key. The prover only helps generate the cryptographic proof, so the wallet can work faster on mobile devices.
+Delegated proof generation lets Bread Wallet use a remote prover to handle heavy computation. Your device still signs transactions with your key. The prover only helps generate the cryptographic proof, so the wallet can work faster.
 
 ### What is Guardian?
 
