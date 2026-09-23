@@ -298,9 +298,23 @@ Recall height is the block height after which a sender can reclaim an unclaimed 
 
 ## Troubleshooting
 
-### My transfer shows as completed, but the token never arrived.
+### My transfer shows as confirmed, but the token never arrived.
 
-Please report this directly to our [**SUPPORT**](https://miden-feedback-v2.miden-feedback-relay.workers.dev/?cb=4).
+When a send shows as **Confirmed** in **Activity**, the transaction is on the blockchain and the tokens have left your wallet. It does not mean the recipient has them yet: tokens arrive as a note that the recipient has to accept.
+
+**1. Ask the recipient to check their Pending tab**
+
+Incoming tokens wait in **Activity**, on the **Pending** tab, until the recipient selects **Accept Transfer**. Only MIDEN token is accepted automatically, when **Auto Consume** in the settings is on. Every other token must be accepted manually. If the recipient selected **Decline**, the transfer is only hidden on their device, and they can restore it in **Activity**.
+
+**2. If the recipient never accepts it**
+
+A send expires after 7 days by default. You can see or change this as the **Expiration Date** before you send. If the recipient hasn't accepted it by then, the tokens come back to you: they appear on your **Pending** tab in **Activity**, like a newly arrived transfer. Select **Accept Transfer** to add them back to your balance. No funds are lost.
+
+**Still missing after an hour?**
+
+Report it to our [**SUPPORT**](/feedback).
+
+Never include your recovery key or password.
 
 ### My token is stuck on Consuming (receiver address)
 
@@ -312,4 +326,4 @@ If the app closes while a send is in progress, the transaction may stay in the *
 
 ### Why is my token taking so long to arrive?
 
-We may have an issue with our infrastructure at the moment — please wait a little longer until it arrives. If there is no progress after 20 minutes, please report it directly to our [**SUPPORT**](https://miden-feedback-v2.miden-feedback-relay.workers.dev/?cb=4).
+We may have an issue with our infrastructure at the moment — please wait a little longer until it arrives. If there is no progress after 20 minutes, please report it directly to our [**SUPPORT**](/feedback).
