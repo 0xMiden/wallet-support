@@ -52,11 +52,14 @@ test('the Cross-chain and Earn cards each open their own subcategory, and the si
   await expect(page.locator(TITLE)).toHaveText('Earning yield');
 });
 
-test('Activity and transaction status still routes, and gains no FAQ article', async ({ page }) => {
+test('Activity and transaction status still routes, with its one FAQ article after the first', async ({ page }) => {
   await page.goto('/#activity-and-transaction-status');
 
   await expect(page.locator(TITLE)).toHaveText('Activity and transaction status');
-  await expect(page.locator('.help-center-card-link')).toHaveText(['What is delegate proof generation?']);
+  await expect(page.locator('.help-center-card-link')).toHaveText([
+    'What is delegate proof generation?',
+    'How do I accept a pending transfer?'
+  ]);
 });
 
 for (const { route, alt } of [

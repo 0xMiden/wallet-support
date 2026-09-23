@@ -34,7 +34,7 @@ Not by who owns it. Bread Wallet's sidebar is a narrow panel like a Chrome menu,
 |---|---|---|
 | What | A page in a browser tab — the whole tab, or the part of it that matters (E01: the top of the Chrome Web Store listing); any Bread Wallet screen that opens as a full page in a tab | Chrome's jigsaw menu and **Add extension** dialog; Bread Wallet's sidebar or popup |
 | How | **Whole tab:** Chrome DevTools, device toolbar, width **1360**, DPR **1**. **Part of a tab:** OS screenshot at **150%** Windows display scaling, cropped to the part that matters | OS screenshot at **200%** Windows display scaling, cropped tight to the surface |
-| Capture width | **Whole tab:** exactly **1360px**. **Part of a tab:** **1360–2040px** | whatever the surface comes to at 2x, **540–1200px** (floor lowered 2026-09-18, see below) |
+| Capture width | **Whole tab:** exactly **1360px**. **Part of a tab:** **1360–2040px** | whatever the surface comes to at 2x, **520–1200px** (floor lowered 2026-09-18 and 2026-09-23, see below) |
 | Shown at | 680px — the full column, identical for every one | half the capture, so it appears at life size — the `'narrow'` tag is what tells the page to halve it |
 
 **Why 1360 at DPR 1 and not 680 at DPR 2.** Both give 1360 device pixels, which is what the 2x rule
@@ -78,6 +78,9 @@ upscaling the file afterwards.
 comes to about 547px (E07, E08). 540 still catches a 1x capture: the menus, dialogs and sidebar land
 between 310 and 435 at 1x.
 
+**Floor lowered to 520 (2026-09-23).** The Guardian switch captures E19 to E23 came to 528–530px at the
+same 150% scaling. 520 still catches a 1x capture.
+
 **Each position below is pre-tagged A or B.** The pattern is simple: everything before the wallet opens
 is onboarding in a browser tab, so it is A; everything inside the running wallet is the sidebar, so it
 is B. A few are marked **you decide** where the step text does not settle it — each says what to look
@@ -111,7 +114,7 @@ Bread Wallet's own screens carry none. Nothing is drawn on a delivered capture w
 ### If a capture misses the spec
 
 `content.test.ts` fails the build and names the file and the number it found: a column-width capture
-outside 1360–2040px, a narrow-surface capture outside 540–1200px, any image taller than 1.3× its width, or
+outside 1360–2040px, a narrow-surface capture outside 520–1200px, any image taller than 1.3× its width, or
 any file over 400 KB. The test cannot tell a whole tab from part of one, so a whole-tab capture that is
 not exactly 1360px, or a stroke that is not 3px on screen, is still yours to check.
 
@@ -318,6 +321,19 @@ wallet** and the encrypted wallet file.
 - **Save as:** `E18-file-restore-import-page.png`
 - **Capture as:** **A · fills a tab** — DevTools device toolbar, width 1360, DPR 1
 - **Then register:** `'E18-file-restore-import-page.png': [1360, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+
+### H. Switch Guardian operators (added 2026-09-23)
+
+Ivan's steps for How do I switch Guardian operators?, with his five sidebar captures at 150%, tagged
+narrow and used exactly as captured, like E07 and E08, so they are let past the height ceiling. E20
+carries the box Ivan drew himself. Steps 2 and 3 were merged into one (Ivan, 2026-09-23). Steps 6 and 7 have no capture yet: they wait until the
+password screen issue is resolved, then follow the same pattern.
+
+- **E19** · step 1 · Home page, **Settings** lower right · `E19-guardian-home.png`, 530 × 1255
+- **E20** · step 2 · Settings, **Guardian Settings** boxed · `E20-guardian-settings-menu.png`, 529 × 1248
+- **E21** · step 3 · **Guardian Settings**, **Rotate Guardian** · `E21-guardian-settings.png`, 528 × 1245
+- **E22** · step 4 · *Choose your Guardian*, **Continue** · `E22-guardian-choose.png`, 530 × 1249
+- **E23** · step 5 · **Review rotation**, **Continue** · `E23-guardian-review.png`, 530 × 1246
 
 ## Mobile run: phone, 14 positions
 

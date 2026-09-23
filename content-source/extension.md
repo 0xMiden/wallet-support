@@ -298,18 +298,62 @@ Recall height is the block height after which a sender can reclaim an unclaimed 
 
 ## Troubleshooting
 
-### My transfer shows as completed, but the token never arrived.
+### My transfer shows as confirmed, but the token never arrived.
 
-Please report this directly to our [**SUPPORT**](https://miden-feedback-v2.miden-feedback-relay.workers.dev/?cb=4).
+When a send shows as **Confirmed** in **Activity**, the transaction is on the blockchain and the tokens have left your wallet. It does not mean the recipient has them yet: tokens arrive as a note that the recipient has to accept.
+
+**1. Ask the recipient to check their Pending tab**
+
+Incoming tokens wait in **Activity**, on the **Pending** tab, until the recipient selects **Accept Transfer**. Only MIDEN token is accepted automatically, when **Auto Consume** in the settings is on. Every other token must be accepted manually. If the recipient selected **Decline**, the transfer is only hidden on their device, and they can restore it in **Activity**.
+
+**2. If the recipient never accepts it**
+
+A send expires after 7 days by default. You can see or change this as the **Expiration Date** before you send. If the recipient hasn't accepted it by then, the tokens come back to you: they appear on your **Pending** tab in **Activity**, like a newly arrived transfer. Select **Accept Transfer** to add them back to your balance. No funds are lost.
+
+**Still missing after an hour?**
+
+Report it to our [**SUPPORT**](/feedback).
+
+Never include your recovery key or password.
 
 ### My token is stuck on Consuming (receiver address)
 
-If a transaction appears stuck on the **Consuming** stage, the wallet is still working in the background and will often resolve it on its own within a few minutes. No action is needed in most cases. If it remains stuck, closing and reopening the app may prompt the wallet to resume the transaction. The wallet will cancel, mark it as failed if it cannot be completed within 30 minutes, and attempt to resume note consumption.
+If a transaction appears stuck on the **Consuming** stage, the wallet is still working in the background and will often resolve it on its own within a few minutes. No action is needed in most cases.
+
+If it stays stuck, the wallet marks it as failed: after 30 minutes on the browser extension, or after 2 minutes on mobile. Closing and reopening the app also ends it, marked as **Interrupted**. Either way, the transfer returns to the **Pending** tab in **Activity** with a **Retry** button, so you can try it again.
+
+**If it keeps getting stuck:**
+
+Retry your stuck transfers one at a time instead of all together.
+
+1. Open **Settings**, select **General**, and turn off **Auto Consume MIDEN notes**.
+2. Wait until nothing is on **Consuming**. Turning the setting off does not stop a transfer that is already being claimed.
+3. Open **Activity** and select the **Pending** tab. Choose one transfer that failed to consume and select its **Retry** button. Wait for it to finish before you retry the next one.
+4. When all your stuck transfers have gone through, turn **Auto Consume MIDEN notes** back on.
+
+Each transfer you retry is a separate transaction with its own network fee, so retrying them one at a time costs more than claiming them together.
 
 ### Send stuck in the Sending phase
 
-If the app closes while a send is in progress, the transaction may stay in the **Sending** state for up to 30 minutes. No funds leave the wallet. If the transaction cannot complete, it will be marked as failed and your token balance will remain the same.
+While a send is in progress, it shows as **Sending** in **Activity**. On the browser extension it keeps going in the background even if you close the wallet, and you'll get a notification if it fails.
+
+If a send can't finish, the wallet marks it as **Transaction failed**:
+
+- after 30 minutes on the browser extension, or after 2 minutes on mobile (time with the app in the background doesn't count)
+- straight away when you reopen the app, if it was closed in the middle of the send. It then shows **Interrupted — check your activity after it syncs**.
+
+**Before you try again:**
+
+Occasionally a failed send has already reached the network just before it stopped. Let your wallet sync, then check your balance and **Activity**.
+
+To try again, open the failed send in **Activity** and select its **Retry** button. The wallet first checks whether the send already went through, so it won't send it twice. If it can't tell, it asks you to check your balance before retrying.
 
 ### Why is my token taking so long to arrive?
 
-We may have an issue with our infrastructure at the moment — please wait a little longer until it arrives. If there is no progress after 20 minutes, please report it directly to our [**SUPPORT**](https://miden-feedback-v2.miden-feedback-relay.workers.dev/?cb=4).
+Incoming tokens usually show up within a few moments. If they're taking longer, check these first:
+
+1. **Open and unlock your wallet.** Bread checks for incoming tokens every few seconds while it's open. On mobile it only checks while the app is open; on the browser extension it also checks in the background about once a minute.
+2. **Check the Pending tab.** Incoming tokens wait in **Activity**, on the **Pending** tab, until you select **Accept Transfer**. Only MIDEN token is accepted automatically, when **Auto Consume** in the settings is on.
+3. **Look for a connection message.** If the wallet shows **You appear to be offline** or **Cannot reach the Miden node**, it can't check for new tokens. Check your internet connection, then select **Try again** or **Retry sync**. If the Miden network is down or busy, your tokens appear once it's reachable again.
+
+If there is still nothing after an hour, report it to our [**SUPPORT**](/feedback).

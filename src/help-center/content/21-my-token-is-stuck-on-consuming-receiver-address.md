@@ -6,4 +6,17 @@ subcategory: common-issues-and-support
 platforms: [extension-desktop, mobile]
 ---
 
-If a transaction appears stuck on the **Consuming** stage, the wallet is still working in the background and will often resolve it on its own within a few minutes. No action is needed in most cases. If it remains stuck, closing and reopening the app may prompt the wallet to resume the transaction. The wallet will cancel, mark it as failed if it cannot be completed within 30 minutes, and attempt to resume note consumption.
+If a transaction appears stuck on the **Consuming** stage, the wallet is still working in the background and will often resolve it on its own within a few minutes. No action is needed in most cases.
+
+If it stays stuck, the wallet marks it as failed: after 30 minutes on the browser extension, or after 2 minutes on mobile. Closing and reopening the app also ends it, marked as **Interrupted**. Either way, the transfer returns to the **Pending** tab in **Activity** with a **Retry** button, so you can try it again.
+
+**If it keeps getting stuck:**
+
+Retry your stuck transfers one at a time instead of all together.
+
+1. Open **Settings**, select **General**, and turn off **Auto Consume MIDEN notes**.
+2. Wait until nothing is on **Consuming**. Turning the setting off does not stop a transfer that is already being claimed.
+3. Open **Activity** and select the **Pending** tab. Choose one transfer that failed to consume and select its **Retry** button. Wait for it to finish before you retry the next one.
+4. When all your stuck transfers have gone through, turn **Auto Consume MIDEN notes** back on.
+
+Each transfer you retry is a separate transaction with its own network fee, so retrying them one at a time costs more than claiming them together.
