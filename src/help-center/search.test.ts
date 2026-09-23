@@ -46,9 +46,15 @@ describe('searching the Help Center', () => {
   });
 
   it('still finds an extension-only article while Mobile is selected', () => {
-    expect(find('encrypted file', 'mobile').map(r => r.article.id)).toContain(
-      'how-to-download-the-encrypted-file'
+    // No published article is extension-only while the download article is
+    // held back, so one is narrowed to the extension here.
+    const articles = helpCenterArticles.map(article =>
+      article.id === 'what-is-recall-height'
+        ? { ...article, platforms: ['extension-desktop' as const] }
+        : article
     );
+    const results = searchHelpCenter(articles, helpCenterMainCategories, 'recall height', 'mobile');
+    expect(results.map(r => r.article.id)).toContain('what-is-recall-height');
   });
 
   it('ignores a query shorter than two characters', () => {

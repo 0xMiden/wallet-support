@@ -795,9 +795,10 @@ describe('the migrated article set', () => {
   });
 
   it('publishes every article except the ones held back', () => {
-    expect(helpCenterArticles).toHaveLength(37);
+    expect(helpCenterArticles).toHaveLength(36);
     const published = helpCenterArticles.map(article => article.id);
     expect(published).not.toContain('how-to-restore-the-wallet-using-an-encrypted-file');
+    expect(published).not.toContain('how-to-download-the-encrypted-file');
     expect(published).not.toContain('how-to-find-a-token-contract-address-in-bread-wallet');
     expect(published).not.toContain('what-is-the-difference-between-a-recovery-phrase-and-an-encrypted-wallet-file');
   });
@@ -952,7 +953,7 @@ describe('card excerpts', () => {
 
 describe('finding articles', () => {
   it('lists every published article in a subcategory regardless of platform', () => {
-    expect(articlesInSubcategory(helpCenterArticles, 'security-and-recovery')).toHaveLength(8);
+    expect(articlesInSubcategory(helpCenterArticles, 'security-and-recovery')).toHaveLength(7);
   });
 
   it('keeps the held-back article out of its subcategory listing', () => {

@@ -4,6 +4,8 @@ title: How to download the encrypted file?
 mainCategory: manage-wallet
 subcategory: security-and-recovery
 platforms: [extension-desktop]
+hidden: true
+hiddenReason: Held back for now (Ivan, 2026-09-23). Publish again when Ivan asks.
 ---
 
 This exports a password-protected copy of your wallet data. **The current Bread Wallet UI cannot import this file**, so do not rely on it as a working recovery method. Keep your recovery key secure and use Guardian if you want supported account-state recovery.
