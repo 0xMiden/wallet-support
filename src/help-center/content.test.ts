@@ -609,7 +609,7 @@ describe('fidelity to the FAQ', () => {
     }
 
     expect(unresolved).toEqual([]);
-    expect(linked).toBe(25);
+    expect(linked).toBe(24);
   });
 
   it('points every internal link at a published article, labelled with its title', () => {
@@ -795,10 +795,11 @@ describe('the migrated article set', () => {
   });
 
   it('publishes every article except the ones held back', () => {
-    expect(helpCenterArticles).toHaveLength(38);
+    expect(helpCenterArticles).toHaveLength(37);
     const published = helpCenterArticles.map(article => article.id);
     expect(published).not.toContain('how-to-restore-the-wallet-using-an-encrypted-file');
     expect(published).not.toContain('how-to-find-a-token-contract-address-in-bread-wallet');
+    expect(published).not.toContain('what-is-the-difference-between-a-recovery-phrase-and-an-encrypted-wallet-file');
   });
 
   it('splits bodies exactly where the source pages diverge', () => {
@@ -951,7 +952,7 @@ describe('card excerpts', () => {
 
 describe('finding articles', () => {
   it('lists every published article in a subcategory regardless of platform', () => {
-    expect(articlesInSubcategory(helpCenterArticles, 'security-and-recovery')).toHaveLength(9);
+    expect(articlesInSubcategory(helpCenterArticles, 'security-and-recovery')).toHaveLength(8);
   });
 
   it('keeps the held-back article out of its subcategory listing', () => {
@@ -1063,29 +1064,40 @@ describe('the key-structure vocabulary', () => {
    * A Guardian-backed account has three keys: the everyday key, the emergency
    * key and the Guardian key. The recovery phrase is not a key; it rebuilds the
    * emergency key. The Miden blog calls the first two "hot key" and "cold key",
-   * and the articles once said "device key" and "recovery key", which also made
-   * the phrase sound like a key. None of those appear on the site, and this is
-   * what keeps it that way when the next article is written from the blog.
+   * and the articles once said "device key". The words that restore the wallet
+   * are the recovery key, never the "recovery phrase" or a "private key" (Ivan,
+   * 2026-09-23). None of the retired names appear on the site, and this is what
+   * keeps it that way when the next article is written from the blog.
    *
    * The hot and cold patterns are deliberately NOT symmetrical. "hot key" and
    * "hot-key" are caught; the closed "hotkey" is not, because that spelling
    * belongs to keyboard shortcuts and this repo documents keyboard navigation.
    * "coldkey" has no such competing sense, so the closed form stays banned
-   * there, and so do "recoverykey" and "devicekey". A guard that only catches
-   * the spacing the source happened to pick is not a guard — but neither is one
-   * that fails on a word used correctly: every pattern needs "key" straight
-   * after its first word, so "recovery phrase" never matches.
+   * there, and so does "devicekey". A guard that only catches the spacing the
+   * source happened to pick is not a guard — but neither is one that fails on a
+   * word used correctly: "seed phrase", which the wallet's own screen says, is
+   * left alone.
+   *
+   * The glossary's Key and Signing entries define the general cryptography
+   * term, where a private key pairs with a public key; they are the one place
+   * "private key" stays, checked by GENERIC_CRYPTOGRAPHY below.
    */
   const BANNED = [
     { pattern: /hot[ \u00a0-]keys?/gi, instead: 'everyday key' },
     { pattern: /cold[ \u00a0-]?keys?/gi, instead: 'emergency key' },
-    { pattern: /recovery[ \u00a0-]?keys?/gi, instead: 'emergency key' },
+    { pattern: /recovery[ \u00a0-]phrases?/gi, instead: 'recovery key' },
+    { pattern: /private[ \u00a0-]keys?/gi, instead: 'recovery key' },
     { pattern: /device[ \u00a0-]?keys?/gi, instead: 'everyday key' }
   ] as const;
 
+  const GENERIC_CRYPTOGRAPHY = /private key that must be kept secret|Using a private key to create|someone controlling the private key|while the private key remains hidden/g;
+
+  // A link target is an article's id, and ids stay as they were so links
+  // already shared keep working; only the words a reader sees are checked.
   function retired(text: string) {
+    const words = text.replace(/\]\(#[^)]*\)/g, '](#)');
     return BANNED.flatMap(({ pattern, instead }) =>
-      (text.match(pattern) ?? []).map(match => `"${match}" — say "${instead}"`)
+      (words.match(pattern) ?? []).map(match => `"${match}" — say "${instead}"`)
     );
   }
 
@@ -1145,7 +1157,8 @@ describe('the key-structure vocabulary', () => {
     expect(Object.keys(glossary), 'glossary.ts was moved or renamed').toEqual(['./glossary.ts']);
 
     for (const [file, source] of Object.entries(glossary)) {
-      expect(retired(source), file).toEqual([]);
+      expect(source.match(GENERIC_CRYPTOGRAPHY), 'the general cryptography definitions moved').toHaveLength(4);
+      expect(retired(source.replace(GENERIC_CRYPTOGRAPHY, '')), file).toEqual([]);
     }
   });
 
@@ -1163,26 +1176,28 @@ describe('the key-structure vocabulary', () => {
      */
     const VOCABULARY =
       'Use the house vocabulary for the account keys: everyday key (not "hot key" or "device key"), ' +
-      'emergency key (not "cold key" or "recovery key"), recovery phrase for the phrase itself ' +
-      '(never a "key"), and Guardian key (it acknowledges state updates; it does not co-sign).';
+      'emergency key (not "cold key"), recovery key for the words that restore the wallet (not "recovery ' +
+      'phrase" or "private key"; Ivan, 2026-09-23), and Guardian key (it acknowledges state updates; it ' +
+      'does not co-sign).';
     const guide = claudeGuide.replace(/\s+/g, ' ');
 
     expect(guide.includes(VOCABULARY), 'CLAUDE.md no longer states the approved key vocabulary').toBe(true);
     expect(retired(guide.replace(VOCABULARY, '')), 'CLAUDE.md').toEqual([]);
   });
 
-  it('catches each retired name in every spelling, and leaves the recovery phrase alone', () => {
+  it('catches each retired name in every spelling, and leaves the recovery key alone', () => {
     const caught = [
       ['hot key', 'everyday key'],
       ['Hot-keys', 'everyday key'],
       ['cold key', 'emergency key'],
       ['coldkey', 'emergency key'],
-      ['recovery key', 'emergency key'],
-      ['Recovery Key', 'emergency key'],
-      ['recovery-key', 'emergency key'],
-      ['recoverykey', 'emergency key'],
-      ['recovery keys', 'emergency key'],
-      ['recovery\u00a0key', 'emergency key'],
+      ['recovery phrase', 'recovery key'],
+      ['Recovery Phrase', 'recovery key'],
+      ['recovery-phrase', 'recovery key'],
+      ['recovery phrases', 'recovery key'],
+      ['recovery\u00a0phrase', 'recovery key'],
+      ['private key', 'recovery key'],
+      ['Private Keys', 'recovery key'],
       ['device key', 'everyday key'],
       ['Device Keys', 'everyday key'],
       ['device-keys', 'everyday key'],
@@ -1192,12 +1207,12 @@ describe('the key-structure vocabulary', () => {
       expect(retired(`Keep your ${name} safe.`), name).toEqual([`"${name}" — say "${instead}"`]);
     }
 
-    // The words the site does use, the recovery phrase above all.
+    // The words the site does use, the recovery key above all.
     for (const sentence of [
-      'Keep your recovery phrase offline and never share it.',
-      'Your seed phrase is your recovery phrase.',
-      'Write down both recovery phrases.',
-      'an everyday key on your device, an emergency key rebuilt from your recovery phrase, and the Guardian key',
+      'Keep your recovery key offline and never share it.',
+      'Your seed phrase is your recovery key.',
+      'Write down both recovery keys.',
+      'an everyday key on your device, an emergency key rebuilt from your recovery key, and the Guardian key',
       'Guardian keeps a backup so you can recover on another device.',
       'Press a hotkey to open search.'
     ]) {

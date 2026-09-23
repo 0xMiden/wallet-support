@@ -60,7 +60,7 @@ Open the app and you'll land on the **Welcome to Bread!** screen.
    - If the scan doesn't work, tap **Use PIN** to open your wallet with your device passcode instead.
 
 > ⚠️ **Reminder:** Your wallet is created, but it isn't fully secured yet.
-> Bread will remind you daily on the home screen until your recovery phrase is backed up. The sooner you do it, the safer you are. This phrase is the master key to your wallet, and it's the only way to get your assets back if you lose or replace your phone.
+> Bread will remind you daily on the home screen until your recovery key is backed up. The sooner you do it, the safer you are. Your recovery key is the master key to your wallet, and it's the only way to get your assets back if you lose or replace your phone.
 > Keep it safe:
 > - Write it down on paper and store it somewhere safe and offline.
 > - Never share it with anyone — no real support team will ever ask for it.

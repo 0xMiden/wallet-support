@@ -6,7 +6,7 @@ subcategory: security-and-recovery
 platforms: [extension-desktop]
 ---
 
-This exports a password-protected copy of your wallet data. **The current Bread Wallet UI cannot import this file**, so do not rely on it as a working recovery method. Keep your recovery phrase secure and use Guardian if you want supported account-state recovery.
+This exports a password-protected copy of your wallet data. **The current Bread Wallet UI cannot import this file**, so do not rely on it as a working recovery method. Keep your recovery key secure and use Guardian if you want supported account-state recovery.
 
 1. From the wallet homepage, open **Settings** (top-right corner).
 2. Go to the **Security** section.

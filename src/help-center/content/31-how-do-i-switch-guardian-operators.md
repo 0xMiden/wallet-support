@@ -6,7 +6,7 @@ subcategory: guardian-protection
 platforms: [extension-desktop, mobile]
 ---
 
-Switching Guardian uses your everyday key and your emergency key, so have your recovery phrase ready before you start. In the wallet, this is called **Rotate Guardian**.
+Switching Guardian uses your everyday key and your emergency key, so have your recovery key ready before you start. In the wallet, this is called **Rotate Guardian**.
 
 **Steps:**
 

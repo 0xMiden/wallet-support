@@ -15,7 +15,7 @@ describe('searching the Help Center', () => {
   it('finds the phrases that used to return nothing', () => {
     // Each of these matched no category title, so the old search found nothing
     // while several articles covered the subject.
-    for (const query of ['recovery phrase', 'seed phrase', 'stuck', 'chrome', 'faucet', 'biometric']) {
+    for (const query of ['recovery key', 'seed phrase', 'stuck', 'chrome', 'faucet', 'biometric']) {
       expect(find(query).length, `"${query}" found nothing`).toBeGreaterThan(0);
     }
   });

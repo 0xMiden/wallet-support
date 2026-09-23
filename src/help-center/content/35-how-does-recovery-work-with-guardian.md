@@ -6,7 +6,7 @@ subcategory: security-and-recovery
 platforms: [extension-desktop, mobile]
 ---
 
-On a new device, the recovery phrase rebuilds the emergency key. Together, the emergency key and Guardian unlock the backed-up state and establish a fresh everyday key tied to the new device.
+On a new device, the recovery key rebuilds the emergency key. Together, the emergency key and Guardian unlock the backed-up state and establish a fresh everyday key tied to the new device.
 
 The full round trip across your device, Guardian, and Miden:
 
@@ -17,4 +17,4 @@ The full round trip across your device, Guardian, and Miden:
 5. Your device submits the proof for the new state to Miden.
 The device drives recovery, Guardian acknowledges the recovery update, and only a commitment lands on-chain. Guardian keeps the backup, and the emergency key keeps control.
 
-For the in-app steps, see [*How do I restore my wallet with a recovery phrase?*](#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase)
+For the in-app steps, see [*How do I restore my wallet with a recovery key?*](#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase)
