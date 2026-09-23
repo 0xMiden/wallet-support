@@ -1076,7 +1076,7 @@ export function HelpCenter() {
             <footer className="help-center-security-reminder">
               <strong>Security reminder</strong>
               <span>
-                Bread Wallet support will never ask for your recovery phrase, private key, password, Guardian
+                Bread Wallet support will never ask for your recovery key, password, Guardian
                 authentication information, or another wallet secret.
               </span>
             </footer>

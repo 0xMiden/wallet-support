@@ -103,7 +103,7 @@ export function FeedbackPage() {
         </header>
         <div className="feedback-layout">
           <form className="feedback-form" onSubmit={submit}>
-            <div className="feedback-warning" role="note"><strong>Keep your wallet safe.</strong> Never include a recovery phrase, password, private key, or a screenshot that shows one.</div>
+            <div className="feedback-warning" role="note"><strong>Keep your wallet safe.</strong> Never include a recovery key, password, or a screenshot that shows one.</div>
             <div className="feedback-two-column">
               <label>Feedback type<select name="feedback_type" defaultValue="bug"><option value="bug">Bug report</option><option value="idea">Product idea</option><option value="content">Help Center feedback</option></select></label>
               <label>Platform<select name="platform" required defaultValue=""><option value="" disabled>Select platform</option><option value="extension">Extension</option><option value="ios">iOS</option><option value="android">Android</option></select></label>

@@ -19,7 +19,7 @@ Format: "## " = Notion section, "### " = article title (verbatim), "> " = callou
 1. Open the App Store on iOS, or Google Play on Android, and search for *Bread Wallet*.
 2. Tap **Get** or **Install** and confirm the download as you normally would.
 3. Once it's installed, open the app and follow the prompts to set up your wallet.
-4. Don't forget to back up your recovery phrase somewhere safe and offline. This is very important.
+4. Don't forget to back up your recovery key somewhere safe and offline. This is very important.
 
 ### How do I create a Bread Wallet?
 
@@ -52,7 +52,7 @@ Open the app and you'll land on the **Welcome to Bread!** screen.
    - If the scan doesn't work, tap **Use PIN** to open your wallet with your device passcode instead.
 
 > ⚠️ **Reminder:** Your wallet is created, but it isn't fully secured yet.
-> Bread will remind you daily on the home screen until your recovery phrase is backed up. The sooner you do it, the safer you are. This phrase is the master key to your wallet, and it's the only way to get your assets back if you lose or replace your phone.
+> Bread will remind you daily on the home screen until your recovery key is backed up. The sooner you do it, the safer you are. Your recovery key is the master key to your wallet, and it's the only way to get your assets back if you lose or replace your phone.
 > Keep it safe:
 > - Write it down on paper and store it somewhere safe and offline.
 > - Never share it with anyone — no real support team will ever ask for it.
@@ -87,27 +87,27 @@ Use the faucet to send testnet tokens to a wallet address. Testnet tokens are fo
 
 ### What are the supported browsers for Bread Wallet?
 
-Bread Wallet supports browser extensions for **Chrome** and **Firefox**.
+Bread Wallet is supported as a browser extension for **Chrome** and as a mobile app for **iOS** and **Android**.
 
-Bread is also available as a desktop app for macOS, Windows, and Linux, and as a mobile app for iOS and Android. Brave and Edge are not currently listed as officially supported browser-extension targets.
+Other browsers and platforms are not currently supported.
 
 ## Backup, restore, and security
 
 ### Can I recover stolen assets?
 
-Once a transaction is confirmed on the blockchain, it can't be reversed or refunded. If someone has gained access to your recovery phrase or backup, they can control your wallet, and funds they move are generally not recoverable.
+Once a transaction is confirmed on the blockchain, it can't be reversed or refunded. If someone has gained access to your recovery key or backup, they can control your wallet, and funds they move are generally not recoverable.
 
-The most important step if you've been compromised: move your remaining assets to a brand-new wallet, one with a brand-new recovery phrase the attacker has never seen, as quickly as you safely can.
+The most important step if you've been compromised: move your remaining assets to a brand-new wallet, one with a brand-new recovery key the attacker has never seen, as quickly as you safely can.
 
 **Important note:**
 
-Never share your recovery phrase or backup password with anyone offering to *recover* or *restore* hacked funds. This is one of the most common scams, and it only makes things worse. Bread Wallet support will never ask for your recovery phrase, and neither will a Guardian operator.
+Never share your recovery key or backup password with anyone offering to *recover* or *restore* hacked funds. This is one of the most common scams, and it only makes things worse. Bread Wallet support will never ask for your recovery key, and neither will a Guardian operator.
 
-### How do I restore my wallet with a recovery phrase?
+### How do I restore my wallet with a recovery key?
 
 Before you start, make sure you have:
 
-- Your recovery phrase (sometimes called a seed phrase), written down and ready to enter.
+- Your recovery key (sometimes called a seed phrase), written down and ready to enter.
 - A fresh install of Bread Wallet on your new device or browser.
 
 Steps:
@@ -116,7 +116,7 @@ Steps:
    [image removed]
 2. Read the Miden testnet notice, then tap **I understand**.
    [image removed]
-3. Enter your recovery phrase in the exact order you wrote it down, then tap **Continue**.
+3. Enter your recovery key in the exact order you wrote it down, then tap **Continue**.
    [image removed]
 4. If prompted, choose your Guardian operator. Pick one from the list:
    - OpenZeppelin (US-EAST, the default)
@@ -127,7 +127,7 @@ Steps:
    [image removed]
 6. One final check: Bread asks you to unlock with your fingerprint to open your wallet. Scan it, and you're back in!
 
-> ⚠️ **Before you type your recovery phrase:** it's the master key to your wallet, and anyone who gets it can take everything.
+> ⚠️ **Before you type your recovery key:** it's the master key to your wallet, and anyone who gets it can take everything.
 > - Only enter it in the official Bread Wallet app — never on a website, pop-up, or form.
 > - No support team or admin will ever ask for it. Anyone who does is a scammer.
 > - Type it somewhere private, with no screen recording or sharing turned on.
@@ -138,84 +138,83 @@ Keeping your wallet secure is mostly about protecting your recovery information 
 
 Here are some best practices:
 
-- Store your recovery phrase, private key, and encrypted wallet file offline in a safe place.
+- Store your recovery key offline in a safe place.
 - Turn on biometric unlock on mobile.
 - Use a strong, unique password for your wallet.
-- Never type your recovery phrase into a website, email, chat, or pop-up.
+- Never type your recovery key into a website, email, chat, or pop-up.
 - Only download Bread Wallet from official sources.
 - Be cautious of phishing websites, fake wallet apps, and scam messages.
-- Never share your recovery phrase, private key, or encrypted wallet file.
+- Never share your recovery key.
 
 **If Guardian is enabled:**
 
-Guardian adds a recovery layer; it keeps a backup of your private account data so you can get back into your wallet on a new device if your current one is lost or broken. Guardian's design protects an account with three keys: an everyday key on your device, an emergency key rebuilt from your recovery phrase, and the Guardian key, which acknowledges state updates. Moving funds takes two of the three, so a single stolen key is not enough for someone to move your funds on its own. Guardian never holds your keys and can never move your funds by itself.
+Guardian adds a recovery layer; it keeps a backup of your private account data so you can get back into your wallet on a new device if your current one is lost or broken. Guardian's design protects an account with three keys: an everyday key on your device, an emergency key rebuilt from your recovery key, and the Guardian key, which acknowledges state updates. Moving funds takes two of the three, so a single stolen key is not enough for someone to move your funds on its own. Guardian never holds your keys and can never move your funds by itself.
 
 **If Guardian is not enabled:**
 
-Your security rests entirely on your password or biometrics plus your own backups: your recovery phrase and/or encrypted wallet file. There's no separate backup of your account data and no second-key safety net, so protecting your recovery phrase and keeping a safe backup matters even more.
+Your security rests entirely on your password or biometrics plus your own backup: your recovery key. There's no separate backup of your account data and no second-key safety net, so protecting your recovery key and keeping a safe backup matters even more.
 
 **What this means for you:**
 
-Think of your recovery phrase as the master key to a safe; whoever holds it owns everything inside. Set a strong password; enable a biometric lock where you can; and keep your recovery phrase private and offline. Guardian is a helpful safety net for recovery, an extra layer on top of protecting your own keys.
+Think of your recovery key as the master key to a safe; whoever holds it owns everything inside. Set a strong password; enable a biometric lock where you can; and keep your recovery key private and offline. Guardian is a helpful safety net for recovery, an extra layer on top of protecting your own keys.
 
-> ⚠️ **Important note:** No one from Bread Wallet, or anyone else, will ever need your recovery phrase, private key, encrypted wallet file, or password. If someone asks for it, it's a scam. Never share it, and never store it in a screenshot, a plain notes app, or unprotected cloud storage.
+> ⚠️ **Important note:** No one from Bread Wallet, or anyone else, will ever need your recovery key or password. If someone asks for it, it's a scam. Never share it, and never store it in a screenshot, a plain notes app, or unprotected cloud storage.
 
-### What should I do if I lose my recovery phrase?
+### What should I do if I lose my recovery key?
 
-If your wallet is still unlocked and working, keep that device secure and check whether Bread lets you display or back up your recovery phrase again. Do not reset the wallet or remove the app until you have confirmed a supported recovery path.
+If your wallet is still unlocked and working, keep that device secure and check whether Bread lets you display or back up your recovery key again. Do not reset the wallet or remove the app until you have confirmed a supported recovery path.
 
-Your recovery phrase restores your keys. A private account also needs its latest off-chain account state, which Guardian can back up. The current Bread Wallet UI can export an encrypted wallet file but cannot import one, so that file is not currently a supported restoration path.
+Your recovery key restores your keys. A private account also needs its latest off-chain account state, which Guardian can back up.
 
 Whether you can recover depends on your wallet setup, whether Guardian is on, and which backups you still have.
 
 **If Guardian is enabled:**
 
-Guardian keeps a backup of your account data, but it does not keep your recovery phrase or control your keys. If you lose the recovery phrase and every device that still holds your keys, Guardian alone cannot restore the wallet.
+Guardian keeps a backup of your account data, but it does not keep your recovery key or control your keys. If you lose the recovery key and every device that still holds your keys, Guardian alone cannot restore the wallet.
 
 **If Guardian is not enabled:**
 
-Your recovery phrase restores your keys, but a more-private account also needs its locally stored account state.
+Your recovery key restores your keys, but a more-private account also needs its locally stored account state.
 
-- Bread Wallet does not currently offer encrypted-file import.
-- If you lose your recovery phrase and access to every device holding the wallet, there is generally no supported way to restore it.
+- If you lose your recovery key and access to every device holding the wallet, there is generally no supported way to restore it.
 
 **Important note:**
 
-No one from Bread Wallet or your Guardian operator can reset or recover your recovery phrase for you. Anyone claiming they can recover a lost phrase is running a scam.
+No one from Bread Wallet or your Guardian operator can reset or recover your recovery key for you. Anyone claiming they can recover a lost recovery key is running a scam.
 
-### What is the difference between a recovery phrase and an encrypted wallet file?
+### What is the difference between a recovery key and an encrypted wallet file?
 
-They contain different wallet information, and only recovery-phrase import is available in the current Bread Wallet UI.
+They contain different wallet information, and only recovery-key import is available in the current Bread Wallet UI.
 
-- A **recovery phrase** is a list of ordinary words that represents your wallet. It's easy to write on paper, but it's only as safe as where you keep it. Anyone who reads those words can restore your wallet.
+- A **recovery key** is a list of ordinary words that represents your wallet. It's easy to write on paper, but it's only as safe as where you keep it. Anyone who reads those words can restore your wallet.
 - An **encrypted wallet file** is a password-protected export of wallet data. The current app can export this file but cannot import it, so do not rely on it as a working restoration method.
 
-**A simple way to picture it:** a recovery phrase is like your key written in plain handwriting, while an encrypted wallet file is like that key locked in a box that needs a password to open.
+**A simple way to picture it:** a recovery key is like your key written in plain handwriting, while an encrypted wallet file is like that key locked in a box that needs a password to open.
 
 **If Guardian is enabled:**
 
-Guardian backs up account state so supported recovery can restore it on a new device. Guardian does not replace your recovery phrase; you still need your own keys to control the wallet.
+Guardian backs up account state so supported recovery can restore it on a new device. Guardian does not replace your recovery key; you still need your own keys to control the wallet.
 
 **If Guardian is not enabled:**
 
-Without Guardian, a private account's state remains on the device. Because encrypted-file import is unavailable, losing that device can make the private account unrecoverable even if you still have the recovery phrase.
+Without Guardian, a private account's state remains on the device. Because encrypted-file import is unavailable, losing that device can make the private account unrecoverable even if you still have the recovery key.
 
 **What this means for you:**
 
-- If you only use a public account, your recovery phrase is your key backup. Keep it safe.
-- If you use a private account, keep the device and recovery phrase secure. Enable Guardian if you want the currently supported account-state recovery path.
+- If you only use a public account, your recovery key is your key backup. Keep it safe.
+- If you use a private account, keep the device and recovery key secure. Enable Guardian if you want the currently supported account-state recovery path.
 
 ## Key concepts
 
 ### What is delegate proof generation?
 
-Delegated proof generation lets Bread Wallet use a remote prover to handle heavy computation. Your device still signs transactions with your key. The prover only helps generate the cryptographic proof, so the wallet can work faster on mobile devices.
+Delegated proof generation lets Bread Wallet use a remote prover to handle heavy computation. Your device still signs transactions with your key. The prover only helps generate the cryptographic proof, so the wallet can work faster.
 
 ### What is Guardian?
 
 Guardian is a recovery and backup layer for private accounts. Because Miden keeps some account data private and local to you, losing a device can also mean losing access to that account data. Guardian helps back up and recover that data on a new device.
 
-Guardian does not hold your recovery phrase, does not hold your private key, and cannot move funds by itself.
+Guardian does not hold your recovery key and cannot move funds by itself.
 
 ### What is a private account?
 
@@ -224,7 +223,7 @@ On Miden, an account can be public or private, and the difference is about where
 - With a private account, only a small cryptographic *commitment* (the fingerprint of your data) is stored on the public blockchain, while the full account data stays with you, off-chain. This gives you strong privacy; the network can confirm your account is valid without seeing its contents, like your balances.
 - With a public account, the full account data is stored on-chain and is visible to everyone.
 
-Because a private account's data lives off-chain, a recovery phrase alone does not restore its latest state. Guardian provides the supported account-state recovery path in the current wallet.
+Because a private account's data lives off-chain, a recovery key alone does not restore its latest state. Guardian provides the supported account-state recovery path in the current wallet.
 
 **If Guardian is enabled:**
 
@@ -232,7 +231,7 @@ Guardian backs up and syncs your private account data, so a lost or broken devic
 
 **If Guardian is not enabled:**
 
-You are solely responsible for the account state stored on your device. Although Bread can export an encrypted wallet file, the current UI cannot import it. If you lose the device and have no Guardian backup, the private account may be unrecoverable.
+You are solely responsible for the account state stored on your device. If you lose the device and have no Guardian backup, the private account may be unrecoverable.
 
 ### What is a public note?
 

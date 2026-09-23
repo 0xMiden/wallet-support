@@ -9,7 +9,7 @@ platforms: [extension-desktop, mobile]
 A Guardian-backed account spreads control across three keys:
 
 - an **everyday key**, stored on your device, for regular wallet actions,
-- an **emergency key**, recreated from your recovery phrase, and
+- an **emergency key**, recreated from your recovery key, and
 - the **Guardian key**, which acknowledges state updates.
 The rule tying them together is simple: every action needs two of the three keys, so no single key can move funds alone.
 

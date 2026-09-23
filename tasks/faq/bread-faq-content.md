@@ -68,7 +68,7 @@ Category: Guardian › Guardian protection
 A Guardian-backed account spreads control across three keys:
 
 - an **everyday key**, stored on your device, for regular wallet actions,
-- an **emergency key**, recreated from your recovery phrase, and
+- an **emergency key**, recreated from your recovery key, and
 - the **Guardian key**, which acknowledges state updates.
 The rule tying them together is simple: every action needs two of the three keys, so no single key can move funds alone.
 
@@ -83,13 +83,13 @@ Related: *What is the emergency key?*, *What is the everyday key?*, *What is the
 ### 4. What is the emergency key?
 Category: Guardian › Guardian protection
 
-The emergency key is recreated from your recovery phrase when you need it.
+The emergency key is recreated from your recovery key when you need it.
 
-It is used in two situations: replacing a lost device and switching Guardian. On a new device, the recovery phrase rebuilds the emergency key. Together, the emergency key and Guardian unlock the backed-up state and establish a fresh everyday key tied to the new device.
+It is used in two situations: replacing a lost device and switching Guardian. On a new device, the recovery key rebuilds the emergency key. Together, the emergency key and Guardian unlock the backed-up state and establish a fresh everyday key tied to the new device.
 
-Guardian keeps the backup, and the emergency key keeps control. Keep your recovery phrase offline and never share it.
+Guardian keeps the backup, and the emergency key keeps control. Keep your recovery key offline and never share it.
 
-Related: *What should I do if I lose my recovery phrase?*, *What is the difference between a recovery phrase and an encrypted wallet file?*, *How does recovery work with Guardian?*
+Related: *What should I do if I lose my recovery key?*, *How does recovery work with Guardian?*
 
 ### 5. What is the everyday key?
 Category: Guardian › Guardian protection
@@ -120,14 +120,14 @@ Every action needs two of the three keys, so no single key can move funds alone.
 
 You hold the other two: the everyday key and the emergency key. Those keys let you switch Guardian operators. See *How do I switch Guardian operators?*
 
-A Guardian outage, refusal, or sync problem can temporarily interrupt ordinary Guardian-backed transactions while Bread verifies or repairs the connection. If automatic repair cannot finish, the wallet prompts you to switch operators. Keep your recovery phrase safe so you can use the emergency key when a rotation is required.
+A Guardian outage, refusal, or sync problem can temporarily interrupt ordinary Guardian-backed transactions while Bread verifies or repairs the connection. If automatic repair cannot finish, the wallet prompts you to switch operators. Keep your recovery key safe so you can use the emergency key when a rotation is required.
 
 For the full picture of why and how Guardian coordinates without ever taking custody, see *What is Guardian?*
 
 ### 8. How do I switch Guardian operators?
 Category: Guardian › Guardian protection
 
-Switching Guardian uses your everyday key and your emergency key, so have your recovery phrase ready before you start. In the wallet, this is called **Rotate Guardian**.
+Switching Guardian uses your everyday key and your emergency key, so have your recovery key ready before you start. In the wallet, this is called **Rotate Guardian**.
 
 **Steps:**
 
@@ -158,11 +158,11 @@ Category: Manage wallet › Security and recovery
 
 It depends on the account type you chose at setup.
 
-**Guardian-backed account: yes.** Because Guardian keeps a backup of the account, a lost device doesn't have to mean a lost wallet. On a new device, your recovery phrase restores the account from that backup. See *How do I restore my wallet with a recovery phrase?*
+**Guardian-backed account: yes.** Because Guardian keeps a backup of the account, a lost device doesn't have to mean a lost wallet. On a new device, your recovery key restores the account from that backup. See *How do I restore my wallet with a recovery key?*
 
 **More private account: no.** A more private account keeps everything on the device and shares nothing with a Guardian operator. Lose the device and the account state is gone, along with the funds.
 
-A lost device is not the same as a lost recovery phrase. If you have lost your recovery phrase, see *What should I do if I lose my recovery phrase?*
+A lost device is not the same as a lost recovery key. If you have lost your recovery key, see *What should I do if I lose my recovery key?*
 
 ### 11. What does Guardian back up?
 Category: Manage wallet › Security and recovery
@@ -176,7 +176,7 @@ Guardian keeps the backup, and the emergency key keeps control. Guardian never h
 ### 12. How does recovery work with Guardian?
 Category: Manage wallet › Security and recovery
 
-On a new device, the recovery phrase rebuilds the emergency key. Together, the emergency key and Guardian unlock the backed-up state and establish a fresh everyday key tied to the new device.
+On a new device, the recovery key rebuilds the emergency key. Together, the emergency key and Guardian unlock the backed-up state and establish a fresh everyday key tied to the new device.
 
 The full round trip across your device, Guardian, and Miden:
 
@@ -187,7 +187,7 @@ The full round trip across your device, Guardian, and Miden:
 5. Your device submits the proof for the new state to Miden.
 The device drives recovery, Guardian acknowledges the recovery update, and only a commitment lands on-chain. Guardian keeps the backup, and the emergency key keeps control.
 
-For the in-app steps, see *How do I restore my wallet with a recovery phrase?*
+For the in-app steps, see *How do I restore my wallet with a recovery key?*
 
 ### 13. Can I send funds to another blockchain?
 Category: Cross-chain › Moving across chains

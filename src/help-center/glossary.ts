@@ -76,9 +76,9 @@ export const helpCenterGlossary: readonly HelpCenterGlossaryEntry[] = [
       'A value used by cryptographic software to authorize or verify actions. Keys commonly come in related pairs: a private key that must be kept secret and a public key that can be shared. This setup is widely used in internet security and crypto wallets. Bread uses the everyday and emergency keys for wallet actions, while the Guardian key acknowledges state updates.'
   },
   {
-    term: 'Seed phrase (aka recovery phrase)',
+    term: 'Seed phrase (aka recovery key)',
     definition:
-      'A sequence of words containing the information needed to recreate one or more private keys. In Bread, the recovery phrase recreates the emergency key on a new device. The phrase is the backup used to rebuild the key, rather than the key itself.'
+      'A sequence of words containing the information needed to recreate one or more keys. In Bread, it is called the recovery key, and it recreates the emergency key on a new device.'
   },
   {
     term: 'Signing',
