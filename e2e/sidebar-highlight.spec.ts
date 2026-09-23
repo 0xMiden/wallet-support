@@ -114,7 +114,7 @@ test('a heading lets go however the route moves: home and back again, or the bac
   await page.goto('/#guardian-protection');
   await heading(page, 'Privacy').click();
   await page.goBack();
-  await expectLit(page, ['Common issues and support'], 'after the back button');
+  await expectLit(page, ['Common issues'], 'after the back button');
 });
 
 test('in the phone drawer, clicking the page already open takes the highlight back too', async ({ page }) => {

@@ -90,7 +90,7 @@ export const helpCenterMainCategories: readonly HelpCenterMainCategory[] = [
     subcategories: [
       {
         id: 'common-issues-and-support',
-        title: 'Common issues and support',
+        title: 'Common issues',
         description: 'A route to common fixes and the appropriate support channel.'
       }
     ]

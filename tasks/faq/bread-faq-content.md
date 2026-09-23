@@ -1,6 +1,6 @@
 # Bread FAQ: final content for implementation
 
-Seventeen articles. Platform: both Extension and Mobile, one body each. Text is verbatim and approved; do not edit.
+Nineteen articles. Platform: both Extension and Mobile, one body each. Text is verbatim and approved; do not edit.
 
 ## Placement
 
@@ -23,8 +23,10 @@ Seventeen articles. Platform: both Extension and Mobile, one body each. Text is 
 | 15 | Can I swap tokens across chains? | Cross-chain | Moving across chains |
 | 16 | Can I earn yield in Bread? | Earn | Earning yield |
 | 17 | Are my funds private while they earn? | Earn | Earning yield |
+| 18 | How do I accept a pending transfer? | Manage wallet | Activity and transaction status |
+| 19 | What should I do if accepting a transfer fails? | Troubleshooting | Common issues |
 
-New main categories, last in category order: Cross-chain, with the subcategory Moving across chains (articles 13–15), then Earn, with the subcategory Earning yield (16–17). Within every subcategory, new articles go after the existing ones, in the order above. Activity and transaction status stays empty.
+New main categories, last in category order: Cross-chain, with the subcategory Moving across chains (articles 13–15), then Earn, with the subcategory Earning yield (16–17). Within every subcategory, new articles go after the existing ones, in the order above. Articles 18 and 19 were added on 2026-09-23 (Ivan): 18 is the first article in Activity and transaction status, and 19 goes after the existing Common issues articles.
 
 ## Images
 
@@ -252,3 +254,43 @@ Earn is unavailable in the current Bread Beta. When it becomes available, funds 
 Use only the test networks and test assets shown in the wallet.
 
 ![](earn-across-the-privacy-line.png)
+
+### 18. How do I accept a pending transfer?
+Category: Manage wallet › Activity and transaction status
+
+When someone sends you tokens, they show up as a pending transfer on the **Activity** page. The tokens are added to your balance after you accept the transfer.
+
+**Steps:**
+
+1. Open Bread Wallet and select the **Activity** tab.
+2. Select the **Pending** tab to see only the transfers you haven't accepted yet.
+3. Select a transfer card to expand it, and check the **From** address and **Amount** before you accept.
+4. Select the **Accept Transfer** button. The button shows a loading indicator while the wallet adds the tokens to your balance.
+5. Once accepted, the transfer leaves the **Pending** tab. Select the **All** tab to find it as **Received**, marked **Confirmed**. Select it to see the transaction.
+
+To accept everything at once, select the **Accept All** button at the bottom of the **Pending** tab.
+
+If accepting fails, see *What should I do if accepting a transfer fails?*.
+
+**Important note:** If the expanded card shows a date when the transfer returns to the sender, accept it before then. After that date, the tokens return to the sender.
+
+**Decline** only hides a transfer from **Activity** on this device. It does not return the tokens to the sender or delete the transfer. To bring hidden transfers back, select the **Pending** tab, then select the **Restore** button next to **Hidden transfers**.
+
+Only MIDEN token is accepted automatically, when **Auto Consume** in the settings is on, so it may not appear as a pending transfer.
+
+### 19. What should I do if accepting a transfer fails?
+Category: Troubleshooting › Common issues
+
+If accepting a transfer fails, the transfer stays in your **Activity** list and its **Accept Transfer** button changes to a **Retry** button.
+
+**Steps:**
+
+1. Open Bread Wallet and select the **Activity** tab.
+2. Select the **Pending** tab and find the transfer card that shows a **Retry** button.
+3. Select the **Retry** button to try again.
+
+If the expanded card shows a date when the transfer returns to the sender, try again before then.
+
+If it keeps failing, see *My token is stuck on Consuming (receiver address)*, or report it to our [**SUPPORT**](/feedback).
+
+To learn how accepting works, see *How do I accept a pending transfer?*.
