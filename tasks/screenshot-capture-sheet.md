@@ -260,36 +260,46 @@ Token Information needs a token in the wallet; the faucet request in C should pr
 
 ### F. Restore with a recovery phrase
 
-Start fresh first: remove the extension or open a new Chrome profile, then install it again.
+The restore flow changed like the create flow did: **Recover your account**, the Miden Testnet notice,
+the recovery phrase, Create password, the account recovery page, then **Your Wallet is ready!**, after
+which the wallet rotates the everyday key before the sidebar opens. There is no import-type page, and
+the steps are Brian's (PR #21). E13 to E16 keep their numbers but show the new screens; E15a, E16a and
+E16b are new positions (Ivan, 2026-09-23). The six onboarding captures were taken at 150% and are
+tagged narrow; the key-rotation screen is part of a tab and fills the column. They carry **no box**.
+Only the empty space below the content was cropped, 64px left under it as in section B (61px for E14,
+to meet the height rule); every remaining pixel is the file as delivered. E16 is shown whole rather
+than split, past the height ceiling, by Ivan's call (2026-09-23).
 
 #### E13 · How do I restore my wallet with a recovery phrase? · Ext · step 1
-- **Must show:** the first page, with **I already have a wallet** selected.
-- **Read L3 and L4 again:** the create option, which should read as it did at E03.
-- **Save as:** `E13-restore-first-page.png`
-- **Capture as:** **A · fills a tab** — DevTools device toolbar, width 1360, DPR 1
-- **Then register:** `'E13-restore-first-page.png': [1360, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Shows:** **Welcome to Bread!**, with **Recover your account**.
+- **File:** `E13-restore-welcome.png`, 789 × 902, narrow
 
 #### E14 · How do I restore my wallet with a recovery phrase? · Ext · step 2
-- **Must show:** the import type page, with every option it offers.
-- **Check Q2 here, before going on:** is importing from an encrypted wallet file offered? The app source
-  checked when How to restore the wallet using an encrypted file? was held back had no such import. If it is
-  not offered, capture the page as it is, skip E17 and E18, and say so in Q2.
-- **Save as:** `E14-restore-import-type.png`
-- **Capture as:** **A · fills a tab** — DevTools device toolbar, width 1360, DPR 1
-- **Then register:** `'E14-restore-import-type.png': [1360, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Shows:** the Miden Testnet notice, with **I understand**. Q2 answered: there is no import-type page,
+  so encrypted-file import is not offered; E17 and E18 are skipped.
+- **File:** `E14-restore-testnet-notice.png`, 764 × 993, narrow
 
 #### E15 · How do I restore my wallet with a recovery phrase? · Ext · step 3
-- **Must show:** the numbered recovery-phrase boxes, with the words blurred or replaced by sample words.
-- **Save as:** `E15-restore-phrase-boxes.png`
-- **Capture as:** **A · fills a tab** — DevTools device toolbar, width 1360, DPR 1
-- **Then register:** `'E15-restore-phrase-boxes.png': [1360, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Shows:** **Import Wallet**, the twelve numbered boxes blurred.
+- **File:** `E15-restore-phrase-boxes.png`, 820 × 813, narrow
+
+#### E15a · How do I restore my wallet with a recovery phrase? · Ext · step 4
+- **Shows:** **Create password**, fields masked.
+- **File:** `E15a-restore-password.png`, 825 × 849, narrow
 
 #### E16 · How do I restore my wallet with a recovery phrase? · Ext · step 5
-- **Must show:** the recovery choice, with **Guardian** and **Fully private**.
-- **Read L1 again:** on the screen after it, the exact label of the button that opens the wallet.
-- **Save as:** `E16-restore-recovery-choice.png`
-- **Capture as:** **A · fills a tab** — DevTools device toolbar, width 1360, DPR 1
-- **Then register:** `'E16-restore-recovery-choice.png': [1360, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Shows:** *How would you like to recover this wallet?*, with the four Guardian operators,
+  **Import public account**, and **Continue**. Used as delivered, not cropped.
+- **File:** `E16-restore-recovery-choice.png`, 820 × 1284, narrow, full height by Ivan
+
+#### E16a · How do I restore my wallet with a recovery phrase? · Ext · step 6
+- **Shows:** **Your Wallet is ready!**, with **Open wallet**. L1 answered: the button reads **Open wallet**.
+- **File:** `E16a-restore-wallet-ready.png`, 820 × 871, narrow
+
+#### E16b · How do I restore my wallet with a recovery phrase? · Ext · step 6
+- **Shows:** the wallet rotating the everyday key after **Open wallet**, before the sidebar opens. The
+  screen's own title uses the retired term, so the article and alt text say everyday key.
+- **File:** `E16b-restore-everyday-key.png`, 1721 × 387
 
 ### G. Restore with an encrypted file
 

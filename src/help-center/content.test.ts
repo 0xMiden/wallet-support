@@ -657,9 +657,14 @@ describe('fidelity to the FAQ', () => {
   it('holds every step screenshot to the capture spec', () => {
     /*
      * Used exactly as captured, not cropped, by Ivan's call (2026-09-18), so
-     * they are let past the height ceiling. Every other capture is held to it.
+     * they are let past the height ceiling. E16 is shown whole rather than
+     * split in two, also his call (2026-09-23). Every other capture is held to it.
      */
-    const FULL_HEIGHT_BY_IVAN = new Set(['E07-fund-homepage.png', 'E08-fund-activity.png']);
+    const FULL_HEIGHT_BY_IVAN = new Set([
+      'E07-fund-homepage.png',
+      'E08-fund-activity.png',
+      'E16-restore-recovery-choice.png'
+    ]);
     for (const name of FULL_HEIGHT_BY_IVAN) expect(SCREENSHOT_SIZES[name], `${name}: not a registered screenshot`).toBeDefined();
 
     const repoRoot = fileURLToPath(new URL('../..', import.meta.url));

@@ -747,10 +747,13 @@ was wrong). The mobile run happens later on a different build — record its ver
 - [ ] E10 · How to download the encrypted file? · step 2 · Settings › Security
 - [ ] E11 · How to download the encrypted file? · step 3 · "Encrypted Wallet File" option
 - [ ] E12 · How to download the encrypted file? · step 6 · Download complete / "Done"
-- [ ] E13 · How do I restore my wallet with a recovery phrase? · step 1 · "I already have a wallet" selection
-- [ ] E14 · How do I restore my wallet with a recovery phrase? · step 2 · Import type: Seed Phrase / Encrypted Wallet File
-- [ ] E15 · How do I restore my wallet with a recovery phrase? · step 3 · Numbered recovery-phrase entry boxes (sample words)
-- [ ] E16 · How do I restore my wallet with a recovery phrase? · step 5 · Recovery choice: Guardian vs Fully private
+- [x] E13 · How do I restore my wallet with a recovery phrase? · step 1 · Welcome to Bread! with **Recover your account** — 789 × 902 (2026-09-23)
+- [x] E14 · How do I restore my wallet with a recovery phrase? · step 2 · Miden Testnet notice (no import-type page any more) — 764 × 993 (2026-09-23)
+- [x] E15 · How do I restore my wallet with a recovery phrase? · step 3 · Numbered recovery-phrase boxes, blurred — 820 × 813 (2026-09-23)
+- [x] E15a · How do I restore my wallet with a recovery phrase? · step 4 · Create password — 825 × 849 (2026-09-23)
+- [x] E16 · How do I restore my wallet with a recovery phrase? · step 5 · Account recovery page: Guardian operators, Import public account — 820 × 1284, full height (2026-09-23)
+- [x] E16a · How do I restore my wallet with a recovery phrase? · step 6 · Your Wallet is ready! — 820 × 871 (2026-09-23)
+- [x] E16b · How do I restore my wallet with a recovery phrase? · step 6 · Everyday key rotation — 1721 × 387 (2026-09-23)
 - [ ] E17 · How to restore the wallet using an encrypted file? · step 2 · Import type: "Import with encrypted wallet file"
 - [ ] E18 · How to restore the wallet using an encrypted file? · step 3 · Import wallet page: drag-and-drop + password
 

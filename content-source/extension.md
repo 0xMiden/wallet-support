@@ -114,11 +114,32 @@ Before you start, make sure you have:
 **Steps:**
 
 1. Open Bread Wallet. On the **Welcome to Bread!** screen, select **Recover your account**.
+
+   ![Bread Wallet's Welcome to Bread! page, with the Recover your account link](E13-restore-welcome.png)
+
 2. Read the Miden testnet notice, then select **I understand**.
+
+   ![Bread Wallet's Miden Testnet notice, with the I understand button](E14-restore-testnet-notice.png)
+
 3. Enter your recovery key in the exact order you wrote it down, then select **Continue**.
+
+   ![Bread Wallet's Import Wallet page, with the numbered recovery key boxes](E15-restore-phrase-boxes.png)
+
 4. Create a new password with at least 8 characters and 1 number, then select **Continue**.
+
+   ![Bread Wallet's Create password page, with the Continue button](E15a-restore-password.png)
+
 5. Follow the account-recovery prompts shown for your wallet setup.
-6. Select **Open Wallet** when recovery is complete.
+
+   ![Bread Wallet's account recovery page, with the Guardian operators and the Continue button](E16-restore-recovery-choice.png)
+
+6. Select **Open wallet** when recovery is complete.
+
+   ![Bread Wallet's Your Wallet is ready screen, with the Open wallet button](E16a-restore-wallet-ready.png)
+
+   Bread Wallet then rotates your everyday key, which a recovered account needs before it can sync and make transactions. The sidebar opens when it's done.
+
+   ![Bread Wallet rotating your everyday key after recovery, before the wallet opens](E16b-restore-everyday-key.png)
 
 > ⚠️ **Before you type your recovery key:** it's the master key to your wallet, and anyone who gets it can take everything.
 > - Only enter it in the official Bread Wallet extension — never on a website, pop-up, or form.
