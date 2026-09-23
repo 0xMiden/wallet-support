@@ -658,12 +658,19 @@ describe('fidelity to the FAQ', () => {
     /*
      * Used exactly as captured, not cropped, by Ivan's call (2026-09-18), so
      * they are let past the height ceiling. E16 is shown whole rather than
-     * split in two, also his call (2026-09-23). Every other capture is held to it.
+     * split in two, also his call (2026-09-23), and the Guardian switch sidebar
+     * captures E19 to E23 are used as captured like E07 and E08. Every other
+     * capture is held to it.
      */
     const FULL_HEIGHT_BY_IVAN = new Set([
       'E07-fund-homepage.png',
       'E08-fund-activity.png',
-      'E16-restore-recovery-choice.png'
+      'E16-restore-recovery-choice.png',
+      'E19-guardian-home.png',
+      'E20-guardian-settings-menu.png',
+      'E21-guardian-settings.png',
+      'E22-guardian-choose.png',
+      'E23-guardian-review.png'
     ]);
     for (const name of FULL_HEIGHT_BY_IVAN) expect(SCREENSHOT_SIZES[name], `${name}: not a registered screenshot`).toBeDefined();
 
@@ -678,15 +685,15 @@ describe('fidelity to the FAQ', () => {
 
       if ((entry as readonly unknown[])[2] === 'narrow') {
         /*
-         * A panel, menu or dialog. The floor is 540 because Bread Wallet's
-         * sidebar is about 365 CSS px and Ivan captures it at 150% scaling,
-         * which comes to about 547 (E07, E08; 2026-09-18). It still catches
+         * A panel, menu or dialog. The floor is 520 because Bread Wallet's
+         * sidebar is about 350-365 CSS px and Ivan captures it at 150% scaling,
+         * which comes to 528-549 (E07, E08, E19 to E23). It still catches
          * what the floor is for, a capture taken at 1x: Chrome's menus and
          * dialogs and the sidebar land between 310 and 435 at 1x.
          */
-        expect(file.width, `${name}: a narrow-surface capture should be 540–1200px wide`)
-          .toBeGreaterThanOrEqual(540);
-        expect(file.width, `${name}: a narrow-surface capture should be 540–1200px wide`)
+        expect(file.width, `${name}: a narrow-surface capture should be 520–1200px wide`)
+          .toBeGreaterThanOrEqual(520);
+        expect(file.width, `${name}: a narrow-surface capture should be 520–1200px wide`)
           .toBeLessThanOrEqual(1200);
       } else {
         /*
