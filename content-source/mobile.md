@@ -87,9 +87,9 @@ Use the faucet to send testnet tokens to a wallet address. Testnet tokens are fo
 
 ### What are the supported browsers for Bread Wallet?
 
-Bread Wallet supports browser extensions for **Chrome** and **Firefox**.
+Bread Wallet is supported as a browser extension for **Chrome** and as a mobile app for **iOS** and **Android**.
 
-Bread is also available as a desktop app for macOS, Windows, and Linux, and as a mobile app for iOS and Android. Brave and Edge are not currently listed as officially supported browser-extension targets.
+Other browsers and platforms are not currently supported.
 
 ## Backup, restore, and security
 
