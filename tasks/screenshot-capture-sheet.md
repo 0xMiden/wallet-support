@@ -326,14 +326,14 @@ wallet** and the encrypted wallet file.
 
 Ivan's steps for How do I switch Guardian operators?, with his five sidebar captures at 150%, tagged
 narrow and used exactly as captured, like E07 and E08, so they are let past the height ceiling. E20
-carries the box Ivan drew himself. Steps 2, 7 and 8 have no capture yet: 7 and 8 wait until the
+carries the box Ivan drew himself. Steps 2 and 3 were merged into one (Ivan, 2026-09-23). Steps 6 and 7 have no capture yet: they wait until the
 password screen issue is resolved, then follow the same pattern.
 
 - **E19** · step 1 · Home page, **Settings** lower right · `E19-guardian-home.png`, 530 × 1255
-- **E20** · step 3 · Settings, **Guardian Settings** boxed · `E20-guardian-settings-menu.png`, 529 × 1248
-- **E21** · step 4 · **Guardian Settings**, **Rotate Guardian** · `E21-guardian-settings.png`, 528 × 1245
-- **E22** · step 5 · *Choose your Guardian*, **Continue** · `E22-guardian-choose.png`, 530 × 1249
-- **E23** · step 6 · **Review rotation**, **Continue** · `E23-guardian-review.png`, 530 × 1246
+- **E20** · step 2 · Settings, **Guardian Settings** boxed · `E20-guardian-settings-menu.png`, 529 × 1248
+- **E21** · step 3 · **Guardian Settings**, **Rotate Guardian** · `E21-guardian-settings.png`, 528 × 1245
+- **E22** · step 4 · *Choose your Guardian*, **Continue** · `E22-guardian-choose.png`, 530 × 1249
+- **E23** · step 5 · **Review rotation**, **Continue** · `E23-guardian-review.png`, 530 × 1246
 
 ## Mobile run: phone, 14 positions
 
