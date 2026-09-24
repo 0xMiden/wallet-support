@@ -335,6 +335,35 @@ password screen issue is resolved, then follow the same pattern.
 - **E22** · step 4 · *Choose your Guardian*, **Continue** · `E22-guardian-choose.png`, 530 × 1249
 - **E23** · step 5 · **Review rotation**, **Continue** · `E23-guardian-review.png`, 530 × 1246
 
+### I. Accept a pending transfer (added 2026-09-24)
+
+Ivan's four sidebar captures for How do I accept a pending transfer?, tagged narrow and used exactly as
+captured, like E19 to E23, so they are let past the height ceiling. E24 and E27 are his clean retakes
+without the pointer (2026-09-24). Step 4 (**Accept Transfer**) has no
+capture of its own.
+
+- **E24** · step 1 · **Activity**, **All** tab with a pending transfer · `E24-accept-activity.png`, 526 × 1150
+- **E25** · step 2 · **Activity**, **Pending** tab · `E25-accept-pending-tab.png`, 530 × 1242
+- **E26** · step 3 · Transfer card expanded, **From** and **Amount** · `E26-accept-transfer-card.png`, 529 × 1251
+- **E27** · step 5 · **Received** tab, transfer marked **Confirmed** · `E27-accept-received-tab.png`, 593 × 1251
+
+### J. Stuck on Consuming: Auto Consume (added 2026-09-24)
+
+Ivan's two sidebar captures for My token is stuck on Consuming, tagged narrow and used exactly as
+captured, like E19 to E27. Both carry the box Ivan drew. The old step 1 was split in two so each has
+its capture (Ivan, 2026-09-24).
+
+- **E28** · step 1 · Settings, **General** boxed · `E28-consume-settings-general.png`, 529 × 1246
+- **E29** · step 2 · General, **Auto Consume MIDEN notes** boxed · `E29-consume-auto-consume.png`, 529 × 1228
+
+### K. Accepting a transfer fails (added 2026-09-24)
+
+Ivan's two sidebar captures for What should I do if accepting a transfer fails?, tagged narrow and used
+exactly as captured, like E19 to E29. Step 3 (**Retry**) has no capture of its own.
+
+- **E30** · step 1 · **Activity**, **All** tab, a transfer showing **Retry** · `E30-accept-fails-activity.png`, 533 × 1195
+- **E31** · step 2 · **Activity**, **Pending** tab, **Retry** · `E31-accept-fails-pending-tab.png`, 531 × 1197
+
 ## Mobile run: phone, 14 positions
 
 ### A. Install
