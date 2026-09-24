@@ -60,6 +60,10 @@ After you install Bread Wallet, open the app. On the **Welcome to Bread!** scree
 
    ![Bread Wallet's Your Wallet is ready! screen, with the Open wallet button](M04a-create-ready.png)
 
+8. One last check: Bread Wallet asks you to unlock your wallet with the biometric you just set up.
+   - **iPhone:** confirm with Face ID, and you're in.
+   - **Android:** scan your fingerprint, and you're in.
+
 > ⚠️ **Reminder:** Your wallet is created, but it isn't fully secured yet.
 > Back up your recovery key within 7 days to fully secure your wallet. Bread will remind you daily on the home screen until you do. Your recovery key is the master key to your wallet, and it's the only way to get your assets back if you lose or replace your phone.
 > Keep it safe:
