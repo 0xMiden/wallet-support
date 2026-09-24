@@ -13,6 +13,7 @@ const BODY = '.help-center-article-body';
 const INSTALL_MOBILE = '/?platform=mobile#setup-and-basic-use/how-to-install-bread-wallet';
 const CREATE_MOBILE = '/?platform=mobile#setup-and-basic-use/how-do-i-create-a-bread-wallet';
 const FUND_MOBILE = '/?platform=mobile#setup-and-basic-use/how-to-fund-your-bread-wallet';
+const RESTORE_MOBILE = '/?platform=mobile#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase';
 const INSTALL = '/#setup-and-basic-use/how-to-install-bread-wallet';
 const CREATE = '/#setup-and-basic-use/how-do-i-create-a-bread-wallet';
 const RESTORE = '/#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase';
@@ -22,6 +23,7 @@ for (const { article, route, count } of [
   { article: 'mobile install', route: INSTALL_MOBILE, count: 1 },
   { article: 'mobile create', route: CREATE_MOBILE, count: 7 },
   { article: 'mobile fund', route: FUND_MOBILE, count: 3 },
+  { article: 'mobile restore', route: RESTORE_MOBILE, count: 5 },
   { article: 'install', route: INSTALL, count: 3 },
   { article: 'create', route: CREATE, count: 5 },
   { article: 'restore', route: RESTORE, count: 7 },

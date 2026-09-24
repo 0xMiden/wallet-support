@@ -58,14 +58,28 @@ Before you start, make sure you have:
 Steps:
 
 1. Open the Bread app. On the **Welcome to Bread!** screen, tap **Recover your account**.
+
+   ![Bread Wallet's Welcome to Bread! screen, with Recover your account](M10-restore-welcome.png)
+
 2. Read the Miden testnet notice, then tap **I understand**.
+
+   ![Bread Wallet's Miden testnet notice, with the I understand button](M10a-restore-testnet-notice.png)
+
 3. Enter your recovery key in the exact order you wrote it down, then tap **Continue**.
-4. If prompted, choose your Guardian operator. Pick one from the list:
-   - OpenZeppelin (US-EAST, the default)
-   - Gateway Operator (EU-NORTH)
-   - Lambda Class (EU-WEST)
-5. Your wallet is ready! You'll see the **Your Wallet is ready!** screen. Tap **Open wallet**.
-6. One final check: Bread asks you to unlock with your fingerprint to open your wallet. Scan it, and you're back in!
+
+   ![Bread Wallet's Import Wallet screen, with twelve numbered boxes for the recovery key](M12-restore-phrase.png)
+
+4. On the **How would you like to recover this wallet?** screen, keep **Import via Guardian** selected. Bread Wallet finds your Guardian for you. If it can't, pick the Guardian you used. Then tap **Continue**.
+5. On the **Your Wallet is ready!** screen, tap **Open wallet**.
+
+   ![Bread Wallet's Your Wallet is ready! screen, with the Open wallet button](M14-restore-ready.png)
+
+6. One last check: Bread Wallet asks you to unlock your wallet with your phone's biometric.
+   - **iPhone:** confirm with Face ID, and you're in.
+   - **Android:** scan your fingerprint, and you're in.
+7. Wait while Bread Wallet rotates your everyday key. A recovered account needs this before it can sync and make transactions. Your wallet opens when it's done.
+
+   ![Bread Wallet rotating the everyday key of a recovered account](M14a-restore-rotating-key.png)
 
 > ⚠️ **Before you type your recovery key:** it's the master key to your wallet, and anyone who gets it can take everything.
 > - Only enter it in the official Bread Wallet app — never on a website, pop-up, or form.

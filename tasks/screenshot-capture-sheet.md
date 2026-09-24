@@ -450,6 +450,13 @@ No screenshot here.
 Start fresh first: delete the app and install it again. The Mobile create flow shows no recovery phrase, so
 use the one from E04.
 
+**Done (2026-09-24):** the Mobile steps were rewritten against v1.16.1: no import-type choice and no
+Guardian list any more (the app finds the Guardian on **How would you like to recover this wallet?**), then
+**Open wallet**, the phone's biometric check, and the everyday-key rotation. Placed: M10 Welcome, M10a testnet
+notice, M12 Import Wallet (Ivan's capture with the words blurred, 469px source scaled to 530 × 747), M14 ready,
+M14a rotation (639px source). Step 4 (recovery method) has no capture yet; step 6 has none by Ivan's call, like
+create-a-wallet step 8. The positions below are superseded where they differ.
+
 #### M10 · How do I restore my wallet with a recovery phrase? · Mob · step 1
 - **Must show:** the **Welcome to Bread!** screen, with **Recover your account**.
 - **Save as:** `M10-restore-welcome.png`
