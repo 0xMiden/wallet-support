@@ -48,6 +48,8 @@ Before you start, make sure you have:
 > - No support team or admin will ever ask for it. Anyone who does is a scammer.
 > - Type it somewhere private, with no screen recording or sharing turned on.
 
+If you've lost your recovery key, see [*What should I do if I lose my recovery key?*](#security-and-recovery/what-should-i-do-if-i-lose-my-recovery-phrase) To learn how Guardian brings back your account data, see [*How does recovery work with Guardian?*](#security-and-recovery/how-does-recovery-work-with-guardian)
+
 <!-- platform: mobile -->
 
 Before you start, make sure you have:
@@ -71,3 +73,5 @@ Steps:
 > - Only enter it in the official Bread Wallet app — never on a website, pop-up, or form.
 > - No support team or admin will ever ask for it. Anyone who does is a scammer.
 > - Type it somewhere private, with no screen recording or sharing turned on.
+
+If you've lost your recovery key, see [*What should I do if I lose my recovery key?*](#security-and-recovery/what-should-i-do-if-i-lose-my-recovery-phrase) To learn how Guardian brings back your account data, see [*How does recovery work with Guardian?*](#security-and-recovery/how-does-recovery-work-with-guardian)

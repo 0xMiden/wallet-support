@@ -14,4 +14,6 @@ When available, the fast route uses a solver, as is typical of intent-based prot
 
 For a configured direct transfer, a canonical bridge transfers the specified test asset without a solver: funds are claimed on arrival, with no swap in transit.
 
+To swap tokens, see [*Can I swap tokens across chains?*](#moving-across-chains/can-i-swap-tokens-across-chains)
+
 ![Across chains, two routes](across-chains-two-routes.png)

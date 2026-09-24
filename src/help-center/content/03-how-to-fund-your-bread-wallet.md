@@ -21,6 +21,8 @@ Use the faucet to receive test MIDEN tokens in your wallet.
 
    ![Bread Wallet's Activity page, with a confirmed Faucet Request for 100 MIDEN](E08-fund-activity.png)
 
+If the tokens don't show up, see [*Why is my token taking so long to arrive?*](#common-issues-and-support/why-is-my-token-taking-so-long-to-arrive)
+
 <!-- platform: mobile -->
 
 Use the faucet to send testnet tokens to a wallet address. Testnet tokens are for testing only and do not have real-world value.
@@ -29,3 +31,5 @@ Use the faucet to send testnet tokens to a wallet address. Testnet tokens are fo
 - Tap the **Faucet** card.
 - On the faucet page, enter the wallet address and the amount you want to request.
 - Select the note type for your request: **Private** or **Public**.
+
+If the tokens don't show up, see [*Why is my token taking so long to arrive?*](#common-issues-and-support/why-is-my-token-taking-so-long-to-arrive)

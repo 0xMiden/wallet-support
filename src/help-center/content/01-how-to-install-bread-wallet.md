@@ -26,6 +26,8 @@ platforms: [extension-desktop, mobile]
 
 After adding the Bread Wallet extension, Bread Wallet will open automatically. To keep it easy to access, click the **puzzle icon** in the top-right corner of your browser, then click the **pin icon** to add it to your toolbar.
 
+To set up your wallet next, see [*How do I create a Bread Wallet?*](#setup-and-basic-use/how-do-i-create-a-bread-wallet)
+
 ![Chrome's Extensions menu, opened from the puzzle icon, with the pin icon beside Bread Wallet highlighted](E02-install-pin.png)
 
 <!-- platform: mobile -->
@@ -41,3 +43,5 @@ After adding the Bread Wallet extension, Bread Wallet will open automatically. T
 2. Tap **Get** or **Install** and confirm the download as you normally would.
 3. Once it's installed, open the app and follow the prompts to set up your wallet.
 4. Don't forget to back up your recovery key somewhere safe and offline. This is very important.
+
+To set up your wallet next, see [*How do I create a Bread Wallet?*](#setup-and-basic-use/how-do-i-create-a-bread-wallet)
