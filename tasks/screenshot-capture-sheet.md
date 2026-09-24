@@ -338,7 +338,8 @@ password screen issue is resolved, then follow the same pattern.
 ### I. Accept a pending transfer (added 2026-09-24)
 
 Ivan's four sidebar captures for How do I accept a pending transfer?, tagged narrow and used exactly as
-captured, like E19 to E23, so they are let past the height ceiling. Step 4 (**Accept Transfer**) has no
+captured, like E19 to E23, so they are let past the height ceiling. E24 and E27 are his clean retakes
+without the pointer (2026-09-24). Step 4 (**Accept Transfer**) has no
 capture of its own.
 
 - **E24** · step 1 · **Activity**, **All** tab with a pending transfer · `E24-accept-activity.png`, 526 × 1150
