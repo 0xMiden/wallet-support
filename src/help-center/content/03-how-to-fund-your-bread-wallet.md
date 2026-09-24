@@ -21,6 +21,8 @@ Use the faucet to receive test MIDEN tokens in your wallet.
 
    ![Bread Wallet's Activity page, with a confirmed Faucet Request for 100 MIDEN](E08-fund-activity.png)
 
+If the tokens don't show up, see [*Why is my token taking so long to arrive?*](#common-issues-and-support/why-is-my-token-taking-so-long-to-arrive)
+
 <!-- platform: mobile -->
 
 Use the faucet to receive test MIDEN tokens in your wallet. Testnet tokens are for testing only and do not have real-world value.
@@ -36,3 +38,5 @@ Use the faucet to receive test MIDEN tokens in your wallet. Testnet tokens are f
 3. Tap the **Activity** tab to track the request. The tokens are ready to use once the status changes to **Confirmed**.
 
    ![Bread Wallet's Activity page on mobile, with a confirmed Faucet Request for 100 MIDEN](M07-fund-activity.png)
+
+If the tokens don't show up, see [*Why is my token taking so long to arrive?*](#common-issues-and-support/why-is-my-token-taking-so-long-to-arrive)

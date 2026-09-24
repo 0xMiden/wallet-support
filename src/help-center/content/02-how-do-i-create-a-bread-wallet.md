@@ -30,6 +30,8 @@ When you install Bread Wallet, there are two options to choose between: **Get st
 
 5. Congrats, your wallet is ready! Click the **Open wallet** button; it will close the tab automatically and open the sidebar for you.
 
+For help choosing a Guardian, see [*Why should I pick a Guardian-backed account over a more private one?*](#guardian-protection/why-should-i-pick-a-guardian-backed-account-over-a-more-private-one)
+
    ![Bread Wallet's Your Wallet is ready screen, with the Open wallet button](E06a-create-wallet-ready.png)
 
 <!-- platform: mobile -->
@@ -78,3 +80,5 @@ After you install Bread Wallet, open the app. On the **Welcome to Bread!** scree
 > - Write it down on paper and store it somewhere safe and offline.
 > - Never share it with anyone — no real support team will ever ask for it.
 > - Don't screenshot it or save it in your notes or the cloud, where it could be stolen.
+
+For help choosing a Guardian, see [*Why should I pick a Guardian-backed account over a more private one?*](#guardian-protection/why-should-i-pick-a-guardian-backed-account-over-a-more-private-one)

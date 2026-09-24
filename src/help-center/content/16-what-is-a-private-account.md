@@ -20,3 +20,5 @@ Guardian backs up and syncs your private account data, so a lost or broken devic
 **If Guardian is not enabled:**
 
 You are solely responsible for the account state stored on your device. If you lose the device and have no Guardian backup, the private account may be unrecoverable.
+
+To see what stays hidden, see [*What can other people see about my account on the blockchain?*](#public-and-private-transactions/what-can-other-people-see-about-my-account-on-the-blockchain)

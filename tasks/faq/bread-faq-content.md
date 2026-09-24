@@ -129,7 +129,7 @@ For the full picture of why and how Guardian coordinates without ever taking cus
 ### 8. How do I switch Guardian operators?
 Category: Guardian › Guardian protection
 
-Switching Guardian uses your everyday key and your emergency key, so have your recovery key ready before you start. In the wallet, this is called **Rotate Guardian**.
+Switching Guardian uses your everyday key and your emergency key, so have your recovery key ready before you start. In the wallet, this is called **Rotate Guardian**. For how these keys work, see *What are the three keys in a Guardian-backed account?*
 
 **Steps:**
 
@@ -225,6 +225,8 @@ When available, the fast route uses a solver, as is typical of intent-based prot
 
 For a configured direct transfer, a canonical bridge transfers the specified test asset without a solver: funds are claimed on arrival, with no swap in transit.
 
+To swap tokens, see *Can I swap tokens across chains?*
+
 ![](across-chains-two-routes.png)
 
 ### 15. Can I swap tokens across chains?
@@ -232,7 +234,7 @@ Category: Cross-chain › Moving across chains
 
 Cross-chain swaps are available only when Bread Beta shows a configured fast route for the selected test asset and destination. When available, a solver can swap the token in transit and deliver the equivalent on the other side. Use only Miden testnet and Ethereum Sepolia test funds; never use assets from Ethereum mainnet or another real network.
 
-Swaps within Miden use Miden-native Swap.
+Swaps within Miden use Miden-native Swap. For how the fast route works, see *What is the difference between a solver route and a canonical bridge?*
 
 ### 16. Can I earn yield in Bread?
 Category: Earn › Earning yield
@@ -251,7 +253,7 @@ Earn is unavailable in the current Bread Beta. When it becomes available, funds 
 - **On Miden:** your balance and activity are hidden.
 - **While they earn:** the funds sit in the displayed lending market, where the amount and the yield are visible.
 - **On the way back:** the funds return to your private account on Miden.
-Use only the test networks and test assets shown in the wallet.
+Use only the test networks and test assets shown in the wallet. For how Earn will work, see *Can I earn yield in Bread?*
 
 ![](earn-across-the-privacy-line.png)
 

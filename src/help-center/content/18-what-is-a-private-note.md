@@ -9,3 +9,5 @@ platforms: [extension-desktop, mobile]
 A private note is the privacy-preserving version of a note. Instead of publishing the full contents on-chain, only the note's commitment is stored publicly, and the actual details stay off-chain. That means only the people who have the note's details can see and use it.
 
 **Important note:** Keep your wallet backed up with Guardian. Since private notes rely on off-chain data, keep your wallet and its data safe.
+
+For the public version, see [*What is a public note?*](#public-and-private-transactions/what-is-a-public-note)

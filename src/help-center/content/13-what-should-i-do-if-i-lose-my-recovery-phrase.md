@@ -14,7 +14,7 @@ Whether you can recover depends on your wallet setup, whether Guardian is on, an
 
 **If Guardian is enabled:**
 
-Guardian keeps a backup of your account data, but it does not keep your recovery key or control your keys. If you lose the recovery key and every device that still holds your keys, Guardian alone cannot restore the wallet.
+Guardian keeps a backup of your account data, but it does not keep your recovery key or control your keys. If you lose the recovery key and every device that still holds your keys, Guardian alone cannot restore the wallet. To learn what information Guardian stores, see [*What does Guardian back up?*](#security-and-recovery/what-does-guardian-back-up)
 
 **If Guardian is not enabled:**
 

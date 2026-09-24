@@ -27,3 +27,5 @@ Retry your stuck transfers one at a time instead of all together.
 5. When all your stuck transfers have gone through, turn **Auto Consume MIDEN notes** back on.
 
 Each transfer you retry is a separate transaction with its own network fee, so retrying them one at a time costs more than claiming them together.
+
+For how to retry a single transfer, see [*What should I do if accepting a transfer fails?*](#common-issues-and-support/what-should-i-do-if-accepting-a-transfer-fails)

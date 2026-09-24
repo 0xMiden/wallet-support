@@ -611,7 +611,7 @@ describe('fidelity to the FAQ', () => {
     }
 
     expect(unresolved).toEqual([]);
-    expect(linked).toBe(27);
+    expect(linked).toBe(31);
   });
 
   it('points every internal link at a published article, labelled with its title', () => {

@@ -27,6 +27,8 @@ Format: "## " = Notion section, "### " = article title (verbatim), "> " = callou
 
 After adding the Bread Wallet extension, Bread Wallet will open automatically. To keep it easy to access, click the **puzzle icon** in the top-right corner of your browser, then click the **pin icon** to add it to your toolbar.
 
+To set up your wallet next, see [*How do I create a Bread Wallet?*](#setup-and-basic-use/how-do-i-create-a-bread-wallet)
+
 ![Chrome's Extensions menu, opened from the puzzle icon, with the pin icon beside Bread Wallet highlighted](E02-install-pin.png)
 
 ### How do I create a Bread Wallet?
@@ -53,6 +55,8 @@ When you install Bread Wallet, there are two options to choose between: **Get st
 
 5. Congrats, your wallet is ready! Click the **Open wallet** button; it will close the tab automatically and open the sidebar for you.
 
+For help choosing a Guardian, see [*Why should I pick a Guardian-backed account over a more private one?*](#guardian-protection/why-should-i-pick-a-guardian-backed-account-over-a-more-private-one)
+
    ![Bread Wallet's Your Wallet is ready screen, with the Open wallet button](E06a-create-wallet-ready.png)
 
 ### How to fund your Bread Wallet?
@@ -70,6 +74,8 @@ Use the faucet to receive test MIDEN tokens in your wallet.
 
    ![Bread Wallet's Activity page, with a confirmed Faucet Request for 100 MIDEN](E08-fund-activity.png)
 
+If the tokens don't show up, see [*Why is my token taking so long to arrive?*](#common-issues-and-support/why-is-my-token-taking-so-long-to-arrive)
+
 ### How to find a token contract address in Bread Wallet?
 
 **Steps:**
@@ -86,11 +92,13 @@ Use the faucet to receive test MIDEN tokens in your wallet.
   - Android — [Google Play](https://play.google.com/store/apps/details?id=com.miden.wallet)
   - iOS — [App Store](https://apps.apple.com/ch/app/bread-wallet-by-miden/id6789341854?l=en-GB)
 
+For the install steps, see [*How to install Bread Wallet*](#setup-and-basic-use/how-to-install-bread-wallet).
+
 ### What are the supported browsers for Bread Wallet?
 
 Bread Wallet is supported as a browser extension for **Chrome** and as a mobile app for **iOS** and **Android**.
 
-Other browsers and platforms are not currently supported.
+Other browsers and platforms are not currently supported. For the install steps, see [*How to install Bread Wallet*](#setup-and-basic-use/how-to-install-bread-wallet).
 
 ## Backup, restore, and security
 
@@ -98,7 +106,7 @@ Other browsers and platforms are not currently supported.
 
 Once a transaction is confirmed on the blockchain, it can't be reversed or refunded. If someone has gained access to your recovery key or backup, they can control your wallet, and funds they move are generally not recoverable.
 
-The most important step if you've been compromised: move your remaining assets to a brand-new wallet, one with a brand-new recovery key the attacker has never seen, as quickly as you safely can.
+The most important step if you've been compromised: move your remaining assets to a brand-new wallet, one with a brand-new recovery key the attacker has never seen, as quickly as you safely can. To protect it, see [*How do I keep my wallet secure?*](#security-and-recovery/how-do-i-keep-my-wallet-secure)
 
 **Important note:**
 
@@ -146,6 +154,8 @@ Before you start, make sure you have:
 > - No support team or admin will ever ask for it. Anyone who does is a scammer.
 > - Type it somewhere private, with no screen recording or sharing turned on.
 
+If you've lost your recovery key, see [*What should I do if I lose my recovery key?*](#security-and-recovery/what-should-i-do-if-i-lose-my-recovery-phrase) To learn how Guardian brings back your account data, see [*How does recovery work with Guardian?*](#security-and-recovery/how-does-recovery-work-with-guardian)
+
 ### How to restore the wallet using an encrypted file?
 
 Things you need first before restoring the wallet account
@@ -191,7 +201,7 @@ Here are some best practices:
 
 **If Guardian is enabled:**
 
-Guardian adds a recovery layer; it keeps a backup of your private account data so you can get back into your wallet on a new device if your current one is lost or broken. Guardian's design protects an account with three keys: an everyday key on your device, an emergency key rebuilt from your recovery key, and the Guardian key, which acknowledges state updates. Moving funds takes two of the three, so a single stolen key is not enough for someone to move your funds on its own. Guardian never holds your keys and can never move your funds by itself.
+Guardian adds a recovery layer; it keeps a backup of your private account data so you can get back into your wallet on a new device if your current one is lost or broken. Guardian's design protects an account with three keys: an everyday key on your device, an emergency key rebuilt from your recovery key, and the Guardian key, which acknowledges state updates. Moving funds takes two of the three, so a single stolen key is not enough for someone to move your funds on its own. Guardian never holds your keys and can never move your funds by itself. For more on each key, see [*What are the three keys in a Guardian-backed account?*](#guardian-protection/what-are-the-three-keys-in-a-guardian-backed-account)
 
 **If Guardian is not enabled:**
 
@@ -213,7 +223,7 @@ Whether you can recover depends on your wallet setup, whether Guardian is on, an
 
 **If Guardian is enabled:**
 
-Guardian keeps a backup of your account data, but it does not keep your recovery key or control your keys. If you lose the recovery key and every device that still holds your keys, Guardian alone cannot restore the wallet.
+Guardian keeps a backup of your account data, but it does not keep your recovery key or control your keys. If you lose the recovery key and every device that still holds your keys, Guardian alone cannot restore the wallet. To learn what information Guardian stores, see [*What does Guardian back up?*](#security-and-recovery/what-does-guardian-back-up)
 
 **If Guardian is not enabled:**
 
@@ -259,6 +269,8 @@ Guardian is a recovery and backup layer for private accounts. Because Miden keep
 
 Guardian does not hold your recovery key and cannot move funds by itself.
 
+To learn what information Guardian stores, see [*What does Guardian back up?*](#security-and-recovery/what-does-guardian-back-up) For what it can and can't do, see [*Can Guardian move my funds or lock me out?*](#guardian-protection/can-guardian-move-my-funds-or-lock-me-out)
+
 ### What is a private account?
 
 On Miden, an account can be public or private, and the difference is about where your account's data is stored.
@@ -276,6 +288,8 @@ Guardian backs up and syncs your private account data, so a lost or broken devic
 
 You are solely responsible for the account state stored on your device. If you lose the device and have no Guardian backup, the private account may be unrecoverable.
 
+To see what stays hidden, see [*What can other people see about my account on the blockchain?*](#public-and-private-transactions/what-can-other-people-see-about-my-account-on-the-blockchain)
+
 ### What is a public note?
 
 On Miden, a note is how value or a message moves between accounts; think of it as a transferable envelope that can carry assets along with the rules for how it can be claimed.
@@ -286,15 +300,21 @@ A public note is one whose full contents are stored on the blockchain, so its de
 
 A public note is fine when visibility isn't a concern, for example, when the details don't need to be kept private. Just remember that the contents are recorded openly on-chain.
 
+For the private version, see [*What is a private note?*](#public-and-private-transactions/what-is-a-private-note)
+
 ### What is a private note?
 
 A private note is the privacy-preserving version of a note. Instead of publishing the full contents on-chain, only the note's commitment is stored publicly, and the actual details stay off-chain. That means only the people who have the note's details can see and use it.
 
 **Important note:** Keep your wallet backed up with Guardian. Since private notes rely on off-chain data, keep your wallet and its data safe.
 
+For the public version, see [*What is a public note?*](#public-and-private-transactions/what-is-a-public-note)
+
 ### What is recall height?
 
 Recall height is the block height after which a sender can reclaim an unclaimed note. If the recipient does not claim the note before that height, the sender can take it back.
+
+To accept a transfer before it can be taken back, see [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
 
 ## Troubleshooting
 
@@ -340,6 +360,8 @@ Retry your stuck transfers one at a time instead of all together.
 
 Each transfer you retry is a separate transaction with its own network fee, so retrying them one at a time costs more than claiming them together.
 
+For how to retry a single transfer, see [*What should I do if accepting a transfer fails?*](#common-issues-and-support/what-should-i-do-if-accepting-a-transfer-fails)
+
 ### Send stuck in the Sending phase
 
 While a send is in progress, it shows as **Sending** in **Activity**. On the browser extension it keeps going in the background even if you close the wallet, and you'll get a notification if it fails.
@@ -354,6 +376,8 @@ If a send can't finish, the wallet marks it as **Transaction failed**:
 Occasionally a failed send has already reached the network just before it stopped. Let your wallet sync, then check your balance and **Activity**.
 
 To try again, open the failed send in **Activity** and select its **Retry** button. The wallet first checks whether the send already went through, so it won't send it twice. If it can't tell, it asks you to check your balance before retrying.
+
+If the send shows as **Confirmed** but the recipient doesn't have it, see [*My transfer shows as confirmed, but the token never arrived.*](#common-issues-and-support/my-transfer-shows-as-completed-but-the-token-never-arrived)
 
 ### Why is my token taking so long to arrive?
 

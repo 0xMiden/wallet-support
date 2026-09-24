@@ -13,3 +13,5 @@ A public note is one whose full contents are stored on the blockchain, so its de
 **What this means for you:**
 
 A public note is fine when visibility isn't a concern, for example, when the details don't need to be kept private. Just remember that the contents are recorded openly on-chain.
+
+For the private version, see [*What is a private note?*](#public-and-private-transactions/what-is-a-private-note)
