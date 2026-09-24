@@ -390,6 +390,10 @@ captures (E19 onward) on the **Extension** tab.
 - **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M04-create-guardian.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
+**Done (2026-09-24):** the Mobile steps were rewritten against v1.16.1 and carry seven light-mode iPhone
+captures, 530px wide, one per step: M02 Welcome, M02a testnet notice, M03 protect, M03a Face ID prompt,
+M03b Confirmed!, M04 Choose your Guardian, M04a Your Wallet is ready! (IMG_0131–IMG_0137).
+
 ### C. Fund the wallet
 
 #### M05 · How to fund your Bread Wallet? · Mob · step 1
