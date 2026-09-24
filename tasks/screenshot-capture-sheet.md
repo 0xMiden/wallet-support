@@ -337,13 +337,32 @@ password screen issue is resolved, then follow the same pattern.
 
 ## Mobile run: phone, 14 positions
 
+### Phone capture spec (set 2026-09-24, Ivan)
+
+Phone captures sit on each article's **Mobile** tab and must look like the same set as the sidebar
+captures (E19 onward) on the **Extension** tab.
+
+- **Take:** the phone's own screenshot, full screen, of the screen the step names. Send it as it is.
+- **Prepared before it lands** (the agent does this and shows Ivan the result before committing):
+  - crop off the status bar (time, battery, signal) and the home indicator, so no device chrome
+    shows, like the sidebar captures;
+  - scale to **530px wide**, the width of the sidebar set, so both tabs show their screenshots at the
+    same size (about 265px) and it stays at 2x;
+  - mask all but a few characters of any address.
+- **Register:** tagged `'narrow'` in `SCREENSHOT_SIZES` and shown full height like E19 onward, so each
+  is added to `FULL_HEIGHT_BY_IVAN` in `content.test.ts`.
+- **Box:** red, drawn by Ivan as on E20, where a step needs one.
+- **Text first:** before capturing, check each screen against the article's Mobile text. If the phone now
+  matches the Extension steps, report it instead: the Mobile text may be stale, and a proposed fix goes to
+  Ivan as ORIGINAL → PROPOSED before any capture is placed.
+
 ### A. Install
 
 #### M01 · How to install Bread Wallet · Mob · step 2
 - **Must show:** the App Store listing, with **Get**.
 - §7 names the App Store, so on an Android phone this is the one position that needs an iPhone.
 - **Save as:** `M01-install-app-store.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M01-install-app-store.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 ### B. Create a wallet
@@ -352,13 +371,13 @@ password screen issue is resolved, then follow the same pattern.
 - **Must show:** the **Welcome to Bread!** screen, with both of its options.
 - **Read L7, Mobile half:** the exact label of the create button.
 - **Save as:** `M02-create-welcome.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M02-create-welcome.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M03 · How do I create a Bread Wallet? · Mob · step 2
 - **Must show:** the screen for choosing how to protect the wallet, with the biometric option.
 - **Save as:** `M03-create-protect.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M03-create-protect.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M04 · How do I create a Bread Wallet? · Mob · step 5
@@ -366,7 +385,7 @@ password screen issue is resolved, then follow the same pattern.
 - **Read L2 and L5:** on the screen after it, its exact title and the label of the button that opens the
   wallet.
 - **Save as:** `M04-create-guardian.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M04-create-guardian.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 ### C. Fund the wallet
@@ -374,20 +393,20 @@ password screen issue is resolved, then follow the same pattern.
 #### M05 · How to fund your Bread Wallet? · Mob · step 1
 - **Must show:** the **Explore** tab.
 - **Save as:** `M05-fund-explore.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M05-fund-explore.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M06 · How to fund your Bread Wallet? · Mob · step 2
 - **Must show:** the **Faucet** card.
 - **Save as:** `M06-fund-faucet-card.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M06-fund-faucet-card.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M07 · How to fund your Bread Wallet? · Mob · step 3–4
 - **Must show:** the faucet page with the address, the amount, and the **Private** / **Public** choice. Mask
   all but a few characters of the address.
 - **Save as:** `M07-fund-faucet-page.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M07-fund-faucet-page.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 ### D. Find a token contract address
@@ -398,13 +417,13 @@ wallet at the moment. Skip this section until the article is published again.
 #### M08 · How to find a token contract address in Bread Wallet? · Mob · step 1
 - **Must show:** the homepage, with a token being selected.
 - **Save as:** `M08-token-homepage.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M08-token-homepage.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M09 · How to find a token contract address in Bread Wallet? · Mob · step 2
 - **Must show:** the Token Information section.
 - **Save as:** `M09-token-information.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M09-token-information.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 ### E. The encrypted file on Mobile
@@ -423,32 +442,32 @@ use the one from E04.
 #### M10 · How do I restore my wallet with a recovery phrase? · Mob · step 1
 - **Must show:** the **Welcome to Bread!** screen, with **Recover your account**.
 - **Save as:** `M10-restore-welcome.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M10-restore-welcome.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M11 · How do I restore my wallet with a recovery phrase? · Mob · step 2
 - **Must show:** the import type choice.
 - **Save as:** `M11-restore-import-type.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M11-restore-import-type.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M12 · How do I restore my wallet with a recovery phrase? · Mob · step 3
 - **Must show:** the recovery-phrase entry, with the words blurred or replaced by sample words.
 - **Save as:** `M12-restore-phrase.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M12-restore-phrase.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M13 · How do I restore my wallet with a recovery phrase? · Mob · step 4
 - **Must show:** the Guardian operator list, with every operator and region visible.
 - **Save as:** `M13-restore-operators.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M13-restore-operators.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M14 · How do I restore my wallet with a recovery phrase? · Mob · step 5
 - **Must show:** the ready screen at the end of the restore.
 - **Read L2 and L6:** its exact title and the label of the button that opens the wallet.
 - **Save as:** `M14-restore-ready.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M14-restore-ready.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 ## Answers
