@@ -356,6 +356,14 @@ its capture (Ivan, 2026-09-24).
 - **E28** · step 1 · Settings, **General** boxed · `E28-consume-settings-general.png`, 529 × 1246
 - **E29** · step 2 · General, **Auto Consume MIDEN notes** boxed · `E29-consume-auto-consume.png`, 529 × 1228
 
+### K. Accepting a transfer fails (added 2026-09-24)
+
+Ivan's two sidebar captures for What should I do if accepting a transfer fails?, tagged narrow and used
+exactly as captured, like E19 to E29. Step 3 (**Retry**) has no capture of its own.
+
+- **E30** · step 1 · **Activity**, **All** tab, a transfer showing **Retry** · `E30-accept-fails-activity.png`, 533 × 1195
+- **E31** · step 2 · **Activity**, **Pending** tab, **Retry** · `E31-accept-fails-pending-tab.png`, 531 × 1197
+
 ## Mobile run: phone, 14 positions
 
 ### A. Install

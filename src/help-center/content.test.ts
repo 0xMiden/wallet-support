@@ -662,7 +662,8 @@ describe('fidelity to the FAQ', () => {
      * they are let past the height ceiling. E16 is shown whole rather than
      * split in two, also his call (2026-09-23), and the Guardian switch sidebar
      * captures E19 to E23, the accept-a-transfer captures E24 to E27 and the
-     * Auto Consume captures E28 and E29 (2026-09-24) are used as captured like E07 and E08. Every other capture
+     * Auto Consume captures E28 and E29 and the accept-fails captures E30 and
+     * E31 (2026-09-24) are used as captured like E07 and E08. Every other capture
      * is held to it.
      */
     const FULL_HEIGHT_BY_IVAN = new Set([
@@ -679,7 +680,9 @@ describe('fidelity to the FAQ', () => {
       'E26-accept-transfer-card.png',
       'E27-accept-received-tab.png',
       'E28-consume-settings-general.png',
-      'E29-consume-auto-consume.png'
+      'E29-consume-auto-consume.png',
+      'E30-accept-fails-activity.png',
+      'E31-accept-fails-pending-tab.png'
     ]);
     for (const name of FULL_HEIGHT_BY_IVAN) expect(SCREENSHOT_SIZES[name], `${name}: not a registered screenshot`).toBeDefined();
 

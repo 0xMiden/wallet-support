@@ -297,7 +297,13 @@ If accepting a transfer fails, the transfer stays in your **Activity** list and 
 **Steps:**
 
 1. Open Bread Wallet and select the **Activity** tab.
+
+   ![Bread Wallet's Activity page, with a transfer showing the Retry button](E30-accept-fails-activity.png)
+
 2. Select the **Pending** tab and find the transfer card that shows a **Retry** button.
+
+   ![Bread Wallet's Activity page, with the Pending tab selected and the Retry button](E31-accept-fails-pending-tab.png)
+
 3. Select the **Retry** button to try again.
 
 If the expanded card shows a date when the transfer returns to the sender, try again before then.
