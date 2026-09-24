@@ -347,6 +347,15 @@ capture of its own.
 - **E26** · step 3 · Transfer card expanded, **From** and **Amount** · `E26-accept-transfer-card.png`, 529 × 1251
 - **E27** · step 5 · **Received** tab, transfer marked **Confirmed** · `E27-accept-received-tab.png`, 593 × 1251
 
+### J. Stuck on Consuming: Auto Consume (added 2026-09-24)
+
+Ivan's two sidebar captures for My token is stuck on Consuming, tagged narrow and used exactly as
+captured, like E19 to E27. Both carry the box Ivan drew. The old step 1 was split in two so each has
+its capture (Ivan, 2026-09-24).
+
+- **E28** · step 1 · Settings, **General** boxed · `E28-consume-settings-general.png`, 529 × 1246
+- **E29** · step 2 · General, **Auto Consume MIDEN notes** boxed · `E29-consume-auto-consume.png`, 529 × 1228
+
 ## Mobile run: phone, 14 positions
 
 ### A. Install

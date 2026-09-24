@@ -15,13 +15,15 @@ const CREATE = '/#setup-and-basic-use/how-do-i-create-a-bread-wallet';
 const RESTORE = '/#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase';
 const SWITCH = '/#guardian-protection/how-do-i-switch-guardian-operators';
 const ACCEPT = '/#activity-and-transaction-status/how-do-i-accept-a-pending-transfer';
+const CONSUMING = '/#common-issues-and-support/my-token-is-stuck-on-consuming-receiver-address';
 
 for (const { article, route, count } of [
   { article: 'install', route: INSTALL, count: 3 },
   { article: 'create', route: CREATE, count: 5 },
   { article: 'restore', route: RESTORE, count: 7 },
   { article: 'switch', route: SWITCH, count: 5 },
-  { article: 'accept', route: ACCEPT, count: 4 }
+  { article: 'accept', route: ACCEPT, count: 4 },
+  { article: 'consuming', route: CONSUMING, count: 2 }
 ]) for (const { name, width } of [
   { name: 'desktop', width: 1321 },
   { name: 'phone', width: 390 }

@@ -177,6 +177,8 @@ export const SCREENSHOT_SIZES: Readonly<Record<string, ScreenshotSize>> = {
   'E25-accept-pending-tab.png': [530, 1242, 'narrow'],
   'E26-accept-transfer-card.png': [529, 1251, 'narrow'],
   'E27-accept-received-tab.png': [593, 1251, 'narrow'],
+  'E28-consume-settings-general.png': [529, 1246, 'narrow'],
+  'E29-consume-auto-consume.png': [529, 1228, 'narrow'],
   'E13-restore-welcome.png': [789, 902, 'narrow'],
   'E14-restore-testnet-notice.png': [764, 993, 'narrow'],
   'E15-restore-phrase-boxes.png': [820, 813, 'narrow'],
