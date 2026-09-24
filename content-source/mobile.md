@@ -30,32 +30,19 @@ After you install Bread Wallet, open the app. On the **Welcome to Bread!** scree
 
 **Steps:**
 
-Open the app and you'll land on the **Welcome to Bread!** screen.
-
 1. Tap **Get started** to create your new wallet.
-   [image removed]
-2. Choose how to protect your wallet.
-   - Bread asks how you'd like to lock your wallet.
-   - Since we're setting up biometrics, tap **Use Face ID or Biometric**.
-   [image removed]
-3. Your phone's built-in biometric setup prompt will pop up. Scan your fingerprint the way you normally would to unlock your phone.
-   - Want to use your face instead? Tap the **Face** tab at the top.
-   - Having trouble? Tap **Use PIN** to fall back to your device passcode.
-4. A green checkmark appears with the message **Confirmed! Only one more step!**
-   - Tap **Continue** to keep going.
-5. Pick your Guardian, then tap **Continue** to proceed. Note the Guardian operator can see your state, i.e., account balance and activity.
-   [image removed]
+2. Read the Miden testnet notice, then tap **I understand**.
+3. Choose how to protect your wallet. Tap **Use FaceID or Biometric**, or tap **Set up your passcode** to use a passcode instead.
+4. Your phone asks whether Bread can use Face ID or your fingerprint. Tap **Allow**, or tap **Use passcode instead** to use a passcode.
+5. When you see **Confirmed! Only one more step!**, tap **Continue**.
+6. On the **Choose your Guardian** screen, select a Guardian operator, then tap **Continue**. OpenZeppelin is selected by default. Note the Guardian operator can see your state, i.e., account balance and activity.
 
 > 🛡️ Think of a Guardian as a secure backup layer: it keeps a safe copy of your wallet's private info so you can recover it on a new device if you ever lose your phone — without ever holding your keys or your funds. You stay in full control the whole time.
 
-6. You'll see the **Your Wallet is ready** screen.
-   - Tap **Open wallet**.
-7. Unlock to open your wallet
-   - One last check: Bread Wallet asks you to unlock your wallet with the biometric you just set up. Scan your fingerprint and you're in.
-   - If the scan doesn't work, tap **Use PIN** to open your wallet with your device passcode instead.
+7. On the **Your Wallet is ready!** screen, tap **Open wallet**.
 
 > ⚠️ **Reminder:** Your wallet is created, but it isn't fully secured yet.
-> Bread will remind you daily on the home screen until your recovery key is backed up. The sooner you do it, the safer you are. Your recovery key is the master key to your wallet, and it's the only way to get your assets back if you lose or replace your phone.
+> Back up your recovery key within 7 days to fully secure your wallet. Bread will remind you daily on the home screen until you do. Your recovery key is the master key to your wallet, and it's the only way to get your assets back if you lose or replace your phone.
 > Keep it safe:
 > - Write it down on paper and store it somewhere safe and offline.
 > - Never share it with anyone — no real support team will ever ask for it.
