@@ -25,11 +25,18 @@ If the tokens don't show up, see [*Why is my token taking so long to arrive?*](#
 
 <!-- platform: mobile -->
 
-Use the faucet to send testnet tokens to a wallet address. Testnet tokens are for testing only and do not have real-world value.
+Use the faucet to receive test MIDEN tokens in your wallet. Testnet tokens are for testing only and do not have real-world value.
 
-- From the wallet homepage, tap **Explore**.
-- Tap the **Faucet** card.
-- On the faucet page, enter the wallet address and the amount you want to request.
-- Select the note type for your request: **Private** or **Public**.
+1. On the wallet **Home** page, find the **Fund your wallet** section, then tap **Fund now**.
+
+   ![Bread Wallet's Home page on mobile, with the Fund your wallet section and Fund now](M05-fund-home.png)
+
+2. When **Wallet funded** appears, tap **Done**. Your tokens are on the way.
+
+   ![Bread Wallet's Wallet funded sheet, with the Done button](M06-fund-wallet-funded.png)
+
+3. Tap the **Activity** tab to track the request. The tokens are ready to use once the status changes to **Confirmed**.
+
+   ![Bread Wallet's Activity page on mobile, with a confirmed Faucet Request for 100 MIDEN](M07-fund-activity.png)
 
 If the tokens don't show up, see [*Why is my token taking so long to arrive?*](#common-issues-and-support/why-is-my-token-taking-so-long-to-arrive)

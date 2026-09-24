@@ -324,15 +324,15 @@ When a send shows as **Confirmed** in **Activity**, the transaction is on the bl
 
 **1. Ask the recipient to check their Pending tab**
 
-Incoming tokens wait in **Activity**, on the **Pending** tab, until the recipient selects **Accept Transfer**. Only MIDEN token is accepted automatically, when **Auto Consume** in the settings is on. Every other token must be accepted manually. If the recipient selected **Decline**, the transfer is only hidden on their device, and they can restore it in **Activity**.
+Incoming tokens wait in **Activity**, on the **Pending** tab, until the recipient selects **Accept Transfer**. Only MIDEN token is accepted automatically, when **Auto Consume** in the settings is on. Every other token must be accepted manually. If the recipient selected **Decline**, the transfer is only hidden on their device, and they can restore it in **Activity**. For the steps, see [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
 
 **2. If the recipient never accepts it**
 
-A send expires after 7 days by default. You can see or change this as the **Expiration Date** before you send. If the recipient hasn't accepted it by then, the tokens come back to you: they appear on your **Pending** tab in **Activity**, like a newly arrived transfer. Select **Accept Transfer** to add them back to your balance. No funds are lost.
+A send expires after 7 days by default. You can see or change this as the **Expiration Date** before you send. If the recipient hasn't accepted it by then, the tokens come back to you: they appear on your **Pending** tab in **Activity**, like a newly arrived transfer. Select **Accept Transfer** to add them back to your balance.
 
 **Still missing after an hour?**
 
-Report it to our [**SUPPORT**](/feedback).
+If the recipient can't find it, they can check [*Why is my token taking so long to arrive?*](#common-issues-and-support/why-is-my-token-taking-so-long-to-arrive) If it's still missing, report it to our [**SUPPORT**](/feedback).
 
 Never include your recovery key or password.
 
@@ -346,10 +346,17 @@ If it stays stuck, the wallet marks it as failed: after 30 minutes on the browse
 
 Retry your stuck transfers one at a time instead of all together.
 
-1. Open **Settings**, select **General**, and turn off **Auto Consume MIDEN notes**.
-2. Wait until nothing is on **Consuming**. Turning the setting off does not stop a transfer that is already being claimed.
-3. Open **Activity** and select the **Pending** tab. Choose one transfer that failed to consume and select its **Retry** button. Wait for it to finish before you retry the next one.
-4. When all your stuck transfers have gone through, turn **Auto Consume MIDEN notes** back on.
+1. Select the **Settings** tab, then select **General**.
+
+   ![Bread Wallet's Settings page, with General highlighted](E28-consume-settings-general.png)
+
+2. Turn off **Auto Consume MIDEN notes**.
+
+   ![Bread Wallet's General page, with Auto Consume MIDEN notes highlighted](E29-consume-auto-consume.png)
+
+3. Wait until nothing is on **Consuming**. Turning the setting off does not stop a transfer that is already being claimed.
+4. Open **Activity** and select the **Pending** tab. Choose one transfer that failed to consume and select its **Retry** button. Wait for it to finish before you retry the next one.
+5. When all your stuck transfers have gone through, turn **Auto Consume MIDEN notes** back on.
 
 Each transfer you retry is a separate transaction with its own network fee, so retrying them one at a time costs more than claiming them together.
 
@@ -377,7 +384,7 @@ If the send shows as **Confirmed** but the recipient doesn't have it, see [*My t
 Incoming tokens usually show up within a few moments. If they're taking longer, check these first:
 
 1. **Open and unlock your wallet.** Bread checks for incoming tokens every few seconds while it's open. On mobile it only checks while the app is open; on the browser extension it also checks in the background about once a minute.
-2. **Check the Pending tab.** Incoming tokens wait in **Activity**, on the **Pending** tab, until you select **Accept Transfer**. Only MIDEN token is accepted automatically, when **Auto Consume** in the settings is on.
-3. **Look for a connection message.** If the wallet shows **You appear to be offline** or **Cannot reach the Miden node**, it can't check for new tokens. Check your internet connection, then select **Try again** or **Retry sync**. If the Miden network is down or busy, your tokens appear once it's reachable again.
+2. **Check the Pending tab.** Incoming tokens wait in **Activity**, on the **Pending** tab, until you select **Accept Transfer**. Only MIDEN token is accepted automatically, when **Auto Consume** in the settings is on. See [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
+3. **Check for a connection banner.** If a banner at the top of the wallet says **You appear to be offline** or **Cannot reach the Miden node**, the wallet can't check for new tokens. Check your internet connection, then select **Try again** or **Retry sync**. If the Miden network is down or busy, your tokens appear once it's reachable again.
 
 If there is still nothing after an hour, report it to our [**SUPPORT**](/feedback).

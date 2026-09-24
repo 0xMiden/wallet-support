@@ -335,7 +335,55 @@ password screen issue is resolved, then follow the same pattern.
 - **E22** · step 4 · *Choose your Guardian*, **Continue** · `E22-guardian-choose.png`, 530 × 1249
 - **E23** · step 5 · **Review rotation**, **Continue** · `E23-guardian-review.png`, 530 × 1246
 
+### I. Accept a pending transfer (added 2026-09-24)
+
+Ivan's four sidebar captures for How do I accept a pending transfer?, tagged narrow and used exactly as
+captured, like E19 to E23, so they are let past the height ceiling. E24 and E27 are his clean retakes
+without the pointer (2026-09-24). Step 4 (**Accept Transfer**) has no
+capture of its own.
+
+- **E24** · step 1 · **Activity**, **All** tab with a pending transfer · `E24-accept-activity.png`, 526 × 1150
+- **E25** · step 2 · **Activity**, **Pending** tab · `E25-accept-pending-tab.png`, 530 × 1242
+- **E26** · step 3 · Transfer card expanded, **From** and **Amount** · `E26-accept-transfer-card.png`, 529 × 1251
+- **E27** · step 5 · **Received** tab, transfer marked **Confirmed** · `E27-accept-received-tab.png`, 593 × 1251
+
+### J. Stuck on Consuming: Auto Consume (added 2026-09-24)
+
+Ivan's two sidebar captures for My token is stuck on Consuming, tagged narrow and used exactly as
+captured, like E19 to E27. Both carry the box Ivan drew. The old step 1 was split in two so each has
+its capture (Ivan, 2026-09-24).
+
+- **E28** · step 1 · Settings, **General** boxed · `E28-consume-settings-general.png`, 529 × 1246
+- **E29** · step 2 · General, **Auto Consume MIDEN notes** boxed · `E29-consume-auto-consume.png`, 529 × 1228
+
+### K. Accepting a transfer fails (added 2026-09-24)
+
+Ivan's two sidebar captures for What should I do if accepting a transfer fails?, tagged narrow and used
+exactly as captured, like E19 to E29. Step 3 (**Retry**) has no capture of its own.
+
+- **E30** · step 1 · **Activity**, **All** tab, a transfer showing **Retry** · `E30-accept-fails-activity.png`, 533 × 1195
+- **E31** · step 2 · **Activity**, **Pending** tab, **Retry** · `E31-accept-fails-pending-tab.png`, 531 × 1197
+
 ## Mobile run: phone, 14 positions
+
+### Phone capture spec (set 2026-09-24, Ivan)
+
+Phone captures sit on each article's **Mobile** tab and must look like the same set as the sidebar
+captures (E19 onward) on the **Extension** tab.
+
+- **Take:** the phone's own screenshot, full screen, of the screen the step names. Send it as it is.
+- **Prepared before it lands** (the agent does this and shows Ivan the result before committing):
+  - crop off the status bar (time, battery, signal) and the home indicator, so no device chrome
+    shows, like the sidebar captures;
+  - scale to **530px wide**, the width of the sidebar set, so both tabs show their screenshots at the
+    same size (about 265px) and it stays at 2x;
+  - mask all but a few characters of any address.
+- **Register:** tagged `'narrow'` in `SCREENSHOT_SIZES` and shown full height like E19 onward, so each
+  is added to `FULL_HEIGHT_BY_IVAN` in `content.test.ts`.
+- **Box:** red, drawn by Ivan as on E20, where a step needs one.
+- **Text first:** before capturing, check each screen against the article's Mobile text. If the phone now
+  matches the Extension steps, report it instead: the Mobile text may be stale, and a proposed fix goes to
+  Ivan as ORIGINAL → PROPOSED before any capture is placed.
 
 ### A. Install
 
@@ -343,8 +391,10 @@ password screen issue is resolved, then follow the same pattern.
 - **Must show:** the App Store listing, with **Get**.
 - §7 names the App Store, so on an Android phone this is the one position that needs an iPhone.
 - **Save as:** `M01-install-app-store.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M01-install-app-store.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Done (2026-09-24):** Ivan's App Store capture in light mode with his box on **Get** (get2.jpg), scaled to 530 × 888. iOS only by his
+  call: a side-by-side iOS + Android image was previewed and was too small to read on a phone.
 
 ### B. Create a wallet
 
@@ -352,13 +402,13 @@ password screen issue is resolved, then follow the same pattern.
 - **Must show:** the **Welcome to Bread!** screen, with both of its options.
 - **Read L7, Mobile half:** the exact label of the create button.
 - **Save as:** `M02-create-welcome.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M02-create-welcome.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M03 · How do I create a Bread Wallet? · Mob · step 2
 - **Must show:** the screen for choosing how to protect the wallet, with the biometric option.
 - **Save as:** `M03-create-protect.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M03-create-protect.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M04 · How do I create a Bread Wallet? · Mob · step 5
@@ -366,28 +416,37 @@ password screen issue is resolved, then follow the same pattern.
 - **Read L2 and L5:** on the screen after it, its exact title and the label of the button that opens the
   wallet.
 - **Save as:** `M04-create-guardian.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M04-create-guardian.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
+**Done (2026-09-24):** the Mobile steps were rewritten against v1.16.1 and carry seven light-mode iPhone
+captures, 530px wide, one per step: M02 Welcome, M02a testnet notice, M03 protect, M03a Face ID prompt,
+M03b Confirmed!, M04 Choose your Guardian, M04a Your Wallet is ready! (IMG_0131–IMG_0137).
+
 ### C. Fund the wallet
+
+**Done (2026-09-24):** the phone now matches the Extension flow (v1.16.1: the **Fund your wallet** card on
+Home, `HomePrompts.tsx:64-67`), so the Mobile steps were rewritten and M05–M07 redefined: M05 Home with
+**Fund your wallet**, M06 **Wallet funded**, M07 **Activity** with the confirmed Faucet Request (IMG_0138–IMG_0140,
+light mode, 530px). The positions below describe the old Explore → Faucet flow and are superseded.
 
 #### M05 · How to fund your Bread Wallet? · Mob · step 1
 - **Must show:** the **Explore** tab.
 - **Save as:** `M05-fund-explore.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M05-fund-explore.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M06 · How to fund your Bread Wallet? · Mob · step 2
 - **Must show:** the **Faucet** card.
 - **Save as:** `M06-fund-faucet-card.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M06-fund-faucet-card.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M07 · How to fund your Bread Wallet? · Mob · step 3–4
 - **Must show:** the faucet page with the address, the amount, and the **Private** / **Public** choice. Mask
   all but a few characters of the address.
 - **Save as:** `M07-fund-faucet-page.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M07-fund-faucet-page.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 ### D. Find a token contract address
@@ -398,13 +457,13 @@ wallet at the moment. Skip this section until the article is published again.
 #### M08 · How to find a token contract address in Bread Wallet? · Mob · step 1
 - **Must show:** the homepage, with a token being selected.
 - **Save as:** `M08-token-homepage.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M08-token-homepage.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M09 · How to find a token contract address in Bread Wallet? · Mob · step 2
 - **Must show:** the Token Information section.
 - **Save as:** `M09-token-information.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M09-token-information.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 ### E. The encrypted file on Mobile
@@ -420,35 +479,42 @@ No screenshot here.
 Start fresh first: delete the app and install it again. The Mobile create flow shows no recovery phrase, so
 use the one from E04.
 
+**Done (2026-09-24):** the Mobile steps were rewritten against v1.16.1: no import-type choice and no
+Guardian list any more (the app finds the Guardian on **How would you like to recover this wallet?**), then
+**Open wallet**, the phone's biometric check, and the everyday-key rotation. Placed: M10 Welcome, M10a testnet
+notice, M12 Import Wallet (Ivan's capture with the words blurred, 469px source scaled to 530 × 747), M14 ready,
+M14a rotation (639px source). Step 4 carries M13, the recovery-method screen with the Guardian it found; step 6 has none by Ivan's
+call, like create-a-wallet step 8. The positions below are superseded where they differ.
+
 #### M10 · How do I restore my wallet with a recovery phrase? · Mob · step 1
 - **Must show:** the **Welcome to Bread!** screen, with **Recover your account**.
 - **Save as:** `M10-restore-welcome.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M10-restore-welcome.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M11 · How do I restore my wallet with a recovery phrase? · Mob · step 2
 - **Must show:** the import type choice.
 - **Save as:** `M11-restore-import-type.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M11-restore-import-type.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M12 · How do I restore my wallet with a recovery phrase? · Mob · step 3
 - **Must show:** the recovery-phrase entry, with the words blurred or replaced by sample words.
 - **Save as:** `M12-restore-phrase.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M12-restore-phrase.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M13 · How do I restore my wallet with a recovery phrase? · Mob · step 4
 - **Must show:** the Guardian operator list, with every operator and region visible.
 - **Save as:** `M13-restore-operators.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M13-restore-operators.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 #### M14 · How do I restore my wallet with a recovery phrase? · Mob · step 5
 - **Must show:** the ready screen at the end of the restore.
 - **Read L2 and L6:** its exact title and the label of the button that opens the wallet.
 - **Save as:** `M14-restore-ready.png`
-- **Capture as:** mobile run — the phone capture spec is set when that run starts, not here
+- **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M14-restore-ready.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
 
 ## Answers

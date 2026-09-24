@@ -265,10 +265,21 @@ When someone sends you tokens, they show up as a pending transfer on the **Activ
 **Steps:**
 
 1. Open Bread Wallet and select the **Activity** tab.
+
+   ![Bread Wallet's Activity page, with a pending transfer and the Accept Transfer button](E24-accept-activity.png)
+
 2. Select the **Pending** tab to see only the transfers you haven't accepted yet.
+
+   ![Bread Wallet's Activity page, with the Pending tab selected](E25-accept-pending-tab.png)
+
 3. Select a transfer card to expand it, and check the **From** address and **Amount** before you accept.
+
+   ![Bread Wallet's Activity page, with a transfer card expanded to show From and Amount](E26-accept-transfer-card.png)
+
 4. Select the **Accept Transfer** button. The button shows a loading indicator while the wallet adds the tokens to your balance.
-5. Once accepted, the transfer leaves the **Pending** tab. Select the **All** tab to find it as **Received**, marked **Confirmed**. Select it to see the transaction.
+5. Once accepted, the transfer leaves the **Pending** tab. Select the **Received** tab to find it as **Received**, marked **Confirmed**. Select it to see the details of the transaction.
+
+   ![Bread Wallet's Activity page, with the Received tab selected and the transfer marked Confirmed](E27-accept-received-tab.png)
 
 To accept everything at once, select the **Accept All** button at the bottom of the **Pending** tab.
 
@@ -288,7 +299,13 @@ If accepting a transfer fails, the transfer stays in your **Activity** list and 
 **Steps:**
 
 1. Open Bread Wallet and select the **Activity** tab.
+
+   ![Bread Wallet's Activity page, with a transfer showing the Retry button](E30-accept-fails-activity.png)
+
 2. Select the **Pending** tab and find the transfer card that shows a **Retry** button.
+
+   ![Bread Wallet's Activity page, with the Pending tab selected and the Retry button](E31-accept-fails-pending-tab.png)
+
 3. Select the **Retry** button to try again.
 
 If the expanded card shows a date when the transfer returns to the sender, try again before then.
