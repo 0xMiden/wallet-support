@@ -667,6 +667,24 @@ describe('fidelity to the FAQ', () => {
      * is held to it.
      */
     const FULL_HEIGHT_BY_IVAN = new Set([
+      // Phone captures are shown full height too (phone capture spec, 2026-09-24).
+      'M01-install-app-store.png',
+      'M02-create-welcome.png',
+      'M02a-create-testnet-notice.png',
+      'M03-create-protect.png',
+      'M03a-create-face-id.png',
+      'M03b-create-confirmed.png',
+      'M04-create-guardian.png',
+      'M04a-create-ready.png',
+      'M05-fund-home.png',
+      'M06-fund-wallet-funded.png',
+      'M07-fund-activity.png',
+      'M10-restore-welcome.png',
+      'M10a-restore-testnet-notice.png',
+      'M12-restore-phrase.png',
+      'M13-restore-recovery-method.png',
+      'M14-restore-ready.png',
+      'M14a-restore-rotating-key.png',
       'E07-fund-homepage.png',
       'E08-fund-activity.png',
       'E16-restore-recovery-choice.png',

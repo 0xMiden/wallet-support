@@ -261,12 +261,14 @@ describe('the migrated articles', () => {
   });
 
   it('shows every supplied image, each exactly once', () => {
+    // Each distinct body once: a body shared by both platforms is one page, and
+    // a Mobile body carries its own phone captures.
     const shown = helpCenterAllArticles.flatMap(article =>
-      [
-        ...renderMarkdown(article.bodies['extension-desktop'] ?? '', article.id, helpCenterArticleImages).matchAll(
-          /<img src="([^"]+)"/g
+      [...new Set(article.platforms.map(platform => article.bodies[platform] ?? ''))].flatMap(body =>
+        [...renderMarkdown(body, article.id, helpCenterArticleImages).matchAll(/<img src="([^"]+)"/g)].map(
+          match => match[1]
         )
-      ].map(match => match[1])
+      )
     );
     expect(shown.sort()).toEqual(Object.values(helpCenterArticleImages).map(image => image.src).sort());
   });

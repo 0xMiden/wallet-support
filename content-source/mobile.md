@@ -18,6 +18,9 @@ Format: "## " = Notion section, "### " = article title (verbatim), "> " = callou
 
 1. Open the App Store on iOS, or Google Play on Android, and search for *Bread Wallet*.
 2. Tap **Get** or **Install** and confirm the download as you normally would.
+
+   ![The Bread Wallet listing on the App Store, with the Get button highlighted](M01-install-app-store.png)
+
 3. Once it's installed, open the app and follow the prompts to set up your wallet.
 4. Don't forget to back up your recovery key somewhere safe and offline. This is very important.
 
@@ -27,32 +30,42 @@ After you install Bread Wallet, open the app. On the **Welcome to Bread!** scree
 
 **Steps:**
 
-Open the app and you'll land on the **Welcome to Bread!** screen.
-
 1. Tap **Get started** to create your new wallet.
-   [image removed]
-2. Choose how to protect your wallet.
-   - Bread asks how you'd like to lock your wallet.
-   - Since we're setting up biometrics, tap **Use Face ID or Biometric**.
-   [image removed]
-3. Your phone's built-in biometric setup prompt will pop up. Scan your fingerprint the way you normally would to unlock your phone.
-   - Want to use your face instead? Tap the **Face** tab at the top.
-   - Having trouble? Tap **Use PIN** to fall back to your device passcode.
-4. A green checkmark appears with the message **Confirmed! Only one more step!**
-   - Tap **Continue** to keep going.
-5. Pick your Guardian, then tap **Continue** to proceed. Note the Guardian operator can see your state, i.e., account balance and activity.
-   [image removed]
+
+   ![Bread Wallet's Welcome to Bread! screen, with the Get started button](M02-create-welcome.png)
+
+2. Read the Miden testnet notice, then tap **I understand**.
+
+   ![Bread Wallet's Miden testnet notice, with the I understand button](M02a-create-testnet-notice.png)
+
+3. Choose how to protect your wallet. Tap **Use FaceID or Biometric**, or tap **Set up your passcode** to use a passcode instead.
+
+   ![Bread Wallet's Choose how you want to protect your wallet screen, with the Use FaceID or Biometric button](M03-create-protect.png)
+
+4. Your phone asks whether Bread can use Face ID or your fingerprint. Tap **Allow**, or tap **Use passcode instead** to use a passcode.
+
+   ![The iPhone prompt asking to allow Bread to use Face ID, with the Allow button](M03a-create-face-id.png)
+
+5. When you see **Confirmed! Only one more step!**, tap **Continue**.
+
+   ![Bread Wallet's Confirmed! screen, with the Continue button](M03b-create-confirmed.png)
+
+6. On the **Choose your Guardian** screen, select a Guardian operator, then tap **Continue**. Note the Guardian operator can see your state, i.e., account balance and activity.
+
+   ![Bread Wallet's Choose your Guardian screen, with four Guardian operators and the Continue button](M04-create-guardian.png)
 
 > 🛡️ Think of a Guardian as a secure backup layer: it keeps a safe copy of your wallet's private info so you can recover it on a new device if you ever lose your phone — without ever holding your keys or your funds. You stay in full control the whole time.
 
-6. You'll see the **Your Wallet is ready** screen.
-   - Tap **Open wallet**.
-7. Unlock to open your wallet
-   - One last check: Bread Wallet asks you to unlock your wallet with the biometric you just set up. Scan your fingerprint and you're in.
-   - If the scan doesn't work, tap **Use PIN** to open your wallet with your device passcode instead.
+7. On the **Your Wallet is ready!** screen, tap **Open wallet**.
+
+   ![Bread Wallet's Your Wallet is ready! screen, with the Open wallet button](M04a-create-ready.png)
+
+8. One last check: Bread Wallet asks you to unlock your wallet with the biometric you just set up.
+   - **iPhone:** confirm with Face ID, and you're in.
+   - **Android:** scan your fingerprint, and you're in.
 
 > ⚠️ **Reminder:** Your wallet is created, but it isn't fully secured yet.
-> Bread will remind you daily on the home screen until your recovery key is backed up. The sooner you do it, the safer you are. Your recovery key is the master key to your wallet, and it's the only way to get your assets back if you lose or replace your phone.
+> Back up your recovery key within 7 days to fully secure your wallet. Bread will remind you daily on the home screen until you do. Your recovery key is the master key to your wallet, and it's the only way to get your assets back if you lose or replace your phone.
 > Keep it safe:
 > - Write it down on paper and store it somewhere safe and offline.
 > - Never share it with anyone — no real support team will ever ask for it.
@@ -60,12 +73,19 @@ Open the app and you'll land on the **Welcome to Bread!** screen.
 
 ### How to fund your Bread Wallet?
 
-Use the faucet to send testnet tokens to a wallet address. Testnet tokens are for testing only and do not have real-world value.
+Use the faucet to receive test MIDEN tokens in your wallet. Testnet tokens are for testing only and do not have real-world value.
 
-- From the wallet homepage, tap **Explore**.
-- Tap the **Faucet** card.
-- On the faucet page, enter the wallet address and the amount you want to request.
-- Select the note type for your request: **Private** or **Public**.
+1. On the wallet **Home** page, find the **Fund your wallet** section, then tap **Fund now**.
+
+   ![Bread Wallet's Home page on mobile, with the Fund your wallet section and Fund now](M05-fund-home.png)
+
+2. When **Wallet funded** appears, tap **Done**. Your tokens are on the way.
+
+   ![Bread Wallet's Wallet funded sheet, with the Done button](M06-fund-wallet-funded.png)
+
+3. Tap the **Activity** tab to track the request. The tokens are ready to use once the status changes to **Confirmed**.
+
+   ![Bread Wallet's Activity page on mobile, with a confirmed Faucet Request for 100 MIDEN](M07-fund-activity.png)
 
 ### How to find a token contract address in Bread Wallet?
 
@@ -113,19 +133,31 @@ Before you start, make sure you have:
 Steps:
 
 1. Open the Bread app. On the **Welcome to Bread!** screen, tap **Recover your account**.
-   [image removed]
+
+   ![Bread Wallet's Welcome to Bread! screen, with Recover your account](M10-restore-welcome.png)
+
 2. Read the Miden testnet notice, then tap **I understand**.
-   [image removed]
+
+   ![Bread Wallet's Miden testnet notice, with the I understand button](M10a-restore-testnet-notice.png)
+
 3. Enter your recovery key in the exact order you wrote it down, then tap **Continue**.
-   [image removed]
-4. If prompted, choose your Guardian operator. Pick one from the list:
-   - OpenZeppelin (US-EAST, the default)
-   - Gateway Operator (EU-NORTH)
-   - Lambda Class (EU-WEST)
-   [image removed]
-5. Your wallet is ready! You'll see the **Your Wallet is ready!** screen. Tap **Open wallet**.
-   [image removed]
-6. One final check: Bread asks you to unlock with your fingerprint to open your wallet. Scan it, and you're back in!
+
+   ![Bread Wallet's Import Wallet screen, with twelve numbered boxes for the recovery key](M12-restore-phrase.png)
+
+4. On the **How would you like to recover this wallet?** screen, keep **Import via Guardian** selected. Bread Wallet finds your Guardian for you. If it can't, pick the Guardian you used. Then tap **Continue**.
+
+   ![Bread Wallet's How would you like to recover this wallet? screen, with Import via Guardian and the Guardian it found](M13-restore-recovery-method.png)
+
+5. On the **Your Wallet is ready!** screen, tap **Open wallet**.
+
+   ![Bread Wallet's Your Wallet is ready! screen, with the Open wallet button](M14-restore-ready.png)
+
+6. One last check: Bread Wallet asks you to unlock your wallet with your phone's biometric.
+   - **iPhone:** confirm with Face ID, and you're in.
+   - **Android:** scan your fingerprint, and you're in.
+7. Wait while Bread Wallet rotates your everyday key. A recovered account needs this before it can sync and make transactions. Your wallet opens when it's done.
+
+   ![Bread Wallet rotating the everyday key of a recovered account](M14a-restore-rotating-key.png)
 
 > ⚠️ **Before you type your recovery key:** it's the master key to your wallet, and anyone who gets it can take everything.
 > - Only enter it in the official Bread Wallet app — never on a website, pop-up, or form.

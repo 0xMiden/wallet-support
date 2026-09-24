@@ -158,6 +158,24 @@ const ARTICLE_IMAGE_SIZES: Readonly<Record<string, readonly [number, number]>> =
 export type ScreenshotSize = readonly [number, number] | readonly [number, number, 'narrow'];
 
 export const SCREENSHOT_SIZES: Readonly<Record<string, ScreenshotSize>> = {
+  // Phone captures, prepared to the phone capture spec (530px wide).
+  'M01-install-app-store.png': [530, 888, 'narrow'],
+  'M02-create-welcome.png': [530, 1013, 'narrow'],
+  'M02a-create-testnet-notice.png': [530, 1010, 'narrow'],
+  'M03-create-protect.png': [530, 1006, 'narrow'],
+  'M03a-create-face-id.png': [530, 1010, 'narrow'],
+  'M03b-create-confirmed.png': [530, 1013, 'narrow'],
+  'M04-create-guardian.png': [530, 1012, 'narrow'],
+  'M04a-create-ready.png': [530, 1013, 'narrow'],
+  'M05-fund-home.png': [530, 1007, 'narrow'],
+  'M06-fund-wallet-funded.png': [530, 1015, 'narrow'],
+  'M07-fund-activity.png': [530, 1011, 'narrow'],
+  'M10-restore-welcome.png': [530, 1013, 'narrow'],
+  'M10a-restore-testnet-notice.png': [530, 1010, 'narrow'],
+  'M12-restore-phrase.png': [530, 747, 'narrow'],
+  'M13-restore-recovery-method.png': [530, 1012, 'narrow'],
+  'M14-restore-ready.png': [530, 1013, 'narrow'],
+  'M14a-restore-rotating-key.png': [530, 1062, 'narrow'],
   'E01-install-web-store.png': [1783, 363],
   'E01a-install-add-extension.png': [870, 486, 'narrow'],
   'E02-install-pin.png': [870, 487, 'narrow'],
