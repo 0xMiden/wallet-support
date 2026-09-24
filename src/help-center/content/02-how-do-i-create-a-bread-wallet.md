@@ -44,9 +44,6 @@ After you install Bread Wallet, open the app. On the **Welcome to Bread!** scree
 4. Your phone asks whether Bread can use Face ID or your fingerprint. Tap **Allow**, or tap **Use passcode instead** to use a passcode.
 5. When you see **Confirmed! Only one more step!**, tap **Continue**.
 6. On the **Choose your Guardian** screen, select a Guardian operator, then tap **Continue**. Note the Guardian operator can see your state, i.e., account balance and activity.
-
-> 🛡️ Think of a Guardian as a secure backup layer: it keeps a safe copy of your wallet's private info so you can recover it on a new device if you ever lose your phone — without ever holding your keys or your funds. You stay in full control the whole time.
-
 7. On the **Your Wallet is ready!** screen, tap **Open wallet**.
 
 > ⚠️ **Reminder:** Your wallet is created, but it isn't fully secured yet.
