@@ -661,8 +661,9 @@ describe('fidelity to the FAQ', () => {
      * Used exactly as captured, not cropped, by Ivan's call (2026-09-18), so
      * they are let past the height ceiling. E16 is shown whole rather than
      * split in two, also his call (2026-09-23), and the Guardian switch sidebar
-     * captures E19 to E23 are used as captured like E07 and E08. Every other
-     * capture is held to it.
+     * captures E19 to E23 and the accept-a-transfer captures E24 to E27
+     * (2026-09-24) are used as captured like E07 and E08. Every other capture
+     * is held to it.
      */
     const FULL_HEIGHT_BY_IVAN = new Set([
       'E07-fund-homepage.png',
@@ -672,7 +673,11 @@ describe('fidelity to the FAQ', () => {
       'E20-guardian-settings-menu.png',
       'E21-guardian-settings.png',
       'E22-guardian-choose.png',
-      'E23-guardian-review.png'
+      'E23-guardian-review.png',
+      'E24-accept-activity.png',
+      'E25-accept-pending-tab.png',
+      'E26-accept-transfer-card.png',
+      'E27-accept-received-tab.png'
     ]);
     for (const name of FULL_HEIGHT_BY_IVAN) expect(SCREENSHOT_SIZES[name], `${name}: not a registered screenshot`).toBeDefined();
 
