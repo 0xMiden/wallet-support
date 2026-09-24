@@ -18,6 +18,9 @@ Format: "## " = Notion section, "### " = article title (verbatim), "> " = callou
 
 1. Open the App Store on iOS, or Google Play on Android, and search for *Bread Wallet*.
 2. Tap **Get** or **Install** and confirm the download as you normally would.
+
+   ![The Bread Wallet listing on the App Store, with the Get button highlighted](M01-install-app-store.png)
+
 3. Once it's installed, open the app and follow the prompts to set up your wallet.
 4. Don't forget to back up your recovery key somewhere safe and offline. This is very important.
 

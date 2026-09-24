@@ -364,6 +364,8 @@ captures (E19 onward) on the **Extension** tab.
 - **Save as:** `M01-install-app-store.png`
 - **Capture as:** phone, see *Phone capture spec* above
 - **Then register:** `'M01-install-app-store.png': [width, height],` in `SCREENSHOT_SIZES`, `src/help-center/content.ts`
+- **Done (2026-09-24):** Ivan's App Store capture with his box on **Get**, scaled to 530 × 893. iOS only by his
+  call: a side-by-side iOS + Android image was previewed and was too small to read on a phone.
 
 ### B. Create a wallet
 

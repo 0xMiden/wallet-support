@@ -665,6 +665,8 @@ describe('fidelity to the FAQ', () => {
      * capture is held to it.
      */
     const FULL_HEIGHT_BY_IVAN = new Set([
+      // Phone captures are shown full height too (phone capture spec, 2026-09-24).
+      'M01-install-app-store.png',
       'E07-fund-homepage.png',
       'E08-fund-activity.png',
       'E16-restore-recovery-choice.png',

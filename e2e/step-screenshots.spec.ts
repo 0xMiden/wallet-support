@@ -10,12 +10,14 @@ import { expect, test } from '@playwright/test';
  */
 
 const BODY = '.help-center-article-body';
+const INSTALL_MOBILE = '/?platform=mobile#setup-and-basic-use/how-to-install-bread-wallet';
 const INSTALL = '/#setup-and-basic-use/how-to-install-bread-wallet';
 const CREATE = '/#setup-and-basic-use/how-do-i-create-a-bread-wallet';
 const RESTORE = '/#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase';
 const SWITCH = '/#guardian-protection/how-do-i-switch-guardian-operators';
 
 for (const { article, route, count } of [
+  { article: 'mobile install', route: INSTALL_MOBILE, count: 1 },
   { article: 'install', route: INSTALL, count: 3 },
   { article: 'create', route: CREATE, count: 5 },
   { article: 'restore', route: RESTORE, count: 7 },
