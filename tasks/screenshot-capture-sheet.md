@@ -396,6 +396,11 @@ M03b Confirmed!, M04 Choose your Guardian, M04a Your Wallet is ready! (IMG_0131�
 
 ### C. Fund the wallet
 
+**Done (2026-09-24):** the phone now matches the Extension flow (v1.16.1: the **Fund your wallet** card on
+Home, `HomePrompts.tsx:64-67`), so the Mobile steps were rewritten and M05–M07 redefined: M05 Home with
+**Fund your wallet**, M06 **Wallet funded**, M07 **Activity** with the confirmed Faucet Request (IMG_0138–IMG_0140,
+light mode, 530px). The positions below describe the old Explore → Faucet flow and are superseded.
+
 #### M05 · How to fund your Bread Wallet? · Mob · step 1
 - **Must show:** the **Explore** tab.
 - **Save as:** `M05-fund-explore.png`
