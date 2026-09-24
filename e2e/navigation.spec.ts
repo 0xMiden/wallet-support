@@ -72,6 +72,33 @@ test('a shared ?q= link opens the results it names', async ({ page }) => {
   await expect(page.locator('.help-center-card-link').first()).toBeVisible();
 });
 
+test('a search result opens its article and leaves the search', async ({ page }) => {
+  // The regression this guards (Ivan, 2026-09-24): the result link changed the
+  // hash and nothing else, so the results kept rendering over the article.
+  await page.goto('/?q=restore');
+  await expect(page.locator(RESULTS)).toContainText('for “restore”');
+
+  await page.locator('.help-center-card-link', { hasText: 'How do I restore my wallet with a recovery key?' }).click();
+
+  await expect(page.locator(RESULTS)).toHaveCount(0);
+  await expect(page.locator('h1')).toHaveText('How do I restore my wallet with a recovery key?');
+  await expect(page).toHaveURL(/#security-and-recovery\/how-do-i-restore-my-wallet-with-a-recovery-phrase$/);
+  await expect(page).not.toHaveURL(/q=/);
+});
+
+test('a search result for the article already open still leaves the search', async ({ page }) => {
+  // Same hash, so no hashchange fires: only the click can end the search.
+  await page.goto('/#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase');
+  await page.locator('.help-center-search input').fill('restore');
+  await expect(page.locator(RESULTS)).toContainText('for “restore”');
+
+  await page.locator('.help-center-card-link', { hasText: 'How do I restore my wallet with a recovery key?' }).click();
+
+  await expect(page.locator(RESULTS)).toHaveCount(0);
+  await expect(page.locator('h1')).toHaveText('How do I restore my wallet with a recovery key?');
+  await expect(page).not.toHaveURL(/q=/);
+});
+
 test('searching keeps the platform, and the platform keeps the search', async ({ page }) => {
   // The stated case — choosing Mobile with a search active — is not reachable:
   // the tabs live inside the section that is hidden while results show. This

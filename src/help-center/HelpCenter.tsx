@@ -554,17 +554,26 @@ export function HelpCenter() {
    * link to the page already open, which fires no hashchange and so never
    * reaches the handler above. Checked once on the shell rather than on each
    * link, so every route link counts: the tree's rows and Glossary link, the
-   * breadcrumb, and the footer alike. A hash that is not a route, such as an On
-   * this page anchor, leaves the highlight where it is.
+   * breadcrumb, the footer, and the search results alike. A hash that is not a
+   * route, such as an On this page anchor, leaves the highlight where it is.
+   *
+   * It also leaves the search behind. The results render whenever a query is
+   * set, so a result link changed the hash and nothing else: the reader asked
+   * for the article and kept the results (Ivan, 2026-09-24). Here rather than
+   * in the hashchange handler, because a result for the page already open
+   * fires no hashchange, and because a shared ?q= link read on arrival must
+   * still show its results.
    */
-  const releaseSelectionOnRouteLink = (event: MouseEvent<HTMLDivElement>) => {
+  const followRouteLink = (event: MouseEvent<HTMLDivElement>) => {
     const link = event.target instanceof Element ? event.target.closest('a[href^="#"]') : null;
-    if (link && routeFromHash(link.getAttribute('href') ?? '') !== null) setSelectedMainCategoryId(null);
+    if (!link || routeFromHash(link.getAttribute('href') ?? '') === null) return;
+    setSelectedMainCategoryId(null);
+    setQuery('');
   };
 
 
   return (
-    <div className="help-center-shell" onClick={releaseSelectionOnRouteLink}>
+    <div className="help-center-shell" onClick={followRouteLink}>
       <a
         className="help-center-skip-link"
         href="#help-center-content"
