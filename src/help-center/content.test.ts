@@ -680,6 +680,7 @@ describe('fidelity to the FAQ', () => {
       'M10-restore-welcome.png',
       'M10a-restore-testnet-notice.png',
       'M12-restore-phrase.png',
+      'M13-restore-recovery-method.png',
       'M14-restore-ready.png',
       'M14a-restore-rotating-key.png',
       'E07-fund-homepage.png',

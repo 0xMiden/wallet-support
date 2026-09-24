@@ -145,6 +145,9 @@ Steps:
    ![Bread Wallet's Import Wallet screen, with twelve numbered boxes for the recovery key](M12-restore-phrase.png)
 
 4. On the **How would you like to recover this wallet?** screen, keep **Import via Guardian** selected. Bread Wallet finds your Guardian for you. If it can't, pick the Guardian you used. Then tap **Continue**.
+
+   ![Bread Wallet's How would you like to recover this wallet? screen, with Import via Guardian and the Guardian it found](M13-restore-recovery-method.png)
+
 5. On the **Your Wallet is ready!** screen, tap **Open wallet**.
 
    ![Bread Wallet's Your Wallet is ready! screen, with the Open wallet button](M14-restore-ready.png)
