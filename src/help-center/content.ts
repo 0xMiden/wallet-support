@@ -159,7 +159,7 @@ export type ScreenshotSize = readonly [number, number] | readonly [number, numbe
 
 export const SCREENSHOT_SIZES: Readonly<Record<string, ScreenshotSize>> = {
   // Phone captures, prepared to the phone capture spec (530px wide).
-  'M01-install-app-store.png': [530, 893, 'narrow'],
+  'M01-install-app-store.png': [530, 888, 'narrow'],
   'E01-install-web-store.png': [1783, 363],
   'E01a-install-add-extension.png': [870, 486, 'narrow'],
   'E02-install-pin.png': [870, 487, 'narrow'],
