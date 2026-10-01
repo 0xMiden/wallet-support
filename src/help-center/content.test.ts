@@ -695,6 +695,7 @@ describe('fidelity to the FAQ', () => {
       'M14a-restore-rotating-key.png',
       'E06-create-guardian.png',
       'E07-fund-homepage.png',
+      'E07a-fund-funding.png',
       'E08-fund-activity.png',
       'E15-restore-phrase-boxes.png',
       'E16-restore-recovery-choice.png',

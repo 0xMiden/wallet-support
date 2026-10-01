@@ -24,15 +24,19 @@ When you install Bread Wallet, there are two options to choose between: **Get st
 
    ![Bread Wallet's Create password page, with the Continue button](E05-create-password.png)
 
-4. On the **Choose your Guardian** page, you can select a Guardian operator and then click **Continue**.
+4. On the **Set up your account** page, select each of the three points to confirm you've read it. Bread Wallet picks the fastest Guardian operator for you; to pick another, select **Choose a different Guardian**. Then click **Continue**.
 
-   ![Bread Wallet's Choose your Guardian page, with the Continue button](E06-create-guardian.png)
+   ![Bread Wallet's Set up your account page, with the three points checked, the Guardian it picked, and the Continue button](E06-create-guardian.png)
 
-5. Congrats, your wallet is ready! Click the **Open wallet** button; it will close the tab automatically and open the sidebar for you.
+5. On the **Help improve Wallet** page, choose **Share usage data** or **Not now**.
+
+   ![Bread Wallet's Help improve Wallet page, with the Share usage data and Not now buttons](E06b-create-help-improve.png)
+
+6. Congrats, your wallet is ready! Click the **Open wallet** button; it will close the tab automatically and open the sidebar for you.
 
 For help choosing a Guardian, see [*Why should I pick a Guardian-backed account over a more private one?*](#guardian-protection/why-should-i-pick-a-guardian-backed-account-over-a-more-private-one)
 
-   ![Bread Wallet's Your Wallet is ready screen, with the Open wallet button](E06a-create-wallet-ready.png)
+   ![Bread Wallet's Your wallet is ready! screen, with the Open wallet button](E06a-create-wallet-ready.png)
 
 <!-- platform: mobile -->
 

@@ -283,12 +283,12 @@ When someone sends you tokens, they show up as a pending transfer on the **Activ
 
    ![Bread Wallet's Activity page, with a transfer card expanded to show From and Amount](E26-accept-transfer-card.png)
 
-4. Select the **Accept Transfer** button. The button shows a loading indicator while the wallet adds the tokens to your balance.
+4. Select the **Accept Transfer** button. The button changes to **Accepting…** while the wallet adds the tokens to your balance.
 5. Once accepted, the transfer leaves the **Pending** tab. Select the **Received** tab to find it as **Received**, marked **Confirmed**. Select it to see the details of the transaction.
 
    ![Bread Wallet's Activity page, with the Received tab selected and the transfer marked Confirmed](E27-accept-received-tab.png)
 
-To accept everything at once, select the **Accept All** button at the bottom of the **Pending** tab.
+To accept everything at once, select **Accept All** in the row above the list on the **Pending** tab, which shows how many transfers are waiting and their total.
 
 If accepting fails, see *What should I do if accepting a transfer fails?*.
 
@@ -296,7 +296,7 @@ If accepting fails, see *What should I do if accepting a transfer fails?*.
 
 **Decline** only hides a transfer from **Activity** on this device. It does not return the tokens to the sender or delete the transfer. To bring hidden transfers back, select the **Pending** tab, then select the **Restore** button next to **Hidden transfers**.
 
-Only MIDEN token is accepted automatically, when **Auto Consume** in the settings is on, so it may not appear as a pending transfer.
+Only MIDEN token is accepted automatically, when **Auto-accept MIDEN transfers** is on in **General** settings, so it may not appear as a pending transfer.
 
 ### 19. What should I do if accepting a transfer fails?
 Category: Troubleshooting › Common issues
@@ -317,6 +317,6 @@ If accepting a transfer fails, the transfer stays in your **Activity** list and 
 
 If the expanded card shows a date when the transfer returns to the sender, try again before then.
 
-If it keeps failing, see *My token is stuck on Consuming (receiver address)*, or report it to our [**SUPPORT**](/feedback).
+If it keeps failing, see *My transfer is stuck on Accepting stage*, or report it to our [**SUPPORT**](/feedback).
 
 To learn how accepting works, see *How do I accept a pending transfer?*.
