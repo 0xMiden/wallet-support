@@ -49,9 +49,10 @@ Sizes from this run, which supersede the sizes given under each position above:
   E16b is now the sidebar showing **Rotating your everyday key**, which is where 1.16.2 shows it.
 
 E06, E15 and E16b are shown whole rather than split (Ivan, 2026-10-01). No capture carries a box.
-E01, E01a and E02 (Chrome's own screens) were not retaken. A captured **Choose your import type**
-page (restore, after the testnet notice) is held until the recovery vocabulary is decided, so Q2's
-answer below no longer holds for 1.16.2: the page is back.
+E01, E01a and E02 (Chrome's own screens) were not retaken. **E14a-restore-import-type**, 822 x 615
+(new, 2026-10-01): the **Choose your import type** page after the testnet notice, with **Import with
+recovery phrase**, quoted as the button reads (Ivan's ruling on on-screen labels). Q2's answer below
+no longer holds for 1.16.2: the page is back.
 
 ## Image spec — keep this open while capturing
 

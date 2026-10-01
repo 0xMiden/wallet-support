@@ -1136,6 +1136,16 @@ describe('the key-structure vocabulary', () => {
    * word used correctly: "seed phrase", which the wallet's own screen says, is
    * left alone.
    *
+   * The same holds for any label the wallet shows: an on-screen label is quoted
+   * exactly as it reads, retired words and all, because a help page that names a
+   * different label than the button sends the reader hunting for one that does
+   * not exist (Ivan, 2026-10-01; 1.16.2's restore button reads "Import with
+   * recovery phrase"). The house style already marks labels: bold, with any
+   * punctuation outside the bold. So a bold span is a label, exempt here, and
+   * prose is not, including a bold run-in heading such as "**Before you
+   * start:**", which ends in its own colon or full stop and is checked like
+   * any other sentence. Titles carry no labels and are always checked.
+   *
    * The glossary's Key and Signing entries define the general cryptography
    * term, where a private key pairs with a public key; they are the one place
    * "private key" stays, checked by GENERIC_CRYPTOGRAPHY below.
@@ -1152,12 +1162,31 @@ describe('the key-structure vocabulary', () => {
 
   // A link target is an article's id, and ids stay as they were so links
   // already shared keep working; only the words a reader sees are checked.
+  // A bold span whose text does not end in a colon or full stop: an on-screen
+  // label in house style. Its words are what the wallet shows, so they are not
+  // the article's to rename.
+  const ON_SCREEN_LABEL = /\*\*(?![^*]*[:.]\*\*)[^*\n]+\*\*/g;
+
   function retired(text: string) {
-    const words = text.replace(/\]\(#[^)]*\)/g, '](#)');
+    const words = text.replace(/\]\(#[^)]*\)/g, '](#)').replace(ON_SCREEN_LABEL, '**label**');
     return BANNED.flatMap(({ pattern, instead }) =>
       (words.match(pattern) ?? []).map(match => `"${match}" — say "${instead}"`)
     );
   }
+
+  it('quotes an on-screen label as it reads, but holds the same words in prose to the vocabulary', () => {
+    // The label is exempt…
+    expect(retired('3. Select **Import with recovery phrase**.')).toEqual([]);
+    expect(retired('Select **Reveal recovery phrase**, then **Hide Recovery Phrase**.')).toEqual([]);
+    // …the same words outside it are not, even in the same sentence…
+    expect(retired('Keep your recovery phrase safe.')).toHaveLength(1);
+    expect(retired('Select **Import with recovery phrase** and type your recovery phrase.')).toHaveLength(1);
+    // …and a bold run-in heading is prose, told apart by the colon or full stop
+    // inside its bold that a label in house style never has.
+    expect(retired('**Before you type your recovery phrase:** it is the master key.')).toHaveLength(1);
+    expect(retired('**Never share your recovery phrase.**')).toHaveLength(1);
+    expect(retired('**Keep your cold key offline:**')).toHaveLength(1);
+  });
 
   it('names the keys everyday, emergency and Guardian in every article, held-back ones included', () => {
     // helpCenterAllArticles, not helpCenterArticles: a held-back article is

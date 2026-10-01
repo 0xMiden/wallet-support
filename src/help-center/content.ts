@@ -206,6 +206,7 @@ export const SCREENSHOT_SIZES: Readonly<Record<string, ScreenshotSize>> = {
   'E34-guardian-rotated.png': [540, 1287, 'narrow'],
   'E13-restore-welcome.png': [822, 825, 'narrow'],
   'E14-restore-testnet-notice.png': [822, 1002, 'narrow'],
+  'E14a-restore-import-type.png': [822, 615, 'narrow'],
   'E15-restore-phrase-boxes.png': [822, 1143, 'narrow'],
   'E15a-restore-password.png': [822, 867, 'narrow'],
   'E16-restore-recovery-choice.png': [822, 1161, 'narrow'],

@@ -136,19 +136,23 @@ Before you start, make sure you have:
 
    ![Bread Wallet's Miden Testnet notice, with the I understand button](E14-restore-testnet-notice.png)
 
-3. Enter your recovery key in the exact order you wrote it down, then select **Continue**.
+3. On the **Choose your import type** page, select **Import with recovery phrase**.
+
+   ![Bread Wallet's Choose your import type page, with the two ways to import a wallet](E14a-restore-import-type.png)
+
+4. Enter your recovery key in the exact order you wrote it down, then select **Continue**.
 
    ![Bread Wallet's Import Wallet page, with the numbered recovery key boxes](E15-restore-phrase-boxes.png)
 
-4. Create a new password with at least 8 characters and 1 number, then select **Continue**.
+5. Create a new password with at least 8 characters and 1 number, then select **Continue**.
 
    ![Bread Wallet's Create password page, with the Continue button](E15a-restore-password.png)
 
-5. Follow the account-recovery prompts shown for your wallet setup.
+6. Follow the account-recovery prompts shown for your wallet setup.
 
    ![Bread Wallet's account recovery page, with the Guardian operators and the Continue button](E16-restore-recovery-choice.png)
 
-6. Select **Open wallet** when recovery is complete.
+7. Select **Open wallet** when recovery is complete.
 
    ![Bread Wallet's Your Wallet is ready screen, with the Open wallet button](E16a-restore-wallet-ready.png)
 
