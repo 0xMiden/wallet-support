@@ -1123,9 +1123,12 @@ describe('the key-structure vocabulary', () => {
    * key and the Guardian key. The recovery phrase is not a key; it rebuilds the
    * emergency key. The Miden blog calls the first two "hot key" and "cold key",
    * and the articles once said "device key". The words that restore the wallet
-   * are the recovery key, never the "recovery phrase" or a "private key" (Ivan,
-   * 2026-09-23). None of the retired names appear on the site, and this is what
-   * keeps it that way when the next article is written from the blog.
+   * are the recovery phrase, as the wallet calls them, never the "recovery key"
+   * or a "private key" (Ivan, 2026-10-01; from 2026-09-23 to then the site said
+   * "recovery key", until wallet 1.16.2 settled on "recovery phrase" and used
+   * "recovery key" for the emergency key). None of the retired names appear in
+   * the site's own sentences, and this is what keeps it that way when the next
+   * article is written from the blog.
    *
    * The hot and cold patterns are deliberately NOT symmetrical. "hot key" and
    * "hot-key" are caught; the closed "hotkey" is not, because that spelling
@@ -1133,8 +1136,18 @@ describe('the key-structure vocabulary', () => {
    * "coldkey" has no such competing sense, so the closed form stays banned
    * there, and so does "devicekey". A guard that only catches the spacing the
    * source happened to pick is not a guard — but neither is one that fails on a
-   * word used correctly: "seed phrase", which the wallet's own screen says, is
-   * left alone.
+   * word used correctly: "seed phrase", the name other wallets give the same
+   * words, is left alone.
+   *
+   * The same holds for any label the wallet shows: an on-screen label is quoted
+   * exactly as it reads, retired words and all, because a help page that names a
+   * different label than the button sends the reader hunting for one that does
+   * not exist (Ivan, 2026-10-01; 1.16.2 calls the emergency key "Guardian
+   * recovery key" on some screens). The house style already marks labels: bold, with any
+   * punctuation outside the bold. So a bold span is a label, exempt here, and
+   * prose is not, including a bold run-in heading such as "**Before you
+   * start:**", which ends in its own colon or full stop and is checked like
+   * any other sentence. Titles carry no labels and are always checked.
    *
    * The glossary's Key and Signing entries define the general cryptography
    * term, where a private key pairs with a public key; they are the one place
@@ -1143,8 +1156,8 @@ describe('the key-structure vocabulary', () => {
   const BANNED = [
     { pattern: /hot[ \u00a0-]keys?/gi, instead: 'everyday key' },
     { pattern: /cold[ \u00a0-]?keys?/gi, instead: 'emergency key' },
-    { pattern: /recovery[ \u00a0-]phrases?/gi, instead: 'recovery key' },
-    { pattern: /private[ \u00a0-]keys?/gi, instead: 'recovery key' },
+    { pattern: /recovery[ \u00a0-]keys?/gi, instead: 'recovery phrase' },
+    { pattern: /private[ \u00a0-]keys?/gi, instead: 'recovery phrase' },
     { pattern: /device[ \u00a0-]?keys?/gi, instead: 'everyday key' }
   ] as const;
 
@@ -1152,12 +1165,31 @@ describe('the key-structure vocabulary', () => {
 
   // A link target is an article's id, and ids stay as they were so links
   // already shared keep working; only the words a reader sees are checked.
+  // A bold span whose text does not end in a colon or full stop: an on-screen
+  // label in house style. Its words are what the wallet shows, so they are not
+  // the article's to rename.
+  const ON_SCREEN_LABEL = /\*\*(?![^*]*[:.]\*\*)[^*\n]+\*\*/g;
+
   function retired(text: string) {
-    const words = text.replace(/\]\(#[^)]*\)/g, '](#)');
+    const words = text.replace(/\]\(#[^)]*\)/g, '](#)').replace(ON_SCREEN_LABEL, '**label**');
     return BANNED.flatMap(({ pattern, instead }) =>
       (words.match(pattern) ?? []).map(match => `"${match}" — say "${instead}"`)
     );
   }
+
+  it('quotes an on-screen label as it reads, but holds the same words in prose to the vocabulary', () => {
+    // The label is exempt…
+    expect(retired('Some screens call it your **Guardian recovery key**.')).toEqual([]);
+    expect(retired('It is your **recovery (cold) key**, then **Private Key**.')).toEqual([]);
+    // …the same words outside it are not, even in the same sentence…
+    expect(retired('Keep your recovery key safe.')).toHaveLength(1);
+    expect(retired('Some screens say **Guardian recovery key** for your recovery key.')).toHaveLength(1);
+    // …and a bold run-in heading is prose, told apart by the colon or full stop
+    // inside its bold that a label in house style never has.
+    expect(retired('**Before you type your recovery key:** it is the master key.')).toHaveLength(1);
+    expect(retired('**Never share your recovery key.**')).toHaveLength(1);
+    expect(retired('**Keep your cold key offline:**')).toHaveLength(1);
+  });
 
   it('names the keys everyday, emergency and Guardian in every article, held-back ones included', () => {
     // helpCenterAllArticles, not helpCenterArticles: a held-back article is
@@ -1188,13 +1220,17 @@ describe('the key-structure vocabulary', () => {
   });
 
   it('is the vocabulary in the interface too, not only the articles', () => {
-    const components = import.meta.glob<string>('./*.tsx', {
+    // The feedback page sits beside the Help Center and gives the same safety
+    // advice, so it is held to the same words (its "recovery key" was missed
+    // until 2026-10-01 because only this folder was read).
+    const components = import.meta.glob<string>(['./*.tsx', '../feedback/*.tsx'], {
       query: '?raw',
       import: 'default',
       eager: true
     });
 
     expect(Object.keys(components).length).toBeGreaterThan(0);
+    expect(Object.keys(components), 'the feedback page was moved or renamed').toContain('../feedback/FeedbackPage.tsx');
 
     for (const [file, source] of Object.entries(components)) {
       expect(retired(source), file).toEqual([]);
@@ -1234,8 +1270,8 @@ describe('the key-structure vocabulary', () => {
      */
     const VOCABULARY =
       'Use the house vocabulary for the account keys: everyday key (not "hot key" or "device key"), ' +
-      'emergency key (not "cold key"), recovery key for the words that restore the wallet (not "recovery ' +
-      'phrase" or "private key"; Ivan, 2026-09-23), and Guardian key (it acknowledges state updates; it ' +
+      'emergency key (not "cold key"), recovery phrase for the words that restore the wallet (not "recovery ' +
+      'key" or "private key"; Ivan, 2026-10-01, matching the wallet), and Guardian key (it acknowledges state updates; it ' +
       'does not co-sign).';
     const guide = claudeGuide.replace(/\s+/g, ' ');
 
@@ -1249,13 +1285,13 @@ describe('the key-structure vocabulary', () => {
       ['Hot-keys', 'everyday key'],
       ['cold key', 'emergency key'],
       ['coldkey', 'emergency key'],
-      ['recovery phrase', 'recovery key'],
-      ['Recovery Phrase', 'recovery key'],
-      ['recovery-phrase', 'recovery key'],
-      ['recovery phrases', 'recovery key'],
-      ['recovery\u00a0phrase', 'recovery key'],
-      ['private key', 'recovery key'],
-      ['Private Keys', 'recovery key'],
+      ['recovery key', 'recovery phrase'],
+      ['Recovery Key', 'recovery phrase'],
+      ['recovery-key', 'recovery phrase'],
+      ['recovery keys', 'recovery phrase'],
+      ['recovery\u00a0key', 'recovery phrase'],
+      ['private key', 'recovery phrase'],
+      ['Private Keys', 'recovery phrase'],
       ['device key', 'everyday key'],
       ['Device Keys', 'everyday key'],
       ['device-keys', 'everyday key'],
@@ -1265,12 +1301,12 @@ describe('the key-structure vocabulary', () => {
       expect(retired(`Keep your ${name} safe.`), name).toEqual([`"${name}" — say "${instead}"`]);
     }
 
-    // The words the site does use, the recovery key above all.
+    // The words the site does use, the recovery phrase above all.
     for (const sentence of [
-      'Keep your recovery key offline and never share it.',
-      'Your seed phrase is your recovery key.',
-      'Write down both recovery keys.',
-      'an everyday key on your device, an emergency key rebuilt from your recovery key, and the Guardian key',
+      'Keep your recovery phrase offline and never share it.',
+      'Your seed phrase is your recovery phrase.',
+      'Write down both recovery phrases.',
+      'an everyday key on your device, an emergency key rebuilt from your recovery phrase, and the Guardian key',
       'Guardian keeps a backup so you can recover on another device.',
       'Press a hotkey to open search.'
     ]) {

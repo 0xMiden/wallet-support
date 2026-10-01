@@ -1,6 +1,6 @@
 <!--
 Source: Notion › Miden Workspace › COMMUNITY › "Bread Wallet Help Center" (page 28d99411-cf90-80b2-b4ac-cb1107193585), read 3 Sep 2026.
-Owner-approved corrections applied (per tasks/content-proposal.md): install title unified; "How do I restore my wallet with a recovery key?" body replaced with the extension flow (§6); store link labels read **Bread Wallet**.
+Owner-approved corrections applied (per tasks/content-proposal.md): install title unified; "How do I restore my wallet with a recovery phrase?" body replaced with the extension flow (§6); store link labels read **Bread Wallet**.
 Images removed; each removed image is marked with a line "[image removed]".
 Format: "## " = Notion section, "### " = article title (verbatim), "> " = callout.
 -->
@@ -111,19 +111,19 @@ Other browsers and platforms are not currently supported. For the install steps,
 
 ### Can I recover stolen assets?
 
-Once a transaction is confirmed on the blockchain, it can't be reversed or refunded. If someone has gained access to your recovery key or backup, they can control your wallet, and funds they move are generally not recoverable.
+Once a transaction is confirmed on the blockchain, it can't be reversed or refunded. If someone has gained access to your recovery phrase or backup, they can control your wallet, and funds they move are generally not recoverable.
 
-The most important step if you've been compromised: move your remaining assets to a brand-new wallet, one with a brand-new recovery key the attacker has never seen, as quickly as you safely can. To protect it, see [*How do I keep my wallet secure?*](#security-and-recovery/how-do-i-keep-my-wallet-secure)
+The most important step if you've been compromised: move your remaining assets to a brand-new wallet, one with a brand-new recovery phrase the attacker has never seen, as quickly as you safely can. To protect it, see [*How do I keep my wallet secure?*](#security-and-recovery/how-do-i-keep-my-wallet-secure)
 
 **Important note:**
 
-Never share your recovery key or backup password with anyone offering to *recover* or *restore* hacked funds. This is one of the most common scams, and it only makes things worse. Bread Wallet support will never ask for your recovery key, and neither will a Guardian operator.
+Never share your recovery phrase or backup password with anyone offering to *recover* or *restore* hacked funds. This is one of the most common scams, and it only makes things worse. Bread Wallet support will never ask for your recovery phrase, and neither will a Guardian operator.
 
-### How do I restore my wallet with a recovery key?
+### How do I restore my wallet with a recovery phrase?
 
 Before you start, make sure you have:
 
-- Your recovery key (sometimes called a seed phrase), written down and ready to enter.
+- Your recovery phrase (sometimes called a seed phrase), written down and ready to enter.
 - A fresh install of Bread Wallet in your Chrome browser.
 
 **Steps:**
@@ -136,19 +136,23 @@ Before you start, make sure you have:
 
    ![Bread Wallet's Miden Testnet notice, with the I understand button](E14-restore-testnet-notice.png)
 
-3. Enter your recovery key in the exact order you wrote it down, then select **Continue**.
+3. On the **Choose your import type** page, select **Import with recovery phrase**.
 
-   ![Bread Wallet's Import Wallet page, with the numbered recovery key boxes](E15-restore-phrase-boxes.png)
+   ![Bread Wallet's Choose your import type page, with the two ways to import a wallet](E14a-restore-import-type.png)
 
-4. Create a new password with at least 8 characters and 1 number, then select **Continue**.
+4. Enter your recovery phrase in the exact order you wrote it down, then select **Continue**.
+
+   ![Bread Wallet's Import wallet page, with the numbered recovery phrase boxes](E15-restore-phrase-boxes.png)
+
+5. Create a new password with at least 8 characters and 1 number, then select **Continue**.
 
    ![Bread Wallet's Create password page, with the Continue button](E15a-restore-password.png)
 
-5. Follow the account-recovery prompts shown for your wallet setup.
+6. Follow the account-recovery prompts shown for your wallet setup.
 
    ![Bread Wallet's account recovery page, with the Guardian operators and the Continue button](E16-restore-recovery-choice.png)
 
-6. Select **Open wallet** when recovery is complete.
+7. Select **Open wallet** when recovery is complete.
 
    ![Bread Wallet's Your Wallet is ready screen, with the Open wallet button](E16a-restore-wallet-ready.png)
 
@@ -156,12 +160,12 @@ Before you start, make sure you have:
 
    ![Bread Wallet's sidebar rotating your everyday key after recovery](E16b-restore-everyday-key.png)
 
-> ⚠️ **Before you type your recovery key:** it's the master key to your wallet, and anyone who gets it can take everything.
+> ⚠️ **Before you type your recovery phrase:** it's the master key to your wallet, and anyone who gets it can take everything.
 > - Only enter it in the official Bread Wallet extension — never on a website, pop-up, or form.
 > - No support team or admin will ever ask for it. Anyone who does is a scammer.
 > - Type it somewhere private, with no screen recording or sharing turned on.
 
-If you've lost your recovery key, see [*What should I do if I lose my recovery key?*](#security-and-recovery/what-should-i-do-if-i-lose-my-recovery-phrase) To learn how Guardian brings back your account data, see [*How does recovery work with Guardian?*](#security-and-recovery/how-does-recovery-work-with-guardian)
+If you've lost your recovery phrase, see [*What should I do if I lose my recovery phrase?*](#security-and-recovery/what-should-i-do-if-i-lose-my-recovery-phrase) To learn how Guardian brings back your account data, see [*How does recovery work with Guardian?*](#security-and-recovery/how-does-recovery-work-with-guardian)
 
 ### How to restore the wallet using an encrypted file?
 
@@ -180,7 +184,7 @@ Things you need first before restoring the wallet account
 
 ### How to download the encrypted file?
 
-This exports a password-protected copy of your wallet data. **The current Bread Wallet UI cannot import this file**, so do not rely on it as a working recovery method. Keep your recovery key secure and use Guardian if you want supported account-state recovery.
+This exports a password-protected copy of your wallet data. **The current Bread Wallet UI cannot import this file**, so do not rely on it as a working recovery method. Keep your recovery phrase secure and use Guardian if you want supported account-state recovery.
 
 1. From the wallet homepage, open **Settings** (top-right corner).
 2. Go to the **Security** section.
@@ -198,71 +202,71 @@ Keeping your wallet secure is mostly about protecting your recovery information 
 
 Here are some best practices:
 
-- Store your recovery key offline in a safe place.
+- Store your recovery phrase offline in a safe place.
 - Turn on biometric unlock on mobile.
 - Use a strong, unique password for your wallet.
-- Never type your recovery key into a website, email, chat, or pop-up.
+- Never type your recovery phrase into a website, email, chat, or pop-up.
 - Only download Bread Wallet from official sources.
 - Be cautious of phishing websites, fake wallet apps, and scam messages.
-- Never share your recovery key.
+- Never share your recovery phrase.
 
 **If Guardian is enabled:**
 
-Guardian adds a recovery layer; it keeps a backup of your private account data so you can get back into your wallet on a new device if your current one is lost or broken. Guardian's design protects an account with three keys: an everyday key on your device, an emergency key rebuilt from your recovery key, and the Guardian key, which acknowledges state updates. Moving funds takes two of the three, so a single stolen key is not enough for someone to move your funds on its own. Guardian never holds your keys and can never move your funds by itself. For more on each key, see [*What are the three keys in a Guardian-backed account?*](#guardian-protection/what-are-the-three-keys-in-a-guardian-backed-account)
+Guardian adds a recovery layer; it keeps a backup of your private account data so you can get back into your wallet on a new device if your current one is lost or broken. Guardian's design protects an account with three keys: an everyday key on your device, an emergency key rebuilt from your recovery phrase, and the Guardian key, which acknowledges state updates. Moving funds takes two of the three, so a single stolen key is not enough for someone to move your funds on its own. Guardian never holds your keys and can never move your funds by itself. For more on each key, see [*What are the three keys in a Guardian-backed account?*](#guardian-protection/what-are-the-three-keys-in-a-guardian-backed-account)
 
 **If Guardian is not enabled:**
 
-Your security rests entirely on your password or biometrics plus your own backup: your recovery key. There's no separate backup of your account data and no second-key safety net, so protecting your recovery key and keeping a safe backup matters even more.
+Your security rests entirely on your password or biometrics plus your own backup: your recovery phrase. There's no separate backup of your account data and no second-key safety net, so protecting your recovery phrase and keeping a safe backup matters even more.
 
 **What this means for you:**
 
-Think of your recovery key as the master key to a safe; whoever holds it owns everything inside. Set a strong password; enable a biometric lock where you can; and keep your recovery key private and offline. Guardian is a helpful safety net for recovery, an extra layer on top of protecting your own keys.
+Think of your recovery phrase as the master key to a safe; whoever holds it owns everything inside. Set a strong password; enable a biometric lock where you can; and keep your recovery phrase private and offline. Guardian is a helpful safety net for recovery, an extra layer on top of protecting your own keys.
 
-> ⚠️ **Important note:** No one from Bread Wallet, or anyone else, will ever need your recovery key or password. If someone asks for it, it's a scam. Never share it, and never store it in a screenshot, a plain notes app, or unprotected cloud storage.
+> ⚠️ **Important note:** No one from Bread Wallet, or anyone else, will ever need your recovery phrase or password. If someone asks for it, it's a scam. Never share it, and never store it in a screenshot, a plain notes app, or unprotected cloud storage.
 
-### What should I do if I lose my recovery key?
+### What should I do if I lose my recovery phrase?
 
-If your wallet is still unlocked and working, keep that device secure and check whether Bread lets you display or back up your recovery key again. Do not reset the wallet or remove the app until you have confirmed a supported recovery path.
+If your wallet is still unlocked and working, keep that device secure and check whether Bread lets you display or back up your recovery phrase again. Do not reset the wallet or remove the app until you have confirmed a supported recovery path.
 
-Your recovery key restores your keys. A private account also needs its latest off-chain account state, which Guardian can back up.
+Your recovery phrase restores your keys. A private account also needs its latest off-chain account state, which Guardian can back up.
 
 Whether you can recover depends on your wallet setup, whether Guardian is on, and which backups you still have.
 
 **If Guardian is enabled:**
 
-Guardian keeps a backup of your account data, but it does not keep your recovery key or control your keys. If you lose the recovery key and every device that still holds your keys, Guardian alone cannot restore the wallet. To learn what information Guardian stores, see [*What does Guardian back up?*](#security-and-recovery/what-does-guardian-back-up)
+Guardian keeps a backup of your account data, but it does not keep your recovery phrase or control your keys. If you lose the recovery phrase and every device that still holds your keys, Guardian alone cannot restore the wallet. To learn what information Guardian stores, see [*What does Guardian back up?*](#security-and-recovery/what-does-guardian-back-up)
 
 **If Guardian is not enabled:**
 
-Your recovery key restores your keys, but a more-private account also needs its locally stored account state.
+Your recovery phrase restores your keys, but a more-private account also needs its locally stored account state.
 
-- If you lose your recovery key and access to every device holding the wallet, there is generally no supported way to restore it.
+- If you lose your recovery phrase and access to every device holding the wallet, there is generally no supported way to restore it.
 
 **Important note:**
 
-No one from Bread Wallet or your Guardian operator can reset or recover your recovery key for you. Anyone claiming they can recover a lost recovery key is running a scam.
+No one from Bread Wallet or your Guardian operator can reset or recover your recovery phrase for you. Anyone claiming they can recover a lost recovery phrase is running a scam.
 
-### What is the difference between a recovery key and an encrypted wallet file?
+### What is the difference between a recovery phrase and an encrypted wallet file?
 
-They contain different wallet information, and only recovery-key import is available in the current Bread Wallet UI.
+They contain different wallet information, and only recovery-phrase import is available in the current Bread Wallet UI.
 
-- A **recovery key** is a list of ordinary words that represents your wallet. It's easy to write on paper, but it's only as safe as where you keep it. Anyone who reads those words can restore your wallet.
+- A **recovery phrase** is a list of ordinary words that represents your wallet. It's easy to write on paper, but it's only as safe as where you keep it. Anyone who reads those words can restore your wallet.
 - An **encrypted wallet file** is a password-protected export of wallet data. The current app can export this file but cannot import it, so do not rely on it as a working restoration method.
 
-**A simple way to picture it:** a recovery key is like your key written in plain handwriting, while an encrypted wallet file is like that key locked in a box that needs a password to open.
+**A simple way to picture it:** a recovery phrase is like your key written in plain handwriting, while an encrypted wallet file is like that key locked in a box that needs a password to open.
 
 **If Guardian is enabled:**
 
-Guardian backs up account state so supported recovery can restore it on a new device. Guardian does not replace your recovery key; you still need your own keys to control the wallet.
+Guardian backs up account state so supported recovery can restore it on a new device. Guardian does not replace your recovery phrase; you still need your own keys to control the wallet.
 
 **If Guardian is not enabled:**
 
-Without Guardian, a private account's state remains on the device. Because encrypted-file import is unavailable, losing that device can make the private account unrecoverable even if you still have the recovery key.
+Without Guardian, a private account's state remains on the device. Because encrypted-file import is unavailable, losing that device can make the private account unrecoverable even if you still have the recovery phrase.
 
 **What this means for you:**
 
-- If you only use a public account, your recovery key is your key backup. Keep it safe.
-- If you use a private account, keep the device and recovery key secure. Enable Guardian if you want the currently supported account-state recovery path.
+- If you only use a public account, your recovery phrase is your key backup. Keep it safe.
+- If you use a private account, keep the device and recovery phrase secure. Enable Guardian if you want the currently supported account-state recovery path.
 
 ## Key concepts
 
@@ -274,7 +278,7 @@ Delegated proof generation lets Bread Wallet use a remote prover to handle heavy
 
 Guardian is a recovery and backup layer for private accounts. Because Miden keeps some account data private and local to you, losing a device can also mean losing access to that account data. Guardian helps back up and recover that data on a new device.
 
-Guardian does not hold your recovery key and cannot move funds by itself.
+Guardian does not hold your recovery phrase and cannot move funds by itself.
 
 To learn what information Guardian stores, see [*What does Guardian back up?*](#security-and-recovery/what-does-guardian-back-up) For what it can and can't do, see [*Can Guardian move my funds or lock me out?*](#guardian-protection/can-guardian-move-my-funds-or-lock-me-out)
 
@@ -285,7 +289,7 @@ On Miden, an account can be public or private, and the difference is about where
 - With a private account, only a small cryptographic *commitment* (the fingerprint of your data) is stored on the public blockchain, while the full account data stays with you, off-chain. This gives you strong privacy; the network can confirm your account is valid without seeing its contents, like your balances.
 - With a public account, the full account data is stored on-chain and is visible to everyone.
 
-Because a private account's data lives off-chain, a recovery key alone does not restore its latest state. Guardian provides the supported account-state recovery path in the current wallet.
+Because a private account's data lives off-chain, a recovery phrase alone does not restore its latest state. Guardian provides the supported account-state recovery path in the current wallet.
 
 **If Guardian is enabled:**
 
@@ -341,7 +345,7 @@ A send expires after 7 days by default. You can see or change this as the **Expi
 
 If the recipient can't find it, they can check [*Why is my token taking so long to arrive?*](#common-issues-and-support/why-is-my-token-taking-so-long-to-arrive) If it's still missing, report it to our [**SUPPORT**](/feedback).
 
-Never include your recovery key or password.
+Never include your recovery phrase or password.
 
 ### My transfer is stuck on Accepting stage
 

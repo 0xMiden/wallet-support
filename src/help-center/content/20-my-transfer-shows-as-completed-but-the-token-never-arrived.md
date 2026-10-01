@@ -20,4 +20,4 @@ A send expires after 7 days by default. You can see or change this as the **Expi
 
 If the recipient can't find it, they can check [*Why is my token taking so long to arrive?*](#common-issues-and-support/why-is-my-token-taking-so-long-to-arrive) If it's still missing, report it to our [**SUPPORT**](/feedback).
 
-Never include your recovery key or password.
+Never include your recovery phrase or password.

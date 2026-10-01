@@ -56,7 +56,9 @@ not revert its choices.
 - **Article content.** Articles inherit the shipped typography and spacing; nothing gets bespoke
   styling. Bold for UI labels, with punctuation outside the bold; quotes only in titles and for
   genuine quotation. Use the canonical terms from the glossary and the terminology guard in
-  `content.test.ts`, and ask Ivan where the two disagree.
+  `content.test.ts`, and ask Ivan where the two disagree. On-screen labels are quoted exactly as the
+  shipped wallet reads, retired terms included (Ivan, 2026-10-01): the terminology guard exempts a
+  bold label, and still checks the same words in prose and in a bold run-in heading.
 - **Images line up.** Every image in every article, screenshot or diagram, top-level or inside a
   step, is centred on the article column, so all images share one centre line on every page (Ivan,
   2026-09-18: misaligned images look messy). A step's screenshot reaches back over the list indent
@@ -95,8 +97,8 @@ Owns how Help Center information is organized.
 - Keep the structure intuitive and scalable as more articles are added.
 - Maintain clear relationships between categories, subcategories, and articles.
 - Use the house vocabulary for the account keys: everyday key (not "hot key" or "device key"),
-  emergency key (not "cold key"), recovery key for the words that restore the wallet (not "recovery
-  phrase" or "private key"; Ivan, 2026-09-23), and Guardian key (it acknowledges state updates; it
+  emergency key (not "cold key"), recovery phrase for the words that restore the wallet (not "recovery
+  key" or "private key"; Ivan, 2026-10-01, matching the wallet), and Guardian key (it acknowledges state updates; it
   does not co-sign). External sources,
   including the Miden blog, use the retired terms; quote them only where the note is explicitly
   describing that source. `content.test.ts` enforces this over the articles, `content-source/`, the

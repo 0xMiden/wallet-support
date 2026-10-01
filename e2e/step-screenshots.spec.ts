@@ -29,7 +29,7 @@ for (const { article, route, count } of [
   { article: 'mobile restore', route: RESTORE_MOBILE, count: 6 },
   { article: 'install', route: INSTALL, count: 3 },
   { article: 'create', route: CREATE, count: 6 },
-  { article: 'restore', route: RESTORE, count: 7 },
+  { article: 'restore', route: RESTORE, count: 8 },
   { article: 'switch', route: SWITCH, count: 8 },
   { article: 'accept', route: ACCEPT, count: 4 },
   { article: 'consuming', route: CONSUMING, count: 2 },
