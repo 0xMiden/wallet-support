@@ -10,15 +10,13 @@ describe('the home page promises', () => {
   it('offers only popular searches that actually find something', () => {
     // A suggested search is a promise the page makes on the reader's behalf.
     // These are written by hand and the articles are not, so nothing but a
-    // test stops one of them from quietly starting to return nothing.
-    for (const suggestion of POPULAR_SEARCHES) {
-      const results = searchHelpCenter(
-        helpCenterArticles,
-        helpCenterMainCategories,
-        suggestion,
-        'extension-desktop'
-      );
-      expect(results.length, `"${suggestion}" found no articles`).toBeGreaterThan(0);
+    // test stops one of them from quietly starting to return nothing. The
+    // chips show on both platforms, so each has to find something on both.
+    for (const platform of ['extension-desktop', 'mobile'] as const) {
+      for (const suggestion of POPULAR_SEARCHES) {
+        const results = searchHelpCenter(helpCenterArticles, helpCenterMainCategories, suggestion, platform);
+        expect(results.length, `"${suggestion}" found no articles on ${platform}`).toBeGreaterThan(0);
+      }
     }
   });
 

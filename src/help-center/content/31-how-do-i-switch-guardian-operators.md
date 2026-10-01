@@ -16,7 +16,7 @@ Switching Guardian uses your everyday key and your emergency key, so have your r
 
 2. Go to the **Security** section and select **Guardian Settings**.
 
-   ![Bread Wallet's Settings page, with Guardian Settings highlighted](E20-guardian-settings-menu.png)
+   ![Bread Wallet's Settings page, with Guardian Settings under Security](E20-guardian-settings-menu.png)
 
 3. Click **Rotate Guardian**.
 
@@ -38,4 +38,4 @@ Switching Guardian uses your everyday key and your emergency key, so have your r
 
    ![Bread Wallet's Processing page, with the Hide button](E33-guardian-processing.png)
 
-   ![Bread Wallet's Guardian rotated page, with the Done button](E34-guardian-rotated.png)
+   ![Bread Wallet's Success page after the Guardian switch, with the Done button](E34-guardian-rotated.png)

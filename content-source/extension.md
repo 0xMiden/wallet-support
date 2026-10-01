@@ -152,9 +152,9 @@ Before you start, make sure you have:
 
    ![Bread Wallet's Your Wallet is ready screen, with the Open wallet button](E16a-restore-wallet-ready.png)
 
-   Bread Wallet then rotates your everyday key, which a recovered account needs before it can sync and make transactions. The sidebar opens when it's done.
+   Bread Wallet then rotates your everyday key, which a recovered account needs before it can sync and make transactions. The sidebar opens and shows **Rotating your everyday key** until it's done.
 
-   ![Bread Wallet rotating your everyday key after recovery, before the wallet opens](E16b-restore-everyday-key.png)
+   ![Bread Wallet's sidebar rotating your everyday key after recovery](E16b-restore-everyday-key.png)
 
 > ⚠️ **Before you type your recovery key:** it's the master key to your wallet, and anyone who gets it can take everything.
 > - Only enter it in the official Bread Wallet extension — never on a website, pop-up, or form.
