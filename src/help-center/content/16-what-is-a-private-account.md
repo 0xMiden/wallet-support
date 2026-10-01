@@ -11,7 +11,7 @@ On Miden, an account can be public or private, and the difference is about where
 - With a private account, only a small cryptographic *commitment* (the fingerprint of your data) is stored on the public blockchain, while the full account data stays with you, off-chain. This gives you strong privacy; the network can confirm your account is valid without seeing its contents, like your balances.
 - With a public account, the full account data is stored on-chain and is visible to everyone.
 
-Because a private account's data lives off-chain, a recovery key alone does not restore its latest state. Guardian provides the supported account-state recovery path in the current wallet.
+Because a private account's data lives off-chain, a recovery phrase alone does not restore its latest state. Guardian provides the supported account-state recovery path in the current wallet.
 
 **If Guardian is enabled:**
 

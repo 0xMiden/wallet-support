@@ -45,6 +45,6 @@ To set up your wallet next, see [*How do I create a Bread Wallet?*](#setup-and-b
    ![The Bread Wallet listing on the App Store, with the Get button highlighted](M01-install-app-store.png)
 
 3. Once it's installed, open the app and follow the prompts to set up your wallet.
-4. Don't forget to back up your recovery key somewhere safe and offline. This is very important.
+4. Don't forget to back up your recovery phrase somewhere safe and offline. This is very important.
 
 To set up your wallet next, see [*How do I create a Bread Wallet?*](#setup-and-basic-use/how-do-i-create-a-bread-wallet)

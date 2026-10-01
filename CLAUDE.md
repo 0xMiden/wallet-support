@@ -97,8 +97,8 @@ Owns how Help Center information is organized.
 - Keep the structure intuitive and scalable as more articles are added.
 - Maintain clear relationships between categories, subcategories, and articles.
 - Use the house vocabulary for the account keys: everyday key (not "hot key" or "device key"),
-  emergency key (not "cold key"), recovery key for the words that restore the wallet (not "recovery
-  phrase" or "private key"; Ivan, 2026-09-23), and Guardian key (it acknowledges state updates; it
+  emergency key (not "cold key"), recovery phrase for the words that restore the wallet (not "recovery
+  key" or "private key"; Ivan, 2026-10-01, matching the wallet), and Guardian key (it acknowledges state updates; it
   does not co-sign). External sources,
   including the Miden blog, use the retired terms; quote them only where the note is explicitly
   describing that source. `content.test.ts` enforces this over the articles, `content-source/`, the

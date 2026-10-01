@@ -35,7 +35,7 @@ import type { HelpCenterMainCategory } from './types';
  */
 export const POPULAR_SEARCHES: readonly string[] = [
   'Install Bread Wallet',
-  'Recovery key',
+  'Recovery phrase',
   'Private account',
   'Guardian',
   'Transfer is stuck'

@@ -62,9 +62,9 @@ const APPROVED: readonly HelpCenterGlossaryEntry[] = [
       'A value used by cryptographic software to authorize or verify actions. Keys commonly come in related pairs: a private key that must be kept secret and a public key that can be shared. This setup is widely used in internet security and crypto wallets. Bread uses the everyday and emergency keys for wallet actions, while the Guardian key acknowledges state updates.'
   },
   {
-    term: 'Seed phrase (aka recovery key)',
+    term: 'Seed phrase (aka recovery phrase)',
     definition:
-      'A sequence of words containing the information needed to recreate one or more keys. In Bread, it is called the recovery key, and it recreates the emergency key on a new device.'
+      'A sequence of words containing the information needed to recreate one or more keys. In Bread Wallet, it is called the recovery phrase, and it recreates the emergency key on a new device.'
   },
   {
     term: 'Signing',
@@ -143,7 +143,7 @@ describe('entry ids and anchors', () => {
   it('derives an id from the term', () => {
     expect(glossaryEntryId('Commitment')).toBe('commitment');
     expect(glossaryEntryId('Intent-based protocol')).toBe('intent-based-protocol');
-    expect(glossaryEntryId('Seed phrase (aka recovery key)')).toBe('seed-phrase-aka-recovery-key');
+    expect(glossaryEntryId('Seed phrase (aka recovery phrase)')).toBe('seed-phrase-aka-recovery-phrase');
   });
 
   it('gives every shipped entry a unique, hash-safe id and a glossary- anchor', () => {

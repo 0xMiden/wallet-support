@@ -78,10 +78,10 @@ test('a search result opens its article and leaves the search', async ({ page })
   await page.goto('/?q=restore');
   await expect(page.locator(RESULTS)).toContainText('for “restore”');
 
-  await page.locator('.help-center-card-link', { hasText: 'How do I restore my wallet with a recovery key?' }).click();
+  await page.locator('.help-center-card-link', { hasText: 'How do I restore my wallet with a recovery phrase?' }).click();
 
   await expect(page.locator(RESULTS)).toHaveCount(0);
-  await expect(page.locator('h1')).toHaveText('How do I restore my wallet with a recovery key?');
+  await expect(page.locator('h1')).toHaveText('How do I restore my wallet with a recovery phrase?');
   await expect(page).toHaveURL(/#security-and-recovery\/how-do-i-restore-my-wallet-with-a-recovery-phrase$/);
   await expect(page).not.toHaveURL(/q=/);
 });
@@ -92,10 +92,10 @@ test('a search result for the article already open still leaves the search', asy
   await page.locator('.help-center-search input').fill('restore');
   await expect(page.locator(RESULTS)).toContainText('for “restore”');
 
-  await page.locator('.help-center-card-link', { hasText: 'How do I restore my wallet with a recovery key?' }).click();
+  await page.locator('.help-center-card-link', { hasText: 'How do I restore my wallet with a recovery phrase?' }).click();
 
   await expect(page.locator(RESULTS)).toHaveCount(0);
-  await expect(page.locator('h1')).toHaveText('How do I restore my wallet with a recovery key?');
+  await expect(page.locator('h1')).toHaveText('How do I restore my wallet with a recovery phrase?');
   await expect(page).not.toHaveURL(/q=/);
 });
 

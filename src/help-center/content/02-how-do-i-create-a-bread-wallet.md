@@ -79,7 +79,7 @@ After you install Bread Wallet, open the app. On the **Welcome to Bread!** scree
    - **Android:** scan your fingerprint, and you're in.
 
 > ⚠️ **Reminder:** Your wallet is created, but it isn't fully secured yet.
-> Back up your recovery key within 7 days to fully secure your wallet. Bread will remind you daily on the home screen until you do. Your recovery key is the master key to your wallet, and it's the only way to get your assets back if you lose or replace your phone.
+> Back up your recovery phrase within 7 days to fully secure your wallet. Bread will remind you daily on the home screen until you do. Your recovery phrase is the master key to your wallet, and it's the only way to get your assets back if you lose or replace your phone.
 > Keep it safe:
 > - Write it down on paper and store it somewhere safe and offline.
 > - Never share it with anyone — no real support team will ever ask for it.
