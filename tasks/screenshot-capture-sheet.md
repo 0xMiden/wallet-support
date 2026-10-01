@@ -9,11 +9,49 @@ given screenshot came from, and "the store release" stops meaning anything as so
 
 | Run | Version | State |
 |---|---|---|
-| Extension | **1.16.1** | in progress, from 2026-09-16 |
-| Mobile | record it from Settings when the run starts | not started; separate run, later build |
+| Extension | **1.16.1** | done, 2026-09-16 to 2026-09-25, by hand |
+| Extension retake (issue #34) | **1.16.2** | done, 2026-10-01, automated; see *Extension retake on 1.16.2* below |
+| Mobile | 1.16.1 | done, 2026-09-24, by hand; the 1.16.2 retake is a separate run |
 
 1.16.1 is what Settings reports in the build being captured. It supersedes the 1.16.0 this sheet carried,
 which came from the store listing — the installed build is the authority, not the listing.
+
+## Extension retake on 1.16.2 (issue #34, 2026-10-01)
+
+Every Bread Wallet capture on the Extension tab was retaken on **1.16.2**, read in three places that
+agree: **Settings** (*Version 1.16.2*), the Chrome Web Store install in the capture profile
+(`1.16.2_0`), and the `v1.16.2` tag of 0xMiden/wallet. File names and IDs are unchanged.
+
+**Method.** Real Google Chrome on Windows, in a capture profile of its own with nothing but Bread
+Wallet installed from the Web Store and a throwaway testnet wallet. A script drives it over a private
+pipe, with Chrome's sandbox on and none of the automation tool's default switches, and checks the
+browser's command line before every run. Each page gets fixed device metrics, asserted before the file
+is saved, so a capture comes out the same size every run:
+
+| Surface | Viewport, CSS px | Scale | File |
+|---|---|---|---|
+| Sidebar (E07 onward) | 360 x 858, the real side panel's size | 1.5 | **540 x 1287** |
+| Onboarding page (E03 to E06b, E13 to E16a) | 1360 x 1100, cropped to a 548 px centred column | 1.5 | **822** wide |
+
+The sidebar is captured by opening the side panel's own page in a tab at the panel's size. Checked
+against the real side panel opened from the toolbar: the two are pixel-identical (0 differing pixels),
+both 540 px wide. **540 px is the sidebar width from this run on**, approved by Ivan 2026-10-01; it
+replaces the 526 to 593 px of the hand captures.
+
+Sizes from this run, which supersede the sizes given under each position above:
+
+- E03 822 x 825 · E04 822 x 1002 · E05 822 x 867 · E06 822 x 1409 · E06a 822 x 444
+- E06b-create-help-improve 822 x 842 (new: **Help improve Wallet**, between **Creating your wallet…** and
+  **Your wallet is ready!**)
+- E13 822 x 825 · E14 822 x 1002 · E15 822 x 1143 (boxes empty) · E15a 822 x 867 · E16 822 x 1161 ·
+  E16a 822 x 821
+- E07, E07a-fund-funding (new: the card showing **Funding**), E08, E16b, E19 to E34: 540 x 1287 each.
+  E16b is now the sidebar showing **Rotating your everyday key**, which is where 1.16.2 shows it.
+
+E06, E15 and E16b are shown whole rather than split (Ivan, 2026-10-01). No capture carries a box.
+E01, E01a and E02 (Chrome's own screens) were not retaken. A captured **Choose your import type**
+page (restore, after the testnet notice) is held until the recovery vocabulary is decided, so Q2's
+answer below no longer holds for 1.16.2: the page is back.
 
 ## Image spec — keep this open while capturing
 
