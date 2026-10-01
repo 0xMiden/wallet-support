@@ -656,6 +656,11 @@ describe('fidelity to the FAQ', () => {
    * which is what keeps the set crisp and consistent. The annotation stroke is
    * set from the width so it lands at 3px on screen; that one is checked by eye.
    */
+  /*
+   * This test and the one that checks every file's header decode each screenshot
+   * in the folder, which takes longer than vitest's 5 s default now there are
+   * fifty of them; 30 s leaves room without hiding a hang.
+   */
   it('holds every step screenshot to the capture spec', () => {
     /*
      * Used exactly as captured, not cropped, by Ivan's call (2026-09-18), so
@@ -663,8 +668,11 @@ describe('fidelity to the FAQ', () => {
      * split in two, also his call (2026-09-23), and the Guardian switch sidebar
      * captures E19 to E23, the accept-a-transfer captures E24 to E27 and the
      * Auto Consume captures E28 and E29 and the accept-fails captures E30 and
-     * E31 (2026-09-24) are used as captured like E07 and E08. Every other capture
-     * is held to it.
+     * E31 (2026-09-24) and the Guardian switch password, processing and success
+     * captures E32 to E34 (2026-09-25) are used as captured like E07 and E08. The v1.16.2
+     * retake (2026-10-01, issue #34) shoots every sidebar capture at the real side panel's
+     * 540 x 1287, so E07a and the sidebar's E16b join them, and E06 and E15 are shown whole
+     * rather than split, Ivan's call. Every other capture is held to it.
      */
     const FULL_HEIGHT_BY_IVAN = new Set([
       // Phone captures are shown full height too (phone capture spec, 2026-09-24).
@@ -685,9 +693,13 @@ describe('fidelity to the FAQ', () => {
       'M13-restore-recovery-method.png',
       'M14-restore-ready.png',
       'M14a-restore-rotating-key.png',
+      'E06-create-guardian.png',
       'E07-fund-homepage.png',
+      'E07a-fund-funding.png',
       'E08-fund-activity.png',
+      'E15-restore-phrase-boxes.png',
       'E16-restore-recovery-choice.png',
+      'E16b-restore-everyday-key.png',
       'E19-guardian-home.png',
       'E20-guardian-settings-menu.png',
       'E21-guardian-settings.png',
@@ -700,7 +712,10 @@ describe('fidelity to the FAQ', () => {
       'E28-consume-settings-general.png',
       'E29-consume-auto-consume.png',
       'E30-accept-fails-activity.png',
-      'E31-accept-fails-pending-tab.png'
+      'E31-accept-fails-pending-tab.png',
+      'E32-guardian-password.png',
+      'E33-guardian-processing.png',
+      'E34-guardian-rotated.png'
     ]);
     for (const name of FULL_HEIGHT_BY_IVAN) expect(SCREENSHOT_SIZES[name], `${name}: not a registered screenshot`).toBeDefined();
 
@@ -746,7 +761,7 @@ describe('fidelity to the FAQ', () => {
       }
       expect(bytes.length, `${name}: over the 400 KB ceiling`).toBeLessThanOrEqual(400 * 1024);
     }
-  });
+  }, 30_000);
 
   it('carries the narrow tag through to the image the renderer gets', () => {
     const files = { './assets/screenshots/menu.png': '/menu.png', './assets/screenshots/page.png': '/page.png' };
@@ -774,7 +789,7 @@ describe('fidelity to the FAQ', () => {
         helpCenterArticleImages[name]?.height
       ]);
     }
-  });
+  }, 30_000);
 
   it('ships each image pixel for pixel as delivered, never larger, at the size its header gives', () => {
     const repoRoot = fileURLToPath(new URL('../..', import.meta.url));

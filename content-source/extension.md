@@ -49,15 +49,19 @@ When you install Bread Wallet, there are two options to choose between: **Get st
 
    ![Bread Wallet's Create password page, with the Continue button](E05-create-password.png)
 
-4. On the **Choose your Guardian** page, you can select a Guardian operator and then click **Continue**.
+4. On the **Set up your account** page, select each of the three points to confirm you've read it. Bread Wallet picks the fastest Guardian operator for you; to pick another, select **Choose a different Guardian**. Then click **Continue**.
 
-   ![Bread Wallet's Choose your Guardian page, with the Continue button](E06-create-guardian.png)
+   ![Bread Wallet's Set up your account page, with the three points checked, the Guardian it picked, and the Continue button](E06-create-guardian.png)
 
-5. Congrats, your wallet is ready! Click the **Open wallet** button; it will close the tab automatically and open the sidebar for you.
+5. On the **Help improve Wallet** page, choose **Share usage data** or **Not now**.
+
+   ![Bread Wallet's Help improve Wallet page, with the Share usage data and Not now buttons](E06b-create-help-improve.png)
+
+6. Congrats, your wallet is ready! Click the **Open wallet** button; it will close the tab automatically and open the sidebar for you.
 
 For help choosing a Guardian, see [*Why should I pick a Guardian-backed account over a more private one?*](#guardian-protection/why-should-i-pick-a-guardian-backed-account-over-a-more-private-one)
 
-   ![Bread Wallet's Your Wallet is ready screen, with the Open wallet button](E06a-create-wallet-ready.png)
+   ![Bread Wallet's Your wallet is ready! screen, with the Open wallet button](E06a-create-wallet-ready.png)
 
 ### How to fund your Bread Wallet?
 
@@ -66,10 +70,13 @@ Use the faucet to receive test MIDEN tokens in your wallet.
 1. Open the wallet **Home** page.
 2. Find the **Fund your wallet** section.
 
-   ![Bread Wallet's Home page, with the Fund your wallet section highlighted](E07-fund-homepage.png)
+   ![Bread Wallet's Home page, with the Fund your wallet card](E07-fund-homepage.png)
 
-3. Select **Fund now**.
-4. The faucet will automatically send test tokens to your wallet address.
+3. Select the **Fund your wallet** card.
+4. The card changes to **Funding** while the faucet sends 100 test MIDEN, and then the funds will be automatically received on your wallet.
+
+   ![Bread Wallet's Home page, with the Fund your wallet card showing Funding](E07a-fund-funding.png)
+
 5. Open the **Activity** page to track the request. The tokens are ready to use once the status changes to **Confirmed**.
 
    ![Bread Wallet's Activity page, with a confirmed Faucet Request for 100 MIDEN](E08-fund-activity.png)
@@ -145,9 +152,9 @@ Before you start, make sure you have:
 
    ![Bread Wallet's Your Wallet is ready screen, with the Open wallet button](E16a-restore-wallet-ready.png)
 
-   Bread Wallet then rotates your everyday key, which a recovered account needs before it can sync and make transactions. The sidebar opens when it's done.
+   Bread Wallet then rotates your everyday key, which a recovered account needs before it can sync and make transactions. The sidebar opens and shows **Rotating your everyday key** until it's done.
 
-   ![Bread Wallet rotating your everyday key after recovery, before the wallet opens](E16b-restore-everyday-key.png)
+   ![Bread Wallet's sidebar rotating your everyday key after recovery](E16b-restore-everyday-key.png)
 
 > ⚠️ **Before you type your recovery key:** it's the master key to your wallet, and anyone who gets it can take everything.
 > - Only enter it in the official Bread Wallet extension — never on a website, pop-up, or form.
@@ -336,9 +343,9 @@ If the recipient can't find it, they can check [*Why is my token taking so long 
 
 Never include your recovery key or password.
 
-### My token is stuck on Consuming (receiver address)
+### My transfer is stuck on Accepting stage
 
-If a transaction appears stuck on the **Consuming** stage, the wallet is still working in the background and will often resolve it on its own within a few minutes. No action is needed in most cases.
+If a transaction appears stuck on the **Accepting…** stage, the wallet is still working in the background and will often resolve it on its own within a few minutes. No action is needed in most cases.
 
 If it stays stuck, the wallet marks it as failed: after 30 minutes on the browser extension, or after 2 minutes on mobile. Closing and reopening the app also ends it, marked as **Interrupted**. Either way, the transfer returns to the **Pending** tab in **Activity** with a **Retry** button, so you can try it again.
 
@@ -346,17 +353,17 @@ If it stays stuck, the wallet marks it as failed: after 30 minutes on the browse
 
 Retry your stuck transfers one at a time instead of all together.
 
-1. Select the **Settings** tab, then select **General**.
+1. Select **Settings** (the gear icon), then select **General**.
 
-   ![Bread Wallet's Settings page, with General highlighted](E28-consume-settings-general.png)
+   ![Bread Wallet's Settings page, with General under Preferences](E28-consume-settings-general.png)
 
-2. Turn off **Auto Consume MIDEN notes**.
+2. Turn off **Auto-accept MIDEN transfers**.
 
-   ![Bread Wallet's General page, with Auto Consume MIDEN notes highlighted](E29-consume-auto-consume.png)
+   ![Bread Wallet's General page, with the Auto-accept MIDEN transfers switch](E29-consume-auto-consume.png)
 
-3. Wait until nothing is on **Consuming**. Turning the setting off does not stop a transfer that is already being claimed.
+3. Wait until nothing shows **Accepting…**. Turning the setting off does not stop a transfer that is already being claimed.
 4. Open **Activity** and select the **Pending** tab. Choose one transfer that failed to consume and select its **Retry** button. Wait for it to finish before you retry the next one.
-5. When all your stuck transfers have gone through, turn **Auto Consume MIDEN notes** back on.
+5. When all your stuck transfers have gone through, turn **Auto-accept MIDEN transfers** back on.
 
 Each transfer you retry is a separate transaction with its own network fee, so retrying them one at a time costs more than claiming them together.
 

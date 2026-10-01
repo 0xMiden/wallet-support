@@ -38,7 +38,7 @@ export const POPULAR_SEARCHES: readonly string[] = [
   'Recovery key',
   'Private account',
   'Guardian',
-  'Token is stuck'
+  'Transfer is stuck'
 ];
 
 function CategoryGlyph({ categoryId }: { categoryId: string }) {

@@ -13,10 +13,13 @@ Use the faucet to receive test MIDEN tokens in your wallet.
 1. Open the wallet **Home** page.
 2. Find the **Fund your wallet** section.
 
-   ![Bread Wallet's Home page, with the Fund your wallet section highlighted](E07-fund-homepage.png)
+   ![Bread Wallet's Home page, with the Fund your wallet card](E07-fund-homepage.png)
 
-3. Select **Fund now**.
-4. The faucet will automatically send test tokens to your wallet address.
+3. Select the **Fund your wallet** card.
+4. The card changes to **Funding** while the faucet sends 100 test MIDEN, and then the funds will be automatically received on your wallet.
+
+   ![Bread Wallet's Home page, with the Fund your wallet card showing Funding](E07a-fund-funding.png)
+
 5. Open the **Activity** page to track the request. The tokens are ready to use once the status changes to **Confirmed**.
 
    ![Bread Wallet's Activity page, with a confirmed Faucet Request for 100 MIDEN](E08-fund-activity.png)

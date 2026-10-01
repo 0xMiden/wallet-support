@@ -22,6 +22,6 @@ If accepting a transfer fails, the transfer stays in your **Activity** list and 
 
 If the expanded card shows a date when the transfer returns to the sender, try again before then.
 
-If it keeps failing, see [*My token is stuck on Consuming (receiver address)*](#common-issues-and-support/my-token-is-stuck-on-consuming-receiver-address), or report it to our [**SUPPORT**](/feedback).
+If it keeps failing, see [*My transfer is stuck on Accepting stage*](#common-issues-and-support/my-token-is-stuck-on-consuming-receiver-address), or report it to our [**SUPPORT**](/feedback).
 
 To learn how accepting works, see [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer).
