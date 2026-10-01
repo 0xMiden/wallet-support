@@ -326,14 +326,17 @@ wallet** and the encrypted wallet file.
 
 Ivan's steps for How do I switch Guardian operators?, with his five sidebar captures at 150%, tagged
 narrow and used exactly as captured, like E07 and E08, so they are let past the height ceiling. E20
-carries the box Ivan drew himself. Steps 2 and 3 were merged into one (Ivan, 2026-09-23). Steps 6 and 7 have no capture yet: they wait until the
-password screen issue is resolved, then follow the same pattern.
+carries the box Ivan drew himself. Steps 2 and 3 were merged into one (Ivan, 2026-09-23). Steps 6 and 7 got their
+captures on 2026-09-25 (E32 to E34), same pattern; step 7 carries two, processing then success.
 
 - **E19** · step 1 · Home page, **Settings** lower right · `E19-guardian-home.png`, 530 × 1255
 - **E20** · step 2 · Settings, **Guardian Settings** boxed · `E20-guardian-settings-menu.png`, 529 × 1248
 - **E21** · step 3 · **Guardian Settings**, **Rotate Guardian** · `E21-guardian-settings.png`, 528 × 1245
 - **E22** · step 4 · *Choose your Guardian*, **Continue** · `E22-guardian-choose.png`, 530 × 1249
 - **E23** · step 5 · **Review rotation**, **Continue** · `E23-guardian-review.png`, 530 × 1246
+- **E32** · step 6 · **Enter password**, **Continue** · `E32-guardian-password.png`, 534 × 1209
+- **E33** · step 7 · **Processing**, **Hide** · `E33-guardian-processing.png`, 532 × 1268
+- **E34** · step 7 · success page, **Done** · `E34-guardian-rotated.png`, 528 × 1282
 
 ### I. Accept a pending transfer (added 2026-09-24)
 

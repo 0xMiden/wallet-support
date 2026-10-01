@@ -154,7 +154,14 @@ Switching Guardian uses your everyday key and your emergency key, so have your r
    ![Bread Wallet's Review rotation page, with the Continue button](E23-guardian-review.png)
 
 6. A password page will appear to authenticate the switch. Enter your wallet password, then click **Continue**.
+
+   ![Bread Wallet's Enter password page, with the Continue button](E32-guardian-password.png)
+
 7. A processing page will appear. You can hide it or wait until the process is complete, then click **Done** once the switch succeeds.
+
+   ![Bread Wallet's Processing page, with the Hide button](E33-guardian-processing.png)
+
+   ![Bread Wallet's Guardian rotated page, with the Done button](E34-guardian-rotated.png)
 
 ### 9. What can other people see about my account on the blockchain?
 Category: Privacy › Public and private transactions
