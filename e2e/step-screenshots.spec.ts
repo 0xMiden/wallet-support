@@ -24,9 +24,9 @@ const CONSUMING = '/#common-issues-and-support/my-token-is-stuck-on-consuming-re
 
 for (const { article, route, count } of [
   { article: 'mobile install', route: INSTALL_MOBILE, count: 1 },
-  { article: 'mobile create', route: CREATE_MOBILE, count: 7 },
+  { article: 'mobile create', route: CREATE_MOBILE, count: 8 },
   { article: 'mobile fund', route: FUND_MOBILE, count: 3 },
-  { article: 'mobile restore', route: RESTORE_MOBILE, count: 6 },
+  { article: 'mobile restore', route: RESTORE_MOBILE, count: 7 },
   { article: 'install', route: INSTALL, count: 3 },
   { article: 'create', route: CREATE, count: 6 },
   { article: 'restore', route: RESTORE, count: 8 },

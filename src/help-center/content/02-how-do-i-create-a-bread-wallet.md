@@ -52,9 +52,9 @@ After you install Bread Wallet, open the app. On the **Welcome to Bread!** scree
 
    ![Bread Wallet's Miden testnet notice, with the I understand button](M02a-create-testnet-notice.png)
 
-3. Choose how to protect your wallet. Tap **Use FaceID or Biometric**, or tap **Set up your passcode** to use a passcode instead.
+3. Choose how to protect your wallet. Tap **Face ID set up** (on Android, the fingerprint option), or tap **Set up your passcode** to use a passcode instead.
 
-   ![Bread Wallet's Choose how you want to protect your wallet screen, with the Use FaceID or Biometric button](M03-create-protect.png)
+   ![Bread Wallet's Choose how you want to protect your wallet screen, with the Face ID set up button](M03-create-protect.png)
 
 4. Your phone asks whether Bread can use Face ID or your fingerprint. Tap **Allow**, or tap **Use passcode instead** to use a passcode.
 
@@ -64,17 +64,21 @@ After you install Bread Wallet, open the app. On the **Welcome to Bread!** scree
 
    ![Bread Wallet's Confirmed! screen, with the Continue button](M03b-create-confirmed.png)
 
-6. On the **Choose your Guardian** screen, select a Guardian operator, then tap **Continue**. Note the Guardian operator can see your state, i.e., account balance and activity.
+6. On the **Set up your account** screen, tap each of the three points to confirm you've read it. Bread Wallet picks the fastest Guardian operator for you; to pick another, tap **Choose a different Guardian**. Then tap **Continue**. Note the Guardian operator can see your state, i.e., account balance and activity.
 
-   ![Bread Wallet's Choose your Guardian screen, with four Guardian operators and the Continue button](M04-create-guardian.png)
+   ![Bread Wallet's Set up your account screen, with the three points checked, the Guardian it picked, and the Continue button](M04-create-guardian.png)
 
 > 🛡️ Think of a Guardian as a secure backup layer: it keeps a safe copy of your wallet's private info so you can recover it on a new device if you ever lose your phone — without ever holding your keys or your funds. You stay in full control the whole time.
 
-7. On the **Your Wallet is ready!** screen, tap **Open wallet**.
+7. On the **Your wallet is ready!** screen, tap **Open wallet**.
 
-   ![Bread Wallet's Your Wallet is ready! screen, with the Open wallet button](M04a-create-ready.png)
+   ![Bread Wallet's Your wallet is ready! screen, with the Open wallet button](M04a-create-ready.png)
 
-8. One last check: Bread Wallet asks you to unlock your wallet with the biometric you just set up.
+8. On the **Help improve Wallet** screen, tap **Share usage data** or **Not now**.
+
+   ![Bread Wallet's Help improve Wallet screen, with the Share usage data and Not now buttons](M04b-create-help-improve.png)
+
+9. One last check: Bread Wallet asks you to unlock your wallet with the biometric you just set up.
    - **iPhone:** confirm with Face ID, and you're in.
    - **Android:** scan your fingerprint, and you're in.
 

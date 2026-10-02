@@ -12,6 +12,7 @@ given screenshot came from, and "the store release" stops meaning anything as so
 | Extension | **1.16.1** | done, 2026-09-16 to 2026-09-25, by hand |
 | Extension retake (issue #34) | **1.16.2** | done, 2026-10-01, automated; see *Extension retake on 1.16.2* below |
 | Mobile | 1.16.1 | done, 2026-09-24, by hand; the 1.16.2 retake is a separate run |
+| Mobile retake (issue #34) | **1.16.2** | done, 2026-10-02, by hand on iPhone; see *Mobile retake on 1.16.2* below |
 
 1.16.1 is what Settings reports in the build being captured. It supersedes the 1.16.0 this sheet carried,
 which came from the store listing — the installed build is the authority, not the listing.
@@ -53,6 +54,22 @@ E01, E01a and E02 (Chrome's own screens) were not retaken. **E14a-restore-import
 (new, 2026-10-01): the **Choose your import type** page after the testnet notice, with **Import with
 recovery phrase**, quoted as the button reads (Ivan's ruling on on-screen labels). Q2's answer below
 no longer holds for 1.16.2: the page is back.
+
+## Mobile retake on 1.16.2 (issue #34, 2026-10-02)
+
+Every Mobile capture except M01 was retaken on **1.16.2** (build 13, read on the phone over USB), on
+iPhone, by Ivan: the phone's own screenshots, cropped of the status bar and home indicator on the phone,
+then scaled to **540px wide** to match the sidebar set from the 1.16.2 Extension run. M01, the App
+Store listing, was unchanged and keeps its 530px capture.
+
+- New: **M04b-create-help-improve** (**Help improve Wallet**, after **Open wallet** on create, unlike the
+  Extension where it comes before **Your wallet is ready!**), **M05a-fund-funding** (the card showing
+  **Funding**) and **M10b-restore-import-type** (**Choose your import type**).
+- Retired: **M06-fund-wallet-funded**. 1.16.2 shows no **Wallet funded** sheet; the card turns to
+  **Funding** instead.
+- M12 shows the phrase typed and blurred by Ivan, and the new **Import with key instead** link, which
+  the article does not mention.
+- **Help improve Wallet** did not appear on restore.
 
 ## Image spec — keep this open while capturing
 

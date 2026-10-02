@@ -40,9 +40,9 @@ After you install Bread Wallet, open the app. On the **Welcome to Bread!** scree
 
    ![Bread Wallet's Miden testnet notice, with the I understand button](M02a-create-testnet-notice.png)
 
-3. Choose how to protect your wallet. Tap **Use FaceID or Biometric**, or tap **Set up your passcode** to use a passcode instead.
+3. Choose how to protect your wallet. Tap **Face ID set up** (on Android, the fingerprint option), or tap **Set up your passcode** to use a passcode instead.
 
-   ![Bread Wallet's Choose how you want to protect your wallet screen, with the Use FaceID or Biometric button](M03-create-protect.png)
+   ![Bread Wallet's Choose how you want to protect your wallet screen, with the Face ID set up button](M03-create-protect.png)
 
 4. Your phone asks whether Bread can use Face ID or your fingerprint. Tap **Allow**, or tap **Use passcode instead** to use a passcode.
 
@@ -52,17 +52,21 @@ After you install Bread Wallet, open the app. On the **Welcome to Bread!** scree
 
    ![Bread Wallet's Confirmed! screen, with the Continue button](M03b-create-confirmed.png)
 
-6. On the **Choose your Guardian** screen, select a Guardian operator, then tap **Continue**. Note the Guardian operator can see your state, i.e., account balance and activity.
+6. On the **Set up your account** screen, tap each of the three points to confirm you've read it. Bread Wallet picks the fastest Guardian operator for you; to pick another, tap **Choose a different Guardian**. Then tap **Continue**. Note the Guardian operator can see your state, i.e., account balance and activity.
 
-   ![Bread Wallet's Choose your Guardian screen, with four Guardian operators and the Continue button](M04-create-guardian.png)
+   ![Bread Wallet's Set up your account screen, with the three points checked, the Guardian it picked, and the Continue button](M04-create-guardian.png)
 
 > 🛡️ Think of a Guardian as a secure backup layer: it keeps a safe copy of your wallet's private info so you can recover it on a new device if you ever lose your phone — without ever holding your keys or your funds. You stay in full control the whole time.
 
-7. On the **Your Wallet is ready!** screen, tap **Open wallet**.
+7. On the **Your wallet is ready!** screen, tap **Open wallet**.
 
-   ![Bread Wallet's Your Wallet is ready! screen, with the Open wallet button](M04a-create-ready.png)
+   ![Bread Wallet's Your wallet is ready! screen, with the Open wallet button](M04a-create-ready.png)
 
-8. One last check: Bread Wallet asks you to unlock your wallet with the biometric you just set up.
+8. On the **Help improve Wallet** screen, tap **Share usage data** or **Not now**.
+
+   ![Bread Wallet's Help improve Wallet screen, with the Share usage data and Not now buttons](M04b-create-help-improve.png)
+
+9. One last check: Bread Wallet asks you to unlock your wallet with the biometric you just set up.
    - **iPhone:** confirm with Face ID, and you're in.
    - **Android:** scan your fingerprint, and you're in.
 
@@ -79,13 +83,13 @@ For help choosing a Guardian, see [*Why should I pick a Guardian-backed account 
 
 Use the faucet to receive test MIDEN tokens in your wallet. Testnet tokens are for testing only and do not have real-world value.
 
-1. On the wallet **Home** page, find the **Fund your wallet** section, then tap **Fund now**.
+1. On the wallet **Home** page, tap the **Fund your wallet** card.
 
-   ![Bread Wallet's Home page on mobile, with the Fund your wallet section and Fund now](M05-fund-home.png)
+   ![Bread Wallet's Home page on mobile, with the Fund your wallet card](M05-fund-home.png)
 
-2. When **Wallet funded** appears, tap **Done**. Your tokens are on the way.
+2. The card changes to **Funding** while the faucet sends 100 test MIDEN, and then the funds will be automatically received on your wallet.
 
-   ![Bread Wallet's Wallet funded sheet, with the Done button](M06-fund-wallet-funded.png)
+   ![Bread Wallet's Home page on mobile, with the Fund your wallet card showing Funding](M05a-fund-funding.png)
 
 3. Tap the **Activity** tab to track the request. The tokens are ready to use once the status changes to **Confirmed**.
 
@@ -148,22 +152,26 @@ Steps:
 
    ![Bread Wallet's Miden testnet notice, with the I understand button](M10a-restore-testnet-notice.png)
 
-3. Enter your recovery phrase in the exact order you wrote it down, then tap **Continue**.
+3. On the **Choose your import type** screen, tap **Import with recovery phrase**.
+
+   ![Bread Wallet's Choose your import type screen, with the two ways to import a wallet](M10b-restore-import-type.png)
+
+4. Enter your recovery phrase in the exact order you wrote it down, then tap **Continue**.
 
    ![Bread Wallet's Import wallet screen, with twelve numbered boxes for the recovery phrase](M12-restore-phrase.png)
 
-4. On the **How would you like to recover this wallet?** screen, keep **Import via Guardian** selected. Bread Wallet finds your Guardian for you. If it can't, pick the Guardian you used. Then tap **Continue**.
+5. On the **How would you like to recover this wallet?** screen, keep **Import via Guardian** selected. Bread Wallet finds your Guardian for you. If it can't, pick the Guardian you used. Then tap **Continue**.
 
    ![Bread Wallet's How would you like to recover this wallet? screen, with Import via Guardian and the Guardian it found](M13-restore-recovery-method.png)
 
-5. On the **Your Wallet is ready!** screen, tap **Open wallet**.
+6. On the **Your wallet is ready!** screen, tap **Open wallet**.
 
-   ![Bread Wallet's Your Wallet is ready! screen, with the Open wallet button](M14-restore-ready.png)
+   ![Bread Wallet's Your wallet is ready! screen, with the Open wallet button](M14-restore-ready.png)
 
-6. One last check: Bread Wallet asks you to unlock your wallet with your phone's biometric.
+7. One last check: Bread Wallet asks you to unlock your wallet with your phone's biometric.
    - **iPhone:** confirm with Face ID, and you're in.
    - **Android:** scan your fingerprint, and you're in.
-7. Wait while Bread Wallet rotates your everyday key. A recovered account needs this before it can sync and make transactions. Your wallet opens when it's done.
+8. Wait while Bread Wallet rotates your everyday key. A recovered account needs this before it can sync and make transactions. Your wallet opens when it's done.
 
    ![Bread Wallet rotating the everyday key of a recovered account](M14a-restore-rotating-key.png)
 
