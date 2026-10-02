@@ -71,22 +71,26 @@ Steps:
 
    ![Bread Wallet's Miden testnet notice, with the I understand button](M10a-restore-testnet-notice.png)
 
-3. Enter your recovery phrase in the exact order you wrote it down, then tap **Continue**.
+3. On the **Choose your import type** screen, tap **Import with recovery phrase**.
+
+   ![Bread Wallet's Choose your import type screen, with the two ways to import a wallet](M10b-restore-import-type.png)
+
+4. Enter your recovery phrase in the exact order you wrote it down, then tap **Continue**.
 
    ![Bread Wallet's Import wallet screen, with twelve numbered boxes for the recovery phrase](M12-restore-phrase.png)
 
-4. On the **How would you like to recover this wallet?** screen, keep **Import via Guardian** selected. Bread Wallet finds your Guardian for you. If it can't, pick the Guardian you used. Then tap **Continue**.
+5. On the **How would you like to recover this wallet?** screen, keep **Import via Guardian** selected. Bread Wallet finds your Guardian for you. If it can't, pick the Guardian you used. Then tap **Continue**.
 
    ![Bread Wallet's How would you like to recover this wallet? screen, with Import via Guardian and the Guardian it found](M13-restore-recovery-method.png)
 
-5. On the **Your Wallet is ready!** screen, tap **Open wallet**.
+6. On the **Your wallet is ready!** screen, tap **Open wallet**.
 
-   ![Bread Wallet's Your Wallet is ready! screen, with the Open wallet button](M14-restore-ready.png)
+   ![Bread Wallet's Your wallet is ready! screen, with the Open wallet button](M14-restore-ready.png)
 
-6. One last check: Bread Wallet asks you to unlock your wallet with your phone's biometric.
+7. One last check: Bread Wallet asks you to unlock your wallet with your phone's biometric.
    - **iPhone:** confirm with Face ID, and you're in.
    - **Android:** scan your fingerprint, and you're in.
-7. Wait while Bread Wallet rotates your everyday key. A recovered account needs this before it can sync and make transactions. Your wallet opens when it's done.
+8. Wait while Bread Wallet rotates your everyday key. A recovered account needs this before it can sync and make transactions. Your wallet opens when it's done.
 
    ![Bread Wallet rotating the everyday key of a recovered account](M14a-restore-rotating-key.png)
 
