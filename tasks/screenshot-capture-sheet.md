@@ -13,6 +13,7 @@ given screenshot came from, and "the store release" stops meaning anything as so
 | Extension retake (issue #34) | **1.16.2** | done, 2026-10-01, automated; see *Extension retake on 1.16.2* below |
 | Mobile | 1.16.1 | done, 2026-09-24, by hand; the 1.16.2 retake is a separate run |
 | Mobile retake (issue #34) | **1.16.2** | done, 2026-10-02, by hand on iPhone; see *Mobile retake on 1.16.2* below |
+| Extension, Earn articles | **1.16.2** | done, 2026-10-06, automated; E35 to E47, see *L. Earn* below. E46 is to be retaken |
 
 1.16.1 is what Settings reports in the build being captured. It supersedes the 1.16.0 this sheet carried,
 which came from the store listing — the installed build is the authority, not the listing.
@@ -422,6 +423,27 @@ exactly as captured, like E19 to E29. Step 3 (**Retry**) has no capture of its o
 
 - **E30** · step 1 · **Activity**, **All** tab, a transfer showing **Retry** · `E30-accept-fails-activity.png`, 533 × 1195
 - **E31** · step 2 · **Activity**, **Pending** tab, **Retry** · `E31-accept-fails-pending-tab.png`, 531 × 1197
+
+### L. Earn (added 2026-10-06)
+
+Twelve sidebar captures for the Earn articles, taken on wallet 1.16.2 (Chrome Web Store build, Miden
+Testnet, vault **Dummy Lending**) with the automated method of the 1.16.2 retake: 540 x 1287 each,
+tagged narrow and used exactly as captured, like E19 to E34. No boxes. E44 is not used.
+
+- **E35** · deposit step 1 · **Earn** tab, no positions, **Featured Vaults** · `E35-earn-tab.png`
+- **E36** · deposit step 2 · vault page, **Deposit** · `E36-earn-vault.png`
+- **E37** · deposit step 3 · **Deposit Amount**, 10 entered · `E37-earn-deposit-amount.png`
+- **E38** · deposit step 4 · deposit review, **Open position** · `E38-earn-deposit-review.png`
+- **E39** · deposit step 5 · **Generating Transaction** · `E39-earn-deposit-generating.png`
+- **E40** · deposit step 6 · **You're Earning!** · `E40-earn-deposit-success.png`
+- **E41** · position step 1 · **Earn** tab with a position · `E41-earn-tab-position.png`
+- **E42** · position step 2 · position page, **Deposit more** and **Withdraw** · `E42-earn-position.png`
+- **E43** · withdraw step 3 · withdrawal review, **Withdraw** · `E43-earn-withdraw-review.png`
+- **E45** · withdraw step 4 · **Withdrawal Started!** · `E45-earn-withdraw-started.png`
+- **E46** · withdraw step 5 · **Activity**, **Withdraw from Earn**, **Redeeming** · `E46-earn-withdraw-activity.png`.
+  To be retaken: the capture also shows the returning transfer as MIDEN with **Retry**, which is what
+  testnet did on the day and not what the article describes.
+- **E47** · failure step 1 · **Transaction Failed** for a deposit · `E47-earn-deposit-failed.png`
 
 ## Mobile run: phone, 14 positions
 
