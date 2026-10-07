@@ -1355,3 +1355,21 @@ is open until the check in its last column is done.
 | Article 21, **Interrupted** | "Closing and reopening the app also ends it, marked as **Interrupted**" — an interrupted accept was reproduced and came back with **Retry**, but no **Interrupted** label was seen on the card. | Interrupt an accept again and read the card and its expanded details for the word; if it never appears, propose removing it. |
 | Articles 21, 41 and 42 on mobile | One body serves both platforms, so the 1.16.2 wording (**Settings** as the gear icon, **Auto-accept MIDEN transfers**, **Accepting…**, **Accept All** above the list) now describes the phone too. Checked on the Extension only; the strings are shared in the wallet's `en.json`. | Not checked in the 2026-10-02 mobile run (create, fund and restore only). Check each on the phone; if the phone differs, split the article by platform rather than editing the shared text. |
 | **Help improve Wallet** on restore | #34 says it appears after create and restore. On restore after a full wipe it did not appear on the Extension, nor on the iPhone (mobile run, 2026-10-02); on create it appears once per install. | On the next Extension restore, note whether it appears; adjust article 09 only if it does. |
+
+## Open from the Earn articles on wallet 1.16.2 (2026-10-06)
+
+Nine Earn articles (43 to 51, FAQ 20 to 28) were written against the Extension build. Ivan ruled on each
+item on 2026-10-07; an item marked deferred is left as it is until the check in its last column.
+
+| Item | Where it stands | What reopens or closes it |
+|---|---|---|
+| Articles 39 and 40 | Deferred. Both still say Earn is unavailable, beside nine articles that describe using it. Left unchanged on Ivan's decision (2026-10-06, confirmed 2026-10-07). | The mainnet launch: Ivan approves new text for 39 and 40 then. |
+| E46 | Deferred. The capture shows the returning transfer as +9.834 MIDEN with **Retry**. Testnet returns MIDEN; the article says USDC, which is the mainnet behaviour (Ivan and Utkarsh, 2026-10-06). Expected and already reported (Ivan, 2026-10-07). | Mainnet: retake on a build that returns USDC. |
+| Article 46, step 6 | Deferred. **Accept Transfer** on the returning funds was not seen: on testnet they arrive as MIDEN, which is accepted automatically. Written on Ivan's instruction and left as it is (2026-10-07). | Mainnet: a withdrawal on a build that returns USDC. |
+| Article 48 | Settled for now. The article names the network fee as the fee for using Earn (Ivan, 2026-10-07). The route also takes 0.83% on each leg, which the wallet does not show (0xMiden/wallet#1350). | #1350 ships; then the article names what the review page shows. |
+| Article 49 | Closed. Covers the deposit failure that was reproduced. **Withdrawal Failed** and **Retry delivery** exist in the wallet's strings but were not reproduced, and stay out until there is data (Ivan, 2026-10-07). | A failed withdrawal reproduced on a build. |
+| Article 50 | Closed. Ivan restored a Guardian-backed wallet with an open position himself and the position remained (2026-10-07). The sentence on a wallet without Guardian describes a private account, is correct as written and needs no test; the article text stays as it is (Ivan, 2026-10-07). | Nothing. |
+| Article 51 | Verified in source. `~/wallet` at `7490702a7` (1.17.1): `spending-limits/policy.ts` counts `earn-deposit` among the outgoing types, valued in USD over a 24-hour window, and leaves `earn-withdraw` out. That the rule changes at public mainnet is Ivan's statement, not the code. No limit was set and hit on a build. | A deposit over a set daily limit on the build. |
+| Articles 43 to 51 on mobile | Open. One body serves both platforms; every label was read on the Extension only. Next up after this pull request (Ivan, 2026-10-07). | The mobile run for Earn. |
+| Light theme | Closed. The capture run could not select **Light** in **General**; the wallet stayed on **System**, which rendered light, and those captures stand (Ivan, 2026-10-07). | Nothing. |
+| Wallet 1.17.1 | Open. The articles and captures are from 1.16.2; `~/wallet` main is now 1.17.1 and only the spending-limit policy was reread there. | The next wallet upgrade review covers the Earn labels. |

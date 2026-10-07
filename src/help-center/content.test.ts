@@ -200,11 +200,11 @@ describe('coverage', () => {
    * The totals, written down rather than derived, so adding a category or an
    * article is a decision this file has to be told about.
    */
-  it('spans 7 main categories, 9 subcategories and 42 articles', () => {
+  it('spans 7 main categories, 9 subcategories and 51 articles', () => {
     const navigation = createHelpCenterNavigation(helpCenterMainCategories);
     expect(navigation.mainCategories).toHaveLength(7);
     expect(navigation.categories).toHaveLength(9);
-    expect(helpCenterAllArticles).toHaveLength(42);
+    expect(helpCenterAllArticles).toHaveLength(51);
   });
 
   it('resolves every article to exactly one position, through navigation.ts', () => {
@@ -234,7 +234,7 @@ describe('coverage', () => {
       taken.set(position, article.id);
     }
 
-    expect(taken.size).toBe(42);
+    expect(taken.size).toBe(51);
   });
 
   it('keeps Activity and transaction status in the hierarchy, with its one FAQ article after the first', () => {
@@ -392,7 +392,7 @@ describe('article sources', () => {
     }
 
     expect(helpCenterAllArticles.filter(article => pages.has(article.title))).toHaveLength(23);
-    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(19);
+    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(28);
   });
 });
 
@@ -417,7 +417,7 @@ const FAQ_PLACEMENT: Readonly<Record<string, readonly number[]>> = {
   'public-and-private-transactions': [9],
   'guardian-protection': [2, 3, 4, 5, 6, 7, 8],
   'moving-across-chains': [13, 14, 15],
-  earn: [16, 17],
+  earn: [16, 17, 20, 21, 22, 23, 24, 25, 26, 27, 28],
   'activity-and-transaction-status': [18],
   'common-issues-and-support': [19]
 };
@@ -518,14 +518,14 @@ describe('fidelity to the FAQ', () => {
     return article;
   };
 
-  it('reads nineteen articles, numbered in order, that agree with the placement table', () => {
-    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 19 }, (_, index) => index + 1));
+  it('reads twenty-eight articles, numbered in order, that agree with the placement table', () => {
+    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 28 }, (_, index) => index + 1));
     expect(FAQ.placement).toEqual(
       FAQ.entries.map(({ number, title, mainCategory, subcategory }) => ({ number, title, mainCategory, subcategory }))
     );
   });
 
-  it('carries all nineteen titles and bodies byte for byte, link and image markup aside', () => {
+  it('carries all twenty-eight titles and bodies byte for byte, link and image markup aside', () => {
     // The title is matched exactly by the lookup, so a changed character in
     // one fails here as a missing article.
     for (const entry of FAQ.entries) {
@@ -577,7 +577,7 @@ describe('fidelity to the FAQ', () => {
     }
 
     expect(articlesInSubcategory(helpCenterAllArticles, 'moving-across-chains')).toHaveLength(3);
-    expect(articlesInSubcategory(helpCenterAllArticles, 'earn')).toHaveLength(2);
+    expect(articlesInSubcategory(helpCenterAllArticles, 'earn')).toHaveLength(11);
   });
 
   it('links each referenced title to the published article it names, or leaves it italic', () => {
@@ -611,7 +611,7 @@ describe('fidelity to the FAQ', () => {
     }
 
     expect(unresolved).toEqual([]);
-    expect(linked).toBe(31);
+    expect(linked).toBe(43);
   });
 
   it('points every internal link at a published article, labelled with its title', () => {
@@ -717,7 +717,19 @@ describe('fidelity to the FAQ', () => {
       'E31-accept-fails-pending-tab.png',
       'E32-guardian-password.png',
       'E33-guardian-processing.png',
-      'E34-guardian-rotated.png'
+      'E34-guardian-rotated.png',
+      'E35-earn-tab.png',
+      'E36-earn-vault.png',
+      'E37-earn-deposit-amount.png',
+      'E38-earn-deposit-review.png',
+      'E39-earn-deposit-generating.png',
+      'E40-earn-deposit-success.png',
+      'E41-earn-tab-position.png',
+      'E42-earn-position.png',
+      'E43-earn-withdraw-review.png',
+      'E45-earn-withdraw-started.png',
+      'E46-earn-withdraw-activity.png',
+      'E47-earn-deposit-failed.png'
     ]);
     for (const name of FULL_HEIGHT_BY_IVAN) expect(SCREENSHOT_SIZES[name], `${name}: not a registered screenshot`).toBeDefined();
 
@@ -848,13 +860,13 @@ describe('fidelity to the FAQ', () => {
  */
 describe('the migrated article set', () => {
   it('carries every article in the approved mapping', () => {
-    expect(helpCenterAllArticles).toHaveLength(42);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(42);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(40);
+    expect(helpCenterAllArticles).toHaveLength(51);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(51);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(49);
   });
 
   it('publishes every article except the ones held back', () => {
-    expect(helpCenterArticles).toHaveLength(38);
+    expect(helpCenterArticles).toHaveLength(47);
     const published = helpCenterArticles.map(article => article.id);
     expect(published).not.toContain('how-to-restore-the-wallet-using-an-encrypted-file');
     expect(published).not.toContain('how-to-download-the-encrypted-file');

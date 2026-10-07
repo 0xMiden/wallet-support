@@ -43,7 +43,16 @@ test('the Cross-chain and Earn cards each open their own subcategory, and the si
   await expect(page.locator(TITLE)).toHaveText('Earning yield');
   await expect(page.locator('.help-center-card-link')).toHaveText([
     'Can I earn yield in Bread?',
-    'Are my funds private while they earn?'
+    'Are my funds private while they earn?',
+    'What do I need before I can use Earn?',
+    'How do I deposit into Earn?',
+    'How do I check my Earn position?',
+    'How do I withdraw from Earn?',
+    'Can I withdraw part of my position?',
+    'What does it cost to use Earn?',
+    'What should I do if an Earn deposit or withdrawal fails?',
+    'Do I keep my Earn position if I restore my wallet?',
+    'Do spending limits apply to Earn deposits?'
   ]);
 
   await page.goto('/');

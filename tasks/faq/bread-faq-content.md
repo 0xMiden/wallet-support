@@ -1,6 +1,6 @@
 # Bread FAQ: final content for implementation
 
-Nineteen articles. Platform: both Extension and Mobile, one body each. Text is verbatim and approved; do not edit.
+Twenty-eight articles. Platform: both Extension and Mobile, one body each. Text is verbatim and approved; do not edit.
 
 ## Placement
 
@@ -25,8 +25,17 @@ Nineteen articles. Platform: both Extension and Mobile, one body each. Text is v
 | 17 | Are my funds private while they earn? | Earn | Earning yield |
 | 18 | How do I accept a pending transfer? | Manage wallet | Activity and transaction status |
 | 19 | What should I do if accepting a transfer fails? | Troubleshooting | Common issues |
+| 20 | What do I need before I can use Earn? | Earn | Earning yield |
+| 21 | How do I deposit into Earn? | Earn | Earning yield |
+| 22 | How do I check my Earn position? | Earn | Earning yield |
+| 23 | How do I withdraw from Earn? | Earn | Earning yield |
+| 24 | Can I withdraw part of my position? | Earn | Earning yield |
+| 25 | What does it cost to use Earn? | Earn | Earning yield |
+| 26 | What should I do if an Earn deposit or withdrawal fails? | Earn | Earning yield |
+| 27 | Do I keep my Earn position if I restore my wallet? | Earn | Earning yield |
+| 28 | Do spending limits apply to Earn deposits? | Earn | Earning yield |
 
-New main categories, last in category order: Cross-chain, with the subcategory Moving across chains (articles 13–15), then Earn, with the subcategory Earning yield (16–17). Within every subcategory, new articles go after the existing ones, in the order above. Articles 18 and 19 were added on 2026-09-23 (Ivan): 18 is the first article in Activity and transaction status, and 19 goes after the existing Common issues articles.
+New main categories, last in category order: Cross-chain, with the subcategory Moving across chains (articles 13–15), then Earn, with the subcategory Earning yield (16–17). Within every subcategory, new articles go after the existing ones, in the order above. Articles 18 and 19 were added on 2026-09-23 (Ivan): 18 is the first article in Activity and transaction status, and 19 goes after the existing Common issues articles. Articles 20 to 28 were added on 2026-10-06 (Ivan): they go after 16 and 17 in Earning yield, in the order above.
 
 ## Images
 
@@ -320,3 +329,143 @@ If the expanded card shows a date when the transfer returns to the sender, try a
 If it keeps failing, see *My transfer is stuck on Accepting stage*, or report it to our [**SUPPORT**](/feedback).
 
 To learn how accepting works, see *How do I accept a pending transfer?*.
+
+### 20. What do I need before I can use Earn?
+Category: Earn › Earning yield
+
+Earn works with USDC on Miden Testnet. You need two things in your wallet:
+
+- **USDC** to deposit. An incoming USDC transfer is not accepted automatically, so accept it on the **Activity** page first. See *How do I accept a pending transfer?*
+- **MIDEN** to pay the network fee. The network fee is always paid in MIDEN, so it cannot be paid in USDC.
+
+Use only the test networks and test assets shown in the wallet. To make a deposit, see *How do I deposit into Earn?*
+
+### 21. How do I deposit into Earn?
+Category: Earn › Earning yield
+
+Depositing opens a position in a vault. Your USDC leaves your Miden balance and starts earning in the lending market.
+
+**Steps:**
+
+1. Open Bread Wallet and select the **Earn** tab.
+
+   ![Bread Wallet's Earn page, with Featured Vaults and no active positions](E35-earn-tab.png)
+
+2. Under **Featured Vaults**, select a vault to see its details, then select the **Deposit** button.
+
+   ![Bread Wallet's vault page, with the Deposit button](E36-earn-vault.png)
+
+3. Enter the amount of USDC and select the **Confirm** button.
+
+   ![Bread Wallet's Deposit Amount page, with an amount entered](E37-earn-deposit-amount.png)
+
+4. Check the **Deposit Amount**, **Route**, **Estimated time** and **Max network fee**, then select the **Open position** button.
+
+   ![Bread Wallet's deposit review page, with the Open position button](E38-earn-deposit-review.png)
+
+5. The wallet shows **Generating Transaction** while it processes the deposit. You can select **Hide** and keep using the wallet.
+
+   ![Bread Wallet's Generating Transaction page for an Earn deposit](E39-earn-deposit-generating.png)
+
+6. When it is done, the wallet shows **You're Earning!** Select the **Done** button.
+
+   ![Bread Wallet's success page for an Earn deposit, showing You're Earning!](E40-earn-deposit-success.png)
+
+Your position appears under **Current Positions** on the **Earn** tab. See *How do I check my Earn position?*
+
+Before you deposit, see *What do I need before I can use Earn?*
+
+### 22. How do I check my Earn position?
+Category: Earn › Earning yield
+
+Your positions are on the **Earn** tab, with what you deposited and what it has earned.
+
+**Steps:**
+
+1. Open Bread Wallet and select the **Earn** tab. **Your Earnings** shows **Total Deposited** and **Estimated Rewards** across all your positions.
+
+   ![Bread Wallet's Earn page, with a position under Current Positions](E41-earn-tab-position.png)
+
+2. Under **Current Positions**, select a position to open it.
+
+   ![Bread Wallet's position page, with the Deposit more and Withdraw buttons](E42-earn-position.png)
+
+The position page shows **Deposited**, **Total Earned**, **APY**, **Daily Avg**, **Time Active** and **Started**. A value shows a dash until the wallet has data for it.
+
+To add to the position, select the **Deposit more** button and follow the steps in *How do I deposit into Earn?*
+
+### 23. How do I withdraw from Earn?
+Category: Earn › Earning yield
+
+Withdrawing closes your position and returns the USDC to your Miden balance.
+
+**Steps:**
+
+1. Open Bread Wallet, select the **Earn** tab, and select your position under **Current Positions**.
+2. Select the **Withdraw** button.
+3. Check the **Withdraw Amount**, **Route** and **Estimated time**, then select the **Withdraw** button.
+
+   ![Bread Wallet's withdrawal review page, with the Withdraw button](E43-earn-withdraw-review.png)
+
+4. The wallet shows **Processing Withdrawal**, then **Withdrawal Started!** Select **View in Activities** to follow it.
+
+   ![Bread Wallet's Withdrawal Started! page, with the View in Activities button](E45-earn-withdraw-started.png)
+
+5. On the **Activity** page, **Withdraw from Earn** shows **Redeeming**, then **Delivering**.
+
+   ![Bread Wallet's Activity page, with a Withdraw from Earn transaction](E46-earn-withdraw-activity.png)
+
+6. When the USDC arrives, it appears as a **Received** transfer. Select the **Accept Transfer** button to add it to your balance.
+
+A withdrawal returns your whole position. See *Can I withdraw part of my position?*
+
+To learn how accepting works, see *How do I accept a pending transfer?*
+
+### 24. Can I withdraw part of my position?
+Category: Earn › Earning yield
+
+No. A withdrawal returns your whole position. The review page shows **Withdrawal** as **Full position (gasless)**.
+
+To keep some funds earning, withdraw and then deposit the amount you want to keep. See *How do I withdraw from Earn?*
+
+### 25. What does it cost to use Earn?
+Category: Earn › Earning yield
+
+- **Depositing** costs a network fee, paid in MIDEN. The review page shows the **Max network fee** before you confirm, and the success page shows the **Network Fee** you paid.
+- **Withdrawing** is gasless: you pay no network fee.
+
+The network fee cannot be paid in USDC. See *What do I need before I can use Earn?*
+
+### 26. What should I do if an Earn deposit or withdrawal fails?
+Category: Earn › Earning yield
+
+If a deposit fails, the wallet shows **Transaction Failed** and your USDC stays in your balance.
+
+**Steps:**
+
+1. On the **Transaction Failed** page, select **View in Activities**.
+
+   ![Bread Wallet's Transaction Failed page for an Earn deposit](E47-earn-deposit-failed.png)
+
+2. Wait for the wallet to sync, and check that you have MIDEN for the network fee.
+3. Make the deposit again. See *How do I deposit into Earn?*
+
+When you withdraw, the returning funds arrive as a **Received** transfer on the **Activity** page. If it shows a **Retry** button, see *What should I do if accepting a transfer fails?*
+
+If it keeps failing, report it to our [**SUPPORT**](/feedback).
+
+### 27. Do I keep my Earn position if I restore my wallet?
+Category: Earn › Earning yield
+
+Yes, if your wallet is backed up with Guardian. Restore the wallet and your position appears again under **Current Positions** on the **Earn** tab.
+
+Without Guardian, losing your device means losing the wallet and the position with it.
+
+To restore, see *How do I restore my wallet with a recovery phrase?*
+
+### 28. Do spending limits apply to Earn deposits?
+Category: Earn › Earning yield
+
+Yes. An Earn deposit counts towards your daily spending limit, based on its value in USD. Withdrawals bring funds back to your wallet and do not count.
+
+This applies to the current release and will change at public mainnet.
