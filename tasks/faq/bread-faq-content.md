@@ -1,6 +1,6 @@
 # Bread FAQ: final content for implementation
 
-Twenty-eight articles. Platform: both Extension and Mobile, one body each. Text is verbatim and approved; do not edit.
+Thirty-five articles. Platform: both Extension and Mobile, one body each, except articles 29 to 35, which are Extension only until they are checked on a phone. Text is verbatim and approved; do not edit.
 
 ## Placement
 
@@ -34,8 +34,15 @@ Twenty-eight articles. Platform: both Extension and Mobile, one body each. Text 
 | 26 | What should I do if an Earn deposit or withdrawal fails? | Earn | Earning yield |
 | 27 | Do I keep my Earn position if I restore my wallet? | Earn | Earning yield |
 | 28 | Do spending limits apply to Earn deposits? | Earn | Earning yield |
+| 29 | How do I remove my recovery phrase from my device? | Manage wallet | Security and recovery |
+| 30 | How do I view my recovery phrase? | Manage wallet | Security and recovery |
+| 31 | How do I reveal my keys in Bread Wallet? | Manage wallet | Security and recovery |
+| 32 | How do I rotate my everyday key? | Guardian | Guardian protection |
+| 33 | How do I set a spending limit? | Manage wallet | Security and recovery |
+| 34 | How do I manage the dApps connected to my wallet? | Manage wallet | Security and recovery |
+| 35 | How do I save a contact in Bread Wallet? | Manage wallet | Sending, receiving, and claiming |
 
-New main categories, last in category order: Cross-chain, with the subcategory Moving across chains (articles 13–15), then Earn, with the subcategory Earning yield (16–17). Within every subcategory, new articles go after the existing ones, in the order above. Articles 18 and 19 were added on 2026-09-23 (Ivan): 18 is the first article in Activity and transaction status, and 19 goes after the existing Common issues articles. Articles 20 to 28 were added on 2026-10-06 (Ivan): they go after 16 and 17 in Earning yield, in the order above.
+New main categories, last in category order: Cross-chain, with the subcategory Moving across chains (articles 13–15), then Earn, with the subcategory Earning yield (16–17). Within every subcategory, new articles go after the existing ones, in the order above. Articles 18 and 19 were added on 2026-09-23 (Ivan): 18 is the first article in Activity and transaction status, and 19 goes after the existing Common issues articles. Articles 20 to 28 were added on 2026-10-06 (Ivan): they go after 16 and 17 in Earning yield, in the order above. Articles 29 to 35 were added on 2026-10-09 (Ivan), written against wallet 1.17.1: they go after the existing articles in their subcategories, in the order above, and 35 is the first FAQ article in Sending, receiving, and claiming.
 
 ## Images
 
@@ -469,3 +476,142 @@ Category: Earn › Earning yield
 Yes. An Earn deposit counts towards your daily spending limit, based on its value in USD. Withdrawals bring funds back to your wallet and do not count.
 
 This applies to the current release and will change at public mainnet.
+
+### 29. How do I remove my recovery phrase from my device?
+Category: Manage wallet › Security and recovery
+
+Removing your recovery phrase deletes it from this device, so someone who gets into your wallet cannot read it. Your wallet keeps working for everyday transactions. You will need to type the recovery phrase when you switch Guardian or rotate your everyday key, so write it down first.
+
+**Steps:**
+
+1. Select **Settings** (the gear icon), then select **Recovery Phrase** under **Security**.
+2. Select **Remove recovery phrase**.
+3. On the **Verify recovery phrase** page, make sure no one can see your screen, then select **Continue**.
+4. Enter your wallet password and select **Continue**.
+5. Your 12 words appear, numbered in order. Write all of them on paper in that order, and keep the paper in a safe place outside this device. Select **Continue**.
+6. Select the first and last words of your phrase to confirm you saved it, then select **Continue**.
+7. Select **Remove from this device**.
+
+The wallet then shows **Recovery phrase removed from this device**, and **Recovery Phrase** no longer appears in **Settings**.
+
+Related: *How do I view my recovery phrase?*, *What should I do if I lose my recovery phrase?*
+
+### 30. How do I view my recovery phrase?
+Category: Manage wallet › Security and recovery
+
+You can show your recovery phrase again at any time, as long as it is still stored on this device.
+
+**Steps:**
+
+1. Select **Settings** (the gear icon), then select **Recovery Phrase** under **Security**.
+2. Select **Reveal recovery phrase**.
+3. Make sure no one can see your screen, then select **View**.
+4. Enter your wallet password and select **Continue**.
+5. Your 12 words appear. Write them down, or select **Copy**. Select **Hide Recovery Phrase** when you are done.
+
+If **Recovery Phrase** is missing from **Settings**, the phrase has been removed from this device and can no longer be shown here.
+
+> ⚠️ **Important note:** Anyone who knows your recovery phrase can access your wallet and funds. Never share it.
+
+Related: *How do I keep my wallet secure?*, *How do I remove my recovery phrase from my device?*
+
+### 31. How do I reveal my keys in Bread Wallet?
+Category: Manage wallet › Security and recovery
+
+Bread Wallet can show the keys your account signs with: your Miden everyday key and your EVM key. Most people never need them. Reveal them only when you are setting the account up somewhere that asks for them.
+
+**Steps:**
+
+1. Select **Settings** (the gear icon), then select **Keys** under **Security**.
+2. Select **Reveal Private Key**.
+3. Read the **Before you reveal your private keys** warning, enter your wallet password and select **Continue**.
+4. The wallet shows a QR code that holds both keys. Select **Show keys as text** to see the **Miden everyday private key** and the **EVM private key** written out, or **Show QR code** to go back.
+
+The page hides the keys again after a short time. Enter your password again if you need more time.
+
+> ⚠️ **Important note:** Keep both keys secret. Anyone with them can control your Miden and EVM assets. Rotating your everyday key does not change or protect a leaked EVM key.
+
+If you think your everyday key has leaked, see *How do I rotate my everyday key?*
+
+### 32. How do I rotate my everyday key?
+Category: Guardian › Guardian protection
+
+Rotating creates a new everyday key and replaces the current one on-chain. Do this if you suspect your device is compromised. Your account, address and funds stay the same.
+
+**Steps:**
+
+1. Select **Settings** (the gear icon), then select **Keys** under **Security**.
+2. Select **Rotate everyday key**.
+3. Read the confirmation message that appears, then select **Confirm rotation**.
+4. The wallet shows **Generating Transaction** while it works. You can select **Hide** and keep using the wallet.
+5. When it shows **Transaction Complete!**, select **Done**, or select **View in Activities** to see the transaction.
+
+A rotation is a transaction, so it pays a small **Network Fee** in USDCX. If you removed your recovery phrase from this device, the wallet asks you to type it before it rotates.
+
+Related: *What is the everyday key?*, *How do I reveal my keys in Bread Wallet?*
+
+### 33. How do I set a spending limit?
+Category: Manage wallet › Security and recovery
+
+A spending limit caps how much your account can send in a day, measured in USD. When a transaction would go over it, the wallet stops and asks you to authenticate before it continues.
+
+**Steps:**
+
+1. Select **Settings** (the gear icon), then select **Spending limits** under **Security**.
+2. Type an amount, or select one of the suggested limits: **$100**, **$500**, **$1,000** or **$5,000**.
+3. Select **Save**.
+4. Enter your wallet password and select **Continue**.
+
+The page then shows your limit, for example **Current limit: $500 a day**.
+
+**Changing or removing a limit:**
+
+- Lowering a limit saves straight away.
+- Raising a limit asks for your password again.
+- To remove the limit, clear the amount and select **Save**, then enter your password. The page shows **No limit set**.
+
+**Good to know:**
+
+- **Stored on this device.** Limits and spending history are kept only on this installation. Resetting app data or reinstalling the wallet removes them.
+- **A local safety check.** The limit is not an on-chain restriction. Anyone with direct access to your keys can bypass it.
+
+Related: *Do spending limits apply to Earn deposits?*
+
+### 34. How do I manage the dApps connected to my wallet?
+Category: Manage wallet › Security and recovery
+
+**Authorized DApps** controls whether dApps can connect to your wallet, and lists the ones that already have.
+
+**To turn dApp connections on or off:**
+
+1. Select **Settings** (the gear icon), then select **Authorized DApps** under **Developer**.
+2. Use the **DApps Interaction** switch. When it is off, dApps cannot connect or see your balance.
+
+**To disconnect a dApp:**
+
+1. On the **Authorized DApps** page, select **See connected**. This row appears only when a dApp is connected to the current account.
+2. Find the dApp. Each one shows its **Origin**, **Network**, **Account** and **Permissions**.
+3. Select **Disconnect**, then select **Disconnect** again on the **Confirm the action** message.
+
+The dApp must ask to connect again before it can see your account.
+
+### 35. How do I save a contact in Bread Wallet?
+Category: Manage wallet › Sending, receiving, and claiming
+
+The **Address Book** saves addresses under a name, so you can send to a person without pasting their address each time.
+
+**To add a contact:**
+
+1. Select **Settings** (the gear icon), then select **Address Book** under **Preferences**.
+2. Select **New contact**.
+3. Enter the **Address**, then a **Name**. Use the full address that starts with mtst1.
+4. Select **Add Contact**.
+
+The wallet shows **Invalid address** if the address is not valid, and **This is one of your accounts** if it is your own. Your own accounts are already listed under **My accounts**.
+
+**To send to, rename or delete a contact:**
+
+1. On the **Address Book** page, select the contact. Its page shows the **Address**, **Network** and the date it was **Added**.
+2. Select **Send** to start a transfer to it.
+3. To rename it, select **Edit**, change the **Name**, then select **Save**.
+4. To remove it, select **Edit**, select **Delete contact**, then select **Delete**.

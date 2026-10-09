@@ -200,11 +200,11 @@ describe('coverage', () => {
    * The totals, written down rather than derived, so adding a category or an
    * article is a decision this file has to be told about.
    */
-  it('spans 7 main categories, 9 subcategories and 51 articles', () => {
+  it('spans 7 main categories, 9 subcategories and 58 articles', () => {
     const navigation = createHelpCenterNavigation(helpCenterMainCategories);
     expect(navigation.mainCategories).toHaveLength(7);
     expect(navigation.categories).toHaveLength(9);
-    expect(helpCenterAllArticles).toHaveLength(51);
+    expect(helpCenterAllArticles).toHaveLength(58);
   });
 
   it('resolves every article to exactly one position, through navigation.ts', () => {
@@ -234,7 +234,7 @@ describe('coverage', () => {
       taken.set(position, article.id);
     }
 
-    expect(taken.size).toBe(51);
+    expect(taken.size).toBe(58);
   });
 
   it('keeps Activity and transaction status in the hierarchy, with its one FAQ article after the first', () => {
@@ -392,7 +392,7 @@ describe('article sources', () => {
     }
 
     expect(helpCenterAllArticles.filter(article => pages.has(article.title))).toHaveLength(23);
-    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(28);
+    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(35);
   });
 });
 
@@ -413,9 +413,10 @@ function withoutMigrationMarkup(body: string) {
 /** Written out by hand from the placement table: FAQ numbers, in reading order. */
 const FAQ_PLACEMENT: Readonly<Record<string, readonly number[]>> = {
   'setup-and-basic-use': [1],
-  'security-and-recovery': [10, 11, 12],
+  'security-and-recovery': [10, 11, 12, 29, 30, 31, 33, 34],
+  'sending-receiving-and-claiming': [35],
   'public-and-private-transactions': [9],
-  'guardian-protection': [2, 3, 4, 5, 6, 7, 8],
+  'guardian-protection': [2, 3, 4, 5, 6, 7, 8, 32],
   'moving-across-chains': [13, 14, 15],
   earn: [16, 17, 20, 21, 22, 23, 24, 25, 26, 27, 28],
   'activity-and-transaction-status': [18],
@@ -518,14 +519,14 @@ describe('fidelity to the FAQ', () => {
     return article;
   };
 
-  it('reads twenty-eight articles, numbered in order, that agree with the placement table', () => {
-    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 28 }, (_, index) => index + 1));
+  it('reads thirty-five articles, numbered in order, that agree with the placement table', () => {
+    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 35 }, (_, index) => index + 1));
     expect(FAQ.placement).toEqual(
       FAQ.entries.map(({ number, title, mainCategory, subcategory }) => ({ number, title, mainCategory, subcategory }))
     );
   });
 
-  it('carries all twenty-eight titles and bodies byte for byte, link and image markup aside', () => {
+  it('carries all thirty-five titles and bodies byte for byte, link and image markup aside', () => {
     // The title is matched exactly by the lookup, so a changed character in
     // one fails here as a missing article.
     for (const entry of FAQ.entries) {
@@ -538,13 +539,23 @@ describe('fidelity to the FAQ', () => {
     }
   });
 
-  it('gives every FAQ article both platforms and one body, with no platform sections', () => {
+  it('gives every FAQ article one body with no platform sections, on both platforms unless it is Extension only', () => {
     const files = import.meta.glob<string>('./content/*.md', { query: '?raw', import: 'default', eager: true });
+
+    // FAQ 29 to 35 describe Settings on wallet 1.17.1 and were read on the
+    // Extension only; the phone asks for a passcode where these say password.
+    // Each joins the other platform once it is checked there (Ivan, 2026-10-09).
+    const EXTENSION_ONLY: ReadonlySet<number> = new Set([29, 30, 31, 32, 33, 34, 35]);
 
     for (const entry of FAQ.entries) {
       const article = faqArticle(entry);
-      expect(article.platforms, article.id).toEqual(['extension-desktop', 'mobile']);
-      expect(article.bodies.mobile, article.id).toBe(article.bodies['extension-desktop']);
+      if (EXTENSION_ONLY.has(entry.number)) {
+        expect(article.platforms, article.id).toEqual(['extension-desktop']);
+        expect(article.bodies.mobile, article.id).toBeUndefined();
+      } else {
+        expect(article.platforms, article.id).toEqual(['extension-desktop', 'mobile']);
+        expect(article.bodies.mobile, article.id).toBe(article.bodies['extension-desktop']);
+      }
 
       const file = Object.values(files).filter(source => source.includes(`\nid: ${article.id}\n`));
       expect(file, article.id).toHaveLength(1);
@@ -611,7 +622,7 @@ describe('fidelity to the FAQ', () => {
     }
 
     expect(unresolved).toEqual([]);
-    expect(linked).toBe(43);
+    expect(linked).toBe(51);
   });
 
   it('points every internal link at a published article, labelled with its title', () => {
@@ -860,13 +871,13 @@ describe('fidelity to the FAQ', () => {
  */
 describe('the migrated article set', () => {
   it('carries every article in the approved mapping', () => {
-    expect(helpCenterAllArticles).toHaveLength(51);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(51);
+    expect(helpCenterAllArticles).toHaveLength(58);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(58);
     expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(49);
   });
 
   it('publishes every article except the ones held back', () => {
-    expect(helpCenterArticles).toHaveLength(47);
+    expect(helpCenterArticles).toHaveLength(54);
     const published = helpCenterArticles.map(article => article.id);
     expect(published).not.toContain('how-to-restore-the-wallet-using-an-encrypted-file');
     expect(published).not.toContain('how-to-download-the-encrypted-file');
@@ -944,7 +955,14 @@ describe('platform applicability', () => {
       .filter(subcategory => subcategoryNeedsPlatformChoice(helpCenterArticles, subcategory.id))
       .map(subcategory => subcategory.id);
 
-    expect(needsChoice).toEqual(['setup-and-basic-use', 'security-and-recovery']);
+    // Guardian protection and Sending, receiving, and claiming joined on 2026-10-09: each has an
+    // Extension-only FAQ (32 and 35) until those are checked on a phone.
+    expect(needsChoice).toEqual([
+      'setup-and-basic-use',
+      'security-and-recovery',
+      'sending-receiving-and-claiming',
+      'guardian-protection'
+    ]);
   });
 
   it('answers from the articles, not from a stored flag', () => {
@@ -1024,11 +1042,11 @@ describe('card excerpts', () => {
 
 describe('finding articles', () => {
   it('lists every published article in a subcategory regardless of platform', () => {
-    expect(articlesInSubcategory(helpCenterArticles, 'security-and-recovery')).toHaveLength(7);
+    expect(articlesInSubcategory(helpCenterArticles, 'security-and-recovery')).toHaveLength(12);
   });
 
   it('keeps the held-back article out of its subcategory listing', () => {
-    expect(articlesInSubcategory(helpCenterAllArticles, 'security-and-recovery')).toHaveLength(10);
+    expect(articlesInSubcategory(helpCenterAllArticles, 'security-and-recovery')).toHaveLength(15);
   });
 
   it('finds an article only inside its own subcategory', () => {
