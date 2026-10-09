@@ -13,6 +13,9 @@ Bread Wallet can show the keys your account signs with: your Miden everyday key 
 1. Select **Settings** (the gear icon), then select **Keys** under **Security**.
 2. Select **Reveal Private Key**.
 3. Read the **Before you reveal your private keys** warning, enter your wallet password and select **Continue**.
+
+   ![Bread Wallet's page for revealing the keys, with the warning and the password field](E52-reveal-keys-warning.png)
+
 4. The wallet shows a QR code that holds both keys. Select **Show keys as text** to see the **Miden everyday private key** and the **EVM private key** written out, or **Show QR code** to go back.
 
 The page hides the keys again after a short time. Enter your password again if you need more time.

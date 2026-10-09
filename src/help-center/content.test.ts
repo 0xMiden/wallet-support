@@ -740,7 +740,25 @@ describe('fidelity to the FAQ', () => {
       'E43-earn-withdraw-review.png',
       'E45-earn-withdraw-started.png',
       'E46-earn-withdraw-activity.png',
-      'E47-earn-deposit-failed.png'
+      'E47-earn-deposit-failed.png',
+      'E48-settings-menu.png',
+      'E49-recovery-phrase-menu.png',
+      'E50-remove-phrase-verify.png',
+      'E51-reveal-phrase-notice.png',
+      'E52-reveal-keys-warning.png',
+      'E53-keys.png',
+      'E54-rotate-confirm.png',
+      'E55-rotate-generating.png',
+      'E56-rotate-complete.png',
+      'E57-spending-limits.png',
+      'E58-spending-limit-preset.png',
+      'E59-spending-limit-saved.png',
+      'E60-authorized-dapps.png',
+      'E61-address-book.png',
+      'E62-new-contact.png',
+      'E63-address-book-contact.png',
+      'E64-edit-contact.png',
+      'E65-delete-contact-confirm.png'
     ]);
     for (const name of FULL_HEIGHT_BY_IVAN) expect(SCREENSHOT_SIZES[name], `${name}: not a registered screenshot`).toBeDefined();
 

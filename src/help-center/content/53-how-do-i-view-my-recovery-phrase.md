@@ -13,6 +13,9 @@ You can show your recovery phrase again at any time, as long as it is still stor
 1. Select **Settings** (the gear icon), then select **Recovery Phrase** under **Security**.
 2. Select **Reveal recovery phrase**.
 3. Make sure no one can see your screen, then select **View**.
+
+   ![Bread Wallet's Recovery Phrase page with the phrase covered, and the View button](E51-reveal-phrase-notice.png)
+
 4. Enter your wallet password and select **Continue**.
 5. Your 12 words appear. Write them down, or select **Copy**. Select **Hide Recovery Phrase** when you are done.
 

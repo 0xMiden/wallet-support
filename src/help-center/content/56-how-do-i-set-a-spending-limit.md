@@ -11,9 +11,17 @@ A spending limit caps how much your account can send in a day, measured in USD. 
 **Steps:**
 
 1. Select **Settings** (the gear icon), then select **Spending limits** under **Security**.
+
+   ![Bread Wallet's Spending limits page, showing No limit set](E57-spending-limits.png)
+
 2. Type an amount, or select one of the suggested limits: **$100**, **$500**, **$1,000** or **$5,000**.
+
+   ![Bread Wallet's Spending limits page with $500 selected, and the Save button](E58-spending-limit-preset.png)
+
 3. Select **Save**.
 4. Enter your wallet password and select **Continue**.
+
+   ![Bread Wallet's Spending limits page, showing Current limit: $500 a day](E59-spending-limit-saved.png)
 
 The page then shows your limit, for example **Current limit: $500 a day**.
 

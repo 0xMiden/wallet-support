@@ -11,8 +11,17 @@ Removing your recovery phrase deletes it from this device, so someone who gets i
 **Steps:**
 
 1. Select **Settings** (the gear icon), then select **Recovery Phrase** under **Security**.
+
+   ![Bread Wallet's Settings page, with Recovery Phrase under Security](E48-settings-menu.png)
+
 2. Select **Remove recovery phrase**.
+
+   ![Bread Wallet's Recovery Phrase page, with Reveal recovery phrase and Remove recovery phrase](E49-recovery-phrase-menu.png)
+
 3. On the **Verify recovery phrase** page, make sure no one can see your screen, then select **Continue**.
+
+   ![Bread Wallet's Verify recovery phrase page, with the Continue button](E50-remove-phrase-verify.png)
+
 4. Enter your wallet password and select **Continue**.
 5. Your 12 words appear, numbered in order. Write all of them on paper in that order, and keep the paper in a safe place outside this device. Select **Continue**.
 6. Select the first and last words of your phrase to confirm you saved it, then select **Continue**.

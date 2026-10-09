@@ -12,9 +12,20 @@ Rotating creates a new everyday key and replaces the current one on-chain. Do th
 
 1. Select **Settings** (the gear icon), then select **Keys** under **Security**.
 2. Select **Rotate everyday key**.
+
+   ![Bread Wallet's Keys page, with the Rotate everyday key button](E53-keys.png)
+
 3. Read the confirmation message that appears, then select **Confirm rotation**.
+
+   ![Bread Wallet's Keys page, with the Confirm rotation button](E54-rotate-confirm.png)
+
 4. The wallet shows **Generating Transaction** while it works. You can select **Hide** and keep using the wallet.
+
+   ![Bread Wallet's Generating Transaction page for a key rotation](E55-rotate-generating.png)
+
 5. When it shows **Transaction Complete!**, select **Done**, or select **View in Activities** to see the transaction.
+
+   ![Bread Wallet's Transaction Complete! page for a key rotation](E56-rotate-complete.png)
 
 A rotation is a transaction, so it pays a small **Network Fee** in USDCX. If you removed your recovery phrase from this device, the wallet asks you to type it before it rotates.
 

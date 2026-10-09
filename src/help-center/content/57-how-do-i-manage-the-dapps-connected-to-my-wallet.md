@@ -13,6 +13,8 @@ platforms: [extension-desktop]
 1. Select **Settings** (the gear icon), then select **Authorized DApps** under **Developer**.
 2. Use the **DApps Interaction** switch. When it is off, dApps cannot connect or see your balance.
 
+   ![Bread Wallet's Authorized DApps page, with the DApps Interaction switch](E60-authorized-dapps.png)
+
 **To disconnect a dApp:**
 
 1. On the **Authorized DApps** page, select **See connected**. This row appears only when a dApp is connected to the current account.

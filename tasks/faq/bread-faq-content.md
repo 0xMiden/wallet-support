@@ -485,8 +485,17 @@ Removing your recovery phrase deletes it from this device, so someone who gets i
 **Steps:**
 
 1. Select **Settings** (the gear icon), then select **Recovery Phrase** under **Security**.
+
+   ![Bread Wallet's Settings page, with Recovery Phrase under Security](E48-settings-menu.png)
+
 2. Select **Remove recovery phrase**.
+
+   ![Bread Wallet's Recovery Phrase page, with Reveal recovery phrase and Remove recovery phrase](E49-recovery-phrase-menu.png)
+
 3. On the **Verify recovery phrase** page, make sure no one can see your screen, then select **Continue**.
+
+   ![Bread Wallet's Verify recovery phrase page, with the Continue button](E50-remove-phrase-verify.png)
+
 4. Enter your wallet password and select **Continue**.
 5. Your 12 words appear, numbered in order. Write all of them on paper in that order, and keep the paper in a safe place outside this device. Select **Continue**.
 6. Select the first and last words of your phrase to confirm you saved it, then select **Continue**.
@@ -506,6 +515,9 @@ You can show your recovery phrase again at any time, as long as it is still stor
 1. Select **Settings** (the gear icon), then select **Recovery Phrase** under **Security**.
 2. Select **Reveal recovery phrase**.
 3. Make sure no one can see your screen, then select **View**.
+
+   ![Bread Wallet's Recovery Phrase page with the phrase covered, and the View button](E51-reveal-phrase-notice.png)
+
 4. Enter your wallet password and select **Continue**.
 5. Your 12 words appear. Write them down, or select **Copy**. Select **Hide Recovery Phrase** when you are done.
 
@@ -525,6 +537,9 @@ Bread Wallet can show the keys your account signs with: your Miden everyday key 
 1. Select **Settings** (the gear icon), then select **Keys** under **Security**.
 2. Select **Reveal Private Key**.
 3. Read the **Before you reveal your private keys** warning, enter your wallet password and select **Continue**.
+
+   ![Bread Wallet's page for revealing the keys, with the warning and the password field](E52-reveal-keys-warning.png)
+
 4. The wallet shows a QR code that holds both keys. Select **Show keys as text** to see the **Miden everyday private key** and the **EVM private key** written out, or **Show QR code** to go back.
 
 The page hides the keys again after a short time. Enter your password again if you need more time.
@@ -542,9 +557,20 @@ Rotating creates a new everyday key and replaces the current one on-chain. Do th
 
 1. Select **Settings** (the gear icon), then select **Keys** under **Security**.
 2. Select **Rotate everyday key**.
+
+   ![Bread Wallet's Keys page, with the Rotate everyday key button](E53-keys.png)
+
 3. Read the confirmation message that appears, then select **Confirm rotation**.
+
+   ![Bread Wallet's Keys page, with the Confirm rotation button](E54-rotate-confirm.png)
+
 4. The wallet shows **Generating Transaction** while it works. You can select **Hide** and keep using the wallet.
+
+   ![Bread Wallet's Generating Transaction page for a key rotation](E55-rotate-generating.png)
+
 5. When it shows **Transaction Complete!**, select **Done**, or select **View in Activities** to see the transaction.
+
+   ![Bread Wallet's Transaction Complete! page for a key rotation](E56-rotate-complete.png)
 
 A rotation is a transaction, so it pays a small **Network Fee** in USDCX. If you removed your recovery phrase from this device, the wallet asks you to type it before it rotates.
 
@@ -558,9 +584,17 @@ A spending limit caps how much your account can send in a day, measured in USD. 
 **Steps:**
 
 1. Select **Settings** (the gear icon), then select **Spending limits** under **Security**.
+
+   ![Bread Wallet's Spending limits page, showing No limit set](E57-spending-limits.png)
+
 2. Type an amount, or select one of the suggested limits: **$100**, **$500**, **$1,000** or **$5,000**.
+
+   ![Bread Wallet's Spending limits page with $500 selected, and the Save button](E58-spending-limit-preset.png)
+
 3. Select **Save**.
 4. Enter your wallet password and select **Continue**.
+
+   ![Bread Wallet's Spending limits page, showing Current limit: $500 a day](E59-spending-limit-saved.png)
 
 The page then shows your limit, for example **Current limit: $500 a day**.
 
@@ -587,6 +621,8 @@ Category: Manage wallet › Security and recovery
 1. Select **Settings** (the gear icon), then select **Authorized DApps** under **Developer**.
 2. Use the **DApps Interaction** switch. When it is off, dApps cannot connect or see your balance.
 
+   ![Bread Wallet's Authorized DApps page, with the DApps Interaction switch](E60-authorized-dapps.png)
+
 **To disconnect a dApp:**
 
 1. On the **Authorized DApps** page, select **See connected**. This row appears only when a dApp is connected to the current account.
@@ -603,8 +639,14 @@ The **Address Book** saves addresses under a name, so you can send to a person w
 **To add a contact:**
 
 1. Select **Settings** (the gear icon), then select **Address Book** under **Preferences**.
+
+   ![Bread Wallet's Address Book page, with the New contact button](E61-address-book.png)
+
 2. Select **New contact**.
 3. Enter the **Address**, then a **Name**. Use the full address that starts with mtst1.
+
+   ![Bread Wallet's New contact page, with the Address and Name fields](E62-new-contact.png)
+
 4. Select **Add Contact**.
 
 The wallet shows **Invalid address** if the address is not valid, and **This is one of your accounts** if it is your own. Your own accounts are already listed under **My accounts**.
@@ -612,6 +654,14 @@ The wallet shows **Invalid address** if the address is not valid, and **This is 
 **To send to, rename or delete a contact:**
 
 1. On the **Address Book** page, select the contact. Its page shows the **Address**, **Network** and the date it was **Added**.
+
+   ![Bread Wallet's Address Book page, with a saved contact](E63-address-book-contact.png)
+
 2. Select **Send** to start a transfer to it.
 3. To rename it, select **Edit**, change the **Name**, then select **Save**.
+
+   ![Bread Wallet's Edit contact page, with the Name field and Delete contact](E64-edit-contact.png)
+
 4. To remove it, select **Edit**, select **Delete contact**, then select **Delete**.
+
+   ![Bread Wallet's Delete contact message, with the Delete button](E65-delete-contact-confirm.png)
