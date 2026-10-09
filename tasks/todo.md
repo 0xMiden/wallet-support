@@ -1373,3 +1373,25 @@ item on 2026-10-07; an item marked deferred is left as it is until the check in 
 | Articles 43 to 51 on mobile | Open. One body serves both platforms; every label was read on the Extension only. Next up after this pull request (Ivan, 2026-10-07). | The mobile run for Earn. |
 | Light theme | Closed. The capture run could not select **Light** in **General**; the wallet stayed on **System**, which rendered light, and those captures stand (Ivan, 2026-10-07). | Nothing. |
 | Wallet 1.17.1 | Open. The articles and captures are from 1.16.2; `~/wallet` main is now 1.17.1 and only the spending-limit policy was reread there. | The next wallet upgrade review covers the Earn labels. |
+
+## Open from the Settings FAQs on wallet 1.17.1 (2026-10-09)
+
+Seven FAQs (articles 52 to 58, FAQ 29 to 35) were written against the Extension build of wallet 1.17.1
+(tag `v1.17.1`, Chrome Web Store build, Miden Testnet). Ivan approved the titles and the text on
+2026-10-09. An item is open until the check in its last column is done.
+
+| Item | Where it stands | What closes it |
+|---|---|---|
+| Articles 52 to 58 on mobile | Open. All seven are Extension only. The wallet's source asks for a passcode or device security on the phone where these say "wallet password", and nothing was read on a phone. Because of this, Guardian protection and Sending, receiving, and claiming now show the platform switch. | A phone check of each; then add `mobile`, with a body of its own where the steps differ. |
+| Screenshots | Partly done. Eighteen captures, E48 to E65, are placed (capture sheet, *M. Settings*); Ivan cleared them on 2026-10-09. Missing: article 52 steps 5 to 7, article 54 step 4, article 57's disconnect steps, and the contact's own page in article 58, whose capture shows a full address. E57 to E59 show the **Priced assets only** note, which the text of article 56 leaves out on Ivan's instruction. | A capture of each missing screen that shows no phrase, key or full address, or Ivan's word that they stay without one. |
+| Article 52, steps 6 and 7 | From source, not seen on screen. The run stopped at the numbered-words page: the word check, **Remove from this device** and **Recovery phrase removed from this device** come from the wallet's strings (`verifySeedPhraseWarningBody`, `removeSeedPhraseConfirm`, `seedPhraseRemoved`). | Finish a removal on a throwaway wallet. It removes the phrase from that wallet for good. |
+| Article 57, disconnecting | From source, not seen on screen. No dApp was connected, so **See connected**, the **Origin**, **Network**, **Account** and **Permissions** rows, **Disconnect** and **Confirm the action** come from `DAppSettings.tsx` and the strings. The **DApps Interaction** switch was seen. | Connect a dApp to the capture wallet and disconnect it. |
+| Article 58, the mtst1 line | Testnet only. "Use the full address that starts with mtst1" is what the current build accepts; the short `0x` form was rejected with **Invalid address**. | Mainnet: reword or drop the line when the prefix changes. |
+| Article 54, the note | Settled. The note keeps the wallet's own two warnings; the wallet's third sentence, that the export leaves out the Guardian recovery key, stays out (Ivan, 2026-10-09). | Nothing. |
+| Article 20 and 23 | Reported, not changed. Both call the switch **Auto Consume** and say only MIDEN is accepted automatically. The 1.17.1 switch is **Auto-accept USDCX transfers**, under **General**. | Ivan approves new text. |
+| Articles 21 and 41 | Reported, not changed. Both quote **Auto-accept MIDEN transfers**; 1.17.1 reads **Auto-accept USDCX transfers**. E28 and E29 show the old label. | Ivan approves new text, and a retake of E28 and E29. |
+| Article 31, step 4 | Reported, not changed. It says "On the **Rotate Guardian** page"; in 1.17.1 that page is headed **Choose your Guardian**. | Ivan approves new text. |
+| Article 12 | Reported, not changed. It tells the reader to turn on biometric unlock; Settings has no biometric, passcode or change-password control in 1.17.1, the unlock method is chosen at setup. | Ivan approves new text. |
+| Article 13 | Reported, not changed. It hedges on whether the recovery phrase can be shown again. It can, at **Recovery Phrase** › **Reveal recovery phrase**, while the phrase is still stored on the device; article 53 now covers it. | Ivan approves new text, or a link to article 53. |
+| Article 7 | Reported, not changed. It does not say where the switch is: **General** › **Advanced** › **Delegate Proof Generation**. | Ivan approves an added line. |
+| Articles 11 and 14 (held back) | Reported, not changed. Article 11 puts Settings in the top-right corner. Article 14's hidden reason says the encrypted wallet file is not available; in 1.17.1 the export row exists for a wallet holding an account without Guardian. | Ivan decides whether either is published again. |
