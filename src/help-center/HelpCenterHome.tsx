@@ -313,7 +313,7 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
             className="help-center-contact-button"
             href={articleHref('moving-across-chains', 'what-is-the-partner-mainnet-deposit-limit')}
           >
-            Read about the deposit limit
+            Read the deposit limit
             <ArrowIcon />
           </a>
         </section>

@@ -17,7 +17,7 @@ test('the Partner Mainnet limit is prominent and reaches its FAQ on either platf
     expect(categoriesBox).not.toBeNull();
     expect(noticeBox!.y + noticeBox!.height).toBeLessThanOrEqual(categoriesBox!.y);
 
-    const link = notice.getByRole('link', { name: 'Read about the deposit limit' });
+    const link = notice.getByRole('link', { name: 'Read the deposit limit' });
     await expect(link).toHaveAttribute('href', ARTICLE);
     await link.focus();
     await expect(link).toBeFocused();
@@ -48,9 +48,12 @@ test('the limit notice fits on both sides of every responsive breakpoint', async
     await page.setViewportSize({ width, height: 900 });
     await expect(notice).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth), `${width}px`).toBeLessThanOrEqual(0);
-    const box = await notice.getByRole('link', { name: 'Read about the deposit limit' }).boundingBox();
+    const box = await notice.getByRole('link', { name: 'Read the deposit limit' }).boundingBox();
     expect(box).not.toBeNull();
     expect(box!.x, `${width}px`).toBeGreaterThanOrEqual(0);
     expect(box!.x + box!.width, `${width}px`).toBeLessThanOrEqual(width);
+    const arrow = await notice.locator('.help-home-arrow').boundingBox();
+    expect(arrow).not.toBeNull();
+    expect(arrow!.width, `${width}px: link arrow remains visible`).toBeGreaterThan(0);
   }
 });
