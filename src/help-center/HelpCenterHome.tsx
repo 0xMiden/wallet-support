@@ -6,7 +6,7 @@ import { articlesInMainCategory, helpCenterArticles } from './content';
 import { HelpCenterFooter } from './HelpCenterFooter';
 import { CONTACT_SUPPORT_URL } from './links';
 import { panelTintFor } from './panelTint';
-import { categoryHref, homeHref } from './routing';
+import { articleHref, categoryHref, homeHref } from './routing';
 import type { HelpCenterMainCategory } from './types';
 
 /**
@@ -299,6 +299,23 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
               ))}
             </ul>
           </div>
+        </section>
+
+        <section className="help-home-support" aria-labelledby="help-home-limit-title">
+          <div className="help-home-support-copy">
+            <h2 id="help-home-limit-title">Partner Mainnet deposit limit</h2>
+            <p>
+              Keep the overall deposited balance at or below $1,232.462. This includes the existing
+              balance and each new deposit; the limit is not per deposit.
+            </p>
+          </div>
+          <a
+            className="help-center-contact-button"
+            href={articleHref('moving-across-chains', 'what-is-the-partner-mainnet-deposit-limit')}
+          >
+            Read the deposit limit
+            <ArrowIcon />
+          </a>
         </section>
 
         <section className="help-home-categories" aria-labelledby="help-home-categories-title">

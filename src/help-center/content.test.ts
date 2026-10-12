@@ -200,11 +200,11 @@ describe('coverage', () => {
    * The totals, written down rather than derived, so adding a category or an
    * article is a decision this file has to be told about.
    */
-  it('spans 7 main categories, 9 subcategories and 58 articles', () => {
+  it('spans 7 main categories, 9 subcategories and 59 articles', () => {
     const navigation = createHelpCenterNavigation(helpCenterMainCategories);
     expect(navigation.mainCategories).toHaveLength(7);
     expect(navigation.categories).toHaveLength(9);
-    expect(helpCenterAllArticles).toHaveLength(58);
+    expect(helpCenterAllArticles).toHaveLength(59);
   });
 
   it('resolves every article to exactly one position, through navigation.ts', () => {
@@ -234,7 +234,7 @@ describe('coverage', () => {
       taken.set(position, article.id);
     }
 
-    expect(taken.size).toBe(58);
+    expect(taken.size).toBe(59);
   });
 
   it('keeps Activity and transaction status in the hierarchy, with its one FAQ article after the first', () => {
@@ -392,7 +392,7 @@ describe('article sources', () => {
     }
 
     expect(helpCenterAllArticles.filter(article => pages.has(article.title))).toHaveLength(23);
-    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(35);
+    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(36);
   });
 });
 
@@ -417,7 +417,7 @@ const FAQ_PLACEMENT: Readonly<Record<string, readonly number[]>> = {
   'sending-receiving-and-claiming': [35],
   'public-and-private-transactions': [9],
   'guardian-protection': [2, 3, 4, 5, 6, 7, 8, 32],
-  'moving-across-chains': [13, 14, 15],
+  'moving-across-chains': [13, 14, 15, 36],
   earn: [16, 17, 20, 21, 22, 23, 24, 25, 26, 27, 28],
   'activity-and-transaction-status': [18],
   'common-issues-and-support': [19]
@@ -519,14 +519,14 @@ describe('fidelity to the FAQ', () => {
     return article;
   };
 
-  it('reads thirty-five articles, numbered in order, that agree with the placement table', () => {
-    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 35 }, (_, index) => index + 1));
+  it('reads thirty-six articles, numbered in order, that agree with the placement table', () => {
+    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 36 }, (_, index) => index + 1));
     expect(FAQ.placement).toEqual(
       FAQ.entries.map(({ number, title, mainCategory, subcategory }) => ({ number, title, mainCategory, subcategory }))
     );
   });
 
-  it('carries all thirty-five titles and bodies byte for byte, link and image markup aside', () => {
+  it('carries all thirty-six titles and bodies byte for byte, link and image markup aside', () => {
     // The title is matched exactly by the lookup, so a changed character in
     // one fails here as a missing article.
     for (const entry of FAQ.entries) {
@@ -587,7 +587,7 @@ describe('fidelity to the FAQ', () => {
       );
     }
 
-    expect(articlesInSubcategory(helpCenterAllArticles, 'moving-across-chains')).toHaveLength(3);
+    expect(articlesInSubcategory(helpCenterAllArticles, 'moving-across-chains')).toHaveLength(4);
     expect(articlesInSubcategory(helpCenterAllArticles, 'earn')).toHaveLength(11);
   });
 
@@ -889,13 +889,13 @@ describe('fidelity to the FAQ', () => {
  */
 describe('the migrated article set', () => {
   it('carries every article in the approved mapping', () => {
-    expect(helpCenterAllArticles).toHaveLength(58);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(58);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(49);
+    expect(helpCenterAllArticles).toHaveLength(59);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(59);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(50);
   });
 
   it('publishes every article except the ones held back', () => {
-    expect(helpCenterArticles).toHaveLength(54);
+    expect(helpCenterArticles).toHaveLength(55);
     const published = helpCenterArticles.map(article => article.id);
     expect(published).not.toContain('how-to-restore-the-wallet-using-an-encrypted-file');
     expect(published).not.toContain('how-to-download-the-encrypted-file');

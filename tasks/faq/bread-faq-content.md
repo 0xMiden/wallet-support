@@ -1,6 +1,6 @@
 # Bread FAQ: final content for implementation
 
-Thirty-five articles. Platform: both Extension and Mobile, one body each, except articles 29 to 35, which are Extension only until they are checked on a phone. Text is verbatim and approved; do not edit.
+Thirty-six articles. Platform: both Extension and Mobile, one body each, except articles 29 to 35, which are Extension only until they are checked on a phone. Text is verbatim and approved; do not edit.
 
 ## Placement
 
@@ -41,6 +41,7 @@ Thirty-five articles. Platform: both Extension and Mobile, one body each, except
 | 33 | How do I set a spending limit? | Manage wallet | Security and recovery |
 | 34 | How do I manage the dApps connected to my wallet? | Manage wallet | Security and recovery |
 | 35 | How do I save a contact in Bread Wallet? | Manage wallet | Sending, receiving, and claiming |
+| 36 | What is the Partner Mainnet deposit limit? | Cross-chain | Moving across chains |
 
 New main categories, last in category order: Cross-chain, with the subcategory Moving across chains (articles 13–15), then Earn, with the subcategory Earning yield (16–17). Within every subcategory, new articles go after the existing ones, in the order above. Articles 18 and 19 were added on 2026-09-23 (Ivan): 18 is the first article in Activity and transaction status, and 19 goes after the existing Common issues articles. Articles 20 to 28 were added on 2026-10-06 (Ivan): they go after 16 and 17 in Earning yield, in the order above. Articles 29 to 35 were added on 2026-10-09 (Ivan), written against wallet 1.17.1: they go after the existing articles in their subcategories, in the order above, and 35 is the first FAQ article in Sending, receiving, and claiming.
 
@@ -665,3 +666,10 @@ The wallet shows **Invalid address** if the address is not valid, and **This is 
 4. To remove it, select **Edit**, select **Delete contact**, then select **Delete**.
 
    ![Bread Wallet's Delete contact message, with the Delete button](E65-delete-contact-confirm.png)
+
+### 36. What is the Partner Mainnet deposit limit?
+Category: Cross-chain › Moving across chains
+
+Partner Mainnet has a $1,232.462 limit on the overall deposited balance. This is not a per-deposit limit.
+
+Before making a deposit, add the new deposit to the existing deposited balance. The total must stay at or below $1,232.462. Splitting funds into smaller deposits does not change the limit.
