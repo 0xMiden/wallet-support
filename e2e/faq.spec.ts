@@ -27,7 +27,8 @@ test('the Cross-chain and Earn cards each open their own subcategory, and the si
   await expect(page.locator('.help-center-card-link')).toHaveText([
     'Can I send funds to another blockchain?',
     'What is the difference between a solver route and a canonical bridge?',
-    'Can I swap tokens across chains?'
+    'Can I swap tokens across chains?',
+    'What is the Partner Mainnet deposit limit?'
   ]);
 
   // Earn is a group of its own, so its row is reached through its heading. A
