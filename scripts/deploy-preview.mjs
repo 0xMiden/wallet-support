@@ -27,7 +27,7 @@ import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { appendFileSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join, relative, sep } from 'node:path';
+import { isAbsolute, join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const PROJECT = 'bread-wallet-help-center-preview';
@@ -40,6 +40,14 @@ const SERVED_RECORD = 'deploy-record.json';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const dist = join(root, 'dist');
+// CI records are retained as workflow artifacts, never committed back to main.
+// Manual deployments retain the existing tracked ledger behavior.
+const ci = process.env.GITHUB_ACTIONS === 'true';
+const runnerTemp = process.env.RUNNER_TEMP;
+if (ci && (!runnerTemp || !isAbsolute(runnerTemp) || !relative(root, runnerTemp).startsWith(`..${sep}`))) {
+  throw new Error('CI requires an absolute RUNNER_TEMP outside the checkout');
+}
+const records = ci ? join(runnerTemp, 'preview-deployment.jsonl') : join(root, RECORDS);
 
 function fail(message) {
   console.error(`deploy:preview: ${message}`);
@@ -170,6 +178,7 @@ for (const [name, value] of Object.entries(headers)) {
   if (document.headers.get(name) !== value) problems.push(`header ${name}: served ${document.headers.get(name) ?? 'none'}`);
 }
 if (reported.environment !== 'preview') problems.push(`environment is ${reported.environment}, not preview`);
+if (reported.pages_project !== PROJECT) problems.push(`project is ${reported.pages_project}, not ${PROJECT}`);
 
 // --- record ----------------------------------------------------------------
 
@@ -188,10 +197,12 @@ const record = {
   assets,
   checked: { files: checkedFiles.length, headers: Object.keys(headers), problems }
 };
-appendFileSync(join(root, RECORDS), `${JSON.stringify(record)}\n`);
+appendFileSync(records, `${JSON.stringify(record)}\n`);
 
 console.log(`\ndeploy:preview: ${record.deploymentId} (${record.environment}) from ${commit.slice(0, 7)}`);
 console.log(`  ${record.url}\n  ${record.alias ?? '(no alias reported)'}`);
-console.log(`  record appended to ${RECORDS}; commit it in this branch's pull request`);
+console.log(ci
+  ? `  CI record appended to ${records}; retain as a workflow artifact`
+  : `  record appended to ${RECORDS}; commit it in this branch's pull request`);
 if (problems.length > 0) fail(`the deployment does not match the build:\n  ${problems.join('\n  ')}`);
 console.log(`  ${checkedFiles.length} files and ${Object.keys(headers).length} headers match the build`);
