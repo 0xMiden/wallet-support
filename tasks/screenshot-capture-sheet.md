@@ -14,6 +14,7 @@ given screenshot came from, and "the store release" stops meaning anything as so
 | Mobile | 1.16.1 | done, 2026-09-24, by hand; the 1.16.2 retake is a separate run |
 | Mobile retake (issue #34) | **1.16.2** | done, 2026-10-02, by hand on iPhone; see *Mobile retake on 1.16.2* below |
 | Extension, Earn articles | **1.16.2** | done, 2026-10-06, automated; E35 to E47, see *L. Earn* below. E46 is to be retaken |
+| Extension, Settings FAQs | **1.17.1** | done, 2026-10-09, automated; E48 to E65, see *M. Settings* below |
 
 1.16.1 is what Settings reports in the build being captured. It supersedes the 1.16.0 this sheet carried,
 which came from the store listing — the installed build is the authority, not the listing.
@@ -444,6 +445,35 @@ tagged narrow and used exactly as captured, like E19 to E34. No boxes. E44 is no
   To be retaken: the capture also shows the returning transfer as MIDEN with **Retry**, which is what
   testnet did on the day and not what the article describes.
 - **E47** · failure step 1 · **Transaction Failed** for a deposit · `E47-earn-deposit-failed.png`
+
+### M. Settings (added 2026-10-09)
+
+Eighteen sidebar captures for the Settings FAQs (articles 52 to 58), taken on wallet 1.17.1 (Chrome
+Web Store build, Miden Testnet) with the automated method of the 1.16.2 retake: 540 x 1287 each, tagged
+narrow and used exactly as captured, like E19 to E47. No boxes. They were taken while the screens were
+being read for the text, and Ivan cleared them for use on 2026-10-09.
+
+- **E48** · remove phrase step 1 · **Settings**, **Recovery Phrase** under **Security** · `E48-settings-menu.png`
+- **E49** · remove phrase step 2 · **Recovery Phrase** page, both rows · `E49-recovery-phrase-menu.png`
+- **E50** · remove phrase step 3 · **Verify recovery phrase**, phrase covered, **Continue** · `E50-remove-phrase-verify.png`
+- **E51** · view phrase step 3 · **Recovery Phrase**, phrase covered, **View** · `E51-reveal-phrase-notice.png`
+- **E52** · reveal keys step 3 · **Reveal Private Key**, the warning and the password field · `E52-reveal-keys-warning.png`
+- **E53** · rotate step 2 · **Keys**, **Rotate everyday key** · `E53-keys.png`
+- **E54** · rotate step 3 · **Keys**, **Confirm rotation** · `E54-rotate-confirm.png`
+- **E55** · rotate step 4 · **Generating Transaction** · `E55-rotate-generating.png`
+- **E56** · rotate step 5 · **Transaction Complete!**, **Network Fee** 0.000133 USDCX · `E56-rotate-complete.png`
+- **E57** · limit step 1 · **Spending limits**, **No limit set** · `E57-spending-limits.png`
+- **E58** · limit step 2 · **Spending limits**, **$500** selected, **Save** · `E58-spending-limit-preset.png`
+- **E59** · limit step 4 · **Current limit: $500 a day** · `E59-spending-limit-saved.png`
+- **E60** · dApps step 2 · **Authorized DApps**, **DApps Interaction** on · `E60-authorized-dapps.png`
+- **E61** · contact step 1 · **Address Book**, no contacts, **New contact** · `E61-address-book.png`
+- **E62** · contact step 3 · **New contact**, empty **Address** and **Name** · `E62-new-contact.png`
+- **E63** · contact, second list, step 1 · **Address Book** with a saved contact · `E63-address-book-contact.png`
+- **E64** · contact, second list, step 3 · **Edit contact** · `E64-edit-contact.png`
+- **E65** · contact, second list, step 4 · **Delete contact** message · `E65-delete-contact-confirm.png`
+
+Not captured: the uncovered recovery phrase and keys (never captured), the last two screens of removing
+the phrase, a connected dApp, and the contact's own page, which shows a full address.
 
 ## Mobile run: phone, 14 positions
 
