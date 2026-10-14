@@ -9,6 +9,8 @@ Format: "## " = Notion section, "### " = article title (verbatim), "> " = callou
 
 ### How to install Bread Wallet
 
+Store availability and wallet features can differ by platform and app version. A store listing does not mean a new Mainnet flow is available in your installed app. Update through the official store and check the network before funding. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)
+
 > ⚠️ Caution: Only download Bread Wallet from official links.
 > - iOS — [App Store](https://apps.apple.com/ch/app/bread-wallet-by-miden/id6789341854?l=en-GB)
 > - Android — [Google Play](https://play.google.com/store/apps/details?id=com.miden.wallet)
@@ -28,86 +30,44 @@ To set up your wallet next, see [*How do I create a Bread Wallet?*](#setup-and-b
 
 ### How do I create a Bread Wallet?
 
-After you install Bread Wallet, open the app. On the **Welcome to Bread!** screen, you'll see two options: **Get started** and **Recover your account**.
+Use the official app and follow the setup shown in your installed version. If the welcome screen asks for an access code, follow your invitation; do not change Developer Settings to bypass it.
 
-**Steps:**
+1. Tap **Get started** when that option is available.
+2. Check the network. If Bread shows a Testnet notice, read it and tap **I understand**. Testnet tokens have no real-world value.
+3. Follow the prompts to set up a passcode or supported biometric unlock. Keep a secure way to unlock the device.
+4. Read the Guardian explanation and confirm the provider shown. Standard Bread setup creates a Guardian-backed account. The operator can see the account state but cannot move funds alone.
+5. Complete any usage-data choice and open the wallet when setup finishes.
+6. Back up your recovery phrase on paper and keep it offline before you fund the wallet. Biometrics do not replace this backup.
 
-1. Tap **Get started** to create your new wallet.
-
-   ![Bread Wallet's Welcome to Bread! screen, with the Get started button](M02-create-welcome.png)
-
-2. Read the Miden testnet notice, then tap **I understand**.
-
-   ![Bread Wallet's Miden testnet notice, with the I understand button](M02a-create-testnet-notice.png)
-
-3. Choose how to protect your wallet. Tap **Face ID set up** (on Android, the fingerprint option), or tap **Set up your passcode** to use a passcode instead.
-
-   ![Bread Wallet's Choose how you want to protect your wallet screen, with the Face ID set up button](M03-create-protect.png)
-
-4. Your phone asks whether Bread can use Face ID or your fingerprint. Tap **Allow**, or tap **Use passcode instead** to use a passcode.
-
-   ![The iPhone prompt asking to allow Bread to use Face ID, with the Allow button](M03a-create-face-id.png)
-
-5. When you see **Confirmed! Only one more step!**, tap **Continue**.
-
-   ![Bread Wallet's Confirmed! screen, with the Continue button](M03b-create-confirmed.png)
-
-6. On the **Set up your account** screen, tap each of the three points to confirm you've read it. Bread Wallet picks the fastest Guardian operator for you; to pick another, tap **Choose a different Guardian**. Then tap **Continue**. Note the Guardian operator can see your state, i.e., account balance and activity.
-
-   ![Bread Wallet's Set up your account screen, with the three points checked, the Guardian it picked, and the Continue button](M04-create-guardian.png)
-
-> 🛡️ Think of a Guardian as a secure backup layer: it keeps a safe copy of your wallet's private info so you can recover it on a new device if you ever lose your phone — without ever holding your keys or your funds. You stay in full control the whole time.
-
-7. On the **Your wallet is ready!** screen, tap **Open wallet**.
-
-   ![Bread Wallet's Your wallet is ready! screen, with the Open wallet button](M04a-create-ready.png)
-
-8. On the **Help improve Wallet** screen, tap **Share usage data** or **Not now**.
-
-   ![Bread Wallet's Help improve Wallet screen, with the Share usage data and Not now buttons](M04b-create-help-improve.png)
-
-9. One last check: Bread Wallet asks you to unlock your wallet with the biometric you just set up.
-   - **iPhone:** confirm with Face ID, and you're in.
-   - **Android:** scan your fingerprint, and you're in.
-
-> ⚠️ **Reminder:** Your wallet is created, but it isn't fully secured yet.
-> Back up your recovery phrase within 7 days to fully secure your wallet. Bread will remind you daily on the home screen until you do. Your recovery phrase is the master key to your wallet, and it's the only way to get your assets back if you lose or replace your phone.
-> Keep it safe:
-> - Write it down on paper and store it somewhere safe and offline.
-> - Never share it with anyone — no real support team will ever ask for it.
-> - Don't screenshot it or save it in your notes or the cloud, where it could be stolen.
-
-For help choosing a Guardian, see [*Why should I pick a Guardian-backed account over a more private one?*](#guardian-protection/why-should-i-pick-a-guardian-backed-account-over-a-more-private-one)
+The screens and their order can differ between releases. App Store availability does not establish that the latest Mainnet flow has shipped. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network) and [*How do I keep my wallet secure?*](#security-and-recovery/how-do-i-keep-my-wallet-secure)
 
 ### How to fund your Bread Wallet?
 
-Use the faucet to receive test MIDEN tokens in your wallet. Testnet tokens are for testing only and do not have real-world value.
+Check the network before adding funds. Testnet assets and Mainnet assets are separate; a Testnet faucet does not fund a Mainnet account.
 
-1. On the wallet **Home** page, tap the **Fund your wallet** card.
+**On Testnet:**
 
-   ![Bread Wallet's Home page on mobile, with the Fund your wallet card](M05-fund-home.png)
+Tap **Fund your wallet** if your version shows a test faucet. Keep the app open while it syncs, then check **Activity**. Test tokens have no real-world value. Do not send real assets to a test address.
 
-2. The card changes to **Funding** while the faucet sends 100 test MIDEN, and then the funds will be automatically received on your wallet.
+**On Mainnet, when supported by your installed version:**
 
-   ![Bread Wallet's Home page on mobile, with the Fund your wallet card showing Funding](M05a-fund-funding.png)
+Use only the deposit networks, assets and routes shown by the wallet. Check the source network, destination network, address, amount and fees before confirming. Do not transfer from an unsupported chain or assume tokens with the same name are interchangeable.
 
-3. Tap the **Activity** tab to track the request. The tokens are ready to use once the status changes to **Confirmed**.
+The Partner Mainnet cap is $1,232.462 for the total wallet balance after a deposit. See [*What is the Partner Mainnet deposit limit?*](#moving-across-chains/what-is-the-partner-mainnet-deposit-limit)
 
-   ![Bread Wallet's Activity page on mobile, with a confirmed Faucet Request for 100 MIDEN](M07-fund-activity.png)
-
-If the tokens don't show up, see [*Why is my token taking so long to arrive?*](#common-issues-and-support/why-is-my-token-taking-so-long-to-arrive)
+Mainnet availability can differ between store versions. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network) If a transfer is missing, check **Activity** before starting another deposit.
 
 ### How to find a token contract address in Bread Wallet?
 
 **Steps:**
 
 1. From the Bread Wallet homepage, select the token you want to view.
-   [image removed]
 2. Scroll down to the Token Information section.
-   [image removed]
 3. Tap the copy icon beside the contract address to copy it.
 
 ### Is Bread Wallet available on mobile?
+
+Store availability and wallet features can differ by platform and app version. A store listing does not mean a new Mainnet flow is available in your installed app. Update through the official store and check the network before funding. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)
 
 > ⚠️ Caution: These are the only official Bread Wallet downloads for Android and iOS.
 
@@ -137,122 +97,55 @@ Never share your recovery phrase or backup password with anyone offering to *rec
 
 ### How do I restore my wallet with a recovery phrase?
 
-Before you start, make sure you have:
+Have your recovery phrase (sometimes called a seed phrase) ready and use the official app on the same network as the account you want to recover. A Testnet account does not become a Mainnet account through recovery.
 
-- Your recovery phrase (sometimes called a seed phrase), written down and ready to enter.
-- A fresh install of Bread Wallet on your new device or browser.
+1. Open Bread and tap **Recover your account** when the welcome screen offers it.
+2. Read any network notice. Select recovery with your recovery phrase if Bread asks for an import method.
+3. Enter the words in their original order, in the official app only.
+4. Follow the device-protection and Guardian recovery prompts. Bread can look for the operator; if it cannot find your account, check the network and the Guardian you used.
+5. Open the wallet when recovery finishes. Wait for any everyday-key rotation and sync before making a transaction.
 
-Steps:
+Some screens differ between store releases. Recovery needs your phrase and a supported account-state backup; support cannot reset your phrase. Biometrics are an unlock method, not a recovery backup. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)
 
-1. Open the Bread app. On the **Welcome to Bread!** screen, tap **Recover your account**.
-
-   ![Bread Wallet's Welcome to Bread! screen, with Recover your account](M10-restore-welcome.png)
-
-2. Read the Miden testnet notice, then tap **I understand**.
-
-   ![Bread Wallet's Miden testnet notice, with the I understand button](M10a-restore-testnet-notice.png)
-
-3. On the **Choose your import type** screen, tap **Import with recovery phrase**.
-
-   ![Bread Wallet's Choose your import type screen, with the two ways to import a wallet](M10b-restore-import-type.png)
-
-4. Enter your recovery phrase in the exact order you wrote it down, then tap **Continue**.
-
-   ![Bread Wallet's Import wallet screen, with twelve numbered boxes for the recovery phrase](M12-restore-phrase.png)
-
-5. On the **How would you like to recover this wallet?** screen, keep **Import via Guardian** selected. Bread Wallet finds your Guardian for you. If it can't, pick the Guardian you used. Then tap **Continue**.
-
-   ![Bread Wallet's How would you like to recover this wallet? screen, with Import via Guardian and the Guardian it found](M13-restore-recovery-method.png)
-
-6. On the **Your wallet is ready!** screen, tap **Open wallet**.
-
-   ![Bread Wallet's Your wallet is ready! screen, with the Open wallet button](M14-restore-ready.png)
-
-7. One last check: Bread Wallet asks you to unlock your wallet with your phone's biometric.
-   - **iPhone:** confirm with Face ID, and you're in.
-   - **Android:** scan your fingerprint, and you're in.
-8. Wait while Bread Wallet rotates your everyday key. A recovered account needs this before it can sync and make transactions. Your wallet opens when it's done.
-
-   ![Bread Wallet rotating the everyday key of a recovered account](M14a-restore-rotating-key.png)
-
-> ⚠️ **Before you type your recovery phrase:** it's the master key to your wallet, and anyone who gets it can take everything.
-> - Only enter it in the official Bread Wallet app — never on a website, pop-up, or form.
-> - No support team or admin will ever ask for it. Anyone who does is a scammer.
-> - Type it somewhere private, with no screen recording or sharing turned on.
-
-If you've lost your recovery phrase, see [*What should I do if I lose my recovery phrase?*](#security-and-recovery/what-should-i-do-if-i-lose-my-recovery-phrase) To learn how Guardian brings back your account data, see [*How does recovery work with Guardian?*](#security-and-recovery/how-does-recovery-work-with-guardian)
+Never enter your recovery phrase on a website, in feedback, or in a chat. Keep screen sharing and recording off while entering it.
 
 ### How do I keep my wallet secure?
 
-Keeping your wallet secure is mostly about protecting your recovery information and your devices.
+Protect your recovery phrase and the device that holds your wallet.
 
-Here are some best practices:
+**Everyday protection:**
 
-- Store your recovery phrase offline in a safe place.
-- Turn on biometric unlock on mobile.
-- Use a strong, unique password for your wallet.
-- Never type your recovery phrase into a website, email, chat, or pop-up.
-- Only download Bread Wallet from official sources.
-- Be cautious of phishing websites, fake wallet apps, and scam messages.
-- Never share your recovery phrase.
+- Write your recovery phrase on paper and store it safely offline.
+- Use a strong, unique wallet password or passcode, and supported biometric unlock on mobile.
+- Download and update Bread only through official sources.
+- Keep your operating system secure and be cautious of fake apps, sites and support messages.
+- Never share your recovery phrase, signing keys or password, including in screenshots or feedback.
 
-**If Guardian is enabled:**
+**Guardian and recovery:**
 
-Guardian adds a recovery layer; it keeps a backup of your private account data so you can get back into your wallet on a new device if your current one is lost or broken. Guardian's design protects an account with three keys: an everyday key on your device, an emergency key rebuilt from your recovery phrase, and the Guardian key, which acknowledges state updates. Moving funds takes two of the three, so a single stolen key is not enough for someone to move your funds on its own. Guardian never holds your keys and can never move your funds by itself. For more on each key, see [*What are the three keys in a Guardian-backed account?*](#guardian-protection/what-are-the-three-keys-in-a-guardian-backed-account)
+Standard Bread accounts use Guardian to back up private account state. Your recovery phrase restores the keys; Guardian provides the supported account-state recovery path. Guardian does not keep your phrase and cannot move funds alone. See [*How do I restore my wallet with a recovery phrase?*](#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase)
 
-**If Guardian is not enabled:**
+**Before a reset:**
 
-Your security rests entirely on your password or biometrics plus your own backup: your recovery phrase. There's no separate backup of your account data and no second-key safety net, so protecting your recovery phrase and keeping a safe backup matters even more.
+Do not reset or reinstall until you know you can restore the account. Removing the phrase from a device does not remove copies from earlier backups.
 
-**What this means for you:**
-
-Think of your recovery phrase as the master key to a safe; whoever holds it owns everything inside. Set a strong password; enable a biometric lock where you can; and keep your recovery phrase private and offline. Guardian is a helpful safety net for recovery, an extra layer on top of protecting your own keys.
-
-> ⚠️ **Important note:** No one from Bread Wallet, or anyone else, will ever need your recovery phrase or password. If someone asks for it, it's a scam. Never share it, and never store it in a screenshot, a plain notes app, or unprotected cloud storage.
+Developer-created accounts and older account types can have different recovery requirements. These are outside the standard setup described here; see [*Do I need Developer Settings to use Bread?*](#setup-and-basic-use/do-i-need-developer-settings-to-use-bread)
 
 ### What should I do if I lose my recovery phrase?
 
-If your wallet is still unlocked and working, keep that device secure and check whether Bread lets you display or back up your recovery phrase again. Do not reset the wallet or remove the app until you have confirmed a supported recovery path.
+If you can still unlock Bread, keep that device secure. If the recovery phrase is still stored there, open **Settings**, then **Recovery Phrase** under **Security**, and follow the reveal and authentication prompts. Back it up offline.
 
-Your recovery phrase restores your keys. A private account also needs its latest off-chain account state, which Guardian can back up.
+If you previously removed the phrase, Bread cannot display it again. Do not reset, sign out, uninstall, or erase app data while this is your only working access.
 
-Whether you can recover depends on your wallet setup, whether Guardian is on, and which backups you still have.
+Guardian backs up account state, not your recovery phrase. Losing the phrase and every device that holds your keys leaves no supported way for support or Guardian to restore your wallet.
 
-**If Guardian is enabled:**
-
-Guardian keeps a backup of your account data, but it does not keep your recovery phrase or control your keys. If you lose the recovery phrase and every device that still holds your keys, Guardian alone cannot restore the wallet. To learn what information Guardian stores, see [*What does Guardian back up?*](#security-and-recovery/what-does-guardian-back-up)
-
-**If Guardian is not enabled:**
-
-Your recovery phrase restores your keys, but a more-private account also needs its locally stored account state.
-
-- If you lose your recovery phrase and access to every device holding the wallet, there is generally no supported way to restore it.
-
-**Important note:**
-
-No one from Bread Wallet or your Guardian operator can reset or recover your recovery phrase for you. Anyone claiming they can recover a lost recovery phrase is running a scam.
+If the wallet remains usable but the phrase is lost, contact [support](/feedback) for guidance before taking a destructive action. Never send your phrase, keys or password. Anyone claiming to reconstruct your lost recovery phrase is a scammer.
 
 ### What is the difference between a recovery phrase and an encrypted wallet file?
 
-They contain different wallet information, and only recovery-phrase import is available in the current Bread Wallet UI.
+This article is held back while encrypted-file recovery is reviewed for released wallet versions. Do not rely on an encrypted file as a verified recovery method for your installation.
 
-- A **recovery phrase** is a list of ordinary words that represents your wallet. It's easy to write on paper, but it's only as safe as where you keep it. Anyone who reads those words can restore your wallet.
-- An **encrypted wallet file** is a password-protected export of wallet data. The current app can export this file but cannot import it, so do not rely on it as a working restoration method.
-
-**A simple way to picture it:** a recovery phrase is like your key written in plain handwriting, while an encrypted wallet file is like that key locked in a box that needs a password to open.
-
-**If Guardian is enabled:**
-
-Guardian backs up account state so supported recovery can restore it on a new device. Guardian does not replace your recovery phrase; you still need your own keys to control the wallet.
-
-**If Guardian is not enabled:**
-
-Without Guardian, a private account's state remains on the device. Because encrypted-file import is unavailable, losing that device can make the private account unrecoverable even if you still have the recovery phrase.
-
-**What this means for you:**
-
-- If you only use a public account, your recovery phrase is your key backup. Keep it safe.
-- If you use a private account, keep the device and recovery phrase secure. Enable Guardian if you want the currently supported account-state recovery path.
+Keep your recovery phrase offline and confirm a supported recovery path before resetting or reinstalling. See [*How do I restore my wallet with a recovery phrase?*](#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase)
 
 ## Key concepts
 
@@ -270,22 +163,13 @@ To learn what information Guardian stores, see [*What does Guardian back up?*](#
 
 ### What is a private account?
 
-On Miden, an account can be public or private, and the difference is about where your account's data is stored.
+A private Miden account keeps its full state off-chain. The public blockchain records a cryptographic commitment, a fingerprint of the state, rather than publishing the balance and account data. Public Miden accounts record their full state on-chain.
 
-- With a private account, only a small cryptographic *commitment* (the fingerprint of your data) is stored on the public blockchain, while the full account data stays with you, off-chain. This gives you strong privacy; the network can confirm your account is valid without seeing its contents, like your balances.
-- With a public account, the full account data is stored on-chain and is visible to everyone.
+Standard Bread setup creates a private Guardian-backed account. Guardian can see the account state it backs up; other users cannot inspect that state merely by looking up the account.
 
-Because a private account's data lives off-chain, a recovery phrase alone does not restore its latest state. Guardian provides the supported account-state recovery path in the current wallet.
+A recovery phrase restores keys, but private account recovery also needs account state. Guardian supplies the supported backup for standard Bread accounts. Developer-created accounts without Guardian need a separate recovery plan and are outside this consumer guide.
 
-**If Guardian is enabled:**
-
-Guardian backs up and syncs your private account data, so a lost or broken device doesn't have to mean losing your account state; you can recover it on a new device.
-
-**If Guardian is not enabled:**
-
-You are solely responsible for the account state stored on your device. If you lose the device and have no Guardian backup, the private account may be unrecoverable.
-
-To see what stays hidden, see [*What can other people see about my account on the blockchain?*](#public-and-private-transactions/what-can-other-people-see-about-my-account-on-the-blockchain)
+Public notes and external-chain transactions can still reveal transfer details. See [*What can other people see about my account on the blockchain?*](#public-and-private-transactions/what-can-other-people-see-about-my-account-on-the-blockchain)
 
 ### What is a public note?
 
@@ -309,9 +193,11 @@ For the public version, see [*What is a public note?*](#public-and-private-trans
 
 ### What is recall height?
 
-Recall height is the block height after which a sender can reclaim an unclaimed note. If the recipient does not claim the note before that height, the sender can take it back.
+Recall height is the block height after which the sender can reclaim a note, if the note supports recall and the recipient has not already accepted it. Reaching that height makes recall possible; it does not automatically add the funds back to the sender's spendable balance.
 
-To accept a transfer before it can be taken back, see [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
+Check the expiration information shown in **Activity**. The sender may need to accept the reclaimable transfer to bring it back into their balance.
+
+To accept a transfer, see [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
 
 ## Troubleshooting
 
@@ -321,11 +207,11 @@ When a send shows as **Confirmed** in **Activity**, the transaction is on the bl
 
 **1. Ask the recipient to check their Pending tab**
 
-Incoming tokens wait in **Activity**, on the **Pending** tab, until the recipient selects **Accept Transfer**. Only MIDEN token is accepted automatically, when **Auto Consume** in the settings is on. Every other token must be accepted manually. If the recipient selected **Decline**, the transfer is only hidden on their device, and they can restore it in **Activity**. For the steps, see [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
+Incoming tokens wait in **Activity**, on the **Pending** tab, until the recipient selects **Accept Transfer**. Eligible USDCX transfers can be accepted automatically when **Auto-accept USDCX transfers** is on. Other transfers may need manual acceptance. If the recipient selected **Decline**, the transfer is only hidden on their device, and they can restore it in **Activity**. For the steps, see [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
 
 **2. If the recipient never accepts it**
 
-A send expires after 7 days by default. You can see or change this as the **Expiration Date** before you send. If the recipient hasn't accepted it by then, the tokens come back to you: they appear on your **Pending** tab in **Activity**, like a newly arrived transfer. Select **Accept Transfer** to add them back to your balance.
+A recallable send has an expiration shown as **Expiration Date** before you send. If the recipient has not accepted it by then, it becomes eligible for you to reclaim. Check your **Pending** tab in **Activity** and select **Accept Transfer** when the reclaimable transfer appears. Expiration alone does not add it to your spendable balance.
 
 **Still missing after an hour?**
 
@@ -337,7 +223,7 @@ Never include your recovery phrase or password.
 
 If a transaction appears stuck on the **Accepting…** stage, the wallet is still working in the background and will often resolve it on its own within a few minutes. No action is needed in most cases.
 
-If it stays stuck, the wallet marks it as failed: after 30 minutes on the browser extension, or after 2 minutes on mobile. Closing and reopening the app also ends it, marked as **Interrupted**. Either way, the transfer returns to the **Pending** tab in **Activity** with a **Retry** button, so you can try it again.
+If it stays stuck, the wallet may mark it as failed or **Interrupted**. An interrupted screen does not prove the transaction stopped before reaching the network. Let the wallet sync and check **Activity** and your balance before selecting **Retry**. Do not start another acceptance while the first may still be processing.
 
 **If it keeps getting stuck:**
 
@@ -347,13 +233,11 @@ Retry your stuck transfers one at a time instead of all together.
 
    ![Bread Wallet's Settings page, with General under Preferences](E28-consume-settings-general.png)
 
-2. Turn off **Auto-accept MIDEN transfers**.
-
-   ![Bread Wallet's General page, with the Auto-accept MIDEN transfers switch](E29-consume-auto-consume.png)
+2. Turn off **Auto-accept USDCX transfers**.
 
 3. Wait until nothing shows **Accepting…**. Turning the setting off does not stop a transfer that is already being claimed.
 4. Open **Activity** and select the **Pending** tab. Choose one transfer that failed to consume and select its **Retry** button. Wait for it to finish before you retry the next one.
-5. When all your stuck transfers have gone through, turn **Auto-accept MIDEN transfers** back on.
+5. When all your stuck transfers have gone through, turn **Auto-accept USDCX transfers** back on.
 
 Each transfer you retry is a separate transaction with its own network fee, so retrying them one at a time costs more than claiming them together.
 
@@ -363,16 +247,13 @@ For how to retry a single transfer, see [*What should I do if accepting a transf
 
 While a send is in progress, it shows as **Sending** in **Activity**. On the browser extension it keeps going in the background even if you close the wallet, and you'll get a notification if it fails.
 
-If a send can't finish, the wallet marks it as **Transaction failed**:
-
-- after 30 minutes on the browser extension, or after 2 minutes on mobile (time with the app in the background doesn't count)
-- straight away when you reopen the app, if it was closed in the middle of the send. It then shows **Interrupted — check your activity after it syncs**.
+If a send cannot finish, it may show **Transaction failed**. After an app or browser interruption, it may show **Interrupted — check your activity after it syncs**. Timeouts depend on the platform and transaction stage; keep the wallet connected and let it sync before deciding what to do next.
 
 **Before you try again:**
 
 Occasionally a failed send has already reached the network just before it stopped. Let your wallet sync, then check your balance and **Activity**.
 
-To try again, open the failed send in **Activity** and select its **Retry** button. The wallet first checks whether the send already went through, so it won't send it twice. If it can't tell, it asks you to check your balance before retrying.
+To try again, open the failed send in **Activity** and select its **Retry** button. The wallet checks whether the send already went through. If the outcome is uncertain, wait for sync and check your balance and the recipient before retrying; do not start a second send while the first may still be processing.
 
 If the send shows as **Confirmed** but the recipient doesn't have it, see [*My transfer shows as confirmed, but the token never arrived.*](#common-issues-and-support/my-transfer-shows-as-completed-but-the-token-never-arrived)
 
@@ -381,7 +262,7 @@ If the send shows as **Confirmed** but the recipient doesn't have it, see [*My t
 Incoming tokens usually show up within a few moments. If they're taking longer, check these first:
 
 1. **Open and unlock your wallet.** Bread checks for incoming tokens every few seconds while it's open. On mobile it only checks while the app is open; on the browser extension it also checks in the background about once a minute.
-2. **Check the Pending tab.** Incoming tokens wait in **Activity**, on the **Pending** tab, until you select **Accept Transfer**. Only MIDEN token is accepted automatically, when **Auto Consume** in the settings is on. See [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
+2. **Check the Pending tab.** Incoming tokens wait in **Activity**, on the **Pending** tab, until you select **Accept Transfer**. Eligible USDCX transfers can be accepted automatically when **Auto-accept USDCX transfers** is on. See [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
 3. **Check for a connection banner.** If a banner at the top of the wallet says **You appear to be offline** or **Cannot reach the Miden node**, the wallet can't check for new tokens. Check your internet connection, then select **Try again** or **Retry sync**. If the Miden network is down or busy, your tokens appear once it's reachable again.
 
 If there is still nothing after an hour, report it to our [**SUPPORT**](/feedback).

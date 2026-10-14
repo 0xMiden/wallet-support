@@ -31,8 +31,8 @@ To accept everything at once, select **Accept All** in the row above the list on
 
 If accepting fails, see [*What should I do if accepting a transfer fails?*](#common-issues-and-support/what-should-i-do-if-accepting-a-transfer-fails).
 
-**Important note:** If the expanded card shows a date when the transfer returns to the sender, accept it before then. After that date, the tokens return to the sender.
+**Important note:** If the expanded card shows an expiration date, accept the transfer before then. After that date, a recallable transfer can be reclaimed by the sender; it does not automatically become spendable in the sender's wallet.
 
 **Decline** only hides a transfer from **Activity** on this device. It does not return the tokens to the sender or delete the transfer. To bring hidden transfers back, select the **Pending** tab, then select the **Restore** button next to **Hidden transfers**.
 
-Only MIDEN token is accepted automatically, when **Auto-accept MIDEN transfers** is on in **General** settings, so it may not appear as a pending transfer.
+Eligible USDCX transfers can be accepted automatically in versions where **Auto-accept USDCX transfers** is on in **General** settings, so it may not appear as a pending transfer.

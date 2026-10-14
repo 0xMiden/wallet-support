@@ -2,6 +2,8 @@ import { helpCenterMainCategories } from './categories';
 import { articlesInSubcategory, helpCenterArticles } from './content';
 import { HelpCenterFooter } from './HelpCenterFooter';
 import { articleHref } from './routing';
+import { TopicIcon } from './TopicIcon';
+import { panelTintFor } from './panelTint';
 
 export function AllTopics() {
   const firstCategoryId = helpCenterMainCategories[0]?.subcategories[0]?.id ?? '';
@@ -14,10 +16,10 @@ export function AllTopics() {
           <p>Browse every guide, grouped by the task you are trying to complete.</p>
         </header>
         <div className="all-topics-grid">
-          {helpCenterMainCategories.map(mainCategory => (
-            <section className="all-topics-group" key={mainCategory.id}>
+          {helpCenterMainCategories.map((mainCategory, index) => (
+            <section className="all-topics-group" key={mainCategory.id} data-panel-tint={panelTintFor(index)}>
               <div className="all-topics-group-heading">
-                <h2>{mainCategory.title}</h2>
+                <h2><TopicIcon categoryId={mainCategory.id} />{mainCategory.title}</h2>
                 <p>{mainCategory.description}</p>
               </div>
               {mainCategory.subcategories.map(category => {

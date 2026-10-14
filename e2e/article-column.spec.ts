@@ -18,7 +18,7 @@ import { expect, test } from '@playwright/test';
 const root = fileURLToPath(new URL('..', import.meta.url));
 const breakpoints = [
   ...new Set(
-    ['src/help-center/help-center.css', 'src/help-center/tokens.css', 'src/styles.css'].flatMap(file =>
+    ['src/help-center/help-center.css', 'src/help-center/tokens.css', 'src/help-center/shell.css', 'src/help-center/home.css', 'src/styles.css'].flatMap(file =>
       [...readFileSync(join(root, file), 'utf8').matchAll(/@media[^{]*?\((?:min|max)-width:\s*(\d+)px\)/g)].map(
         match => Number(match[1])
       )
@@ -140,8 +140,16 @@ test('the rail never leaves the article below the 52ch floor', async ({ page }) 
     narrowestBeside = Math.min(narrowestBeside, frame.column);
   }
 
-  // 52ch, at the 10px per character this stylesheet's type gives.
-  expect(narrowestBeside, 'the rail squeezed the article below 52ch').toBeGreaterThanOrEqual(519.5);
+  // The body now uses the wallet's Inter instead of Nunito; measure its actual ch.
+  const floor = await page.locator('.help-center-article-body').evaluate(element => {
+    const probe = document.createElement('span');
+    probe.style.cssText = 'position:absolute;width:52ch';
+    element.append(probe);
+    const width = probe.getBoundingClientRect().width;
+    probe.remove();
+    return width;
+  });
+  expect(narrowestBeside, 'the rail squeezed the article below 52ch').toBeGreaterThanOrEqual(floor - .5);
   // What Ivan reported: at his window the strip beside the article sat empty
   // and the rail was below it. It is beside well before the old ~1400px.
   expect(besideFrom, 'the rail arrives later than the 52ch threshold implies').toBeLessThanOrEqual(1240);

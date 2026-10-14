@@ -6,19 +6,10 @@ subcategory: public-and-private-transactions
 platforms: [extension-desktop, mobile]
 ---
 
-On Miden, an account can be public or private, and the difference is about where your account's data is stored.
+A private Miden account keeps its full state off-chain. The public blockchain records a cryptographic commitment, a fingerprint of the state, rather than publishing the balance and account data. Public Miden accounts record their full state on-chain.
 
-- With a private account, only a small cryptographic *commitment* (the fingerprint of your data) is stored on the public blockchain, while the full account data stays with you, off-chain. This gives you strong privacy; the network can confirm your account is valid without seeing its contents, like your balances.
-- With a public account, the full account data is stored on-chain and is visible to everyone.
+Standard Bread setup creates a private Guardian-backed account. Guardian can see the account state it backs up; other users cannot inspect that state merely by looking up the account.
 
-Because a private account's data lives off-chain, a recovery phrase alone does not restore its latest state. Guardian provides the supported account-state recovery path in the current wallet.
+A recovery phrase restores keys, but private account recovery also needs account state. Guardian supplies the supported backup for standard Bread accounts. Developer-created accounts without Guardian need a separate recovery plan and are outside this consumer guide.
 
-**If Guardian is enabled:**
-
-Guardian backs up and syncs your private account data, so a lost or broken device doesn't have to mean losing your account state; you can recover it on a new device.
-
-**If Guardian is not enabled:**
-
-You are solely responsible for the account state stored on your device. If you lose the device and have no Guardian backup, the private account may be unrecoverable.
-
-To see what stays hidden, see [*What can other people see about my account on the blockchain?*](#public-and-private-transactions/what-can-other-people-see-about-my-account-on-the-blockchain)
+Public notes and external-chain transactions can still reveal transfer details. See [*What can other people see about my account on the blockchain?*](#public-and-private-transactions/what-can-other-people-see-about-my-account-on-the-blockchain)

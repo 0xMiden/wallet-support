@@ -6,6 +6,8 @@ subcategory: security-and-recovery
 platforms: [extension-desktop]
 ---
 
+This page manages your consumer wallet permissions; it is not an integration setup guide. Never provide a recovery phrase or signing key to connect a dApp.
+
 **Authorized DApps** controls whether dApps can connect to your wallet, and lists the ones that already have.
 
 **To turn dApp connections on or off:**

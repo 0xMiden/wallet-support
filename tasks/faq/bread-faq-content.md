@@ -1,13 +1,13 @@
-# Bread FAQ: final content for implementation
+# Bread FAQ: content for implementation
 
-Thirty-six articles. Platform: both Extension and Mobile, one body each, except articles 29 to 35, which are Extension only until they are checked on a phone. Text is verbatim and approved; do not edit.
+Revised for Brian's 2026-10-14 support audit. Forty-three articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
 
 ## Placement
 
 | # | Title | Main category | Subcategory |
 |---|---|---|---|
 | 1 | What is Bread Wallet? | Getting started | Setup and basic use |
-| 2 | Why should I pick a Guardian-backed account over a more private one? | Guardian | Guardian protection |
+| 2 | Does Bread use Guardian-backed accounts? | Guardian | Guardian protection |
 | 3 | What are the three keys in a Guardian-backed account? | Guardian | Guardian protection |
 | 4 | What is the emergency key? | Guardian | Guardian protection |
 | 5 | What is the everyday key? | Guardian | Guardian protection |
@@ -42,12 +42,13 @@ Thirty-six articles. Platform: both Extension and Mobile, one body each, except 
 | 34 | How do I manage the dApps connected to my wallet? | Manage wallet | Security and recovery |
 | 35 | How do I save a contact in Bread Wallet? | Manage wallet | Sending, receiving, and claiming |
 | 36 | What is the Partner Mainnet deposit limit? | Cross-chain | Moving across chains |
-
-New main categories, last in category order: Cross-chain, with the subcategory Moving across chains (articles 13–15), then Earn, with the subcategory Earning yield (16–17). Within every subcategory, new articles go after the existing ones, in the order above. Articles 18 and 19 were added on 2026-09-23 (Ivan): 18 is the first article in Activity and transaction status, and 19 goes after the existing Common issues articles. Articles 20 to 28 were added on 2026-10-06 (Ivan): they go after 16 and 17 in Earning yield, in the order above. Articles 29 to 35 were added on 2026-10-09 (Ivan), written against wallet 1.17.1: they go after the existing articles in their subcategories, in the order above, and 35 is the first FAQ article in Sending, receiving, and claiming.
-
-## Images
-
-Five files in `faq-images/`, referenced below by filename: guardian-backed-or-more-private.png, three-keys-always-in-control.png, private-from-other-users.png, across-chains-two-routes.png, earn-across-the-privacy-line.png
+| 37 | How do I prepare for Mainnet and check my network? | Getting started | Setup and basic use |
+| 38 | Do I need Developer Settings to use Bread? | Getting started | Setup and basic use |
+| 39 | What should I do before resetting or reinstalling Bread? | Manage wallet | Security and recovery |
+| 40 | What should I check if a bridge deposit or withdrawal is delayed? | Troubleshooting | Common issues |
+| 41 | How do I send feedback or report a problem? | Troubleshooting | Common issues |
+| 42 | How do I send or receive tokens on Miden? | Manage wallet | Sending, receiving, and claiming |
+| 43 | What should I check before a Swap? | Cross-chain | Moving across chains |
 
 ## Articles
 
@@ -56,30 +57,24 @@ Category: Getting started › Setup and basic use
 
 Bread is a private wallet on Miden, built for sending, receiving, swapping, and earning yield.
 
-Underneath, your account is private by default and, with Guardian, stays recoverable without ever handing over control. Privacy is built in, and the complexity is handled for you so the experience stays simple.
+Standard Bread accounts are private and Guardian-backed, with recovery through your recovery phrase and the Guardian backup. Privacy is built in, and the complexity is handled for you so the experience stays simple.
 
 - **Private from other users.** The people you transact with can see their own transaction, but not the rest of your balance or history. Neither can anyone else watching the chain.
 - **Recoverable and still yours.** With a Guardian-backed account, a lost or stolen device isn't the end of the story, and no single key can move funds alone.
+Feature availability depends on your installed version and network. Mainnet access, Swap, cross-chain routes and Earn are available only when your released wallet supports them. See *How do I prepare for Mainnet and check my network?*
+
 Related: *What is a private account?*, *What is Guardian?*, *How to install Bread Wallet*
 
-### 2. Why should I pick a Guardian-backed account over a more private one?
+### 2. Does Bread use Guardian-backed accounts?
 Category: Guardian › Guardian protection
 
-Setting up Bread comes down to one real decision: whether to back your account up with Guardian, a third-party service that makes privacy practical to use.
+Standard Bread setup uses a private Guardian-backed account. You choose a Guardian provider; you are not asked to choose between Guardian and an unsupported recovery setup.
 
-![](guardian-backed-or-more-private.png)
+Guardian keeps the account-state backup needed for recovery. The operator can see that state, but it cannot move funds on its own and never holds your recovery phrase.
 
-**Guardian-backed (recommended)**
+Keep the recovery phrase offline. It restores your keys and, with Guardian's backup, lets you recover on a new device. See *How do I restore my wallet with a recovery phrase?*
 
-A Guardian-backed account can be recovered on a new device and is protected by more than one key, so a lost or stolen device isn't the end of the story. The trade-off is that the Guardian operator can see the account state. This allows Guardian to keep the account backup up to date without being able to move funds on its own.
-
-**More private**
-
-A more private account keeps everything on the device and shares nothing with a Guardian operator. In return, there's no recovery: lose the device and the account state is gone, along with the funds.
-
-Both options are private from other users. The choice is about recovery, and about who else can see the state. For most users, Guardian offers the best balance between privacy and practical recovery.
-
-To set up either account type, see *How do I create a Bread Wallet?*
+Developer Settings can expose other account types for testing. Those accounts have different recovery requirements and are outside the standard consumer setup. See *Do I need Developer Settings to use Bread?*
 
 ### 3. What are the three keys in a Guardian-backed account?
 Category: Guardian › Guardian protection
@@ -174,7 +169,8 @@ Switching Guardian uses your everyday key and your emergency key, so have your r
 
    ![Bread Wallet's Enter password page, with the Continue button](E32-guardian-password.png)
 
-7. A processing page will appear. You can hide it or wait until the process is complete, then click **Done** once the switch succeeds.
+7. If the recovery phrase was removed from this device, enter it when the official wallet asks. Do not send it to support.
+8. A processing page will appear. You can hide it or wait until the process is complete, then click **Done** once the switch succeeds.
 
    ![Bread Wallet's Processing page, with the Hide button](E33-guardian-processing.png)
 
@@ -185,24 +181,22 @@ Category: Privacy › Public and private transactions
 
 On most chains, an account's balance and full history live on a public ledger that anyone can read. Miden works differently: a private account keeps its state (its balances and its history) on your device, and the only things that ever reach the publicly readable chain are the account's address and a commitment to that state. A commitment is a hash of the state, a short cryptographic fingerprint that gives nothing away about its contents.
 
-From outside, the chain shows only that an account exists and that its state changed. What was done and how much moved stay private. When you look up an account on a block explorer, you'll see that it exists and that its state has changed, but you won't see what changed or how.
+From outside, the chain shows only that an account exists and that its state changed. The private account state is hidden, but public notes and transactions on other chains may reveal transfer details. When you look up an account on a block explorer, you'll see that it exists and that its state has changed, but you won't see what changed or how.
 
 ![](private-from-other-users.png)
 
-This is what private from other users means: the people you transact with can see their own transaction, but they cannot inspect the rest of your balance or history. Neither can anyone else watching the chain.
+This is what private from other users means: the people you transact with can see their own transaction, but they cannot inspect the rest of your balance or history. Guardian can see the state it backs up, and anyone can read the contents of a public note. Privacy depends on the transfer as well as the account.
 
 Related: *What is a private account?*, *What is a private note?*
 
 ### 10. Can I get my wallet back if I lose my device?
 Category: Manage wallet › Security and recovery
 
-It depends on the account type you chose at setup.
+For a standard Guardian-backed Bread account, recovery on a new device uses your recovery phrase and Guardian's account-state backup. See *How do I restore my wallet with a recovery phrase?*
 
-**Guardian-backed account: yes.** Because Guardian keeps a backup of the account, a lost device doesn't have to mean a lost wallet. On a new device, your recovery phrase restores the account from that backup. See *How do I restore my wallet with a recovery phrase?*
+You still need the recovery phrase. Guardian cannot replace it or recover funds for you if the phrase and every device holding your keys are lost.
 
-**More private account: no.** A more private account keeps everything on the device and shares nothing with a Guardian operator. Lose the device and the account state is gone, along with the funds.
-
-A lost device is not the same as a lost recovery phrase. If you have lost your recovery phrase, see *What should I do if I lose my recovery phrase?*
+If an older installation or a developer-created account does not use Guardian, do not assume this recovery path applies. Preserve any working device and seek [support](/feedback) before resetting it.
 
 ### 11. What does Guardian back up?
 Category: Manage wallet › Security and recovery
@@ -232,52 +226,53 @@ For the in-app steps, see *How do I restore my wallet with a recovery phrase?*
 ### 13. Can I send funds to another blockchain?
 Category: Cross-chain › Moving across chains
 
-Bread Beta can move supported test assets between Miden testnet and Ethereum Sepolia.
+Only use a cross-chain route when your installed Bread version offers it for the selected network and asset.
 
-> ⚠️ **Test funds only:** connect an Ethereum Sepolia wallet and use only testnet assets. Never send funds from Ethereum mainnet or any other network with real assets.
+On Testnet, use only the displayed test networks and test assets. Never send real funds to a test address. A Sepolia route is not an Ethereum Mainnet route.
 
-The routes and assets available in Bread depend on the current Beta configuration. The wallet shows only the routes it can use for that transfer. See *What is the difference between a solver route and a canonical bridge?*
+On Mainnet, use real assets only after your installed version supports Mainnet and shows the exact route. Check the source chain, destination chain, token, recipient and fees before you confirm. Store updates and route availability can differ by platform.
+
+Keep the resulting total wallet balance within the Partner Mainnet cap. See *What is the Partner Mainnet deposit limit?* For route differences, see *What is the difference between a solver route and a canonical bridge?*
 
 ### 14. What is the difference between a solver route and a canonical bridge?
 Category: Cross-chain › Moving across chains
 
-Bread Beta runs on Miden testnet and Ethereum Sepolia. Use test funds only; never connect a wallet holding real assets for a bridge transfer.
+A solver route fulfills a request to deliver assets on another chain. A canonical bridge uses the bridge's deposit and claim process. Their supported assets, fees, arrival times and recovery steps can differ.
 
-Bread may offer several routes across those test networks, and the difference is how funds are handled along the way. The wallet shows a route only when it is configured for the selected asset and destination.
+Bread shows only the routes configured for the selected network and asset. A fast route can be unavailable, and a bridge transfer does not necessarily swap the token in transit. Check the route and quote before signing.
 
-When available, the fast route uses a solver, as is typical of intent-based protocols like Epoch or NEAR Intents. The solver briefly holds the test funds and delivers the equivalent on the other side. This route can swap the token in transit, but it may be unavailable and supports only configured tokens.
+Use test assets only on Testnet routes. Mainnet routes require a released wallet that supports them; seeing a test route is not evidence that its Mainnet equivalent is available.
 
-For a configured direct transfer, a canonical bridge transfers the specified test asset without a solver: funds are claimed on arrival, with no swap in transit.
-
-To swap tokens, see *Can I swap tokens across chains?*
-
-![](across-chains-two-routes.png)
+If a transfer is pending, follow its existing status and claim or recovery instructions rather than starting it again. See *What should I check if a bridge deposit or withdrawal is delayed?*
 
 ### 15. Can I swap tokens across chains?
 Category: Cross-chain › Moving across chains
 
-Cross-chain swaps are available only when Bread Beta shows a configured fast route for the selected test asset and destination. When available, a solver can swap the token in transit and deliver the equivalent on the other side. Use only Miden testnet and Ethereum Sepolia test funds; never use assets from Ethereum mainnet or another real network.
+A cross-chain swap is available only when Bread shows a route that supports the selected source token, destination token and networks. Not every bridge route swaps tokens. A Swap within Miden is a different operation.
 
-Swaps within Miden use Miden-native Swap. For how the fast route works, see *What is the difference between a solver route and a canonical bridge?*
+Check the quote, expected received amount, fees and recipient before signing. If the quote expires or changes, review the updated quote. Do not assume a route is available because another token or network works.
+
+Use test assets on Testnet. Use Mainnet routes only when your installed released version supports them. See *What is the difference between a solver route and a canonical bridge?*
 
 ### 16. Can I earn yield in Bread?
 Category: Earn › Earning yield
 
-Not yet. Earn is unavailable in the current Bread Beta. Do not send real funds to test this feature.
+Earn is available only when your installed version and selected network enable it. A missing or disabled deposit control means you should not start a new deposit.
 
-When Earn becomes available, the wallet will show the supported test networks, assets, and lending route. Funds will be routed from Bread to the displayed lending market and returned to Bread on withdrawal.
+Testnet Earn uses test assets and a test lending market. Estimated rewards there do not represent real returns. Mainnet Earn must be supported by your released wallet and the route it shows; do not infer availability from these Testnet guides.
 
-There's one privacy point worth knowing: the funds are private on Miden, become visible on Ethereum while they earn, and return to your private account on the way back. See *Are my funds private while they earn?*
+When a supported route is available, review the market, fees and expected amount before confirming. The lending-market portion can be publicly visible. See *Are my funds private while they earn?*
 
 ### 17. Are my funds private while they earn?
 Category: Earn › Earning yield
 
-Earn is unavailable in the current Bread Beta. When it becomes available, funds will not be private while they earn:
+Earn does not provide the same privacy as holding assets in your private Miden account.
 
-- **On Miden:** your balance and activity are hidden.
-- **While they earn:** the funds sit in the displayed lending market, where the amount and the yield are visible.
-- **On the way back:** the funds return to your private account on Miden.
-Use only the test networks and test assets shown in the wallet. For how Earn will work, see *Can I earn yield in Bread?*
+- **On Miden:** the private account state is hidden from the public chain; Guardian can see its backup.
+- **In an external lending market:** the amount, activity and rewards may be publicly visible.
+- **On return:** the assets go back to your Miden account after the route completes and the transfer is accepted.
+
+Testnet Earn uses test assets. This explanation does not announce Mainnet availability. Review the route your installed wallet offers. See *Can I earn yield in Bread?*
 
 ![](earn-across-the-privacy-line.png)
 
@@ -309,11 +304,11 @@ To accept everything at once, select **Accept All** in the row above the list on
 
 If accepting fails, see *What should I do if accepting a transfer fails?*.
 
-**Important note:** If the expanded card shows a date when the transfer returns to the sender, accept it before then. After that date, the tokens return to the sender.
+**Important note:** If the expanded card shows an expiration date, accept the transfer before then. After that date, a recallable transfer can be reclaimed by the sender; it does not automatically become spendable in the sender's wallet.
 
 **Decline** only hides a transfer from **Activity** on this device. It does not return the tokens to the sender or delete the transfer. To bring hidden transfers back, select the **Pending** tab, then select the **Restore** button next to **Hidden transfers**.
 
-Only MIDEN token is accepted automatically, when **Auto-accept MIDEN transfers** is on in **General** settings, so it may not appear as a pending transfer.
+Eligible USDCX transfers can be accepted automatically in versions where **Auto-accept USDCX transfers** is on in **General** settings, so it may not appear as a pending transfer.
 
 ### 19. What should I do if accepting a transfer fails?
 Category: Troubleshooting › Common issues
@@ -341,15 +336,19 @@ To learn how accepting works, see *How do I accept a pending transfer?*.
 ### 20. What do I need before I can use Earn?
 Category: Earn › Earning yield
 
+These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
+
 Earn works with USDC on Miden Testnet. You need two things in your wallet:
 
 - **USDC** to deposit. An incoming USDC transfer is not accepted automatically, so accept it on the **Activity** page first. See *How do I accept a pending transfer?*
-- **MIDEN** to pay the network fee. The network fee is always paid in MIDEN, so it cannot be paid in USDC.
+- The fee asset and amount shown by the wallet. Keep enough for the network fee; do not assume the deposit token can pay it.
 
 Use only the test networks and test assets shown in the wallet. To make a deposit, see *How do I deposit into Earn?*
 
 ### 21. How do I deposit into Earn?
 Category: Earn › Earning yield
+
+These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
 
 Depositing opens a position in a vault. Your USDC leaves your Miden balance and starts earning in the lending market.
 
@@ -386,6 +385,8 @@ Before you deposit, see *What do I need before I can use Earn?*
 ### 22. How do I check my Earn position?
 Category: Earn › Earning yield
 
+These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
+
 Your positions are on the **Earn** tab, with what you deposited and what it has earned.
 
 **Steps:**
@@ -404,6 +405,8 @@ To add to the position, select the **Deposit more** button and follow the steps 
 
 ### 23. How do I withdraw from Earn?
 Category: Earn › Earning yield
+
+These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
 
 Withdrawing closes your position and returns the USDC to your Miden balance.
 
@@ -432,6 +435,8 @@ To learn how accepting works, see *How do I accept a pending transfer?*
 ### 24. Can I withdraw part of my position?
 Category: Earn › Earning yield
 
+These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
+
 No. A withdrawal returns your whole position. The review page shows **Withdrawal** as **Full position (gasless)**.
 
 To keep some funds earning, withdraw and then deposit the amount you want to keep. See *How do I withdraw from Earn?*
@@ -439,15 +444,19 @@ To keep some funds earning, withdraw and then deposit the amount you want to kee
 ### 25. What does it cost to use Earn?
 Category: Earn › Earning yield
 
-- **Depositing** costs a network fee, paid in MIDEN. The review page shows the **Max network fee** before you confirm, and the success page shows the **Network Fee** you paid.
+These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
+
+- **Depositing** costs a network fee, paid in the fee asset shown by the wallet. The review page shows the **Max network fee** before you confirm, and the success page shows the **Network Fee** you paid.
 - **Withdrawing** is gasless: you pay no network fee.
 
-The network fee cannot be paid in USDC. See *What do I need before I can use Earn?*
+Check the displayed fee asset and maximum fee before confirming. See *What do I need before I can use Earn?*
 
 ### 26. What should I do if an Earn deposit or withdrawal fails?
 Category: Earn › Earning yield
 
-If a deposit fails, the wallet shows **Transaction Failed** and your USDC stays in your balance.
+These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
+
+If a deposit shows **Transaction Failed**, check its status and your balance after sync before starting another deposit. A failed or interrupted screen does not by itself prove that nothing was submitted.
 
 **Steps:**
 
@@ -455,7 +464,7 @@ If a deposit fails, the wallet shows **Transaction Failed** and your USDC stays 
 
    ![Bread Wallet's Transaction Failed page for an Earn deposit](E47-earn-deposit-failed.png)
 
-2. Wait for the wallet to sync, and check that you have MIDEN for the network fee.
+2. Wait for the wallet to sync, and check that you have the displayed fee asset for the network fee.
 3. Make the deposit again. See *How do I deposit into Earn?*
 
 When you withdraw, the returning funds arrive as a **Received** transfer on the **Activity** page. If it shows a **Retry** button, see *What should I do if accepting a transfer fails?*
@@ -465,23 +474,27 @@ If it keeps failing, report it to our [**SUPPORT**](/feedback).
 ### 27. Do I keep my Earn position if I restore my wallet?
 Category: Earn › Earning yield
 
-Yes, if your wallet is backed up with Guardian. Restore the wallet and your position appears again under **Current Positions** on the **Earn** tab.
+These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
 
-Without Guardian, losing your device means losing the wallet and the position with it.
+For a supported position on the same network, recovery uses your recovery phrase and the Guardian backup of your standard Bread account. Restore the wallet and your position appears again under **Current Positions** on the **Earn** tab.
+
+Recovery does not move a Testnet position to Mainnet. Developer-created accounts without Guardian require a separate recovery plan.
 
 To restore, see *How do I restore my wallet with a recovery phrase?*
 
 ### 28. Do spending limits apply to Earn deposits?
 Category: Earn › Earning yield
 
+These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
+
 Yes. An Earn deposit counts towards your daily spending limit, based on its value in USD. Withdrawals bring funds back to your wallet and do not count.
 
-This applies to the current release and will change at public mainnet.
+This daily spending check is separate from the Partner Mainnet total wallet-balance cap. Do not assume future releases use the same spending rules.
 
 ### 29. How do I remove my recovery phrase from my device?
 Category: Manage wallet › Security and recovery
 
-Removing your recovery phrase deletes it from this device, so someone who gets into your wallet cannot read it. Your wallet keeps working for everyday transactions. You will need to type the recovery phrase when you switch Guardian or rotate your everyday key, so write it down first.
+Removing your recovery phrase deletes the stored copy from this installation, so someone who gets into your wallet cannot read it. Your wallet keeps working for everyday transactions. You will need to type the recovery phrase when you switch Guardian or rotate your everyday key, so write it down first.
 
 **Steps:**
 
@@ -503,6 +516,8 @@ Removing your recovery phrase deletes it from this device, so someone who gets i
 7. Select **Remove from this device**.
 
 The wallet then shows **Recovery phrase removed from this device**, and **Recovery Phrase** no longer appears in **Settings**.
+
+Earlier backups may still contain the phrase. Keep them secure. If the phrase is removed, account creation and some security actions may require it again; keep your offline copy available.
 
 Related: *How do I view my recovery phrase?*, *What should I do if I lose my recovery phrase?*
 
@@ -531,7 +546,7 @@ Related: *How do I keep my wallet secure?*, *How do I remove my recovery phrase 
 ### 31. How do I reveal my keys in Bread Wallet?
 Category: Manage wallet › Security and recovery
 
-Bread Wallet can show the keys your account signs with: your Miden everyday key and your EVM key. Most people never need them. Reveal them only when you are setting the account up somewhere that asks for them.
+Bread Wallet can show the keys your account signs with: your Miden everyday key and your EVM key. Most people never need them. Do not reveal them for ordinary wallet setup, a dApp connection, troubleshooting or feedback. Requests to paste signing keys into a site or send them to support are unsafe.
 
 **Steps:**
 
@@ -573,7 +588,7 @@ Rotating creates a new everyday key and replaces the current one on-chain. Do th
 
    ![Bread Wallet's Transaction Complete! page for a key rotation](E56-rotate-complete.png)
 
-A rotation is a transaction, so it pays a small **Network Fee** in USDCX. If you removed your recovery phrase from this device, the wallet asks you to type it before it rotates.
+A rotation is a transaction, so it pays the **Network Fee** shown by your wallet. If you removed your recovery phrase from this device, the wallet asks you to type it before it rotates.
 
 Related: *What is the everyday key?*, *How do I reveal my keys in Bread Wallet?*
 
@@ -610,10 +625,14 @@ The page then shows your limit, for example **Current limit: $500 a day**.
 - **Stored on this device.** Limits and spending history are kept only on this installation. Resetting app data or reinstalling the wallet removes them.
 - **A local safety check.** The limit is not an on-chain restriction. Anyone with direct access to your keys can bypass it.
 
+Your daily spending limit does not raise or replace the Partner Mainnet total wallet-balance cap. See *What is the Partner Mainnet deposit limit?*
+
 Related: *Do spending limits apply to Earn deposits?*
 
 ### 34. How do I manage the dApps connected to my wallet?
 Category: Manage wallet › Security and recovery
+
+This page manages your consumer wallet permissions; it is not an integration setup guide. Never provide a recovery phrase or signing key to connect a dApp.
 
 **Authorized DApps** controls whether dApps can connect to your wallet, and lists the ones that already have.
 
@@ -644,7 +663,7 @@ The **Address Book** saves addresses under a name, so you can send to a person w
    ![Bread Wallet's Address Book page, with the New contact button](E61-address-book.png)
 
 2. Select **New contact**.
-3. Enter the **Address**, then a **Name**. Use the full address that starts with mtst1.
+3. Enter the **Address**, then a **Name**. Use the full Miden address supplied for the correct network. Do not substitute an Ethereum address or reuse a Testnet address for Mainnet.
 
    ![Bread Wallet's New contact page, with the Address and Name fields](E62-new-contact.png)
 
@@ -670,6 +689,104 @@ The wallet shows **Invalid address** if the address is not valid, and **This is 
 ### 36. What is the Partner Mainnet deposit limit?
 Category: Cross-chain › Moving across chains
 
-Partner Mainnet has a $1,232.462 limit on the overall deposited balance. This is not a per-deposit limit.
+The Partner Mainnet cap is $1,232.462 for the total wallet balance after a deposit. It is not a per-transfer allowance or a daily deposit limit.
 
-Before making a deposit, add the new deposit to the existing deposited balance. The total must stay at or below $1,232.462. Splitting funds into smaller deposits does not change the limit.
+Add the value of the proposed deposit to the existing total wallet balance. The result must be at or below $1,232.462. For example, a wallet balance of $1,000 leaves $232.462 of room. Splitting a larger amount into smaller deposits does not increase that room.
+
+This balance cap is separate from a daily spending limit. A bridge provider may also show a smaller route limit or a minimum amount; follow the displayed route requirements as well.
+
+Use only Mainnet routes supported by your installed version. Do not rely on a missing warning as permission to exceed the cap. See *How do I prepare for Mainnet and check my network?*
+
+### 37. How do I prepare for Mainnet and check my network?
+Category: Getting started › Setup and basic use
+
+Mainnet and Testnet are separate networks. Testnet tokens have no real-world value and do not turn into Mainnet funds.
+
+Before funding, update Bread through the official store, check the network shown in the wallet, and confirm that your installed version supports the route you plan to use. Store releases can differ by platform. A reviewed or announced feature is not proof that it is installed on your device.
+
+If Bread shows a Testnet or developer-network indicator, use test assets only. Do not send real funds to a test address, and do not change endpoints to make an account appear to be on Mainnet.
+
+If your released version offers a Mainnet upgrade, follow the wallet's instructions. Keep your recovery phrase backed up before any reset. Testnet balances and positions do not transfer to Mainnet through a wallet reset or phrase import.
+
+If the welcome screen requires an access code, follow your invitation. Do not treat Developer Settings as an access-code workaround. If Mainnet is not offered by your installed version, wait for the supported update or contact [support](/feedback).
+
+See *What is the Partner Mainnet deposit limit?* and *Do I need Developer Settings to use Bread?*
+
+### 38. Do I need Developer Settings to use Bread?
+Category: Getting started › Setup and basic use
+
+No. Standard wallet use does not require custom RPC, prover, faucet or Guardian endpoints. Use the defaults supplied by your official wallet version.
+
+Developer Settings are for developers testing integrations and separate networks. Changing them can break sync or point the wallet at a different network. A reachable endpoint does not prove that it is the right or trusted service.
+
+After setup, **Network endpoints** may show an active override. Returning to defaults can require **Reset to defaults & re-onboard**, which erases local keys and history. Have a supported recovery path before using it. Do not reset a working wallet as a first troubleshooting step.
+
+Developer-created accounts without Guardian do not have the standard Guardian recovery backup. Keep their data and backups separate from normal consumer accounts.
+
+For SDK, API and custom-network integration instructions, use the [Miden developer documentation](https://docs.miden.xyz/). This Help Center covers consumer wallet use. See *How do I prepare for Mainnet and check my network?*
+
+### 39. What should I do before resetting or reinstalling Bread?
+Category: Manage wallet › Security and recovery
+
+A reset can erase this installation's wallet keys, local history, contacts and settings. Signing out to recover a forgotten password and resetting developer endpoints can also replace local wallet data.
+
+Before you continue:
+
+1. Confirm that you have the recovery phrase written correctly and stored offline. A passcode, password or biometric unlock alone cannot restore a wallet on a new installation.
+2. Check which network and Guardian the account uses. Standard Guardian recovery needs your phrase and its account-state backup.
+3. Check **Activity**, balances and any in-flight bridge or Earn transfers. Record non-secret references you may need to follow up.
+4. Keep any working installation until you have confirmed a supported recovery path. Do not assume an encrypted-file guide applies to your released version.
+
+If you forgot the wallet password, use the wallet's recovery flow to reimport the account and choose new protection. Support cannot reset your recovery phrase. If the phrase is missing, do not sign out or reset; contact [support](/feedback).
+
+Resetting does not cancel a transaction already submitted to a network and does not move Testnet assets to Mainnet. See *How do I restore my wallet with a recovery phrase?*
+
+### 40. What should I check if a bridge deposit or withdrawal is delayed?
+Category: Troubleshooting › Common issues
+
+A bridge transfer can include a source-chain transaction, route processing and a destination-chain claim or arrival. Confirmation on the source chain alone does not mean the destination balance has updated.
+
+1. Check the source and destination networks, token and recipient in the original transfer.
+2. Open **Activity** and read the existing transfer's status and any claim or recovery action. Keep the wallet connected and let it sync.
+3. Check whether an incoming Miden transfer is waiting to be accepted. See *How do I accept a pending transfer?*
+4. If the outcome is uncertain, check the source and destination balances before retrying. Do not submit a second deposit or withdrawal just because the screen was interrupted.
+5. If it remains delayed, report the route, networks, wallet version and a non-secret transaction reference. Hide sensitive information in screenshots. See *How do I send feedback or report a problem?*
+
+A disabled route can stop new transfers without cancelling a transfer already in progress. Follow recovery actions shown for that transfer. Do not change Developer Settings to force a route.
+
+### 41. How do I send feedback or report a problem?
+Category: Troubleshooting › Common issues
+
+Open [the Bread Wallet feedback form](/feedback), or choose **Send feedback** from the wallet's **Settings** and **About** section.
+
+Use **Short title** for one clear summary and **Description** for the details. Choose the feedback type. For a bug, include what you did, what you expected, what happened, your platform, app version and network. Describe one problem per report where possible.
+
+Before adding a screenshot, hide recovery information, signing keys, passwords and any other sensitive information. Never enter a recovery phrase in the form. Support will never ask for it.
+
+Choose **Submit feedback** when your report is ready. If the form cannot open, check your connection and try the link again. Do not reset the wallet to fix a feedback-page problem.
+
+### 42. How do I send or receive tokens on Miden?
+Category: Manage wallet › Sending, receiving, and claiming
+
+For a transfer within Miden, both wallets must use the same network. A transfer to another chain needs a supported cross-chain route.
+
+**To receive:**
+
+Open **Receive** and share the account address or QR code for the intended network. Share the address, never your recovery phrase or signing keys. Ask the sender to check the network and token. Incoming transfers may need to be accepted in **Activity** before they become spendable.
+
+**To send:**
+
+Open **Send**, enter or select the recipient, choose the token and amount, then review the network, address, amount, fee and any expiration before confirming. Keep enough of the displayed fee asset for the transaction. If the address or network is unexpected, stop and check with the recipient.
+
+Track the send in **Activity**. A confirmed send can still require the recipient to accept the transfer. See *My transfer shows as confirmed, but the token never arrived.*
+
+### 43. What should I check before a Swap?
+Category: Cross-chain › Moving across chains
+
+Swap exchanges one supported token for another. Swapping within Miden and swapping as part of a cross-chain route are different flows; use only the options shown by your installed wallet.
+
+Check the network, tokens, amount you will receive and maximum network fee on the review screen. Keep enough of the displayed fee asset. If a quote expires, changes or fails to load, obtain and review a new quote before signing.
+
+A quote is an estimate for that route at that time. Do not assume it guarantees a future price or that a test token has real value. A disabled Swap control can mean the selected network or token pair is unavailable.
+
+If a Swap is interrupted, let the wallet sync and check **Activity** and both token balances before trying again. See *How do I prepare for Mainnet and check my network?*

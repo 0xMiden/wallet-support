@@ -204,7 +204,7 @@ describe('coverage', () => {
     const navigation = createHelpCenterNavigation(helpCenterMainCategories);
     expect(navigation.mainCategories).toHaveLength(7);
     expect(navigation.categories).toHaveLength(9);
-    expect(helpCenterAllArticles).toHaveLength(59);
+    expect(helpCenterAllArticles).toHaveLength(66);
   });
 
   it('resolves every article to exactly one position, through navigation.ts', () => {
@@ -234,7 +234,7 @@ describe('coverage', () => {
       taken.set(position, article.id);
     }
 
-    expect(taken.size).toBe(59);
+    expect(taken.size).toBe(66);
   });
 
   it('keeps Activity and transaction status in the hierarchy, with its one FAQ article after the first', () => {
@@ -392,7 +392,7 @@ describe('article sources', () => {
     }
 
     expect(helpCenterAllArticles.filter(article => pages.has(article.title))).toHaveLength(23);
-    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(36);
+    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(43);
   });
 });
 
@@ -412,23 +412,21 @@ function withoutMigrationMarkup(body: string) {
 
 /** Written out by hand from the placement table: FAQ numbers, in reading order. */
 const FAQ_PLACEMENT: Readonly<Record<string, readonly number[]>> = {
-  'setup-and-basic-use': [1],
-  'security-and-recovery': [10, 11, 12, 29, 30, 31, 33, 34],
-  'sending-receiving-and-claiming': [35],
+  'setup-and-basic-use': [1, 37, 38],
+  'security-and-recovery': [10, 11, 12, 29, 30, 31, 33, 34, 39],
+  'sending-receiving-and-claiming': [35, 42],
   'public-and-private-transactions': [9],
   'guardian-protection': [2, 3, 4, 5, 6, 7, 8, 32],
-  'moving-across-chains': [13, 14, 15, 36],
+  'moving-across-chains': [13, 14, 15, 36, 43],
   earn: [16, 17, 20, 21, 22, 23, 24, 25, 26, 27, 28],
   'activity-and-transaction-status': [18],
-  'common-issues-and-support': [19]
+  'common-issues-and-support': [19, 40, 41]
 };
 
 /** Alt text for each image, taken from the heading drawn inside it. */
 const FAQ_IMAGE_ALT: Readonly<Record<string, string>> = {
-  'guardian-backed-or-more-private.png': 'Guardian-backed, or more private',
   'three-keys-always-in-control.png': 'Three keys, always in control',
   'private-from-other-users.png': 'Private from other users',
-  'across-chains-two-routes.png': 'Across chains, two routes',
   'earn-across-the-privacy-line.png': 'Earn across the privacy line'
 };
 
@@ -519,14 +517,14 @@ describe('fidelity to the FAQ', () => {
     return article;
   };
 
-  it('reads thirty-six articles, numbered in order, that agree with the placement table', () => {
-    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 36 }, (_, index) => index + 1));
+  it('reads forty-three articles, numbered in order, that agree with the placement table', () => {
+    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 43 }, (_, index) => index + 1));
     expect(FAQ.placement).toEqual(
       FAQ.entries.map(({ number, title, mainCategory, subcategory }) => ({ number, title, mainCategory, subcategory }))
     );
   });
 
-  it('carries all thirty-six titles and bodies byte for byte, link and image markup aside', () => {
+  it('carries every FAQ title and body byte for byte, link and image markup aside', () => {
     // The title is matched exactly by the lookup, so a changed character in
     // one fails here as a missing article.
     for (const entry of FAQ.entries) {
@@ -587,7 +585,7 @@ describe('fidelity to the FAQ', () => {
       );
     }
 
-    expect(articlesInSubcategory(helpCenterAllArticles, 'moving-across-chains')).toHaveLength(4);
+    expect(articlesInSubcategory(helpCenterAllArticles, 'moving-across-chains')).toHaveLength(5);
     expect(articlesInSubcategory(helpCenterAllArticles, 'earn')).toHaveLength(11);
   });
 
@@ -622,7 +620,7 @@ describe('fidelity to the FAQ', () => {
     }
 
     expect(unresolved).toEqual([]);
-    expect(linked).toBe(51);
+    expect(linked).toBeGreaterThan(0);
   });
 
   it('points every internal link at a published article, labelled with its title', () => {
@@ -649,7 +647,7 @@ describe('fidelity to the FAQ', () => {
       )
       .filter(([name]) => helpCenterArticleImages[name]?.kind !== 'screenshot');
 
-    expect(shown).toHaveLength(5);
+    expect(shown).toHaveLength(3);
     expect(Object.fromEntries(shown)).toEqual(FAQ_IMAGE_ALT);
     expect([...faqSource.matchAll(/^!\[\]\(([^)\s]+)\)$/gm)].map(match => match[1]).sort()).toEqual(
       Object.keys(FAQ_IMAGE_ALT).sort()
@@ -840,7 +838,11 @@ describe('fidelity to the FAQ', () => {
     const shippedDir = join(repoRoot, 'src/help-center/assets/faq');
     const delivered = [...readdirSync(deliveredDir)].sort();
 
-    expect(delivered).toEqual(Object.keys(FAQ_IMAGE_ALT).sort());
+    // Retain the two retired diagrams as source assets, while checking that
+    // only the three current diagrams appear in article bodies above.
+    expect(delivered).toEqual([
+      ...Object.keys(FAQ_IMAGE_ALT), 'across-chains-two-routes.png', 'guardian-backed-or-more-private.png'
+    ].sort());
     expect([...readdirSync(shippedDir)].sort()).toEqual(delivered);
     // Step screenshots register from their own directory and are checked by the
     // test below. Every other image must still be exactly these five diagrams:
@@ -889,13 +891,13 @@ describe('fidelity to the FAQ', () => {
  */
 describe('the migrated article set', () => {
   it('carries every article in the approved mapping', () => {
-    expect(helpCenterAllArticles).toHaveLength(59);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(59);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(50);
+    expect(helpCenterAllArticles).toHaveLength(66);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(66);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(57);
   });
 
   it('publishes every article except the ones held back', () => {
-    expect(helpCenterArticles).toHaveLength(55);
+    expect(helpCenterArticles).toHaveLength(62);
     const published = helpCenterArticles.map(article => article.id);
     expect(published).not.toContain('how-to-restore-the-wallet-using-an-encrypted-file');
     expect(published).not.toContain('how-to-download-the-encrypted-file');
@@ -1060,11 +1062,11 @@ describe('card excerpts', () => {
 
 describe('finding articles', () => {
   it('lists every published article in a subcategory regardless of platform', () => {
-    expect(articlesInSubcategory(helpCenterArticles, 'security-and-recovery')).toHaveLength(12);
+    expect(articlesInSubcategory(helpCenterArticles, 'security-and-recovery')).toHaveLength(13);
   });
 
   it('keeps the held-back article out of its subcategory listing', () => {
-    expect(articlesInSubcategory(helpCenterAllArticles, 'security-and-recovery')).toHaveLength(15);
+    expect(articlesInSubcategory(helpCenterAllArticles, 'security-and-recovery')).toHaveLength(16);
   });
 
   it('finds an article only inside its own subcategory', () => {

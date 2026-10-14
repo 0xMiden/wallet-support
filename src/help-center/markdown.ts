@@ -19,6 +19,8 @@
  * output is safe to inject. No input reaches the DOM unescaped.
  */
 
+import { CONTACT_SUPPORT_URL } from './links';
+
 const ESCAPES: Readonly<Record<string, string>> = {
   '&': '&amp;',
   '<': '&lt;',
@@ -114,8 +116,8 @@ function fail(origin: string, reason: string, line: string): never {
 }
 
 function renderLink(label: string, originalHref: string, origin: string, line: string) {
-  const href = originalHref.startsWith('https://miden-feedback-v2.miden-feedback-relay.workers.dev/')
-    ? '/feedback'
+  const href = originalHref === '/feedback' || originalHref.startsWith('https://miden-feedback-v2.miden-feedback-relay.workers.dev/')
+    ? CONTACT_SUPPORT_URL
     : originalHref;
   const external = /^https?:\/\//.test(href);
   if (!external && !href.startsWith('mailto:') && !INTERNAL_HREF.test(href)) {

@@ -1,6 +1,6 @@
 :root {
-  color: #484848;
-  background: #fbfbfb;
+  color: #3f3f3f;
+  background: #ffffff;
   /*
    * Inter, self-hosted, with the old system stack behind it.
    *
@@ -24,14 +24,14 @@
 html {
   min-width: 320px;
   min-height: 100%;
-  background: #fbfbfb;
+  background: #ffffff;
 }
 
 body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  background: #fbfbfb;
+  background: #ffffff;
 }
 
 button,

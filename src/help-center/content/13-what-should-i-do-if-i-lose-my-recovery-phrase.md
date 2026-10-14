@@ -6,22 +6,10 @@ subcategory: security-and-recovery
 platforms: [extension-desktop, mobile]
 ---
 
-If your wallet is still unlocked and working, keep that device secure and check whether Bread lets you display or back up your recovery phrase again. Do not reset the wallet or remove the app until you have confirmed a supported recovery path.
+If you can still unlock Bread, keep that device secure. If the recovery phrase is still stored there, open **Settings**, then **Recovery Phrase** under **Security**, and follow the reveal and authentication prompts. Back it up offline.
 
-Your recovery phrase restores your keys. A private account also needs its latest off-chain account state, which Guardian can back up.
+If you previously removed the phrase, Bread cannot display it again. Do not reset, sign out, uninstall, or erase app data while this is your only working access.
 
-Whether you can recover depends on your wallet setup, whether Guardian is on, and which backups you still have.
+Guardian backs up account state, not your recovery phrase. Losing the phrase and every device that holds your keys leaves no supported way for support or Guardian to restore your wallet.
 
-**If Guardian is enabled:**
-
-Guardian keeps a backup of your account data, but it does not keep your recovery phrase or control your keys. If you lose the recovery phrase and every device that still holds your keys, Guardian alone cannot restore the wallet. To learn what information Guardian stores, see [*What does Guardian back up?*](#security-and-recovery/what-does-guardian-back-up)
-
-**If Guardian is not enabled:**
-
-Your recovery phrase restores your keys, but a more-private account also needs its locally stored account state.
-
-- If you lose your recovery phrase and access to every device holding the wallet, there is generally no supported way to restore it.
-
-**Important note:**
-
-No one from Bread Wallet or your Guardian operator can reset or recover your recovery phrase for you. Anyone claiming they can recover a lost recovery phrase is running a scam.
+If the wallet remains usable but the phrase is lost, contact [support](/feedback) for guidance before taking a destructive action. Never send your phrase, keys or password. Anyone claiming to reconstruct your lost recovery phrase is a scammer.

@@ -9,7 +9,7 @@ test('the Partner Mainnet limit is prominent and reaches its FAQ on either platf
     const notice = page.getByRole('region', { name: 'Partner Mainnet deposit limit' });
     await expect(notice).toBeVisible();
     await expect(notice).toContainText('$1,232.462');
-    await expect(notice).toContainText('overall deposited balance');
+    await expect(notice).toContainText('total wallet balance after a deposit');
     await expect(notice).toContainText('existing balance');
     const noticeBox = await notice.boundingBox();
     const categoriesBox = await page.locator('.help-home-categories').boundingBox();
@@ -27,11 +27,12 @@ test('the Partner Mainnet limit is prominent and reaches its FAQ on either platf
     await expect(page.getByRole('heading', { name: 'What is the Partner Mainnet deposit limit?', exact: true })).toBeVisible();
     const body = page.locator('.help-center-article-body');
     await expect(body).toContainText('$1,232.462');
-    await expect(body).toContainText('not a per-deposit limit');
-    await expect(body).toContainText('existing deposited balance');
+    await expect(body).toContainText('not a per-transfer allowance or a daily deposit limit');
+    await expect(body).toContainText('existing total wallet balance');
+    await expect(body).toContainText('$1,000 leaves $232.462 of room');
     await page.reload();
     await expect(body).toBeVisible();
-    await expect(body).toContainText('Splitting funds into smaller deposits does not change the limit');
+    await expect(body).toContainText('Splitting a larger amount into smaller deposits does not increase that room');
 
     await page.goto(`/?platform=${platform}&q=deposit%20limit`);
     const result = page.getByRole('region', { name: 'Search results' }).getByRole('link', { name: 'What is the Partner Mainnet deposit limit?', exact: true });

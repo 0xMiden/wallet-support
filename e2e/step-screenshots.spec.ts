@@ -24,15 +24,15 @@ const CONSUMING = '/#common-issues-and-support/my-token-is-stuck-on-consuming-re
 
 for (const { article, route, count } of [
   { article: 'mobile install', route: INSTALL_MOBILE, count: 1 },
-  { article: 'mobile create', route: CREATE_MOBILE, count: 8 },
-  { article: 'mobile fund', route: FUND_MOBILE, count: 3 },
-  { article: 'mobile restore', route: RESTORE_MOBILE, count: 7 },
+  { article: 'mobile create', route: CREATE_MOBILE, count: 0 },
+  { article: 'mobile fund', route: FUND_MOBILE, count: 0 },
+  { article: 'mobile restore', route: RESTORE_MOBILE, count: 0 },
   { article: 'install', route: INSTALL, count: 3 },
-  { article: 'create', route: CREATE, count: 6 },
-  { article: 'restore', route: RESTORE, count: 8 },
+  { article: 'create', route: CREATE, count: 0 },
+  { article: 'restore', route: RESTORE, count: 0 },
   { article: 'switch', route: SWITCH, count: 8 },
   { article: 'accept', route: ACCEPT, count: 4 },
-  { article: 'consuming', route: CONSUMING, count: 2 },
+  { article: 'consuming', route: CONSUMING, count: 1 },
   { article: 'accept-fails', route: ACCEPT_FAILS, count: 2 }
 ]) for (const { name, width } of [
   { name: 'desktop', width: 1321 },

@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
+import * as Tabs from '@radix-ui/react-tabs';
+import { ResponsiveNavigation } from './ResponsiveNavigation';
 
-import breadLockup from './assets/bread-lockup.png';
+import { BreadBrand } from './BreadBrand';
 import { helpCenterMainCategories } from './categories';
 import { HelpCenterBackToTop } from './HelpCenterBackToTop';
 import { HelpCenterFooter } from './HelpCenterFooter';
@@ -69,10 +71,6 @@ interface SequenceLink {
   crossesInto?: string;
 }
 
-function formatIndex(index: number) {
-  return String(index).padStart(2, '0');
-}
-
 function ChevronIcon({ direction = 'right' }: { direction?: 'down' | 'left' | 'right' }) {
   const rotation = direction === 'down' ? 90 : direction === 'left' ? 180 : 0;
 
@@ -84,22 +82,6 @@ function ChevronIcon({ direction = 'right' }: { direction?: 'down' | 'left' | 'r
       style={{ transform: `rotate(${rotation}deg)` }}
     >
       <path d="m9 5 7 7-7 7" />
-    </svg>
-  );
-}
-
-function MenuIcon() {
-  return (
-    <svg aria-hidden="true" className="help-center-menu-icon" viewBox="0 0 24 24">
-      <path d="M4 7h16M4 12h16M4 17h16" />
-    </svg>
-  );
-}
-
-function CloseIcon() {
-  return (
-    <svg aria-hidden="true" className="help-center-menu-icon" viewBox="0 0 24 24">
-      <path d="m6 6 12 12M18 6 6 18" />
     </svg>
   );
 }
@@ -186,8 +168,6 @@ export function HelpCenter() {
   const lastRoute = useRef<string | null>(null);
   // The section the reader explicitly asked for, held until they scroll again.
   const pinnedSection = useRef<string | null>(null);
-  const sidebar = useRef<HTMLElement>(null);
-  const menuButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -254,22 +234,6 @@ export function HelpCenter() {
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
-
-  useEffect(() => {
-    if (!isMobileMenuOpen) return;
-
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key !== 'Escape') return;
-      setIsMobileMenuOpen(false);
-      menuButton.current?.focus();
-    };
-
-    window.addEventListener('keydown', closeOnEscape);
-    // Not the first focusable in the DOM: that is the desktop brand link, which
-    // is display:none at drawer widths and silently refuses focus.
-    sidebar.current?.querySelector<HTMLElement>('.help-center-navigation-heading')?.focus();
-    return () => window.removeEventListener('keydown', closeOnEscape);
-  }, [isMobileMenuOpen]);
 
   // The browser cannot scroll to a shared entry on arrival, because the entry
   // has not rendered yet. So it is done here, once the glossary is on screen.
@@ -585,44 +549,14 @@ export function HelpCenter() {
         Skip to content
       </a>
 
-      <header className="help-center-mobile-header">
-        <a className="help-center-brand" href={homeHref()} aria-label="Bread Wallet Help Center home">
-          <img src={breadLockup} alt="" />
-          <span className="help-center-visually-hidden">Bread Wallet</span>
-        </a>
-        <button
-          className="help-center-menu-button"
-          type="button"
-          ref={menuButton}
-          aria-controls="help-center-sidebar"
-          aria-expanded={isMobileMenuOpen}
-          aria-label={isMobileMenuOpen ? 'Close navigation' : 'Open navigation'}
-          onClick={() => setIsMobileMenuOpen(current => !current)}
-        >
-          {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
-        </button>
-      </header>
-
-      <button
-        aria-label="Close navigation"
-        className={`help-center-backdrop${isMobileMenuOpen ? ' is-visible' : ''}`}
-        type="button"
-        onClick={() => setIsMobileMenuOpen(false)}
-      />
-
       {/* The sidebar and the content are the grid; the footer is not.
           It used to be a third grid item spanning both columns, and the
           sidebar — sticky and 100vh — overflowed its row by 287px and
           painted straight over it. */}
       <div className="help-center-body">
-        <aside
-          className={`help-center-sidebar${isMobileMenuOpen ? ' is-open' : ''}`}
-          id="help-center-sidebar"
-          ref={sidebar}
-          aria-label="Help Center navigation"
-        >
+        <ResponsiveNavigation open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
           <a className="help-center-brand help-center-desktop-brand" href={homeHref()}>
-            <img src={breadLockup} alt="" />
+            <BreadBrand />
             <span className="help-center-visually-hidden">Bread Wallet</span>
           </a>
 
@@ -699,7 +633,7 @@ export function HelpCenter() {
             <span>{GLOSSARY_TITLE}</span>
             <ChevronIcon />
           </a>
-          </aside>
+        </ResponsiveNavigation>
 
         <main className="help-center-main" id="help-center-content" tabIndex={-1}>
           <div className="help-center-main-inner">
@@ -795,6 +729,7 @@ export function HelpCenter() {
 
             {/* Stands behind the glossary the way it stands behind search results:
                 hidden, not unmounted. */}
+            <Tabs.Root value={activePlatform} onValueChange={value => choosePlatform(value as HelpCenterPlatform)} asChild>
             <section
               className={`help-center-category${showRail ? ' has-rail' : ''}`}
               data-panel-tint={panelTintFor(
@@ -855,28 +790,32 @@ export function HelpCenter() {
               )}
 
               {showPlatformTabs ? (
-                <div className="help-center-platform-tabs" role="tablist" aria-label="Platform">
+                <Tabs.List className="help-center-platform-tabs" aria-label="Platform">
+                  <Tabs.Trigger asChild value="extension-desktop">
                   <button
                     id="extension-desktop-tab"
                     type="button"
                     role="tab"
                     aria-selected={activePlatform === 'extension-desktop'}
                     aria-controls="category-content-panel"
-                    onClick={() => choosePlatform('extension-desktop')}
+
                   >
                     Extension
                   </button>
+                  </Tabs.Trigger>
+                  <Tabs.Trigger asChild value="mobile">
                   <button
                     id="mobile-tab"
                     type="button"
                     role="tab"
                     aria-selected={activePlatform === 'mobile'}
                     aria-controls="category-content-panel"
-                    onClick={() => choosePlatform('mobile')}
+
                   >
                     Mobile
                   </button>
-                </div>
+                  </Tabs.Trigger>
+                </Tabs.List>
               ) : null}
 
               {activeArticle && activeArticle.platforms.length === 1 ? (
@@ -911,12 +850,9 @@ export function HelpCenter() {
                   </div>
                 ) : cards.length > 0 ? (
                   <ul className="help-center-card-grid">
-                    {cards.map((card, cardIndex) => (
+                    {cards.map(card => (
                       <li key={card.id}>
                         <div className="help-center-card">
-                          <span className="help-center-card-index" aria-hidden="true">
-                            {formatIndex(cardIndex + 1)}
-                          </span>
                           <h2 className="help-center-card-title">
                             <a className="help-center-card-link" href={card.href}>
                               {card.title}
@@ -960,7 +896,7 @@ export function HelpCenter() {
                   ) : (
                     <p className="help-center-helpful-reply" role="status">
                       {helpful === 'yes' ? (
-                        'Thanks — good to know.'
+                        'Thanks. Good to know.'
                       ) : (
                         <>
                           Sorry about that.{' '}
@@ -1081,6 +1017,7 @@ export function HelpCenter() {
                 </aside>
               ) : null}
             </section>
+            </Tabs.Root>
 
             <footer className="help-center-security-reminder">
               <strong>Security reminder</strong>

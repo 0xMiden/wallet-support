@@ -8,6 +8,8 @@ platforms: [extension-desktop, mobile]
 
 <!-- platform: extension-desktop -->
 
+Store availability and wallet features can differ by platform and app version. A store listing does not mean a new Mainnet flow is available in your installed app. Update through the official store and check the network before funding. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)
+
 > ⚠️ Caution: Only download Bread Wallet from official links.
 > - iOS — [App Store](https://apps.apple.com/ch/app/bread-wallet-by-miden/id6789341854?l=en-GB)
 > - Android — [Google Play](https://play.google.com/store/apps/details?id=com.miden.wallet)
@@ -31,6 +33,8 @@ To set up your wallet next, see [*How do I create a Bread Wallet?*](#setup-and-b
 ![Chrome's Extensions menu, opened from the puzzle icon, with the pin icon beside Bread Wallet highlighted](E02-install-pin.png)
 
 <!-- platform: mobile -->
+
+Store availability and wallet features can differ by platform and app version. A store listing does not mean a new Mainnet flow is available in your installed app. Update through the official store and check the network before funding. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)
 
 > ⚠️ Caution: Only download Bread Wallet from official links.
 > - iOS — [App Store](https://apps.apple.com/ch/app/bread-wallet-by-miden/id6789341854?l=en-GB)

@@ -6,28 +6,22 @@ subcategory: security-and-recovery
 platforms: [extension-desktop, mobile]
 ---
 
-Keeping your wallet secure is mostly about protecting your recovery information and your devices.
+Protect your recovery phrase and the device that holds your wallet.
 
-Here are some best practices:
+**Everyday protection:**
 
-- Store your recovery phrase offline in a safe place.
-- Turn on biometric unlock on mobile.
-- Use a strong, unique password for your wallet.
-- Never type your recovery phrase into a website, email, chat, or pop-up.
-- Only download Bread Wallet from official sources.
-- Be cautious of phishing websites, fake wallet apps, and scam messages.
-- Never share your recovery phrase.
+- Write your recovery phrase on paper and store it safely offline.
+- Use a strong, unique wallet password or passcode, and supported biometric unlock on mobile.
+- Download and update Bread only through official sources.
+- Keep your operating system secure and be cautious of fake apps, sites and support messages.
+- Never share your recovery phrase, signing keys or password, including in screenshots or feedback.
 
-**If Guardian is enabled:**
+**Guardian and recovery:**
 
-Guardian adds a recovery layer; it keeps a backup of your private account data so you can get back into your wallet on a new device if your current one is lost or broken. Guardian's design protects an account with three keys: an everyday key on your device, an emergency key rebuilt from your recovery phrase, and the Guardian key, which acknowledges state updates. Moving funds takes two of the three, so a single stolen key is not enough for someone to move your funds on its own. Guardian never holds your keys and can never move your funds by itself. For more on each key, see [*What are the three keys in a Guardian-backed account?*](#guardian-protection/what-are-the-three-keys-in-a-guardian-backed-account)
+Standard Bread accounts use Guardian to back up private account state. Your recovery phrase restores the keys; Guardian provides the supported account-state recovery path. Guardian does not keep your phrase and cannot move funds alone. See [*How do I restore my wallet with a recovery phrase?*](#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase)
 
-**If Guardian is not enabled:**
+**Before a reset:**
 
-Your security rests entirely on your password or biometrics plus your own backup: your recovery phrase. There's no separate backup of your account data and no second-key safety net, so protecting your recovery phrase and keeping a safe backup matters even more.
+Do not reset or reinstall until you know you can restore the account. Removing the phrase from a device does not remove copies from earlier backups.
 
-**What this means for you:**
-
-Think of your recovery phrase as the master key to a safe; whoever holds it owns everything inside. Set a strong password; enable a biometric lock where you can; and keep your recovery phrase private and offline. Guardian is a helpful safety net for recovery, an extra layer on top of protecting your own keys.
-
-> ⚠️ **Important note:** No one from Bread Wallet, or anyone else, will ever need your recovery phrase or password. If someone asks for it, it's a scam. Never share it, and never store it in a screenshot, a plain notes app, or unprotected cloud storage.
+Developer-created accounts and older account types can have different recovery requirements. These are outside the standard setup described here; see [*Do I need Developer Settings to use Bread?*](#setup-and-basic-use/do-i-need-developer-settings-to-use-bread)

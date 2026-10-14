@@ -6,7 +6,7 @@ subcategory: security-and-recovery
 platforms: [extension-desktop]
 ---
 
-Removing your recovery phrase deletes it from this device, so someone who gets into your wallet cannot read it. Your wallet keeps working for everyday transactions. You will need to type the recovery phrase when you switch Guardian or rotate your everyday key, so write it down first.
+Removing your recovery phrase deletes the stored copy from this installation, so someone who gets into your wallet cannot read it. Your wallet keeps working for everyday transactions. You will need to type the recovery phrase when you switch Guardian or rotate your everyday key, so write it down first.
 
 **Steps:**
 
@@ -28,5 +28,7 @@ Removing your recovery phrase deletes it from this device, so someone who gets i
 7. Select **Remove from this device**.
 
 The wallet then shows **Recovery phrase removed from this device**, and **Recovery Phrase** no longer appears in **Settings**.
+
+Earlier backups may still contain the phrase. Keep them secure. If the phrase is removed, account creation and some security actions may require it again; keep your offline copy available.
 
 Related: [*How do I view my recovery phrase?*](#security-and-recovery/how-do-i-view-my-recovery-phrase), [*What should I do if I lose my recovery phrase?*](#security-and-recovery/what-should-i-do-if-i-lose-my-recovery-phrase)
