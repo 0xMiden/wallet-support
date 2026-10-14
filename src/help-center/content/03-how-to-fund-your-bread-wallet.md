@@ -8,38 +8,32 @@ platforms: [extension-desktop, mobile]
 
 <!-- platform: extension-desktop -->
 
-Use the faucet to receive test MIDEN tokens in your wallet.
+Check the network before adding funds. Testnet assets and Mainnet assets are separate; a Testnet faucet does not fund a Mainnet account.
 
-1. Open the wallet **Home** page.
-2. Find the **Fund your wallet** section.
+**On Testnet:**
 
-   ![Bread Wallet's Home page, with the Fund your wallet card](E07-fund-homepage.png)
+Use **Fund your wallet** if your version shows a test faucet. Follow the request in **Activity** and wait for the wallet to sync. Test tokens have no real-world value. Do not send real assets to a test address.
 
-3. Select the **Fund your wallet** card.
-4. The card changes to **Funding** while the faucet sends 100 test MIDEN, and then the funds will be automatically received on your wallet.
+**On Mainnet, when supported by your installed version:**
 
-   ![Bread Wallet's Home page, with the Fund your wallet card showing Funding](E07a-fund-funding.png)
+Use only the deposit networks, assets and routes shown by the wallet. Check the source network, destination network, address, amount and fees before confirming. Do not transfer from an unsupported chain or assume tokens with the same name are interchangeable.
 
-5. Open the **Activity** page to track the request. The tokens are ready to use once the status changes to **Confirmed**.
+The Partner Mainnet cap is $1,232.462 for the total wallet balance after a deposit. See [*What is the Partner Mainnet deposit limit?*](#moving-across-chains/what-is-the-partner-mainnet-deposit-limit)
 
-   ![Bread Wallet's Activity page, with a confirmed Faucet Request for 100 MIDEN](E08-fund-activity.png)
-
-If the tokens don't show up, see [*Why is my token taking so long to arrive?*](#common-issues-and-support/why-is-my-token-taking-so-long-to-arrive)
+See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network) If a transfer is missing, check **Activity** before starting another deposit.
 
 <!-- platform: mobile -->
 
-Use the faucet to receive test MIDEN tokens in your wallet. Testnet tokens are for testing only and do not have real-world value.
+Check the network before adding funds. Testnet assets and Mainnet assets are separate; a Testnet faucet does not fund a Mainnet account.
 
-1. On the wallet **Home** page, tap the **Fund your wallet** card.
+**On Testnet:**
 
-   ![Bread Wallet's Home page on mobile, with the Fund your wallet card](M05-fund-home.png)
+Tap **Fund your wallet** if your version shows a test faucet. Keep the app open while it syncs, then check **Activity**. Test tokens have no real-world value. Do not send real assets to a test address.
 
-2. The card changes to **Funding** while the faucet sends 100 test MIDEN, and then the funds will be automatically received on your wallet.
+**On Mainnet, when supported by your installed version:**
 
-   ![Bread Wallet's Home page on mobile, with the Fund your wallet card showing Funding](M05a-fund-funding.png)
+Use only the deposit networks, assets and routes shown by the wallet. Check the source network, destination network, address, amount and fees before confirming. Do not transfer from an unsupported chain or assume tokens with the same name are interchangeable.
 
-3. Tap the **Activity** tab to track the request. The tokens are ready to use once the status changes to **Confirmed**.
+The Partner Mainnet cap is $1,232.462 for the total wallet balance after a deposit. See [*What is the Partner Mainnet deposit limit?*](#moving-across-chains/what-is-the-partner-mainnet-deposit-limit)
 
-   ![Bread Wallet's Activity page on mobile, with a confirmed Faucet Request for 100 MIDEN](M07-fund-activity.png)
-
-If the tokens don't show up, see [*Why is my token taking so long to arrive?*](#common-issues-and-support/why-is-my-token-taking-so-long-to-arrive)
+Mainnet availability can differ between store versions. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network) If a transfer is missing, check **Activity** before starting another deposit.

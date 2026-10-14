@@ -6,8 +6,8 @@ subcategory: earn
 platforms: [extension-desktop, mobile]
 ---
 
-Not yet. Earn is unavailable in the current Bread Beta. Do not send real funds to test this feature.
+Earn is available only when your installed version and selected network enable it. A missing or disabled deposit control means you should not start a new deposit.
 
-When Earn becomes available, the wallet will show the supported test networks, assets, and lending route. Funds will be routed from Bread to the displayed lending market and returned to Bread on withdrawal.
+Testnet Earn uses test assets and a test lending market. Estimated rewards there do not represent real returns. Mainnet Earn must be supported by your released wallet and the route it shows; do not infer availability from these Testnet guides.
 
-There's one privacy point worth knowing: the funds are private on Miden, become visible on Ethereum while they earn, and return to your private account on the way back. See [*Are my funds private while they earn?*](#earn/are-my-funds-private-while-they-earn)
+When a supported route is available, review the market, fees and expected amount before confirming. The lending-market portion can be publicly visible. See [*Are my funds private while they earn?*](#earn/are-my-funds-private-while-they-earn)

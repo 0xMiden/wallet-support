@@ -84,7 +84,15 @@ const APPROVED: readonly HelpCenterGlossaryEntry[] = [
   {
     term: 'Bridge',
     definition:
-      'A system for moving assets between blockchains. Bread can use fast solver-based routes through Epoch or NEAR Intents, or canonical bridges: CCTP for USDCx and Agglayer for other assets.'
+      'A system for moving assets between blockchains. Bread offers a route only when the installed version and selected network support it. Check the source and destination networks, token, fees and claim requirements before confirming.'
+  },
+  {
+    term: 'Mainnet',
+    definition: 'The network used for real assets. Mainnet access and routes must be supported by your installed wallet version; a Testnet account and its test balances do not become Mainnet funds.'
+  },
+  {
+    term: 'Testnet',
+    definition: 'A separate network for testing. Its tokens have no real-world value. Never send real assets to a test address.'
   }
 ];
 

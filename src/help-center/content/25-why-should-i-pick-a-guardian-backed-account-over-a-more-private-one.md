@@ -1,23 +1,15 @@
 ---
 id: why-should-i-pick-a-guardian-backed-account-over-a-more-private-one
-title: Why should I pick a Guardian-backed account over a more private one?
+title: Does Bread use Guardian-backed accounts?
 mainCategory: guardian
 subcategory: guardian-protection
 platforms: [extension-desktop, mobile]
 ---
 
-Setting up Bread comes down to one real decision: whether to back your account up with Guardian, a third-party service that makes privacy practical to use.
+Standard Bread setup uses a private Guardian-backed account. You choose a Guardian provider; you are not asked to choose between Guardian and an unsupported recovery setup.
 
-![Guardian-backed, or more private](guardian-backed-or-more-private.png)
+Guardian keeps the account-state backup needed for recovery. The operator can see that state, but it cannot move funds on its own and never holds your recovery phrase.
 
-**Guardian-backed (recommended)**
+Keep the recovery phrase offline. It restores your keys and, with Guardian's backup, lets you recover on a new device. See [*How do I restore my wallet with a recovery phrase?*](#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase)
 
-A Guardian-backed account can be recovered on a new device and is protected by more than one key, so a lost or stolen device isn't the end of the story. The trade-off is that the Guardian operator can see the account state. This allows Guardian to keep the account backup up to date without being able to move funds on its own.
-
-**More private**
-
-A more private account keeps everything on the device and shares nothing with a Guardian operator. In return, there's no recovery: lose the device and the account state is gone, along with the funds.
-
-Both options are private from other users. The choice is about recovery, and about who else can see the state. For most users, Guardian offers the best balance between privacy and practical recovery.
-
-To set up either account type, see [*How do I create a Bread Wallet?*](#setup-and-basic-use/how-do-i-create-a-bread-wallet)
+Developer Settings can expose other account types for testing. Those accounts have different recovery requirements and are outside the standard consumer setup. See [*Do I need Developer Settings to use Bread?*](#setup-and-basic-use/do-i-need-developer-settings-to-use-bread)

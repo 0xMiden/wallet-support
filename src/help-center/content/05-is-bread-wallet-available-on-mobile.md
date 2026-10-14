@@ -8,6 +8,8 @@ platforms: [extension-desktop, mobile]
 
 <!-- platform: extension-desktop -->
 
+Store availability and wallet features can differ by platform and app version. A store listing does not mean a new Mainnet flow is available in your installed app. Update through the official store and check the network before funding. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)
+
 > ⚠️ Caution: This is the only official Bread Wallet for both Android and iOS.
 
 - Yes, mobile wallets are available on both Android and iOS. You can download it here:
@@ -17,6 +19,8 @@ platforms: [extension-desktop, mobile]
 For the install steps, see [*How to install Bread Wallet*](#setup-and-basic-use/how-to-install-bread-wallet).
 
 <!-- platform: mobile -->
+
+Store availability and wallet features can differ by platform and app version. A store listing does not mean a new Mainnet flow is available in your installed app. Update through the official store and check the network before funding. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)
 
 > ⚠️ Caution: These are the only official Bread Wallet downloads for Android and iOS.
 

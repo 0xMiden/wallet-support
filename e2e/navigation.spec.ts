@@ -46,7 +46,7 @@ test('subcategory to article to home, by the brand mark', async ({ page }) => {
   await page.locator('.help-center-card-link').first().click();
   await expect(page.locator(TITLE)).toHaveText('How to install Bread Wallet');
 
-  await page.locator('.help-center-desktop-brand').click();
+  await page.locator('.public-brand').click();
 
   await expect(page.locator(HOME)).toBeVisible();
 });
@@ -57,7 +57,7 @@ test('the brand mark is a way out of search results', async ({ page }) => {
   await page.locator('.help-home-popular button', { hasText: 'Guardian' }).click();
   await expect(page.locator(RESULTS)).toContainText('results for');
 
-  await page.locator('.help-center-desktop-brand').click();
+  await page.locator('.public-brand').click();
 
   // The regression this guards: the hash changed and nothing else, so the one
   // control promising a way out of the results kept rendering them.
@@ -329,7 +329,7 @@ test('every hover state actually changes something', async ({ page }) => {
     ],
     ['/#setup-and-basic-use', '.help-center-sidebar-utility', 'the sidebar glossary link', SURFACE, null],
     [
-      '/#moving-across-chains/what-is-the-difference-between-a-solver-route-and-a-canonical-bridge',
+      '/#earn/are-my-funds-private-while-they-earn',
       '.help-center-article-body figure > a',
       'a diagram link',
       TEXT,

@@ -110,7 +110,12 @@ The imported feedback service lives in `worker/feedback/`. It keeps its D1 migra
 attachment storage, Durable Object rate limits, review consoles, store-review pipeline, and regression suite
 separate from the public React package.
 
-Public submissions use `/api/feedback/submit`; status checks use `/api/feedback/status`. `/submit`
+Public feedback links open the approved Zapier form from `src/help-center/links.ts`, matching the
+wallet's Settings > About destination. `/feedback` remains a compatibility landing page with an
+external link; it sends no submissions to the Worker. The hosted form owns its fields and workflow.
+Do not use a live submission to validate it without explicit approval.
+
+The retained Worker API uses `/api/feedback/submit`; status checks use `/api/feedback/status`. `/submit`
 and `/status` are temporary compatibility aliases. Unknown `/api/*` and `/admin/*` paths return 404
 from the Worker and never fall through to the public SPA.
 
@@ -168,20 +173,22 @@ The Help Center is isolated in `src/help-center/`:
 - `search.ts` matches article titles and text. `links.ts` holds every destination outside the Help
   Center.
 - `types.ts` defines the small content contract.
-- `tokens.css` holds every design value and loads the two self-hosted fonts. `help-center.css` holds
-  the component rules, scoped under `.help-center-shell` and `.help-center-home`.
-- `assets/` holds the Bread mark (`bread-mark.png`) and the Nunito and Inter font files.
+- `tokens.css` holds design values and loads the two self-hosted fonts. `help-center.css`,
+  `home.css` and `shell.css` hold the reading, home and shared navigation rules. Portal styles
+  apply to Radix dialogs outside the application shell.
+- `assets/` holds the current wallet SVG branding, wallet glyphs, and self-hosted Nunito and Inter
+  font files, with provenance and licenses in `assets/README.md`.
 - The `*.test.ts` files are the only ones that import a dev dependency (`vitest`); a host integrating
   the Help Center can leave them behind without affecting the components.
 
-The Help Center has no router library, CMS, analytics, or network dependency; its only runtime
-dependencies are `react` and `react-dom`, and support, download and social destinations are plain
-links. Pages use hash links in the standalone preview; a host website can map the category, article
+The Help Center has no router library, CMS, analytics, or runtime data-fetching dependency.
+React renders the pages; Radix UI provides accessible navigation dialogs and platform tabs,
+and Lucide supplies interface icons. Support, download and social destinations are plain links. Pages use hash links in the standalone preview; a host website can map the category, article
 and glossary ids to its own routing system when integrating the components.
 
 ## Current scope
 
-- Home page with the main categories, popular searches and a Contact Support panel
+- Home page with search, common-task shortcuts, a deposit-limit notice, compact topics and Contact Support
 - Main categories and subcategories, in a sidebar on wide screens and a drawer below 900px
 - Articles for Extension, Mobile, or both, with platform tabs where a subcategory covers both
 - Search over article titles and text, shareable as `?q=` links

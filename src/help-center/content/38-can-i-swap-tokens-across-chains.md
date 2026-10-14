@@ -6,6 +6,8 @@ subcategory: moving-across-chains
 platforms: [extension-desktop, mobile]
 ---
 
-Cross-chain swaps are available only when Bread Beta shows a configured fast route for the selected test asset and destination. When available, a solver can swap the token in transit and deliver the equivalent on the other side. Use only Miden testnet and Ethereum Sepolia test funds; never use assets from Ethereum mainnet or another real network.
+A cross-chain swap is available only when Bread shows a route that supports the selected source token, destination token and networks. Not every bridge route swaps tokens. A Swap within Miden is a different operation.
 
-Swaps within Miden use Miden-native Swap. For how the fast route works, see [*What is the difference between a solver route and a canonical bridge?*](#moving-across-chains/what-is-the-difference-between-a-solver-route-and-a-canonical-bridge)
+Check the quote, expected received amount, fees and recipient before signing. If the quote expires or changes, review the updated quote. Do not assume a route is available because another token or network works.
+
+Use test assets on Testnet. Use Mainnet routes only when your installed released version supports them. See [*What is the difference between a solver route and a canonical bridge?*](#moving-across-chains/what-is-the-difference-between-a-solver-route-and-a-canonical-bridge)

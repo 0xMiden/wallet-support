@@ -28,7 +28,8 @@ test('the Cross-chain and Earn cards each open their own subcategory, and the si
     'Can I send funds to another blockchain?',
     'What is the difference between a solver route and a canonical bridge?',
     'Can I swap tokens across chains?',
-    'What is the Partner Mainnet deposit limit?'
+    'What is the Partner Mainnet deposit limit?',
+    'What should I check before a Swap?'
   ]);
 
   // Earn is a group of its own, so its row is reached through its heading. A
@@ -73,10 +74,6 @@ test('Activity and transaction status still routes, with its one FAQ article aft
 });
 
 for (const { route, alt } of [
-  {
-    route: '/#moving-across-chains/what-is-the-difference-between-a-solver-route-and-a-canonical-bridge',
-    alt: 'Across chains, two routes'
-  },
   { route: '/#earn/are-my-funds-private-while-they-earn', alt: 'Earn across the privacy line' }
 ]) {
   test(`the "${alt}" diagram renders inside its article`, async ({ page }) => {
@@ -101,9 +98,9 @@ for (const { route, alt } of [
 
 test('at phone width a diagram opens full size in a new tab', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/#moving-across-chains/what-is-the-difference-between-a-solver-route-and-a-canonical-bridge');
+  await page.goto('/#earn/are-my-funds-private-while-they-earn');
 
-  const link = page.getByRole('link', { name: 'Open diagram full size: Across chains, two routes' });
+  const link = page.getByRole('link', { name: 'Open diagram full size: Earn across the privacy line' });
   await link.scrollIntoViewIfNeeded();
   await expect(link).toBeVisible();
   await expect(link.getByText('Open diagram full size')).toBeVisible();

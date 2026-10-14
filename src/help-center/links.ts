@@ -9,8 +9,8 @@
  * A second, tidier version of an approved link is still a second answer.
  */
 
-/** Approved destination for the support intake (content proposal §3A). */
-export const CONTACT_SUPPORT_URL = '/feedback';
+/** Approved hosted intake, matching wallet Settings > About (wallet PR #1369). */
+export const CONTACT_SUPPORT_URL = 'https://cmuv78o9w003x5ebpyha3cf6p.zapier.app/page';
 
 export interface HelpCenterDownload {
   readonly id: string;

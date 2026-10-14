@@ -106,7 +106,7 @@ test('following the Glossary link after a heading leaves only the Glossary lit',
 test('a heading lets go however the route moves: home and back again, or the back button', async ({ page }) => {
   await page.goto('/#guardian-protection');
   await heading(page, 'Privacy').click();
-  await page.locator('.help-center-desktop-brand').click();
+  await page.locator('.public-brand').click();
   await page.locator('.help-home-card', { hasText: 'Guardian' }).first().click();
   await expectLit(page, ['Guardian protection'], 'back on the same page by way of the home page');
 

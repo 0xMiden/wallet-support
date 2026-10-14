@@ -34,7 +34,8 @@ Switching Guardian uses your everyday key and your emergency key, so have your r
 
    ![Bread Wallet's Enter password page, with the Continue button](E32-guardian-password.png)
 
-7. A processing page will appear. You can hide it or wait until the process is complete, then click **Done** once the switch succeeds.
+7. If the recovery phrase was removed from this device, enter it when the official wallet asks. Do not send it to support.
+8. A processing page will appear. You can hide it or wait until the process is complete, then click **Done** once the switch succeeds.
 
    ![Bread Wallet's Processing page, with the Hide button](E33-guardian-processing.png)
 

@@ -8,85 +8,26 @@ platforms: [extension-desktop, mobile]
 
 <!-- platform: extension-desktop -->
 
-When you install Bread Wallet, there are two options to choose between: **Get started** or **Recover your account**.
+Use the official extension and follow the setup shown in your installed version. If the welcome screen asks for an access code, follow your invitation; do not change Developer Settings to bypass it.
 
-**Steps:**
+1. Select **Get started** when that option is available.
+2. Check the network. If Bread shows a Testnet notice, read it and select **I understand**. Testnet tokens have no real-world value.
+3. Create a strong wallet password and follow the displayed password requirements.
+4. Read the Guardian explanation and confirm the provider shown. Standard Bread setup creates a Guardian-backed account. The operator can see the account state but cannot move funds alone.
+5. Complete any usage-data choice and select **Open wallet** when setup finishes.
+6. Back up your recovery phrase on paper and keep it offline before you fund the wallet.
 
-1. To create a new wallet, select **Get started**.
-
-   ![Bread Wallet's Welcome to Bread! page, with the Get started button](E03-create-get-started.png)
-
-2. You will be directed to the Acknowledgment Screen page. Click **I understand**.
-
-   ![Bread Wallet's Miden Testnet notice, with the I understand button](E04-create-testnet-notice.png)
-
-3. On the create password page, create a strong password with a minimum of 8 characters and at least 1 number, and then click **Continue**.
-
-   ![Bread Wallet's Create password page, with the Continue button](E05-create-password.png)
-
-4. On the **Set up your account** page, select each of the three points to confirm you've read it. Bread Wallet picks the fastest Guardian operator for you; to pick another, select **Choose a different Guardian**. Then click **Continue**.
-
-   ![Bread Wallet's Set up your account page, with the three points checked, the Guardian it picked, and the Continue button](E06-create-guardian.png)
-
-5. On the **Help improve Wallet** page, choose **Share usage data** or **Not now**.
-
-   ![Bread Wallet's Help improve Wallet page, with the Share usage data and Not now buttons](E06b-create-help-improve.png)
-
-6. Congrats, your wallet is ready! Click the **Open wallet** button; it will close the tab automatically and open the sidebar for you.
-
-For help choosing a Guardian, see [*Why should I pick a Guardian-backed account over a more private one?*](#guardian-protection/why-should-i-pick-a-guardian-backed-account-over-a-more-private-one)
-
-   ![Bread Wallet's Your wallet is ready! screen, with the Open wallet button](E06a-create-wallet-ready.png)
+The screens and their order can differ between releases. For Mainnet readiness, see [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network) For developer options, see [*Do I need Developer Settings to use Bread?*](#setup-and-basic-use/do-i-need-developer-settings-to-use-bread)
 
 <!-- platform: mobile -->
 
-After you install Bread Wallet, open the app. On the **Welcome to Bread!** screen, you'll see two options: **Get started** and **Recover your account**.
+Use the official app and follow the setup shown in your installed version. If the welcome screen asks for an access code, follow your invitation; do not change Developer Settings to bypass it.
 
-**Steps:**
+1. Tap **Get started** when that option is available.
+2. Check the network. If Bread shows a Testnet notice, read it and tap **I understand**. Testnet tokens have no real-world value.
+3. Follow the prompts to set up a passcode or supported biometric unlock. Keep a secure way to unlock the device.
+4. Read the Guardian explanation and confirm the provider shown. Standard Bread setup creates a Guardian-backed account. The operator can see the account state but cannot move funds alone.
+5. Complete any usage-data choice and open the wallet when setup finishes.
+6. Back up your recovery phrase on paper and keep it offline before you fund the wallet. Biometrics do not replace this backup.
 
-1. Tap **Get started** to create your new wallet.
-
-   ![Bread Wallet's Welcome to Bread! screen, with the Get started button](M02-create-welcome.png)
-
-2. Read the Miden testnet notice, then tap **I understand**.
-
-   ![Bread Wallet's Miden testnet notice, with the I understand button](M02a-create-testnet-notice.png)
-
-3. Choose how to protect your wallet. Tap **Face ID set up** (on Android, the fingerprint option), or tap **Set up your passcode** to use a passcode instead.
-
-   ![Bread Wallet's Choose how you want to protect your wallet screen, with the Face ID set up button](M03-create-protect.png)
-
-4. Your phone asks whether Bread can use Face ID or your fingerprint. Tap **Allow**, or tap **Use passcode instead** to use a passcode.
-
-   ![The iPhone prompt asking to allow Bread to use Face ID, with the Allow button](M03a-create-face-id.png)
-
-5. When you see **Confirmed! Only one more step!**, tap **Continue**.
-
-   ![Bread Wallet's Confirmed! screen, with the Continue button](M03b-create-confirmed.png)
-
-6. On the **Set up your account** screen, tap each of the three points to confirm you've read it. Bread Wallet picks the fastest Guardian operator for you; to pick another, tap **Choose a different Guardian**. Then tap **Continue**. Note the Guardian operator can see your state, i.e., account balance and activity.
-
-   ![Bread Wallet's Set up your account screen, with the three points checked, the Guardian it picked, and the Continue button](M04-create-guardian.png)
-
-> 🛡️ Think of a Guardian as a secure backup layer: it keeps a safe copy of your wallet's private info so you can recover it on a new device if you ever lose your phone — without ever holding your keys or your funds. You stay in full control the whole time.
-
-7. On the **Your wallet is ready!** screen, tap **Open wallet**.
-
-   ![Bread Wallet's Your wallet is ready! screen, with the Open wallet button](M04a-create-ready.png)
-
-8. On the **Help improve Wallet** screen, tap **Share usage data** or **Not now**.
-
-   ![Bread Wallet's Help improve Wallet screen, with the Share usage data and Not now buttons](M04b-create-help-improve.png)
-
-9. One last check: Bread Wallet asks you to unlock your wallet with the biometric you just set up.
-   - **iPhone:** confirm with Face ID, and you're in.
-   - **Android:** scan your fingerprint, and you're in.
-
-> ⚠️ **Reminder:** Your wallet is created, but it isn't fully secured yet.
-> Back up your recovery phrase within 7 days to fully secure your wallet. Bread will remind you daily on the home screen until you do. Your recovery phrase is the master key to your wallet, and it's the only way to get your assets back if you lose or replace your phone.
-> Keep it safe:
-> - Write it down on paper and store it somewhere safe and offline.
-> - Never share it with anyone — no real support team will ever ask for it.
-> - Don't screenshot it or save it in your notes or the cloud, where it could be stolen.
-
-For help choosing a Guardian, see [*Why should I pick a Guardian-backed account over a more private one?*](#guardian-protection/why-should-i-pick-a-guardian-backed-account-over-a-more-private-one)
+The screens and their order can differ between releases. App Store availability does not establish that the latest Mainnet flow has shipped. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network) and [*How do I keep my wallet secure?*](#security-and-recovery/how-do-i-keep-my-wallet-secure)

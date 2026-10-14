@@ -10,11 +10,11 @@ When a send shows as **Confirmed** in **Activity**, the transaction is on the bl
 
 **1. Ask the recipient to check their Pending tab**
 
-Incoming tokens wait in **Activity**, on the **Pending** tab, until the recipient selects **Accept Transfer**. Only MIDEN token is accepted automatically, when **Auto Consume** in the settings is on. Every other token must be accepted manually. If the recipient selected **Decline**, the transfer is only hidden on their device, and they can restore it in **Activity**. For the steps, see [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
+Incoming tokens wait in **Activity**, on the **Pending** tab, until the recipient selects **Accept Transfer**. Eligible USDCX transfers can be accepted automatically when **Auto-accept USDCX transfers** is on. Other transfers may need manual acceptance. If the recipient selected **Decline**, the transfer is only hidden on their device, and they can restore it in **Activity**. For the steps, see [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
 
 **2. If the recipient never accepts it**
 
-A send expires after 7 days by default. You can see or change this as the **Expiration Date** before you send. If the recipient hasn't accepted it by then, the tokens come back to you: they appear on your **Pending** tab in **Activity**, like a newly arrived transfer. Select **Accept Transfer** to add them back to your balance.
+A recallable send has an expiration shown as **Expiration Date** before you send. If the recipient has not accepted it by then, it becomes eligible for you to reclaim. Check your **Pending** tab in **Activity** and select **Accept Transfer** when the reclaimable transfer appears. Expiration alone does not add it to your spendable balance.
 
 **Still missing after an hour?**
 

@@ -2,11 +2,19 @@ import { describe, expect, it } from 'vitest';
 
 import { helpCenterMainCategories } from './categories';
 import { articlesInMainCategory, helpCenterArticles } from './content';
-import { POPULAR_SEARCHES } from './HelpCenterHome';
+import { POPULAR_SEARCHES, QUICK_HELP } from './HelpCenterHome';
 import { helpCenterDownloads, helpCenterLegal, helpCenterSocials } from './links';
 import { searchHelpCenter } from './search';
 
 describe('the home page promises', () => {
+  it('each task shortcut reaches an article available on both platforms', () => {
+    for (const shortcut of QUICK_HELP) {
+      const article = helpCenterArticles.find(article => article.id === shortcut.article);
+      expect(article, shortcut.title).toBeDefined();
+      expect(article?.subcategory, shortcut.title).toBe(shortcut.subcategory);
+      expect(article?.platforms, shortcut.title).toEqual(['extension-desktop', 'mobile']);
+    }
+  });
   it('offers only popular searches that actually find something', () => {
     // A suggested search is a promise the page makes on the reader's behalf.
     // These are written by hand and the articles are not, so nothing but a

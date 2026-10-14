@@ -29,10 +29,14 @@ describe('inline markup', () => {
     expect(render('[**SUPPORT**](https://example.com/)')).toContain('<strong>SUPPORT</strong>');
   });
 
-  it('routes the retired feedback worker URL through the integrated support form', () => {
+  it('routes the retired feedback worker URL to the approved hosted form', () => {
     const html = render('[Support](https://miden-feedback-v2.miden-feedback-relay.workers.dev/?cb=4)');
-    expect(html).toContain('<a href="/feedback">Support</a>');
+    expect(html).toContain('href="https://cmuv78o9w003x5ebpyha3cf6p.zapier.app/page" target="_blank" rel="noopener noreferrer">Support</a>');
     expect(html).not.toContain('workers.dev');
+  });
+
+  it('routes compatibility feedback links to the same hosted form', () => {
+    expect(render('[Support](/feedback)')).toContain('href="https://cmuv78o9w003x5ebpyha3cf6p.zapier.app/page"');
   });
 
   it('refuses a link scheme outside http, https and mailto', () => {
@@ -244,7 +248,7 @@ describe('images', () => {
 });
 
 describe('the migrated articles', () => {
-  it('renders all 109 platform bodies without throwing', () => {
+  it('renders all 123 platform bodies without throwing', () => {
     let rendered = 0;
     for (const article of helpCenterAllArticles) {
       for (const platform of article.platforms) {
@@ -257,10 +261,10 @@ describe('the migrated articles', () => {
         rendered += 1;
       }
     }
-    expect(rendered).toBe(109);
+    expect(rendered).toBe(123);
   });
 
-  it('shows every supplied image, each exactly once', () => {
+  it('shows every referenced image exactly once, while allowing retained source assets', () => {
     // Each distinct body once: a body shared by both platforms is one page, and
     // a Mobile body carries its own phone captures.
     const shown = helpCenterAllArticles.flatMap(article =>
@@ -270,7 +274,14 @@ describe('the migrated articles', () => {
         )
       )
     );
-    expect(shown.sort()).toEqual(Object.values(helpCenterArticleImages).map(image => image.src).sort());
+    const referenced = helpCenterAllArticles.flatMap(article =>
+      [...new Set(article.platforms.map(platform => article.bodies[platform] ?? ''))].flatMap(body =>
+        [...body.matchAll(/!\[[^\]]*\]\(([^)]+)\)/g)].map(match => helpCenterArticleImages[match[1] as string]?.src)
+      )
+    );
+    expect(referenced).not.toContain(undefined);
+    expect(shown.sort()).toEqual(referenced.sort());
+    expect(new Set(shown).size).toBe(shown.length);
   });
 
   it('leaves no unrendered markdown markers in the output', () => {
