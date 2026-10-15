@@ -97,10 +97,25 @@ and steps 1 to 3 of article 44 were walked on the build.
   - Step 2: "Under **Featured Vaults**, select a vault…" → "Under **Available Vaults**, select a vault…"
   - E35 alt: "Bread Wallet's Earn page, with Featured Vaults and no active positions" → "Bread
     Wallet's Earn page, with Available Vaults and no active positions"
-- **Article 44, steps 1 to 3.** Unchanged on 1.17.3: the vault page's **Deposit** button, then
-  **Deposit Amount** with **Confirm**.
-- **Steps 4 onward and articles 45 to 51.** Labels unchanged in the strings; not walked, because the
-  capture wallet holds USDCX and the testnet vault takes USDC.
+- **Walked end to end on 1.17.3 (2026-10-15)** with 100 Test Epoch USDC from Ivan, accepted by hand
+  from **Activity** as article 43 says: a 10 USDC deposit into Dummy Lending, the position, and a
+  full withdrawal. Retaken, raw, not placed: E35 to E38 and E40 to E46.
+- **Article 44, steps 1 to 4.** Unchanged: **Deposit**, **Deposit Amount** with **Confirm**, then
+  **Deposit Amount**, **Route**, **Estimated time**, **Max network fee** and **Open position**. The
+  review page now also shows return projections, **Collateral** and a Testnet banner.
+- **Article 44, step 5, and E39.** **Generating Transaction** and **Hide** did not appear: the review
+  page disabled **Open position**, then went straight to **Success** with **You're Earning!** (E40).
+  Proposed: drop step 5 and E39, and make step 6 "When the deposit is done, the wallet shows
+  **You're Earning!** Select the **Done** button."
+- **Articles 45, 47 and 48.** Match 1.17.3 as written.
+- **Article 46, steps 1 to 4.** Match: **Withdraw Amount**, **Route**, **Estimated time**, then
+  **Processing Withdrawal** (E44, not used by the article) and **Withdrawal Started!** with **View in
+  Activities**.
+- **Article 46, steps 5 and 6.** **Redeeming** was seen; **Delivering** was not seen between captures.
+  The returning funds arrived as +9.834 USDCX and were accepted automatically (auto-accept for USDCX
+  is on by default), so no **Accept Transfer** was needed. This is the deferred mainnet item (mainnet
+  returns USDC); left as it is.
+- **Articles 49 to 51.** Not exercised: no failure reproduced, no restore, no spending limit set.
 
 ## Open points for Ivan
 
