@@ -29,4 +29,4 @@ Rotating creates a new everyday key and replaces the current one on-chain. Do th
 
 A rotation is a transaction, so it pays the **Network Fee** shown by your wallet. If you removed your recovery phrase from this device, the wallet asks you to type it before it rotates.
 
-Related: [*What is the everyday key?*](#guardian-protection/what-is-the-everyday-key), [*How do I reveal my keys in Bread Wallet?*](#security-and-recovery/how-do-i-reveal-my-keys-in-bread-wallet)
+Related: [*What is the everyday key?*](#guardian-protection/what-is-the-everyday-key), [*How do I reveal my keys in Bread?*](#security-and-recovery/how-do-i-reveal-my-keys-in-bread-wallet)

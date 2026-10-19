@@ -7,7 +7,7 @@ Format: "## " = Notion section, "### " = article title (verbatim), "> " = callou
 
 ## Setup and basic use
 
-### How to install Bread Wallet
+### How to install Bread
 
 Store availability and wallet features can differ by platform and app version. A store listing does not mean a new Mainnet flow is available in your installed app. Update through the official store and check the network before funding. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)
 
@@ -41,7 +41,7 @@ Use the official app and follow the setup shown in your installed version. If th
 
 The screens and their order can differ between releases. App Store availability does not establish that the latest Mainnet flow has shipped. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network) and [*How do I keep my wallet secure?*](#security-and-recovery/how-do-i-keep-my-wallet-secure)
 
-### How to fund your Bread Wallet?
+### How to fund your Bread?
 
 Check the network before adding funds. Testnet assets and Mainnet assets are separate; a Testnet faucet does not fund a Mainnet account.
 
@@ -57,7 +57,7 @@ The Partner Mainnet cap is $1,232.462 for the total wallet balance after a depos
 
 Mainnet availability can differ between store versions. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network) If a transfer is missing, check **Activity** before starting another deposit.
 
-### How to find a token contract address in Bread Wallet?
+### How to find a token contract address in Bread?
 
 **Steps:**
 
@@ -65,7 +65,7 @@ Mainnet availability can differ between store versions. See [*How do I prepare f
 2. Scroll down to the Token Information section.
 3. Tap the copy icon beside the contract address to copy it.
 
-### Is Bread Wallet available on mobile?
+### Is Bread available on mobile?
 
 Store availability and wallet features can differ by platform and app version. A store listing does not mean a new Mainnet flow is available in your installed app. Update through the official store and check the network before funding. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)
 
@@ -75,13 +75,13 @@ Store availability and wallet features can differ by platform and app version. A
   - Android — [Google Play](https://play.google.com/store/apps/details?id=com.miden.wallet)
   - iOS — [App Store](https://apps.apple.com/ch/app/bread-wallet-by-miden/id6789341854?l=en-GB)
 
-For the install steps, see [*How to install Bread Wallet*](#setup-and-basic-use/how-to-install-bread-wallet).
+For the install steps, see [*How to install Bread*](#setup-and-basic-use/how-to-install-bread-wallet).
 
-### What are the supported browsers for Bread Wallet?
+### What are the supported browsers for Bread?
 
 Bread Wallet is supported as a browser extension for **Chrome** and as a mobile app for **iOS** and **Android**.
 
-Other browsers and platforms are not currently supported. For the install steps, see [*How to install Bread Wallet*](#setup-and-basic-use/how-to-install-bread-wallet).
+Other browsers and platforms are not currently supported. For the install steps, see [*How to install Bread*](#setup-and-basic-use/how-to-install-bread-wallet).
 
 ## Backup, restore, and security
 

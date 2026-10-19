@@ -6,7 +6,7 @@ Revised for Brian's 2026-10-14 support audit. Forty-three articles. Existing IDs
 
 | # | Title | Main category | Subcategory |
 |---|---|---|---|
-| 1 | What is Bread Wallet? | Getting started | Setup and basic use |
+| 1 | What is Bread? | Getting started | Setup and basic use |
 | 2 | Does Bread use Guardian-backed accounts? | Guardian | Guardian protection |
 | 3 | What are the three keys in a Guardian-backed account? | Guardian | Guardian protection |
 | 4 | What is the emergency key? | Guardian | Guardian protection |
@@ -36,11 +36,11 @@ Revised for Brian's 2026-10-14 support audit. Forty-three articles. Existing IDs
 | 28 | Do spending limits apply to Earn deposits? | Earn | Earning yield |
 | 29 | How do I remove my recovery phrase from my device? | Manage wallet | Security and recovery |
 | 30 | How do I view my recovery phrase? | Manage wallet | Security and recovery |
-| 31 | How do I reveal my keys in Bread Wallet? | Manage wallet | Security and recovery |
+| 31 | How do I reveal my keys in Bread? | Manage wallet | Security and recovery |
 | 32 | How do I rotate my everyday key? | Guardian | Guardian protection |
 | 33 | How do I set a spending limit? | Manage wallet | Security and recovery |
 | 34 | How do I manage the dApps connected to my wallet? | Manage wallet | Security and recovery |
-| 35 | How do I save a contact in Bread Wallet? | Manage wallet | Sending, receiving, and claiming |
+| 35 | How do I save a contact in Bread? | Manage wallet | Sending, receiving, and claiming |
 | 36 | What is the Partner Mainnet deposit limit? | Cross-chain | Moving across chains |
 | 37 | How do I prepare for Mainnet and check my network? | Getting started | Setup and basic use |
 | 38 | Do I need Developer Settings to use Bread? | Getting started | Setup and basic use |
@@ -52,7 +52,7 @@ Revised for Brian's 2026-10-14 support audit. Forty-three articles. Existing IDs
 
 ## Articles
 
-### 1. What is Bread Wallet?
+### 1. What is Bread?
 Category: Getting started › Setup and basic use
 
 Bread is a private wallet on Miden, built for sending, receiving, swapping, and earning yield.
@@ -63,7 +63,7 @@ Standard Bread accounts are private and Guardian-backed, with recovery through y
 - **Recoverable and still yours.** With a Guardian-backed account, a lost or stolen device isn't the end of the story, and no single key can move funds alone.
 Feature availability depends on your installed version and network. Mainnet access, Swap, cross-chain routes and Earn are available only when your released wallet supports them. See *How do I prepare for Mainnet and check my network?*
 
-Related: *What is a private account?*, *What is Guardian?*, *How to install Bread Wallet*
+Related: *What is a private account?*, *What is Guardian?*, *How to install Bread*
 
 ### 2. Does Bread use Guardian-backed accounts?
 Category: Guardian › Guardian protection
@@ -543,7 +543,7 @@ If **Recovery Phrase** is missing from **Settings**, the phrase has been removed
 
 Related: *How do I keep my wallet secure?*, *How do I remove my recovery phrase from my device?*
 
-### 31. How do I reveal my keys in Bread Wallet?
+### 31. How do I reveal my keys in Bread?
 Category: Manage wallet › Security and recovery
 
 Bread Wallet can show the keys your account signs with: your Miden everyday key and your EVM key. Most people never need them. Do not reveal them for ordinary wallet setup, a dApp connection, troubleshooting or feedback. Requests to paste signing keys into a site or send them to support are unsafe.
@@ -590,7 +590,7 @@ Rotating creates a new everyday key and replaces the current one on-chain. Do th
 
 A rotation is a transaction, so it pays the **Network Fee** shown by your wallet. If you removed your recovery phrase from this device, the wallet asks you to type it before it rotates.
 
-Related: *What is the everyday key?*, *How do I reveal my keys in Bread Wallet?*
+Related: *What is the everyday key?*, *How do I reveal my keys in Bread?*
 
 ### 33. How do I set a spending limit?
 Category: Manage wallet › Security and recovery
@@ -651,7 +651,7 @@ This page manages your consumer wallet permissions; it is not an integration set
 
 The dApp must ask to connect again before it can see your account.
 
-### 35. How do I save a contact in Bread Wallet?
+### 35. How do I save a contact in Bread?
 Category: Manage wallet › Sending, receiving, and claiming
 
 The **Address Book** saves addresses under a name, so you can send to a person without pasting their address each time.

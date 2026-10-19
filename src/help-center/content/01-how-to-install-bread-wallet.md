@@ -1,6 +1,6 @@
 ---
 id: how-to-install-bread-wallet
-title: How to install Bread Wallet
+title: How to install Bread
 mainCategory: getting-started
 subcategory: setup-and-basic-use
 platforms: [extension-desktop, mobile]

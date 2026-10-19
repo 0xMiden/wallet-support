@@ -1,6 +1,6 @@
 ---
 id: how-do-i-reveal-my-keys-in-bread-wallet
-title: How do I reveal my keys in Bread Wallet?
+title: How do I reveal my keys in Bread?
 mainCategory: manage-wallet
 subcategory: security-and-recovery
 platforms: [extension-desktop]
