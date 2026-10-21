@@ -820,7 +820,7 @@ export function HelpCenter() {
 
               {activeArticle && activeArticle.platforms.length === 1 ? (
                 <p className="help-center-platform-note">
-                  {activeArticle.platforms[0] === 'extension-desktop' ? 'Extension only' : 'Mobile only'}
+                  {activeArticle.platforms[0] === 'extension-desktop' ? 'Extension only' : 'Mobile'}
                 </p>
               ) : null}
 
