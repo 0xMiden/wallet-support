@@ -30,7 +30,7 @@ for (const { width, platform } of [
     });
     await page.setViewportSize({ width, height: 900 });
     const applicable = articles.filter(article => article.platforms.includes(platform));
-    expect(articles).toHaveLength(62);
+    expect(articles).toHaveLength(63);
     for (const article of applicable) {
       await page.goto(`/?platform=${platform}#${article.sub}/${article.id}`);
       await expect(page.locator('#help-center-category-title'), article.id).toHaveText(article.title);

@@ -1,6 +1,6 @@
 # Bread FAQ: content for implementation
 
-Revised for Brian's 2026-10-14 support audit. Forty-three articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
+Revised for Brian's 2026-10-14 support audit. Forty-four articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
 
 ## Placement
 
@@ -49,6 +49,7 @@ Revised for Brian's 2026-10-14 support audit. Forty-three articles. Existing IDs
 | 41 | How do I send feedback or report a problem? | Troubleshooting | Common issues |
 | 42 | How do I send or receive tokens on Miden? | Manage wallet | Sending, receiving, and claiming |
 | 43 | What should I check before a Swap? | Cross-chain | Moving across chains |
+| 44 | What should I do if a bridge deposit fails? | Troubleshooting | Common issues |
 
 ## Articles
 
@@ -754,6 +755,8 @@ A bridge transfer can include a source-chain transaction, route processing and a
 
 A disabled route can stop new transfers without cancelling a transfer already in progress. Follow recovery actions shown for that transfer. Do not change Developer Settings to force a route.
 
+If Bread shows **Bridge deposit failed**, see *What should I do if a bridge deposit fails?*
+
 ### 41. How do I send feedback or report a problem?
 Category: Troubleshooting › Common issues
 
@@ -790,3 +793,17 @@ Check the network, tokens, amount you will receive and maximum network fee on th
 A quote is an estimate for that route at that time. Do not assume it guarantees a future price or that a test token has real value. A disabled Swap control can mean the selected network or token pair is unavailable.
 
 If a Swap is interrupted, let the wallet sync and check **Activity** and both token balances before trying again. See *How do I prepare for Mainnet and check my network?*
+
+### 44. What should I do if a bridge deposit fails?
+Category: Troubleshooting › Common issues
+
+If Bread shows **Bridge deposit failed** after your external wallet, such as MetaMask, asks you to approve the deposit, the connection between Bread and that wallet may need refreshing. Disconnecting and reconnecting the wallet can let the deposit complete.
+
+1. Before you try again, check that the deposit did not go through. Look in **Activity** in Bread and in your external wallet's history. If a deposit transaction was sent, do not send another. See *What should I check if a bridge deposit or withdrawal is delayed?*
+2. Tap **Done** to close the failure screen.
+3. Open **Receive**, tap **Cross-chain** and go to the amount screen.
+4. Tap your wallet address at the top of the screen. **Switch wallet** opens.
+5. Tap **Connect another wallet**, choose the same wallet again and approve the connection in it.
+6. Enter the amount and continue. Approve each request in your wallet as it appears.
+
+If it still fails, report the error, the networks, the token and your wallet version. Hide sensitive information in screenshots. See *How do I send feedback or report a problem?*
