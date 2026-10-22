@@ -18,9 +18,9 @@ Revised for Brian's 2026-10-14 support audit. Forty-three articles. Existing IDs
 | 10 | Can I get my wallet back if I lose my device? | Manage wallet | Security and recovery |
 | 11 | What does Guardian back up? | Manage wallet | Security and recovery |
 | 12 | How does recovery work with Guardian? | Manage wallet | Security and recovery |
-| 13 | Can I send funds to another blockchain? | Cross-chain | Moving across chains |
-| 14 | What is the difference between a solver route and a canonical bridge? | Cross-chain | Moving across chains |
-| 15 | Can I swap tokens across chains? | Cross-chain | Moving across chains |
+| 13 | Can I send funds to another blockchain? | Crosschain | Moving across chains |
+| 14 | What is the difference between a solver route and a canonical bridge? | Crosschain | Moving across chains |
+| 15 | Can I swap tokens across chains? | Crosschain | Moving across chains |
 | 16 | Can I earn yield in Bread? | Earn | Earning yield |
 | 17 | Are my funds private while they earn? | Earn | Earning yield |
 | 18 | How do I accept a pending transfer? | Manage wallet | Activity and transaction status |
@@ -41,14 +41,14 @@ Revised for Brian's 2026-10-14 support audit. Forty-three articles. Existing IDs
 | 33 | How do I set a spending limit? | Manage wallet | Security and recovery |
 | 34 | How do I manage the dApps connected to my wallet? | Manage wallet | Security and recovery |
 | 35 | How do I save a contact in Bread? | Manage wallet | Sending, receiving, and claiming |
-| 36 | What is the Partner Mainnet deposit limit? | Cross-chain | Moving across chains |
+| 36 | What is the Partner Mainnet deposit limit? | Crosschain | Moving across chains |
 | 37 | How do I prepare for Mainnet and check my network? | Getting started | Setup and basic use |
 | 38 | Do I need Developer Settings to use Bread? | Getting started | Setup and basic use |
 | 39 | What should I do before resetting or reinstalling Bread? | Manage wallet | Security and recovery |
 | 40 | What should I check if a bridge deposit or withdrawal is delayed? | Troubleshooting | Common issues |
 | 41 | How do I send feedback or report a problem? | Troubleshooting | Common issues |
 | 42 | How do I send or receive tokens on Miden? | Manage wallet | Sending, receiving, and claiming |
-| 43 | What should I check before a Swap? | Cross-chain | Moving across chains |
+| 43 | What should I check before a Swap? | Crosschain | Moving across chains |
 
 ## Articles
 
@@ -61,7 +61,7 @@ Standard Bread accounts are private and Guardian-backed, with recovery through y
 
 - **Private from other users.** The people you transact with can see their own transaction, but not the rest of your balance or history. Neither can anyone else watching the chain.
 - **Recoverable and still yours.** With a Guardian-backed account, a lost or stolen device isn't the end of the story, and no single key can move funds alone.
-Feature availability depends on your installed version and network. Mainnet access, Swap, cross-chain routes and Earn are available only when your released wallet supports them. See *How do I prepare for Mainnet and check my network?*
+Feature availability depends on your installed version and network. Mainnet access, Swap, crosschain routes and Earn are available only when your released wallet supports them. See *How do I prepare for Mainnet and check my network?*
 
 Related: *What is a private account?*, *What is Guardian?*, *How to install Bread*
 
@@ -224,9 +224,9 @@ The device drives recovery, Guardian acknowledges the recovery update, and only 
 For the in-app steps, see *How do I restore my wallet with a recovery phrase?*
 
 ### 13. Can I send funds to another blockchain?
-Category: Cross-chain › Moving across chains
+Category: Crosschain › Moving across chains
 
-Only use a cross-chain route when your installed Bread version offers it for the selected network and asset.
+Only use a crosschain route when your installed Bread version offers it for the selected network and asset.
 
 On Testnet, use only the displayed test networks and test assets. Never send real funds to a test address. A Sepolia route is not an Ethereum Mainnet route.
 
@@ -235,7 +235,7 @@ On Mainnet, use real assets only after your installed version supports Mainnet a
 Keep the resulting total wallet balance within the Partner Mainnet cap. See *What is the Partner Mainnet deposit limit?* For route differences, see *What is the difference between a solver route and a canonical bridge?*
 
 ### 14. What is the difference between a solver route and a canonical bridge?
-Category: Cross-chain › Moving across chains
+Category: Crosschain › Moving across chains
 
 A solver route fulfills a request to deliver assets on another chain. A canonical bridge uses the bridge's deposit and claim process. Their supported assets, fees, arrival times and recovery steps can differ.
 
@@ -246,9 +246,9 @@ Use test assets only on Testnet routes. Mainnet routes require a released wallet
 If a transfer is pending, follow its existing status and claim or recovery instructions rather than starting it again. See *What should I check if a bridge deposit or withdrawal is delayed?*
 
 ### 15. Can I swap tokens across chains?
-Category: Cross-chain › Moving across chains
+Category: Crosschain › Moving across chains
 
-A cross-chain swap is available only when Bread shows a route that supports the selected source token, destination token and networks. Not every bridge route swaps tokens. A Swap within Miden is a different operation.
+A crosschain swap is available only when Bread shows a route that supports the selected source token, destination token and networks. Not every bridge route swaps tokens. A Swap within Miden is a different operation.
 
 Check the quote, expected received amount, fees and recipient before signing. If the quote expires or changes, review the updated quote. Do not assume a route is available because another token or network works.
 
@@ -283,7 +283,7 @@ When someone sends you tokens, they show up as a pending transfer on the **Activ
 
 **Steps:**
 
-1. Open Bread Wallet and select the **Activity** tab.
+1. Open Bread and select the **Activity** tab.
 
    ![Bread Wallet's Activity page, with a pending transfer and the Accept Transfer button](E24-accept-activity.png)
 
@@ -317,7 +317,7 @@ If accepting a transfer fails, the transfer stays in your **Activity** list and 
 
 **Steps:**
 
-1. Open Bread Wallet and select the **Activity** tab.
+1. Open Bread and select the **Activity** tab.
 
    ![Bread Wallet's Activity page, with a transfer showing the Retry button](E30-accept-fails-activity.png)
 
@@ -354,7 +354,7 @@ Depositing opens a position in a vault. Your USDC leaves your Miden balance and 
 
 **Steps:**
 
-1. Open Bread Wallet and select the **Earn** tab.
+1. Open Bread and select the **Earn** tab.
 
    ![Bread Wallet's Earn page, with Featured Vaults and no active positions](E35-earn-tab.png)
 
@@ -391,7 +391,7 @@ Your positions are on the **Earn** tab, with what you deposited and what it has 
 
 **Steps:**
 
-1. Open Bread Wallet and select the **Earn** tab. **Your Earnings** shows **Total Deposited** and **Estimated Rewards** across all your positions.
+1. Open Bread and select the **Earn** tab. **Your Earnings** shows **Total Deposited** and **Estimated Rewards** across all your positions.
 
    ![Bread Wallet's Earn page, with a position under Current Positions](E41-earn-tab-position.png)
 
@@ -412,7 +412,7 @@ Withdrawing closes your position and returns the USDC to your Miden balance.
 
 **Steps:**
 
-1. Open Bread Wallet, select the **Earn** tab, and select your position under **Current Positions**.
+1. Open Bread, select the **Earn** tab, and select your position under **Current Positions**.
 2. Select the **Withdraw** button.
 3. Check the **Withdraw Amount**, **Route** and **Estimated time**, then select the **Withdraw** button.
 
@@ -546,7 +546,7 @@ Related: *How do I keep my wallet secure?*, *How do I remove my recovery phrase 
 ### 31. How do I reveal my keys in Bread?
 Category: Manage wallet › Security and recovery
 
-Bread Wallet can show the keys your account signs with: your Miden everyday key and your EVM key. Most people never need them. Do not reveal them for ordinary wallet setup, a dApp connection, troubleshooting or feedback. Requests to paste signing keys into a site or send them to support are unsafe.
+Bread can show the keys your account signs with: your Miden everyday key and your EVM key. Most people never need them. Do not reveal them for ordinary wallet setup, a dApp connection, troubleshooting or feedback. Requests to paste signing keys into a site or send them to support are unsafe.
 
 **Steps:**
 
@@ -687,7 +687,7 @@ The wallet shows **Invalid address** if the address is not valid, and **This is 
    ![Bread Wallet's Delete contact message, with the Delete button](E65-delete-contact-confirm.png)
 
 ### 36. What is the Partner Mainnet deposit limit?
-Category: Cross-chain › Moving across chains
+Category: Crosschain › Moving across chains
 
 The Partner Mainnet cap is $1,232.462 for the total wallet balance after a deposit. It is not a per-transfer allowance or a daily deposit limit.
 
@@ -757,7 +757,7 @@ A disabled route can stop new transfers without cancelling a transfer already in
 ### 41. How do I send feedback or report a problem?
 Category: Troubleshooting › Common issues
 
-Open [the Bread Wallet feedback form](/feedback), or choose **Send feedback** from the wallet's **Settings** and **About** section.
+Open [the Bread feedback form](/feedback), or choose **Send feedback** from the wallet's **Settings** and **About** section.
 
 Use **Short title** for one clear summary and **Description** for the details. Choose the feedback type. For a bug, include what you did, what you expected, what happened, your platform, app version and network. Describe one problem per report where possible.
 
@@ -768,7 +768,7 @@ Choose **Submit feedback** when your report is ready. If the form cannot open, c
 ### 42. How do I send or receive tokens on Miden?
 Category: Manage wallet › Sending, receiving, and claiming
 
-For a transfer within Miden, both wallets must use the same network. A transfer to another chain needs a supported cross-chain route.
+For a transfer within Miden, both wallets must use the same network. A transfer to another chain needs a supported crosschain route.
 
 **To receive:**
 
@@ -781,9 +781,9 @@ Open **Send**, enter or select the recipient, choose the token and amount, then 
 Track the send in **Activity**. A confirmed send can still require the recipient to accept the transfer. See *My transfer shows as confirmed, but the token never arrived.*
 
 ### 43. What should I check before a Swap?
-Category: Cross-chain › Moving across chains
+Category: Crosschain › Moving across chains
 
-Swap exchanges one supported token for another. Swapping within Miden and swapping as part of a cross-chain route are different flows; use only the options shown by your installed wallet.
+Swap exchanges one supported token for another. Swapping within Miden and swapping as part of a crosschain route are different flows; use only the options shown by your installed wallet.
 
 Check the network, tokens, amount you will receive and maximum network fee on the review screen. Keep enough of the displayed fee asset. If a quote expires, changes or fails to load, obtain and review a new quote before signing.
 

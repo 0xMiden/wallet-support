@@ -10,7 +10,7 @@ If accepting a transfer fails, the transfer stays in your **Activity** list and 
 
 **Steps:**
 
-1. Open Bread Wallet and select the **Activity** tab.
+1. Open Bread and select the **Activity** tab.
 
    ![Bread Wallet's Activity page, with a transfer showing the Retry button](E30-accept-fails-activity.png)
 

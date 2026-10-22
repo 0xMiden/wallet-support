@@ -6,7 +6,7 @@ subcategory: moving-across-chains
 platforms: [extension-desktop, mobile]
 ---
 
-Only use a cross-chain route when your installed Bread version offers it for the selected network and asset.
+Only use a crosschain route when your installed Bread version offers it for the selected network and asset.
 
 On Testnet, use only the displayed test networks and test assets. Never send real funds to a test address. A Sepolia route is not an Ethereum Mainnet route.
 

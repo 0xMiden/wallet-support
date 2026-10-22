@@ -26,9 +26,9 @@ Store availability and wallet features can differ by platform and app version. A
 3. Once it's installed, open the app and follow the prompts to set up your wallet.
 4. Don't forget to back up your recovery phrase somewhere safe and offline. This is very important.
 
-To set up your wallet next, see [*How do I create a Bread Wallet?*](#setup-and-basic-use/how-do-i-create-a-bread-wallet)
+To set up your wallet next, see [*How do I create a new account with Bread?*](#setup-and-basic-use/how-do-i-create-a-bread-wallet)
 
-### How do I create a Bread Wallet?
+### How do I create a new account with Bread?
 
 Use the official app and follow the setup shown in your installed version. If the welcome screen asks for an access code, follow your invitation; do not change Developer Settings to bypass it.
 
@@ -41,7 +41,7 @@ Use the official app and follow the setup shown in your installed version. If th
 
 The screens and their order can differ between releases. App Store availability does not establish that the latest Mainnet flow has shipped. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network) and [*How do I keep my wallet secure?*](#security-and-recovery/how-do-i-keep-my-wallet-secure)
 
-### How to fund your Bread?
+### How to add funds into Bread?
 
 Check the network before adding funds. Testnet assets and Mainnet assets are separate; a Testnet faucet does not fund a Mainnet account.
 

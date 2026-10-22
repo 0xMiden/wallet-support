@@ -29,11 +29,11 @@ Store availability and wallet features can differ by platform and app version. A
 
 After adding the Bread Wallet extension, Bread Wallet will open automatically. To keep it easy to access, click the **puzzle icon** in the top-right corner of your browser, then click the **pin icon** to add it to your toolbar.
 
-To set up your wallet next, see [*How do I create a Bread Wallet?*](#setup-and-basic-use/how-do-i-create-a-bread-wallet)
+To set up your wallet next, see [*How do I create a new account with Bread?*](#setup-and-basic-use/how-do-i-create-a-bread-wallet)
 
 ![Chrome's Extensions menu, opened from the puzzle icon, with the pin icon beside Bread Wallet highlighted](E02-install-pin.png)
 
-### How do I create a Bread Wallet?
+### How do I create a new account with Bread?
 
 Use the official extension and follow the setup shown in your installed version. If the welcome screen asks for an access code, follow your invitation; do not change Developer Settings to bypass it.
 
@@ -46,7 +46,7 @@ Use the official extension and follow the setup shown in your installed version.
 
 The screens and their order can differ between releases. For Mainnet readiness, see [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network) For developer options, see [*Do I need Developer Settings to use Bread?*](#setup-and-basic-use/do-i-need-developer-settings-to-use-bread)
 
-### How to fund your Bread?
+### How to add funds into Bread?
 
 Check the network before adding funds. Testnet assets and Mainnet assets are separate; a Testnet faucet does not fund a Mainnet account.
 

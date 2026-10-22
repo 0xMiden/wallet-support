@@ -16,11 +16,11 @@ const homeCard = (page: Page, title: string) =>
     has: page.locator('.help-home-card-title', { hasText: new RegExp(`^${title}$`) })
   });
 
-test('the Cross-chain and Earn cards each open their own subcategory, and the sidebar reaches Earn', async ({
+test('the Crosschain and Earn cards each open their own subcategory, and the sidebar reaches Earn', async ({
   page
 }) => {
   await page.goto('/');
-  await homeCard(page, 'Cross-chain').click();
+  await homeCard(page, 'Crosschain').click();
 
   await expect(page).toHaveURL(/#moving-across-chains$/);
   await expect(page.locator(TITLE)).toHaveText('Moving across chains');
