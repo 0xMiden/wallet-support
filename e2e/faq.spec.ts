@@ -16,11 +16,11 @@ const homeCard = (page: Page, title: string) =>
     has: page.locator('.help-home-card-title', { hasText: new RegExp(`^${title}$`) })
   });
 
-test('the Cross-chain and Earn cards each open their own subcategory, and the sidebar reaches Earn', async ({
+test('the Crosschain and Earn cards each open their own subcategory, and the sidebar reaches Earn', async ({
   page
 }) => {
   await page.goto('/');
-  await homeCard(page, 'Cross-chain').click();
+  await homeCard(page, 'Crosschain').click();
 
   await expect(page).toHaveURL(/#moving-across-chains$/);
   await expect(page.locator(TITLE)).toHaveText('Moving across chains');
@@ -139,9 +139,9 @@ test('a See reference is a link to the article it names, in the same tab', async
 test('a reference to an article with platform variants keeps the platform being read', async ({ page }) => {
   await page.goto('/?platform=mobile#setup-and-basic-use/what-is-bread-wallet');
 
-  await page.locator(`${BODY} a`, { hasText: 'How to install Bread Wallet' }).click();
+  await page.locator(`${BODY} a`, { hasText: 'How to install Bread' }).click();
 
   await expect(page).toHaveURL(/\?platform=mobile#setup-and-basic-use\/how-to-install-bread-wallet$/);
-  await expect(page.locator(TITLE)).toHaveText('How to install Bread Wallet');
+  await expect(page.locator(TITLE)).toHaveText('How to install Bread');
   await expect(page.locator(BODY)).toContainText('Tap Get or Install');
 });

@@ -44,7 +44,7 @@ test('subcategory to article to home, by the brand mark', async ({ page }) => {
   await page.goto('/#setup-and-basic-use');
 
   await page.locator('.help-center-card-link').first().click();
-  await expect(page.locator(TITLE)).toHaveText('How to install Bread Wallet');
+  await expect(page.locator(TITLE)).toHaveText('How to install Bread');
 
   await page.locator('.public-brand').click();
 

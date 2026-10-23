@@ -6,7 +6,7 @@ subcategory: sending-receiving-and-claiming
 platforms: [extension-desktop, mobile]
 ---
 
-For a transfer within Miden, both wallets must use the same network. A transfer to another chain needs a supported cross-chain route.
+For a transfer within Miden, both wallets must use the same network. A transfer to another chain needs a supported crosschain route.
 
 **To receive:**
 

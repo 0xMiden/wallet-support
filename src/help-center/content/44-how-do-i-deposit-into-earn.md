@@ -12,7 +12,7 @@ Depositing opens a position in a vault. Your USDC leaves your Miden balance and 
 
 **Steps:**
 
-1. Open Bread Wallet and select the **Earn** tab.
+1. Open Bread and select the **Earn** tab.
 
    ![Bread Wallet's Earn page, with Featured Vaults and no active positions](E35-earn-tab.png)
 

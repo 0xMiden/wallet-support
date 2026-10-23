@@ -1,6 +1,6 @@
 ---
 id: how-do-i-save-a-contact-in-bread-wallet
-title: How do I save a contact in Bread Wallet?
+title: How do I save a contact in Bread?
 mainCategory: manage-wallet
 subcategory: sending-receiving-and-claiming
 platforms: [extension-desktop]

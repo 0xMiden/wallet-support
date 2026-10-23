@@ -1,6 +1,6 @@
 ---
 id: how-to-find-a-token-contract-address-in-bread-wallet
-title: How to find a token contract address in Bread Wallet?
+title: How to find a token contract address in Bread?
 mainCategory: getting-started
 subcategory: setup-and-basic-use
 platforms: [extension-desktop, mobile]

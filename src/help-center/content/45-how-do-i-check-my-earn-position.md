@@ -12,7 +12,7 @@ Your positions are on the **Earn** tab, with what you deposited and what it has 
 
 **Steps:**
 
-1. Open Bread Wallet and select the **Earn** tab. **Your Earnings** shows **Total Deposited** and **Estimated Rewards** across all your positions.
+1. Open Bread and select the **Earn** tab. **Your Earnings** shows **Total Deposited** and **Estimated Rewards** across all your positions.
 
    ![Bread Wallet's Earn page, with a position under Current Positions](E41-earn-tab-position.png)
 
