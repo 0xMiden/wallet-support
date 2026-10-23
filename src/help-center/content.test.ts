@@ -204,7 +204,7 @@ describe('coverage', () => {
     const navigation = createHelpCenterNavigation(helpCenterMainCategories);
     expect(navigation.mainCategories).toHaveLength(7);
     expect(navigation.categories).toHaveLength(9);
-    expect(helpCenterAllArticles).toHaveLength(70);
+    expect(helpCenterAllArticles).toHaveLength(71);
   });
 
   it('resolves every article to exactly one position, through navigation.ts', () => {
@@ -234,7 +234,7 @@ describe('coverage', () => {
       taken.set(position, article.id);
     }
 
-    expect(taken.size).toBe(70);
+    expect(taken.size).toBe(71);
   });
 
   it('keeps Activity and transaction status in the hierarchy, with its one FAQ article after the first', () => {
@@ -392,7 +392,7 @@ describe('article sources', () => {
     }
 
     expect(helpCenterAllArticles.filter(article => pages.has(article.title))).toHaveLength(23);
-    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(47);
+    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(48);
   });
 });
 
@@ -420,7 +420,7 @@ const FAQ_PLACEMENT: Readonly<Record<string, readonly number[]>> = {
   'moving-across-chains': [13, 14, 15, 36, 43, 46],
   earn: [16, 17, 20, 21, 22, 23, 24, 25, 26, 27, 28],
   'activity-and-transaction-status': [18],
-  'common-issues-and-support': [19, 40, 41, 47]
+  'common-issues-and-support': [19, 40, 41, 47, 48]
 };
 
 /** Alt text for each image, taken from the heading drawn inside it. */
@@ -517,8 +517,8 @@ describe('fidelity to the FAQ', () => {
     return article;
   };
 
-  it('reads forty-seven articles, numbered in order, that agree with the placement table', () => {
-    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 47 }, (_, index) => index + 1));
+  it('reads forty-eight articles, numbered in order, that agree with the placement table', () => {
+    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 48 }, (_, index) => index + 1));
     expect(FAQ.placement).toEqual(
       FAQ.entries.map(({ number, title, mainCategory, subcategory }) => ({ number, title, mainCategory, subcategory }))
     );
@@ -537,19 +537,25 @@ describe('fidelity to the FAQ', () => {
     }
   });
 
-  it('gives every FAQ article one body with no platform sections, on both platforms unless it is Extension only', () => {
+  it('gives every FAQ article one body with no platform sections, on both platforms unless it is held to one', () => {
     const files = import.meta.glob<string>('./content/*.md', { query: '?raw', import: 'default', eager: true });
 
     // FAQ 29 to 35 describe Settings on wallet 1.17.1 and were read on the
     // Extension only; the phone asks for a passcode where these say password.
     // Each joins the other platform once it is checked there (Ivan, 2026-10-09).
     const EXTENSION_ONLY: ReadonlySet<number> = new Set([29, 30, 31, 32, 33, 34, 35]);
+    // FAQ 48 was reported and traced on the phone (wallet 1.17.3); it joins the
+    // Extension once its reconnect steps are checked there (Ivan, 2026-10-21).
+    const MOBILE_ONLY: ReadonlySet<number> = new Set([48]);
 
     for (const entry of FAQ.entries) {
       const article = faqArticle(entry);
       if (EXTENSION_ONLY.has(entry.number)) {
         expect(article.platforms, article.id).toEqual(['extension-desktop']);
         expect(article.bodies.mobile, article.id).toBeUndefined();
+      } else if (MOBILE_ONLY.has(entry.number)) {
+        expect(article.platforms, article.id).toEqual(['mobile']);
+        expect(article.bodies['extension-desktop'], article.id).toBeUndefined();
       } else {
         expect(article.platforms, article.id).toEqual(['extension-desktop', 'mobile']);
         expect(article.bodies.mobile, article.id).toBe(article.bodies['extension-desktop']);
@@ -600,7 +606,7 @@ describe('fidelity to the FAQ', () => {
     for (const entry of FAQ.entries) {
       const article = faqArticle(entry);
 
-      for (const match of (article.bodies['extension-desktop'] as string).matchAll(REFERENCE)) {
+      for (const match of (article.bodies[article.platforms[0]] as string).matchAll(REFERENCE)) {
         const title = match[2] as string;
         const target = helpCenterArticles.find(candidate => candidate.title === title);
 
@@ -908,13 +914,13 @@ describe('fidelity to the FAQ', () => {
  */
 describe('the migrated article set', () => {
   it('carries every article in the approved mapping', () => {
-    expect(helpCenterAllArticles).toHaveLength(70);
+    expect(helpCenterAllArticles).toHaveLength(71);
     expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(70);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(61);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(62);
   });
 
   it('publishes every article except the ones held back', () => {
-    expect(helpCenterArticles).toHaveLength(66);
+    expect(helpCenterArticles).toHaveLength(67);
     const published = helpCenterArticles.map(article => article.id);
     expect(published).not.toContain('how-to-restore-the-wallet-using-an-encrypted-file');
     expect(published).not.toContain('how-to-download-the-encrypted-file');
@@ -993,12 +999,14 @@ describe('platform applicability', () => {
       .map(subcategory => subcategory.id);
 
     // Guardian protection and Sending, receiving, and claiming joined on 2026-10-09: each has an
-    // Extension-only FAQ (32 and 35) until those are checked on a phone.
+    // Extension-only FAQ (32 and 35) until those are checked on a phone. Common issues and support
+    // joined on 2026-10-21 with the phone-only FAQ 44.
     expect(needsChoice).toEqual([
       'setup-and-basic-use',
       'security-and-recovery',
       'sending-receiving-and-claiming',
-      'guardian-protection'
+      'guardian-protection',
+      'common-issues-and-support'
     ]);
   });
 

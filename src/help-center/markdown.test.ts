@@ -248,7 +248,7 @@ describe('images', () => {
 });
 
 describe('the migrated articles', () => {
-  it('renders all 131 platform bodies without throwing', () => {
+  it('renders all 132 platform bodies without throwing', () => {
     let rendered = 0;
     for (const article of helpCenterAllArticles) {
       for (const platform of article.platforms) {
@@ -261,7 +261,7 @@ describe('the migrated articles', () => {
         rendered += 1;
       }
     }
-    expect(rendered).toBe(131);
+    expect(rendered).toBe(132);
   });
 
   it('shows every referenced image exactly once, while allowing retained source assets', () => {

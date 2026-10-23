@@ -1,6 +1,6 @@
 # Bread FAQ: content for implementation
 
-Revised for Brian's 2026-10-23 launch support audit. Forty-seven articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
+Revised for Brian's 2026-10-23 launch support audit. Forty-eight articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
 
 ## Placement
 
@@ -53,6 +53,7 @@ Revised for Brian's 2026-10-23 launch support audit. Forty-seven articles. Exist
 | 45 | How do GameCoins and Arcade work? | Getting started | Setup and basic use |
 | 46 | Which bridge networks and tokens can I use? | Crosschain | Moving across chains |
 | 47 | What should I do if Guardian cannot connect? | Troubleshooting | Common issues |
+| 48 | What should I do if a bridge deposit fails? | Troubleshooting | Common issues |
 
 ## Articles
 
@@ -792,6 +793,8 @@ A bridge transfer can include a source-chain transaction, route processing and a
 
 A disabled route can stop new transfers without cancelling a transfer already in progress. Follow recovery actions shown for that transfer. Do not change Developer Settings to force a route.
 
+If Bread shows **Bridge deposit failed**, see *What should I do if a bridge deposit fails?*
+
 ### 41. How do I send feedback or report a problem?
 Category: Troubleshooting › Common issues
 
@@ -919,3 +922,17 @@ If Bread reports a Guardian connection or authentication error, such as 401, kee
 4. Contact [support](/feedback) before resetting, reinstalling or trying repeated recovery attempts. Keep any working installation while the issue is investigated.
 
 Guardian backs up account state; it does not replace your recovery phrase. Support cannot recover a missing phrase. See *What should I do before resetting or reinstalling Bread?*
+
+### 48. What should I do if a bridge deposit fails?
+Category: Troubleshooting › Common issues
+
+If Bread shows **Bridge deposit failed** after your external wallet, such as MetaMask, asks you to approve the deposit, the connection between Bread and that wallet may need refreshing. Disconnecting and reconnecting the wallet can let the deposit complete.
+
+1. Before you try again, check that the deposit did not go through. Look in **Activity** in Bread and in your external wallet's history. If a deposit transaction was sent, do not send another. See *What should I check if a bridge deposit or withdrawal is delayed?*
+2. Tap **Done** to close the failure screen.
+3. Open **Receive**, tap **Cross-chain** and go to the amount screen.
+4. Tap your wallet address at the top of the screen. **Switch wallet** opens.
+5. Tap **Connect another wallet**, choose the same wallet again and approve the connection in it.
+6. Enter the amount and continue. Approve each request in your wallet as it appears.
+
+If it still fails, report the error, the networks, the token and your wallet version. Hide sensitive information in screenshots. See *How do I send feedback or report a problem?*
