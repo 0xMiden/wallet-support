@@ -16,7 +16,7 @@ See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/
 
 <!-- platform: mobile -->
 
-You add funds to Bread by bridging them from your MetaMask wallet. MetaMask needs the tokens you want to bring in, plus a little ETH on the same network for the network fee.
+You add funds to Bread by bridging them from your MetaMask wallet. MetaMask needs the tokens you want to bring in, plus enough to pay that network's fee: ETH on Ethereum, Base or Arbitrum One, or USDC on Arc.
 
 1. Tap **Receive**, then **Cross-chain**.
 
