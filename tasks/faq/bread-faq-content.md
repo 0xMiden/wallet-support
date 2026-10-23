@@ -1,6 +1,6 @@
 # Bread FAQ: content for implementation
 
-Revised for Brian's 2026-10-14 support audit. Forty-four articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
+Revised for Brian's 2026-10-23 launch support audit. Forty-eight articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
 
 ## Placement
 
@@ -49,7 +49,11 @@ Revised for Brian's 2026-10-14 support audit. Forty-four articles. Existing IDs 
 | 41 | How do I send feedback or report a problem? | Troubleshooting | Common issues |
 | 42 | How do I send or receive tokens on Miden? | Manage wallet | Sending, receiving, and claiming |
 | 43 | What should I check before a Swap? | Cross-chain | Moving across chains |
-| 44 | What should I do if a bridge deposit fails? | Troubleshooting | Common issues |
+| 44 | How do I use Explore and mini-apps? | Getting started | Setup and basic use |
+| 45 | How do GameCoins and Arcade work? | Getting started | Setup and basic use |
+| 46 | Which bridge networks and tokens can I use? | Cross-chain | Moving across chains |
+| 47 | What should I do if Guardian cannot connect? | Troubleshooting | Common issues |
+| 48 | What should I do if a bridge deposit fails? | Troubleshooting | Common issues |
 
 ## Articles
 
@@ -258,9 +262,21 @@ Use test assets on Testnet. Use Mainnet routes only when your installed released
 ### 16. Can I earn yield in Bread?
 Category: Earn › Earning yield
 
+Mainnet Earn is not currently available. Earn is also not offered in the United Kingdom or New York. Seeing a vault preview does not mean deposits are available. If availability cannot be checked, wait and try again later or contact [support](/feedback).
+
 Earn is available only when your installed version and selected network enable it. A missing or disabled deposit control means you should not start a new deposit.
 
-Testnet Earn uses test assets and a test lending market. Estimated rewards there do not represent real returns. Mainnet Earn must be supported by your released wallet and the route it shows; do not infer availability from these Testnet guides.
+**Planned Mainnet markets — not available for deposits**
+
+The planned Earn selection is native USDC in these six markets:
+
+- Arbitrum: Aave V3 USDC and Compound III USDC.
+- Base: Aave V3 USDC and Compound III USDC.
+- Ethereum: Aave V3 USDC and Compound III USDC.
+
+These are planned lending markets, not live Bread deposit options. Morpho vaults are not included in this selection. Bridged USDC variants and other assets are not included in this planned list. [Aave](https://aave.com/help/aave-101/introduction-to-aave) and [Compound III](https://docs.compound.xyz/) explain their protocols; availability on a provider's own site does not establish availability in Bread.
+
+Testnet Earn uses test assets and a test lending market. Estimated rewards there do not represent real returns. These Testnet guides do not establish Mainnet availability. Do not treat an announced market or a preview vault as an available deposit option.
 
 When a supported route is available, review the market, fees and expected amount before confirming. The lending-market portion can be publicly visible. See *Are my funds private while they earn?*
 
@@ -448,7 +464,7 @@ Category: Earn › Earning yield
 These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
 
 - **Depositing** costs a network fee, paid in the fee asset shown by the wallet. The review page shows the **Max network fee** before you confirm, and the success page shows the **Network Fee** you paid.
-- **Withdrawing** is gasless: you pay no network fee.
+- **Withdrawing** in this Testnet flow is gasless: you pay no network fee. Do not assume that other routes or a future Mainnet withdrawal have the same fees; review the amount and fees shown before confirming.
 
 Check the displayed fee asset and maximum fee before confirming. See *What do I need before I can use Earn?*
 
@@ -466,7 +482,7 @@ If a deposit shows **Transaction Failed**, check its status and your balance aft
    ![Bread Wallet's Transaction Failed page for an Earn deposit](E47-earn-deposit-failed.png)
 
 2. Wait for the wallet to sync, and check that you have the displayed fee asset for the network fee.
-3. Make the deposit again. See *How do I deposit into Earn?*
+3. Retry only after **Activity**, balances and any existing Earn position confirm that the original deposit failed and no transfer is still pending. If the outcome is uncertain, contact [support](/feedback) before submitting again. See *How do I deposit into Earn?*
 
 When you withdraw, the returning funds arrive as a **Received** transfer on the **Activity** page. If it shows a **Retry** button, see *What should I do if accepting a transfer fails?*
 
@@ -477,7 +493,7 @@ Category: Earn › Earning yield
 
 These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
 
-For a supported position on the same network, recovery uses your recovery phrase and the Guardian backup of your standard Bread account. Restore the wallet and your position appears again under **Current Positions** on the **Earn** tab.
+For a supported position on the same network, recovery uses your recovery phrase and the Guardian backup of your standard Bread account. After restoring, let the wallet sync and check **Current Positions** on the **Earn** tab. If the position is missing, check the network and account before contacting [support](/feedback). Do not make a replacement deposit to recover a missing position.
 
 Recovery does not move a Testnet position to Mainnet. Developer-created accounts without Guardian require a separate recovery plan.
 
@@ -701,17 +717,35 @@ Use only Mainnet routes supported by your installed version. Do not rely on a mi
 ### 37. How do I prepare for Mainnet and check my network?
 Category: Getting started › Setup and basic use
 
+Partner Mainnet is a limited, invitation-only phase. It is separate from Testnet and the future public Mainnet launch. Use small testing balances and follow official migration notices. Do not assume that balances will move automatically to a future network.
+
 Mainnet and Testnet are separate networks. Testnet tokens have no real-world value and do not turn into Mainnet funds.
 
-Before funding, update Bread through the official store, check the network shown in the wallet, and confirm that your installed version supports the route you plan to use. Store releases can differ by platform. A reviewed or announced feature is not proof that it is installed on your device.
+**Get the right build and your invitation**
 
-If Bread shows a Testnet or developer-network indicator, use test assets only. Do not send real funds to a test address, and do not change endpoints to make an account appear to be on Mainnet.
+Use the invitation-enabled Bread version named in your official invitation. Store releases can differ by platform; installing a store update or a test build does not prove that your device has the supported Mainnet flow. Check your version and network before funding. If the expected options are missing, contact [support](/feedback).
 
-If your released version offers a Mainnet upgrade, follow the wallet's instructions. Keep your recovery phrase backed up before any reset. Testnet balances and positions do not transfer to Mainnet through a wallet reset or phrase import.
+Your personal access code is in your invitation email. A code registers one new account. Keep it private: do not post it, include it in screenshots or send it in a support report. If you have not received an invitation, contact [support](/feedback) about access. Downloading Bread does not itself grant an invitation.
 
-If the welcome screen requires an access code, follow your invitation. Do not treat Developer Settings as an access-code workaround. If Mainnet is not offered by your installed version, wait for the supported update or contact [support](/feedback).
+**Register a new Partner Mainnet account**
 
-See *What is the Partner Mainnet deposit limit?* and *Do I need Developer Settings to use Bread?*
+1. Start from the fresh **Welcome** screen in the supported invitation-enabled build. Do not erase a working wallet just to reach this screen; first follow *What should I do before resetting or reinstalling Bread?*
+2. If **I have a code** is already visible, select it. If your invitation-enabled build instead shows the general welcome options, tap the **Bread logo** seven times, with less than two seconds between taps, to reveal invitation access. The gesture does not replace a valid code. If it opens Developer Settings, go back; do not change endpoints.
+3. Choose **I have a code**, enter your code exactly as supplied in **Access code**, preserving uppercase and lowercase letters, then select **Unlock mainnet**.
+4. Complete security and Guardian setup, save the new recovery phrase safely offline, and finish registration. An accepted code alone does not mean registration is finished. Keep Bread connected until registration and sync complete.
+5. Check the network, account and usable fee balance before sending or bridging funds. Use only routes enabled for your installed version. See *What is the Partner Mainnet deposit limit?*
+
+**Recover an existing account**
+
+If you already registered a Mainnet account, recover that account instead of registering another one. On the Mainnet welcome screen choose **I don't have a code**, then **Recover your account**. Recovery of an existing registered account does not require a new invitation code. It needs the correct recovery phrase and the account's Guardian backup. A Testnet account cannot gain Mainnet access through recovery.
+
+Follow *How do I restore my wallet with a recovery phrase?*. Wait for recovery, any everyday-key rotation and sync to finish before transacting. Do not reset again if the result is unclear.
+
+**If the code or registration fails**
+
+Check that you used the invitation's supported build and entered the code exactly. If Bread cannot check the code or registration times out, check your connection and the account's current status before retrying. Do not create another account or repeatedly reinstall to resolve an uncertain registration. Report the error text, platform, version and network through [support](/feedback), without the code, recovery phrase or signing keys.
+
+If Bread shows a Testnet or developer-network indicator, use test assets only. Do not change endpoints to make an account appear to be on Mainnet. See *Do I need Developer Settings to use Bread?*
 
 ### 38. Do I need Developer Settings to use Bread?
 Category: Getting started › Setup and basic use
@@ -740,6 +774,10 @@ Before you continue:
 
 If you forgot the wallet password, use the wallet's recovery flow to reimport the account and choose new protection. Support cannot reset your recovery phrase. If the phrase is missing, do not sign out or reset; contact [support](/feedback).
 
+If your installed version offers **Settings** → **Security** → **Encrypted Wallet File**, treat that file as a sensitive backup. It is a snapshot, not a continuously updated copy; save a new snapshot after account changes. Keep it protected and never attach it to a support report. Availability depends on your wallet version and account type.
+
+Restoring Guardian account state from a file does not by itself complete recovery. Replacing the everyday key can still need the Guardian operator; a compatible, previously saved everyday key pair can be another supported path in versions that offer it. Do not assume a file alone or an older snapshot guarantees recovery. If the operator is unavailable or you are unsure which backups you have, keep the working installation and contact [support](/feedback) before resetting.
+
 Resetting does not cancel a transaction already submitted to a network and does not move Testnet assets to Mainnet. See *How do I restore my wallet with a recovery phrase?*
 
 ### 40. What should I check if a bridge deposit or withdrawal is delayed?
@@ -764,7 +802,7 @@ Open [the Bread Wallet feedback form](/feedback), or choose **Send feedback** fr
 
 Use **Short title** for one clear summary and **Description** for the details. Choose the feedback type. For a bug, include what you did, what you expected, what happened, your platform, app version and network. Describe one problem per report where possible.
 
-Before adding a screenshot, hide recovery information, signing keys, passwords and any other sensitive information. Never enter a recovery phrase in the form. Support will never ask for it.
+Before adding a screenshot, hide recovery information, signing keys, passwords, invitation codes and any other sensitive information. Never attach a wallet backup file. Never enter a recovery phrase in the form. Support will never ask for it.
 
 Choose **Submit feedback** when your report is ready. If the form cannot open, check your connection and try the link again. Do not reset the wallet to fix a feedback-page problem.
 
@@ -788,13 +826,104 @@ Category: Cross-chain › Moving across chains
 
 Swap exchanges one supported token for another. Swapping within Miden and swapping as part of a cross-chain route are different flows; use only the options shown by your installed wallet.
 
+**Which tokens and pairs are listed?**
+
+As checked on 23 October 2026, the Swap quote service lists these seven pairs:
+
+- ETH ↔ USDT.
+- WBTC ↔ USDT.
+- Wrapped SOL ↔ USDT.
+- USDCX ↔ USDT.
+- ETH ↔ USDCX.
+- WBTC ↔ USDCX.
+- Wrapped SOL ↔ USDCX.
+
+Each listed pair allows either direction when the wallet offers a valid quote. Wrapped SOL can appear as **SOL** in the token picker. This is a dated quote-service listing, not a guarantee that every pair is available on your selected network or in your installed release. Bread also checks the listed assets on that network before offering them. Token registration alone does not make an asset swappable; NEAR, PAXG, WBNB and PYUSD are not in this dated service listing.
+
+Miden Swap uses solver quotes supplied through [Forkchoice](https://forkchoice.xyz/). The provider and route for a cross-chain exchange can differ from a Swap within Miden. Check the current choices in the wallet rather than treating this list as a list of supported cross-chain destinations. See *Which bridge networks and tokens can I use?* for bridge routes.
+
 Check the network, tokens, amount you will receive and maximum network fee on the review screen. Keep enough of the displayed fee asset. If a quote expires, changes or fails to load, obtain and review a new quote before signing.
+
+If Bread says **No swap tokens are configured for this network yet.**, the selected network has no usable Swap choices in that version. Do not change endpoints to force another network's token list. If it says **Price unavailable. Try again shortly.**, wait and request a fresh quote; do not sign using a remembered price. Contact [support](/feedback) if the problem continues.
 
 A quote is an estimate for that route at that time. Do not assume it guarantees a future price or that a test token has real value. A disabled Swap control can mean the selected network or token pair is unavailable.
 
 If a Swap is interrupted, let the wallet sync and check **Activity** and both token balances before trying again. See *How do I prepare for Mainnet and check my network?*
 
-### 44. What should I do if a bridge deposit fails?
+
+### 44. How do I use Explore and mini-apps?
+Category: Getting started › Setup and basic use
+
+**Explore** opens the app catalog for your wallet's selected network. The apps shown can differ between Mainnet and Testnet, mobile and extension, and wallet versions. An app appearing in a catalog does not guarantee every feature inside it is available.
+
+1. Check your wallet's network, then open **Explore** and choose an app.
+2. Check the app's address and the account it asks to connect. Never enter your recovery phrase, signing keys or wallet password into a mini-app or website.
+3. Review each request in the wallet before approving it. Connecting an app is separate from approving a transfer or signing a transaction. Cancel requests you do not understand.
+
+If an app does not open or connect, check your connection and that the app and wallet use the same network. Reopen it from **Explore**. A Testnet app cannot use Mainnet balances. Do not change network endpoints to force a connection.
+
+If a transaction was interrupted, check **Activity** and balances before retrying. For support, include the app name, its public address, network, wallet version and the error text, with secrets removed. See *How do I send feedback or report a problem?*
+
+
+### 45. How do GameCoins and Arcade work?
+Category: Getting started › Setup and basic use
+
+GameCoin (GC) is used for supported Arcade leaderboard submissions. The rules below describe the intended Arcade flow; claims and leaderboard posting require the deployed service and a compatible game. A game preview or announced integration is not confirmation that those services are live.
+
+- Playing, replaying and sharing results on social are free. You do not need GC just to share a result.
+- Submitting a result to a supported game's leaderboard costs 1 GC. You also pay the network fee shown by the wallet; GC does not replace the fee asset.
+- When the claim service is available, each account can claim 10 GC per week from Arcade, regardless of its existing balance. Unused GC carries over.
+- GC is transferable, but its balance is not a score. Each game has its own scoring and leaderboard. There is no global ranking across games.
+
+If claiming or posting is unavailable, continue with free play where the game supports it. Do not repeatedly sign a failed submission: first check **Activity** and your GC balance. Do not assume a claim or score was recorded until the wallet and game confirm it.
+
+Report the game, network, wallet version and error text without recovery information. See *How do I send feedback or report a problem?*
+
+
+### 46. Which bridge networks and tokens can I use?
+Category: Cross-chain › Moving across chains
+
+Use only the source network, destination network, token and transfer direction currently enabled in your installed Bread version. Support for a chain does not mean support for every token or every direction. A token ticker alone does not identify an asset.
+
+**Partner Mainnet route list — checked 23 October 2026**
+
+The current Partner Mainnet configuration lists these routes in both directions: deposits into Miden and withdrawals from Miden. This describes configured options; it does not guarantee that each route is available in your installed release or for your transfer. Continue only when the wallet offers the exact route and its review information.
+
+- **Circle USDC route:** native USDC on Ethereum, Arbitrum, Base or Arc ↔ USDCX on Miden. This route uses Circle's [xReserve](https://www.circle.com/xreserve) infrastructure; routes from Ethereum, Arbitrum and Base also use Circle's [Cross-Chain Transfer Protocol (CCTP)](https://developers.circle.com/cctp/concepts/supported-chains-and-domains). USDCX on Miden and native USDC on another network are distinct assets.
+- **Agglayer route:** Ethereum ↔ Miden for WBTC, wrapped SOL, Ethereum's NEAR token, PAXG, USDT, WBNB and PYUSD. These are the ERC-20 assets listed in the configuration. Native ETH is handled separately through the bridge registry; use it only when the wallet offers the ETH route. Wrapped SOL and WBNB do not establish support for the native Solana or BNB Chain networks. Learn about [Agglayer](https://docs.polygon.technology/interoperability/agglayer).
+
+A separate bridge website may offer different assets or directions; its options do not establish support inside Bread. [Epoch](https://epochprotocol.xyz/)'s fast-bridge route is not currently enabled on Partner Mainnet. Do not infer that other networks or every token supported by a provider are supported in Bread.
+
+**NEAR Intents — coming soon**
+
+[NEAR Intents](https://docs.near-intents.org/) support is coming soon to Bread and is not currently available. There is no announced availability date. Native NEAR-network transfers and NEAR Intents are separate from the Ethereum NEAR-token route listed above. Do not send native NEAR to an Ethereum or Miden address on the assumption that Intents will handle the transfer.
+
+**Before depositing or withdrawing**
+
+1. Check whether Bread is using Partner Mainnet or Testnet. Testnet route availability does not establish Mainnet support.
+2. Open the bridge flow and choose the source and destination networks. Check deposits and withdrawals separately; an available route in one direction does not establish the reverse route.
+3. Select the exact token offered for that route. Review its source asset and destination asset, the recipient, limits, fees and estimated amount before confirming. USDC and USDCX are not interchangeable token identifiers.
+4. Continue only if the wallet enables the route and provides the required review information. If the route is missing, disabled or cannot provide a quote, stop and contact [support](/feedback). Never send directly to a bridge contract or substitute a token with a similar name.
+
+A list of networks in an announcement, website or earlier wallet version does not guarantee that a route is currently available. The available choices can change by network, app version, token, amount, direction or service status.
+
+Do not assume native NEAR-network transfers or NEAR intents are available because you see an Ethereum token named NEAR. Use only the actual networks and route shown by your supported wallet version.
+
+Check the Partner Mainnet balance cap before depositing. If a submitted transfer is delayed, follow *What should I check if a bridge deposit or withdrawal is delayed?*
+
+### 47. What should I do if Guardian cannot connect?
+Category: Troubleshooting › Common issues
+
+If Bread reports a Guardian connection or authentication error, such as 401, keep the wallet installed. An error does not mean your recovery phrase is wrong, and resetting the wallet is not a connection fix.
+
+1. Check your internet connection and update through the official store. If the wallet is still syncing or rotating an everyday key after recovery, let that operation finish before starting another one.
+2. Confirm that the wallet is on the network used by the original account. Mainnet and Testnet have different account state. Do not replace RPC or Guardian endpoints with addresses supplied by strangers.
+3. If the error continues, record the exact message, the time it occurred, your platform, wallet version, network and the Guardian name shown by the wallet. Keep recovery information and signing keys out of the report.
+4. Contact [support](/feedback) before resetting, reinstalling or trying repeated recovery attempts. Keep any working installation while the issue is investigated.
+
+Guardian backs up account state; it does not replace your recovery phrase. Support cannot recover a missing phrase. See *What should I do before resetting or reinstalling Bread?*
+
+### 48. What should I do if a bridge deposit fails?
 Category: Troubleshooting › Common issues
 
 If Bread shows **Bridge deposit failed** after your external wallet, such as MetaMask, asks you to approve the deposit, the connection between Bread and that wallet may need refreshing. Disconnecting and reconnecting the wallet can let the deposit complete.
