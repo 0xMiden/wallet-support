@@ -12,7 +12,7 @@ Withdrawing closes your position and returns the USDC to your Miden balance.
 
 **Steps:**
 
-1. Open Bread Wallet, select the **Earn** tab, and select your position under **Current Positions**.
+1. Open Bread, select the **Earn** tab, and select your position under **Current Positions**.
 2. Select the **Withdraw** button.
 3. Check the **Withdraw Amount**, **Route** and **Estimated time**, then select the **Withdraw** button.
 

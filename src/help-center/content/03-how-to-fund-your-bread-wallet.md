@@ -1,6 +1,6 @@
 ---
 id: how-to-fund-your-bread-wallet
-title: How to fund your Bread Wallet?
+title: How to add funds into Bread?
 mainCategory: getting-started
 subcategory: setup-and-basic-use
 platforms: [extension-desktop, mobile]

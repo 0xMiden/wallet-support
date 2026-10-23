@@ -6,7 +6,7 @@ Revised for Brian's 2026-10-23 launch support audit. Forty-eight articles. Exist
 
 | # | Title | Main category | Subcategory |
 |---|---|---|---|
-| 1 | What is Bread Wallet? | Getting started | Setup and basic use |
+| 1 | What is Bread? | Getting started | Setup and basic use |
 | 2 | Does Bread use Guardian-backed accounts? | Guardian | Guardian protection |
 | 3 | What are the three keys in a Guardian-backed account? | Guardian | Guardian protection |
 | 4 | What is the emergency key? | Guardian | Guardian protection |
@@ -18,9 +18,9 @@ Revised for Brian's 2026-10-23 launch support audit. Forty-eight articles. Exist
 | 10 | Can I get my wallet back if I lose my device? | Manage wallet | Security and recovery |
 | 11 | What does Guardian back up? | Manage wallet | Security and recovery |
 | 12 | How does recovery work with Guardian? | Manage wallet | Security and recovery |
-| 13 | Can I send funds to another blockchain? | Cross-chain | Moving across chains |
-| 14 | What is the difference between a solver route and a canonical bridge? | Cross-chain | Moving across chains |
-| 15 | Can I swap tokens across chains? | Cross-chain | Moving across chains |
+| 13 | Can I send funds to another blockchain? | Crosschain | Moving across chains |
+| 14 | What is the difference between a solver route and a canonical bridge? | Crosschain | Moving across chains |
+| 15 | Can I swap tokens across chains? | Crosschain | Moving across chains |
 | 16 | Can I earn yield in Bread? | Earn | Earning yield |
 | 17 | Are my funds private while they earn? | Earn | Earning yield |
 | 18 | How do I accept a pending transfer? | Manage wallet | Activity and transaction status |
@@ -36,28 +36,28 @@ Revised for Brian's 2026-10-23 launch support audit. Forty-eight articles. Exist
 | 28 | Do spending limits apply to Earn deposits? | Earn | Earning yield |
 | 29 | How do I remove my recovery phrase from my device? | Manage wallet | Security and recovery |
 | 30 | How do I view my recovery phrase? | Manage wallet | Security and recovery |
-| 31 | How do I reveal my keys in Bread Wallet? | Manage wallet | Security and recovery |
+| 31 | How do I reveal my keys in Bread? | Manage wallet | Security and recovery |
 | 32 | How do I rotate my everyday key? | Guardian | Guardian protection |
 | 33 | How do I set a spending limit? | Manage wallet | Security and recovery |
 | 34 | How do I manage the dApps connected to my wallet? | Manage wallet | Security and recovery |
-| 35 | How do I save a contact in Bread Wallet? | Manage wallet | Sending, receiving, and claiming |
-| 36 | What is the Partner Mainnet deposit limit? | Cross-chain | Moving across chains |
+| 35 | How do I save a contact in Bread? | Manage wallet | Sending, receiving, and claiming |
+| 36 | What is the Partner Mainnet deposit limit? | Crosschain | Moving across chains |
 | 37 | How do I prepare for Mainnet and check my network? | Getting started | Setup and basic use |
 | 38 | Do I need Developer Settings to use Bread? | Getting started | Setup and basic use |
 | 39 | What should I do before resetting or reinstalling Bread? | Manage wallet | Security and recovery |
 | 40 | What should I check if a bridge deposit or withdrawal is delayed? | Troubleshooting | Common issues |
 | 41 | How do I send feedback or report a problem? | Troubleshooting | Common issues |
 | 42 | How do I send or receive tokens on Miden? | Manage wallet | Sending, receiving, and claiming |
-| 43 | What should I check before a Swap? | Cross-chain | Moving across chains |
+| 43 | What should I check before a Swap? | Crosschain | Moving across chains |
 | 44 | How do I use Explore and mini-apps? | Getting started | Setup and basic use |
 | 45 | How do GameCoins and Arcade work? | Getting started | Setup and basic use |
-| 46 | Which bridge networks and tokens can I use? | Cross-chain | Moving across chains |
+| 46 | Which bridge networks and tokens can I use? | Crosschain | Moving across chains |
 | 47 | What should I do if Guardian cannot connect? | Troubleshooting | Common issues |
 | 48 | What should I do if a bridge deposit fails? | Troubleshooting | Common issues |
 
 ## Articles
 
-### 1. What is Bread Wallet?
+### 1. What is Bread?
 Category: Getting started › Setup and basic use
 
 Bread is a private wallet on Miden, built for sending, receiving, swapping, and earning yield.
@@ -66,9 +66,9 @@ Standard Bread accounts are private and Guardian-backed, with recovery through y
 
 - **Private from other users.** The people you transact with can see their own transaction, but not the rest of your balance or history. Neither can anyone else watching the chain.
 - **Recoverable and still yours.** With a Guardian-backed account, a lost or stolen device isn't the end of the story, and no single key can move funds alone.
-Feature availability depends on your installed version and network. Mainnet access, Swap, cross-chain routes and Earn are available only when your released wallet supports them. See *How do I prepare for Mainnet and check my network?*
+Feature availability depends on your installed version and network. Mainnet access, Swap, crosschain routes and Earn are available only when your released wallet supports them. See *How do I prepare for Mainnet and check my network?*
 
-Related: *What is a private account?*, *What is Guardian?*, *How to install Bread Wallet*
+Related: *What is a private account?*, *What is Guardian?*, *How to install Bread*
 
 ### 2. Does Bread use Guardian-backed accounts?
 Category: Guardian › Guardian protection
@@ -229,9 +229,9 @@ The device drives recovery, Guardian acknowledges the recovery update, and only 
 For the in-app steps, see *How do I restore my wallet with a recovery phrase?*
 
 ### 13. Can I send funds to another blockchain?
-Category: Cross-chain › Moving across chains
+Category: Crosschain › Moving across chains
 
-Only use a cross-chain route when your installed Bread version offers it for the selected network and asset.
+Only use a crosschain route when your installed Bread version offers it for the selected network and asset.
 
 On Testnet, use only the displayed test networks and test assets. Never send real funds to a test address. A Sepolia route is not an Ethereum Mainnet route.
 
@@ -240,7 +240,7 @@ On Mainnet, use real assets only after your installed version supports Mainnet a
 Keep the resulting total wallet balance within the Partner Mainnet cap. See *What is the Partner Mainnet deposit limit?* For route differences, see *What is the difference between a solver route and a canonical bridge?*
 
 ### 14. What is the difference between a solver route and a canonical bridge?
-Category: Cross-chain › Moving across chains
+Category: Crosschain › Moving across chains
 
 A solver route fulfills a request to deliver assets on another chain. A canonical bridge uses the bridge's deposit and claim process. Their supported assets, fees, arrival times and recovery steps can differ.
 
@@ -251,9 +251,9 @@ Use test assets only on Testnet routes. Mainnet routes require a released wallet
 If a transfer is pending, follow its existing status and claim or recovery instructions rather than starting it again. See *What should I check if a bridge deposit or withdrawal is delayed?*
 
 ### 15. Can I swap tokens across chains?
-Category: Cross-chain › Moving across chains
+Category: Crosschain › Moving across chains
 
-A cross-chain swap is available only when Bread shows a route that supports the selected source token, destination token and networks. Not every bridge route swaps tokens. A Swap within Miden is a different operation.
+A crosschain swap is available only when Bread shows a route that supports the selected source token, destination token and networks. Not every bridge route swaps tokens. A Swap within Miden is a different operation.
 
 Check the quote, expected received amount, fees and recipient before signing. If the quote expires or changes, review the updated quote. Do not assume a route is available because another token or network works.
 
@@ -300,7 +300,7 @@ When someone sends you tokens, they show up as a pending transfer on the **Activ
 
 **Steps:**
 
-1. Open Bread Wallet and select the **Activity** tab.
+1. Open Bread and select the **Activity** tab.
 
    ![Bread Wallet's Activity page, with a pending transfer and the Accept Transfer button](E24-accept-activity.png)
 
@@ -334,7 +334,7 @@ If accepting a transfer fails, the transfer stays in your **Activity** list and 
 
 **Steps:**
 
-1. Open Bread Wallet and select the **Activity** tab.
+1. Open Bread and select the **Activity** tab.
 
    ![Bread Wallet's Activity page, with a transfer showing the Retry button](E30-accept-fails-activity.png)
 
@@ -371,7 +371,7 @@ Depositing opens a position in a vault. Your USDC leaves your Miden balance and 
 
 **Steps:**
 
-1. Open Bread Wallet and select the **Earn** tab.
+1. Open Bread and select the **Earn** tab.
 
    ![Bread Wallet's Earn page, with Featured Vaults and no active positions](E35-earn-tab.png)
 
@@ -408,7 +408,7 @@ Your positions are on the **Earn** tab, with what you deposited and what it has 
 
 **Steps:**
 
-1. Open Bread Wallet and select the **Earn** tab. **Your Earnings** shows **Total Deposited** and **Estimated Rewards** across all your positions.
+1. Open Bread and select the **Earn** tab. **Your Earnings** shows **Total Deposited** and **Estimated Rewards** across all your positions.
 
    ![Bread Wallet's Earn page, with a position under Current Positions](E41-earn-tab-position.png)
 
@@ -429,7 +429,7 @@ Withdrawing closes your position and returns the USDC to your Miden balance.
 
 **Steps:**
 
-1. Open Bread Wallet, select the **Earn** tab, and select your position under **Current Positions**.
+1. Open Bread, select the **Earn** tab, and select your position under **Current Positions**.
 2. Select the **Withdraw** button.
 3. Check the **Withdraw Amount**, **Route** and **Estimated time**, then select the **Withdraw** button.
 
@@ -560,10 +560,10 @@ If **Recovery Phrase** is missing from **Settings**, the phrase has been removed
 
 Related: *How do I keep my wallet secure?*, *How do I remove my recovery phrase from my device?*
 
-### 31. How do I reveal my keys in Bread Wallet?
+### 31. How do I reveal my keys in Bread?
 Category: Manage wallet › Security and recovery
 
-Bread Wallet can show the keys your account signs with: your Miden everyday key and your EVM key. Most people never need them. Do not reveal them for ordinary wallet setup, a dApp connection, troubleshooting or feedback. Requests to paste signing keys into a site or send them to support are unsafe.
+Bread can show the keys your account signs with: your Miden everyday key and your EVM key. Most people never need them. Do not reveal them for ordinary wallet setup, a dApp connection, troubleshooting or feedback. Requests to paste signing keys into a site or send them to support are unsafe.
 
 **Steps:**
 
@@ -607,7 +607,7 @@ Rotating creates a new everyday key and replaces the current one on-chain. Do th
 
 A rotation is a transaction, so it pays the **Network Fee** shown by your wallet. If you removed your recovery phrase from this device, the wallet asks you to type it before it rotates.
 
-Related: *What is the everyday key?*, *How do I reveal my keys in Bread Wallet?*
+Related: *What is the everyday key?*, *How do I reveal my keys in Bread?*
 
 ### 33. How do I set a spending limit?
 Category: Manage wallet › Security and recovery
@@ -668,7 +668,7 @@ This page manages your consumer wallet permissions; it is not an integration set
 
 The dApp must ask to connect again before it can see your account.
 
-### 35. How do I save a contact in Bread Wallet?
+### 35. How do I save a contact in Bread?
 Category: Manage wallet › Sending, receiving, and claiming
 
 The **Address Book** saves addresses under a name, so you can send to a person without pasting their address each time.
@@ -704,7 +704,7 @@ The wallet shows **Invalid address** if the address is not valid, and **This is 
    ![Bread Wallet's Delete contact message, with the Delete button](E65-delete-contact-confirm.png)
 
 ### 36. What is the Partner Mainnet deposit limit?
-Category: Cross-chain › Moving across chains
+Category: Crosschain › Moving across chains
 
 The Partner Mainnet cap is $1,232.462 for the total wallet balance after a deposit. It is not a per-transfer allowance or a daily deposit limit.
 
@@ -798,7 +798,7 @@ If Bread shows **Bridge deposit failed**, see *What should I do if a bridge depo
 ### 41. How do I send feedback or report a problem?
 Category: Troubleshooting › Common issues
 
-Open [the Bread Wallet feedback form](/feedback), or choose **Send feedback** from the wallet's **Settings** and **About** section.
+Open [the Bread feedback form](/feedback), or choose **Send feedback** from the wallet's **Settings** and **About** section.
 
 Use **Short title** for one clear summary and **Description** for the details. Choose the feedback type. For a bug, include what you did, what you expected, what happened, your platform, app version and network. Describe one problem per report where possible.
 
@@ -809,7 +809,7 @@ Choose **Submit feedback** when your report is ready. If the form cannot open, c
 ### 42. How do I send or receive tokens on Miden?
 Category: Manage wallet › Sending, receiving, and claiming
 
-For a transfer within Miden, both wallets must use the same network. A transfer to another chain needs a supported cross-chain route.
+For a transfer within Miden, both wallets must use the same network. A transfer to another chain needs a supported crosschain route.
 
 **To receive:**
 
@@ -822,9 +822,9 @@ Open **Send**, enter or select the recipient, choose the token and amount, then 
 Track the send in **Activity**. A confirmed send can still require the recipient to accept the transfer. See *My transfer shows as confirmed, but the token never arrived.*
 
 ### 43. What should I check before a Swap?
-Category: Cross-chain › Moving across chains
+Category: Crosschain › Moving across chains
 
-Swap exchanges one supported token for another. Swapping within Miden and swapping as part of a cross-chain route are different flows; use only the options shown by your installed wallet.
+Swap exchanges one supported token for another. Swapping within Miden and swapping as part of a crosschain route are different flows; use only the options shown by your installed wallet.
 
 **Which tokens and pairs are listed?**
 
@@ -840,7 +840,7 @@ As checked on 23 October 2026, the Swap quote service lists these seven pairs:
 
 Each listed pair allows either direction when the wallet offers a valid quote. Wrapped SOL can appear as **SOL** in the token picker. This is a dated quote-service listing, not a guarantee that every pair is available on your selected network or in your installed release. Bread also checks the listed assets on that network before offering them. Token registration alone does not make an asset swappable; NEAR, PAXG, WBNB and PYUSD are not in this dated service listing.
 
-Miden Swap uses solver quotes supplied through [Forkchoice](https://forkchoice.xyz/). The provider and route for a cross-chain exchange can differ from a Swap within Miden. Check the current choices in the wallet rather than treating this list as a list of supported cross-chain destinations. See *Which bridge networks and tokens can I use?* for bridge routes.
+Miden Swap uses solver quotes supplied through [Forkchoice](https://forkchoice.xyz/). The provider and route for a crosschain exchange can differ from a Swap within Miden. Check the current choices in the wallet rather than treating this list as a list of supported crosschain destinations. See *Which bridge networks and tokens can I use?* for bridge routes.
 
 Check the network, tokens, amount you will receive and maximum network fee on the review screen. Keep enough of the displayed fee asset. If a quote expires, changes or fails to load, obtain and review a new quote before signing.
 
@@ -881,7 +881,7 @@ Report the game, network, wallet version and error text without recovery informa
 
 
 ### 46. Which bridge networks and tokens can I use?
-Category: Cross-chain › Moving across chains
+Category: Crosschain › Moving across chains
 
 Use only the source network, destination network, token and transfer direction currently enabled in your installed Bread version. Support for a chain does not mean support for every token or every direction. A token ticker alone does not identify an asset.
 

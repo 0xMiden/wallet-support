@@ -10,7 +10,7 @@ When someone sends you tokens, they show up as a pending transfer on the **Activ
 
 **Steps:**
 
-1. Open Bread Wallet and select the **Activity** tab.
+1. Open Bread and select the **Activity** tab.
 
    ![Bread Wallet's Activity page, with a pending transfer and the Accept Transfer button](E24-accept-activity.png)
 
