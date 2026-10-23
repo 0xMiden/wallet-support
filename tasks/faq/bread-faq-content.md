@@ -265,6 +265,16 @@ Mainnet Earn is not currently available. Earn is also not offered in the United 
 
 Earn is available only when your installed version and selected network enable it. A missing or disabled deposit control means you should not start a new deposit.
 
+**Planned Mainnet markets — not available for deposits**
+
+The planned Earn selection is native USDC in these six markets:
+
+- Arbitrum: Aave V3 USDC and Compound III USDC.
+- Base: Aave V3 USDC and Compound III USDC.
+- Ethereum: Aave V3 USDC and Compound III USDC.
+
+These are planned lending markets, not live Bread deposit options. Morpho vaults are not included in this selection. Bridged USDC variants and other assets are not included in this planned list. [Aave](https://aave.com/help/aave-101/introduction-to-aave) and [Compound III](https://docs.compound.xyz/) explain their protocols; availability on a provider's own site does not establish availability in Bread.
+
 Testnet Earn uses test assets and a test lending market. Estimated rewards there do not represent real returns. These Testnet guides do not establish Mainnet availability. Do not treat an announced market or a preview vault as an available deposit option.
 
 When a supported route is available, review the market, fees and expected amount before confirming. The lending-market portion can be publicly visible. See *Are my funds private while they earn?*
@@ -813,6 +823,22 @@ Category: Cross-chain › Moving across chains
 
 Swap exchanges one supported token for another. Swapping within Miden and swapping as part of a cross-chain route are different flows; use only the options shown by your installed wallet.
 
+**Which tokens and pairs are listed?**
+
+As checked on 23 October 2026, the Swap quote service lists these seven pairs:
+
+- ETH ↔ USDT.
+- WBTC ↔ USDT.
+- Wrapped SOL ↔ USDT.
+- USDCX ↔ USDT.
+- ETH ↔ USDCX.
+- WBTC ↔ USDCX.
+- Wrapped SOL ↔ USDCX.
+
+Each listed pair allows either direction when the wallet offers a valid quote. Wrapped SOL can appear as **SOL** in the token picker. This is a dated quote-service listing, not a guarantee that every pair is available on your selected network or in your installed release. Bread also checks the listed assets on that network before offering them. Token registration alone does not make an asset swappable; NEAR, PAXG, WBNB and PYUSD are not in this dated service listing.
+
+Miden Swap uses solver quotes supplied through [Forkchoice](https://forkchoice.xyz/). The provider and route for a cross-chain exchange can differ from a Swap within Miden. Check the current choices in the wallet rather than treating this list as a list of supported cross-chain destinations. See *Which bridge networks and tokens can I use?* for bridge routes.
+
 Check the network, tokens, amount you will receive and maximum network fee on the review screen. Keep enough of the displayed fee asset. If a quote expires, changes or fails to load, obtain and review a new quote before signing.
 
 If Bread says **No swap tokens are configured for this network yet.**, the selected network has no usable Swap choices in that version. Do not change endpoints to force another network's token list. If it says **Price unavailable. Try again shortly.**, wait and request a fresh quote; do not sign using a remembered price. Contact [support](/feedback) if the problem continues.
@@ -855,6 +881,19 @@ Report the game, network, wallet version and error text without recovery informa
 Category: Cross-chain › Moving across chains
 
 Use only the source network, destination network, token and transfer direction currently enabled in your installed Bread version. Support for a chain does not mean support for every token or every direction. A token ticker alone does not identify an asset.
+
+**Partner Mainnet route list — checked 23 October 2026**
+
+The current Partner Mainnet configuration lists these routes in both directions: deposits into Miden and withdrawals from Miden. This describes configured options; it does not guarantee that each route is available in your installed release or for your transfer. Continue only when the wallet offers the exact route and its review information.
+
+- **Circle USDC route:** native USDC on Ethereum, Arbitrum, Base or Arc ↔ USDCX on Miden. This route uses Circle's [xReserve](https://www.circle.com/xreserve) infrastructure; routes from Ethereum, Arbitrum and Base also use Circle's [Cross-Chain Transfer Protocol (CCTP)](https://developers.circle.com/cctp/concepts/supported-chains-and-domains). USDCX on Miden and native USDC on another network are distinct assets.
+- **Agglayer route:** Ethereum ↔ Miden for WBTC, wrapped SOL, Ethereum's NEAR token, PAXG, USDT, WBNB and PYUSD. These are the ERC-20 assets listed in the configuration. Native ETH is handled separately through the bridge registry; use it only when the wallet offers the ETH route. Wrapped SOL and WBNB do not establish support for the native Solana or BNB Chain networks. Learn about [Agglayer](https://docs.polygon.technology/interoperability/agglayer).
+
+A separate bridge website may offer different assets or directions; its options do not establish support inside Bread. [Epoch](https://epochprotocol.xyz/)'s fast-bridge route is not currently enabled on Partner Mainnet. Do not infer that other networks or every token supported by a provider are supported in Bread.
+
+**NEAR Intents — coming soon**
+
+[NEAR Intents](https://docs.near-intents.org/) support is coming soon to Bread and is not currently available. There is no announced availability date. Native NEAR-network transfers and NEAR Intents are separate from the Ethereum NEAR-token route listed above. Do not send native NEAR to an Ethereum or Miden address on the assumption that Intents will handle the transfer.
 
 **Before depositing or withdrawing**
 
