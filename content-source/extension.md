@@ -38,23 +38,14 @@ To set up your wallet next, see [*How do I create a new account with Bread?*](#s
 Use the official extension and follow the setup shown in your installed version. If the welcome screen asks for an access code, follow your invitation; do not change Developer Settings to bypass it.
 
 1. Select **Get started** when that option is available.
-2. Check the network. If Bread shows a Testnet notice, read it and select **I understand**. Testnet tokens have no real-world value.
-3. Create a strong wallet password and follow the displayed password requirements.
-4. Read the Guardian explanation and confirm the provider shown. Standard Bread setup creates a Guardian-backed account. The operator can see the account state but cannot move funds alone.
-5. Complete any usage-data choice and select **Open wallet** when setup finishes.
-6. Back up your recovery phrase on paper and keep it offline before you fund the wallet.
+2. Create a strong wallet password and follow the displayed password requirements.
+3. Read the Guardian explanation and confirm the provider shown. Standard Bread setup creates a Guardian-backed account. The operator can see the account state but cannot move funds alone.
+4. Complete any usage-data choice and select **Open wallet** when setup finishes.
+5. Back up your recovery phrase on paper and keep it offline before you fund the wallet.
 
 The screens and their order can differ between releases. For Mainnet readiness, see [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network) For developer options, see [*Do I need Developer Settings to use Bread?*](#setup-and-basic-use/do-i-need-developer-settings-to-use-bread)
 
 ### How to add funds into Bread?
-
-Check the network before adding funds. Testnet assets and Mainnet assets are separate; a Testnet faucet does not fund a Mainnet account.
-
-**On Testnet:**
-
-Use **Fund your wallet** if your version shows a test faucet. Follow the request in **Activity** and wait for the wallet to sync. Test tokens have no real-world value. Do not send real assets to a test address.
-
-**On Mainnet, when supported by your installed version:**
 
 Use only the deposit networks, assets and routes shown by the wallet. Check the source network, destination network, address, amount and fees before confirming. Do not transfer from an unsupported chain or assume tokens with the same name are interchangeable.
 
@@ -102,10 +93,10 @@ Never share your recovery phrase or backup password with anyone offering to *rec
 
 ### How do I restore my wallet with a recovery phrase?
 
-Have your recovery phrase (sometimes called a seed phrase) ready and use the official extension on the same network as the account you want to recover. A Testnet account does not become a Mainnet account through recovery.
+Have your recovery phrase (sometimes called a seed phrase) ready and use the official extension on the same network as the account you want to recover.
 
 1. Open Bread and select **Recover your account** when the welcome screen offers it.
-2. Read any network notice. Select recovery with your recovery phrase if Bread asks for an import method.
+2. Select recovery with your recovery phrase if Bread asks for an import method.
 3. Enter the words in their original order, in the official wallet only.
 4. Create a new wallet password and follow the Guardian recovery prompts. Bread can look for the operator; if it cannot find your account, check the network and the Guardian you used.
 5. Open the wallet when recovery finishes. Wait for any everyday-key rotation and sync before making a transaction.
