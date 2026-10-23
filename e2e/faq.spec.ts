@@ -30,7 +30,8 @@ test('the Crosschain and Earn cards each open their own subcategory, and the sid
     'Can I swap tokens across chains?',
     'What is the Partner Mainnet deposit limit?',
     'What should I check before a Swap?',
-    'Which bridge networks and tokens can I use?'
+    'Which bridge networks and tokens can I use?',
+    'How do I send funds from Bread to another blockchain?'
   ]);
 
   // Earn is a group of its own, so its row is reached through its heading. A

@@ -204,7 +204,7 @@ describe('coverage', () => {
     const navigation = createHelpCenterNavigation(helpCenterMainCategories);
     expect(navigation.mainCategories).toHaveLength(7);
     expect(navigation.categories).toHaveLength(9);
-    expect(helpCenterAllArticles).toHaveLength(71);
+    expect(helpCenterAllArticles).toHaveLength(72);
   });
 
   it('resolves every article to exactly one position, through navigation.ts', () => {
@@ -234,7 +234,7 @@ describe('coverage', () => {
       taken.set(position, article.id);
     }
 
-    expect(taken.size).toBe(71);
+    expect(taken.size).toBe(72);
   });
 
   it('keeps Activity and transaction status in the hierarchy, with its one FAQ article after the first', () => {
@@ -305,6 +305,24 @@ interface FaqEntry {
   readonly mainCategory: string;
   readonly subcategory: string;
   readonly body: string;
+  /** Set when the entry carries platform markers: one body per platform, split at them. */
+  readonly bodies?: Readonly<Partial<Record<HelpCenterPlatform, string>>>;
+}
+
+/**
+ * An entry whose steps differ by platform carries the article's own platform
+ * markers, so the FAQ holds both texts the way the article does.
+ */
+function splitFaqBody(body: string): FaqEntry['bodies'] {
+  const marker = /^<!--\s*platform:\s*([A-Za-z0-9-]+)\s*-->\s*$/gm;
+  const found = [...body.matchAll(marker)];
+  if (found.length === 0) return undefined;
+  const bodies: Partial<Record<HelpCenterPlatform, string>> = {};
+  found.forEach((match, index) => {
+    const end = found[index + 1]?.index ?? body.length;
+    bodies[match[1] as HelpCenterPlatform] = body.slice((match.index as number) + match[0].length, end).trim();
+  });
+  return bodies;
 }
 
 function readFaq(text: string) {
@@ -328,7 +346,8 @@ function readFaq(text: string) {
         title: match[2] as string,
         mainCategory: match[3] as string,
         subcategory: match[4] as string,
-        body: match[5] as string
+        body: match[5] as string,
+        bodies: splitFaqBody(match[5] as string)
       };
     });
 
@@ -392,7 +411,7 @@ describe('article sources', () => {
     }
 
     expect(helpCenterAllArticles.filter(article => pages.has(article.title))).toHaveLength(23);
-    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(48);
+    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(49);
   });
 });
 
@@ -417,7 +436,7 @@ const FAQ_PLACEMENT: Readonly<Record<string, readonly number[]>> = {
   'sending-receiving-and-claiming': [35, 42],
   'public-and-private-transactions': [9],
   'guardian-protection': [2, 3, 4, 5, 6, 7, 8, 32],
-  'moving-across-chains': [13, 14, 15, 36, 43, 46],
+  'moving-across-chains': [13, 14, 15, 36, 43, 46, 49],
   earn: [16, 17, 20, 21, 22, 23, 24, 25, 26, 27, 28],
   'activity-and-transaction-status': [18],
   'common-issues-and-support': [19, 40, 41, 47, 48]
@@ -517,8 +536,8 @@ describe('fidelity to the FAQ', () => {
     return article;
   };
 
-  it('reads forty-eight articles, numbered in order, that agree with the placement table', () => {
-    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 48 }, (_, index) => index + 1));
+  it('reads forty-nine articles, numbered in order, that agree with the placement table', () => {
+    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 49 }, (_, index) => index + 1));
     expect(FAQ.placement).toEqual(
       FAQ.entries.map(({ number, title, mainCategory, subcategory }) => ({ number, title, mainCategory, subcategory }))
     );
@@ -531,7 +550,7 @@ describe('fidelity to the FAQ', () => {
       const article = faqArticle(entry);
       for (const platform of article.platforms) {
         expect(withoutMigrationMarkup(article.bodies[platform] ?? ''), `${article.id} (${platform})`).toBe(
-          entry.body
+          entry.bodies?.[platform] ?? entry.body
         );
       }
     }
@@ -547,6 +566,10 @@ describe('fidelity to the FAQ', () => {
     // FAQ 48 was reported and traced on the phone (wallet 1.17.3); it joins the
     // Extension once its reconnect steps are checked there (Ivan, 2026-10-21).
     const MOBILE_ONLY: ReadonlySet<number> = new Set([48]);
+    // FAQ 49's steps differ by platform: the phone sends from Bread itself and the
+    // Extension through https://bridge.miden.xyz/ (Ivan, 2026-10-23). Its entry and
+    // its article carry the same platform markers.
+    const SPLIT: ReadonlySet<number> = new Set([49]);
 
     for (const entry of FAQ.entries) {
       const article = faqArticle(entry);
@@ -556,6 +579,11 @@ describe('fidelity to the FAQ', () => {
       } else if (MOBILE_ONLY.has(entry.number)) {
         expect(article.platforms, article.id).toEqual(['mobile']);
         expect(article.bodies['extension-desktop'], article.id).toBeUndefined();
+      } else if (SPLIT.has(entry.number)) {
+        expect(article.platforms, article.id).toEqual(['extension-desktop', 'mobile']);
+        expect(article.bodies.mobile, article.id).not.toBe(article.bodies['extension-desktop']);
+        expect(Object.keys(entry.bodies ?? {}).sort(), article.id).toEqual(['extension-desktop', 'mobile']);
+        continue;
       } else {
         expect(article.platforms, article.id).toEqual(['extension-desktop', 'mobile']);
         expect(article.bodies.mobile, article.id).toBe(article.bodies['extension-desktop']);
@@ -591,7 +619,7 @@ describe('fidelity to the FAQ', () => {
       );
     }
 
-    expect(articlesInSubcategory(helpCenterAllArticles, 'moving-across-chains')).toHaveLength(6);
+    expect(articlesInSubcategory(helpCenterAllArticles, 'moving-across-chains')).toHaveLength(7);
     expect(articlesInSubcategory(helpCenterAllArticles, 'earn')).toHaveLength(11);
   });
 
@@ -717,6 +745,16 @@ describe('fidelity to the FAQ', () => {
       'M13-restore-recovery-method.png',
       'M14-restore-ready.png',
       'M14a-restore-rotating-key.png',
+      'M15-send-out-send-to.png',
+      'M15a-send-out-network.png',
+      'M15b-send-out-select-network.png',
+      'M15c-send-out-select-token.png',
+      'M15d-send-out-enter-amount.png',
+      'M16-send-out-choose-route.png',
+      'M16a-send-out-review.png',
+      'M16b-send-out-generating.png',
+      'M17-send-out-burn-submitted.png',
+      'M17a-send-out-confirmed.png',
       'E06-create-guardian.png',
       'E07-fund-homepage.png',
       'E07a-fund-funding.png',
@@ -779,7 +817,11 @@ describe('fidelity to the FAQ', () => {
       'E67a-fund-review-transfer.png',
       'E67b-fund-spending-cap.png',
       'E67c-fund-transaction-request.png',
-      'E68-fund-delivered.png'
+      'E68-fund-delivered.png',
+      'E69-send-out-withdraw.png',
+      'E69a-send-out-review.png',
+      'E69b-send-out-confirm.png',
+      'E70-send-out-submitted.png'
     ]);
     for (const name of FULL_HEIGHT_BY_IVAN) expect(SCREENSHOT_SIZES[name], `${name}: not a registered screenshot`).toBeDefined();
 
@@ -914,13 +956,13 @@ describe('fidelity to the FAQ', () => {
  */
 describe('the migrated article set', () => {
   it('carries every article in the approved mapping', () => {
-    expect(helpCenterAllArticles).toHaveLength(71);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(70);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(62);
+    expect(helpCenterAllArticles).toHaveLength(72);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(71);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(63);
   });
 
   it('publishes every article except the ones held back', () => {
-    expect(helpCenterArticles).toHaveLength(67);
+    expect(helpCenterArticles).toHaveLength(68);
     const published = helpCenterArticles.map(article => article.id);
     expect(published).not.toContain('how-to-restore-the-wallet-using-an-encrypted-file');
     expect(published).not.toContain('how-to-download-the-encrypted-file');
@@ -938,6 +980,7 @@ describe('the migrated article set', () => {
       [
         'how-do-i-create-a-bread-wallet',
         'how-do-i-restore-my-wallet-with-a-recovery-phrase',
+        'how-do-i-send-funds-from-bread-to-another-blockchain',
         'how-to-find-a-token-contract-address-in-bread-wallet',
         'how-to-fund-your-bread-wallet',
         'how-to-install-bread-wallet',
@@ -1000,13 +1043,15 @@ describe('platform applicability', () => {
 
     // Guardian protection and Sending, receiving, and claiming joined on 2026-10-09: each has an
     // Extension-only FAQ (32 and 35) until those are checked on a phone. Common issues and support
-    // joined on 2026-10-21 with the phone-only FAQ 44.
+    // joined on 2026-10-21 with the phone-only FAQ 48, and Moving across chains on 2026-10-23
+    // with FAQ 49, whose steps differ by platform.
     expect(needsChoice).toEqual([
       'setup-and-basic-use',
       'security-and-recovery',
       'sending-receiving-and-claiming',
       'guardian-protection',
-      'common-issues-and-support'
+      'common-issues-and-support',
+      'moving-across-chains'
     ]);
   });
 
