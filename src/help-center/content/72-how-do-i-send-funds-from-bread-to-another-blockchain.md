@@ -30,7 +30,7 @@ These steps send USDCX from Bread to your MetaMask wallet. It arrives in MetaMas
 
    ![Bread's Choose a route page, with the Circle xReserve route, the Circle fee and You Receive](M16-send-out-choose-route.png)
 
-6. On **Review Details**, check the address, **Network**, **Route** and **You Receive**, then tap **Send Payment**. The transfer can't be reversed once you send it, so check the address carefully.
+6. On **Review Details**, check the address, **Network**, **Route** and **You Receive**, then tap **Send Payment**. Once it is sent, the transfer can't be reclaimed, so check the address carefully.
 
    ![Bread's Review Details page, with the address, network, route, fees and the Send Payment button](M16a-send-out-review.png)
 
@@ -42,6 +42,6 @@ These steps send USDCX from Bread to your MetaMask wallet. It arrives in MetaMas
 
    ![Bread's Burn submitted page, with the Done and View in Activities buttons](M17-send-out-burn-submitted.png)
 
-9. The transfer is complete when its **Status** reads **Confirmed**. The USDC is then in your MetaMask wallet.
+9. In **Activity**, tap the transfer to open it. The transfer is complete when its **Status** reads **Confirmed**. The USDC is then in your MetaMask wallet.
 
    ![Bread's Transaction page for the transfer, with the status Confirmed](M17a-send-out-confirmed.png)

@@ -232,15 +232,11 @@ For the in-app steps, see *How do I restore my wallet with a recovery phrase?*
 ### 13. Can I send funds to another blockchain?
 Category: Cross-chain › Moving across chains
 
-Only use a cross-chain route when your installed Bread version offers it for the selected network and asset.
+Yes. You can send USDCX from Bread to an address on **Ethereum**, **Base**, **Arbitrum One** or **Arc**. It arrives there as USDC, through Circle's xReserve route.
 
-On Testnet, use only the displayed test networks and test assets. Never send real funds to a test address. A Sepolia route is not an Ethereum Mainnet route.
+Circle takes a fee from the amount you send, so you receive less than you send. Check the address before you confirm: once it is sent, the transfer can't be reclaimed.
 
-On Mainnet, use real assets only after your installed version supports Mainnet and shows the exact route. Check the source chain, destination chain, token, recipient and fees before you confirm. Store updates and route availability can differ by platform.
-
-Keep the resulting total wallet balance within the Partner Mainnet cap. See *What is the Partner Mainnet deposit limit?* For route differences, see *What is the difference between a solver route and a canonical bridge?*
-
-For the steps on mobile, see *How do I send funds from Bread to another blockchain?*
+For the steps on mobile, see *How do I send funds from Bread to another blockchain?* For route differences, see *What is the difference between a solver route and a canonical bridge?*
 
 ### 14. What is the difference between a solver route and a canonical bridge?
 Category: Cross-chain › Moving across chains
@@ -967,7 +963,7 @@ These steps send USDCX from Bread to your MetaMask wallet. It arrives in MetaMas
 
    ![Bread's Choose a route page, with the Circle xReserve route, the Circle fee and You Receive](M16-send-out-choose-route.png)
 
-6. On **Review Details**, check the address, **Network**, **Route** and **You Receive**, then tap **Send Payment**. The transfer can't be reversed once you send it, so check the address carefully.
+6. On **Review Details**, check the address, **Network**, **Route** and **You Receive**, then tap **Send Payment**. Once it is sent, the transfer can't be reclaimed, so check the address carefully.
 
    ![Bread's Review Details page, with the address, network, route, fees and the Send Payment button](M16a-send-out-review.png)
 
@@ -979,6 +975,6 @@ These steps send USDCX from Bread to your MetaMask wallet. It arrives in MetaMas
 
    ![Bread's Burn submitted page, with the Done and View in Activities buttons](M17-send-out-burn-submitted.png)
 
-9. The transfer is complete when its **Status** reads **Confirmed**. The USDC is then in your MetaMask wallet.
+9. In **Activity**, tap the transfer to open it. The transfer is complete when its **Status** reads **Confirmed**. The USDC is then in your MetaMask wallet.
 
    ![Bread's Transaction page for the transfer, with the status Confirmed](M17a-send-out-confirmed.png)
