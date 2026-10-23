@@ -1,6 +1,6 @@
 # Bread FAQ: content for implementation
 
-Revised for Brian's 2026-10-23 launch support audit. Forty-eight articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
+Revised for Brian's 2026-10-23 launch support audit. Forty-nine articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
 
 ## Placement
 
@@ -54,6 +54,7 @@ Revised for Brian's 2026-10-23 launch support audit. Forty-eight articles. Exist
 | 46 | Which bridge networks and tokens can I use? | Cross-chain | Moving across chains |
 | 47 | What should I do if Guardian cannot connect? | Troubleshooting | Common issues |
 | 48 | What should I do if a bridge deposit fails? | Troubleshooting | Common issues |
+| 49 | How do I send funds from Bread to another blockchain? | Cross-chain | Moving across chains |
 
 ## Articles
 
@@ -238,6 +239,8 @@ On Testnet, use only the displayed test networks and test assets. Never send rea
 On Mainnet, use real assets only after your installed version supports Mainnet and shows the exact route. Check the source chain, destination chain, token, recipient and fees before you confirm. Store updates and route availability can differ by platform.
 
 Keep the resulting total wallet balance within the Partner Mainnet cap. See *What is the Partner Mainnet deposit limit?* For route differences, see *What is the difference between a solver route and a canonical bridge?*
+
+For the steps on mobile, see *How do I send funds from Bread to another blockchain?*
 
 ### 14. What is the difference between a solver route and a canonical bridge?
 Category: Cross-chain › Moving across chains
@@ -936,3 +939,46 @@ If Bread shows **Bridge deposit failed** after your external wallet, such as Met
 6. Enter the amount and continue. Approve each request in your wallet as it appears.
 
 If it still fails, report the error, the networks, the token and your wallet version. Hide sensitive information in screenshots. See *How do I send feedback or report a problem?*
+
+### 49. How do I send funds from Bread to another blockchain?
+Category: Cross-chain › Moving across chains
+
+These steps send USDCX from Bread to your MetaMask wallet. It arrives in MetaMask as USDC.
+
+1. Tap **Send**. Under **Send to**, paste your MetaMask address, or pick it from **Recent** or **Address Book**.
+
+   ![Bread's Send to page, with Paste, Address Book, Scan QR code and the Recent list](M15-send-out-send-to.png)
+
+2. Under **Network**, tap the network and choose where you want to receive the funds: **Ethereum**, **Base**, **Arbitrum One** or **Arc**. Then tap **Confirm**.
+
+   ![Bread's Send to page, with a MetaMask address and Network set to Ethereum](M15a-send-out-network.png)
+
+   ![Bread's Select network list, with Ethereum, Base, Arbitrum One and Arc](M15b-send-out-select-network.png)
+
+3. Tap the token and choose **USDCX**.
+
+   ![Bread's Select a token list, with ETH and USDCX](M15c-send-out-select-token.png)
+
+4. Enter the amount and tap **Confirm**.
+
+   ![Bread's Enter amount page, with 5 USDCX going to MetaMask on Ethereum](M15d-send-out-enter-amount.png)
+
+5. Under **Choose a route**, check the **Circle fee** and **You Receive**, then tap **Confirm**. Circle's fee comes out of the amount you send, so you receive less than you send.
+
+   ![Bread's Choose a route page, with the Circle xReserve route, the Circle fee and You Receive](M16-send-out-choose-route.png)
+
+6. On **Review Details**, check the address, **Network**, **Route** and **You Receive**, then tap **Send Payment**. The transfer can't be reversed once you send it, so check the address carefully.
+
+   ![Bread's Review Details page, with the address, network, route, fees and the Send Payment button](M16a-send-out-review.png)
+
+7. While Bread shows **Generating Transaction**, you can tap **Hide**. Bread notifies you when it's done.
+
+   ![Bread's Generating Transaction page, with its progress steps and the Hide button](M16b-send-out-generating.png)
+
+8. When **Burn submitted** appears, tap **View in Activities** to follow the transfer.
+
+   ![Bread's Burn submitted page, with the Done and View in Activities buttons](M17-send-out-burn-submitted.png)
+
+9. The transfer is complete when its **Status** reads **Confirmed**. The USDC is then in your MetaMask wallet.
+
+   ![Bread's Transaction page for the transfer, with the status Confirmed](M17a-send-out-confirmed.png)

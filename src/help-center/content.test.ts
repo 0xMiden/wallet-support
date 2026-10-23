@@ -204,7 +204,7 @@ describe('coverage', () => {
     const navigation = createHelpCenterNavigation(helpCenterMainCategories);
     expect(navigation.mainCategories).toHaveLength(7);
     expect(navigation.categories).toHaveLength(9);
-    expect(helpCenterAllArticles).toHaveLength(71);
+    expect(helpCenterAllArticles).toHaveLength(72);
   });
 
   it('resolves every article to exactly one position, through navigation.ts', () => {
@@ -234,7 +234,7 @@ describe('coverage', () => {
       taken.set(position, article.id);
     }
 
-    expect(taken.size).toBe(71);
+    expect(taken.size).toBe(72);
   });
 
   it('keeps Activity and transaction status in the hierarchy, with its one FAQ article after the first', () => {
@@ -392,7 +392,7 @@ describe('article sources', () => {
     }
 
     expect(helpCenterAllArticles.filter(article => pages.has(article.title))).toHaveLength(23);
-    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(48);
+    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(49);
   });
 });
 
@@ -417,7 +417,7 @@ const FAQ_PLACEMENT: Readonly<Record<string, readonly number[]>> = {
   'sending-receiving-and-claiming': [35, 42],
   'public-and-private-transactions': [9],
   'guardian-protection': [2, 3, 4, 5, 6, 7, 8, 32],
-  'moving-across-chains': [13, 14, 15, 36, 43, 46],
+  'moving-across-chains': [13, 14, 15, 36, 43, 46, 49],
   earn: [16, 17, 20, 21, 22, 23, 24, 25, 26, 27, 28],
   'activity-and-transaction-status': [18],
   'common-issues-and-support': [19, 40, 41, 47, 48]
@@ -517,8 +517,8 @@ describe('fidelity to the FAQ', () => {
     return article;
   };
 
-  it('reads forty-eight articles, numbered in order, that agree with the placement table', () => {
-    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 48 }, (_, index) => index + 1));
+  it('reads forty-nine articles, numbered in order, that agree with the placement table', () => {
+    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 49 }, (_, index) => index + 1));
     expect(FAQ.placement).toEqual(
       FAQ.entries.map(({ number, title, mainCategory, subcategory }) => ({ number, title, mainCategory, subcategory }))
     );
@@ -546,7 +546,9 @@ describe('fidelity to the FAQ', () => {
     const EXTENSION_ONLY: ReadonlySet<number> = new Set([29, 30, 31, 32, 33, 34, 35]);
     // FAQ 48 was reported and traced on the phone (wallet 1.17.3); it joins the
     // Extension once its reconnect steps are checked there (Ivan, 2026-10-21).
-    const MOBILE_ONLY: ReadonlySet<number> = new Set([48]);
+    // FAQ 49 follows Ivan's Mainnet bridge-out captures from the phone; the
+    // Extension flow differs and gets its own steps (Ivan, 2026-10-23).
+    const MOBILE_ONLY: ReadonlySet<number> = new Set([48, 49]);
 
     for (const entry of FAQ.entries) {
       const article = faqArticle(entry);
@@ -591,7 +593,7 @@ describe('fidelity to the FAQ', () => {
       );
     }
 
-    expect(articlesInSubcategory(helpCenterAllArticles, 'moving-across-chains')).toHaveLength(6);
+    expect(articlesInSubcategory(helpCenterAllArticles, 'moving-across-chains')).toHaveLength(7);
     expect(articlesInSubcategory(helpCenterAllArticles, 'earn')).toHaveLength(11);
   });
 
@@ -709,6 +711,16 @@ describe('fidelity to the FAQ', () => {
       'M13-restore-recovery-method.png',
       'M14-restore-ready.png',
       'M14a-restore-rotating-key.png',
+      'M15-send-out-send-to.png',
+      'M15a-send-out-network.png',
+      'M15b-send-out-select-network.png',
+      'M15c-send-out-select-token.png',
+      'M15d-send-out-enter-amount.png',
+      'M16-send-out-choose-route.png',
+      'M16a-send-out-review.png',
+      'M16b-send-out-generating.png',
+      'M17-send-out-burn-submitted.png',
+      'M17a-send-out-confirmed.png',
       'E06-create-guardian.png',
       'E07-fund-homepage.png',
       'E07a-fund-funding.png',
@@ -896,13 +908,13 @@ describe('fidelity to the FAQ', () => {
  */
 describe('the migrated article set', () => {
   it('carries every article in the approved mapping', () => {
-    expect(helpCenterAllArticles).toHaveLength(71);
+    expect(helpCenterAllArticles).toHaveLength(72);
     expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(70);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(62);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(63);
   });
 
   it('publishes every article except the ones held back', () => {
-    expect(helpCenterArticles).toHaveLength(67);
+    expect(helpCenterArticles).toHaveLength(68);
     const published = helpCenterArticles.map(article => article.id);
     expect(published).not.toContain('how-to-restore-the-wallet-using-an-encrypted-file');
     expect(published).not.toContain('how-to-download-the-encrypted-file');
@@ -982,13 +994,15 @@ describe('platform applicability', () => {
 
     // Guardian protection and Sending, receiving, and claiming joined on 2026-10-09: each has an
     // Extension-only FAQ (32 and 35) until those are checked on a phone. Common issues and support
-    // joined on 2026-10-21 with the phone-only FAQ 44.
+    // joined on 2026-10-21 with the phone-only FAQ 48, and Moving across chains on 2026-10-23
+    // with the phone-only FAQ 49.
     expect(needsChoice).toEqual([
       'setup-and-basic-use',
       'security-and-recovery',
       'sending-receiving-and-claiming',
       'guardian-protection',
-      'common-issues-and-support'
+      'common-issues-and-support',
+      'moving-across-chains'
     ]);
   });
 
