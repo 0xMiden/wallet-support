@@ -33,29 +33,63 @@ To set up your wallet next, see [*How do I create a new account with Bread?*](#s
 Use the official app and follow the setup shown in your installed version. If the welcome screen asks for an access code, follow your invitation; do not change Developer Settings to bypass it.
 
 1. Tap **Get started** when that option is available.
-2. Check the network. If Bread shows a Testnet notice, read it and tap **I understand**. Testnet tokens have no real-world value.
-3. Follow the prompts to set up a passcode or supported biometric unlock. Keep a secure way to unlock the device.
-4. Read the Guardian explanation and confirm the provider shown. Standard Bread setup creates a Guardian-backed account. The operator can see the account state but cannot move funds alone.
-5. Complete any usage-data choice and open the wallet when setup finishes.
-6. Back up your recovery phrase on paper and keep it offline before you fund the wallet. Biometrics do not replace this backup.
+2. Follow the prompts to set up a passcode or supported biometric unlock. Keep a secure way to unlock the device.
+3. Read the Guardian explanation and confirm the provider shown. Standard Bread setup creates a Guardian-backed account. The operator can see the account state but cannot move funds alone.
+4. Complete any usage-data choice and open the wallet when setup finishes.
+5. Back up your recovery phrase on paper and keep it offline before you fund the wallet. Biometrics do not replace this backup.
 
 The screens and their order can differ between releases. App Store availability does not establish that the latest Mainnet flow has shipped. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network) and [*How do I keep my wallet secure?*](#security-and-recovery/how-do-i-keep-my-wallet-secure)
 
 ### How to add funds into Bread?
 
-Check the network before adding funds. Testnet assets and Mainnet assets are separate; a Testnet faucet does not fund a Mainnet account.
+You add funds to Bread by bridging them from your MetaMask wallet. MetaMask needs the tokens you want to bring in, plus enough to pay that network's fee: ETH on Ethereum, Base or Arbitrum One, or USDC on Arc.
 
-**On Testnet:**
+1. Tap **Receive**, then **Cross-chain**.
 
-Tap **Fund your wallet** if your version shows a test faucet. Keep the app open while it syncs, then check **Activity**. Test tokens have no real-world value. Do not send real assets to a test address.
+   ![Bread's Receive page, with the Share and Cross-chain options](M05-fund-receive.png)
 
-**On Mainnet, when supported by your installed version:**
+2. On **Connect your wallet**, tap **Connect wallet**, then choose **MetaMask**.
 
-Use only the deposit networks, assets and routes shown by the wallet. Check the source network, destination network, address, amount and fees before confirming. Do not transfer from an unsupported chain or assume tokens with the same name are interchangeable.
+   ![Bread's Bridge in page, with Connect your wallet and the Connect wallet button](M05a-fund-connect-your-wallet.png)
+
+   ![Bread's Bridge in page, with the Connect wallet list open and MetaMask in it](M05b-fund-wallet-list.png)
+
+3. MetaMask opens and asks to connect. Check the account and tap **Connect**.
+
+   ![MetaMask asking to connect, with the account and the Connect button](M05c-fund-metamask-connect.png)
+
+4. Back in Bread, tap the token to choose what to bring in, such as **USDC**. Then tap **From** and choose the network your funds are on.
+
+   ![Bread's Bridge in page, with USDC as the token, From Ethereum and To Miden](M05d-fund-enter-amount.png)
+
+   ![Bread's Select network list, with Arc, Ethereum, Base and Arbitrum One](M05e-fund-select-network.png)
+
+5. Enter the amount and tap **Continue**.
+6. Under **Choose a route**, check the **Bridge fee** and **Estimated arrival**, then tap **Continue**.
+
+   ![Bread's Choose a route page, with the bridge fee and estimated arrival](M06-fund-choose-route.png)
+
+7. Under **You are depositing**, check the amount, **From**, **Route**, the fee and **You Receive**, then tap **Confirm Deposit**.
+
+   ![Bread's deposit review, with the amount, route, fee and the Confirm Deposit button](M06a-fund-review.png)
+
+8. MetaMask opens with a **Spending cap request**. Check it and tap **Confirm**. Keep Bread open while it shows **Confirming bridge deposit**.
+
+   ![MetaMask's Spending cap request for USDC, with the Confirm button](M06b-fund-spending-cap.png)
+
+9. When Bread shows **Waiting for the next wallet confirmation**, MetaMask opens a **Transaction request**. Check it and tap **Confirm**.
+
+   ![MetaMask's Transaction request for the USDC deposit, with the Confirm button](M07-fund-transaction-request.png)
+
+10. When **Bridge initiated!** appears, tap **Done**. **Status** shows **Delivering** until the funds arrive in Bread.
+
+    ![Bread's Bridge initiated! page, with the status Delivering and the Done button](M07a-fund-bridge-initiated.png)
+
+USDC arrives in Bread as USDCx.
+
+If you connected a wallet before, Bread uses it again. To use a different one, tap the wallet address next to **Enter amount** and choose **Connect another wallet**.
 
 The Partner Mainnet cap is $1,232.462 for the total wallet balance after a deposit. See [*What is the Partner Mainnet deposit limit?*](#moving-across-chains/what-is-the-partner-mainnet-deposit-limit)
-
-Mainnet availability can differ between store versions. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network) If a transfer is missing, check **Activity** before starting another deposit.
 
 ### How to find a token contract address in Bread?
 
@@ -97,10 +131,10 @@ Never share your recovery phrase or backup password with anyone offering to *rec
 
 ### How do I restore my wallet with a recovery phrase?
 
-Have your recovery phrase (sometimes called a seed phrase) ready and use the official app on the same network as the account you want to recover. A Testnet account does not become a Mainnet account through recovery.
+Have your recovery phrase (sometimes called a seed phrase) ready and use the official app on the same network as the account you want to recover.
 
 1. Open Bread and tap **Recover your account** when the welcome screen offers it.
-2. Read any network notice. Select recovery with your recovery phrase if Bread asks for an import method.
+2. Select recovery with your recovery phrase if Bread asks for an import method.
 3. Enter the words in their original order, in the official app only.
 4. Follow the device-protection and Guardian recovery prompts. Bread can look for the operator; if it cannot find your account, check the network and the Guardian you used.
 5. Open the wallet when recovery finishes. Wait for any everyday-key rotation and sync before making a transaction.

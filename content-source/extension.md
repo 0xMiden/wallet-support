@@ -38,29 +38,60 @@ To set up your wallet next, see [*How do I create a new account with Bread?*](#s
 Use the official extension and follow the setup shown in your installed version. If the welcome screen asks for an access code, follow your invitation; do not change Developer Settings to bypass it.
 
 1. Select **Get started** when that option is available.
-2. Check the network. If Bread shows a Testnet notice, read it and select **I understand**. Testnet tokens have no real-world value.
-3. Create a strong wallet password and follow the displayed password requirements.
-4. Read the Guardian explanation and confirm the provider shown. Standard Bread setup creates a Guardian-backed account. The operator can see the account state but cannot move funds alone.
-5. Complete any usage-data choice and select **Open wallet** when setup finishes.
-6. Back up your recovery phrase on paper and keep it offline before you fund the wallet.
+2. Create a strong wallet password and follow the displayed password requirements.
+3. Read the Guardian explanation and confirm the provider shown. Standard Bread setup creates a Guardian-backed account. The operator can see the account state but cannot move funds alone.
+4. Complete any usage-data choice and select **Open wallet** when setup finishes.
+5. Back up your recovery phrase on paper and keep it offline before you fund the wallet.
 
 The screens and their order can differ between releases. For Mainnet readiness, see [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network) For developer options, see [*Do I need Developer Settings to use Bread?*](#setup-and-basic-use/do-i-need-developer-settings-to-use-bread)
 
 ### How to add funds into Bread?
 
-Check the network before adding funds. Testnet assets and Mainnet assets are separate; a Testnet faucet does not fund a Mainnet account.
+You add funds to Bread from your computer on the bridge website, https://bridge.miden.xyz/. You need the MetaMask extension in Chrome, holding the tokens you want to bring in, plus enough to pay that network's fee: ETH on Ethereum, Base or Arbitrum, or USDC on Arc.
 
-**On Testnet:**
+1. Go to https://bridge.miden.xyz/. On the **Bridge** tab, select **Deposit**.
 
-Use **Fund your wallet** if your version shows a test faucet. Follow the request in **Activity** and wait for the wallet to sync. Test tokens have no real-world value. Do not send real assets to a test address.
+   ![The bridge website's Bridge tab, with Deposit selected and a Connect wallet button next to From and To](E66-fund-bridge-deposit.png)
 
-**On Mainnet, when supported by your installed version:**
+2. Next to **From**, select **Connect wallet**, then choose **MetaMask**.
 
-Use only the deposit networks, assets and routes shown by the wallet. Check the source network, destination network, address, amount and fees before confirming. Do not transfer from an unsupported chain or assume tokens with the same name are interchangeable.
+   ![The bridge website's Connect Wallet list, with MetaMask](E66a-fund-connect-metamask.png)
+
+3. In MetaMask, check the account and select **Connect**.
+
+   ![MetaMask asking to connect bridge.miden.xyz, with the account and the Connect button](E66b-fund-metamask-connect.png)
+
+4. Next to **To**, select **Connect wallet**, then select **Connect wallet** again in the menu that opens.
+
+   ![The bridge website's wallet menu next to To, with Bread ready to connect and the Connect wallet option](E66c-fund-connect-bread.png)
+
+5. Bread opens a window for https://bridge.miden.xyz. Check the account, tick **I understand the risk and wish to proceed.**, then select **Connect**. This gives the site ongoing access to your account data until you revoke it in **Authorized DApps**.
+
+   ![Bread's window asking to connect bridge.miden.xyz, with the risk checkbox ticked and the Connect button](E66d-fund-bread-connect.png)
+
+6. Choose the token, and next to **From**, the network your funds are on. Enter the amount, check **Your route**, then select **Review transfer**.
+
+   ![The bridge website's Select network list next to From, with Arc, Ethereum, Base and Arbitrum, and Your route below](E67-fund-amount-network.png)
+
+7. Check **You receive**, the fees and **Total USDC**, then select **Confirm in wallet**.
+
+   ![The bridge website's Review transfer window, with You receive, the fees and the Confirm in wallet button](E67a-fund-review-transfer.png)
+
+8. MetaMask opens a **Spending cap request**. Check it and select **Confirm**.
+
+   ![MetaMask's Spending cap request for USDC from bridge.miden.xyz, with the Confirm button](E67b-fund-spending-cap.png)
+
+9. MetaMask then opens a **Transaction request**. Check it and select **Confirm**.
+
+   ![MetaMask's Transaction request for the USDC deposit, with the Confirm button](E67c-fund-transaction-request.png)
+
+10. The bridge shows each stage of the transfer. When it reads **Delivered**, the USDCx is on Miden. If it's waiting in **Activity** in Bread, accept it. See [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
+
+    ![The bridge website's transfer card, marked Delivered, with each stage ticked](E68-fund-delivered.png)
+
+USDC arrives in Bread as USDCx.
 
 The Partner Mainnet cap is $1,232.462 for the total wallet balance after a deposit. See [*What is the Partner Mainnet deposit limit?*](#moving-across-chains/what-is-the-partner-mainnet-deposit-limit)
-
-See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network) If a transfer is missing, check **Activity** before starting another deposit.
 
 ### How to find a token contract address in Bread?
 
@@ -102,10 +133,10 @@ Never share your recovery phrase or backup password with anyone offering to *rec
 
 ### How do I restore my wallet with a recovery phrase?
 
-Have your recovery phrase (sometimes called a seed phrase) ready and use the official extension on the same network as the account you want to recover. A Testnet account does not become a Mainnet account through recovery.
+Have your recovery phrase (sometimes called a seed phrase) ready and use the official extension on the same network as the account you want to recover.
 
 1. Open Bread and select **Recover your account** when the welcome screen offers it.
-2. Read any network notice. Select recovery with your recovery phrase if Bread asks for an import method.
+2. Select recovery with your recovery phrase if Bread asks for an import method.
 3. Enter the words in their original order, in the official wallet only.
 4. Create a new wallet password and follow the Guardian recovery prompts. Bread can look for the operator; if it cannot find your account, check the network and the Guardian you used.
 5. Open the wallet when recovery finishes. Wait for any everyday-key rotation and sync before making a transaction.
