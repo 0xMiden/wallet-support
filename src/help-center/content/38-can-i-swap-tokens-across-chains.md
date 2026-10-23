@@ -6,7 +6,7 @@ subcategory: moving-across-chains
 platforms: [extension-desktop, mobile]
 ---
 
-A cross-chain swap is available only when Bread shows a route that supports the selected source token, destination token and networks. Not every bridge route swaps tokens. A Swap within Miden is a different operation.
+A crosschain swap is available only when Bread shows a route that supports the selected source token, destination token and networks. Not every bridge route swaps tokens. A Swap within Miden is a different operation.
 
 Check the quote, expected received amount, fees and recipient before signing. If the quote expires or changes, review the updated quote. Do not assume a route is available because another token or network works.
 

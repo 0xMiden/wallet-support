@@ -60,7 +60,7 @@ describe('the home page promises', () => {
     // Supplied by hand, and pointing somewhere no test otherwise visits. An
     // edit to this list must be a deliberate one.
     expect(helpCenterSocials.map(social => [social.label, social.href])).toEqual([
-      ['X', 'https://x.com/0xMiden'],
+      ['X', 'https://x.com/joinbread'],
       ['GitHub', 'https://github.com/0xMiden/wallet'],
       ['Telegram', 'https://t.me/BuildOnMiden']
     ]);

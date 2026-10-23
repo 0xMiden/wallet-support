@@ -97,7 +97,7 @@ export const helpCenterMainCategories: readonly HelpCenterMainCategory[] = [
   },
   {
     id: 'cross-chain',
-    title: 'Cross-chain',
+    title: 'Crosschain',
     description: 'Send and swap across chains, and compare the routes.',
     subcategories: [
       {

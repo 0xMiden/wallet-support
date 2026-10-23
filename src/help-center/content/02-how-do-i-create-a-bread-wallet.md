@@ -1,6 +1,6 @@
 ---
 id: how-do-i-create-a-bread-wallet
-title: How do I create a Bread Wallet?
+title: How do I create a new account with Bread?
 mainCategory: getting-started
 subcategory: setup-and-basic-use
 platforms: [extension-desktop, mobile]

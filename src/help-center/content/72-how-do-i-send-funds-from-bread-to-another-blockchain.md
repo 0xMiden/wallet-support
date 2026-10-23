@@ -10,7 +10,7 @@ platforms: [extension-desktop, mobile]
 
 These steps send USDCx from Bread to your MetaMask wallet on the bridge website, https://bridge.miden.xyz/. It arrives in MetaMask as USDC.
 
-1. Go to https://bridge.miden.xyz/, connect MetaMask and Bread as in steps 2 to 5 of [*How to fund your Bread Wallet?*](#setup-and-basic-use/how-to-fund-your-bread-wallet), and select **Withdraw**.
+1. Go to https://bridge.miden.xyz/, connect MetaMask and Bread as in steps 2 to 5 of [*How to add funds into Bread?*](#setup-and-basic-use/how-to-fund-your-bread-wallet), and select **Withdraw**.
 2. Next to **To**, choose where you want to receive the funds: **Arc**, **Ethereum**, **Base** or **Arbitrum**. Enter the amount and select **Review transfer**.
 
    ![The bridge website's Withdraw tab, with the Select network list next to To](E69-send-out-withdraw.png)

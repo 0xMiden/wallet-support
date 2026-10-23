@@ -7,7 +7,7 @@ Format: "## " = Notion section, "### " = article title (verbatim), "> " = callou
 
 ## Setup and basic use
 
-### How to install Bread Wallet
+### How to install Bread
 
 Store availability and wallet features can differ by platform and app version. A store listing does not mean a new Mainnet flow is available in your installed app. Update through the official store and check the network before funding. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)
 
@@ -29,11 +29,11 @@ Store availability and wallet features can differ by platform and app version. A
 
 After adding the Bread Wallet extension, Bread Wallet will open automatically. To keep it easy to access, click the **puzzle icon** in the top-right corner of your browser, then click the **pin icon** to add it to your toolbar.
 
-To set up your wallet next, see [*How do I create a Bread Wallet?*](#setup-and-basic-use/how-do-i-create-a-bread-wallet)
+To set up your wallet next, see [*How do I create a new account with Bread?*](#setup-and-basic-use/how-do-i-create-a-bread-wallet)
 
 ![Chrome's Extensions menu, opened from the puzzle icon, with the pin icon beside Bread Wallet highlighted](E02-install-pin.png)
 
-### How do I create a Bread Wallet?
+### How do I create a new account with Bread?
 
 Use the official extension and follow the setup shown in your installed version. If the welcome screen asks for an access code, follow your invitation; do not change Developer Settings to bypass it.
 
@@ -46,7 +46,7 @@ Use the official extension and follow the setup shown in your installed version.
 
 The screens and their order can differ between releases. For Mainnet readiness, see [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network) For developer options, see [*Do I need Developer Settings to use Bread?*](#setup-and-basic-use/do-i-need-developer-settings-to-use-bread)
 
-### How to fund your Bread Wallet?
+### How to add funds into Bread?
 
 Check the network before adding funds. Testnet assets and Mainnet assets are separate; a Testnet faucet does not fund a Mainnet account.
 
@@ -62,7 +62,7 @@ The Partner Mainnet cap is $1,232.462 for the total wallet balance after a depos
 
 See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network) If a transfer is missing, check **Activity** before starting another deposit.
 
-### How to find a token contract address in Bread Wallet?
+### How to find a token contract address in Bread?
 
 **Steps:**
 
@@ -70,7 +70,7 @@ See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/
 2. Scroll down to the Token Information section.
 3. Click the **Copy icon** beside the contract address to copy the token contract address.
 
-### Is Bread Wallet available on mobile?
+### Is Bread available on mobile?
 
 Store availability and wallet features can differ by platform and app version. A store listing does not mean a new Mainnet flow is available in your installed app. Update through the official store and check the network before funding. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)
 
@@ -80,13 +80,13 @@ Store availability and wallet features can differ by platform and app version. A
   - Android — [Google Play](https://play.google.com/store/apps/details?id=com.miden.wallet)
   - iOS — [App Store](https://apps.apple.com/ch/app/bread-wallet-by-miden/id6789341854?l=en-GB)
 
-For the install steps, see [*How to install Bread Wallet*](#setup-and-basic-use/how-to-install-bread-wallet).
+For the install steps, see [*How to install Bread*](#setup-and-basic-use/how-to-install-bread-wallet).
 
-### What are the supported browsers for Bread Wallet?
+### What are the supported browsers for Bread?
 
 Bread Wallet is supported as a browser extension for **Chrome** and as a mobile app for **iOS** and **Android**.
 
-Other browsers and platforms are not currently supported. For the install steps, see [*How to install Bread Wallet*](#setup-and-basic-use/how-to-install-bread-wallet).
+Other browsers and platforms are not currently supported. For the install steps, see [*How to install Bread*](#setup-and-basic-use/how-to-install-bread-wallet).
 
 ## Backup, restore, and security
 
