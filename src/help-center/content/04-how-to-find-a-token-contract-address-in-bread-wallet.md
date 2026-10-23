@@ -5,7 +5,7 @@ mainCategory: getting-started
 subcategory: setup-and-basic-use
 platforms: [extension-desktop, mobile]
 hidden: true
-hiddenReason: Token Information is not visible in the wallet at the moment (Ivan, 2026-09-18). Publish again once it is.
+hiddenReason: Token Information is not currently available in the wallet.
 ---
 
 <!-- platform: extension-desktop -->
