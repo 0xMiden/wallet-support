@@ -8,7 +8,7 @@ import { articleHref, categoryHref } from './routing';
 import { TopicIcon } from './TopicIcon';
 import type { HelpCenterMainCategory } from './types';
 
-export const POPULAR_SEARCHES: readonly string[] = ['Recovery phrase', 'Guardian', 'Transfer is stuck'];
+export const POPULAR_SEARCHES: readonly string[] = ['Mainnet', 'Recovery phrase', 'Guardian', 'Bridge', 'Swap', 'Earn', 'Explore'];
 
 /** Shortcuts link to reviewed consumer articles, never duplicated instructions. */
 export const QUICK_HELP = [

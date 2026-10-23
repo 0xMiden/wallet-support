@@ -29,7 +29,8 @@ test('the Cross-chain and Earn cards each open their own subcategory, and the si
     'What is the difference between a solver route and a canonical bridge?',
     'Can I swap tokens across chains?',
     'What is the Partner Mainnet deposit limit?',
-    'What should I check before a Swap?'
+    'What should I check before a Swap?',
+    'Which bridge networks and tokens can I use?'
   ]);
 
   // Earn is a group of its own, so its row is reached through its heading. A
