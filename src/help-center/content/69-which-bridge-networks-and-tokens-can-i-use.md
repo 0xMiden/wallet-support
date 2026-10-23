@@ -8,6 +8,19 @@ platforms: [extension-desktop, mobile]
 
 Use only the source network, destination network, token and transfer direction currently enabled in your installed Bread version. Support for a chain does not mean support for every token or every direction. A token ticker alone does not identify an asset.
 
+**Partner Mainnet route list — checked 23 October 2026**
+
+The current Partner Mainnet configuration lists these routes in both directions: deposits into Miden and withdrawals from Miden. This describes configured options; it does not guarantee that each route is available in your installed release or for your transfer. Continue only when the wallet offers the exact route and its review information.
+
+- **Circle USDC route:** native USDC on Ethereum, Arbitrum, Base or Arc ↔ USDCX on Miden. This route uses Circle's [xReserve](https://www.circle.com/xreserve) infrastructure; routes from Ethereum, Arbitrum and Base also use Circle's [Cross-Chain Transfer Protocol (CCTP)](https://developers.circle.com/cctp/concepts/supported-chains-and-domains). USDCX on Miden and native USDC on another network are distinct assets.
+- **Agglayer route:** Ethereum ↔ Miden for WBTC, wrapped SOL, Ethereum's NEAR token, PAXG, USDT, WBNB and PYUSD. These are the ERC-20 assets listed in the configuration. Native ETH is handled separately through the bridge registry; use it only when the wallet offers the ETH route. Wrapped SOL and WBNB do not establish support for the native Solana or BNB Chain networks. Learn about [Agglayer](https://docs.polygon.technology/interoperability/agglayer).
+
+A separate bridge website may offer different assets or directions; its options do not establish support inside Bread. [Epoch](https://epochprotocol.xyz/)'s fast-bridge route is not currently enabled on Partner Mainnet. Do not infer that other networks or every token supported by a provider are supported in Bread.
+
+**NEAR Intents — coming soon**
+
+[NEAR Intents](https://docs.near-intents.org/) support is coming soon to Bread and is not currently available. There is no announced availability date. Native NEAR-network transfers and NEAR Intents are separate from the Ethereum NEAR-token route listed above. Do not send native NEAR to an Ethereum or Miden address on the assumption that Intents will handle the transfer.
+
 **Before depositing or withdrawing**
 
 1. Check whether Bread is using Partner Mainnet or Testnet. Testnet route availability does not establish Mainnet support.
