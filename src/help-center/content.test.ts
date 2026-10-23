@@ -305,6 +305,24 @@ interface FaqEntry {
   readonly mainCategory: string;
   readonly subcategory: string;
   readonly body: string;
+  /** Set when the entry carries platform markers: one body per platform, split at them. */
+  readonly bodies?: Readonly<Partial<Record<HelpCenterPlatform, string>>>;
+}
+
+/**
+ * An entry whose steps differ by platform carries the article's own platform
+ * markers, so the FAQ holds both texts the way the article does.
+ */
+function splitFaqBody(body: string): FaqEntry['bodies'] {
+  const marker = /^<!--\s*platform:\s*([A-Za-z0-9-]+)\s*-->\s*$/gm;
+  const found = [...body.matchAll(marker)];
+  if (found.length === 0) return undefined;
+  const bodies: Partial<Record<HelpCenterPlatform, string>> = {};
+  found.forEach((match, index) => {
+    const end = found[index + 1]?.index ?? body.length;
+    bodies[match[1] as HelpCenterPlatform] = body.slice((match.index as number) + match[0].length, end).trim();
+  });
+  return bodies;
 }
 
 function readFaq(text: string) {
@@ -328,7 +346,8 @@ function readFaq(text: string) {
         title: match[2] as string,
         mainCategory: match[3] as string,
         subcategory: match[4] as string,
-        body: match[5] as string
+        body: match[5] as string,
+        bodies: splitFaqBody(match[5] as string)
       };
     });
 
@@ -531,7 +550,7 @@ describe('fidelity to the FAQ', () => {
       const article = faqArticle(entry);
       for (const platform of article.platforms) {
         expect(withoutMigrationMarkup(article.bodies[platform] ?? ''), `${article.id} (${platform})`).toBe(
-          entry.body
+          entry.bodies?.[platform] ?? entry.body
         );
       }
     }
@@ -546,9 +565,11 @@ describe('fidelity to the FAQ', () => {
     const EXTENSION_ONLY: ReadonlySet<number> = new Set([29, 30, 31, 32, 33, 34, 35]);
     // FAQ 48 was reported and traced on the phone (wallet 1.17.3); it joins the
     // Extension once its reconnect steps are checked there (Ivan, 2026-10-21).
-    // FAQ 49 follows Ivan's Mainnet bridge-out captures from the phone; the
-    // Extension flow differs and gets its own steps (Ivan, 2026-10-23).
-    const MOBILE_ONLY: ReadonlySet<number> = new Set([48, 49]);
+    const MOBILE_ONLY: ReadonlySet<number> = new Set([48]);
+    // FAQ 49's steps differ by platform: the phone sends from Bread itself and the
+    // Extension through https://bridge.miden.xyz/ (Ivan, 2026-10-23). Its entry and
+    // its article carry the same platform markers.
+    const SPLIT: ReadonlySet<number> = new Set([49]);
 
     for (const entry of FAQ.entries) {
       const article = faqArticle(entry);
@@ -558,6 +579,11 @@ describe('fidelity to the FAQ', () => {
       } else if (MOBILE_ONLY.has(entry.number)) {
         expect(article.platforms, article.id).toEqual(['mobile']);
         expect(article.bodies['extension-desktop'], article.id).toBeUndefined();
+      } else if (SPLIT.has(entry.number)) {
+        expect(article.platforms, article.id).toEqual(['extension-desktop', 'mobile']);
+        expect(article.bodies.mobile, article.id).not.toBe(article.bodies['extension-desktop']);
+        expect(Object.keys(entry.bodies ?? {}).sort(), article.id).toEqual(['extension-desktop', 'mobile']);
+        continue;
       } else {
         expect(article.platforms, article.id).toEqual(['extension-desktop', 'mobile']);
         expect(article.bodies.mobile, article.id).toBe(article.bodies['extension-desktop']);
@@ -773,7 +799,11 @@ describe('fidelity to the FAQ', () => {
       'E62-new-contact.png',
       'E63-address-book-contact.png',
       'E64-edit-contact.png',
-      'E65-delete-contact-confirm.png'
+      'E65-delete-contact-confirm.png',
+      'E69-send-out-withdraw.png',
+      'E69a-send-out-review.png',
+      'E69b-send-out-confirm.png',
+      'E70-send-out-submitted.png'
     ]);
     for (const name of FULL_HEIGHT_BY_IVAN) expect(SCREENSHOT_SIZES[name], `${name}: not a registered screenshot`).toBeDefined();
 
@@ -909,7 +939,7 @@ describe('fidelity to the FAQ', () => {
 describe('the migrated article set', () => {
   it('carries every article in the approved mapping', () => {
     expect(helpCenterAllArticles).toHaveLength(72);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(70);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(71);
     expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(63);
   });
 
@@ -932,6 +962,7 @@ describe('the migrated article set', () => {
       [
         'how-do-i-create-a-bread-wallet',
         'how-do-i-restore-my-wallet-with-a-recovery-phrase',
+        'how-do-i-send-funds-from-bread-to-another-blockchain',
         'how-to-find-a-token-contract-address-in-bread-wallet',
         'how-to-fund-your-bread-wallet',
         'how-to-install-bread-wallet',
@@ -995,7 +1026,7 @@ describe('platform applicability', () => {
     // Guardian protection and Sending, receiving, and claiming joined on 2026-10-09: each has an
     // Extension-only FAQ (32 and 35) until those are checked on a phone. Common issues and support
     // joined on 2026-10-21 with the phone-only FAQ 48, and Moving across chains on 2026-10-23
-    // with the phone-only FAQ 49.
+    // with FAQ 49, whose steps differ by platform.
     expect(needsChoice).toEqual([
       'setup-and-basic-use',
       'security-and-recovery',

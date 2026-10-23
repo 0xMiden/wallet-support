@@ -3,8 +3,31 @@ id: how-do-i-send-funds-from-bread-to-another-blockchain
 title: How do I send funds from Bread to another blockchain?
 mainCategory: cross-chain
 subcategory: moving-across-chains
-platforms: [mobile]
+platforms: [extension-desktop, mobile]
 ---
+
+<!-- platform: extension-desktop -->
+
+These steps send USDCx from Bread to your MetaMask wallet on the bridge website, https://bridge.miden.xyz/. It arrives in MetaMask as USDC.
+
+1. Go to https://bridge.miden.xyz/, connect MetaMask and Bread as in steps 2 to 5 of [*How to fund your Bread Wallet?*](#setup-and-basic-use/how-to-fund-your-bread-wallet), and select **Withdraw**.
+2. Next to **To**, choose where you want to receive the funds: **Arc**, **Ethereum**, **Base** or **Arbitrum**. Enter the amount and select **Review transfer**.
+
+   ![The bridge website's Withdraw tab, with the Select network list next to To](E69-send-out-withdraw.png)
+
+3. Check **Estimated received** and the fees, then select **Confirm in wallet**. Burning USDCx can't be reversed, and the final Circle fee can change after the burn. Keep some USDCx for the Miden network fee.
+
+   ![The bridge website's Review transfer window for a withdrawal, with Estimated received and the Confirm in wallet button](E69a-send-out-review.png)
+
+4. Bread opens **Confirm Transaction**. Check the asset change and **Network Fee**, then select **Confirm**.
+
+   ![Bread's Confirm Transaction window for bridge.miden.xyz, with the asset change and the Confirm button](E69b-send-out-confirm.png)
+
+5. The bridge shows **Withdrawal submitted**. It doesn't track the payout yet, so check MetaMask for the USDC.
+
+   ![The bridge website's transfer card, marked Withdrawal submitted](E70-send-out-submitted.png)
+
+<!-- platform: mobile -->
 
 These steps send USDCX from Bread to your MetaMask wallet. It arrives in MetaMask as USDC.
 
