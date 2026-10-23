@@ -763,7 +763,17 @@ describe('fidelity to the FAQ', () => {
       'E62-new-contact.png',
       'E63-address-book-contact.png',
       'E64-edit-contact.png',
-      'E65-delete-contact-confirm.png'
+      'E65-delete-contact-confirm.png',
+      'E66-fund-bridge-deposit.png',
+      'E66a-fund-connect-metamask.png',
+      'E66b-fund-metamask-connect.png',
+      'E66c-fund-connect-bread.png',
+      'E66d-fund-bread-connect.png',
+      'E67-fund-amount-network.png',
+      'E67a-fund-review-transfer.png',
+      'E67b-fund-spending-cap.png',
+      'E67c-fund-transaction-request.png',
+      'E68-fund-delivered.png'
     ]);
     for (const name of FULL_HEIGHT_BY_IVAN) expect(SCREENSHOT_SIZES[name], `${name}: not a registered screenshot`).toBeDefined();
 
