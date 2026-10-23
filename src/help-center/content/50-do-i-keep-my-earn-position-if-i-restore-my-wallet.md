@@ -8,7 +8,7 @@ platforms: [extension-desktop, mobile]
 
 These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
 
-For a supported position on the same network, recovery uses your recovery phrase and the Guardian backup of your standard Bread account. Restore the wallet and your position appears again under **Current Positions** on the **Earn** tab.
+For a supported position on the same network, recovery uses your recovery phrase and the Guardian backup of your standard Bread account. After restoring, let the wallet sync and check **Current Positions** on the **Earn** tab. If the position is missing, check the network and account before contacting [support](/feedback). Do not make a replacement deposit to recover a missing position.
 
 Recovery does not move a Testnet position to Mainnet. Developer-created accounts without Guardian require a separate recovery plan.
 

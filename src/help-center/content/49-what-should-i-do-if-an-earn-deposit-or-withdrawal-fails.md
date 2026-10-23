@@ -17,7 +17,7 @@ If a deposit shows **Transaction Failed**, check its status and your balance aft
    ![Bread Wallet's Transaction Failed page for an Earn deposit](E47-earn-deposit-failed.png)
 
 2. Wait for the wallet to sync, and check that you have the displayed fee asset for the network fee.
-3. Make the deposit again. See [*How do I deposit into Earn?*](#earn/how-do-i-deposit-into-earn)
+3. Retry only after **Activity**, balances and any existing Earn position confirm that the original deposit failed and no transfer is still pending. If the outcome is uncertain, contact [support](/feedback) before submitting again. See [*How do I deposit into Earn?*](#earn/how-do-i-deposit-into-earn)
 
 When you withdraw, the returning funds arrive as a **Received** transfer on the **Activity** page. If it shows a **Retry** button, see [*What should I do if accepting a transfer fails?*](#common-issues-and-support/what-should-i-do-if-accepting-a-transfer-fails)
 
