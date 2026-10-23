@@ -64,7 +64,3 @@ USDC arrives in Bread as USDCx.
 If you connected a wallet before, Bread uses it again. To use a different one, tap the wallet address next to **Enter amount** and choose **Connect another wallet**.
 
 The Partner Mainnet cap is $1,232.462 for the total wallet balance after a deposit. See [*What is the Partner Mainnet deposit limit?*](#moving-across-chains/what-is-the-partner-mainnet-deposit-limit)
-
-If **Cross-chain** is missing or disabled, bridging is not available in your version yet. Do not send funds another way. See [*Which bridge networks and tokens can I use?*](#moving-across-chains/which-bridge-networks-and-tokens-can-i-use)
-
-Mainnet availability can differ between store versions. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network) If a transfer is missing, check **Activity** before starting another deposit.
