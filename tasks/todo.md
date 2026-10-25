@@ -1406,5 +1406,7 @@ Seven FAQs (articles 52 to 58, FAQ 29 to 35) were written against the Extension 
 - [ ] E35 to E47 (Earn): not retaken; mainnet shows **Earn is not available on this network**. Closes
       when Earn opens on mainnet.
 - [ ] E01, E01a, E02 (Chrome Web Store install): taken by hand, not checked in this run.
-- [ ] Mobile: article 21 is shared by both platforms; its **Profile** wording assumes the phone app
-      matches 1.17.6. Confirm in the mobile run.
+- [x] Mobile: confirmed on iPhone, 2026-10-25 (Bread 1.17.6): **Profile** (person icon),
+      **Auto-accept USDCX transfers**, the Guardian list, and the **Pending** and **Transfer** filters
+      all match, so articles 21, 31 and 41 need no mobile change.
+- [ ] M01 (App Store listing): not checked yet; needs a fresh screenshot of the App Store page.
