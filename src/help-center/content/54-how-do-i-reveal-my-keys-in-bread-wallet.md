@@ -10,7 +10,7 @@ Bread can show the keys your account signs with: your Miden everyday key and you
 
 **Steps:**
 
-1. Select **Settings** (the gear icon), then select **Keys** under **Security**.
+1. Select **Profile** (the person icon), then select **Keys** under **Security**.
 2. Select **Reveal Private Key**.
 3. Read the **Before you reveal your private keys** warning, enter your wallet password and select **Continue**.
 

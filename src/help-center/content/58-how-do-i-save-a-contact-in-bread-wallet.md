@@ -10,7 +10,7 @@ The **Address Book** saves addresses under a name, so you can send to a person w
 
 **To add a contact:**
 
-1. Select **Settings** (the gear icon), then select **Address Book** under **Preferences**.
+1. Select **Profile** (the person icon), then select **Address Book** under **Preferences**.
 
    ![Bread Wallet's Address Book page, with the New contact button](E61-address-book.png)
 

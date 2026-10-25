@@ -10,7 +10,7 @@ Rotating creates a new everyday key and replaces the current one on-chain. Do th
 
 **Steps:**
 
-1. Select **Settings** (the gear icon), then select **Keys** under **Security**.
+1. Select **Profile** (the person icon), then select **Keys** under **Security**.
 2. Select **Rotate everyday key**.
 
    ![Bread Wallet's Keys page, with the Rotate everyday key button](E53-keys.png)

@@ -1395,3 +1395,16 @@ Seven FAQs (articles 52 to 58, FAQ 29 to 35) were written against the Extension 
 | Article 13 | Reported, not changed. It hedges on whether the recovery phrase can be shown again. It can, at **Recovery Phrase** › **Reveal recovery phrase**, while the phrase is still stored on the device; article 53 now covers it. | Ivan approves new text, or a link to article 53. |
 | Article 7 | Reported, not changed. It does not say where the switch is: **General** › **Advanced** › **Delegate Proof Generation**. | Ivan approves an added line. |
 | Articles 11 and 14 (held back) | Reported, not changed. Article 11 puts Settings in the top-right corner. Article 14's hidden reason says the encrypted wallet file is not available; in 1.17.1 the export row exists for a wallet holding an account without Guardian. | Ivan decides whether either is published again. |
+
+## Extension mainnet audit on 1.17.6 — open items (2026-10-25)
+
+- [ ] E63, E64, E65 (save, edit, delete a contact): still show testnet addresses. Closes with a second
+      mainnet address to save as the test contact; the wallet refuses its own (**This is one of your accounts**).
+- [ ] E30, E31 (**Retry**): still the 1.16.2 testnet images. 1.17.6 returns an interrupted accept to
+      **Accept Transfer**; **Retry** appears only when queuing the accept fails with a real error. Closes
+      with a genuine failed accept on mainnet.
+- [ ] E35 to E47 (Earn): not retaken; mainnet shows **Earn is not available on this network**. Closes
+      when Earn opens on mainnet.
+- [ ] E01, E01a, E02 (Chrome Web Store install): taken by hand, not checked in this run.
+- [ ] Mobile: article 21 is shared by both platforms; its **Profile** wording assumes the phone app
+      matches 1.17.6. Confirm in the mobile run.

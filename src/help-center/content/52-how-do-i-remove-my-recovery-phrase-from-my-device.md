@@ -10,9 +10,9 @@ Removing your recovery phrase deletes the stored copy from this installation, so
 
 **Steps:**
 
-1. Select **Settings** (the gear icon), then select **Recovery Phrase** under **Security**.
+1. Select **Profile** (the person icon), then select **Recovery Phrase** under **Security**.
 
-   ![Bread Wallet's Settings page, with Recovery Phrase under Security](E48-settings-menu.png)
+   ![Bread Wallet's Profile page, with Recovery Phrase under Security](E48-settings-menu.png)
 
 2. Select **Remove recovery phrase**.
 
@@ -27,7 +27,7 @@ Removing your recovery phrase deletes the stored copy from this installation, so
 6. Select the first and last words of your phrase to confirm you saved it, then select **Continue**.
 7. Select **Remove from this device**.
 
-The wallet then shows **Recovery phrase removed from this device**, and **Recovery Phrase** no longer appears in **Settings**.
+The wallet then shows **Recovery phrase removed from this device**, and **Recovery Phrase** no longer appears in **Profile**.
 
 Earlier backups may still contain the phrase. Keep them secure. If the phrase is removed, account creation and some security actions may require it again; keep your offline copy available.
 
