@@ -1398,8 +1398,8 @@ Seven FAQs (articles 52 to 58, FAQ 29 to 35) were written against the Extension 
 
 ## Extension mainnet audit on 1.17.6 — open items (2026-10-25)
 
-- [ ] E63, E64, E65 (save, edit, delete a contact): still show testnet addresses. Closes with a second
-      mainnet address to save as the test contact; the wallet refuses its own (**This is one of your accounts**).
+- [x] E63, E64, E65 (save, edit, delete a contact): retaken 2026-10-25 with a second mainnet address
+      of Ivan's as the test contact, deleted afterwards.
 - [ ] E30, E31 (**Retry**): still the 1.16.2 testnet images. 1.17.6 returns an interrupted accept to
       **Accept Transfer**; **Retry** appears only when queuing the accept fails with a real error. Closes
       with a genuine failed accept on mainnet.
