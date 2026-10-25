@@ -1400,13 +1400,11 @@ Seven FAQs (articles 52 to 58, FAQ 29 to 35) were written against the Extension 
 
 - [x] E63, E64, E65 (save, edit, delete a contact): retaken 2026-10-25 with a second mainnet address
       of Ivan's as the test contact, deleted afterwards.
-- [ ] E30, E31 (**Retry**): still the 1.16.2 testnet images. 1.17.6 returns an interrupted accept to
-      **Accept Transfer**; **Retry** appears only when queuing the accept fails with a real error. Closes
-      with a genuine failed accept on mainnet.
+- [x] E30, E31 (**Retry**): retaken 2026-10-25 from a real failed accept on mainnet (the wallet was
+      closed while the accept was processing).
 - [ ] E35 to E47 (Earn): not retaken; mainnet shows **Earn is not available on this network**. Closes
       when Earn opens on mainnet.
-- [ ] E01, E01a, E02 (Chrome Web Store install): taken by hand, not checked in this run.
+- [x] E01, E01a, E02 (Chrome Web Store install) and M01 (App Store): no change needed (Ivan, 2026-10-25).
 - [x] Mobile: confirmed on iPhone, 2026-10-25 (Bread 1.17.6): **Profile** (person icon),
       **Auto-accept USDCX transfers**, the Guardian list, and the **Pending** and **Transfer** filters
       all match, so articles 21, 31 and 41 need no mobile change.
-- [ ] M01 (App Store listing): not checked yet; needs a fresh screenshot of the App Store page.

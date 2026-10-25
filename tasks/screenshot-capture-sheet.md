@@ -15,7 +15,7 @@ given screenshot came from, and "the store release" stops meaning anything as so
 | Mobile retake (issue #34) | **1.16.2** | done, 2026-10-02, by hand on iPhone; see *Mobile retake on 1.16.2* below |
 | Extension, Earn articles | **1.16.2** | done, 2026-10-06, automated; E35 to E47, see *L. Earn* below. E46 is to be retaken |
 | Extension, Settings FAQs | **1.17.1** | done, 2026-10-09, automated; E48 to E65, see *M. Settings* below |
-| Extension, mainnet audit | **1.17.6** | done, 2026-10-25, automated on mainnet; 21 retaken, see *Extension mainnet audit on 1.17.6* below |
+| Extension, mainnet audit | **1.17.6** | done, 2026-10-25, automated on mainnet; 23 retaken, see *Extension mainnet audit on 1.17.6* below |
 
 1.16.1 is what Settings reports in the build being captured. It supersedes the 1.16.0 this sheet carried,
 which came from the store listing — the installed build is the authority, not the listing.
@@ -28,13 +28,13 @@ Every Extension screenshot an article shows was compared, as an image, with the 
 Welcome opens with seven clicks on the logo, then **I don't have a code** > **Recover your account**.
 File names, IDs and sizes are unchanged.
 
-- Retaken: E19 to E28, E32 to E34, E48, E57 to E59, E61, E63 to E65 (the test contact was a second
-  mainnet address of Ivan's, deleted afterwards). **Profile** replaces **Settings** and the tab
+- Retaken: E19 to E28, E32 to E34, E48, E57 to E59, E30, E31, E61, E63 to E65 (the test contact was a second
+  mainnet address of Ivan's, deleted afterwards). E30 and E31 show a real **Retry**: Ivan sent a
+  transfer and the wallet was closed while the accept was processing. **Profile** replaces **Settings** and the tab
   bar has four icons; the Guardian list, the Activity tabs (**Transfer** replaces **Received**) and the
   spending-limit chips changed.
 - Unchanged, kept: E49 to E56, E60, E62. E52 differs only by an empty password placeholder.
-- Not retaken: E01, E01a and E02 (taken by hand); E35 to E47 (Earn is not available on mainnet);
-  E30 and E31 (1.17.6 no longer shows **Retry** after an interrupted accept, only after a real error).
+- Not retaken: E01, E01a and E02 (taken by hand); E35 to E47 (Earn is not available on mainnet).
 - Side panel: 1.17.6 opens a popup until a person finishes onboarding. The real panel, opened by
   hand, measured 540 x 1287, the same as the 360 x 858 tab at 1.5x.
 
