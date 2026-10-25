@@ -1404,6 +1404,10 @@ Seven FAQs (articles 52 to 58, FAQ 29 to 35) were written against the Extension 
       closed while the accept was processing).
 - [ ] E35 to E47 (Earn): not retaken; mainnet shows **Earn is not available on this network**. Closes
       when Earn opens on mainnet.
+- [ ] Earn text (articles 43 to 51): still written for testnet. Article 43 says Earn works with USDC on
+      Miden Testnet, the articles name **USDC** where mainnet shows **USDCX**, and article 43 says
+      incoming USDC is not accepted automatically (mainnet has **Auto-accept USDCX transfers**). Review
+      with the screenshots when Earn opens on mainnet.
 - [x] E01, E01a, E02 (Chrome Web Store install) and M01 (App Store): no change needed (Ivan, 2026-10-25).
 - [x] Mobile: confirmed on iPhone, 2026-10-25 (Bread 1.17.6): **Profile** (person icon),
       **Auto-accept USDCX transfers**, the Guardian list, and the **Pending** and **Transfer** filters
