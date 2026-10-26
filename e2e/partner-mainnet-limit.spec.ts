@@ -28,11 +28,11 @@ test('the Partner Mainnet limit is prominent and reaches its FAQ on either platf
     const body = page.locator('.help-center-article-body');
     await expect(body).toContainText('$1,232.462');
     await expect(body).toContainText('not a per-transfer allowance or a daily deposit limit');
-    await expect(body).toContainText('existing total wallet balance');
-    await expect(body).toContainText('$1,000 leaves $232.462 of room');
+    await expect(body).toContainText('what the receiving account already holds');
+    await expect(body).toContainText('an account that holds $1,000 can take up to $232.462 more');
     await page.reload();
     await expect(body).toBeVisible();
-    await expect(body).toContainText('Splitting a larger amount into smaller deposits does not increase that room');
+    await expect(body).toContainText("Splitting a deposit into smaller ones doesn't help");
 
     await page.goto(`/?platform=${platform}&q=deposit%20limit`);
     const result = page.getByRole('region', { name: 'Search results' }).getByRole('link', { name: 'What is the Partner Mainnet deposit limit?', exact: true });
