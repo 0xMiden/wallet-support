@@ -1,6 +1,7 @@
 import { readFile, readdir } from 'node:fs/promises';
 import { extname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { publicAssetPaths, validatePublicAsset } from './asset-validation.mjs';
 
 const ROOT = fileURLToPath(new URL('../', import.meta.url));
 const SCANNED_EXTENSIONS = new Set(['.html', '.json', '.md', '.ts', '.tsx']);
@@ -86,6 +87,16 @@ async function request(url, method) {
 }
 
 async function checkLink(url) {
+  try {
+    const local = publicAssetPaths(url, ROOT);
+    if (local) {
+      await validatePublicAsset(local);
+      return { ok: true, status: 'local build' };
+    }
+  } catch (error) {
+    return { ok: false, error: error instanceof Error ? error.message : String(error) };
+  }
+
   let lastError = '';
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt += 1) {
