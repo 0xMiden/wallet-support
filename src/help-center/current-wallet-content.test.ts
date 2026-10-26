@@ -26,6 +26,25 @@ describe('verified wallet behavior', () => {
     expect(text).not.toContain('not accepted automatically');
   });
 
+  it('keeps reported deposit success separate from the non-Base withdrawal limitation', () => {
+    const status = body('can-i-earn-yield-in-bread');
+    expect(status).toContain('26 October 2026, 12:32 JST');
+    expect(status).toContain('deposits into Ethereum, Arbitrum and Base Earn markets were reported working');
+    expect(status).toContain('withdrawals worked only from Base back to Miden');
+    expect(status).toContain('Ethereum and Arbitrum withdrawals were not working');
+    expect(status).toContain('Do not start new deposits into Ethereum or Arbitrum Earn markets');
+    expect(status).toContain('do not guarantee');
+    expect(status).not.toContain('provider liquidity setup is still in progress');
+    for (const id of ['what-do-i-need-before-i-can-use-earn', 'how-do-i-deposit-into-earn']) {
+      expect(body(id)).toContain('Do not start new deposits into Ethereum or Arbitrum Earn markets');
+      expect(body(id)).toContain('withdrawal');
+    }
+    for (const id of ['how-do-i-withdraw-from-earn', 'can-i-withdraw-part-of-my-position']) {
+      expect(body(id)).toContain('Ethereum and Arbitrum withdrawals were not working');
+      expect(body(id)).toContain('implemented controls');
+    }
+  });
+
   it('allows partial withdrawals and distinguishes sponsored gas from costs', () => {
     const partial = body('can-i-withdraw-part-of-my-position');
     expect(partial).toContain('**Max**');

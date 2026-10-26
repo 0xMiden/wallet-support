@@ -22,7 +22,7 @@ The build now emits explicit documents for only the two existing public routes, 
 | 13, 31, 62, 64 | Profile navigation and Choose your Guardian screen label | v1.17.7 `Me.tsx`, `Settings.tsx`; merged screenshots E20/E22/E48 |
 | 21, 42 | Retry versus Accept Transfer; sync/status/balance reconciliation before retry; expiry enables recall rather than automatic refund | [PendingActivityCard](https://github.com/0xMiden/wallet/blob/v1.17.6/src/app/templates/history/PendingActivityCard.tsx), existing article 41 recall guidance |
 | 36–38, 69; reviewed 63, 72 | Circle USDC ↔ USDCx, Agglayer Ethereum ↔ Miden, disabled fast/NEAR transfer routes; Earn provider scope kept separate | [Mainnet v11 configuration](https://github.com/0xMiden/wallet-config/blob/2989b42cdcecb30fd913ba0856376ca3c3ce8ef2/mainnet.json), [route clarification](https://midengroup.slack.com/archives/C0A73K81FNZ/p1792968647531669) |
-| 39–40, 43–51 | Enabled eligible Mainnet Earn; six Aave V3/Compound III markets; no guarantee of working provider liquidity; UK/New York restrictions | Mainnet v11 configuration; [liquidity setup status](https://midengroup.slack.com/archives/C0A73K81FNZ/p1792971119069049) |
+| 39–40, 43–51 | Enabled eligible Mainnet Earn; six Aave V3/Compound III markets; reported deposits on all three chains but withdrawals only from Base; UK/New York restrictions | Mainnet v11 configuration; [deposit test](https://midengroup.slack.com/archives/C0A73K81FNZ/p1792985253854739), [deposit result](https://midengroup.slack.com/archives/C0A73K81FNZ/p1792985256547279), [withdrawal limitation](https://midengroup.slack.com/archives/C0A73K81FNZ/p1792985574894959) |
 | 43–46, 49 | Wallet USDCx distinct from external native USDC; fee reserve; conditional auto-accept | [Earn collateral](https://github.com/0xMiden/wallet/blob/v1.17.7/src/lib/epoch/earn-collateral.ts), deposit/withdrawal screens and English labels at v1.17.7 |
 | 46–48 | Amount/Max and partial withdrawals, quote limits; sponsored gas distinct from route costs | [Amount screen](https://github.com/0xMiden/wallet/blob/v1.17.6/src/screens/earn-flow/EarnWithdrawAmount.tsx), [review screen](https://github.com/0xMiden/wallet/blob/v1.17.7/src/screens/earn-flow/EarnWithdrawReview.tsx) |
 | 44–46, 49 | Retained E35–E47 captures explicitly labelled Bread 1.16.2 Testnet illustrations | `tasks/screenshot-capture-sheet.md`; no Mainnet deposit executed for screenshots |
@@ -32,13 +32,19 @@ The build now emits explicit documents for only the two existing public routes, 
 
 Maintained content-source and FAQ sections are synchronized. Historical capture/audit records were not rewritten. IDs and article links are retained. New regression tests guard the main behavioral distinctions; existing tests enforce source fidelity, terminology and links.
 
+## Updated Earn operational evidence
+
+The full Earn thread was reread after the 12:32 JST update. Brian reported USDCx deposits on Ethereum, Arbitrum and Base working at 12:27 JST, then qualified at 12:32 JST that withdrawals worked only from Base to Miden; Ethereum and Arbitrum withdrawals were not working. These observations supersede the earlier liquidity-setup-pending message as the current operational notice. They do not independently establish settlement, every market/build/amount, or full Earn readiness; the amounts and exact withdrawal failure stage were not specified.
+
+Article 39 records the dated result. Articles 43/44 prominently advise against new Ethereum/Arbitrum deposits while their withdrawal path is unavailable and require checking an exit for the exact market before any deposit. Articles 46/47 distinguish implemented withdrawal controls from route availability; article 49 directs affected withdrawals to support rather than repeated submission. No ETA or general deposit recommendation is added. Corresponding FAQ sections and the status regression are updated.
+
 ## Link preview image
 
 `index.html` now supplies Open Graph/Twitter metadata with an absolute production image URL. `public/bread-wallet-og.png` is an unchanged copy of the official image declared by [Bread's page](https://www.miden.xyz/wallet), redirected from miden.xyz/bread, checked 26 October 2026. [Original image](https://cdn.prod.website-files.com/6a26670ad40ec24a0a8e0c5f/6aa91f205755fa1089759233_Miden%20wallet%20OG%201.png), 1204 × 631. No new illustration was created. The image URL on support.miden.xyz will remain absent until a frontend release is authorized and deployed.
 
 ## Verification
 
-- `VITE_TURNSTILE_SITE_KEY=1x00000000000000000000AA yarn verify`: passed; typecheck, 273 unit tests, 140 Chromium browser tests and production build. Browser coverage includes every public article on mobile/desktop, accessibility, image alignment, navigation, reloads, headers and the file-only route regression.
+- `VITE_TURNSTILE_SITE_KEY=1x00000000000000000000AA yarn verify`: passed; typecheck, 274 unit tests, 140 Chromium browser tests and production build. Browser coverage includes every public article on mobile/desktop, accessibility, image alignment, navigation, reloads, headers and the file-only route regression.
 - `yarn worker:typecheck`: passed. `yarn worker:test`: 425 tests passed across 26 files; existing local missing-secret/remote-AI-binding warnings were printed. No Worker code/configuration changed.
 - `git diff --check`: passed. Independent final source/code/content review found no must-fix issues. Rendered mobile Arcade and desktop Mainnet instructions were also visually inspected.
 - `yarn check:links`: one failure, the new `https://support.miden.xyz/bread-wallet-og.png` returns 404 before deployment. The local built file and its dimensions/MIME are verified; every other checked external link passed the checker's policy. This expected live-site failure remains visible rather than being suppressed.

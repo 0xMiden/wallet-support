@@ -273,7 +273,9 @@ Category: Earn › Earning yield
 
 Earn is enabled for eligible Mainnet users, but an enabled feature or a visible vault does not guarantee that a deposit can complete. Your installed version, selected network, market, provider liquidity and quote must all support the action. Earn is not offered in the United Kingdom or New York. If availability cannot be checked, do not submit a new deposit; contact [support](/feedback).
 
-**Status checked 26 October 2026:** provider liquidity setup is still in progress. Do not repeatedly submit deposits to work around an unavailable route or quote.
+**Operational status — 26 October 2026, 12:32 JST:** USDCx deposits into Ethereum, Arbitrum and Base Earn markets were reported working in wallet tests. In the same report, withdrawals worked only from Base back to Miden; Ethereum and Arbitrum withdrawals were not working.
+
+Reported tests do not guarantee current availability for every market, amount or installed version. Do not start new deposits into Ethereum or Arbitrum Earn markets while their withdrawal path is unavailable. Before any deposit, confirm that both deposit and withdrawal are currently available for the exact market; contact [support](/feedback) if uncertain. Do not repeatedly submit a failed withdrawal.
 
 **Mainnet markets**
 
@@ -365,6 +367,8 @@ Category: Earn › Earning yield
 
 Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See *Can I earn yield in Bread?*
 
+**Before depositing:** Do not start new deposits into Ethereum or Arbitrum Earn markets while their withdrawal path is unavailable. Deposits there were reported working on 26 October 2026, but withdrawals were reported working only from Base to Miden. Check the current status in *Can I earn yield in Bread?* and confirm an available withdrawal path for the exact market before starting a new deposit.
+
 You need spendable **USDCx** in your Miden wallet to fund an Earn deposit. The external lending market uses native USDC; the deposit route handles that change of asset.
 
 - Check **Activity** for incoming transfers that still need acceptance. Eligible USDCx transfers can be accepted automatically when **Auto-accept USDCX transfers** is on in **General** settings. Other transfers may need **Accept Transfer**. See *How do I accept a pending transfer?*
@@ -377,6 +381,8 @@ To make a deposit, see *How do I deposit into Earn?*
 Category: Earn › Earning yield
 
 Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See *Can I earn yield in Bread?*
+
+**Before depositing:** Do not start new deposits into Ethereum or Arbitrum Earn markets while their withdrawal path is unavailable. Deposits there were reported working on 26 October 2026, but withdrawals were reported working only from Base to Miden. Check the current status in *Can I earn yield in Bread?* and confirm an available withdrawal path for the exact market before starting a new deposit.
 
 The screenshots below were captured on Bread 1.16.2 Testnet. They illustrate an older flow; token names, balances and layouts can differ from your installed version.
 
@@ -440,6 +446,8 @@ Category: Earn › Earning yield
 
 Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See *Can I earn yield in Bread?*
 
+**Withdrawal limitation — 26 October 2026, 12:32 JST:** withdrawals were reported working only from Base to Miden; Ethereum and Arbitrum withdrawals were not working. These are reported tests, not a guarantee for every market, amount or installed version. The steps below describe implemented controls; they do not establish that an affected route can complete. Check the current status in *Can I earn yield in Bread?* and contact [support](/feedback) if your withdrawal route is unavailable.
+
 The screenshots below were captured on Bread 1.16.2 Testnet. They illustrate an older flow; token names, balances and layouts can differ from your installed version. The older withdrawal review shows a full-position withdrawal; current versions let you enter an amount or select **Max**.
 
 A supported withdrawal redeems the selected amount from the external native-USDC position and routes the receipt back to Miden as USDCx. A partial withdrawal leaves the remaining amount invested.
@@ -470,6 +478,8 @@ To learn how accepting works, see *How do I accept a pending transfer?*
 Category: Earn › Earning yield
 
 Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See *Can I earn yield in Bread?*
+
+**Withdrawal limitation — 26 October 2026, 12:32 JST:** withdrawals were reported working only from Base to Miden; Ethereum and Arbitrum withdrawals were not working. These are reported tests, not a guarantee for every market, amount or installed version. The steps below describe implemented controls; they do not establish that an affected route can complete. Check the current status in *Can I earn yield in Bread?* and contact [support](/feedback) if your withdrawal route is unavailable.
 
 Yes, on a supported route with a valid quote. Select **Withdraw**, enter an amount up to the displayed available balance, then select **Review**. Use **Max** if you want to withdraw the available balance instead.
 
@@ -504,6 +514,8 @@ If a deposit shows **Transaction Failed**, check its status and your balance aft
 
 2. Wait for the wallet to sync. Check **Activity**, your spendable balance, the displayed fee reserve and any existing Earn position.
 3. Retry only after those checks confirm that the original deposit failed and no transfer is still pending. If the outcome is uncertain, contact [support](/feedback) before submitting again. An unavailable quote or provider route is not fixed by repeatedly signing deposits. See *How do I deposit into Earn?*
+
+Ethereum and Arbitrum Earn withdrawals were reported not working on 26 October 2026, while withdrawals from Base to Miden were reported working. Check the current status in *Can I earn yield in Bread?*. Do not repeatedly submit withdrawals on an affected route; contact [support](/feedback).
 
 For a withdrawal, check the existing **Withdraw from Earn** activity and position before starting another one. Let an in-progress withdrawal finish. If the wallet offers a recovery action, follow that existing activity rather than creating a duplicate withdrawal. If the outcome is uncertain or the position and balance disagree, contact [support](/feedback).
 

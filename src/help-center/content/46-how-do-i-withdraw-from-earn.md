@@ -8,6 +8,8 @@ platforms: [extension-desktop, mobile]
 
 Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See [*Can I earn yield in Bread?*](#earn/can-i-earn-yield-in-bread)
 
+**Withdrawal limitation — 26 October 2026, 12:32 JST:** withdrawals were reported working only from Base to Miden; Ethereum and Arbitrum withdrawals were not working. These are reported tests, not a guarantee for every market, amount or installed version. The steps below describe implemented controls; they do not establish that an affected route can complete. Check the current status in [*Can I earn yield in Bread?*](#earn/can-i-earn-yield-in-bread) and contact [support](/feedback) if your withdrawal route is unavailable.
+
 The screenshots below were captured on Bread 1.16.2 Testnet. They illustrate an older flow; token names, balances and layouts can differ from your installed version. The older withdrawal review shows a full-position withdrawal; current versions let you enter an amount or select **Max**.
 
 A supported withdrawal redeems the selected amount from the external native-USDC position and routes the receipt back to Miden as USDCx. A partial withdrawal leaves the remaining amount invested.
