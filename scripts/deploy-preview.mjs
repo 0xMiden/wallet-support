@@ -24,6 +24,7 @@
  * production branch.
  */
 import { spawnSync } from 'node:child_process';
+import { deployedFilePath } from './asset-validation.mjs';
 import { createHash } from 'node:crypto';
 import { appendFileSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -166,7 +167,7 @@ for (const file of checkedFiles) {
   // A new deployment can answer from the edge a moment before every file is there.
   for (let attempt = 0; attempt < 6 && actual !== expected; attempt += 1) {
     if (attempt > 0) await new Promise(resolve => setTimeout(resolve, 5000));
-    const { response, bytes } = await fetchOnce(file === 'index.html' ? '' : file);
+    const { response, bytes } = await fetchOnce(deployedFilePath(file));
     actual = response.ok ? sha256(bytes) : `HTTP ${response.status}`;
   }
   if (actual !== expected) problems.push(`${file}: served ${actual.slice(0, 12)}, built ${expected.slice(0, 12)}`);

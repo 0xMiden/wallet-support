@@ -1,6 +1,6 @@
 # Bread FAQ: content for implementation
 
-Revised for Brian's 2026-10-23 launch support audit. Forty-nine articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
+Revised for Brian's 2026-10-23 launch support audit. Fifty articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
 
 ## Placement
 
@@ -55,6 +55,7 @@ Revised for Brian's 2026-10-23 launch support audit. Forty-nine articles. Existi
 | 47 | What should I do if Guardian cannot connect? | Troubleshooting | Common issues |
 | 48 | What should I do if a bridge deposit fails? | Troubleshooting | Common issues |
 | 49 | How do I send funds from Bread to another blockchain? | Crosschain | Moving across chains |
+| 50 | My USDC or USDCX bridge transfer hasn't arrived. Who can help? | Troubleshooting | Common issues |
 
 ## Articles
 
@@ -242,15 +243,15 @@ Other supported assets use the Ethereum ↔ Miden Agglayer bridge when that exac
 
 Circle takes a fee from the amount you send, so you receive less than you send. Check the address before you confirm: once it is sent, the transfer can't be reclaimed.
 
-For the steps, see *How do I send funds from Bread to another blockchain?* For route differences, see *What is the difference between the Fast and Slow routes?*
+For the steps, see *How do I send funds from Bread to another blockchain?* For route differences, see *What is the difference between the Fast and Slow routes?* If a transfer doesn't arrive, see *My USDC or USDCX bridge transfer hasn't arrived. Who can help?*
 
 ### 14. What is the difference between the Fast and Slow routes?
 Category: Crosschain › Moving across chains
 
 When you move funds between Miden and another chain, the route screen shows how they'll travel:
 
-- **Fast · Epoch**: a third party delivers the funds on the other chain for you. It takes about 30 seconds.
-- **Slow · Agglayer**: the funds go through the bridge itself. It takes about 30 minutes and has no bridge fee.
+- **Fast · Epoch**: a third party delivers the funds on the other chain for you. The wallet estimates about 30 seconds.
+- **Slow · Agglayer**: the funds go through the bridge itself. The wallet estimates about 30 minutes and shows no bridge fee. Check any network fee separately.
 - **USDCx (Circle xReserve)**: for USDCX. Circle turns your USDCX into USDC on the other chain, and USDC back into USDCX. How long it takes depends on that chain.
 
 On Mainnet, fast transfers are disabled for now. Epoch also runs Earn, but that doesn't switch fast transfers on. USDC moves through Circle on Ethereum, Base, Arbitrum and Arc. ETH and a few Ethereum tokens (WBTC, wrapped SOL, NEAR, PAXG, USDT, WBNB and PYUSD) use the Slow route. For the full list, see *Which bridge networks and tokens can I use?*
@@ -259,7 +260,7 @@ Before you confirm, check the route, the amount and the fees on the review scree
 
 On Testnet, use test tokens only. A route that works on Testnet may not be on Mainnet yet.
 
-If a transfer is still pending, don't start it again. Open it in **Activity** to check its status. A Fast transfer finishes on its own. A Slow transfer out of Miden needs one more step: when the funds are ready, select **Claim Asset** in its details to receive them on the other chain. See *What should I check if a bridge deposit or withdrawal is delayed?*
+If a transfer is still pending, don't start it again. Open it in **Activity** to check its status. A Fast transfer finishes on its own. A Slow transfer out of Miden may need a manual claim; some withdrawals are claimed automatically. Select **Claim Asset** only if the transfer details in **Activity** still show funds ready to claim, and connect the wallet for the matching destination address. See *What should I check if a bridge deposit or withdrawal is delayed?*
 
 ### 15. Can I swap tokens across chains?
 Category: Crosschain › Moving across chains
@@ -746,13 +747,13 @@ The wallet shows **Invalid address** if the address is not valid, and **This is 
 ### 36. What is the Partner Mainnet deposit limit?
 Category: Crosschain › Moving across chains
 
-The Partner Mainnet cap is $1,232.462 for the total wallet balance after a deposit. It is not a per-transfer allowance or a daily deposit limit.
+The Partner Mainnet cap is $1,232.462 USD. It's the most a Bread account can hold after you bridge funds in. It is not a per-transfer allowance or a daily deposit limit.
 
-Add the value of the proposed deposit to the existing total wallet balance. The result must be at or below $1,232.462. For example, a wallet balance of $1,000 leaves $232.462 of room. Splitting a larger amount into smaller deposits does not increase that room.
+When you make a bridge deposit, Bread adds its value to what the receiving account already holds. If the total would go over $1,232.462 USD, Bread stops the deposit. It shows what the account holds and what the deposit would add, so you can enter a smaller amount. For example, an account that holds $1,000 can take up to $232.462 more. Splitting a deposit into smaller ones doesn't help, because they all count toward the same total.
 
-This balance cap is separate from a daily spending limit. A bridge provider may also show a smaller route limit or a minimum amount; follow the displayed route requirements as well.
+If Bread can't get a price for the token you're depositing, it can't check the cap, so it won't let the deposit through. Try again later.
 
-Use only Mainnet routes supported by your installed version. Do not rely on a missing warning as permission to exceed the cap. See *How do I prepare for Mainnet and check my network?*
+The cap is separate from any daily spending limit you set. See *How do I prepare for Mainnet and check my network?*
 
 ### 37. How do I prepare for Mainnet and check my network?
 Category: Getting started › Setup and basic use
@@ -841,6 +842,8 @@ A bridge transfer can include a source-chain transaction, route processing and a
 
 A disabled route can stop new transfers without cancelling a transfer already in progress. Follow recovery actions shown for that transfer. Do not change Developer Settings to force a route.
 
+For a USDC or USDCX transfer on Circle's route, see *My USDC or USDCX bridge transfer hasn't arrived. Who can help?*
+
 If Bread shows **Bridge deposit failed**, see *What should I do if a bridge deposit fails?*
 
 ### 41. How do I send feedback or report a problem?
@@ -872,31 +875,35 @@ Track the send in **Activity**. A confirmed send can still require the recipient
 ### 43. What should I check before a Swap?
 Category: Crosschain › Moving across chains
 
-Swap exchanges one supported token for another. Swapping within Miden and swapping as part of a crosschain route are different flows; use only the options shown by your installed wallet.
+Swap trades one token for another inside Miden. On Partner Mainnet you can swap these pairs, in either direction:
 
-**Which tokens and pairs are listed?**
+- ETH and USDT
+- WBTC and USDT
+- Wrapped SOL and USDT
+- USDCX and USDT
+- ETH and USDCX
+- WBTC and USDCX
+- Wrapped SOL and USDCX
 
-As checked on 23 October 2026, the Swap quote service lists these seven pairs:
+Wrapped SOL can appear as **SOL** in the token picker. NEAR, PAXG, WBNB and PYUSD can't be swapped yet. Swap prices come from [Forkchoice](https://forkchoice.xyz/).
 
-- ETH ↔ USDT.
-- WBTC ↔ USDT.
-- Wrapped SOL ↔ USDT.
-- USDCX ↔ USDT.
-- ETH ↔ USDCX.
-- WBTC ↔ USDCX.
-- Wrapped SOL ↔ USDCX.
+Swap only works within Miden. To move tokens to or from another blockchain, see *Which bridge networks and tokens can I use?*
 
-Each listed pair allows either direction when the wallet offers a valid quote. Wrapped SOL can appear as **SOL** in the token picker. This is a dated quote-service listing, not a guarantee that every pair is available on your selected network or in your installed release. Bread also checks the listed assets on that network before offering them. Token registration alone does not make an asset swappable; NEAR, PAXG, WBNB and PYUSD are not in this dated service listing.
+**Before you confirm**
 
-Miden Swap uses solver quotes supplied through [Forkchoice](https://forkchoice.xyz/). The provider and route for a crosschain exchange can differ from a Swap within Miden. Check the current choices in the wallet rather than treating this list as a list of supported crosschain destinations. See *Which bridge networks and tokens can I use?* for bridge routes.
+On **Review Swap**, check **You Send**, **You Receive**, **Rate**, **Slippage** and **Max network fee**. Slippage is how far below the current rate your order may fill. The network fee is paid in USDCX, so keep some in your wallet.
 
-Check the network, tokens, amount you will receive and maximum network fee on the review screen. Keep enough of the displayed fee asset. If a quote expires, changes or fails to load, obtain and review a new quote before signing.
+**How a swap fills**
 
-If Bread says **No swap tokens are configured for this network yet.**, the selected network has no usable Swap choices in that version. Do not change endpoints to force another network's token list. If it says **Price unavailable. Try again shortly.**, wait and request a fresh quote; do not sign using a remembered price. Contact [support](/feedback) if the problem continues.
+A swap is an order. If there isn't enough liquidity at the current price, Bread warns you that only part of it may fill right away. The rest waits until the time you set in **Cancel if not filled within**. Anything still unfilled then comes back to you, and until then that amount stays reserved for the order.
 
-A quote is an estimate for that route at that time. Do not assume it guarantees a future price or that a test token has real value. A disabled Swap control can mean the selected network or token pair is unavailable.
+You can follow the order in **Activity** and stop it there with **Cancel swap**.
 
-If a Swap is interrupted, let the wallet sync and check **Activity** and both token balances before trying again. See *How do I prepare for Mainnet and check my network?*
+**If something goes wrong**
+
+If Bread says **Price unavailable. Try again shortly.**, wait a moment and get a new quote. If it says **No swap tokens are configured for this network yet.**, Swap isn't available on the network you're using. Don't change network settings to get around it. If the problem continues, contact [support](/feedback).
+
+If a swap is interrupted, let the wallet sync, then check **Activity** and both token balances before you try again. See *How do I prepare for Mainnet and check my network?*
 
 
 ### 44. How do I use Explore and mini-apps?
@@ -1007,7 +1014,7 @@ These steps send USDCx from Bread to your MetaMask wallet on the bridge website,
 
    ![Bread's Confirm Transaction window for bridge.miden.xyz, with the asset change and the Confirm button](E69b-send-out-confirm.png)
 
-5. The bridge shows **Withdrawal submitted**. It doesn't track the payout yet, so check MetaMask for the USDC.
+5. The bridge shows **Withdrawal submitted**. It doesn't track the payout yet, so check MetaMask for the USDC. If it doesn't arrive, see *My USDC or USDCX bridge transfer hasn't arrived. Who can help?*
 
    ![The bridge website's transfer card, marked Withdrawal submitted](E70-send-out-submitted.png)
 
@@ -1049,6 +1056,37 @@ These steps send USDCX from Bread to your MetaMask wallet. It arrives in MetaMas
 
    ![Bread's Burn submitted page, with the Done and View in Activities buttons](M17-send-out-burn-submitted.png)
 
-9. In **Activity**, tap the transfer to open it. The transfer is complete when its **Status** reads **Confirmed**. The USDC is then in your MetaMask wallet.
+9. In **Activity**, tap the transfer to open it. The transfer is complete when its **Status** reads **Confirmed**. The USDC is then in your MetaMask wallet. If it stays at **Burn confirmed** and the USDC doesn't arrive, see *My USDC or USDCX bridge transfer hasn't arrived. Who can help?*
 
    ![Bread's Transaction page for the transfer, with the status Confirmed](M17a-send-out-confirmed.png)
+
+### 50. My USDC or USDCX bridge transfer hasn't arrived. Who can help?
+Category: Troubleshooting › Common issues
+
+Transfers between USDC on **Ethereum**, **Base**, **Arbitrum One** or **Arc** and USDCX on Miden use Circle's xReserve route. Bread handles the Miden side of the transfer and Circle completes the other side. Many delays can be resolved in Bread, so start there.
+
+**Check Bread first**
+
+1. Open **Activity** and tap the transfer. If it's still in progress, keep Bread open and let it sync.
+2. If you're sending USDCX out of Bread, check the wallet you sent it to. The USDC may have arrived even if Bread still shows **Burn confirmed**.
+3. If you're adding USDC to Bread and Bread asks you to **Execute on Arc**, do it. This step needs a small amount of gas on Arc.
+4. If you're adding USDC to Bread, check whether the USDCX is waiting to be accepted. See *How do I accept a pending transfer?* and *My transfer is stuck on Accepting stage*.
+5. Don't send the transfer again. Check your balances on both networks first: a second transfer doesn't speed up the first.
+
+If you're unsure what happened, work through *What should I check if a bridge deposit or withdrawal is delayed?* or report it to our [support](/feedback).
+
+**When to contact Circle**
+
+Contact Circle when one side of the transfer is done and the other never arrived:
+
+- **Sending out of Bread:** Bread shows **Burn confirmed**, or the bridge website shows **Withdrawal submitted**, but the USDC still hasn't reached the address on the other network.
+- **Adding funds to Bread:** your external wallet shows the USDC deposit as successful, but Bread is still waiting for Circle to attest it, long after the arrival time Bread estimated.
+
+Circle Customer Care:
+
+- Email: [customer-support@arc.io](mailto:customer-support@arc.io)
+- Help Center: [Contact Us](https://help.arc.io/support_arc?id=support_arc_form)
+
+Tell them the networks, the direction, the amount, the time, the receiving address and the transaction hash from the other network. You can find the hash in your external wallet's history or on a block explorer.
+
+Never share your recovery phrase, keys or wallet backup file. Bread support will never ask for them. Use only the contacts on this page; anyone who messages you first offering to recover your funds is a scam.

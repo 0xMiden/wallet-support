@@ -23,7 +23,7 @@ These steps send USDCx from Bread to your MetaMask wallet on the bridge website,
 
    ![Bread's Confirm Transaction window for bridge.miden.xyz, with the asset change and the Confirm button](E69b-send-out-confirm.png)
 
-5. The bridge shows **Withdrawal submitted**. It doesn't track the payout yet, so check MetaMask for the USDC.
+5. The bridge shows **Withdrawal submitted**. It doesn't track the payout yet, so check MetaMask for the USDC. If it doesn't arrive, see [*My USDC or USDCX bridge transfer hasn't arrived. Who can help?*](#common-issues-and-support/my-usdc-or-usdcx-bridge-transfer-has-not-arrived)
 
    ![The bridge website's transfer card, marked Withdrawal submitted](E70-send-out-submitted.png)
 
@@ -65,6 +65,6 @@ These steps send USDCX from Bread to your MetaMask wallet. It arrives in MetaMas
 
    ![Bread's Burn submitted page, with the Done and View in Activities buttons](M17-send-out-burn-submitted.png)
 
-9. In **Activity**, tap the transfer to open it. The transfer is complete when its **Status** reads **Confirmed**. The USDC is then in your MetaMask wallet.
+9. In **Activity**, tap the transfer to open it. The transfer is complete when its **Status** reads **Confirmed**. The USDC is then in your MetaMask wallet. If it stays at **Burn confirmed** and the USDC doesn't arrive, see [*My USDC or USDCX bridge transfer hasn't arrived. Who can help?*](#common-issues-and-support/my-usdc-or-usdcx-bridge-transfer-has-not-arrived)
 
    ![Bread's Transaction page for the transfer, with the status Confirmed](M17a-send-out-confirmed.png)
