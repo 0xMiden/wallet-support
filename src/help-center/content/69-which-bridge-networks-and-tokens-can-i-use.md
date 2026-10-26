@@ -6,17 +6,16 @@ subcategory: moving-across-chains
 platforms: [extension-desktop, mobile]
 ---
 
-Bread moves funds between Miden and four networks: Ethereum, Base, Arbitrum and Arc. What you can move depends on the network.
+Bread's current Partner Mainnet routes connect Miden with Ethereum, Base, Arbitrum and Arc. The choices depend on your installed version and the route checks in the wallet. Testnet uses different networks and settings.
 
 **USDC: Ethereum, Base, Arbitrum and Arc**
 
-USDC sent from any of these four networks arrives in Bread as USDCX. Sending USDCX out works the same way in reverse: it arrives on the other network as USDC. Circle runs this route through [xReserve](https://www.circle.com/xreserve).
+USDC sent through these routes arrives in Bread as USDCX. Sending USDCX out works in reverse: it arrives on the other network as USDC. Circle runs this route through [xReserve](https://www.circle.com/xreserve).
 
 **Other tokens: Ethereum only**
 
-These tokens move between Ethereum and Bread in both directions. Bread shows this route as **Slow · Agglayer**, and a transfer usually takes about 30 minutes.
+The current Mainnet configuration lists these tokens for deposits from Ethereum through Agglayer:
 
-- ETH
 - WBTC
 - USDT
 - PYUSD
@@ -24,20 +23,26 @@ These tokens move between Ethereum and Bread in both directions. Bread shows thi
 - Wrapped SOL (WSOL)
 - Wrapped BNB (WBNB)
 - NEAR
+- USDG
+- POL
+
+Native ETH is handled separately; use its route only when Bread offers it. Bread checks the bridge registry before offering each token. Check deposits and withdrawals separately: a listed deposit token does not guarantee an available withdrawal route.
+
+Bread labels the route **Slow · Agglayer** and shows an arrival estimate of about 30 minutes. This is an estimate, not a guaranteed arrival time; check the estimate shown when you review your transfer.
 
 WSOL, WBNB and NEAR here are the versions of those tokens that live on Ethereum. You can't send to or from the Solana, BNB Chain or NEAR networks themselves. Learn more about [Agglayer](https://docs.polygon.technology/interoperability/agglayer).
 
-**Coming soon**
+**Not available on Partner Mainnet**
 
-- **Fast · Epoch:** a quicker route for USDC through [Epoch](https://epochprotocol.xyz/). It isn't available yet.
-- **NEAR Intents:** transfers through [NEAR Intents](https://docs.near-intents.org/). They aren't available yet either.
+- **Fast · Epoch:** this transfer route through [Epoch](https://epochprotocol.xyz/) is disabled in the current Partner Mainnet configuration. Epoch support for Earn is separate.
+- **NEAR Intents:** transfers through [NEAR Intents](https://docs.near-intents.org/) are disabled in the current Partner Mainnet configuration. There is no announced availability date.
 
 **Before you move funds**
 
-1. Pick the token and both networks in Bread. If a route doesn't appear, Bread doesn't support it yet.
-2. On the review screen, check the receiving address, the fee and the amount you'll receive.
-3. Each Bread account can hold up to $1,232.462 USD after a deposit. If a deposit would take you over, Bread tells you and asks for a smaller amount.
+1. Check your network, then pick the exact token and both networks in Bread. If a route is missing, disabled or cannot be checked, don't send: it may be unsupported or temporarily unavailable. If the problem continues, contact [support](/feedback).
+2. On the review screen, check the receiving address, the fees, the amount you'll receive and the arrival estimate.
+3. On Partner Mainnet, the current deposit cap is $1,232.462 USD for your total wallet balance after a deposit. If a deposit would take you over, Bread asks for a smaller amount. This is not a per-transfer allowance or a daily deposit limit. See [*What is the Partner Mainnet deposit limit?*](#moving-across-chains/what-is-the-partner-mainnet-deposit-limit)
 
-Only move funds through Bread or [bridge.miden.xyz](https://bridge.miden.xyz/), and never send tokens straight to a bridge contract address.
+Only move funds through Bread or [bridge.miden.xyz](https://bridge.miden.xyz/), and never send tokens straight to a bridge contract address. The website can offer different choices from your installed wallet; check its route separately.
 
 If a transfer is taking longer than expected, see [*What should I check if a bridge deposit or withdrawal is delayed?*](#common-issues-and-support/what-should-i-check-if-a-bridge-deposit-or-withdrawal-is-delayed)
