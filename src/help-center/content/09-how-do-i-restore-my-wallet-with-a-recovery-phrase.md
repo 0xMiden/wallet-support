@@ -10,6 +10,8 @@ platforms: [extension-desktop, mobile]
 
 Have your recovery phrase (sometimes called a seed phrase) ready and use the official extension on the same network as the account you want to recover.
 
+Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; you can no longer use the account on the previous device. Recovery does not set up synced access across both devices.
+
 1. Open Bread and select **Recover your account** when the welcome screen offers it.
 2. Select recovery with your recovery phrase if Bread asks for an import method.
 3. Enter the words in their original order, in the official wallet only.
@@ -23,6 +25,8 @@ Never enter your recovery phrase on a website, in feedback, or in a chat. Keep s
 <!-- platform: mobile -->
 
 Have your recovery phrase (sometimes called a seed phrase) ready and use the official app on the same network as the account you want to recover.
+
+Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; you can no longer use the account on the previous device. Recovery does not set up synced access across both devices.
 
 1. Open Bread and tap **Recover your account** when the welcome screen offers it.
 2. Select recovery with your recovery phrase if Bread asks for an import method.

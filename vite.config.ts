@@ -47,7 +47,21 @@ export default defineConfig(({ command, mode }) => {
   }
 
   return {
-    plugins: [react()],
+    plugins: [react(), {
+      name: 'public-route-documents',
+      // Static hosts must be able to serve direct links without an SPA
+      // fallback. Copy the final HTML, keeping Vite's absolute asset URLs.
+      generateBundle: {
+        order: 'post',
+        handler(_options, bundle) {
+          const document = bundle['index.html'];
+          if (!document || document.type !== 'asset') throw new Error('Built index.html is missing');
+          for (const path of ['topics', 'feedback']) {
+            this.emitFile({ type: 'asset', fileName: `${path}/index.html`, source: document.source });
+          }
+        }
+      }
+    }],
     build: {
       target: 'es2022'
     },

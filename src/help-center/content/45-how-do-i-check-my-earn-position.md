@@ -6,20 +6,22 @@ subcategory: earn
 platforms: [extension-desktop, mobile]
 ---
 
-These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
+Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See [*Can I earn yield in Bread?*](#earn/can-i-earn-yield-in-bread)
 
-Your positions are on the **Earn** tab, with what you deposited and what it has earned.
+The screenshots below were captured on Bread 1.16.2 Testnet. They illustrate an older flow; token names, balances and layouts can differ from your installed version.
+
+Open **Earn** to check your positions and estimated earnings. Let the wallet load current data; a loading or error state is not proof of a zero balance.
 
 **Steps:**
 
-1. Open Bread and select the **Earn** tab. **Your Earnings** shows **Total Deposited** and **Estimated Rewards** across all your positions.
+1. Open **Earn** and check the earnings summary and **Current Positions**. Select **See All** to open **My positions** if needed.
 
-   ![Bread Wallet's Earn page, with a position under Current Positions](E41-earn-tab-position.png)
+   ![Bread 1.16.2 Testnet Earn page, with a position under Current Positions](E41-earn-tab-position.png)
 
-2. Under **Current Positions**, select a position to open it.
+2. Select a position to see its market, asset, network and details.
 
-   ![Bread Wallet's position page, with the Deposit more and Withdraw buttons](E42-earn-position.png)
+   ![Bread 1.16.2 Testnet position page, with Deposit more and Withdraw](E42-earn-position.png)
 
-The position page shows **Deposited**, **Total Earned**, **APY**, **Daily Avg**, **Time Active** and **Started**. A value shows a dash until the wallet has data for it.
+The position page includes **Deposited**, **Total Earned**, **APY**, **Daily Avg**, **Time Active** and **Started**. A dash means the wallet has no value to display yet. APY and projected rewards are estimates, not guaranteed returns.
 
-To add to the position, select the **Deposit more** button and follow the steps in [*How do I deposit into Earn?*](#earn/how-do-i-deposit-into-earn)
+To add to a position, use **Deposit more** only when it is available and follow [*How do I deposit into Earn?*](#earn/how-do-i-deposit-into-earn)

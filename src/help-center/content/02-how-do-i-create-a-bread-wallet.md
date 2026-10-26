@@ -10,6 +10,8 @@ platforms: [extension-desktop, mobile]
 
 Use the official extension and follow the setup shown in your installed version. If the welcome screen asks for an access code, follow your invitation; do not change Developer Settings to bypass it.
 
+Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; you can no longer use the account on the previous device. Recovery does not set up synced access across both devices.
+
 1. Select **Get started** when that option is available.
 2. Create a strong wallet password and follow the displayed password requirements.
 3. Read the Guardian explanation and confirm the provider shown. Standard Bread setup creates a Guardian-backed account. The operator can see the account state but cannot move funds alone.
@@ -21,6 +23,8 @@ The screens and their order can differ between releases. For Mainnet readiness, 
 <!-- platform: mobile -->
 
 Use the official app and follow the setup shown in your installed version. If the welcome screen asks for an access code, follow your invitation; do not change Developer Settings to bypass it.
+
+Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; you can no longer use the account on the previous device. Recovery does not set up synced access across both devices.
 
 1. Tap **Get started** when that option is available.
 2. Follow the prompts to set up a passcode or supported biometric unlock. Keep a secure way to unlock the device.

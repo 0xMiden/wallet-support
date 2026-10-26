@@ -6,28 +6,24 @@ subcategory: earn
 platforms: [extension-desktop, mobile]
 ---
 
-These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
+Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See [*Can I earn yield in Bread?*](#earn/can-i-earn-yield-in-bread)
 
-Withdrawing closes your position and returns the USDC to your Miden balance.
+**Withdrawal limitation — 26 October 2026, 12:32 JST:** withdrawals were reported working only from Base to Miden; Ethereum and Arbitrum withdrawals were not working. These are reported tests, not a guarantee for every market, amount or installed version. The earlier test does not guarantee Base withdrawal availability when positions cannot be loaded; a later report described positions-loading failures. Check the existing activity, balance and position after sync, and contact [support](/feedback) if they cannot be reconciled. The steps below describe implemented controls; they do not establish that an affected route can complete. Check the current status in [*Can I earn yield in Bread?*](#earn/can-i-earn-yield-in-bread) and contact [support](/feedback) if your withdrawal route is unavailable.
+
+A supported withdrawal redeems the selected amount from the external native-USDC position and routes the receipt back to Miden as USDCx. A partial withdrawal leaves the remaining amount invested.
 
 **Steps:**
 
-1. Open Bread, select the **Earn** tab, and select your position under **Current Positions**.
-2. Select the **Withdraw** button.
-3. Check the **Withdraw Amount**, **Route** and **Estimated time**, then select the **Withdraw** button.
+1. Open **Earn** and select your position under **Current Positions** or **My positions**.
+2. Select **Withdraw**. Enter an amount within the displayed available balance, or select **Max**, then select **Review**.
+3. Check **You withdraw**, **Stays invested**, the destination network, expected receipt and minimum receipt. Expand the withdrawal details to check the route and fees. Select **Withdraw** only when a valid quote is available and you accept the details.
 
-   ![Bread Wallet's withdrawal review page, with the Withdraw button](E43-earn-withdraw-review.png)
+4. Bread shows **Processing Withdrawal**, then **Withdrawal Started!** when it has started. Select **View in Activities** to follow delivery; starting the withdrawal does not mean the receipt has arrived.
 
-4. The wallet shows **Processing Withdrawal**, then **Withdrawal Started!** Select **View in Activities** to follow it.
+5. Follow **Withdraw from Earn** in **Activity**, including **Redeeming** and **Delivering** where shown. Wait for the existing withdrawal to finish before starting another from the same position.
 
-   ![Bread Wallet's Withdrawal Started! page, with the View in Activities button](E45-earn-withdraw-started.png)
+6. After delivery, check your Miden USDCx balance and **Activity**. Eligible USDCx transfers can be accepted automatically when **Auto-accept USDCX transfers** is on. If the receipt remains pending and shows **Accept Transfer**, accept it there.
 
-5. On the **Activity** page, **Withdraw from Earn** shows **Redeeming**, then **Delivering**.
-
-   ![Bread Wallet's Activity page, with a Withdraw from Earn transaction](E46-earn-withdraw-activity.png)
-
-6. When the USDC arrives, it appears as a **Received** transfer. Select the **Accept Transfer** button to add it to your balance.
-
-A withdrawal returns your whole position. See [*Can I withdraw part of my position?*](#earn/can-i-withdraw-part-of-my-position)
+Partial amounts still depend on the available balance, supported route and a valid quote. See [*Can I withdraw part of my position?*](#earn/can-i-withdraw-part-of-my-position)
 
 To learn how accepting works, see [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)

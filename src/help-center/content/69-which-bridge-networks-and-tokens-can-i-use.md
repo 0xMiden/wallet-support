@@ -34,8 +34,8 @@ WSOL, WBNB and NEAR here are the versions of those tokens that live on Ethereum.
 
 **Not available on Partner Mainnet**
 
-- **Fast · Epoch:** this transfer route through [Epoch](https://epochprotocol.xyz/) is disabled in the current Partner Mainnet configuration. Epoch support for Earn is separate.
-- **NEAR Intents:** transfers through [NEAR Intents](https://docs.near-intents.org/) are disabled in the current Partner Mainnet configuration. There is no announced availability date.
+- **Fast · Epoch**: this transfer route through [Epoch](https://epochprotocol.xyz/) is disabled in the current Partner Mainnet configuration. Epoch support for Earn is separate.
+- **NEAR Intents**: transfers through [NEAR Intents](https://docs.near-intents.org/) are disabled in the current Partner Mainnet configuration. There is no announced availability date.
 
 **Before you move funds**
 

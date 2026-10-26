@@ -25,12 +25,12 @@ for (const { width, platform } of [
       if (!['GET', 'HEAD'].includes(request.method())) {
         writes.push(request.url());
         await route.abort();
-      } else if (!request.url().startsWith('http://localhost:4318/')) await route.abort();
+      } else if (!request.url().startsWith(`${testInfo.project.use.baseURL}/`)) await route.abort();
       else await route.continue();
     });
     await page.setViewportSize({ width, height: 900 });
     const applicable = articles.filter(article => article.platforms.includes(platform));
-    expect(articles).toHaveLength(68);
+    expect(articles).toHaveLength(69);
     for (const article of applicable) {
       await page.goto(`/?platform=${platform}#${article.sub}/${article.id}`);
       await expect(page.locator('#help-center-category-title'), article.id).toHaveText(article.title);

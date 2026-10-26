@@ -16,9 +16,31 @@ given screenshot came from, and "the store release" stops meaning anything as so
 | Extension, Earn articles | **1.16.2** | done, 2026-10-06, automated; E35 to E47, see *L. Earn* below. E46 is to be retaken |
 | Extension, Settings FAQs | **1.17.1** | done, 2026-10-09, automated; E48 to E65, see *M. Settings* below |
 | Extension, mainnet audit | **1.17.6** | done, 2026-10-25, automated on mainnet; 23 retaken, see *Extension mainnet audit on 1.17.6* below |
+| Extension, 1.17.7 update | **1.17.7** | done, 2026-10-26, automated on mainnet; 22 retaken, see *Extension update to 1.17.7* below. Earn withdrawal not captured |
 
 1.16.1 is what Settings reports in the build being captured. It supersedes the 1.16.0 this sheet carried,
 which came from the store listing — the installed build is the authority, not the listing.
+
+## Extension update to 1.17.7 (2026-10-26)
+
+Taken on **1.17.7** on mainnet (read on **Profile** as *Version 1.17.7*, in the capture profile as `1.17.7_0`,
+and as the `v1.17.7` tag), in a fresh capture profile with the mainnet account restored, after the 1.17.7
+release changed Home, the Guardian screens and the Activity rows. File names, IDs and sizes are unchanged.
+
+- Retaken: E19 to E23 and E32 to E34 (a real Guardian switch, Koda to LambdaClass); E24 to E27 (Ivan sent
+  0.01 USDCX with **Auto-accept USDCX transfers** off, then the transfer was accepted); E30 and E31 (a second
+  0.01 USDCX transfer, the wallet closed while accepting, so **Retry** is real); E28 and E48 (top of
+  **Profile**); E35 to E40 (a 1 USDCX deposit into Aave V3 USDC on Arbitrum; E39 is from a second, 0.5 USDCX
+  deposit). E35 to E40 went into PR #54 with FAQ 44.
+- E24 and E30 show the two Earn deposits as **Pending** further down the **All** list: neither had settled
+  when they were taken.
+- Not taken: E41 to E46. Epoch's positions service returned 502 for the three-chain request the wallet
+  makes, and both deposits stayed **Pending**, so no position could be opened or withdrawn. FAQ 46 gives its
+  steps without screenshots until a mainnet withdrawal can be captured. E41, E42 and E47 stay the 1.16.2
+  Testnet captures, labelled as such in FAQs 45 and 49.
+- Unchanged apart from the redrawn back arrow: E49 to E65 and E29. Not retaken.
+- The Earn amount screens spell the token **USDCx** while the rest of the wallet writes **USDCX**; reported
+  to the wallet team by Ivan.
 
 ## Extension mainnet audit on 1.17.6 (2026-10-25)
 

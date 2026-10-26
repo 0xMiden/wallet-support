@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import { loadEnv } from 'vite';
 
 /**
  * End-to-end tests, run against the production build rather than the dev
@@ -9,7 +10,11 @@ import { defineConfig, devices } from '@playwright/test';
  * The build runs first because a stale dist/ would let a passing run describe
  * a page that is no longer the one in the tree.
  */
-const PORT = 4318;
+// E2E_PORT and E2E_STATIC_PORT move the two servers off their usual ports, so a
+// second checkout on the same machine can run the suite at the same time.
+const env = loadEnv('test', '.', 'E2E_');
+const PORT = Number(env.E2E_PORT ?? 4318);
+const STATIC_PORT = Number(env.E2E_STATIC_PORT ?? 4319);
 
 export default defineConfig({
   testDir: './e2e',
@@ -19,12 +24,13 @@ export default defineConfig({
   // navigation tests do not need more.
   workers: 1,
   reporter: [['list']],
+  metadata: { staticOrigin: `http://127.0.0.1:${STATIC_PORT}` },
   use: {
     baseURL: `http://localhost:${PORT}`,
     trace: 'retain-on-failure'
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
-  webServer: {
+  webServer: [{
     command: `yarn build && yarn vite preview --port ${PORT} --strictPort`,
     env: {
       // Cloudflare's documented always-pass test key. Browser tests verify
@@ -40,5 +46,10 @@ export default defineConfig({
      */
     reuseExistingServer: false,
     timeout: 120000
-  }
+  }, {
+    command: 'node e2e/static-host.mjs',
+    env: { E2E_STATIC_PORT: String(STATIC_PORT) },
+    url: `http://127.0.0.1:${STATIC_PORT}`,
+    reuseExistingServer: false
+  }]
 });
