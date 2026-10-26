@@ -26,10 +26,10 @@ test('the Partner Mainnet limit is prominent and reaches its FAQ on either platf
     expect(new URL(page.url()).searchParams.get('platform')).toBe(platform);
     await expect(page.getByRole('heading', { name: 'What is the Partner Mainnet deposit limit?', exact: true })).toBeVisible();
     const body = page.locator('.help-center-article-body');
-    await expect(body).toContainText('about $1,232');
+    await expect(body).toContainText('$1,232.462 USD');
     await expect(body).toContainText("It isn't a per-transfer or daily limit");
     await expect(body).toContainText('what that account already holds');
-    await expect(body).toContainText('an account holding $1,000 can take in about $232 more');
+    await expect(body).toContainText('an account holding $1,000 can take in $232.462 more');
     await page.reload();
     await expect(body).toBeVisible();
     await expect(body).toContainText("Splitting a deposit into smaller ones doesn't help");
