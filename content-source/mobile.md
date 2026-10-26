@@ -263,9 +263,9 @@ If it stays stuck, the wallet may mark it as failed or **Interrupted**. An inter
 
 Retry your stuck transfers one at a time instead of all together.
 
-1. Select **Settings** (the gear icon), then select **General**.
+1. Select **Profile** (the person icon), then select **General**.
 
-   ![Bread Wallet's Settings page, with General under Preferences](E28-consume-settings-general.png)
+   ![Bread Wallet's Profile page, with General under Preferences](E28-consume-settings-general.png)
 
 2. Turn off **Auto-accept USDCX transfers**.
 

@@ -12,7 +12,7 @@ This page manages your consumer wallet permissions; it is not an integration set
 
 **To turn dApp connections on or off:**
 
-1. Select **Settings** (the gear icon), then select **Authorized DApps** under **Developer**.
+1. Select **Profile** (the person icon), then select **Authorized DApps** under **Developer**.
 2. Use the **DApps Interaction** switch. When it is off, dApps cannot connect or see your balance.
 
    ![Bread Wallet's Authorized DApps page, with the DApps Interaction switch](E60-authorized-dapps.png)

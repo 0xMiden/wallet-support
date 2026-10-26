@@ -151,13 +151,13 @@ Switching Guardian uses your everyday key and your emergency key, so have your r
 
 **Steps:**
 
-1. From the wallet homepage, open **Settings** (lower-right corner).
+1. From the wallet homepage, open **Profile** (lower-right corner).
 
-   ![Bread Wallet's Home page, with Settings in the lower-right corner](E19-guardian-home.png)
+   ![Bread Wallet's Home page, with Profile in the lower-right corner](E19-guardian-home.png)
 
 2. Go to the **Security** section and select **Guardian Settings**.
 
-   ![Bread Wallet's Settings page, with Guardian Settings under Security](E20-guardian-settings-menu.png)
+   ![Bread Wallet's Profile page, with Guardian Settings under Security](E20-guardian-settings-menu.png)
 
 3. Click **Rotate Guardian**.
 
@@ -312,9 +312,9 @@ When someone sends you tokens, they show up as a pending transfer on the **Activ
    ![Bread Wallet's Activity page, with a transfer card expanded to show From and Amount](E26-accept-transfer-card.png)
 
 4. Select the **Accept Transfer** button. The button changes to **Accepting…** while the wallet adds the tokens to your balance.
-5. Once accepted, the transfer leaves the **Pending** tab. Select the **Received** tab to find it as **Received**, marked **Confirmed**. Select it to see the details of the transaction.
+5. Once accepted, the transfer leaves the **Pending** tab. Select the **Transfer** tab to find it as **Received**, marked **Confirmed**. Select it to see the details of the transaction.
 
-   ![Bread Wallet's Activity page, with the Received tab selected and the transfer marked Confirmed](E27-accept-received-tab.png)
+   ![Bread Wallet's Activity page, with the Transfer tab selected and the transfer marked Confirmed](E27-accept-received-tab.png)
 
 To accept everything at once, select **Accept All** in the row above the list on the **Pending** tab, which shows how many transfers are waiting and their total.
 
@@ -514,9 +514,9 @@ Removing your recovery phrase deletes the stored copy from this installation, so
 
 **Steps:**
 
-1. Select **Settings** (the gear icon), then select **Recovery Phrase** under **Security**.
+1. Select **Profile** (the person icon), then select **Recovery Phrase** under **Security**.
 
-   ![Bread Wallet's Settings page, with Recovery Phrase under Security](E48-settings-menu.png)
+   ![Bread Wallet's Profile page, with Recovery Phrase under Security](E48-settings-menu.png)
 
 2. Select **Remove recovery phrase**.
 
@@ -531,7 +531,7 @@ Removing your recovery phrase deletes the stored copy from this installation, so
 6. Select the first and last words of your phrase to confirm you saved it, then select **Continue**.
 7. Select **Remove from this device**.
 
-The wallet then shows **Recovery phrase removed from this device**, and **Recovery Phrase** no longer appears in **Settings**.
+The wallet then shows **Recovery phrase removed from this device**, and **Recovery Phrase** no longer appears in **Profile**.
 
 Earlier backups may still contain the phrase. Keep them secure. If the phrase is removed, account creation and some security actions may require it again; keep your offline copy available.
 
@@ -544,7 +544,7 @@ You can show your recovery phrase again at any time, as long as it is still stor
 
 **Steps:**
 
-1. Select **Settings** (the gear icon), then select **Recovery Phrase** under **Security**.
+1. Select **Profile** (the person icon), then select **Recovery Phrase** under **Security**.
 2. Select **Reveal recovery phrase**.
 3. Make sure no one can see your screen, then select **View**.
 
@@ -553,7 +553,7 @@ You can show your recovery phrase again at any time, as long as it is still stor
 4. Enter your wallet password and select **Continue**.
 5. Your 12 words appear. Write them down, or select **Copy**. Select **Hide Recovery Phrase** when you are done.
 
-If **Recovery Phrase** is missing from **Settings**, the phrase has been removed from this device and can no longer be shown here.
+If **Recovery Phrase** is missing from **Profile**, the phrase has been removed from this device and can no longer be shown here.
 
 > ⚠️ **Important note:** Anyone who knows your recovery phrase can access your wallet and funds. Never share it.
 
@@ -566,7 +566,7 @@ Bread can show the keys your account signs with: your Miden everyday key and you
 
 **Steps:**
 
-1. Select **Settings** (the gear icon), then select **Keys** under **Security**.
+1. Select **Profile** (the person icon), then select **Keys** under **Security**.
 2. Select **Reveal Private Key**.
 3. Read the **Before you reveal your private keys** warning, enter your wallet password and select **Continue**.
 
@@ -587,7 +587,7 @@ Rotating creates a new everyday key and replaces the current one on-chain. Do th
 
 **Steps:**
 
-1. Select **Settings** (the gear icon), then select **Keys** under **Security**.
+1. Select **Profile** (the person icon), then select **Keys** under **Security**.
 2. Select **Rotate everyday key**.
 
    ![Bread Wallet's Keys page, with the Rotate everyday key button](E53-keys.png)
@@ -615,7 +615,7 @@ A spending limit caps how much your account can send in a day, measured in USD. 
 
 **Steps:**
 
-1. Select **Settings** (the gear icon), then select **Spending limits** under **Security**.
+1. Select **Profile** (the person icon), then select **Spending limits** under **Security**.
 
    ![Bread Wallet's Spending limits page, showing No limit set](E57-spending-limits.png)
 
@@ -654,7 +654,7 @@ This page manages your consumer wallet permissions; it is not an integration set
 
 **To turn dApp connections on or off:**
 
-1. Select **Settings** (the gear icon), then select **Authorized DApps** under **Developer**.
+1. Select **Profile** (the person icon), then select **Authorized DApps** under **Developer**.
 2. Use the **DApps Interaction** switch. When it is off, dApps cannot connect or see your balance.
 
    ![Bread Wallet's Authorized DApps page, with the DApps Interaction switch](E60-authorized-dapps.png)
@@ -674,7 +674,7 @@ The **Address Book** saves addresses under a name, so you can send to a person w
 
 **To add a contact:**
 
-1. Select **Settings** (the gear icon), then select **Address Book** under **Preferences**.
+1. Select **Profile** (the person icon), then select **Address Book** under **Preferences**.
 
    ![Bread Wallet's Address Book page, with the New contact button](E61-address-book.png)
 

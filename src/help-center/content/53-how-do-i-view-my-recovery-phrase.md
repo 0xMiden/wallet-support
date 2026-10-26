@@ -10,7 +10,7 @@ You can show your recovery phrase again at any time, as long as it is still stor
 
 **Steps:**
 
-1. Select **Settings** (the gear icon), then select **Recovery Phrase** under **Security**.
+1. Select **Profile** (the person icon), then select **Recovery Phrase** under **Security**.
 2. Select **Reveal recovery phrase**.
 3. Make sure no one can see your screen, then select **View**.
 
@@ -19,7 +19,7 @@ You can show your recovery phrase again at any time, as long as it is still stor
 4. Enter your wallet password and select **Continue**.
 5. Your 12 words appear. Write them down, or select **Copy**. Select **Hide Recovery Phrase** when you are done.
 
-If **Recovery Phrase** is missing from **Settings**, the phrase has been removed from this device and can no longer be shown here.
+If **Recovery Phrase** is missing from **Profile**, the phrase has been removed from this device and can no longer be shown here.
 
 > ⚠️ **Important note:** Anyone who knows your recovery phrase can access your wallet and funds. Never share it.
 

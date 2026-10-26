@@ -1395,3 +1395,20 @@ Seven FAQs (articles 52 to 58, FAQ 29 to 35) were written against the Extension 
 | Article 13 | Reported, not changed. It hedges on whether the recovery phrase can be shown again. It can, at **Recovery Phrase** › **Reveal recovery phrase**, while the phrase is still stored on the device; article 53 now covers it. | Ivan approves new text, or a link to article 53. |
 | Article 7 | Reported, not changed. It does not say where the switch is: **General** › **Advanced** › **Delegate Proof Generation**. | Ivan approves an added line. |
 | Articles 11 and 14 (held back) | Reported, not changed. Article 11 puts Settings in the top-right corner. Article 14's hidden reason says the encrypted wallet file is not available; in 1.17.1 the export row exists for a wallet holding an account without Guardian. | Ivan decides whether either is published again. |
+
+## Extension mainnet audit on 1.17.6 — open items (2026-10-25)
+
+- [x] E63, E64, E65 (save, edit, delete a contact): retaken 2026-10-25 with a second mainnet address
+      of Ivan's as the test contact, deleted afterwards.
+- [x] E30, E31 (**Retry**): retaken 2026-10-25 from a real failed accept on mainnet (the wallet was
+      closed while the accept was processing).
+- [ ] E35 to E47 (Earn): not retaken; mainnet shows **Earn is not available on this network**. Closes
+      when Earn opens on mainnet.
+- [ ] Earn text (articles 43 to 51): still written for testnet. Article 43 says Earn works with USDC on
+      Miden Testnet, the articles name **USDC** where mainnet shows **USDCX**, and article 43 says
+      incoming USDC is not accepted automatically (mainnet has **Auto-accept USDCX transfers**). Review
+      with the screenshots when Earn opens on mainnet.
+- [x] E01, E01a, E02 (Chrome Web Store install) and M01 (App Store): no change needed (Ivan, 2026-10-25).
+- [x] Mobile: confirmed on iPhone, 2026-10-25 (Bread 1.17.6): **Profile** (person icon),
+      **Auto-accept USDCX transfers**, the Guardian list, and the **Pending** and **Transfer** filters
+      all match, so articles 21, 31 and 41 need no mobile change.
