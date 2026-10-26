@@ -882,33 +882,41 @@ Report the game, network, wallet version and error text without recovery informa
 ### 46. Which bridge networks and tokens can I use?
 Category: Crosschain › Moving across chains
 
-Use only the source network, destination network, token and transfer direction currently enabled in your installed Bread version. Support for a chain does not mean support for every token or every direction. A token ticker alone does not identify an asset.
+Bread moves funds between Miden and four networks: Ethereum, Base, Arbitrum and Arc. What you can move depends on the network.
 
-**Partner Mainnet route list — checked 23 October 2026**
+**USDC: Ethereum, Base, Arbitrum and Arc**
 
-The current Partner Mainnet configuration lists these routes in both directions: deposits into Miden and withdrawals from Miden. This describes configured options; it does not guarantee that each route is available in your installed release or for your transfer. Continue only when the wallet offers the exact route and its review information.
+USDC sent from any of these four networks arrives in Bread as USDCX. Sending USDCX out works the same way in reverse: it arrives on the other network as USDC. Circle runs this route through [xReserve](https://www.circle.com/xreserve).
 
-- **Circle USDC route:** native USDC on Ethereum, Arbitrum, Base or Arc ↔ USDCX on Miden. This route uses Circle's [xReserve](https://www.circle.com/xreserve) infrastructure; routes from Ethereum, Arbitrum and Base also use Circle's [Cross-Chain Transfer Protocol (CCTP)](https://developers.circle.com/cctp/concepts/supported-chains-and-domains). USDCX on Miden and native USDC on another network are distinct assets.
-- **Agglayer route:** Ethereum ↔ Miden for WBTC, wrapped SOL, Ethereum's NEAR token, PAXG, USDT, WBNB and PYUSD. These are the ERC-20 assets listed in the configuration. Native ETH is handled separately through the bridge registry; use it only when the wallet offers the ETH route. Wrapped SOL and WBNB do not establish support for the native Solana or BNB Chain networks. Learn about [Agglayer](https://docs.polygon.technology/interoperability/agglayer).
+**Other tokens: Ethereum only**
 
-A separate bridge website may offer different assets or directions; its options do not establish support inside Bread. [Epoch](https://epochprotocol.xyz/)'s fast-bridge route is not currently enabled on Partner Mainnet. Do not infer that other networks or every token supported by a provider are supported in Bread.
+These tokens move between Ethereum and Bread in both directions. Bread shows this route as **Slow · Agglayer**, and a transfer usually takes about 30 minutes.
 
-**NEAR Intents — coming soon**
+- ETH
+- WBTC
+- USDT
+- PYUSD
+- PAXG
+- Wrapped SOL (WSOL)
+- Wrapped BNB (WBNB)
+- NEAR
 
-[NEAR Intents](https://docs.near-intents.org/) support is coming soon to Bread and is not currently available. There is no announced availability date. Native NEAR-network transfers and NEAR Intents are separate from the Ethereum NEAR-token route listed above. Do not send native NEAR to an Ethereum or Miden address on the assumption that Intents will handle the transfer.
+WSOL, WBNB and NEAR here are the versions of those tokens that live on Ethereum. You can't send to or from the Solana, BNB Chain or NEAR networks themselves. Learn more about [Agglayer](https://docs.polygon.technology/interoperability/agglayer).
 
-**Before depositing or withdrawing**
+**Coming soon**
 
-1. Check whether Bread is using Partner Mainnet or Testnet. Testnet route availability does not establish Mainnet support.
-2. Open the bridge flow and choose the source and destination networks. Check deposits and withdrawals separately; an available route in one direction does not establish the reverse route.
-3. Select the exact token offered for that route. Review its source asset and destination asset, the recipient, limits, fees and estimated amount before confirming. USDC and USDCX are not interchangeable token identifiers.
-4. Continue only if the wallet enables the route and provides the required review information. If the route is missing, disabled or cannot provide a quote, stop and contact [support](/feedback). Never send directly to a bridge contract or substitute a token with a similar name.
+- **Fast · Epoch:** a quicker route for USDC through [Epoch](https://epochprotocol.xyz/). It isn't available yet.
+- **NEAR Intents:** transfers through [NEAR Intents](https://docs.near-intents.org/). They aren't available yet either.
 
-A list of networks in an announcement, website or earlier wallet version does not guarantee that a route is currently available. The available choices can change by network, app version, token, amount, direction or service status.
+**Before you move funds**
 
-Do not assume native NEAR-network transfers or NEAR intents are available because you see an Ethereum token named NEAR. Use only the actual networks and route shown by your supported wallet version.
+1. Pick the token and both networks in Bread. If a route doesn't appear, Bread doesn't support it yet.
+2. On the review screen, check the receiving address, the fee and the amount you'll receive.
+3. Each Bread account can hold up to about $1,232 after a deposit. If a deposit would take you over, Bread tells you and asks for a smaller amount.
 
-Check the Partner Mainnet balance cap before depositing. If a submitted transfer is delayed, follow *What should I check if a bridge deposit or withdrawal is delayed?*
+Only move funds through Bread or [bridge.miden.xyz](https://bridge.miden.xyz/), and never send tokens straight to a bridge contract address.
+
+If a transfer is taking longer than expected, see *What should I check if a bridge deposit or withdrawal is delayed?*
 
 ### 47. What should I do if Guardian cannot connect?
 Category: Troubleshooting › Common issues
