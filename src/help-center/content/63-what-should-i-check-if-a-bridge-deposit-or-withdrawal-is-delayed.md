@@ -16,4 +16,6 @@ A bridge transfer can include a source-chain transaction, route processing and a
 
 A disabled route can stop new transfers without cancelling a transfer already in progress. Follow recovery actions shown for that transfer. Do not change Developer Settings to force a route.
 
+For a USDC or USDCX transfer on Circle's route, see [*My USDC or USDCX bridge transfer hasn't arrived. Who can help?*](#common-issues-and-support/my-usdc-or-usdcx-bridge-transfer-has-not-arrived)
+
 If Bread shows **Bridge deposit failed**, see [*What should I do if a bridge deposit fails?*](#common-issues-and-support/what-should-i-do-if-a-bridge-deposit-fails)

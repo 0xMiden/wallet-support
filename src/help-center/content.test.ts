@@ -200,11 +200,11 @@ describe('coverage', () => {
    * The totals, written down rather than derived, so adding a category or an
    * article is a decision this file has to be told about.
    */
-  it('spans 7 main categories, 9 subcategories and 70 articles', () => {
+  it('spans 7 main categories, 9 subcategories and 73 articles', () => {
     const navigation = createHelpCenterNavigation(helpCenterMainCategories);
     expect(navigation.mainCategories).toHaveLength(7);
     expect(navigation.categories).toHaveLength(9);
-    expect(helpCenterAllArticles).toHaveLength(72);
+    expect(helpCenterAllArticles).toHaveLength(73);
   });
 
   it('resolves every article to exactly one position, through navigation.ts', () => {
@@ -234,7 +234,7 @@ describe('coverage', () => {
       taken.set(position, article.id);
     }
 
-    expect(taken.size).toBe(72);
+    expect(taken.size).toBe(73);
   });
 
   it('keeps Activity and transaction status in the hierarchy, with its one FAQ article after the first', () => {
@@ -411,7 +411,7 @@ describe('article sources', () => {
     }
 
     expect(helpCenterAllArticles.filter(article => pages.has(article.title))).toHaveLength(23);
-    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(49);
+    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(50);
   });
 });
 
@@ -439,7 +439,7 @@ const FAQ_PLACEMENT: Readonly<Record<string, readonly number[]>> = {
   'moving-across-chains': [13, 14, 15, 36, 43, 46, 49],
   earn: [16, 17, 20, 21, 22, 23, 24, 25, 26, 27, 28],
   'activity-and-transaction-status': [18],
-  'common-issues-and-support': [19, 40, 41, 47, 48]
+  'common-issues-and-support': [19, 40, 41, 47, 48, 50]
 };
 
 /** Alt text for each image, taken from the heading drawn inside it. */
@@ -536,8 +536,8 @@ describe('fidelity to the FAQ', () => {
     return article;
   };
 
-  it('reads forty-nine articles, numbered in order, that agree with the placement table', () => {
-    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 49 }, (_, index) => index + 1));
+  it('reads fifty articles, numbered in order, that agree with the placement table', () => {
+    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 50 }, (_, index) => index + 1));
     expect(FAQ.placement).toEqual(
       FAQ.entries.map(({ number, title, mainCategory, subcategory }) => ({ number, title, mainCategory, subcategory }))
     );
@@ -956,13 +956,13 @@ describe('fidelity to the FAQ', () => {
  */
 describe('the migrated article set', () => {
   it('carries every article in the approved mapping', () => {
-    expect(helpCenterAllArticles).toHaveLength(72);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(71);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(63);
+    expect(helpCenterAllArticles).toHaveLength(73);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(72);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(64);
   });
 
   it('publishes every article except the ones held back', () => {
-    expect(helpCenterArticles).toHaveLength(68);
+    expect(helpCenterArticles).toHaveLength(69);
     const published = helpCenterArticles.map(article => article.id);
     expect(published).not.toContain('how-to-restore-the-wallet-using-an-encrypted-file');
     expect(published).not.toContain('how-to-download-the-encrypted-file');
@@ -1142,6 +1142,39 @@ describe('finding articles', () => {
   it('finds an article only inside its own subcategory', () => {
     expect(findArticle(helpCenterArticles, 'setup-and-basic-use', 'how-to-install-bread-wallet')).toBeDefined();
     expect(findArticle(helpCenterArticles, 'guardian-protection', 'how-to-install-bread-wallet')).toBeUndefined();
+  });
+});
+
+/**
+ * Circle's support desk, as Gaylord passed it on from the founder (2026-10-21). It is printed in
+ * one article and every other article links there, so a changed address is one edit, not a hunt.
+ */
+describe('the Circle support contact', () => {
+  const CIRCLE_CONTACT = /customer-support@arc\.io|help\.arc\.io/;
+  const HOME = 'my-usdc-or-usdcx-bridge-transfer-has-not-arrived';
+
+  it('appears in its one article, on both platforms, and nowhere else', () => {
+    const carriers = helpCenterAllArticles.filter(article =>
+      Object.values(article.bodies).some(body => CIRCLE_CONTACT.test(body ?? ''))
+    );
+    expect(carriers.map(article => article.id)).toEqual([HOME]);
+    const home = carriers[0];
+    expect(home?.platforms).toEqual(['extension-desktop', 'mobile']);
+    expect(home?.bodies.mobile).toContain('(mailto:customer-support@arc.io)');
+    expect(home?.bodies.mobile).toContain('[Contact Us](https://help.arc.io/support_arc?id=support_arc_form)');
+  });
+
+  it('is reached from the bridge articles that send people there', () => {
+    for (const id of [
+      'can-i-send-funds-to-another-blockchain',
+      'what-should-i-check-if-a-bridge-deposit-or-withdrawal-is-delayed',
+      'how-do-i-send-funds-from-bread-to-another-blockchain'
+    ]) {
+      const article = helpCenterAllArticles.find(candidate => candidate.id === id);
+      for (const platform of article?.platforms ?? []) {
+        expect(article?.bodies[platform], `${id} (${platform})`).toContain(`(#common-issues-and-support/${HOME})`);
+      }
+    }
   });
 });
 
