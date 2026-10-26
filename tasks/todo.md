@@ -1402,12 +1402,17 @@ Seven FAQs (articles 52 to 58, FAQ 29 to 35) were written against the Extension 
       of Ivan's as the test contact, deleted afterwards.
 - [x] E30, E31 (**Retry**): retaken 2026-10-25 from a real failed accept on mainnet (the wallet was
       closed while the accept was processing).
-- [ ] E35 to E47 (Earn): not retaken; mainnet shows **Earn is not available on this network**. Closes
-      when Earn opens on mainnet.
-- [ ] Earn text (articles 43 to 51): still written for testnet. Article 43 says Earn works with USDC on
-      Miden Testnet, the articles name **USDC** where mainnet shows **USDCX**, and article 43 says
-      incoming USDC is not accepted automatically (mainnet has **Auto-accept USDCX transfers**). Review
-      with the screenshots when Earn opens on mainnet.
+- [x] E35 to E40 (Earn deposit): retaken on mainnet 1.17.7, 2026-10-26, in PR #54 with FAQ 44.
+- [ ] E41 to E46 (Earn position and withdrawal): not retaken. On 2026-10-26 Epoch's positions service
+      returned 502 for the three-chain request and both capture deposits (1 and 0.5 USDCX, Aave V3 USDC on
+      Arbitrum) stayed **Pending**. FAQ 46 has no screenshots until then; FAQ 45 keeps E41 and E42 as
+      labelled 1.16.2 Testnet captures. Closes when a mainnet deposit settles into a position and a partial
+      withdrawal can be captured, ideally on Base, the market reported to withdraw. Add a Withdraw Amount
+      capture (E44) to FAQ 46 then.
+- [ ] E47 (failed deposit): 1.16.2 Testnet capture, labelled in FAQ 49. Retake only if a deposit fails for
+      real.
+- [x] Earn text (articles 39 to 51): rewritten for mainnet in Brian's PR #54 (Ivan, 2026-10-26: follow
+      Brian's wording).
 - [x] E01, E01a, E02 (Chrome Web Store install) and M01 (App Store): no change needed (Ivan, 2026-10-25).
 - [x] Mobile: confirmed on iPhone, 2026-10-25 (Bread 1.17.6): **Profile** (person icon),
       **Auto-accept USDCX transfers**, the Guardian list, and the **Pending** and **Transfer** filters
