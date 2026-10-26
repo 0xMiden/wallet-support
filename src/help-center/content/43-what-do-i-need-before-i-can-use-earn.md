@@ -6,11 +6,12 @@ subcategory: earn
 platforms: [extension-desktop, mobile]
 ---
 
-These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
+Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See [*Can I earn yield in Bread?*](#earn/can-i-earn-yield-in-bread)
 
-Earn works with USDC on Miden Testnet. You need two things in your wallet:
+You need spendable **USDCx** in your Miden wallet to fund an Earn deposit. The external lending market uses native USDC; the deposit route handles that change of asset.
 
-- **USDC** to deposit. An incoming USDC transfer is not accepted automatically, so accept it on the **Activity** page first. See [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
-- The fee asset and amount shown by the wallet. Keep enough for the network fee; do not assume the deposit token can pay it.
+- Check **Activity** for incoming transfers that still need acceptance. Eligible USDCx transfers can be accepted automatically when **Auto-accept USDCX transfers** is on in **General** settings. Other transfers may need **Accept Transfer**. See [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
+- Keep a reserve for the network fee shown by Bread. On Mainnet, your USDCx balance must cover both the deposit and the displayed network fee; do not enter your entire balance without checking the fee reserve.
+- Check the exact account, network and supported market before requesting a quote. Testnet assets cannot fund a Mainnet position.
 
-Use only the test networks and test assets shown in the wallet. To make a deposit, see [*How do I deposit into Earn?*](#earn/how-do-i-deposit-into-earn)
+To make a deposit, see [*How do I deposit into Earn?*](#earn/how-do-i-deposit-into-earn)

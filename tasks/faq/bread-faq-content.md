@@ -163,7 +163,7 @@ Switching Guardian uses your everyday key and your emergency key, so have your r
 
    ![Bread Wallet's Guardian Settings page, with the Rotate Guardian button](E21-guardian-settings.png)
 
-4. On the **Rotate Guardian** page, select your choice of Guardian, then click **Continue**.
+4. On the **Choose your Guardian** page, select your choice of Guardian, then click **Continue**.
 
    ![Bread Wallet's Choose your Guardian page, with the Continue button](E22-guardian-choose.png)
 
@@ -200,6 +200,8 @@ Category: Manage wallet › Security and recovery
 
 For a standard Guardian-backed Bread account, recovery on a new device uses your recovery phrase and Guardian's account-state backup. See *How do I restore my wallet with a recovery phrase?*
 
+Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; you can no longer use the account on the previous device. Recovery does not set up synced access across both devices.
+
 You still need the recovery phrase. Guardian cannot replace it or recover funds for you if the phrase and every device holding your keys are lost.
 
 If an older installation or a developer-created account does not use Guardian, do not assume this recovery path applies. Preserve any working device and seek [support](/feedback) before resetting it.
@@ -218,6 +220,8 @@ Category: Manage wallet › Security and recovery
 
 On a new device, the recovery phrase rebuilds the emergency key. Together, the emergency key and Guardian unlock the backed-up state and establish a fresh everyday key tied to the new device.
 
+Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; you can no longer use the account on the previous device. Recovery does not set up synced access across both devices.
+
 The full round trip across your device, Guardian, and Miden:
 
 1. Your new device requests the state, signed by the emergency key.
@@ -234,6 +238,8 @@ Category: Crosschain › Moving across chains
 
 Yes. You can send USDCX from Bread to an address on **Ethereum**, **Base**, **Arbitrum One** or **Arc**. It arrives there as USDC, through Circle's xReserve route.
 
+Other supported assets use the Ethereum ↔ Miden Agglayer bridge when that exact route is offered. Epoch and NEAR Intents fast transfers are not enabled on Partner Mainnet; Earn uses a separate Epoch service.
+
 Circle takes a fee from the amount you send, so you receive less than you send. Check the address before you confirm: once it is sent, the transfer can't be reclaimed.
 
 For the steps, see *How do I send funds from Bread to another blockchain?* For route differences, see *What is the difference between a solver route and a canonical bridge?*
@@ -243,7 +249,9 @@ Category: Crosschain › Moving across chains
 
 A solver route fulfills a request to deliver assets on another chain. A canonical bridge uses the bridge's deposit and claim process. Their supported assets, fees, arrival times and recovery steps can differ.
 
-Bread shows only the routes configured for the selected network and asset. A fast route can be unavailable, and a bridge transfer does not necessarily swap the token in transit. Check the route and quote before signing.
+On Partner Mainnet, Circle routes move native USDC on Ethereum, Base, Arbitrum or Arc to and from USDCx on Miden. The Agglayer bridge connects Ethereum and Miden for its configured assets, with native ETH handled separately. Epoch and NEAR Intents fast transfers are disabled. Epoch support for Earn does not enable those transfer routes.
+
+Bread shows only the routes configured for the selected network and asset. A bridge transfer does not necessarily swap the token in transit. Check the exact route, amount and fees before signing.
 
 Use test assets only on Testnet routes. Mainnet routes require a released wallet that supports them; seeing a test route is not evidence that its Mainnet equivalent is available.
 
@@ -252,7 +260,9 @@ If a transfer is pending, follow its existing status and claim or recovery instr
 ### 15. Can I swap tokens across chains?
 Category: Crosschain › Moving across chains
 
-A crosschain swap is available only when Bread shows a route that supports the selected source token, destination token and networks. Not every bridge route swaps tokens. A Swap within Miden is a different operation.
+Partner Mainnet does not currently enable Epoch or NEAR Intents fast crosschain swaps. The Circle and Agglayer bridge routes move their supported assets; do not treat them as a general token-swap service. A Swap within Miden is a different operation.
+
+Use a crosschain swap only if your installed version and selected network explicitly offer that source token, destination token and route.
 
 Check the quote, expected received amount, fees and recipient before signing. If the quote expires or changes, review the updated quote. Do not assume a route is available because another token or network works.
 
@@ -261,23 +271,23 @@ Use test assets on Testnet. Use Mainnet routes only when your installed released
 ### 16. Can I earn yield in Bread?
 Category: Earn › Earning yield
 
-Mainnet Earn is not currently available. Earn is also not offered in the United Kingdom or New York. Seeing a vault preview does not mean deposits are available. If availability cannot be checked, wait and try again later or contact [support](/feedback).
+Earn is enabled for eligible Mainnet users, but an enabled feature or a visible vault does not guarantee that a deposit can complete. Your installed version, selected network, market, provider liquidity and quote must all support the action. Earn is not offered in the United Kingdom or New York. If availability cannot be checked, do not submit a new deposit; contact [support](/feedback).
 
-Earn is available only when your installed version and selected network enable it. A missing or disabled deposit control means you should not start a new deposit.
+**Status checked 26 October 2026:** provider liquidity setup is still in progress. Do not repeatedly submit deposits to work around an unavailable route or quote.
 
-**Planned Mainnet markets — not available for deposits**
+**Mainnet markets**
 
-The planned Earn selection is native USDC in these six markets:
+The Mainnet selection covers native USDC in six external lending markets:
 
 - Arbitrum: Aave V3 USDC and Compound III USDC.
 - Base: Aave V3 USDC and Compound III USDC.
 - Ethereum: Aave V3 USDC and Compound III USDC.
 
-These are planned lending markets, not live Bread deposit options. Morpho vaults are not included in this selection. Bridged USDC variants and other assets are not included in this planned list. [Aave](https://aave.com/help/aave-101/introduction-to-aave) and [Compound III](https://docs.compound.xyz/) explain their protocols; availability on a provider's own site does not establish availability in Bread.
+You fund the deposit with USDCx in your Miden wallet; the route supplies native USDC to the external market. USDCx and USDC are distinct assets. Morpho vaults, bridged USDC variants and other assets are not part of this selection. [Aave](https://aave.com/help/aave-101/introduction-to-aave) and [Compound III](https://docs.compound.xyz/) explain their protocols; availability on a provider's own site does not establish availability in Bread.
 
-Testnet Earn uses test assets and a test lending market. Estimated rewards there do not represent real returns. These Testnet guides do not establish Mainnet availability. Do not treat an announced market or a preview vault as an available deposit option.
+Review the market, network, fees and expected amount before confirming. A missing or disabled deposit control means you should not start a deposit. Testnet uses test assets and estimated rewards there do not represent real returns.
 
-When a supported route is available, review the market, fees and expected amount before confirming. The lending-market portion can be publicly visible. See *Are my funds private while they earn?*
+The external lending-market portion can be publicly visible. See *Are my funds private while they earn?*
 
 ### 17. Are my funds private while they earn?
 Category: Earn › Earning yield
@@ -288,7 +298,7 @@ Earn does not provide the same privacy as holding assets in your private Miden a
 - **In an external lending market:** the amount, activity and rewards may be publicly visible.
 - **On return:** the assets go back to your Miden account after the route completes and the transfer is accepted.
 
-Testnet Earn uses test assets. This explanation does not announce Mainnet availability. Review the route your installed wallet offers. See *Can I earn yield in Bread?*
+Earn availability depends on your installed wallet, network, eligibility and provider route. Testnet uses test assets. Review the available route and quote before starting a deposit. See *Can I earn yield in Bread?*
 
 ![](earn-across-the-privacy-line.png)
 
@@ -341,9 +351,10 @@ If accepting a transfer fails, the transfer stays in your **Activity** list and 
 
    ![Bread Wallet's Activity page, with the Pending tab selected and the Retry button](E31-accept-fails-pending-tab.png)
 
-3. Select the **Retry** button to try again.
+3. Let the wallet sync and check the transfer status and your balance. A failed or interrupted screen does not prove that nothing reached the network. Wait while an acceptance is still processing.
+4. Select **Retry** only when those checks confirm the acceptance failed. If the outcome is uncertain, contact [support](/feedback) before trying again.
 
-If the expanded card shows a date when the transfer returns to the sender, try again before then.
+If the expanded card shows an expiration date, accept the transfer before then. After that date, a recallable transfer can be reclaimed by the sender; expiry does not automatically return spendable funds to the sender. If the card shows **Accept Transfer** rather than **Retry**, it is a pending transfer awaiting acceptance.
 
 If it keeps failing, see *My transfer is stuck on Accepting stage*, or report it to our [**SUPPORT**](/feedback).
 
@@ -352,147 +363,162 @@ To learn how accepting works, see *How do I accept a pending transfer?*.
 ### 20. What do I need before I can use Earn?
 Category: Earn › Earning yield
 
-These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
+Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See *Can I earn yield in Bread?*
 
-Earn works with USDC on Miden Testnet. You need two things in your wallet:
+You need spendable **USDCx** in your Miden wallet to fund an Earn deposit. The external lending market uses native USDC; the deposit route handles that change of asset.
 
-- **USDC** to deposit. An incoming USDC transfer is not accepted automatically, so accept it on the **Activity** page first. See *How do I accept a pending transfer?*
-- The fee asset and amount shown by the wallet. Keep enough for the network fee; do not assume the deposit token can pay it.
+- Check **Activity** for incoming transfers that still need acceptance. Eligible USDCx transfers can be accepted automatically when **Auto-accept USDCX transfers** is on in **General** settings. Other transfers may need **Accept Transfer**. See *How do I accept a pending transfer?*
+- Keep a reserve for the network fee shown by Bread. On Mainnet, your USDCx balance must cover both the deposit and the displayed network fee; do not enter your entire balance without checking the fee reserve.
+- Check the exact account, network and supported market before requesting a quote. Testnet assets cannot fund a Mainnet position.
 
-Use only the test networks and test assets shown in the wallet. To make a deposit, see *How do I deposit into Earn?*
+To make a deposit, see *How do I deposit into Earn?*
 
 ### 21. How do I deposit into Earn?
 Category: Earn › Earning yield
 
-These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
+Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See *Can I earn yield in Bread?*
 
-Depositing opens a position in a vault. Your USDC leaves your Miden balance and starts earning in the lending market.
+The screenshots below were captured on Bread 1.16.2 Testnet. They illustrate an older flow; token names, balances and layouts can differ from your installed version.
+
+Depositing spends USDCx from your Miden balance. The supported route supplies native USDC to the external lending market and opens a position there.
 
 **Steps:**
 
-1. Open Bread and select the **Earn** tab.
+1. Open Bread and select **Earn**.
 
-   ![Bread Wallet's Earn page, with Featured Vaults and no active positions](E35-earn-tab.png)
+   ![Bread 1.16.2 Testnet Earn page, with Featured Vaults and no active positions](E35-earn-tab.png)
 
-2. Under **Featured Vaults**, select a vault to see its details, then select the **Deposit** button.
+2. Select a supported vault, check its market and network, then select **Deposit** if it is available.
 
-   ![Bread Wallet's vault page, with the Deposit button](E36-earn-vault.png)
+   ![Bread 1.16.2 Testnet vault page, with the Deposit button](E36-earn-vault.png)
 
-3. Enter the amount of USDC and select the **Confirm** button.
+3. Enter the amount of USDCx to deposit, leaving enough for the displayed network fee, then select **Confirm**.
 
-   ![Bread Wallet's Deposit Amount page, with an amount entered](E37-earn-deposit-amount.png)
+   ![Bread 1.16.2 Testnet Deposit Amount page, showing the older USDC label](E37-earn-deposit-amount.png)
 
-4. Check the **Deposit Amount**, **Route**, **Estimated time** and **Max network fee**, then select the **Open position** button.
+4. Check the **Deposit Amount**, market, **Route**, **Estimated time** and **Max network fee**. Select **Open position** only when the details are correct and the action is available.
 
-   ![Bread Wallet's deposit review page, with the Open position button](E38-earn-deposit-review.png)
+   ![Bread 1.16.2 Testnet deposit review, with the Open position button](E38-earn-deposit-review.png)
 
-5. The wallet shows **Generating Transaction** while it processes the deposit. You can select **Hide** and keep using the wallet.
+5. Bread shows **Generating Transaction** while it processes the deposit. You can select **Hide** and follow its status in **Activity**. Do not start another deposit because this screen takes longer than expected.
 
-   ![Bread Wallet's Generating Transaction page for an Earn deposit](E39-earn-deposit-generating.png)
+   ![Bread 1.16.2 Testnet Generating Transaction page for an Earn deposit](E39-earn-deposit-generating.png)
 
-6. When it is done, the wallet shows **You're Earning!** Select the **Done** button.
+6. If the deposit completes, Bread shows **You're Earning!** Select **Done**, then check the position and transaction status.
 
-   ![Bread Wallet's success page for an Earn deposit, showing You're Earning!](E40-earn-deposit-success.png)
+   ![Bread 1.16.2 Testnet success page for an Earn deposit](E40-earn-deposit-success.png)
 
-Your position appears under **Current Positions** on the **Earn** tab. See *How do I check my Earn position?*
+Your position appears under **Current Positions** in **Earn** after it loads. See *How do I check my Earn position?*
 
 Before you deposit, see *What do I need before I can use Earn?*
 
 ### 22. How do I check my Earn position?
 Category: Earn › Earning yield
 
-These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
+Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See *Can I earn yield in Bread?*
 
-Your positions are on the **Earn** tab, with what you deposited and what it has earned.
+The screenshots below were captured on Bread 1.16.2 Testnet. They illustrate an older flow; token names, balances and layouts can differ from your installed version.
+
+Open **Earn** to check your positions and estimated earnings. Let the wallet load current data; a loading or error state is not proof of a zero balance.
 
 **Steps:**
 
-1. Open Bread and select the **Earn** tab. **Your Earnings** shows **Total Deposited** and **Estimated Rewards** across all your positions.
+1. Open **Earn** and check the earnings summary and **Current Positions**. Select **See All** to open **My positions** if needed.
 
-   ![Bread Wallet's Earn page, with a position under Current Positions](E41-earn-tab-position.png)
+   ![Bread 1.16.2 Testnet Earn page, with a position under Current Positions](E41-earn-tab-position.png)
 
-2. Under **Current Positions**, select a position to open it.
+2. Select a position to see its market, asset, network and details.
 
-   ![Bread Wallet's position page, with the Deposit more and Withdraw buttons](E42-earn-position.png)
+   ![Bread 1.16.2 Testnet position page, with Deposit more and Withdraw](E42-earn-position.png)
 
-The position page shows **Deposited**, **Total Earned**, **APY**, **Daily Avg**, **Time Active** and **Started**. A value shows a dash until the wallet has data for it.
+The position page includes **Deposited**, **Total Earned**, **APY**, **Daily Avg**, **Time Active** and **Started**. A dash means the wallet has no value to display yet. APY and projected rewards are estimates, not guaranteed returns.
 
-To add to the position, select the **Deposit more** button and follow the steps in *How do I deposit into Earn?*
+To add to a position, use **Deposit more** only when it is available and follow *How do I deposit into Earn?*
 
 ### 23. How do I withdraw from Earn?
 Category: Earn › Earning yield
 
-These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
+Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See *Can I earn yield in Bread?*
 
-Withdrawing closes your position and returns the USDC to your Miden balance.
+The screenshots below were captured on Bread 1.16.2 Testnet. They illustrate an older flow; token names, balances and layouts can differ from your installed version. The older withdrawal review shows a full-position withdrawal; current versions let you enter an amount or select **Max**.
+
+A supported withdrawal redeems the selected amount from the external native-USDC position and routes the receipt back to Miden as USDCx. A partial withdrawal leaves the remaining amount invested.
 
 **Steps:**
 
-1. Open Bread, select the **Earn** tab, and select your position under **Current Positions**.
-2. Select the **Withdraw** button.
-3. Check the **Withdraw Amount**, **Route** and **Estimated time**, then select the **Withdraw** button.
+1. Open **Earn** and select your position under **Current Positions** or **My positions**.
+2. Select **Withdraw**. Enter an amount within the displayed available balance, or select **Max**, then select **Review**.
+3. Check **You withdraw**, **Stays invested**, the destination network, expected receipt and minimum receipt. Expand the withdrawal details to check the route and fees. Select **Withdraw** only when a valid quote is available and you accept the details.
 
-   ![Bread Wallet's withdrawal review page, with the Withdraw button](E43-earn-withdraw-review.png)
+   ![Bread 1.16.2 Testnet full-position withdrawal review](E43-earn-withdraw-review.png)
 
-4. The wallet shows **Processing Withdrawal**, then **Withdrawal Started!** Select **View in Activities** to follow it.
+4. Bread shows **Processing Withdrawal**, then **Withdrawal Started!** when it has started. Select **View in Activities** to follow delivery; starting the withdrawal does not mean the receipt has arrived.
 
-   ![Bread Wallet's Withdrawal Started! page, with the View in Activities button](E45-earn-withdraw-started.png)
+   ![Bread 1.16.2 Testnet Withdrawal Started page, with View in Activities](E45-earn-withdraw-started.png)
 
-5. On the **Activity** page, **Withdraw from Earn** shows **Redeeming**, then **Delivering**.
+5. Follow **Withdraw from Earn** in **Activity**, including **Redeeming** and **Delivering** where shown. Wait for the existing withdrawal to finish before starting another from the same position.
 
-   ![Bread Wallet's Activity page, with a Withdraw from Earn transaction](E46-earn-withdraw-activity.png)
+   ![Bread 1.16.2 Testnet Activity page, with a Withdraw from Earn transaction](E46-earn-withdraw-activity.png)
 
-6. When the USDC arrives, it appears as a **Received** transfer. Select the **Accept Transfer** button to add it to your balance.
+6. After delivery, check your Miden USDCx balance and **Activity**. Eligible USDCx transfers can be accepted automatically when **Auto-accept USDCX transfers** is on. If the receipt remains pending and shows **Accept Transfer**, accept it there.
 
-A withdrawal returns your whole position. See *Can I withdraw part of my position?*
+Partial amounts still depend on the available balance, supported route and a valid quote. See *Can I withdraw part of my position?*
 
 To learn how accepting works, see *How do I accept a pending transfer?*
 
 ### 24. Can I withdraw part of my position?
 Category: Earn › Earning yield
 
-These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
+Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See *Can I earn yield in Bread?*
 
-No. A withdrawal returns your whole position. The review page shows **Withdrawal** as **Full position (gasless)**.
+Yes, on a supported route with a valid quote. Select **Withdraw**, enter an amount up to the displayed available balance, then select **Review**. Use **Max** if you want to withdraw the available balance instead.
 
-To keep some funds earning, withdraw and then deposit the amount you want to keep. See *How do I withdraw from Earn?*
+The review shows **You withdraw** and **Stays invested**, so you can check how much remains in the position. The quoted receipt can be lower than the selected amount because of route costs. Check the expected and minimum receipt before confirming.
+
+A small amount may not have a usable quote. Do not exceed the available balance or start another withdrawal while one from the same position is still in progress. See *How do I withdraw from Earn?*
 
 ### 25. What does it cost to use Earn?
 Category: Earn › Earning yield
 
-These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
+Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See *Can I earn yield in Bread?*
 
-- **Depositing** costs a network fee, paid in the fee asset shown by the wallet. The review page shows the **Max network fee** before you confirm, and the success page shows the **Network Fee** you paid.
-- **Withdrawing** in this Testnet flow is gasless: you pay no network fee. Do not assume that other routes or a future Mainnet withdrawal have the same fees; review the amount and fees shown before confirming.
+- **Depositing** costs a Miden network fee. Check the displayed fee asset and **Max network fee** before confirming; keep enough USDCx on Mainnet for the deposit and that fee. The completed transaction shows the **Network Fee** paid.
+- **Withdrawing** uses sponsored gas on the supported Earn route. Sponsored gas does not mean the withdrawal has no costs: route costs are reflected in the quoted receipt. Check **You withdraw**, the expected receipt, the minimum receipt and **Route fees** before confirming.
 
-Check the displayed fee asset and maximum fee before confirming. See *What do I need before I can use Earn?*
+Amounts and fees depend on the route and quote. Testnet fees and balances do not establish Mainnet costs. See *What do I need before I can use Earn?*
 
 ### 26. What should I do if an Earn deposit or withdrawal fails?
 Category: Earn › Earning yield
 
-These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
+Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See *Can I earn yield in Bread?*
+
+The screenshots below were captured on Bread 1.16.2 Testnet. They illustrate an older flow; token names, balances and layouts can differ from your installed version.
 
 If a deposit shows **Transaction Failed**, check its status and your balance after sync before starting another deposit. A failed or interrupted screen does not by itself prove that nothing was submitted.
 
 **Steps:**
 
-1. On the **Transaction Failed** page, select **View in Activities**.
+1. On **Transaction Failed**, select **View in Activities**.
 
-   ![Bread Wallet's Transaction Failed page for an Earn deposit](E47-earn-deposit-failed.png)
+   ![Bread 1.16.2 Testnet Transaction Failed page for an Earn deposit](E47-earn-deposit-failed.png)
 
-2. Wait for the wallet to sync, and check that you have the displayed fee asset for the network fee.
-3. Retry only after **Activity**, balances and any existing Earn position confirm that the original deposit failed and no transfer is still pending. If the outcome is uncertain, contact [support](/feedback) before submitting again. See *How do I deposit into Earn?*
+2. Wait for the wallet to sync. Check **Activity**, your spendable balance, the displayed fee reserve and any existing Earn position.
+3. Retry only after those checks confirm that the original deposit failed and no transfer is still pending. If the outcome is uncertain, contact [support](/feedback) before submitting again. An unavailable quote or provider route is not fixed by repeatedly signing deposits. See *How do I deposit into Earn?*
 
-When you withdraw, the returning funds arrive as a **Received** transfer on the **Activity** page. If it shows a **Retry** button, see *What should I do if accepting a transfer fails?*
+For a withdrawal, check the existing **Withdraw from Earn** activity and position before starting another one. Let an in-progress withdrawal finish. If the wallet offers a recovery action, follow that existing activity rather than creating a duplicate withdrawal. If the outcome is uncertain or the position and balance disagree, contact [support](/feedback).
 
-If it keeps failing, report it to our [**SUPPORT**](/feedback).
+After a withdrawal is delivered, eligible incoming USDCx may be accepted automatically. If its acceptance fails and **Activity** shows **Retry**, see *What should I do if accepting a transfer fails?*
+
+Report the wallet version, network, market and error text without recovery information. See *How do I send feedback or report a problem?*
 
 ### 27. Do I keep my Earn position if I restore my wallet?
 Category: Earn › Earning yield
 
-These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
+Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See *Can I earn yield in Bread?*
 
-For a supported position on the same network, recovery uses your recovery phrase and the Guardian backup of your standard Bread account. After restoring, let the wallet sync and check **Current Positions** on the **Earn** tab. If the position is missing, check the network and account before contacting [support](/feedback). Do not make a replacement deposit to recover a missing position.
+For a supported position on the same network, recovery uses your recovery phrase and the Guardian backup of your standard Bread account. After restoring, let the wallet sync and check **Current Positions** in **Earn** or open **My positions**. If a position is missing, check the network and account before contacting [support](/feedback). Do not make a replacement deposit to recover a missing position.
+
+Recovery establishes access on the replacement device; it does not provide synchronized use on multiple devices. Use one device at a time, because recovery replaces the former device's access.
 
 Recovery does not move a Testnet position to Mainnet. Developer-created accounts without Guardian require a separate recovery plan.
 
@@ -501,11 +527,13 @@ To restore, see *How do I restore my wallet with a recovery phrase?*
 ### 28. Do spending limits apply to Earn deposits?
 Category: Earn › Earning yield
 
-These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
+Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See *Can I earn yield in Bread?*
 
-Yes. An Earn deposit counts towards your daily spending limit, based on its value in USD. Withdrawals bring funds back to your wallet and do not count.
+An Earn deposit is checked against your account's daily spending limit using its value in USD. A withdrawal returns funds to the wallet and does not count as a new deposit against that limit.
 
-This daily spending check is separate from the Partner Mainnet total wallet-balance cap. Do not assume future releases use the same spending rules.
+Check the amount and any spending-limit or price warning shown before confirming. This daily spending check is separate from the Partner Mainnet total wallet-balance cap.
+
+See *How do I set a spending limit?*
 
 ### 29. How do I remove my recovery phrase from my device?
 Category: Manage wallet › Security and recovery
@@ -639,6 +667,7 @@ The page then shows your limit, for example **Current limit: $500 a day**.
 **Good to know:**
 
 - **Stored on this device.** Limits and spending history are kept only on this installation. Resetting app data or reinstalling the wallet removes them.
+- **Priced assets only.** Assets the wallet cannot price are not covered by this USD limit. Review any price warning before confirming.
 - **A local safety check.** The limit is not an on-chain restriction. Anyone with direct access to your keys can bypass it.
 
 Your daily spending limit does not raise or replace the Partner Mainnet total wallet-balance cap. See *What is the Partner Mainnet deposit limit?*
@@ -722,7 +751,7 @@ Mainnet and Testnet are separate networks. Testnet tokens have no real-world val
 
 **Get the right build and your invitation**
 
-Use the invitation-enabled Bread version named in your official invitation. Store releases can differ by platform; installing a store update or a test build does not prove that your device has the supported Mainnet flow. Check your version and network before funding. If the expected options are missing, contact [support](/feedback).
+Use the invitation-enabled Bread version named in your official invitation. A GitHub release, including 1.17.7, does not mean that version is available in every store or installed on your device. Store releases can differ by platform; installing a store update or a test build does not prove that your device has the supported Mainnet flow. Check your version and network before funding. If the expected options are missing, contact [support](/feedback).
 
 Your personal access code is in your invitation email. A code registers one new account. Keep it private: do not post it, include it in screenshots or send it in a support report. If you have not received an invitation, contact [support](/feedback) about access. Downloading Bread does not itself grant an invitation.
 
@@ -738,7 +767,13 @@ Your personal access code is in your invitation email. A code registers one new 
 
 If you already registered a Mainnet account, recover that account instead of registering another one. On the Mainnet welcome screen choose **I don't have a code**, then **Recover your account**. Recovery of an existing registered account does not require a new invitation code. It needs the correct recovery phrase and the account's Guardian backup. A Testnet account cannot gain Mainnet access through recovery.
 
+A standard Bread account supports one active device at a time. Recovery replaces the former device's access; it does not synchronize use across devices. In 1.17.7, **Another device holds this account** and **Make this device the main one** identify the device-replacement flow. Earlier installed versions may show different controls.
+
 Follow *How do I restore my wallet with a recovery phrase?*. Wait for recovery, any everyday-key rotation and sync to finish before transacting. Do not reset again if the result is unclear.
+
+**Recovery phrase verification in 1.17.7**
+
+For an account created in Bread with its recovery phrase still stored and not yet verified, 1.17.7 requires backup verification when the combined priced Mainnet balance across your accounts reaches $150. Follow the official wallet prompt to confirm your offline backup before continuing. Already verified, recovered or removed phrases are handled differently. Never enter the phrase into a support form or website.
 
 **If the code or registration fails**
 
@@ -764,6 +799,8 @@ Category: Manage wallet › Security and recovery
 
 A reset can erase this installation's wallet keys, local history, contacts and settings. Signing out to recover a forgotten password and resetting developer endpoints can also replace local wallet data.
 
+Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; you can no longer use the account on the previous device. Recovery does not set up synced access across both devices.
+
 Before you continue:
 
 1. Confirm that you have the recovery phrase written correctly and stored offline. A passcode, password or biometric unlock alone cannot restore a wallet on a new installation.
@@ -773,7 +810,7 @@ Before you continue:
 
 If you forgot the wallet password, use the wallet's recovery flow to reimport the account and choose new protection. Support cannot reset your recovery phrase. If the phrase is missing, do not sign out or reset; contact [support](/feedback).
 
-If your installed version offers **Settings** → **Security** → **Encrypted Wallet File**, treat that file as a sensitive backup. It is a snapshot, not a continuously updated copy; save a new snapshot after account changes. Keep it protected and never attach it to a support report. Availability depends on your wallet version and account type.
+If your installed version offers **Profile** → **Security** → **Encrypted Wallet File**, treat that file as a sensitive backup. It is a snapshot, not a continuously updated copy; save a new snapshot after account changes. Keep it protected and never attach it to a support report. Availability depends on your wallet version and account type.
 
 Restoring Guardian account state from a file does not by itself complete recovery. Replacing the everyday key can still need the Guardian operator; a compatible, previously saved everyday key pair can be another supported path in versions that offer it. Do not assume a file alone or an older snapshot guarantees recovery. If the operator is unavailable or you are unsure which backups you have, keep the working installation and contact [support](/feedback) before resetting.
 
@@ -797,7 +834,7 @@ If Bread shows **Bridge deposit failed**, see *What should I do if a bridge depo
 ### 41. How do I send feedback or report a problem?
 Category: Troubleshooting › Common issues
 
-Open [the Bread feedback form](/feedback), or choose **Send feedback** from the wallet's **Settings** and **About** section.
+Open [the Bread feedback form](/feedback), or choose **Send feedback** from the wallet's **Profile** and **About** section.
 
 Use **Short title** for one clear summary and **Description** for the details. Choose the feedback type. For a bug, include what you did, what you expected, what happened, your platform, app version and network. Describe one problem per report where possible.
 
@@ -867,24 +904,24 @@ If a transaction was interrupted, check **Activity** and balances before retryin
 ### 45. How do GameCoins and Arcade work?
 Category: Getting started › Setup and basic use
 
-GameCoin (GC) is used for supported Arcade leaderboard submissions. The rules below describe the intended Arcade flow; claims and leaderboard posting require the deployed service and a compatible game. A game preview or announced integration is not confirmation that those services are live.
+GameCoin (GC) is used by supported Arcade games. Each game sets its own rules for stakes, leaderboard submissions and payouts, including any posting fee. Bread does not provide a weekly GC allowance or claim service.
 
-- Playing, replaying and sharing results on social are free. You do not need GC just to share a result.
-- Submitting a result to a supported game's leaderboard costs 1 GC. You also pay the network fee shown by the wallet; GC does not replace the fee asset.
-- When the claim service is available, each account can claim 10 GC per week from Arcade, regardless of its existing balance. Unused GC carries over.
-- GC is transferable, but its balance is not a score. Each game has its own scoring and leaderboard. There is no global ranking across games.
+In versions that include the Arcade balance display, Bread shows your GC balance for the selected network. In version 1.17.7, **Buy more GC** is disabled: purchasing GC inside the wallet is not implemented. A purchase offered inside a game is a separate game flow, not confirmation that wallet purchasing is available. Store releases can differ by platform; check your installed version.
 
-If claiming or posting is unavailable, continue with free play where the game supports it. Do not repeatedly sign a failed submission: first check **Activity** and your GC balance. Do not assume a claim or score was recorded until the wallet and game confirm it.
+Before playing or submitting a result, check the game's rules, any GC stake, the network fee and the action shown by the wallet. GC does not replace the network fee asset. Free play and social sharing depend on what the game offers.
+
+GC balance is not a score. Each game has its own scoring and leaderboard; there is no global ranking across games.
+
+Do not repeatedly sign a failed game action: first check **Activity**, your GC balance and the game's status. Do not assume a purchase, stake, submission or payout completed until the wallet and game confirm it.
 
 Report the game, network, wallet version and error text without recovery information. See *How do I send feedback or report a problem?*
-
 
 ### 46. Which bridge networks and tokens can I use?
 Category: Crosschain › Moving across chains
 
 Use only the source network, destination network, token and transfer direction currently enabled in your installed Bread version. Support for a chain does not mean support for every token or every direction. A token ticker alone does not identify an asset.
 
-**Partner Mainnet route list — checked 23 October 2026**
+**Partner Mainnet route list — checked 26 October 2026**
 
 The current Partner Mainnet configuration lists these routes in both directions: deposits into Miden and withdrawals from Miden. This describes configured options; it does not guarantee that each route is available in your installed release or for your transfer. Continue only when the wallet offers the exact route and its review information.
 
@@ -893,9 +930,9 @@ The current Partner Mainnet configuration lists these routes in both directions:
 
 A separate bridge website may offer different assets or directions; its options do not establish support inside Bread. [Epoch](https://epochprotocol.xyz/)'s fast-bridge route is not currently enabled on Partner Mainnet. Do not infer that other networks or every token supported by a provider are supported in Bread.
 
-**NEAR Intents — coming soon**
+**NEAR Intents**
 
-[NEAR Intents](https://docs.near-intents.org/) support is coming soon to Bread and is not currently available. There is no announced availability date. Native NEAR-network transfers and NEAR Intents are separate from the Ethereum NEAR-token route listed above. Do not send native NEAR to an Ethereum or Miden address on the assumption that Intents will handle the transfer.
+[NEAR Intents](https://docs.near-intents.org/) is disabled in the current Partner Mainnet configuration. There is no announced availability date. Native NEAR-network transfers and NEAR Intents are separate from the Ethereum NEAR-token route listed above. Do not send native NEAR to an Ethereum or Miden address on the assumption that Intents will handle the transfer.
 
 **Before depositing or withdrawing**
 
@@ -914,6 +951,8 @@ Check the Partner Mainnet balance cap before depositing. If a submitted transfer
 Category: Troubleshooting › Common issues
 
 If Bread reports a Guardian connection or authentication error, such as 401, keep the wallet installed. An error does not mean your recovery phrase is wrong, and resetting the wallet is not a connection fix.
+
+Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; you can no longer use the account on the previous device. Recovery does not set up synced access across both devices. If you have already recovered elsewhere, continue on the device where recovery completed instead of repeatedly recovering back and forth.
 
 1. Check your internet connection and update through the official store. If the wallet is still syncing or rotating an everyday key after recovery, let that operation finish before starting another one.
 2. Confirm that the wallet is on the network used by the original account. Mainnet and Testnet have different account state. Do not replace RPC or Guardian endpoints with addresses supplied by strangers.

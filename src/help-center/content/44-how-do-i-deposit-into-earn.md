@@ -6,36 +6,38 @@ subcategory: earn
 platforms: [extension-desktop, mobile]
 ---
 
-These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
+Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See [*Can I earn yield in Bread?*](#earn/can-i-earn-yield-in-bread)
 
-Depositing opens a position in a vault. Your USDC leaves your Miden balance and starts earning in the lending market.
+The screenshots below were captured on Bread 1.16.2 Testnet. They illustrate an older flow; token names, balances and layouts can differ from your installed version.
+
+Depositing spends USDCx from your Miden balance. The supported route supplies native USDC to the external lending market and opens a position there.
 
 **Steps:**
 
-1. Open Bread and select the **Earn** tab.
+1. Open Bread and select **Earn**.
 
-   ![Bread Wallet's Earn page, with Featured Vaults and no active positions](E35-earn-tab.png)
+   ![Bread 1.16.2 Testnet Earn page, with Featured Vaults and no active positions](E35-earn-tab.png)
 
-2. Under **Featured Vaults**, select a vault to see its details, then select the **Deposit** button.
+2. Select a supported vault, check its market and network, then select **Deposit** if it is available.
 
-   ![Bread Wallet's vault page, with the Deposit button](E36-earn-vault.png)
+   ![Bread 1.16.2 Testnet vault page, with the Deposit button](E36-earn-vault.png)
 
-3. Enter the amount of USDC and select the **Confirm** button.
+3. Enter the amount of USDCx to deposit, leaving enough for the displayed network fee, then select **Confirm**.
 
-   ![Bread Wallet's Deposit Amount page, with an amount entered](E37-earn-deposit-amount.png)
+   ![Bread 1.16.2 Testnet Deposit Amount page, showing the older USDC label](E37-earn-deposit-amount.png)
 
-4. Check the **Deposit Amount**, **Route**, **Estimated time** and **Max network fee**, then select the **Open position** button.
+4. Check the **Deposit Amount**, market, **Route**, **Estimated time** and **Max network fee**. Select **Open position** only when the details are correct and the action is available.
 
-   ![Bread Wallet's deposit review page, with the Open position button](E38-earn-deposit-review.png)
+   ![Bread 1.16.2 Testnet deposit review, with the Open position button](E38-earn-deposit-review.png)
 
-5. The wallet shows **Generating Transaction** while it processes the deposit. You can select **Hide** and keep using the wallet.
+5. Bread shows **Generating Transaction** while it processes the deposit. You can select **Hide** and follow its status in **Activity**. Do not start another deposit because this screen takes longer than expected.
 
-   ![Bread Wallet's Generating Transaction page for an Earn deposit](E39-earn-deposit-generating.png)
+   ![Bread 1.16.2 Testnet Generating Transaction page for an Earn deposit](E39-earn-deposit-generating.png)
 
-6. When it is done, the wallet shows **You're Earning!** Select the **Done** button.
+6. If the deposit completes, Bread shows **You're Earning!** Select **Done**, then check the position and transaction status.
 
-   ![Bread Wallet's success page for an Earn deposit, showing You're Earning!](E40-earn-deposit-success.png)
+   ![Bread 1.16.2 Testnet success page for an Earn deposit](E40-earn-deposit-success.png)
 
-Your position appears under **Current Positions** on the **Earn** tab. See [*How do I check my Earn position?*](#earn/how-do-i-check-my-earn-position)
+Your position appears under **Current Positions** in **Earn** after it loads. See [*How do I check my Earn position?*](#earn/how-do-i-check-my-earn-position)
 
 Before you deposit, see [*What do I need before I can use Earn?*](#earn/what-do-i-need-before-i-can-use-earn)

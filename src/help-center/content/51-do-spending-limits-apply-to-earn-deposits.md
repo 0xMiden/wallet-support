@@ -6,8 +6,10 @@ subcategory: earn
 platforms: [extension-desktop, mobile]
 ---
 
-These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
+Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See [*Can I earn yield in Bread?*](#earn/can-i-earn-yield-in-bread)
 
-Yes. An Earn deposit counts towards your daily spending limit, based on its value in USD. Withdrawals bring funds back to your wallet and do not count.
+An Earn deposit is checked against your account's daily spending limit using its value in USD. A withdrawal returns funds to the wallet and does not count as a new deposit against that limit.
 
-This daily spending check is separate from the Partner Mainnet total wallet-balance cap. Do not assume future releases use the same spending rules.
+Check the amount and any spending-limit or price warning shown before confirming. This daily spending check is separate from the Partner Mainnet total wallet-balance cap.
+
+See [*How do I set a spending limit?*](#security-and-recovery/how-do-i-set-a-spending-limit)

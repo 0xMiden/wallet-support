@@ -8,6 +8,8 @@ platforms: [extension-desktop, mobile]
 
 On a new device, the recovery phrase rebuilds the emergency key. Together, the emergency key and Guardian unlock the backed-up state and establish a fresh everyday key tied to the new device.
 
+Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; you can no longer use the account on the previous device. Recovery does not set up synced access across both devices.
+
 The full round trip across your device, Guardian, and Miden:
 
 1. Your new device requests the state, signed by the emergency key.

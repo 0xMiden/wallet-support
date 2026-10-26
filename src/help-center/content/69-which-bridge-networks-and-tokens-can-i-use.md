@@ -8,7 +8,7 @@ platforms: [extension-desktop, mobile]
 
 Use only the source network, destination network, token and transfer direction currently enabled in your installed Bread version. Support for a chain does not mean support for every token or every direction. A token ticker alone does not identify an asset.
 
-**Partner Mainnet route list — checked 23 October 2026**
+**Partner Mainnet route list — checked 26 October 2026**
 
 The current Partner Mainnet configuration lists these routes in both directions: deposits into Miden and withdrawals from Miden. This describes configured options; it does not guarantee that each route is available in your installed release or for your transfer. Continue only when the wallet offers the exact route and its review information.
 
@@ -17,9 +17,9 @@ The current Partner Mainnet configuration lists these routes in both directions:
 
 A separate bridge website may offer different assets or directions; its options do not establish support inside Bread. [Epoch](https://epochprotocol.xyz/)'s fast-bridge route is not currently enabled on Partner Mainnet. Do not infer that other networks or every token supported by a provider are supported in Bread.
 
-**NEAR Intents — coming soon**
+**NEAR Intents**
 
-[NEAR Intents](https://docs.near-intents.org/) support is coming soon to Bread and is not currently available. There is no announced availability date. Native NEAR-network transfers and NEAR Intents are separate from the Ethereum NEAR-token route listed above. Do not send native NEAR to an Ethereum or Miden address on the assumption that Intents will handle the transfer.
+[NEAR Intents](https://docs.near-intents.org/) is disabled in the current Partner Mainnet configuration. There is no announced availability date. Native NEAR-network transfers and NEAR Intents are separate from the Ethereum NEAR-token route listed above. Do not send native NEAR to an Ethereum or Miden address on the assumption that Intents will handle the transfer.
 
 **Before depositing or withdrawing**
 
