@@ -128,6 +128,11 @@ describe('verified wallet behavior', () => {
 
   it('does not infer fast transfers from Earn being enabled', () => {
     expect(body('what-is-the-difference-between-a-solver-route-and-a-canonical-bridge')).toContain('fast transfers are disabled');
-    expect(body('which-bridge-networks-and-tokens-can-i-use')).toContain('is disabled in the current Partner Mainnet configuration');
+    const bridge = body('which-bridge-networks-and-tokens-can-i-use');
+    for (const route of ['Fast · Epoch', 'NEAR Intents']) {
+      const availability = bridge.split('\n').find(line => line.startsWith(`- **${route}**:`));
+      expect(availability, `${route} availability`).toBeDefined();
+      expect(availability).toMatch(/\bdisabled\b/);
+    }
   });
 });
