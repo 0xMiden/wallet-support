@@ -6,14 +6,15 @@ subcategory: common-issues-and-support
 platforms: [extension-desktop, mobile]
 ---
 
-A bridge transfer can include a source-chain transaction, route processing and a destination-chain claim or arrival. Confirmation on the source chain alone does not mean the destination balance has updated.
+Bridge transfers take time. USDC deposits into Bread usually arrive in about 2 minutes (about 1 minute from Arc), and **Slow · Agglayer** transfers take about 30 minutes. A transfer can be confirmed on the network you sent from before it reaches the other side.
 
-1. Check the source and destination networks, token and recipient in the original transfer.
-2. Open **Activity** and read the existing transfer's status and any claim or recovery action. Keep the wallet connected and let it sync.
-3. Check whether an incoming Miden transfer is waiting to be accepted. See [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
-4. If the outcome is uncertain, check the source and destination balances before retrying. Do not submit a second deposit or withdrawal just because the screen was interrupted.
-5. If it remains delayed, report the route, networks, wallet version and a non-secret transaction reference. Hide sensitive information in screenshots. See [*How do I send feedback or report a problem?*](#common-issues-and-support/how-do-i-send-feedback-or-report-a-problem)
+1. Check the original transfer: the networks, the token and the receiving address.
+2. Open **Activity** and tap the transfer to see its status. Keep Bread open and connected so it can sync.
+3. If the transfer is coming into Bread, check whether it is waiting for you to accept it. See [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
+4. If the transfer shows a button such as **Claim Asset** or **Reclaim funds**, follow it. Some withdrawals need you to connect the receiving wallet to claim.
+5. Check your balances on both networks before you try again. Don't send a second transfer just because the screen closed or froze.
+6. If it's still delayed, report the route, the networks, your wallet version and the transaction ID. Hide sensitive information in screenshots. See [*How do I send feedback or report a problem?*](#common-issues-and-support/how-do-i-send-feedback-or-report-a-problem)
 
-A disabled route can stop new transfers without cancelling a transfer already in progress. Follow recovery actions shown for that transfer. Do not change Developer Settings to force a route.
+If a route is switched off, that stops new transfers, not ones already on their way. Don't change Developer Settings to force a route.
 
 If Bread shows **Bridge deposit failed**, see [*What should I do if a bridge deposit fails?*](#common-issues-and-support/what-should-i-do-if-a-bridge-deposit-fails)

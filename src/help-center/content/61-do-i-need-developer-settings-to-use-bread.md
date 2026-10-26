@@ -6,12 +6,12 @@ subcategory: setup-and-basic-use
 platforms: [extension-desktop, mobile]
 ---
 
-No. Standard wallet use does not require custom RPC, prover, faucet or Guardian endpoints. Use the defaults supplied by your official wallet version.
+No. Bread works with its default settings, and most people never need Developer Settings.
 
-Developer Settings are for developers testing integrations and separate networks. Changing them can break sync or point the wallet at a different network. A reachable endpoint does not prove that it is the right or trusted service.
+Developer Settings are for developers who test integrations, use test faucets or run their own networks. The wallet itself warns that wrong values will break your wallet: a changed endpoint can stop syncing or point Bread at a different network.
 
-After setup, **Network endpoints** may show an active override. Returning to defaults can require **Reset to defaults & re-onboard**, which erases local keys and history. Have a supported recovery path before using it. Do not reset a working wallet as a first troubleshooting step.
+If you changed an endpoint, **Network endpoints** appears in your settings. Going back to the defaults can need **Reset to defaults & re-onboard**, which erases this wallet from the device, including your keys and history. Make sure you have your recovery phrase first. Don't reset a working wallet just to fix a problem.
 
-Developer-created accounts without Guardian do not have the standard Guardian recovery backup. Keep their data and backups separate from normal consumer accounts.
+Developers can also create accounts without a Guardian. Those accounts don't get a Guardian backup, so keep them separate from your everyday accounts.
 
-For SDK, API and custom-network integration instructions, use the [Miden developer documentation](https://docs.miden.xyz/). This Help Center covers consumer wallet use. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)
+For SDK, API and custom-network guides, see the [Miden developer documentation](https://docs.miden.xyz/). See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)

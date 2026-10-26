@@ -18,11 +18,14 @@ If accepting a transfer fails, the transfer stays in your **Activity** list and 
 
    ![Bread Wallet's Activity page, with the Pending tab selected and the Retry button](E31-accept-fails-pending-tab.png)
 
-3. Let the wallet sync and check the transfer status and your balance. A failed or interrupted screen does not prove that nothing reached the network. Wait while an acceptance is still processing.
-4. Select **Retry** only when those checks confirm the acceptance failed. If the outcome is uncertain, contact [support](/feedback) before trying again.
+3. Expand the card and read the message under the transfer:
+   - If it says the transfer could not be accepted, select **Retry**.
+   - If it says the wallet could not confirm whether it went through, it may still complete. Let the wallet sync and check your balance first. Select **Retry** only if the tokens didn't arrive.
 
-If the expanded card shows an expiration date, accept the transfer before then. After that date, a recallable transfer can be reclaimed by the sender; expiry does not automatically return spendable funds to the sender. If the card shows **Accept Transfer** rather than **Retry**, it is a pending transfer awaiting acceptance.
+If you're not sure what happened, contact [support](/feedback) before you try again.
 
-If it keeps failing, see [*My transfer is stuck on Accepting stage*](#common-issues-and-support/my-token-is-stuck-on-consuming-receiver-address), or report it to our [**SUPPORT**](/feedback).
+If the card says the transfer returns to the sender by a certain date, accept it before then. After that date it does not automatically return to the sender's balance: the sender has to accept it.
+
+If it keeps failing, see [*My transfer is stuck on Accepting stage*](#common-issues-and-support/my-token-is-stuck-on-consuming-receiver-address), or report it to our [support](/feedback) team.
 
 To learn how accepting works, see [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer).

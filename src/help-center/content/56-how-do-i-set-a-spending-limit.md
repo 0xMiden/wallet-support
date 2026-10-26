@@ -6,7 +6,7 @@ subcategory: security-and-recovery
 platforms: [extension-desktop]
 ---
 
-A spending limit caps how much your account can send in a day, measured in USD. When a transaction would go over it, the wallet stops and asks you to authenticate before it continues.
+A spending limit caps how much your account can send in a day, in US dollars. If a transaction would go over it, the wallet asks you to authenticate before it continues.
 
 **Steps:**
 
@@ -28,15 +28,15 @@ The page then shows your limit, for example **Current limit: $500 a day**.
 **Changing or removing a limit:**
 
 - Lowering a limit saves straight away.
-- Raising a limit asks for your password again.
-- To remove the limit, clear the amount and select **Save**, then enter your password. The page shows **No limit set**.
+- Raising a limit asks for your password.
+- To remove the limit, clear the amount, select **Save** and enter your password. The page shows **No limit set**.
 
 **Good to know:**
 
-- **Stored on this device.** Limits and spending history are kept only on this installation. Resetting app data or reinstalling the wallet removes them.
-- **Priced assets only.** Assets the wallet cannot price are not covered by this USD limit. Review any price warning before confirming.
-- **A local safety check.** The limit is not an on-chain restriction. Anyone with direct access to your keys can bypass it.
+- **Stored on this device.** The limit and your spending history live only in this installation. Resetting app data or reinstalling the wallet removes them.
+- **Priced assets only.** Tokens the wallet can't price don't count toward the limit.
+- **A local safety check.** The limit isn't enforced on-chain. Someone who has your keys can get around it.
 
-Your daily spending limit does not raise or replace the Partner Mainnet total wallet-balance cap. See [*What is the Partner Mainnet deposit limit?*](#moving-across-chains/what-is-the-partner-mainnet-deposit-limit)
+A spending limit is separate from the cap on bridge deposits. See [*What is the Partner Mainnet deposit limit?*](#moving-across-chains/what-is-the-partner-mainnet-deposit-limit)
 
 Related: [*Do spending limits apply to Earn deposits?*](#earn/do-spending-limits-apply-to-earn-deposits)

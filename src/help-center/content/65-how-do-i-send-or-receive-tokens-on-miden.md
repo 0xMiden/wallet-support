@@ -6,14 +6,22 @@ subcategory: sending-receiving-and-claiming
 platforms: [extension-desktop, mobile]
 ---
 
-For a transfer within Miden, both wallets must use the same network. A transfer to another chain needs a supported crosschain route.
+Use **Send** to send tokens and **Receive** to share your address. Both wallets need to be on the same Miden network.
 
-**To receive:**
+**To receive**
 
-Open **Receive** and share the account address or QR code for the intended network. Share the address, never your recovery phrase or signing keys. Ask the sender to check the network and token. Incoming transfers may need to be accepted in **Activity** before they become spendable.
+1. Open **Receive** and share your address or QR code. Never share your recovery phrase or keys.
+2. Ask the sender to check the network and the token.
+3. Incoming USDCX is accepted automatically by default. Other tokens may need you to accept them in **Activity** before you can use them. See [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
 
-**To send:**
+**To send**
 
-Open **Send**, enter or select the recipient, choose the token and amount, then review the network, address, amount, fee and any expiration before confirming. Keep enough of the displayed fee asset for the transaction. If the address or network is unexpected, stop and check with the recipient.
+1. Open **Send** and paste the address, or pick it from **Recent** or **Address Book**.
+2. Choose the token and enter the amount.
+3. On the review screen, check the address, the amount, **Transfer type** and **Max network fee**, then confirm.
 
-Track the send in **Activity**. A confirmed send can still require the recipient to accept the transfer. See [*My transfer shows as confirmed, but the token never arrived.*](#common-issues-and-support/my-transfer-shows-as-completed-but-the-token-never-arrived)
+Network fees are paid in USDCX, so keep a little in your account. If Bread says the address belongs to a different Miden network, stop and check it with the recipient.
+
+Transfers are **Private** by default. Your address as the sender is always visible on the network. A **Public** transfer also shows the token, amount and recipient.
+
+Track your send in **Activity**. To send to another blockchain, see [*How do I send funds from Bread to another blockchain?*](#moving-across-chains/how-do-i-send-funds-from-bread-to-another-blockchain) If a send shows as confirmed but the token never arrived, see [*My transfer shows as confirmed, but the token never arrived.*](#common-issues-and-support/my-transfer-shows-as-completed-but-the-token-never-arrived)

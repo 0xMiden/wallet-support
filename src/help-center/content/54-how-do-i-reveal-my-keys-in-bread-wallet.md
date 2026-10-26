@@ -6,7 +6,7 @@ subcategory: security-and-recovery
 platforms: [extension-desktop]
 ---
 
-Bread can show the keys your account signs with: your Miden everyday key and your EVM key. Most people never need them. Do not reveal them for ordinary wallet setup, a dApp connection, troubleshooting or feedback. Requests to paste signing keys into a site or send them to support are unsafe.
+Bread can show the two keys your account signs with: your Miden everyday key and your EVM key. Most people never need them. Never paste them into a website or send them to anyone, support included.
 
 **Steps:**
 
@@ -16,10 +16,10 @@ Bread can show the keys your account signs with: your Miden everyday key and you
 
    ![Bread Wallet's page for revealing the keys, with the warning and the password field](E52-reveal-keys-warning.png)
 
-4. The wallet shows a QR code that holds both keys. Select **Show keys as text** to see the **Miden everyday private key** and the **EVM private key** written out, or **Show QR code** to go back.
+4. The wallet shows a QR code that holds both keys. Select **Show keys as text** to see the **Miden everyday private key** and the **EVM private key**, or **Show QR code** to go back.
 
-The page hides the keys again after a short time. Enter your password again if you need more time.
+The keys hide again after a short time. Enter your password again if you need more time.
 
-> ⚠️ **Important note:** Keep both keys secret. Anyone with them can control your Miden and EVM assets. Rotating your everyday key does not change or protect a leaked EVM key.
+> ⚠️ Anyone with these keys can control your Miden and EVM assets. Rotating your everyday key does not protect a leaked EVM key.
 
 If you think your everyday key has leaked, see [*How do I rotate my everyday key?*](#guardian-protection/how-do-i-rotate-my-everyday-key)

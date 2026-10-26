@@ -6,10 +6,10 @@ subcategory: moving-across-chains
 platforms: [extension-desktop, mobile]
 ---
 
-Partner Mainnet does not currently enable Epoch or NEAR Intents fast crosschain swaps. The Circle and Agglayer bridge routes move their supported assets; do not treat them as a general token-swap service. A Swap within Miden is a different operation.
+Not yet. Crosschain swaps through NEAR Intents aren't available in Bread yet.
 
-Use a crosschain swap only if your installed version and selected network explicitly offer that source token, destination token and route.
+You can still move tokens between networks, but they stay the same token. USDC becomes USDCX on Miden and turns back into USDC when you send it out. **Slow · Agglayer** moves ETH and other tokens between Ethereum and Miden.
 
-Check the quote, expected received amount, fees and recipient before signing. If the quote expires or changes, review the updated quote. Do not assume a route is available because another token or network works.
+To trade one token for another, use **Swap** in Bread. It works within Miden only.
 
-Use test assets on Testnet. Use Mainnet routes only when your installed released version supports them. See [*What is the difference between a solver route and a canonical bridge?*](#moving-across-chains/what-is-the-difference-between-a-solver-route-and-a-canonical-bridge)
+To learn how the routes differ, see [*What is the difference between a solver route and a canonical bridge?*](#moving-across-chains/what-is-the-difference-between-a-solver-route-and-a-canonical-bridge)

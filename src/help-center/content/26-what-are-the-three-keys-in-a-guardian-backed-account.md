@@ -6,17 +6,16 @@ subcategory: guardian-protection
 platforms: [extension-desktop, mobile]
 ---
 
-A Guardian-backed account spreads control across three keys:
+A Guardian-backed account has three keys:
 
-- an **everyday key**, stored on your device, for regular wallet actions,
-- an **emergency key**, recreated from your recovery phrase, and
-- the **Guardian key**, which acknowledges state updates.
-The rule tying them together is simple: every action needs two of the three keys, so no single key can move funds alone.
+- the everyday key, on your device, for everyday actions like sending,
+- the emergency key, which comes from your recovery phrase, and
+- the Guardian key, held by Guardian, which acknowledges each transaction.
+
+Every action needs two of the three keys, so no single key can move your funds.
 
 ![Three keys, always in control](three-keys-always-in-control.png)
 
-Switching Guardian takes both the everyday key and the emergency key, and leaves out the Guardian key being replaced.
-
-The result is that Guardian acknowledges state updates but can never act on its own, and you can walk away from it at any time using your own two keys.
+To switch Guardian, you use your everyday key and your emergency key. The old Guardian is only notified, so it can't block you. You can leave a Guardian at any time.
 
 Related: [*What is the emergency key?*](#guardian-protection/what-is-the-emergency-key), [*What is the everyday key?*](#guardian-protection/what-is-the-everyday-key), [*What is the Guardian key?*](#guardian-protection/what-is-the-guardian-key)

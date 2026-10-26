@@ -6,10 +6,10 @@ subcategory: guardian-protection
 platforms: [extension-desktop, mobile]
 ---
 
-Standard Bread setup uses a private Guardian-backed account. You choose a Guardian provider; you are not asked to choose between Guardian and an unsupported recovery setup.
+Yes. Every Bread account is private and Guardian-backed. When you set up, you only choose which Guardian to use.
 
-Guardian keeps the account-state backup needed for recovery. The operator can see that state, but it cannot move funds on its own and never holds your recovery phrase.
+Guardian keeps a backup of your account state so you can recover it. The operator can see that state, but it can't move your funds on its own. It never holds your recovery phrase.
 
-Keep the recovery phrase offline. It restores your keys and, with Guardian's backup, lets you recover on a new device. See [*How do I restore my wallet with a recovery phrase?*](#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase)
+Your recovery phrase restores your keys. With Guardian's backup, it brings your wallet back on a new device. Keep it offline. See [*How do I restore my wallet with a recovery phrase?*](#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase)
 
-Developer Settings can expose other account types for testing. Those accounts have different recovery requirements and are outside the standard consumer setup. See [*Do I need Developer Settings to use Bread?*](#setup-and-basic-use/do-i-need-developer-settings-to-use-bread)
+Other account types exist only in Developer Settings, for testing. You don't need them. See [*Do I need Developer Settings to use Bread?*](#setup-and-basic-use/do-i-need-developer-settings-to-use-bread)

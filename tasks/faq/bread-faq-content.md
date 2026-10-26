@@ -61,93 +61,93 @@ Revised for Brian's 2026-10-23 launch support audit. Forty-nine articles. Existi
 ### 1. What is Bread?
 Category: Getting started › Setup and basic use
 
-Bread is a private wallet on Miden, built for sending, receiving, swapping, and earning yield.
+Bread is a private wallet on Miden. You can use it to send, receive, swap and earn yield.
 
-Standard Bread accounts are private and Guardian-backed, with recovery through your recovery phrase and the Guardian backup. Privacy is built in, and the complexity is handled for you so the experience stays simple.
+Every Bread account is private and Guardian-backed. You don't need to manage the details; the wallet handles them for you.
 
-- **Private from other users.** The people you transact with can see their own transaction, but not the rest of your balance or history. Neither can anyone else watching the chain.
-- **Recoverable and still yours.** With a Guardian-backed account, a lost or stolen device isn't the end of the story, and no single key can move funds alone.
-Feature availability depends on your installed version and network. Mainnet access, Swap, crosschain routes and Earn are available only when your released wallet supports them. See *How do I prepare for Mainnet and check my network?*
+- Private from other users. The people you transact with see their own transaction, not the rest of your balance or history. Nobody watching the chain sees them either.
+- Recoverable and still yours. If you lose your device, your recovery phrase and Guardian's backup bring your wallet back. No single key can move your funds.
+
+Mainnet is invite-only for now, so a new wallet needs an invite code. See *How do I prepare for Mainnet and check my network?*
 
 Related: *What is a private account?*, *What is Guardian?*, *How to install Bread*
 
 ### 2. Does Bread use Guardian-backed accounts?
 Category: Guardian › Guardian protection
 
-Standard Bread setup uses a private Guardian-backed account. You choose a Guardian provider; you are not asked to choose between Guardian and an unsupported recovery setup.
+Yes. Every Bread account is private and Guardian-backed. When you set up, you only choose which Guardian to use.
 
-Guardian keeps the account-state backup needed for recovery. The operator can see that state, but it cannot move funds on its own and never holds your recovery phrase.
+Guardian keeps a backup of your account state so you can recover it. The operator can see that state, but it can't move your funds on its own. It never holds your recovery phrase.
 
-Keep the recovery phrase offline. It restores your keys and, with Guardian's backup, lets you recover on a new device. See *How do I restore my wallet with a recovery phrase?*
+Your recovery phrase restores your keys. With Guardian's backup, it brings your wallet back on a new device. Keep it offline. See *How do I restore my wallet with a recovery phrase?*
 
-Developer Settings can expose other account types for testing. Those accounts have different recovery requirements and are outside the standard consumer setup. See *Do I need Developer Settings to use Bread?*
+Other account types exist only in Developer Settings, for testing. You don't need them. See *Do I need Developer Settings to use Bread?*
 
 ### 3. What are the three keys in a Guardian-backed account?
 Category: Guardian › Guardian protection
 
-A Guardian-backed account spreads control across three keys:
+A Guardian-backed account has three keys:
 
-- an **everyday key**, stored on your device, for regular wallet actions,
-- an **emergency key**, recreated from your recovery phrase, and
-- the **Guardian key**, which acknowledges state updates.
-The rule tying them together is simple: every action needs two of the three keys, so no single key can move funds alone.
+- the everyday key, on your device, for everyday actions like sending,
+- the emergency key, which comes from your recovery phrase, and
+- the Guardian key, held by Guardian, which acknowledges each transaction.
+
+Every action needs two of the three keys, so no single key can move your funds.
 
 ![](three-keys-always-in-control.png)
 
-Switching Guardian takes both the everyday key and the emergency key, and leaves out the Guardian key being replaced.
-
-The result is that Guardian acknowledges state updates but can never act on its own, and you can walk away from it at any time using your own two keys.
+To switch Guardian, you use your everyday key and your emergency key. The old Guardian is only notified, so it can't block you. You can leave a Guardian at any time.
 
 Related: *What is the emergency key?*, *What is the everyday key?*, *What is the Guardian key?*
 
 ### 4. What is the emergency key?
 Category: Guardian › Guardian protection
 
-The emergency key is recreated from your recovery phrase when you need it. Some wallet screens call it your **Guardian recovery key** or your **recovery (cold) key**; it is the same key.
+The emergency key is the key that comes from your recovery phrase. Some wallet screens call it your **Guardian recovery key** or your **recovery (cold) key**; it is the same key.
 
-It is used in two situations: replacing a lost device and switching Guardian. On a new device, the recovery phrase rebuilds the emergency key. Together, the emergency key and Guardian unlock the backed-up state and establish a fresh everyday key tied to the new device.
+You need it to switch Guardian, to rotate your everyday key, and to restore your wallet on a new device. On a new device, your recovery phrase rebuilds the emergency key. With Guardian's backup, it restores your account and sets up a new everyday key there.
 
-Guardian keeps the backup, and the emergency key keeps control. Keep your recovery phrase offline and never share it.
+The wallet keeps the emergency key on your device until you choose **Remove recovery phrase**. After that, the wallet asks for your recovery phrase whenever it needs the emergency key.
+
+Keep your recovery phrase offline and never share it.
 
 Related: *What should I do if I lose my recovery phrase?*, *How does recovery work with Guardian?*
 
 ### 5. What is the everyday key?
 Category: Guardian › Guardian protection
 
-The everyday key lives on your device and is used for regular wallet actions. When you click **Send**, the everyday key signs the transaction locally, protected by your device's biometrics or your wallet password.
+The everyday key lives on your device and signs your regular transactions. When you click **Send**, it signs on your device, protected by your wallet password or biometrics.
 
-Sending, receiving, swapping, and earning take the everyday key plus Guardian. On its own, the everyday key cannot move funds.
+Sending, swapping and earning use the everyday key plus Guardian. The everyday key can't move funds on its own.
 
-If your device is lost or changed, a fresh everyday key is established with the emergency key plus Guardian. See *Can I get my wallet back if I lose my device?*
+If you think your device is compromised, use **Rotate everyday key** to replace it. If you lose your device, restoring your wallet sets up a new everyday key. See *Can I get my wallet back if I lose my device?*
 
 Related: *What is the emergency key?*, *What is the Guardian key?*
 
 ### 6. What is the Guardian key?
 Category: Guardian › Guardian protection
 
-The Guardian key is held by Guardian, and it acknowledges state updates.
+The Guardian key is held by your Guardian. It acknowledges each transaction from your account.
 
-Guardian acknowledges state updates but can never act on its own. It never holds funds. Because switching Guardian takes the everyday key and the emergency key, you can walk away from it at any time using your own two keys.
+Guardian can't act on its own and never holds your funds. You can switch to another Guardian at any time with your own two keys, the everyday key and the emergency key.
 
 Related: *What is Guardian?*, *Can Guardian move my funds or lock me out?*
 
 ### 7. Can Guardian move my funds or lock me out?
 Category: Guardian › Guardian protection
 
-Guardian cannot move your funds by itself or take permanent control of your account.
+No. Guardian can't move your funds by itself or take control of your account.
 
-Every action needs two of the three keys, so no single key can move funds alone. Guardian holds only one key, which means it acknowledges state updates but can never act on its own.
+Every action needs two of your three keys. Guardian holds only one of them. You hold the other two, the everyday key and the emergency key, and they let you switch to another Guardian at any time. See *How do I switch Guardian operators?*
 
-You hold the other two: the everyday key and the emergency key. Those keys let you switch Guardian operators. See *How do I switch Guardian operators?*
+If your Guardian stops responding, the wallet shows **Guardian unreachable** and transactions pause. Select **Switch Guardian** to move to another one. If you removed your recovery phrase from this device, you'll need it to switch, so keep it safe.
 
-A Guardian outage, refusal, or sync problem can temporarily interrupt ordinary Guardian-backed transactions while Bread verifies or repairs the connection. If automatic repair cannot finish, the wallet prompts you to switch operators. Keep your recovery phrase safe so you can use the emergency key when a rotation is required.
-
-For the full picture of why and how Guardian coordinates without ever taking custody, see *What is Guardian?*
+For more on how Guardian works without holding your funds, see *What is Guardian?*
 
 ### 8. How do I switch Guardian operators?
 Category: Guardian › Guardian protection
 
-Switching Guardian uses your everyday key and your emergency key, so have your recovery phrase ready before you start. In the wallet, this is called **Rotate Guardian**. For how these keys work, see *What are the three keys in a Guardian-backed account?*
+In the wallet, switching Guardian is called **Rotate Guardian**. It uses your everyday key and your emergency key. If you removed your recovery phrase from this device, have it ready. For how the keys work, see *What are the three keys in a Guardian-backed account?*
 
 **Steps:**
 
@@ -163,7 +163,7 @@ Switching Guardian uses your everyday key and your emergency key, so have your r
 
    ![Bread Wallet's Guardian Settings page, with the Rotate Guardian button](E21-guardian-settings.png)
 
-4. On the **Choose your Guardian** page, select your choice of Guardian, then click **Continue**.
+4. On the **Choose your Guardian** page, select a Guardian, then click **Continue**.
 
    ![Bread Wallet's Choose your Guardian page, with the Continue button](E22-guardian-choose.png)
 
@@ -171,12 +171,12 @@ Switching Guardian uses your everyday key and your emergency key, so have your r
 
    ![Bread Wallet's Review rotation page, with the Continue button](E23-guardian-review.png)
 
-6. A password page will appear to authenticate the switch. Enter your wallet password, then click **Continue**.
+6. Enter your wallet password to approve the switch, then click **Continue**.
 
    ![Bread Wallet's Enter password page, with the Continue button](E32-guardian-password.png)
 
-7. If the recovery phrase was removed from this device, enter it when the official wallet asks. Do not send it to support.
-8. A processing page will appear. You can hide it or wait until the process is complete, then click **Done** once the switch succeeds.
+7. If the wallet asks for your recovery phrase, enter it there. Never send it to anyone, including support.
+8. Wait while the switch processes, or click **Hide**. When it succeeds, click **Done**.
 
    ![Bread Wallet's Processing page, with the Hide button](E33-guardian-processing.png)
 
@@ -185,88 +185,95 @@ Switching Guardian uses your everyday key and your emergency key, so have your r
 ### 9. What can other people see about my account on the blockchain?
 Category: Privacy › Public and private transactions
 
-On most chains, an account's balance and full history live on a public ledger that anyone can read. Miden works differently: a private account keeps its state (its balances and its history) on your device, and the only things that ever reach the publicly readable chain are the account's address and a commitment to that state. A commitment is a hash of the state, a short cryptographic fingerprint that gives nothing away about its contents.
+Very little. With a private account, your balances and history stay on your device. The public chain only shows that your account exists and that its state changed, not what changed.
 
-From outside, the chain shows only that an account exists and that its state changed. The private account state is hidden, but public notes and transactions on other chains may reveal transfer details. When you look up an account on a block explorer, you'll see that it exists and that its state has changed, but you won't see what changed or how.
+On most blockchains, anyone can read an account's balance and full history. Miden works differently. If someone looks up your account on a block explorer, they won't see your balance or past transactions.
 
 ![](private-from-other-users.png)
 
-This is what private from other users means: the people you transact with can see their own transaction, but they cannot inspect the rest of your balance or history. Guardian can see the state it backs up, and anyone can read the contents of a public note. Privacy depends on the transfer as well as the account.
+The people you transact with see their own transaction, but not the rest of your balance or history. A few things are visible:
+
+- Your sender address is public on every transfer.
+- If you send a **Public** transfer, anyone can see its token, amount and recipient. Transfers are **Private** by default.
+- When you bridge, the transaction on the other chain is public there.
+- Guardian can see the state it backs up.
 
 Related: *What is a private account?*, *What is a private note?*
 
 ### 10. Can I get my wallet back if I lose my device?
 Category: Manage wallet › Security and recovery
 
-For a standard Guardian-backed Bread account, recovery on a new device uses your recovery phrase and Guardian's account-state backup. See *How do I restore my wallet with a recovery phrase?*
+Yes. Restore Bread on a new device with your recovery phrase, and your Guardian's backup brings back your account. See *How do I restore my wallet with a recovery phrase?*
 
-Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; you can no longer use the account on the previous device. Recovery does not set up synced access across both devices.
+You need your recovery phrase for this. Guardian can't replace it. If you lose the phrase and every device with your wallet on it, Guardian can't recover your funds for you.
 
-You still need the recovery phrase. Guardian cannot replace it or recover funds for you if the phrase and every device holding your keys are lost.
-
-If an older installation or a developer-created account does not use Guardian, do not assume this recovery path applies. Preserve any working device and seek [support](/feedback) before resetting it.
+Your account works on one device at a time. Restoring it on a new device makes that device the only one with access.
 
 ### 11. What does Guardian back up?
 Category: Manage wallet › Security and recovery
 
-Guardian keeps a backup of the account's state, meaning its balances and history.
+Guardian keeps a backup of your account's state: its balances and history.
 
-It works like the backup process on a phone, except it automatically refreshes with every transaction so the saved copy stays up to date. On Miden, because accounts are private by default, recovery is harder than it sounds. There is no public history to rebuild from: recovering the account requires both its latest state and the keys needed to regain control.
+It works like a phone backup, except it updates with every transaction, so the copy is always current. This matters on Miden. Accounts are private, so there's no public record to rebuild your account from. To recover it, you need both its latest state and your keys.
 
-Guardian keeps the backup, and the emergency key keeps control. Guardian never holds funds. See *Can Guardian move my funds or lock me out?*
+Guardian keeps the backup, and your emergency key keeps control. Guardian never holds your funds. See *Can Guardian move my funds or lock me out?*
 
 ### 12. How does recovery work with Guardian?
 Category: Manage wallet › Security and recovery
 
-On a new device, the recovery phrase rebuilds the emergency key. Together, the emergency key and Guardian unlock the backed-up state and establish a fresh everyday key tied to the new device.
+Your recovery phrase restores your emergency key on the new device. With it, Bread fetches your account's backup from Guardian and makes a new everyday key for this device. Guardian acknowledges the change, and your account moves to the new device.
 
-Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; you can no longer use the account on the previous device. Recovery does not set up synced access across both devices.
+Your account works on one device at a time. Restoring it makes the new device the only one with access, and the old device shows **Another device holds this account** and can't use the account until you make it the main device again.
 
-The full round trip across your device, Guardian, and Miden:
+Guardian keeps the backup, and your emergency key keeps control.
 
-1. Your new device requests the state, signed by the emergency key.
-2. Guardian returns the state snapshot.
-3. Your device generates a new everyday key and proposes the key update, signed by the emergency key.
-4. Guardian validates the key update, then acknowledges it.
-5. Your device submits the proof for the new state to Miden.
-The device drives recovery, Guardian acknowledges the recovery update, and only a commitment lands on-chain. Guardian keeps the backup, and the emergency key keeps control.
-
-For the in-app steps, see *How do I restore my wallet with a recovery phrase?*
+For the steps in the app, see *How do I restore my wallet with a recovery phrase?*
 
 ### 13. Can I send funds to another blockchain?
 Category: Crosschain › Moving across chains
 
-Yes. You can send USDCX from Bread to an address on **Ethereum**, **Base**, **Arbitrum One** or **Arc**. It arrives there as USDC, through Circle's xReserve route.
+Yes. You can send USDCX from Bread to an address on Ethereum, Base, Arbitrum or Arc. It arrives there as USDC, through Circle's xReserve.
 
-Other supported assets use the Ethereum ↔ Miden Agglayer bridge when that exact route is offered. Epoch and NEAR Intents fast transfers are not enabled on Partner Mainnet; Earn uses a separate Epoch service.
+You can also send ETH and other tokens to Ethereum through **Slow · Agglayer**. It usually takes about 30 minutes.
 
-Circle takes a fee from the amount you send, so you receive less than you send. Check the address before you confirm: once it is sent, the transfer can't be reclaimed.
+**Fast · Epoch** and NEAR Intents transfers aren't available yet. Earn uses Epoch separately, which doesn't make **Fast · Epoch** available.
 
-For the steps, see *How do I send funds from Bread to another blockchain?* For route differences, see *What is the difference between a solver route and a canonical bridge?*
+Circle takes its fee from the amount you send, so you receive a little less. The destination address is public. Check it before you confirm: once sent, the transfer can't be taken back.
+
+For the steps, see *How do I send funds from Bread to another blockchain?* For how the routes differ, see *What is the difference between a solver route and a canonical bridge?*
 
 ### 14. What is the difference between a solver route and a canonical bridge?
 Category: Crosschain › Moving across chains
 
-A solver route fulfills a request to deliver assets on another chain. A canonical bridge uses the bridge's deposit and claim process. Their supported assets, fees, arrival times and recovery steps can differ.
+They're two ways to move tokens between networks. A solver route is usually faster. A canonical bridge is the network's own built-in path.
 
-On Partner Mainnet, Circle routes move native USDC on Ethereum, Base, Arbitrum or Arc to and from USDCx on Miden. The Agglayer bridge connects Ethereum and Miden for its configured assets, with native ETH handled separately. Epoch and NEAR Intents fast transfers are disabled. Epoch support for Earn does not enable those transfer routes.
+On a solver route, a third party called a solver pays you on the other network from its own funds. It then collects what you sent.
 
-Bread shows only the routes configured for the selected network and asset. A bridge transfer does not necessarily swap the token in transit. Check the exact route, amount and fees before signing.
+On a canonical bridge, your tokens are locked or burned on one network. The same amount is then released or created on the other.
 
-Use test assets only on Testnet routes. Mainnet routes require a released wallet that supports them; seeing a test route is not evidence that its Mainnet equivalent is available.
+Fees, arrival times and the tokens you can move differ between the two.
 
-If a transfer is pending, follow its existing status and claim or recovery instructions rather than starting it again. See *What should I check if a bridge deposit or withdrawal is delayed?*
+In Bread today, every transfer uses a bridge:
+
+- USDC on Ethereum, Base, Arbitrum or Arc moves to and from USDCX on Miden through Circle's xReserve.
+- ETH and other tokens move between Ethereum and Miden through **Slow · Agglayer**, in about 30 minutes.
+
+The solver routes, **Fast · Epoch** and NEAR Intents, aren't available yet: fast transfers are disabled on Mainnet for now. Earn uses Epoch separately, which doesn't make **Fast · Epoch** available.
+
+Bread only shows the routes available for the token and network you pick. Check the route, amount and fee before you confirm.
+
+If a transfer is still pending, don't start it again. Follow its status in Bread. See *What should I check if a bridge deposit or withdrawal is delayed?*
 
 ### 15. Can I swap tokens across chains?
 Category: Crosschain › Moving across chains
 
-Partner Mainnet does not currently enable Epoch or NEAR Intents fast crosschain swaps. The Circle and Agglayer bridge routes move their supported assets; do not treat them as a general token-swap service. A Swap within Miden is a different operation.
+Not yet. Crosschain swaps through NEAR Intents aren't available in Bread yet.
 
-Use a crosschain swap only if your installed version and selected network explicitly offer that source token, destination token and route.
+You can still move tokens between networks, but they stay the same token. USDC becomes USDCX on Miden and turns back into USDC when you send it out. **Slow · Agglayer** moves ETH and other tokens between Ethereum and Miden.
 
-Check the quote, expected received amount, fees and recipient before signing. If the quote expires or changes, review the updated quote. Do not assume a route is available because another token or network works.
+To trade one token for another, use **Swap** in Bread. It works within Miden only.
 
-Use test assets on Testnet. Use Mainnet routes only when your installed released version supports them. See *What is the difference between a solver route and a canonical bridge?*
+To learn how the routes differ, see *What is the difference between a solver route and a canonical bridge?*
 
 ### 16. Can I earn yield in Bread?
 Category: Earn › Earning yield
@@ -332,15 +339,15 @@ When someone sends you tokens, they show up as a pending transfer on the **Activ
 
    ![Bread Wallet's Activity page, with the Transfer tab selected and the transfer marked Confirmed](E27-accept-received-tab.png)
 
-To accept everything at once, select **Accept All** in the row above the list on the **Pending** tab, which shows how many transfers are waiting and their total.
+To accept everything at once, select **Accept All** in the row above the list on the **Pending** tab. The row shows how many transfers are waiting and their total.
 
 If accepting fails, see *What should I do if accepting a transfer fails?*.
 
-**Important note:** If the expanded card shows an expiration date, accept the transfer before then. After that date, a recallable transfer can be reclaimed by the sender; it does not automatically become spendable in the sender's wallet.
+Some transfers have a deadline. If the expanded card says the transfer returns to the sender by a certain date, accept it before then.
 
-**Decline** only hides a transfer from **Activity** on this device. It does not return the tokens to the sender or delete the transfer. To bring hidden transfers back, select the **Pending** tab, then select the **Restore** button next to **Hidden transfers**.
+**Decline** only hides a transfer from **Activity** on this device. It doesn't return the tokens to the sender or cancel the transfer. To bring hidden transfers back, select **Restore** in the row above the list on the **Pending** tab.
 
-Eligible USDCX transfers can be accepted automatically in versions where **Auto-accept USDCX transfers** is on in **General** settings, so it may not appear as a pending transfer.
+**Auto-accept USDCX transfers** is on by default in **General** settings, so most USDCX you receive is added to your balance without waiting in **Pending**. Very small amounts, too little to be worth the fee of accepting them, still wait for you to accept them.
 
 ### 19. What should I do if accepting a transfer fails?
 Category: Troubleshooting › Common issues
@@ -357,12 +364,15 @@ If accepting a transfer fails, the transfer stays in your **Activity** list and 
 
    ![Bread Wallet's Activity page, with the Pending tab selected and the Retry button](E31-accept-fails-pending-tab.png)
 
-3. Let the wallet sync and check the transfer status and your balance. A failed or interrupted screen does not prove that nothing reached the network. Wait while an acceptance is still processing.
-4. Select **Retry** only when those checks confirm the acceptance failed. If the outcome is uncertain, contact [support](/feedback) before trying again.
+3. Expand the card and read the message under the transfer:
+   - If it says the transfer could not be accepted, select **Retry**.
+   - If it says the wallet could not confirm whether it went through, it may still complete. Let the wallet sync and check your balance first. Select **Retry** only if the tokens didn't arrive.
 
-If the expanded card shows an expiration date, accept the transfer before then. After that date, a recallable transfer can be reclaimed by the sender; expiry does not automatically return spendable funds to the sender. If the card shows **Accept Transfer** rather than **Retry**, it is a pending transfer awaiting acceptance.
+If you're not sure what happened, contact [support](/feedback) before you try again.
 
-If it keeps failing, see *My transfer is stuck on Accepting stage*, or report it to our [**SUPPORT**](/feedback).
+If the card says the transfer returns to the sender by a certain date, accept it before then. After that date it does not automatically return to the sender's balance: the sender has to accept it.
+
+If it keeps failing, see *My transfer is stuck on Accepting stage*, or report it to our [support](/feedback) team.
 
 To learn how accepting works, see *How do I accept a pending transfer?*.
 
@@ -546,7 +556,7 @@ See *How do I set a spending limit?*
 ### 29. How do I remove my recovery phrase from my device?
 Category: Manage wallet › Security and recovery
 
-Removing your recovery phrase deletes the stored copy from this installation, so someone who gets into your wallet cannot read it. Your wallet keeps working for everyday transactions. You will need to type the recovery phrase when you switch Guardian or rotate your everyday key, so write it down first.
+Removing your recovery phrase deletes the copy stored in this wallet, so anyone who gets into it can't read the phrase. Sending and receiving keep working. Write the phrase down first: you'll need to type it to switch Guardian or rotate your everyday key.
 
 **Steps:**
 
@@ -563,13 +573,13 @@ Removing your recovery phrase deletes the stored copy from this installation, so
    ![Bread Wallet's Verify recovery phrase page, with the Continue button](E50-remove-phrase-verify.png)
 
 4. Enter your wallet password and select **Continue**.
-5. Your 12 words appear, numbered in order. Write all of them on paper in that order, and keep the paper in a safe place outside this device. Select **Continue**.
-6. Select the first and last words of your phrase to confirm you saved it, then select **Continue**.
+5. Your 12 words appear in order. Write them all on paper, in that order, and keep the paper somewhere safe away from this device. Select **Continue**.
+6. Select the first and last words of your phrase, then select **Continue**.
 7. Select **Remove from this device**.
 
-The wallet then shows **Recovery phrase removed from this device**, and **Recovery Phrase** no longer appears in **Profile**.
+The wallet shows **Recovery phrase removed from this device**, and **Recovery Phrase** no longer appears in **Profile**.
 
-Earlier backups may still contain the phrase. Keep them secure. If the phrase is removed, account creation and some security actions may require it again; keep your offline copy available.
+Removing the phrase doesn't delete backups you made earlier, so keep those safe. After removal, you can't add a new account in this wallet.
 
 Related: *How do I view my recovery phrase?*, *What should I do if I lose my recovery phrase?*
 
@@ -598,7 +608,7 @@ Related: *How do I keep my wallet secure?*, *How do I remove my recovery phrase 
 ### 31. How do I reveal my keys in Bread?
 Category: Manage wallet › Security and recovery
 
-Bread can show the keys your account signs with: your Miden everyday key and your EVM key. Most people never need them. Do not reveal them for ordinary wallet setup, a dApp connection, troubleshooting or feedback. Requests to paste signing keys into a site or send them to support are unsafe.
+Bread can show the two keys your account signs with: your Miden everyday key and your EVM key. Most people never need them. Never paste them into a website or send them to anyone, support included.
 
 **Steps:**
 
@@ -608,18 +618,18 @@ Bread can show the keys your account signs with: your Miden everyday key and you
 
    ![Bread Wallet's page for revealing the keys, with the warning and the password field](E52-reveal-keys-warning.png)
 
-4. The wallet shows a QR code that holds both keys. Select **Show keys as text** to see the **Miden everyday private key** and the **EVM private key** written out, or **Show QR code** to go back.
+4. The wallet shows a QR code that holds both keys. Select **Show keys as text** to see the **Miden everyday private key** and the **EVM private key**, or **Show QR code** to go back.
 
-The page hides the keys again after a short time. Enter your password again if you need more time.
+The keys hide again after a short time. Enter your password again if you need more time.
 
-> ⚠️ **Important note:** Keep both keys secret. Anyone with them can control your Miden and EVM assets. Rotating your everyday key does not change or protect a leaked EVM key.
+> ⚠️ Anyone with these keys can control your Miden and EVM assets. Rotating your everyday key does not protect a leaked EVM key.
 
 If you think your everyday key has leaked, see *How do I rotate my everyday key?*
 
 ### 32. How do I rotate my everyday key?
 Category: Guardian › Guardian protection
 
-Rotating creates a new everyday key and replaces the current one on-chain. Do this if you suspect your device is compromised. Your account, address and funds stay the same.
+Rotating replaces your everyday key with a new one. Do it if you think your device or key is compromised. Your account, address and funds stay the same.
 
 **Steps:**
 
@@ -628,7 +638,7 @@ Rotating creates a new everyday key and replaces the current one on-chain. Do th
 
    ![Bread Wallet's Keys page, with the Rotate everyday key button](E53-keys.png)
 
-3. Read the confirmation message that appears, then select **Confirm rotation**.
+3. Read the message, then select **Confirm rotation**.
 
    ![Bread Wallet's Keys page, with the Confirm rotation button](E54-rotate-confirm.png)
 
@@ -636,18 +646,18 @@ Rotating creates a new everyday key and replaces the current one on-chain. Do th
 
    ![Bread Wallet's Generating Transaction page for a key rotation](E55-rotate-generating.png)
 
-5. When it shows **Transaction Complete!**, select **Done**, or select **View in Activities** to see the transaction.
+5. When it shows **Transaction Complete!**, select **Done**, or **View in Activities** to see the transaction.
 
    ![Bread Wallet's Transaction Complete! page for a key rotation](E56-rotate-complete.png)
 
-A rotation is a transaction, so it pays the **Network Fee** shown by your wallet. If you removed your recovery phrase from this device, the wallet asks you to type it before it rotates.
+The rotation is signed with your emergency key and costs the **Network Fee** your wallet shows. If you removed your recovery phrase from this device, the wallet asks you to type it first.
 
 Related: *What is the everyday key?*, *How do I reveal my keys in Bread?*
 
 ### 33. How do I set a spending limit?
 Category: Manage wallet › Security and recovery
 
-A spending limit caps how much your account can send in a day, measured in USD. When a transaction would go over it, the wallet stops and asks you to authenticate before it continues.
+A spending limit caps how much your account can send in a day, in US dollars. If a transaction would go over it, the wallet asks you to authenticate before it continues.
 
 **Steps:**
 
@@ -669,45 +679,43 @@ The page then shows your limit, for example **Current limit: $500 a day**.
 **Changing or removing a limit:**
 
 - Lowering a limit saves straight away.
-- Raising a limit asks for your password again.
-- To remove the limit, clear the amount and select **Save**, then enter your password. The page shows **No limit set**.
+- Raising a limit asks for your password.
+- To remove the limit, clear the amount, select **Save** and enter your password. The page shows **No limit set**.
 
 **Good to know:**
 
-- **Stored on this device.** Limits and spending history are kept only on this installation. Resetting app data or reinstalling the wallet removes them.
-- **Priced assets only.** Assets the wallet cannot price are not covered by this USD limit. Review any price warning before confirming.
-- **A local safety check.** The limit is not an on-chain restriction. Anyone with direct access to your keys can bypass it.
+- **Stored on this device.** The limit and your spending history live only in this installation. Resetting app data or reinstalling the wallet removes them.
+- **Priced assets only.** Tokens the wallet can't price don't count toward the limit.
+- **A local safety check.** The limit isn't enforced on-chain. Someone who has your keys can get around it.
 
-Your daily spending limit does not raise or replace the Partner Mainnet total wallet-balance cap. See *What is the Partner Mainnet deposit limit?*
+A spending limit is separate from the cap on bridge deposits. See *What is the Partner Mainnet deposit limit?*
 
 Related: *Do spending limits apply to Earn deposits?*
 
 ### 34. How do I manage the dApps connected to my wallet?
 Category: Manage wallet › Security and recovery
 
-This page manages your consumer wallet permissions; it is not an integration setup guide. Never provide a recovery phrase or signing key to connect a dApp.
-
-**Authorized DApps** controls whether dApps can connect to your wallet, and lists the ones that already have.
+**Authorized DApps** lets you turn dApp connections on or off and shows which dApps are connected. A dApp never needs your recovery phrase or keys to connect.
 
 **To turn dApp connections on or off:**
 
 1. Select **Profile** (the person icon), then select **Authorized DApps** under **Developer**.
-2. Use the **DApps Interaction** switch. When it is off, dApps cannot connect or see your balance.
+2. Use the **DApps Interaction** switch. When it is off, dApps can't connect or see your balance.
 
    ![Bread Wallet's Authorized DApps page, with the DApps Interaction switch](E60-authorized-dapps.png)
 
 **To disconnect a dApp:**
 
-1. On the **Authorized DApps** page, select **See connected**. This row appears only when a dApp is connected to the current account.
+1. On the **Authorized DApps** page, select **See connected**. You only see this when a dApp is connected to the current account.
 2. Find the dApp. Each one shows its **Origin**, **Network**, **Account** and **Permissions**.
 3. Select **Disconnect**, then select **Disconnect** again on the **Confirm the action** message.
 
-The dApp must ask to connect again before it can see your account.
+The dApp has to ask to connect again before it can see your account.
 
 ### 35. How do I save a contact in Bread?
 Category: Manage wallet › Sending, receiving, and claiming
 
-The **Address Book** saves addresses under a name, so you can send to a person without pasting their address each time.
+The **Address Book** saves addresses under a name, so you can send to someone without pasting their address each time.
 
 **To add a contact:**
 
@@ -716,13 +724,13 @@ The **Address Book** saves addresses under a name, so you can send to a person w
    ![Bread Wallet's Address Book page, with the New contact button](E61-address-book.png)
 
 2. Select **New contact**.
-3. Enter the **Address**, then a **Name**. Use the full Miden address supplied for the correct network. Do not substitute an Ethereum address or reuse a Testnet address for Mainnet.
+3. Enter the **Address**, then a **Name**. Use the person's full Miden address for the network you're on: not an Ethereum address, and not a Testnet address on Mainnet.
 
    ![Bread Wallet's New contact page, with the Address and Name fields](E62-new-contact.png)
 
 4. Select **Add Contact**.
 
-The wallet shows **Invalid address** if the address is not valid, and **This is one of your accounts** if it is your own. Your own accounts are already listed under **My accounts**.
+The wallet shows **Invalid address** if the address isn't valid, and **This is one of your accounts** if it's your own. Your own accounts are already listed under **My accounts**.
 
 **To send to, rename or delete a contact:**
 
@@ -742,137 +750,154 @@ The wallet shows **Invalid address** if the address is not valid, and **This is 
 ### 36. What is the Partner Mainnet deposit limit?
 Category: Crosschain › Moving across chains
 
-The Partner Mainnet cap is $1,232.462 for the total wallet balance after a deposit. It is not a per-transfer allowance or a daily deposit limit.
+On Mainnet, when you bridge funds in, the deposit can't take the receiving account above about $1,232. It isn't a per-transfer or daily limit.
 
-Add the value of the proposed deposit to the existing total wallet balance. The result must be at or below $1,232.462. For example, a wallet balance of $1,000 leaves $232.462 of room. Splitting a larger amount into smaller deposits does not increase that room.
+The wallet adds the deposit to what that account already holds, in US dollars. If the total would pass the cap, it stops the deposit and asks you to enter a smaller amount. For example, an account holding $1,000 can take in about $232 more. Splitting a deposit into smaller ones doesn't help, because each one counts toward the same total.
 
-This balance cap is separate from a daily spending limit. A bridge provider may also show a smaller route limit or a minimum amount; follow the displayed route requirements as well.
+If the wallet can't price the token you're depositing, it can't check the cap, so it won't let the deposit through. Try again later.
 
-Use only Mainnet routes supported by your installed version. Do not rely on a missing warning as permission to exceed the cap. See *How do I prepare for Mainnet and check my network?*
+This cap is separate from any daily spending limit you set. See *How do I prepare for Mainnet and check my network?*
 
 ### 37. How do I prepare for Mainnet and check my network?
 Category: Getting started › Setup and basic use
 
-Partner Mainnet is a limited, invitation-only phase. It is separate from Testnet and the future public Mainnet launch. Use small testing balances and follow official migration notices. Do not assume that balances will move automatically to a future network.
+Mainnet is Bread's live network, with real funds. Testnet is a separate test network: its tokens have no real value and never move to Mainnet. Mainnet is invite-only for now, so a new Mainnet wallet needs the access code from your invite email.
 
-Mainnet and Testnet are separate networks. Testnet tokens have no real-world value and do not turn into Mainnet funds.
+**Check which network you're on**
 
-**Get the right build and your invitation**
+On Testnet, the screen where you review a transaction shows **Testnet · Tokens have no real value**. Mainnet shows no network line there. If you see Testnet, use test tokens only.
 
-Use the invitation-enabled Bread version named in your official invitation. A GitHub release, including 1.17.7, does not mean that version is available in every store or installed on your device. Store releases can differ by platform; installing a store update or a test build does not prove that your device has the supported Mainnet flow. Check your version and network before funding. If the expected options are missing, contact [support](/feedback).
+**Create a new Mainnet wallet**
 
-Your personal access code is in your invitation email. A code registers one new account. Keep it private: do not post it, include it in screenshots or send it in a support report. If you have not received an invitation, contact [support](/feedback) about access. Downloading Bread does not itself grant an invitation.
+1. On the **Welcome** screen, select **I have a code**.
+2. Enter the 12-character code from your invite email in **Access code**, exactly as written, then select **Unlock mainnet**.
+3. Finish setting up your wallet, and write down your new recovery phrase.
 
-**Register a new Partner Mainnet account**
+Each code registers one account. Keep it private: don't post it, show it in a screenshot or send it to support.
 
-1. Start from the fresh **Welcome** screen in the supported invitation-enabled build. Do not erase a working wallet just to reach this screen; first follow *What should I do before resetting or reinstalling Bread?*
-2. If **I have a code** is already visible, select it. If your invitation-enabled build instead shows the general welcome options, tap the **Bread logo** seven times, with less than two seconds between taps, to reveal invitation access. The gesture does not replace a valid code. If it opens Developer Settings, go back; do not change endpoints.
-3. Choose **I have a code**, enter your code exactly as supplied in **Access code**, preserving uppercase and lowercase letters, then select **Unlock mainnet**.
-4. Complete security and Guardian setup, save the new recovery phrase safely offline, and finish registration. An accepted code alone does not mean registration is finished. Keep Bread connected until registration and sync complete.
-5. Check the network, account and usable fee balance before sending or bridging funds. Use only routes enabled for your installed version. See *What is the Partner Mainnet deposit limit?*
+If you don't have a code, select **I don't have a code**. You can still recover an account you already have; for access, contact [support](/feedback).
 
-**Recover an existing account**
+If the wallet says the code did not work, check it and enter it again. If it says it could not check the code, check your connection and try again later. Don't create another account or reinstall to get past an error.
 
-If you already registered a Mainnet account, recover that account instead of registering another one. On the Mainnet welcome screen choose **I don't have a code**, then **Recover your account**. Recovery of an existing registered account does not require a new invitation code. It needs the correct recovery phrase and the account's Guardian backup. A Testnet account cannot gain Mainnet access through recovery.
+**Move from Testnet to Mainnet**
 
-A standard Bread account supports one active device at a time. Recovery replaces the former device's access; it does not synchronize use across devices. In 1.17.7, **Another device holds this account** and **Make this device the main one** identify the device-replacement flow. Earlier installed versions may show different controls.
+Your Testnet wallet can't become a Mainnet wallet. Switching clears the Testnet wallet from this device and starts a new Mainnet one. Save your Testnet recovery details first; see *What should I do before resetting or reinstalling Bread?*
 
-Follow *How do I restore my wallet with a recovery phrase?*. Wait for recovery, any everyday-key rotation and sync to finish before transacting. Do not reset again if the result is unclear.
+1. Select **Have a mainnet access code?** at the top of the wallet. If it isn't there, select **Profile**, tap the version number at the bottom seven times to open **Developer Settings**, and select **Switch to mainnet**. Don't change anything else in **Developer Settings**.
+2. Enter your code and select **Continue**. Nothing is cleared until Mainnet accepts the code.
+3. Select **Reset and switch to mainnet**.
+4. Create your Mainnet wallet with the code, or recover a Mainnet account you already have.
 
-**Recovery phrase verification in 1.17.7**
+**Recover an existing Mainnet account**
 
-For an account created in Bread with its recovery phrase still stored and not yet verified, 1.17.7 requires backup verification when the combined priced Mainnet balance across your accounts reaches $150. Follow the official wallet prompt to confirm your offline backup before continuing. Already verified, recovered or removed phrases are handled differently. Never enter the phrase into a support form or website.
+You don't need a new code to recover a Mainnet account. On the **Welcome** screen, select **I don't have a code**, then **Recover your account**, and follow *How do I restore my wallet with a recovery phrase?*
 
-**If the code or registration fails**
+An account works on one device at a time. Recovering it makes the new device the only one with access, and the old one shows **Another device holds this account**, with a **Make this device the main one** button.
 
-Check that you used the invitation's supported build and entered the code exactly. If Bread cannot check the code or registration times out, check your connection and the account's current status before retrying. Do not create another account or repeatedly reinstall to resolve an uncertain registration. Report the error text, platform, version and network through [support](/feedback), without the code, recovery phrase or signing keys.
+**Back up your recovery phrase at $150**
 
-If Bread shows a Testnet or developer-network indicator, use test assets only. Do not change endpoints to make an account appear to be on Mainnet. See *Do I need Developer Settings to use Bread?*
+When your accounts on Mainnet reach $150 in total, the wallet asks you to back up your recovery phrase before you can continue. This applies if you created the wallet in Bread, the phrase is still stored on this device, and you haven't confirmed your backup yet. Never type your phrase into a website or support form.
+
+Before you add funds, see *What is the Partner Mainnet deposit limit?* and *Do I need Developer Settings to use Bread?*
 
 ### 38. Do I need Developer Settings to use Bread?
 Category: Getting started › Setup and basic use
 
-No. Standard wallet use does not require custom RPC, prover, faucet or Guardian endpoints. Use the defaults supplied by your official wallet version.
+No. Bread works with its default settings, and most people never need Developer Settings.
 
-Developer Settings are for developers testing integrations and separate networks. Changing them can break sync or point the wallet at a different network. A reachable endpoint does not prove that it is the right or trusted service.
+Developer Settings are for developers who test integrations, use test faucets or run their own networks. The wallet itself warns that wrong values will break your wallet: a changed endpoint can stop syncing or point Bread at a different network.
 
-After setup, **Network endpoints** may show an active override. Returning to defaults can require **Reset to defaults & re-onboard**, which erases local keys and history. Have a supported recovery path before using it. Do not reset a working wallet as a first troubleshooting step.
+If you changed an endpoint, **Network endpoints** appears in your settings. Going back to the defaults can need **Reset to defaults & re-onboard**, which erases this wallet from the device, including your keys and history. Make sure you have your recovery phrase first. Don't reset a working wallet just to fix a problem.
 
-Developer-created accounts without Guardian do not have the standard Guardian recovery backup. Keep their data and backups separate from normal consumer accounts.
+Developers can also create accounts without a Guardian. Those accounts don't get a Guardian backup, so keep them separate from your everyday accounts.
 
-For SDK, API and custom-network integration instructions, use the [Miden developer documentation](https://docs.miden.xyz/). This Help Center covers consumer wallet use. See *How do I prepare for Mainnet and check my network?*
+For SDK, API and custom-network guides, see the [Miden developer documentation](https://docs.miden.xyz/). See *How do I prepare for Mainnet and check my network?*
 
 ### 39. What should I do before resetting or reinstalling Bread?
 Category: Manage wallet › Security and recovery
 
-A reset can erase this installation's wallet keys, local history, contacts and settings. Signing out to recover a forgotten password and resetting developer endpoints can also replace local wallet data.
+Resetting or reinstalling erases Bread from this device: your keys, local history, contacts and settings. Signing out after a forgotten password, or resetting developer endpoints, does the same. You get your wallet back only with your recovery phrase or a backup.
 
-Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; you can no longer use the account on the previous device. Recovery does not set up synced access across both devices.
+Your Bread account works on one device at a time. If you restore it on another device, that device becomes the only one with access and the old device can't use the account. The old device can take it back with **Make this device the main one**, which pays a small network fee. If that option isn't there, restore the wallet with your recovery phrase.
 
-Before you continue:
+**Before you reset**
 
-1. Confirm that you have the recovery phrase written correctly and stored offline. A passcode, password or biometric unlock alone cannot restore a wallet on a new installation.
-2. Check which network and Guardian the account uses. Standard Guardian recovery needs your phrase and its account-state backup.
-3. Check **Activity**, balances and any in-flight bridge or Earn transfers. Record non-secret references you may need to follow up.
-4. Keep any working installation until you have confirmed a supported recovery path. Do not assume an encrypted-file guide applies to your released version.
+1. Check that you have your recovery phrase written down correctly and stored offline. A password, passcode or biometric unlock can't restore a wallet on a new installation.
+2. Check which network and Guardian the account uses. Recovery needs your phrase and your Guardian's backup of the account.
+3. Check **Activity** and your balances, including any bridge or Earn transfers still in progress. Note any details you may need to follow up.
+4. Keep your working installation until you know you can recover.
 
-If you forgot the wallet password, use the wallet's recovery flow to reimport the account and choose new protection. Support cannot reset your recovery phrase. If the phrase is missing, do not sign out or reset; contact [support](/feedback).
+If you forgot your password, use **Forgot password?** (**Forgot passcode?** on a phone) to sign out and import the account again with a new password. Support can't reset your recovery phrase. If you don't have the phrase, don't sign out or reset; contact [support](/feedback).
 
-If your installed version offers **Profile** → **Security** → **Encrypted Wallet File**, treat that file as a sensitive backup. It is a snapshot, not a continuously updated copy; save a new snapshot after account changes. Keep it protected and never attach it to a support report. Availability depends on your wallet version and account type.
+**Encrypted Wallet File**
 
-Restoring Guardian account state from a file does not by itself complete recovery. Replacing the everyday key can still need the Guardian operator; a compatible, previously saved everyday key pair can be another supported path in versions that offer it. Do not assume a file alone or an older snapshot guarantees recovery. If the operator is unavailable or you are unsure which backups you have, keep the working installation and contact [support](/feedback) before resetting.
+If you see **Profile** → **Security** → **Encrypted Wallet File**, you can save an extra backup. Treat it like a password. It is a snapshot, so save a new one after you change your accounts. Never share it or attach it to a support report.
 
-Resetting does not cancel a transaction already submitted to a network and does not move Testnet assets to Mainnet. See *How do I restore my wallet with a recovery phrase?*
+A file alone may not complete recovery: Bread may still need to set up a new everyday key, and that needs your Guardian to respond. If your Guardian is down, or you're unsure which backups you have, keep your working installation and contact [support](/feedback) before resetting.
+
+Resetting doesn't cancel a transaction you already sent, and it doesn't move Testnet funds to Mainnet. See *How do I restore my wallet with a recovery phrase?*
 
 ### 40. What should I check if a bridge deposit or withdrawal is delayed?
 Category: Troubleshooting › Common issues
 
-A bridge transfer can include a source-chain transaction, route processing and a destination-chain claim or arrival. Confirmation on the source chain alone does not mean the destination balance has updated.
+Bridge transfers take time. USDC deposits into Bread usually arrive in about 2 minutes (about 1 minute from Arc), and **Slow · Agglayer** transfers take about 30 minutes. A transfer can be confirmed on the network you sent from before it reaches the other side.
 
-1. Check the source and destination networks, token and recipient in the original transfer.
-2. Open **Activity** and read the existing transfer's status and any claim or recovery action. Keep the wallet connected and let it sync.
-3. Check whether an incoming Miden transfer is waiting to be accepted. See *How do I accept a pending transfer?*
-4. If the outcome is uncertain, check the source and destination balances before retrying. Do not submit a second deposit or withdrawal just because the screen was interrupted.
-5. If it remains delayed, report the route, networks, wallet version and a non-secret transaction reference. Hide sensitive information in screenshots. See *How do I send feedback or report a problem?*
+1. Check the original transfer: the networks, the token and the receiving address.
+2. Open **Activity** and tap the transfer to see its status. Keep Bread open and connected so it can sync.
+3. If the transfer is coming into Bread, check whether it is waiting for you to accept it. See *How do I accept a pending transfer?*
+4. If the transfer shows a button such as **Claim Asset** or **Reclaim funds**, follow it. Some withdrawals need you to connect the receiving wallet to claim.
+5. Check your balances on both networks before you try again. Don't send a second transfer just because the screen closed or froze.
+6. If it's still delayed, report the route, the networks, your wallet version and the transaction ID. Hide sensitive information in screenshots. See *How do I send feedback or report a problem?*
 
-A disabled route can stop new transfers without cancelling a transfer already in progress. Follow recovery actions shown for that transfer. Do not change Developer Settings to force a route.
+If a route is switched off, that stops new transfers, not ones already on their way. Don't change Developer Settings to force a route.
 
 If Bread shows **Bridge deposit failed**, see *What should I do if a bridge deposit fails?*
 
 ### 41. How do I send feedback or report a problem?
 Category: Troubleshooting › Common issues
 
-Open [the Bread feedback form](/feedback), or choose **Send feedback** from the wallet's **Profile** and **About** section.
+Open [the Bread feedback form](/feedback), or in Bread go to **Profile** → **About** → **Send feedback**.
 
-Use **Short title** for one clear summary and **Description** for the details. Choose the feedback type. For a bug, include what you did, what you expected, what happened, your platform, app version and network. Describe one problem per report where possible.
+1. Choose a **Feedback type**, then give it a **Short title** and a **Description**.
+2. For a bug, fill in **Steps to reproduce**, **Expected result** and **Actual result**, plus your **Platform**, **App version** and **Network**. One problem per report helps us fix it faster.
+3. Add a screenshot if it helps. First hide anything sensitive, such as your recovery phrase, keys, passwords and invite codes.
+4. Select **Submit feedback**.
 
-Before adding a screenshot, hide recovery information, signing keys, passwords, invitation codes and any other sensitive information. Never attach a wallet backup file. Never enter a recovery phrase in the form. Support will never ask for it.
+Never put your recovery phrase in the form, and never attach a wallet backup file. Support will never ask for them.
 
-Choose **Submit feedback** when your report is ready. If the form cannot open, check your connection and try the link again. Do not reset the wallet to fix a feedback-page problem.
+If the form doesn't open, check your connection and try the link again. You don't need to reset your wallet to fix it.
 
 ### 42. How do I send or receive tokens on Miden?
 Category: Manage wallet › Sending, receiving, and claiming
 
-For a transfer within Miden, both wallets must use the same network. A transfer to another chain needs a supported crosschain route.
+Use **Send** to send tokens and **Receive** to share your address. Both wallets need to be on the same Miden network.
 
-**To receive:**
+**To receive**
 
-Open **Receive** and share the account address or QR code for the intended network. Share the address, never your recovery phrase or signing keys. Ask the sender to check the network and token. Incoming transfers may need to be accepted in **Activity** before they become spendable.
+1. Open **Receive** and share your address or QR code. Never share your recovery phrase or keys.
+2. Ask the sender to check the network and the token.
+3. Incoming USDCX is accepted automatically by default. Other tokens may need you to accept them in **Activity** before you can use them. See *How do I accept a pending transfer?*
 
-**To send:**
+**To send**
 
-Open **Send**, enter or select the recipient, choose the token and amount, then review the network, address, amount, fee and any expiration before confirming. Keep enough of the displayed fee asset for the transaction. If the address or network is unexpected, stop and check with the recipient.
+1. Open **Send** and paste the address, or pick it from **Recent** or **Address Book**.
+2. Choose the token and enter the amount.
+3. On the review screen, check the address, the amount, **Transfer type** and **Max network fee**, then confirm.
 
-Track the send in **Activity**. A confirmed send can still require the recipient to accept the transfer. See *My transfer shows as confirmed, but the token never arrived.*
+Network fees are paid in USDCX, so keep a little in your account. If Bread says the address belongs to a different Miden network, stop and check it with the recipient.
+
+Transfers are **Private** by default. Your address as the sender is always visible on the network. A **Public** transfer also shows the token, amount and recipient.
+
+Track your send in **Activity**. To send to another blockchain, see *How do I send funds from Bread to another blockchain?* If a send shows as confirmed but the token never arrived, see *My transfer shows as confirmed, but the token never arrived.*
 
 ### 43. What should I check before a Swap?
 Category: Crosschain › Moving across chains
 
-Swap exchanges one supported token for another. Swapping within Miden and swapping as part of a crosschain route are different flows; use only the options shown by your installed wallet.
+Swap trades one token for another inside Miden. Prices come from [Forkchoice](https://forkchoice.xyz/). Swapping to another blockchain isn't available yet.
 
-**Which tokens and pairs are listed?**
+**Which pairs can I swap?**
 
-As checked on 23 October 2026, the Swap quote service lists these seven pairs:
+As of 26 October 2026, you can swap these seven pairs, in either direction:
 
 - ETH ↔ USDT.
 - WBTC ↔ USDT.
@@ -882,47 +907,59 @@ As checked on 23 October 2026, the Swap quote service lists these seven pairs:
 - WBTC ↔ USDCX.
 - Wrapped SOL ↔ USDCX.
 
-Each listed pair allows either direction when the wallet offers a valid quote. Wrapped SOL can appear as **SOL** in the token picker. This is a dated quote-service listing, not a guarantee that every pair is available on your selected network or in your installed release. Bread also checks the listed assets on that network before offering them. Token registration alone does not make an asset swappable; NEAR, PAXG, WBNB and PYUSD are not in this dated service listing.
+Wrapped SOL can appear as **SOL** in the token list. Other tokens you hold, such as NEAR, PAXG, WBNB and PYUSD, can't be swapped yet. For moving tokens between networks, see *Which bridge networks and tokens can I use?*
 
-Miden Swap uses solver quotes supplied through [Forkchoice](https://forkchoice.xyz/). The provider and route for a crosschain exchange can differ from a Swap within Miden. Check the current choices in the wallet rather than treating this list as a list of supported crosschain destinations. See *Which bridge networks and tokens can I use?* for bridge routes.
+**Before you confirm**
 
-Check the network, tokens, amount you will receive and maximum network fee on the review screen. Keep enough of the displayed fee asset. If a quote expires, changes or fails to load, obtain and review a new quote before signing.
+On the review screen, check **You Send**, **You Receive**, **Rate**, **Slippage** and **Max network fee**. Network fees are paid in USDCX, so keep a little in your account.
 
-If Bread says **No swap tokens are configured for this network yet.**, the selected network has no usable Swap choices in that version. Do not change endpoints to force another network's token list. If it says **Price unavailable. Try again shortly.**, wait and request a fresh quote; do not sign using a remembered price. Contact [support](/feedback) if the problem continues.
+A swap is an order. It may fill all at once, in parts, or not at all if the price moves. **Cancel if not filled within** sets how long it waits. Whatever hasn't filled by then comes back to you, and you can stop it sooner with **Cancel swap** in **Activity**.
 
-A quote is an estimate for that route at that time. Do not assume it guarantees a future price or that a test token has real value. A disabled Swap control can mean the selected network or token pair is unavailable.
+**If something goes wrong**
 
-If a Swap is interrupted, let the wallet sync and check **Activity** and both token balances before trying again. See *How do I prepare for Mainnet and check my network?*
+- **Price unavailable. Try again shortly.** Wait a moment and get a fresh price. Don't rely on a price you saw earlier.
+- **No swap tokens are configured for this network yet.** Swap isn't available on the network you're using. Don't change endpoints to get around it.
+- If a swap was interrupted, let Bread sync, then check **Activity** and both token balances before trying again. Contact [support](/feedback) if the problem continues.
+
+See *How do I prepare for Mainnet and check my network?*
 
 
 ### 44. How do I use Explore and mini-apps?
 Category: Getting started › Setup and basic use
 
-**Explore** opens the app catalog for your wallet's selected network. The apps shown can differ between Mainnet and Testnet, mobile and extension, and wallet versions. An app appearing in a catalog does not guarantee every feature inside it is available.
+**Explore** lists apps you can use with Bread on your current network. Filter them by **All**, **Finance**, **Arcade** or **Others**, or use **Search dApps**.
 
-1. Check your wallet's network, then open **Explore** and choose an app.
-2. Check the app's address and the account it asks to connect. Never enter your recovery phrase, signing keys or wallet password into a mini-app or website.
-3. Review each request in the wallet before approving it. Connecting an app is separate from approving a transfer or signing a transaction. Cancel requests you do not understand.
+1. Open **Explore** and choose an app. On the extension, the app opens in a new browser tab.
+2. Check the app's address. Never enter your recovery phrase, keys or wallet password into an app or website.
+3. Bread asks before an app connects to your wallet. Connecting is separate from approving a transaction, and Bread asks you to review each one. Cancel any request you don't understand.
 
-If an app does not open or connect, check your connection and that the app and wallet use the same network. Reopen it from **Explore**. A Testnet app cannot use Mainnet balances. Do not change network endpoints to force a connection.
+You can also paste a website address into the search. Only open sites you trust. If a link sends you to a site that isn't listed in Explore, Bread asks before opening it.
 
-If a transaction was interrupted, check **Activity** and balances before retrying. For support, include the app name, its public address, network, wallet version and the error text, with secrets removed. See *How do I send feedback or report a problem?*
+If an app doesn't open or connect, check your connection and reopen it from **Explore**. Make sure the app is on the same network as your wallet: a Testnet app can't use your Mainnet balance. Don't change network endpoints to force a connection.
+
+If a transaction was interrupted, check **Activity** and your balances before trying again. To report a problem, include the app's name and address, your network, your wallet version and the error message, with nothing secret in it. See *How do I send feedback or report a problem?*
 
 
 ### 45. How do GameCoins and Arcade work?
 Category: Getting started › Setup and basic use
 
-GameCoin (GC) is used by supported Arcade games. Each game sets its own rules for stakes, leaderboard submissions and payouts, including any posting fee. Bread does not provide a weekly GC allowance or claim service.
+Game Coins (GC) are the coins that Arcade games use. To find the games, select **Explore Arcade** on Home, or choose **Arcade** in **Explore**.
 
-In versions that include the Arcade balance display, Bread shows your GC balance for the selected network. In version 1.17.7, **Buy more GC** is disabled: purchasing GC inside the wallet is not implemented. A purchase offered inside a game is a separate game flow, not confirmation that wallet purchasing is available. Store releases can differ by platform; check your installed version.
+**Your GC balance**
 
-Before playing or submitting a result, check the game's rules, any GC stake, the network fee and the action shown by the wallet. GC does not replace the network fee asset. Free play and social sharing depend on what the game offers.
+In Arcade, open **Coins** to see your **Game Coins** balance on your current network. Your balance stays private.
 
-GC balance is not a score. Each game has its own scoring and leaderboard; there is no global ranking across games.
+You can't buy GC in Bread yet: **Buy more GC** is disabled, and Bread says so. Bread does not provide a weekly GC allowance either. If a game offers to sell you GC, that's the game's own offer, not Bread's.
 
-Do not repeatedly sign a failed game action: first check **Activity**, your GC balance and the game's status. Do not assume a purchase, stake, submission or payout completed until the wallet and game confirm it.
+**Playing**
 
-Report the game, network, wallet version and error text without recovery information. See *How do I send feedback or report a problem?*
+Opening a game doesn't connect your wallet; Bread asks first. Each game sets its own rules for stakes, payouts and refunds, so read its rules before you approve anything. Network fees are still paid in USDCX, not GC.
+
+GC isn't a score. Each game keeps its own scores and leaderboard, and there's no ranking across games.
+
+If a game action fails, don't keep approving it. Check **Activity**, your GC balance and the game first. In Arcade, **Activity** shows only transactions from games listed in Arcade.
+
+To report a problem, include the game, your network, your wallet version and the error message, with nothing secret in it. See *How do I send feedback or report a problem?*
 
 ### 46. Which bridge networks and tokens can I use?
 Category: Crosschain › Moving across chains
@@ -958,16 +995,17 @@ Check the Partner Mainnet balance cap before depositing. If a submitted transfer
 ### 47. What should I do if Guardian cannot connect?
 Category: Troubleshooting › Common issues
 
-If Bread reports a Guardian connection or authentication error, such as 401, keep the wallet installed. An error does not mean your recovery phrase is wrong, and resetting the wallet is not a connection fix.
+If Bread can't reach your Guardian, it shows **Guardian unreachable**. Your funds stay yours, but new transactions can't go through until your Guardian responds. Keep the wallet installed: this isn't a problem with your recovery phrase, and resetting won't fix it.
 
-Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; you can no longer use the account on the previous device. Recovery does not set up synced access across both devices. If you have already recovered elsewhere, continue on the device where recovery completed instead of repeatedly recovering back and forth.
+1. Check your internet connection and update Bread from the official store.
+2. If Bread is still syncing, or setting up your everyday key after a restore, let it finish before you try anything else.
+3. Check that Bread is on the same network as your account. Mainnet and Testnet accounts are separate. Never enter a Guardian address someone sends you.
+4. If the outage lasts, select **Switch Guardian** to move to another provider. Your address, funds and history stay the same, and your old Guardian can't block the switch. Bread may ask for your recovery phrase.
+5. If it still doesn't work, note the exact message, the time, your platform, wallet version, network and Guardian name. Contact [support](/feedback) before you reset, reinstall or restore again. Keep your recovery phrase and keys out of the report.
 
-1. Check your internet connection and update through the official store. If the wallet is still syncing or rotating an everyday key after recovery, let that operation finish before starting another one.
-2. Confirm that the wallet is on the network used by the original account. Mainnet and Testnet have different account state. Do not replace RPC or Guardian endpoints with addresses supplied by strangers.
-3. If the error continues, record the exact message, the time it occurred, your platform, wallet version, network and the Guardian name shown by the wallet. Keep recovery information and signing keys out of the report.
-4. Contact [support](/feedback) before resetting, reinstalling or trying repeated recovery attempts. Keep any working installation while the issue is investigated.
+Your Bread account works on one device at a time: restoring it on another device makes that device the only one with access. If you've already restored it elsewhere, carry on there rather than restoring back and forth.
 
-Guardian backs up account state; it does not replace your recovery phrase. Support cannot recover a missing phrase. See *What should I do before resetting or reinstalling Bread?*
+Your Guardian backs up your account; it doesn't replace your recovery phrase. Support can't recover a missing phrase. See *What should I do before resetting or reinstalling Bread?*
 
 ### 48. What should I do if a bridge deposit fails?
 Category: Troubleshooting › Common issues

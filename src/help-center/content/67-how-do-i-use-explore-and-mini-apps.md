@@ -6,12 +6,14 @@ subcategory: setup-and-basic-use
 platforms: [extension-desktop, mobile]
 ---
 
-**Explore** opens the app catalog for your wallet's selected network. The apps shown can differ between Mainnet and Testnet, mobile and extension, and wallet versions. An app appearing in a catalog does not guarantee every feature inside it is available.
+**Explore** lists apps you can use with Bread on your current network. Filter them by **All**, **Finance**, **Arcade** or **Others**, or use **Search dApps**.
 
-1. Check your wallet's network, then open **Explore** and choose an app.
-2. Check the app's address and the account it asks to connect. Never enter your recovery phrase, signing keys or wallet password into a mini-app or website.
-3. Review each request in the wallet before approving it. Connecting an app is separate from approving a transfer or signing a transaction. Cancel requests you do not understand.
+1. Open **Explore** and choose an app. On the extension, the app opens in a new browser tab.
+2. Check the app's address. Never enter your recovery phrase, keys or wallet password into an app or website.
+3. Bread asks before an app connects to your wallet. Connecting is separate from approving a transaction, and Bread asks you to review each one. Cancel any request you don't understand.
 
-If an app does not open or connect, check your connection and that the app and wallet use the same network. Reopen it from **Explore**. A Testnet app cannot use Mainnet balances. Do not change network endpoints to force a connection.
+You can also paste a website address into the search. Only open sites you trust. If a link sends you to a site that isn't listed in Explore, Bread asks before opening it.
 
-If a transaction was interrupted, check **Activity** and balances before retrying. For support, include the app name, its public address, network, wallet version and the error text, with secrets removed. See [*How do I send feedback or report a problem?*](#common-issues-and-support/how-do-i-send-feedback-or-report-a-problem)
+If an app doesn't open or connect, check your connection and reopen it from **Explore**. Make sure the app is on the same network as your wallet: a Testnet app can't use your Mainnet balance. Don't change network endpoints to force a connection.
+
+If a transaction was interrupted, check **Activity** and your balances before trying again. To report a problem, include the app's name and address, your network, your wallet version and the error message, with nothing secret in it. See [*How do I send feedback or report a problem?*](#common-issues-and-support/how-do-i-send-feedback-or-report-a-problem)

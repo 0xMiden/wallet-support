@@ -6,21 +6,23 @@ subcategory: security-and-recovery
 platforms: [extension-desktop, mobile]
 ---
 
-A reset can erase this installation's wallet keys, local history, contacts and settings. Signing out to recover a forgotten password and resetting developer endpoints can also replace local wallet data.
+Resetting or reinstalling erases Bread from this device: your keys, local history, contacts and settings. Signing out after a forgotten password, or resetting developer endpoints, does the same. You get your wallet back only with your recovery phrase or a backup.
 
-Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; you can no longer use the account on the previous device. Recovery does not set up synced access across both devices.
+Your Bread account works on one device at a time. If you restore it on another device, that device becomes the only one with access and the old device can't use the account. The old device can take it back with **Make this device the main one**, which pays a small network fee. If that option isn't there, restore the wallet with your recovery phrase.
 
-Before you continue:
+**Before you reset**
 
-1. Confirm that you have the recovery phrase written correctly and stored offline. A passcode, password or biometric unlock alone cannot restore a wallet on a new installation.
-2. Check which network and Guardian the account uses. Standard Guardian recovery needs your phrase and its account-state backup.
-3. Check **Activity**, balances and any in-flight bridge or Earn transfers. Record non-secret references you may need to follow up.
-4. Keep any working installation until you have confirmed a supported recovery path. Do not assume an encrypted-file guide applies to your released version.
+1. Check that you have your recovery phrase written down correctly and stored offline. A password, passcode or biometric unlock can't restore a wallet on a new installation.
+2. Check which network and Guardian the account uses. Recovery needs your phrase and your Guardian's backup of the account.
+3. Check **Activity** and your balances, including any bridge or Earn transfers still in progress. Note any details you may need to follow up.
+4. Keep your working installation until you know you can recover.
 
-If you forgot the wallet password, use the wallet's recovery flow to reimport the account and choose new protection. Support cannot reset your recovery phrase. If the phrase is missing, do not sign out or reset; contact [support](/feedback).
+If you forgot your password, use **Forgot password?** (**Forgot passcode?** on a phone) to sign out and import the account again with a new password. Support can't reset your recovery phrase. If you don't have the phrase, don't sign out or reset; contact [support](/feedback).
 
-If your installed version offers **Profile** → **Security** → **Encrypted Wallet File**, treat that file as a sensitive backup. It is a snapshot, not a continuously updated copy; save a new snapshot after account changes. Keep it protected and never attach it to a support report. Availability depends on your wallet version and account type.
+**Encrypted Wallet File**
 
-Restoring Guardian account state from a file does not by itself complete recovery. Replacing the everyday key can still need the Guardian operator; a compatible, previously saved everyday key pair can be another supported path in versions that offer it. Do not assume a file alone or an older snapshot guarantees recovery. If the operator is unavailable or you are unsure which backups you have, keep the working installation and contact [support](/feedback) before resetting.
+If you see **Profile** → **Security** → **Encrypted Wallet File**, you can save an extra backup. Treat it like a password. It is a snapshot, so save a new one after you change your accounts. Never share it or attach it to a support report.
 
-Resetting does not cancel a transaction already submitted to a network and does not move Testnet assets to Mainnet. See [*How do I restore my wallet with a recovery phrase?*](#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase)
+A file alone may not complete recovery: Bread may still need to set up a new everyday key, and that needs your Guardian to respond. If your Guardian is down, or you're unsure which backups you have, keep your working installation and contact [support](/feedback) before resetting.
+
+Resetting doesn't cancel a transaction you already sent, and it doesn't move Testnet funds to Mainnet. See [*How do I restore my wallet with a recovery phrase?*](#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase)

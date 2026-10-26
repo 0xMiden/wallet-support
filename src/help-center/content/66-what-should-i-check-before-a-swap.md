@@ -6,11 +6,11 @@ subcategory: moving-across-chains
 platforms: [extension-desktop, mobile]
 ---
 
-Swap exchanges one supported token for another. Swapping within Miden and swapping as part of a crosschain route are different flows; use only the options shown by your installed wallet.
+Swap trades one token for another inside Miden. Prices come from [Forkchoice](https://forkchoice.xyz/). Swapping to another blockchain isn't available yet.
 
-**Which tokens and pairs are listed?**
+**Which pairs can I swap?**
 
-As checked on 23 October 2026, the Swap quote service lists these seven pairs:
+As of 26 October 2026, you can swap these seven pairs, in either direction:
 
 - ETH ↔ USDT.
 - WBTC ↔ USDT.
@@ -20,14 +20,18 @@ As checked on 23 October 2026, the Swap quote service lists these seven pairs:
 - WBTC ↔ USDCX.
 - Wrapped SOL ↔ USDCX.
 
-Each listed pair allows either direction when the wallet offers a valid quote. Wrapped SOL can appear as **SOL** in the token picker. This is a dated quote-service listing, not a guarantee that every pair is available on your selected network or in your installed release. Bread also checks the listed assets on that network before offering them. Token registration alone does not make an asset swappable; NEAR, PAXG, WBNB and PYUSD are not in this dated service listing.
+Wrapped SOL can appear as **SOL** in the token list. Other tokens you hold, such as NEAR, PAXG, WBNB and PYUSD, can't be swapped yet. For moving tokens between networks, see [*Which bridge networks and tokens can I use?*](#moving-across-chains/which-bridge-networks-and-tokens-can-i-use)
 
-Miden Swap uses solver quotes supplied through [Forkchoice](https://forkchoice.xyz/). The provider and route for a crosschain exchange can differ from a Swap within Miden. Check the current choices in the wallet rather than treating this list as a list of supported crosschain destinations. See [*Which bridge networks and tokens can I use?*](#moving-across-chains/which-bridge-networks-and-tokens-can-i-use) for bridge routes.
+**Before you confirm**
 
-Check the network, tokens, amount you will receive and maximum network fee on the review screen. Keep enough of the displayed fee asset. If a quote expires, changes or fails to load, obtain and review a new quote before signing.
+On the review screen, check **You Send**, **You Receive**, **Rate**, **Slippage** and **Max network fee**. Network fees are paid in USDCX, so keep a little in your account.
 
-If Bread says **No swap tokens are configured for this network yet.**, the selected network has no usable Swap choices in that version. Do not change endpoints to force another network's token list. If it says **Price unavailable. Try again shortly.**, wait and request a fresh quote; do not sign using a remembered price. Contact [support](/feedback) if the problem continues.
+A swap is an order. It may fill all at once, in parts, or not at all if the price moves. **Cancel if not filled within** sets how long it waits. Whatever hasn't filled by then comes back to you, and you can stop it sooner with **Cancel swap** in **Activity**.
 
-A quote is an estimate for that route at that time. Do not assume it guarantees a future price or that a test token has real value. A disabled Swap control can mean the selected network or token pair is unavailable.
+**If something goes wrong**
 
-If a Swap is interrupted, let the wallet sync and check **Activity** and both token balances before trying again. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)
+- **Price unavailable. Try again shortly.** Wait a moment and get a fresh price. Don't rely on a price you saw earlier.
+- **No swap tokens are configured for this network yet.** Swap isn't available on the network you're using. Don't change endpoints to get around it.
+- If a swap was interrupted, let Bread sync, then check **Activity** and both token balances before trying again. Contact [support](/feedback) if the problem continues.
+
+See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)

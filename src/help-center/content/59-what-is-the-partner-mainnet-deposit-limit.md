@@ -6,10 +6,10 @@ subcategory: moving-across-chains
 platforms: [extension-desktop, mobile]
 ---
 
-The Partner Mainnet cap is $1,232.462 for the total wallet balance after a deposit. It is not a per-transfer allowance or a daily deposit limit.
+On Mainnet, when you bridge funds in, the deposit can't take the receiving account above about $1,232. It isn't a per-transfer or daily limit.
 
-Add the value of the proposed deposit to the existing total wallet balance. The result must be at or below $1,232.462. For example, a wallet balance of $1,000 leaves $232.462 of room. Splitting a larger amount into smaller deposits does not increase that room.
+The wallet adds the deposit to what that account already holds, in US dollars. If the total would pass the cap, it stops the deposit and asks you to enter a smaller amount. For example, an account holding $1,000 can take in about $232 more. Splitting a deposit into smaller ones doesn't help, because each one counts toward the same total.
 
-This balance cap is separate from a daily spending limit. A bridge provider may also show a smaller route limit or a minimum amount; follow the displayed route requirements as well.
+If the wallet can't price the token you're depositing, it can't check the cap, so it won't let the deposit through. Try again later.
 
-Use only Mainnet routes supported by your installed version. Do not rely on a missing warning as permission to exceed the cap. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)
+This cap is separate from any daily spending limit you set. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)

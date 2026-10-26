@@ -27,12 +27,12 @@ When someone sends you tokens, they show up as a pending transfer on the **Activ
 
    ![Bread Wallet's Activity page, with the Transfer tab selected and the transfer marked Confirmed](E27-accept-received-tab.png)
 
-To accept everything at once, select **Accept All** in the row above the list on the **Pending** tab, which shows how many transfers are waiting and their total.
+To accept everything at once, select **Accept All** in the row above the list on the **Pending** tab. The row shows how many transfers are waiting and their total.
 
 If accepting fails, see [*What should I do if accepting a transfer fails?*](#common-issues-and-support/what-should-i-do-if-accepting-a-transfer-fails).
 
-**Important note:** If the expanded card shows an expiration date, accept the transfer before then. After that date, a recallable transfer can be reclaimed by the sender; it does not automatically become spendable in the sender's wallet.
+Some transfers have a deadline. If the expanded card says the transfer returns to the sender by a certain date, accept it before then.
 
-**Decline** only hides a transfer from **Activity** on this device. It does not return the tokens to the sender or delete the transfer. To bring hidden transfers back, select the **Pending** tab, then select the **Restore** button next to **Hidden transfers**.
+**Decline** only hides a transfer from **Activity** on this device. It doesn't return the tokens to the sender or cancel the transfer. To bring hidden transfers back, select **Restore** in the row above the list on the **Pending** tab.
 
-Eligible USDCX transfers can be accepted automatically in versions where **Auto-accept USDCX transfers** is on in **General** settings, so it may not appear as a pending transfer.
+**Auto-accept USDCX transfers** is on by default in **General** settings, so most USDCX you receive is added to your balance without waiting in **Pending**. Very small amounts, too little to be worth the fee of accepting them, still wait for you to accept them.

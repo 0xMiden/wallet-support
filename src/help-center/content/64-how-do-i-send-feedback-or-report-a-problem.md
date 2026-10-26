@@ -6,10 +6,13 @@ subcategory: common-issues-and-support
 platforms: [extension-desktop, mobile]
 ---
 
-Open [the Bread feedback form](/feedback), or choose **Send feedback** from the wallet's **Profile** and **About** section.
+Open [the Bread feedback form](/feedback), or in Bread go to **Profile** → **About** → **Send feedback**.
 
-Use **Short title** for one clear summary and **Description** for the details. Choose the feedback type. For a bug, include what you did, what you expected, what happened, your platform, app version and network. Describe one problem per report where possible.
+1. Choose a **Feedback type**, then give it a **Short title** and a **Description**.
+2. For a bug, fill in **Steps to reproduce**, **Expected result** and **Actual result**, plus your **Platform**, **App version** and **Network**. One problem per report helps us fix it faster.
+3. Add a screenshot if it helps. First hide anything sensitive, such as your recovery phrase, keys, passwords and invite codes.
+4. Select **Submit feedback**.
 
-Before adding a screenshot, hide recovery information, signing keys, passwords, invitation codes and any other sensitive information. Never attach a wallet backup file. Never enter a recovery phrase in the form. Support will never ask for it.
+Never put your recovery phrase in the form, and never attach a wallet backup file. Support will never ask for them.
 
-Choose **Submit feedback** when your report is ready. If the form cannot open, check your connection and try the link again. Do not reset the wallet to fix a feedback-page problem.
+If the form doesn't open, check your connection and try the link again. You don't need to reset your wallet to fix it.

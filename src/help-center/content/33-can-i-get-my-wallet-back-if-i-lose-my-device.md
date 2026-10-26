@@ -6,10 +6,8 @@ subcategory: security-and-recovery
 platforms: [extension-desktop, mobile]
 ---
 
-For a standard Guardian-backed Bread account, recovery on a new device uses your recovery phrase and Guardian's account-state backup. See [*How do I restore my wallet with a recovery phrase?*](#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase)
+Yes. Restore Bread on a new device with your recovery phrase, and your Guardian's backup brings back your account. See [*How do I restore my wallet with a recovery phrase?*](#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase)
 
-Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; you can no longer use the account on the previous device. Recovery does not set up synced access across both devices.
+You need your recovery phrase for this. Guardian can't replace it. If you lose the phrase and every device with your wallet on it, Guardian can't recover your funds for you.
 
-You still need the recovery phrase. Guardian cannot replace it or recover funds for you if the phrase and every device holding your keys are lost.
-
-If an older installation or a developer-created account does not use Guardian, do not assume this recovery path applies. Preserve any working device and seek [support](/feedback) before resetting it.
+Your account works on one device at a time. Restoring it on a new device makes that device the only one with access.

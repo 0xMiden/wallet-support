@@ -6,12 +6,17 @@ subcategory: public-and-private-transactions
 platforms: [extension-desktop, mobile]
 ---
 
-On most chains, an account's balance and full history live on a public ledger that anyone can read. Miden works differently: a private account keeps its state (its balances and its history) on your device, and the only things that ever reach the publicly readable chain are the account's address and a commitment to that state. A commitment is a hash of the state, a short cryptographic fingerprint that gives nothing away about its contents.
+Very little. With a private account, your balances and history stay on your device. The public chain only shows that your account exists and that its state changed, not what changed.
 
-From outside, the chain shows only that an account exists and that its state changed. The private account state is hidden, but public notes and transactions on other chains may reveal transfer details. When you look up an account on a block explorer, you'll see that it exists and that its state has changed, but you won't see what changed or how.
+On most blockchains, anyone can read an account's balance and full history. Miden works differently. If someone looks up your account on a block explorer, they won't see your balance or past transactions.
 
 ![Private from other users](private-from-other-users.png)
 
-This is what private from other users means: the people you transact with can see their own transaction, but they cannot inspect the rest of your balance or history. Guardian can see the state it backs up, and anyone can read the contents of a public note. Privacy depends on the transfer as well as the account.
+The people you transact with see their own transaction, but not the rest of your balance or history. A few things are visible:
+
+- Your sender address is public on every transfer.
+- If you send a **Public** transfer, anyone can see its token, amount and recipient. Transfers are **Private** by default.
+- When you bridge, the transaction on the other chain is public there.
+- Guardian can see the state it backs up.
 
 Related: [*What is a private account?*](#public-and-private-transactions/what-is-a-private-account), [*What is a private note?*](#public-and-private-transactions/what-is-a-private-note)

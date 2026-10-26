@@ -6,7 +6,7 @@ subcategory: sending-receiving-and-claiming
 platforms: [extension-desktop]
 ---
 
-The **Address Book** saves addresses under a name, so you can send to a person without pasting their address each time.
+The **Address Book** saves addresses under a name, so you can send to someone without pasting their address each time.
 
 **To add a contact:**
 
@@ -15,13 +15,13 @@ The **Address Book** saves addresses under a name, so you can send to a person w
    ![Bread Wallet's Address Book page, with the New contact button](E61-address-book.png)
 
 2. Select **New contact**.
-3. Enter the **Address**, then a **Name**. Use the full Miden address supplied for the correct network. Do not substitute an Ethereum address or reuse a Testnet address for Mainnet.
+3. Enter the **Address**, then a **Name**. Use the person's full Miden address for the network you're on: not an Ethereum address, and not a Testnet address on Mainnet.
 
    ![Bread Wallet's New contact page, with the Address and Name fields](E62-new-contact.png)
 
 4. Select **Add Contact**.
 
-The wallet shows **Invalid address** if the address is not valid, and **This is one of your accounts** if it is your own. Your own accounts are already listed under **My accounts**.
+The wallet shows **Invalid address** if the address isn't valid, and **This is one of your accounts** if it's your own. Your own accounts are already listed under **My accounts**.
 
 **To send to, rename or delete a contact:**
 

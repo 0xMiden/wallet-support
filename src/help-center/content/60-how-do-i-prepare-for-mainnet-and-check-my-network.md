@@ -6,38 +6,41 @@ subcategory: setup-and-basic-use
 platforms: [extension-desktop, mobile]
 ---
 
-Partner Mainnet is a limited, invitation-only phase. It is separate from Testnet and the future public Mainnet launch. Use small testing balances and follow official migration notices. Do not assume that balances will move automatically to a future network.
+Mainnet is Bread's live network, with real funds. Testnet is a separate test network: its tokens have no real value and never move to Mainnet. Mainnet is invite-only for now, so a new Mainnet wallet needs the access code from your invite email.
 
-Mainnet and Testnet are separate networks. Testnet tokens have no real-world value and do not turn into Mainnet funds.
+**Check which network you're on**
 
-**Get the right build and your invitation**
+On Testnet, the screen where you review a transaction shows **Testnet · Tokens have no real value**. Mainnet shows no network line there. If you see Testnet, use test tokens only.
 
-Use the invitation-enabled Bread version named in your official invitation. A GitHub release, including 1.17.7, does not mean that version is available in every store or installed on your device. Store releases can differ by platform; installing a store update or a test build does not prove that your device has the supported Mainnet flow. Check your version and network before funding. If the expected options are missing, contact [support](/feedback).
+**Create a new Mainnet wallet**
 
-Your personal access code is in your invitation email. A code registers one new account. Keep it private: do not post it, include it in screenshots or send it in a support report. If you have not received an invitation, contact [support](/feedback) about access. Downloading Bread does not itself grant an invitation.
+1. On the **Welcome** screen, select **I have a code**.
+2. Enter the 12-character code from your invite email in **Access code**, exactly as written, then select **Unlock mainnet**.
+3. Finish setting up your wallet, and write down your new recovery phrase.
 
-**Register a new Partner Mainnet account**
+Each code registers one account. Keep it private: don't post it, show it in a screenshot or send it to support.
 
-1. Start from the fresh **Welcome** screen in the supported invitation-enabled build. Do not erase a working wallet just to reach this screen; first follow [*What should I do before resetting or reinstalling Bread?*](#security-and-recovery/what-should-i-do-before-resetting-or-reinstalling-bread)
-2. If **I have a code** is already visible, select it. If your invitation-enabled build instead shows the general welcome options, tap the **Bread logo** seven times, with less than two seconds between taps, to reveal invitation access. The gesture does not replace a valid code. If it opens Developer Settings, go back; do not change endpoints.
-3. Choose **I have a code**, enter your code exactly as supplied in **Access code**, preserving uppercase and lowercase letters, then select **Unlock mainnet**.
-4. Complete security and Guardian setup, save the new recovery phrase safely offline, and finish registration. An accepted code alone does not mean registration is finished. Keep Bread connected until registration and sync complete.
-5. Check the network, account and usable fee balance before sending or bridging funds. Use only routes enabled for your installed version. See [*What is the Partner Mainnet deposit limit?*](#moving-across-chains/what-is-the-partner-mainnet-deposit-limit)
+If you don't have a code, select **I don't have a code**. You can still recover an account you already have; for access, contact [support](/feedback).
 
-**Recover an existing account**
+If the wallet says the code did not work, check it and enter it again. If it says it could not check the code, check your connection and try again later. Don't create another account or reinstall to get past an error.
 
-If you already registered a Mainnet account, recover that account instead of registering another one. On the Mainnet welcome screen choose **I don't have a code**, then **Recover your account**. Recovery of an existing registered account does not require a new invitation code. It needs the correct recovery phrase and the account's Guardian backup. A Testnet account cannot gain Mainnet access through recovery.
+**Move from Testnet to Mainnet**
 
-A standard Bread account supports one active device at a time. Recovery replaces the former device's access; it does not synchronize use across devices. In 1.17.7, **Another device holds this account** and **Make this device the main one** identify the device-replacement flow. Earlier installed versions may show different controls.
+Your Testnet wallet can't become a Mainnet wallet. Switching clears the Testnet wallet from this device and starts a new Mainnet one. Save your Testnet recovery details first; see [*What should I do before resetting or reinstalling Bread?*](#security-and-recovery/what-should-i-do-before-resetting-or-reinstalling-bread)
 
-Follow [*How do I restore my wallet with a recovery phrase?*](#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase). Wait for recovery, any everyday-key rotation and sync to finish before transacting. Do not reset again if the result is unclear.
+1. Select **Have a mainnet access code?** at the top of the wallet. If it isn't there, select **Profile**, tap the version number at the bottom seven times to open **Developer Settings**, and select **Switch to mainnet**. Don't change anything else in **Developer Settings**.
+2. Enter your code and select **Continue**. Nothing is cleared until Mainnet accepts the code.
+3. Select **Reset and switch to mainnet**.
+4. Create your Mainnet wallet with the code, or recover a Mainnet account you already have.
 
-**Recovery phrase verification in 1.17.7**
+**Recover an existing Mainnet account**
 
-For an account created in Bread with its recovery phrase still stored and not yet verified, 1.17.7 requires backup verification when the combined priced Mainnet balance across your accounts reaches $150. Follow the official wallet prompt to confirm your offline backup before continuing. Already verified, recovered or removed phrases are handled differently. Never enter the phrase into a support form or website.
+You don't need a new code to recover a Mainnet account. On the **Welcome** screen, select **I don't have a code**, then **Recover your account**, and follow [*How do I restore my wallet with a recovery phrase?*](#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase)
 
-**If the code or registration fails**
+An account works on one device at a time. Recovering it makes the new device the only one with access, and the old one shows **Another device holds this account**, with a **Make this device the main one** button.
 
-Check that you used the invitation's supported build and entered the code exactly. If Bread cannot check the code or registration times out, check your connection and the account's current status before retrying. Do not create another account or repeatedly reinstall to resolve an uncertain registration. Report the error text, platform, version and network through [support](/feedback), without the code, recovery phrase or signing keys.
+**Back up your recovery phrase at $150**
 
-If Bread shows a Testnet or developer-network indicator, use test assets only. Do not change endpoints to make an account appear to be on Mainnet. See [*Do I need Developer Settings to use Bread?*](#setup-and-basic-use/do-i-need-developer-settings-to-use-bread)
+When your accounts on Mainnet reach $150 in total, the wallet asks you to back up your recovery phrase before you can continue. This applies if you created the wallet in Bread, the phrase is still stored on this device, and you haven't confirmed your backup yet. Never type your phrase into a website or support form.
+
+Before you add funds, see [*What is the Partner Mainnet deposit limit?*](#moving-across-chains/what-is-the-partner-mainnet-deposit-limit) and [*Do I need Developer Settings to use Bread?*](#setup-and-basic-use/do-i-need-developer-settings-to-use-bread)

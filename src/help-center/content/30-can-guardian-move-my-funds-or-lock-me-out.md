@@ -6,12 +6,10 @@ subcategory: guardian-protection
 platforms: [extension-desktop, mobile]
 ---
 
-Guardian cannot move your funds by itself or take permanent control of your account.
+No. Guardian can't move your funds by itself or take control of your account.
 
-Every action needs two of the three keys, so no single key can move funds alone. Guardian holds only one key, which means it acknowledges state updates but can never act on its own.
+Every action needs two of your three keys. Guardian holds only one of them. You hold the other two, the everyday key and the emergency key, and they let you switch to another Guardian at any time. See [*How do I switch Guardian operators?*](#guardian-protection/how-do-i-switch-guardian-operators)
 
-You hold the other two: the everyday key and the emergency key. Those keys let you switch Guardian operators. See [*How do I switch Guardian operators?*](#guardian-protection/how-do-i-switch-guardian-operators)
+If your Guardian stops responding, the wallet shows **Guardian unreachable** and transactions pause. Select **Switch Guardian** to move to another one. If you removed your recovery phrase from this device, you'll need it to switch, so keep it safe.
 
-A Guardian outage, refusal, or sync problem can temporarily interrupt ordinary Guardian-backed transactions while Bread verifies or repairs the connection. If automatic repair cannot finish, the wallet prompts you to switch operators. Keep your recovery phrase safe so you can use the emergency key when a rotation is required.
-
-For the full picture of why and how Guardian coordinates without ever taking custody, see [*What is Guardian?*](#guardian-protection/what-is-guardian)
+For more on how Guardian works without holding your funds, see [*What is Guardian?*](#guardian-protection/what-is-guardian)

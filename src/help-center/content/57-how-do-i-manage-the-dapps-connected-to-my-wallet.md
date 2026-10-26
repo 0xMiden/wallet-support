@@ -6,21 +6,19 @@ subcategory: security-and-recovery
 platforms: [extension-desktop]
 ---
 
-This page manages your consumer wallet permissions; it is not an integration setup guide. Never provide a recovery phrase or signing key to connect a dApp.
-
-**Authorized DApps** controls whether dApps can connect to your wallet, and lists the ones that already have.
+**Authorized DApps** lets you turn dApp connections on or off and shows which dApps are connected. A dApp never needs your recovery phrase or keys to connect.
 
 **To turn dApp connections on or off:**
 
 1. Select **Profile** (the person icon), then select **Authorized DApps** under **Developer**.
-2. Use the **DApps Interaction** switch. When it is off, dApps cannot connect or see your balance.
+2. Use the **DApps Interaction** switch. When it is off, dApps can't connect or see your balance.
 
    ![Bread Wallet's Authorized DApps page, with the DApps Interaction switch](E60-authorized-dapps.png)
 
 **To disconnect a dApp:**
 
-1. On the **Authorized DApps** page, select **See connected**. This row appears only when a dApp is connected to the current account.
+1. On the **Authorized DApps** page, select **See connected**. You only see this when a dApp is connected to the current account.
 2. Find the dApp. Each one shows its **Origin**, **Network**, **Account** and **Permissions**.
 3. Select **Disconnect**, then select **Disconnect** again on the **Confirm the action** message.
 
-The dApp must ask to connect again before it can see your account.
+The dApp has to ask to connect again before it can see your account.

@@ -6,17 +6,10 @@ subcategory: security-and-recovery
 platforms: [extension-desktop, mobile]
 ---
 
-On a new device, the recovery phrase rebuilds the emergency key. Together, the emergency key and Guardian unlock the backed-up state and establish a fresh everyday key tied to the new device.
+Your recovery phrase restores your emergency key on the new device. With it, Bread fetches your account's backup from Guardian and makes a new everyday key for this device. Guardian acknowledges the change, and your account moves to the new device.
 
-Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; you can no longer use the account on the previous device. Recovery does not set up synced access across both devices.
+Your account works on one device at a time. Restoring it makes the new device the only one with access, and the old device shows **Another device holds this account** and can't use the account until you make it the main device again.
 
-The full round trip across your device, Guardian, and Miden:
+Guardian keeps the backup, and your emergency key keeps control.
 
-1. Your new device requests the state, signed by the emergency key.
-2. Guardian returns the state snapshot.
-3. Your device generates a new everyday key and proposes the key update, signed by the emergency key.
-4. Guardian validates the key update, then acknowledges it.
-5. Your device submits the proof for the new state to Miden.
-The device drives recovery, Guardian acknowledges the recovery update, and only a commitment lands on-chain. Guardian keeps the backup, and the emergency key keeps control.
-
-For the in-app steps, see [*How do I restore my wallet with a recovery phrase?*](#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase)
+For the steps in the app, see [*How do I restore my wallet with a recovery phrase?*](#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase)

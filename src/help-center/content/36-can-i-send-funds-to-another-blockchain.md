@@ -6,10 +6,12 @@ subcategory: moving-across-chains
 platforms: [extension-desktop, mobile]
 ---
 
-Yes. You can send USDCX from Bread to an address on **Ethereum**, **Base**, **Arbitrum One** or **Arc**. It arrives there as USDC, through Circle's xReserve route.
+Yes. You can send USDCX from Bread to an address on Ethereum, Base, Arbitrum or Arc. It arrives there as USDC, through Circle's xReserve.
 
-Other supported assets use the Ethereum ↔ Miden Agglayer bridge when that exact route is offered. Epoch and NEAR Intents fast transfers are not enabled on Partner Mainnet; Earn uses a separate Epoch service.
+You can also send ETH and other tokens to Ethereum through **Slow · Agglayer**. It usually takes about 30 minutes.
 
-Circle takes a fee from the amount you send, so you receive less than you send. Check the address before you confirm: once it is sent, the transfer can't be reclaimed.
+**Fast · Epoch** and NEAR Intents transfers aren't available yet. Earn uses Epoch separately, which doesn't make **Fast · Epoch** available.
 
-For the steps, see [*How do I send funds from Bread to another blockchain?*](#moving-across-chains/how-do-i-send-funds-from-bread-to-another-blockchain) For route differences, see [*What is the difference between a solver route and a canonical bridge?*](#moving-across-chains/what-is-the-difference-between-a-solver-route-and-a-canonical-bridge)
+Circle takes its fee from the amount you send, so you receive a little less. The destination address is public. Check it before you confirm: once sent, the transfer can't be taken back.
+
+For the steps, see [*How do I send funds from Bread to another blockchain?*](#moving-across-chains/how-do-i-send-funds-from-bread-to-another-blockchain) For how the routes differ, see [*What is the difference between a solver route and a canonical bridge?*](#moving-across-chains/what-is-the-difference-between-a-solver-route-and-a-canonical-bridge)
