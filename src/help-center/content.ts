@@ -134,7 +134,7 @@ const ARTICLE_IMAGE_SIZES: Readonly<Record<string, readonly [number, number]>> =
   'across-chains-two-routes.png': [1024, 444],
   'earn-across-the-privacy-line.png': [1024, 393],
   'guardian-backed-or-more-private.png': [1024, 434],
-  'private-from-other-users.png': [916, 535],
+  'private-from-other-users.png': [916, 536],
   'three-keys-always-in-control.png': [1026, 396]
 };
 

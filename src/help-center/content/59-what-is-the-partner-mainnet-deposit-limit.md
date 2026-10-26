@@ -6,10 +6,10 @@ subcategory: moving-across-chains
 platforms: [extension-desktop, mobile]
 ---
 
-The Partner Mainnet cap is $1,232.462 for the total wallet balance after a deposit. It is not a per-transfer allowance or a daily deposit limit.
+The Partner Mainnet cap is $1,232.462 USD. It's the most a Bread account can hold after you bridge funds in. It is not a per-transfer allowance or a daily deposit limit.
 
-Add the value of the proposed deposit to the existing total wallet balance. The result must be at or below $1,232.462. For example, a wallet balance of $1,000 leaves $232.462 of room. Splitting a larger amount into smaller deposits does not increase that room.
+When you make a bridge deposit, Bread adds its value to what the receiving account already holds. If the total would go over $1,232.462 USD, Bread stops the deposit. It shows what the account holds and what the deposit would add, so you can enter a smaller amount. For example, an account that holds $1,000 can take up to $232.462 more. Splitting a deposit into smaller ones doesn't help, because they all count toward the same total.
 
-This balance cap is separate from a daily spending limit. A bridge provider may also show a smaller route limit or a minimum amount; follow the displayed route requirements as well.
+If Bread can't get a price for the token you're depositing, it can't check the cap, so it won't let the deposit through. Try again later.
 
-Use only Mainnet routes supported by your installed version. Do not rely on a missing warning as permission to exceed the cap. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)
+The cap is separate from any daily spending limit you set. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)

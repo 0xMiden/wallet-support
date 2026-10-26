@@ -6,28 +6,32 @@ subcategory: moving-across-chains
 platforms: [extension-desktop, mobile]
 ---
 
-Swap exchanges one supported token for another. Swapping within Miden and swapping as part of a crosschain route are different flows; use only the options shown by your installed wallet.
+Swap trades one token for another inside Miden. On Partner Mainnet you can swap these pairs, in either direction:
 
-**Which tokens and pairs are listed?**
+- ETH and USDT
+- WBTC and USDT
+- Wrapped SOL and USDT
+- USDCX and USDT
+- ETH and USDCX
+- WBTC and USDCX
+- Wrapped SOL and USDCX
 
-As checked on 23 October 2026, the Swap quote service lists these seven pairs:
+Wrapped SOL can appear as **SOL** in the token picker. NEAR, PAXG, WBNB and PYUSD can't be swapped yet. Swap prices come from [Forkchoice](https://forkchoice.xyz/).
 
-- ETH ↔ USDT.
-- WBTC ↔ USDT.
-- Wrapped SOL ↔ USDT.
-- USDCX ↔ USDT.
-- ETH ↔ USDCX.
-- WBTC ↔ USDCX.
-- Wrapped SOL ↔ USDCX.
+Swap only works within Miden. To move tokens to or from another blockchain, see [*Which bridge networks and tokens can I use?*](#moving-across-chains/which-bridge-networks-and-tokens-can-i-use)
 
-Each listed pair allows either direction when the wallet offers a valid quote. Wrapped SOL can appear as **SOL** in the token picker. This is a dated quote-service listing, not a guarantee that every pair is available on your selected network or in your installed release. Bread also checks the listed assets on that network before offering them. Token registration alone does not make an asset swappable; NEAR, PAXG, WBNB and PYUSD are not in this dated service listing.
+**Before you confirm**
 
-Miden Swap uses solver quotes supplied through [Forkchoice](https://forkchoice.xyz/). The provider and route for a crosschain exchange can differ from a Swap within Miden. Check the current choices in the wallet rather than treating this list as a list of supported crosschain destinations. See [*Which bridge networks and tokens can I use?*](#moving-across-chains/which-bridge-networks-and-tokens-can-i-use) for bridge routes.
+On **Review Swap**, check **You Send**, **You Receive**, **Rate**, **Slippage** and **Max network fee**. Slippage is how far below the current rate your order may fill. The network fee is paid in USDCX, so keep some in your wallet.
 
-Check the network, tokens, amount you will receive and maximum network fee on the review screen. Keep enough of the displayed fee asset. If a quote expires, changes or fails to load, obtain and review a new quote before signing.
+**How a swap fills**
 
-If Bread says **No swap tokens are configured for this network yet.**, the selected network has no usable Swap choices in that version. Do not change endpoints to force another network's token list. If it says **Price unavailable. Try again shortly.**, wait and request a fresh quote; do not sign using a remembered price. Contact [support](/feedback) if the problem continues.
+A swap is an order. If there isn't enough liquidity at the current price, Bread warns you that only part of it may fill right away. The rest waits until the time you set in **Cancel if not filled within**. Anything still unfilled then comes back to you, and until then that amount stays reserved for the order.
 
-A quote is an estimate for that route at that time. Do not assume it guarantees a future price or that a test token has real value. A disabled Swap control can mean the selected network or token pair is unavailable.
+You can follow the order in **Activity** and stop it there with **Cancel swap**.
 
-If a Swap is interrupted, let the wallet sync and check **Activity** and both token balances before trying again. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)
+**If something goes wrong**
+
+If Bread says **Price unavailable. Try again shortly.**, wait a moment and get a new quote. If it says **No swap tokens are configured for this network yet.**, Swap isn't available on the network you're using. Don't change network settings to get around it. If the problem continues, contact [support](/feedback).
+
+If a swap is interrupted, let the wallet sync, then check **Activity** and both token balances before you try again. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)
