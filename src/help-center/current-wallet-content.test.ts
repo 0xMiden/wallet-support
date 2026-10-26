@@ -103,10 +103,14 @@ describe('verified wallet behavior', () => {
   });
 
   it('labels retained Earn screenshots as historical illustrations', () => {
-    for (const id of ['how-do-i-deposit-into-earn', 'how-do-i-check-my-earn-position', 'how-do-i-withdraw-from-earn', 'what-should-i-do-if-an-earn-deposit-or-withdrawal-fails']) {
+    for (const id of ['how-do-i-check-my-earn-position', 'how-do-i-withdraw-from-earn', 'what-should-i-do-if-an-earn-deposit-or-withdrawal-fails']) {
       expect(body(id)).toContain('captured on Bread 1.16.2 Testnet');
       expect(body(id)).toContain('older flow');
     }
+  });
+
+  it('does not call the retaken Mainnet 1.17.7 deposit screenshots historical', () => {
+    expect(body('how-do-i-deposit-into-earn')).not.toContain('1.16.2 Testnet');
   });
 
   it('does not infer fast transfers from Earn being enabled', () => {
