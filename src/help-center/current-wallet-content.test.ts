@@ -103,7 +103,7 @@ describe('verified wallet behavior', () => {
   });
 
   it('labels retained Earn screenshots as historical illustrations', () => {
-    for (const id of ['how-do-i-check-my-earn-position', 'how-do-i-withdraw-from-earn', 'what-should-i-do-if-an-earn-deposit-or-withdrawal-fails']) {
+    for (const id of ['how-do-i-check-my-earn-position', 'what-should-i-do-if-an-earn-deposit-or-withdrawal-fails']) {
       expect(body(id)).toContain('captured on Bread 1.16.2 Testnet');
       expect(body(id)).toContain('older flow');
     }
@@ -111,6 +111,19 @@ describe('verified wallet behavior', () => {
 
   it('does not call the retaken Mainnet 1.17.7 deposit screenshots historical', () => {
     expect(body('how-do-i-deposit-into-earn')).not.toContain('1.16.2 Testnet');
+  });
+
+  it('gives the withdrawal steps without screenshots until Mainnet withdrawals can be captured', () => {
+    expect(body('how-do-i-withdraw-from-earn')).not.toContain('](E');
+    expect(body('how-do-i-withdraw-from-earn')).not.toContain('1.16.2 Testnet');
+  });
+
+  it('keeps Slow withdrawal claims conditional on the current activity state', () => {
+    const text = body('what-is-the-difference-between-a-solver-route-and-a-canonical-bridge');
+    expect(text).toContain('may need a manual claim');
+    expect(text).toContain('claimed automatically');
+    expect(text).toContain('matching destination address');
+    expect(text).not.toContain('needs one more step');
   });
 
   it('does not infer fast transfers from Earn being enabled', () => {

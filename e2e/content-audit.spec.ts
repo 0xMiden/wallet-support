@@ -25,7 +25,7 @@ for (const { width, platform } of [
       if (!['GET', 'HEAD'].includes(request.method())) {
         writes.push(request.url());
         await route.abort();
-      } else if (!request.url().startsWith('http://localhost:4318/')) await route.abort();
+      } else if (!request.url().startsWith(`${testInfo.project.use.baseURL}/`)) await route.abort();
       else await route.continue();
     });
     await page.setViewportSize({ width, height: 900 });

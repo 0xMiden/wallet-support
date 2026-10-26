@@ -14,4 +14,4 @@ createServer(async (request, response) => {
     const body = await readFile(file);
     response.writeHead(200, { 'Content-Type': types[file.split('.').at(-1)] ?? 'application/octet-stream' }).end(body);
   } catch { response.writeHead(404).end(); }
-}).listen(4319, '127.0.0.1');
+}).listen(Number(process.env.E2E_STATIC_PORT ?? 4319), '127.0.0.1');

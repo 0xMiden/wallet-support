@@ -19,7 +19,7 @@ Revised for Brian's 2026-10-23 launch support audit. Fifty articles. Existing ID
 | 11 | What does Guardian back up? | Manage wallet | Security and recovery |
 | 12 | How does recovery work with Guardian? | Manage wallet | Security and recovery |
 | 13 | Can I send funds to another blockchain? | Crosschain | Moving across chains |
-| 14 | What is the difference between a solver route and a canonical bridge? | Crosschain | Moving across chains |
+| 14 | What is the difference between the Fast and Slow routes? | Crosschain | Moving across chains |
 | 15 | Can I swap tokens across chains? | Crosschain | Moving across chains |
 | 16 | Can I earn yield in Bread? | Earn | Earning yield |
 | 17 | Are my funds private while they earn? | Earn | Earning yield |
@@ -243,20 +243,24 @@ Other supported assets use the Ethereum ↔ Miden Agglayer bridge when that exac
 
 Circle takes a fee from the amount you send, so you receive less than you send. Check the address before you confirm: once it is sent, the transfer can't be reclaimed.
 
-For the steps, see *How do I send funds from Bread to another blockchain?* For route differences, see *What is the difference between a solver route and a canonical bridge?* If a transfer doesn't arrive, see *My USDC or USDCX bridge transfer hasn't arrived. Who can help?*
+For the steps, see *How do I send funds from Bread to another blockchain?* For route differences, see *What is the difference between the Fast and Slow routes?* If a transfer doesn't arrive, see *My USDC or USDCX bridge transfer hasn't arrived. Who can help?*
 
-### 14. What is the difference between a solver route and a canonical bridge?
+### 14. What is the difference between the Fast and Slow routes?
 Category: Crosschain › Moving across chains
 
-A solver route fulfills a request to deliver assets on another chain. A canonical bridge uses the bridge's deposit and claim process. Their supported assets, fees, arrival times and recovery steps can differ.
+When you move funds between Miden and another chain, the route screen shows how they'll travel:
 
-On Partner Mainnet, Circle routes move native USDC on Ethereum, Base, Arbitrum or Arc to and from USDCx on Miden. The Agglayer bridge connects Ethereum and Miden for its configured assets, with native ETH handled separately. Epoch and NEAR Intents fast transfers are disabled. Epoch support for Earn does not enable those transfer routes.
+- **Fast · Epoch**: a third party delivers the funds on the other chain for you. The wallet estimates about 30 seconds.
+- **Slow · Agglayer**: the funds go through the bridge itself. The wallet estimates about 30 minutes and shows no bridge fee. Check any network fee separately.
+- **USDCx (Circle xReserve)**: for USDCX. Circle turns your USDCX into USDC on the other chain, and USDC back into USDCX. How long it takes depends on that chain.
 
-Bread shows only the routes configured for the selected network and asset. A bridge transfer does not necessarily swap the token in transit. Check the exact route, amount and fees before signing.
+On Mainnet, fast transfers are disabled for now. Epoch also runs Earn, but that doesn't switch fast transfers on. USDC moves through Circle on Ethereum, Base, Arbitrum and Arc. ETH and a few Ethereum tokens (WBTC, wrapped SOL, NEAR, PAXG, USDT, WBNB and PYUSD) use the Slow route. For the full list, see *Which bridge networks and tokens can I use?*
 
-Use test assets only on Testnet routes. Mainnet routes require a released wallet that supports them; seeing a test route is not evidence that its Mainnet equivalent is available.
+Before you confirm, check the route, the amount and the fees on the review screen.
 
-If a transfer is pending, follow its existing status and claim or recovery instructions rather than starting it again. See *What should I check if a bridge deposit or withdrawal is delayed?*
+On Testnet, use test tokens only. A route that works on Testnet may not be on Mainnet yet.
+
+If a transfer is still pending, don't start it again. Open it in **Activity** to check its status. A Fast transfer finishes on its own. A Slow transfer out of Miden may need a manual claim; some withdrawals are claimed automatically. Select **Claim Asset** only if the transfer details in **Activity** still show funds ready to claim, and connect the wallet for the matching destination address. See *What should I check if a bridge deposit or withdrawal is delayed?*
 
 ### 15. Can I swap tokens across chains?
 Category: Crosschain › Moving across chains
@@ -267,7 +271,7 @@ Use a crosschain swap only if your installed version and selected network explic
 
 Check the quote, expected received amount, fees and recipient before signing. If the quote expires or changes, review the updated quote. Do not assume a route is available because another token or network works.
 
-Use test assets on Testnet. Use Mainnet routes only when your installed released version supports them. See *What is the difference between a solver route and a canonical bridge?*
+Use test assets on Testnet. Use Mainnet routes only when your installed released version supports them. See *What is the difference between the Fast and Slow routes?*
 
 ### 16. Can I earn yield in Bread?
 Category: Earn › Earning yield
@@ -451,8 +455,6 @@ Earn depends on your installed version, network, eligibility and an available pr
 
 **Withdrawal limitation — 26 October 2026, 12:32 JST:** withdrawals were reported working only from Base to Miden; Ethereum and Arbitrum withdrawals were not working. These are reported tests, not a guarantee for every market, amount or installed version. The earlier test does not guarantee Base withdrawal availability when positions cannot be loaded; a later report described positions-loading failures. Check the existing activity, balance and position after sync, and contact [support](/feedback) if they cannot be reconciled. The steps below describe implemented controls; they do not establish that an affected route can complete. Check the current status in *Can I earn yield in Bread?* and contact [support](/feedback) if your withdrawal route is unavailable.
 
-The screenshots below were captured on Bread 1.16.2 Testnet. They illustrate an older flow; token names, balances and layouts can differ from your installed version. The older withdrawal review shows a full-position withdrawal; current versions let you enter an amount or select **Max**.
-
 A supported withdrawal redeems the selected amount from the external native-USDC position and routes the receipt back to Miden as USDCx. A partial withdrawal leaves the remaining amount invested.
 
 **Steps:**
@@ -461,15 +463,9 @@ A supported withdrawal redeems the selected amount from the external native-USDC
 2. Select **Withdraw**. Enter an amount within the displayed available balance, or select **Max**, then select **Review**.
 3. Check **You withdraw**, **Stays invested**, the destination network, expected receipt and minimum receipt. Expand the withdrawal details to check the route and fees. Select **Withdraw** only when a valid quote is available and you accept the details.
 
-   ![Bread 1.16.2 Testnet full-position withdrawal review](E43-earn-withdraw-review.png)
-
 4. Bread shows **Processing Withdrawal**, then **Withdrawal Started!** when it has started. Select **View in Activities** to follow delivery; starting the withdrawal does not mean the receipt has arrived.
 
-   ![Bread 1.16.2 Testnet Withdrawal Started page, with View in Activities](E45-earn-withdraw-started.png)
-
 5. Follow **Withdraw from Earn** in **Activity**, including **Redeeming** and **Delivering** where shown. Wait for the existing withdrawal to finish before starting another from the same position.
-
-   ![Bread 1.16.2 Testnet Activity page, with a Withdraw from Earn transaction](E46-earn-withdraw-activity.png)
 
 6. After delivery, check your Miden USDCx balance and **Activity**. Eligible USDCx transfers can be accepted automatically when **Auto-accept USDCX transfers** is on. If the receipt remains pending and shows **Accept Transfer**, accept it there.
 
