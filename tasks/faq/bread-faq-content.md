@@ -1,6 +1,6 @@
 # Bread FAQ: content for implementation
 
-Revised for Brian's 2026-10-23 launch support audit. Forty-nine articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
+Revised for Brian's 2026-10-23 launch support audit. Fifty articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
 
 ## Placement
 
@@ -55,6 +55,7 @@ Revised for Brian's 2026-10-23 launch support audit. Forty-nine articles. Existi
 | 47 | What should I do if Guardian cannot connect? | Troubleshooting | Common issues |
 | 48 | What should I do if a bridge deposit fails? | Troubleshooting | Common issues |
 | 49 | How do I send funds from Bread to another blockchain? | Crosschain | Moving across chains |
+| 50 | My USDC or USDCX bridge transfer hasn't arrived. Who can help? | Troubleshooting | Common issues |
 
 ## Articles
 
@@ -236,7 +237,7 @@ Yes. You can send USDCX from Bread to an address on **Ethereum**, **Base**, **Ar
 
 Circle takes a fee from the amount you send, so you receive less than you send. Check the address before you confirm: once it is sent, the transfer can't be reclaimed.
 
-For the steps, see *How do I send funds from Bread to another blockchain?* For route differences, see *What is the difference between a solver route and a canonical bridge?*
+For the steps, see *How do I send funds from Bread to another blockchain?* For route differences, see *What is the difference between a solver route and a canonical bridge?* If a transfer doesn't arrive, see *My USDC or USDCX bridge transfer hasn't arrived. Who can help?*
 
 ### 14. What is the difference between a solver route and a canonical bridge?
 Category: Crosschain › Moving across chains
@@ -792,6 +793,8 @@ A bridge transfer can include a source-chain transaction, route processing and a
 
 A disabled route can stop new transfers without cancelling a transfer already in progress. Follow recovery actions shown for that transfer. Do not change Developer Settings to force a route.
 
+For a USDC or USDCX transfer on Circle's route, see *My USDC or USDCX bridge transfer hasn't arrived. Who can help?*
+
 If Bread shows **Bridge deposit failed**, see *What should I do if a bridge deposit fails?*
 
 ### 41. How do I send feedback or report a problem?
@@ -956,7 +959,7 @@ These steps send USDCx from Bread to your MetaMask wallet on the bridge website,
 
    ![Bread's Confirm Transaction window for bridge.miden.xyz, with the asset change and the Confirm button](E69b-send-out-confirm.png)
 
-5. The bridge shows **Withdrawal submitted**. It doesn't track the payout yet, so check MetaMask for the USDC.
+5. The bridge shows **Withdrawal submitted**. It doesn't track the payout yet, so check MetaMask for the USDC. If it doesn't arrive, see *My USDC or USDCX bridge transfer hasn't arrived. Who can help?*
 
    ![The bridge website's transfer card, marked Withdrawal submitted](E70-send-out-submitted.png)
 
@@ -998,6 +1001,37 @@ These steps send USDCX from Bread to your MetaMask wallet. It arrives in MetaMas
 
    ![Bread's Burn submitted page, with the Done and View in Activities buttons](M17-send-out-burn-submitted.png)
 
-9. In **Activity**, tap the transfer to open it. The transfer is complete when its **Status** reads **Confirmed**. The USDC is then in your MetaMask wallet.
+9. In **Activity**, tap the transfer to open it. The transfer is complete when its **Status** reads **Confirmed**. The USDC is then in your MetaMask wallet. If it stays at **Burn confirmed** and the USDC doesn't arrive, see *My USDC or USDCX bridge transfer hasn't arrived. Who can help?*
 
    ![Bread's Transaction page for the transfer, with the status Confirmed](M17a-send-out-confirmed.png)
+
+### 50. My USDC or USDCX bridge transfer hasn't arrived. Who can help?
+Category: Troubleshooting › Common issues
+
+Transfers between USDC on **Ethereum**, **Base**, **Arbitrum One** or **Arc** and USDCX on Miden use Circle's xReserve route. Bread handles the Miden side of the transfer and Circle completes the other side. Many delays can be resolved in Bread, so start there.
+
+**Check Bread first**
+
+1. Open **Activity** and tap the transfer. If it's still in progress, keep Bread open and let it sync.
+2. If you're sending USDCX out of Bread, check the wallet you sent it to. The USDC may have arrived even if Bread still shows **Burn confirmed**.
+3. If you're adding USDC to Bread and Bread asks you to **Execute on Arc**, do it. This step needs a small amount of gas on Arc.
+4. If you're adding USDC to Bread, check whether the USDCX is waiting to be accepted. See *How do I accept a pending transfer?* and *My transfer is stuck on Accepting stage*.
+5. Don't send the transfer again. Check your balances on both networks first: a second transfer doesn't speed up the first.
+
+If you're unsure what happened, work through *What should I check if a bridge deposit or withdrawal is delayed?* or report it to our [support](/feedback).
+
+**When to contact Circle**
+
+Contact Circle when one side of the transfer is done and the other never arrived:
+
+- **Sending out of Bread:** Bread shows **Burn confirmed**, or the bridge website shows **Withdrawal submitted**, but the USDC still hasn't reached the address on the other network.
+- **Adding funds to Bread:** your external wallet shows the USDC deposit as successful, but Bread is still waiting for Circle to attest it, long after the arrival time Bread estimated.
+
+Circle Customer Care:
+
+- Email: [customer-support@arc.io](mailto:customer-support@arc.io)
+- Help Center: [Contact Us](https://help.arc.io/support_arc?id=support_arc_form)
+
+Tell them the networks, the direction, the amount, the time, the receiving address and the transaction hash from the other network. You can find the hash in your external wallet's history or on a block explorer.
+
+Never share your recovery phrase, keys or wallet backup file. Bread support will never ask for them. Use only the contacts on this page; anyone who messages you first offering to recover your funds is a scam.
