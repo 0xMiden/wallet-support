@@ -912,7 +912,7 @@ WSOL, WBNB and NEAR here are the versions of those tokens that live on Ethereum.
 
 1. Pick the token and both networks in Bread. If a route doesn't appear, Bread doesn't support it yet.
 2. On the review screen, check the receiving address, the fee and the amount you'll receive.
-3. Each Bread account can hold up to about $1,232 after a deposit. If a deposit would take you over, Bread tells you and asks for a smaller amount.
+3. Each Bread account can hold up to $1,232.462 USD after a deposit. If a deposit would take you over, Bread tells you and asks for a smaller amount.
 
 Only move funds through Bread or [bridge.miden.xyz](https://bridge.miden.xyz/), and never send tokens straight to a bridge contract address.
 
