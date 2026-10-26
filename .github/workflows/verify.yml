@@ -41,7 +41,14 @@ jobs:
       - run: npm ci --prefix worker/feedback
 
       # The browser build matching the pinned @playwright/test, with its system libraries.
-      - run: yarn playwright install --with-deps chromium
+      - name: Install Playwright and system dependencies
+        run: |
+          # Azure's Ubuntu mirror throttled dependency downloads for 11+ minutes.
+          # Use the standard Ubuntu archive; package signatures and checks stay enabled.
+          if [ -f /etc/apt/apt-mirrors.txt ]; then
+            sudo sed -i 's|http://azure.archive.ubuntu.com/ubuntu|http://archive.ubuntu.com/ubuntu|g' /etc/apt/apt-mirrors.txt
+          fi
+          yarn playwright install --with-deps chromium
 
       - run: yarn verify
 
