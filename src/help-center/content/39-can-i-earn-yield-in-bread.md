@@ -8,7 +8,11 @@ platforms: [extension-desktop, mobile]
 
 Earn is enabled for eligible Mainnet users, but an enabled feature or a visible vault does not guarantee that a deposit can complete. Your installed version, selected network, market, provider liquidity and quote must all support the action. Earn is not offered in the United Kingdom or New York. If availability cannot be checked, do not submit a new deposit; contact [support](/feedback).
 
-**Operational status — 26 October 2026, 12:32 JST:** USDCx deposits into Ethereum, Arbitrum and Base Earn markets were reported working in wallet tests. In the same report, withdrawals worked only from Base back to Miden; Ethereum and Arbitrum withdrawals were not working.
+**Operational status — 26 October 2026, 14:31 JST:** a later wallet test reported positions-loading failures and a 1 USDCx deposit still **Pending** more than 45 minutes after **You're Earning!** appeared. The success screen does not confirm settlement. The earlier test does not guarantee Base withdrawal availability when positions cannot be loaded.
+
+Let the wallet sync and check the existing **Activity**, spendable balance and position. If the deposit remains pending, positions cannot load or the outcome is unclear, contact [support](/feedback) before submitting another transaction.
+
+**Earlier tests — 26 October 2026, 12:32 JST:** USDCx deposits into Ethereum, Arbitrum and Base Earn markets were reported working in wallet tests. In the same report, withdrawals worked only from Base back to Miden; Ethereum and Arbitrum withdrawals were not working.
 
 Reported tests do not guarantee current availability for every market, amount or installed version. Do not start new deposits into Ethereum or Arbitrum Earn markets while their withdrawal path is unavailable. Before any deposit, confirm that both deposit and withdrawal are currently available for the exact market; contact [support](/feedback) if uncertain. Do not repeatedly submit a failed withdrawal.
 

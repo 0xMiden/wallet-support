@@ -8,7 +8,7 @@ platforms: [extension-desktop, mobile]
 
 Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See [*Can I earn yield in Bread?*](#earn/can-i-earn-yield-in-bread)
 
-**Before depositing:** Do not start new deposits into Ethereum or Arbitrum Earn markets while their withdrawal path is unavailable. Deposits there were reported working on 26 October 2026, but withdrawals were reported working only from Base to Miden. Check the current status in [*Can I earn yield in Bread?*](#earn/can-i-earn-yield-in-bread) and confirm an available withdrawal path for the exact market before starting a new deposit.
+**Before depositing:** Do not start new deposits into Ethereum or Arbitrum Earn markets while their withdrawal path is unavailable. Deposits there were reported working on 26 October 2026, but withdrawals were reported working only from Base to Miden. A later report described positions-loading failures and a deposit still pending after the success screen, so do not infer settlement or a reliable exit from those earlier tests. Check the current status in [*Can I earn yield in Bread?*](#earn/can-i-earn-yield-in-bread) and confirm an available withdrawal path for the exact market before starting a new deposit.
 
 You need spendable **USDCx** in your Miden wallet to fund an Earn deposit. The external lending market uses native USDC; the deposit route handles that change of asset.
 

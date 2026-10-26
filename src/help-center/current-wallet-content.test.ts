@@ -54,6 +54,26 @@ describe('verified wallet behavior', () => {
     expect(body('how-do-i-withdraw-from-earn')).toContain('accepted automatically');
   });
 
+  it('qualifies the success screen and earlier Base results with the later pending report', () => {
+    const status = body('can-i-earn-yield-in-bread');
+    expect(status).toContain('26 October 2026, 14:31 JST');
+    expect(status).toContain('45 minutes');
+    expect(status).toContain('positions-loading');
+    expect(status).toContain('does not confirm settlement');
+    expect(status).toContain('does not guarantee Base withdrawal availability');
+    expect(status).not.toMatch(/every account|no Mainnet user|reclaimable/);
+    const deposit = body('how-do-i-deposit-into-earn');
+    expect(deposit).toContain('does not confirm settlement');
+    expect(deposit).not.toContain('If the deposit completes, Bread shows');
+    for (const id of ['how-do-i-withdraw-from-earn', 'can-i-withdraw-part-of-my-position']) {
+      expect(body(id)).toContain('does not guarantee Base withdrawal availability');
+    }
+    const failure = body('what-should-i-do-if-an-earn-deposit-or-withdrawal-fails');
+    expect(failure).toContain('**Pending**');
+    expect(failure).toContain('balance');
+    expect(failure).toContain('position');
+  });
+
   it('does not advertise weekly claims or a universal game posting fee', () => {
     const text = body('how-do-gamecoins-and-arcade-work');
     expect(text).toContain('Each game sets its own rules');

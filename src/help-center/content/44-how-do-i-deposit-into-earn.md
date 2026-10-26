@@ -8,7 +8,7 @@ platforms: [extension-desktop, mobile]
 
 Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See [*Can I earn yield in Bread?*](#earn/can-i-earn-yield-in-bread)
 
-**Before depositing:** Do not start new deposits into Ethereum or Arbitrum Earn markets while their withdrawal path is unavailable. Deposits there were reported working on 26 October 2026, but withdrawals were reported working only from Base to Miden. Check the current status in [*Can I earn yield in Bread?*](#earn/can-i-earn-yield-in-bread) and confirm an available withdrawal path for the exact market before starting a new deposit.
+**Before depositing:** Do not start new deposits into Ethereum or Arbitrum Earn markets while their withdrawal path is unavailable. Deposits there were reported working on 26 October 2026, but withdrawals were reported working only from Base to Miden. A later report described positions-loading failures and a deposit still pending after the success screen, so do not infer settlement or a reliable exit from those earlier tests. Check the current status in [*Can I earn yield in Bread?*](#earn/can-i-earn-yield-in-bread) and confirm an available withdrawal path for the exact market before starting a new deposit.
 
 The screenshots below were captured on Bread 1.16.2 Testnet. They illustrate an older flow; token names, balances and layouts can differ from your installed version.
 
@@ -36,7 +36,7 @@ Depositing spends USDCx from your Miden balance. The supported route supplies na
 
    ![Bread 1.16.2 Testnet Generating Transaction page for an Earn deposit](E39-earn-deposit-generating.png)
 
-6. If the deposit completes, Bread shows **You're Earning!** Select **Done**, then check the position and transaction status.
+6. Bread may show **You're Earning!** while **Activity** still shows **Pending**. This screen does not confirm settlement. Select **Done**, let the wallet sync, then check the existing transaction status, spendable balance and position. If they do not reconcile or positions cannot load, contact [support](/feedback) before submitting again.
 
    ![Bread 1.16.2 Testnet success page for an Earn deposit](E40-earn-deposit-success.png)
 
