@@ -6,7 +6,9 @@ subcategory: moving-across-chains
 platforms: [extension-desktop, mobile]
 ---
 
-A crosschain swap is available only when Bread shows a route that supports the selected source token, destination token and networks. Not every bridge route swaps tokens. A Swap within Miden is a different operation.
+Partner Mainnet does not currently enable Epoch or NEAR Intents fast crosschain swaps. The Circle and Agglayer bridge routes move their supported assets; do not treat them as a general token-swap service. A Swap within Miden is a different operation.
+
+Use a crosschain swap only if your installed version and selected network explicitly offer that source token, destination token and route.
 
 Check the quote, expected received amount, fees and recipient before signing. If the quote expires or changes, review the updated quote. Do not assume a route is available because another token or network works.
 

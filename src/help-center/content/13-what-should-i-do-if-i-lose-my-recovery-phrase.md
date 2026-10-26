@@ -6,7 +6,7 @@ subcategory: security-and-recovery
 platforms: [extension-desktop, mobile]
 ---
 
-If you can still unlock Bread, keep that device secure. If the recovery phrase is still stored there, open **Settings**, then **Recovery Phrase** under **Security**, and follow the reveal and authentication prompts. Back it up offline.
+If you can still unlock Bread, keep that device secure. If the recovery phrase is still stored there, open **Profile**, then **Recovery Phrase** under **Security**, and follow the reveal and authentication prompts. Back it up offline.
 
 If you previously removed the phrase, Bread cannot display it again. Do not reset, sign out, uninstall, or erase app data while this is your only working access.
 

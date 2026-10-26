@@ -22,7 +22,7 @@ Switching Guardian uses your everyday key and your emergency key, so have your r
 
    ![Bread Wallet's Guardian Settings page, with the Rotate Guardian button](E21-guardian-settings.png)
 
-4. On the **Rotate Guardian** page, select your choice of Guardian, then click **Continue**.
+4. On the **Choose your Guardian** page, select your choice of Guardian, then click **Continue**.
 
    ![Bread Wallet's Choose your Guardian page, with the Continue button](E22-guardian-choose.png)
 

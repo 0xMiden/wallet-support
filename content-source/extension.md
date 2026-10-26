@@ -37,6 +37,8 @@ To set up your wallet next, see [*How do I create a new account with Bread?*](#s
 
 Use the official extension and follow the setup shown in your installed version. If the welcome screen asks for an access code, follow your invitation; do not change Developer Settings to bypass it.
 
+Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; you can no longer use the account on the previous device. Recovery does not set up synced access across both devices.
+
 1. Select **Get started** when that option is available.
 2. Create a strong wallet password and follow the displayed password requirements.
 3. Read the Guardian explanation and confirm the provider shown. Standard Bread setup creates a Guardian-backed account. The operator can see the account state but cannot move funds alone.
@@ -135,6 +137,8 @@ Never share your recovery phrase or backup password with anyone offering to *rec
 
 Have your recovery phrase (sometimes called a seed phrase) ready and use the official extension on the same network as the account you want to recover.
 
+Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; you can no longer use the account on the previous device. Recovery does not set up synced access across both devices.
+
 1. Open Bread and select **Recover your account** when the welcome screen offers it.
 2. Select recovery with your recovery phrase if Bread asks for an import method.
 3. Enter the words in their original order, in the official wallet only.
@@ -181,7 +185,7 @@ Developer-created accounts and older account types can have different recovery r
 
 ### What should I do if I lose my recovery phrase?
 
-If you can still unlock Bread, keep that device secure. If the recovery phrase is still stored there, open **Settings**, then **Recovery Phrase** under **Security**, and follow the reveal and authentication prompts. Back it up offline.
+If you can still unlock Bread, keep that device secure. If the recovery phrase is still stored there, open **Profile**, then **Recovery Phrase** under **Security**, and follow the reveal and authentication prompts. Back it up offline.
 
 If you previously removed the phrase, Bread cannot display it again. Do not reset, sign out, uninstall, or erase app data while this is your only working access.
 
@@ -284,7 +288,7 @@ Retry your stuck transfers one at a time instead of all together.
 2. Turn off **Auto-accept USDCX transfers**.
 
 3. Wait until nothing shows **Accepting…**. Turning the setting off does not stop a transfer that is already being claimed.
-4. Open **Activity** and select the **Pending** tab. Choose one transfer that failed to consume and select its **Retry** button. Wait for it to finish before you retry the next one.
+4. Open **Activity** and select the **Pending** tab. Choose one transfer. If its acceptance failed and it shows **Retry**, select that button only after checking the synced status and balance. A transfer that has not been accepted shows **Accept Transfer** instead. Wait for it to finish before you continue with the next one.
 5. When all your stuck transfers have gone through, turn **Auto-accept USDCX transfers** back on.
 
 Each transfer you retry is a separate transaction with its own network fee, so retrying them one at a time costs more than claiming them together.

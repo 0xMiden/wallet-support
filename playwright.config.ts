@@ -24,7 +24,7 @@ export default defineConfig({
     trace: 'retain-on-failure'
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
-  webServer: {
+  webServer: [{
     command: `yarn build && yarn vite preview --port ${PORT} --strictPort`,
     env: {
       // Cloudflare's documented always-pass test key. Browser tests verify
@@ -40,5 +40,9 @@ export default defineConfig({
      */
     reuseExistingServer: false,
     timeout: 120000
-  }
+  }, {
+    command: 'node e2e/static-host.mjs',
+    url: 'http://127.0.0.1:4319',
+    reuseExistingServer: false
+  }]
 });

@@ -6,13 +6,14 @@ subcategory: setup-and-basic-use
 platforms: [extension-desktop, mobile]
 ---
 
-GameCoin (GC) is used for supported Arcade leaderboard submissions. The rules below describe the intended Arcade flow; claims and leaderboard posting require the deployed service and a compatible game. A game preview or announced integration is not confirmation that those services are live.
+GameCoin (GC) is used by supported Arcade games. Each game sets its own rules for stakes, leaderboard submissions and payouts, including any posting fee. Bread does not provide a weekly GC allowance or claim service.
 
-- Playing, replaying and sharing results on social are free. You do not need GC just to share a result.
-- Submitting a result to a supported game's leaderboard costs 1 GC. You also pay the network fee shown by the wallet; GC does not replace the fee asset.
-- When the claim service is available, each account can claim 10 GC per week from Arcade, regardless of its existing balance. Unused GC carries over.
-- GC is transferable, but its balance is not a score. Each game has its own scoring and leaderboard. There is no global ranking across games.
+In versions that include the Arcade balance display, Bread shows your GC balance for the selected network. In version 1.17.7, **Buy more GC** is disabled: purchasing GC inside the wallet is not implemented. A purchase offered inside a game is a separate game flow, not confirmation that wallet purchasing is available. Store releases can differ by platform; check your installed version.
 
-If claiming or posting is unavailable, continue with free play where the game supports it. Do not repeatedly sign a failed submission: first check **Activity** and your GC balance. Do not assume a claim or score was recorded until the wallet and game confirm it.
+Before playing or submitting a result, check the game's rules, any GC stake, the network fee and the action shown by the wallet. GC does not replace the network fee asset. Free play and social sharing depend on what the game offers.
+
+GC balance is not a score. Each game has its own scoring and leaderboard; there is no global ranking across games.
+
+Do not repeatedly sign a failed game action: first check **Activity**, your GC balance and the game's status. Do not assume a purchase, stake, submission or payout completed until the wallet and game confirm it.
 
 Report the game, network, wallet version and error text without recovery information. See [*How do I send feedback or report a problem?*](#common-issues-and-support/how-do-i-send-feedback-or-report-a-problem)

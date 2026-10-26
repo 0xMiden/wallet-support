@@ -34,6 +34,7 @@ The page then shows your limit, for example **Current limit: $500 a day**.
 **Good to know:**
 
 - **Stored on this device.** Limits and spending history are kept only on this installation. Resetting app data or reinstalling the wallet removes them.
+- **Priced assets only.** Assets the wallet cannot price are not covered by this USD limit. Review any price warning before confirming.
 - **A local safety check.** The limit is not an on-chain restriction. Anyone with direct access to your keys can bypass it.
 
 Your daily spending limit does not raise or replace the Partner Mainnet total wallet-balance cap. See [*What is the Partner Mainnet deposit limit?*](#moving-across-chains/what-is-the-partner-mainnet-deposit-limit)

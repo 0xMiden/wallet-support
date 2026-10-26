@@ -21,7 +21,7 @@ Retry your stuck transfers one at a time instead of all together.
 2. Turn off **Auto-accept USDCX transfers**.
 
 3. Wait until nothing shows **Accepting…**. Turning the setting off does not stop a transfer that is already being claimed.
-4. Open **Activity** and select the **Pending** tab. Choose one transfer that failed to consume and select its **Retry** button. Wait for it to finish before you retry the next one.
+4. Open **Activity** and select the **Pending** tab. Choose one transfer. If its acceptance failed and it shows **Retry**, select that button only after checking the synced status and balance. A transfer that has not been accepted shows **Accept Transfer** instead. Wait for it to finish before you continue with the next one.
 5. When all your stuck transfers have gone through, turn **Auto-accept USDCX transfers** back on.
 
 Each transfer you retry is a separate transaction with its own network fee, so retrying them one at a time costs more than claiming them together.

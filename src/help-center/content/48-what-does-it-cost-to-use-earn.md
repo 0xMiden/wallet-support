@@ -6,9 +6,9 @@ subcategory: earn
 platforms: [extension-desktop, mobile]
 ---
 
-These steps describe the Testnet Earn flow when it is enabled in your installed version. Test balances and estimated rewards are for testing, not real investment returns. They do not establish that Mainnet Earn is available. Use only the networks and assets shown by your wallet.
+Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See [*Can I earn yield in Bread?*](#earn/can-i-earn-yield-in-bread)
 
-- **Depositing** costs a network fee, paid in the fee asset shown by the wallet. The review page shows the **Max network fee** before you confirm, and the success page shows the **Network Fee** you paid.
-- **Withdrawing** in this Testnet flow is gasless: you pay no network fee. Do not assume that other routes or a future Mainnet withdrawal have the same fees; review the amount and fees shown before confirming.
+- **Depositing** costs a Miden network fee. Check the displayed fee asset and **Max network fee** before confirming; keep enough USDCx on Mainnet for the deposit and that fee. The completed transaction shows the **Network Fee** paid.
+- **Withdrawing** uses sponsored gas on the supported Earn route. Sponsored gas does not mean the withdrawal has no costs: route costs are reflected in the quoted receipt. Check **You withdraw**, the expected receipt, the minimum receipt and **Route fees** before confirming.
 
-Check the displayed fee asset and maximum fee before confirming. See [*What do I need before I can use Earn?*](#earn/what-do-i-need-before-i-can-use-earn)
+Amounts and fees depend on the route and quote. Testnet fees and balances do not establish Mainnet costs. See [*What do I need before I can use Earn?*](#earn/what-do-i-need-before-i-can-use-earn)

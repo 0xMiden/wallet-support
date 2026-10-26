@@ -6,20 +6,26 @@ subcategory: earn
 platforms: [extension-desktop, mobile]
 ---
 
-Mainnet Earn is not currently available. Earn is also not offered in the United Kingdom or New York. Seeing a vault preview does not mean deposits are available. If availability cannot be checked, wait and try again later or contact [support](/feedback).
+Earn is enabled for eligible Mainnet users, but an enabled feature or a visible vault does not guarantee that a deposit can complete. Your installed version, selected network, market, provider liquidity and quote must all support the action. Earn is not offered in the United Kingdom or New York. If availability cannot be checked, do not submit a new deposit; contact [support](/feedback).
 
-Earn is available only when your installed version and selected network enable it. A missing or disabled deposit control means you should not start a new deposit.
+**Operational status — 26 October 2026, 14:31 JST:** a later wallet test reported positions-loading failures and a 1 USDCx deposit still **Pending** more than 45 minutes after **You're Earning!** appeared. The success screen does not confirm settlement. The earlier test does not guarantee Base withdrawal availability when positions cannot be loaded.
 
-**Planned Mainnet markets — not available for deposits**
+Let the wallet sync and check the existing **Activity**, spendable balance and position. If the deposit remains pending, positions cannot load or the outcome is unclear, contact [support](/feedback) before submitting another transaction.
 
-The planned Earn selection is native USDC in these six markets:
+**Earlier tests — 26 October 2026, 12:32 JST:** USDCx deposits into Ethereum, Arbitrum and Base Earn markets were reported working in wallet tests. In the same report, withdrawals worked only from Base back to Miden; Ethereum and Arbitrum withdrawals were not working.
+
+Reported tests do not guarantee current availability for every market, amount or installed version. Do not start new deposits into Ethereum or Arbitrum Earn markets while their withdrawal path is unavailable. Before any deposit, confirm that both deposit and withdrawal are currently available for the exact market; contact [support](/feedback) if uncertain. Do not repeatedly submit a failed withdrawal.
+
+**Mainnet markets**
+
+The Mainnet selection covers native USDC in six external lending markets:
 
 - Arbitrum: Aave V3 USDC and Compound III USDC.
 - Base: Aave V3 USDC and Compound III USDC.
 - Ethereum: Aave V3 USDC and Compound III USDC.
 
-These are planned lending markets, not live Bread deposit options. Morpho vaults are not included in this selection. Bridged USDC variants and other assets are not included in this planned list. [Aave](https://aave.com/help/aave-101/introduction-to-aave) and [Compound III](https://docs.compound.xyz/) explain their protocols; availability on a provider's own site does not establish availability in Bread.
+You fund the deposit with USDCx in your Miden wallet; the route supplies native USDC to the external market. USDCx and USDC are distinct assets. Morpho vaults, bridged USDC variants and other assets are not part of this selection. [Aave](https://aave.com/help/aave-101/introduction-to-aave) and [Compound III](https://docs.compound.xyz/) explain their protocols; availability on a provider's own site does not establish availability in Bread.
 
-Testnet Earn uses test assets and a test lending market. Estimated rewards there do not represent real returns. These Testnet guides do not establish Mainnet availability. Do not treat an announced market or a preview vault as an available deposit option.
+Review the market, network, fees and expected amount before confirming. A missing or disabled deposit control means you should not start a deposit. Testnet uses test assets and estimated rewards there do not represent real returns.
 
-When a supported route is available, review the market, fees and expected amount before confirming. The lending-market portion can be publicly visible. See [*Are my funds private while they earn?*](#earn/are-my-funds-private-while-they-earn)
+The external lending-market portion can be publicly visible. See [*Are my funds private while they earn?*](#earn/are-my-funds-private-while-they-earn)

@@ -6,7 +6,7 @@ subcategory: common-issues-and-support
 platforms: [extension-desktop, mobile]
 ---
 
-Open [the Bread feedback form](/feedback), or choose **Send feedback** from the wallet's **Settings** and **About** section.
+Open [the Bread feedback form](/feedback), or choose **Send feedback** from the wallet's **Profile** and **About** section.
 
 Use **Short title** for one clear summary and **Description** for the details. Choose the feedback type. For a bug, include what you did, what you expected, what happened, your platform, app version and network. Describe one problem per report where possible.
 
