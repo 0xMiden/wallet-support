@@ -118,6 +118,14 @@ describe('verified wallet behavior', () => {
     expect(body('how-do-i-withdraw-from-earn')).not.toContain('1.16.2 Testnet');
   });
 
+  it('keeps Slow withdrawal claims conditional on the current activity state', () => {
+    const text = body('what-is-the-difference-between-a-solver-route-and-a-canonical-bridge');
+    expect(text).toContain('may need a manual claim');
+    expect(text).toContain('claimed automatically');
+    expect(text).toContain('matching destination address');
+    expect(text).not.toContain('needs one more step');
+  });
+
   it('does not infer fast transfers from Earn being enabled', () => {
     expect(body('what-is-the-difference-between-a-solver-route-and-a-canonical-bridge')).toContain('fast transfers are disabled');
     expect(body('which-bridge-networks-and-tokens-can-i-use')).toContain('is disabled in the current Partner Mainnet configuration');
