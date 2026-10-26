@@ -26,7 +26,7 @@ test('the Crosschain and Earn cards each open their own subcategory, and the sid
   await expect(page.locator(TITLE)).toHaveText('Moving across chains');
   await expect(page.locator('.help-center-card-link')).toHaveText([
     'Can I send funds to another blockchain?',
-    'What is the difference between a solver route and a canonical bridge?',
+    'What is the difference between the Fast and Slow routes?',
     'Can I swap tokens across chains?',
     'What is the Partner Mainnet deposit limit?',
     'What should I check before a Swap?',
@@ -124,7 +124,7 @@ test('a See reference is a link to the article it names, in the same tab', async
   await page.goto('/#moving-across-chains/can-i-send-funds-to-another-blockchain');
 
   const reference = page.locator(`${BODY} a`, {
-    hasText: 'What is the difference between a solver route and a canonical bridge?'
+    hasText: 'What is the difference between the Fast and Slow routes?'
   });
   await expect(reference).not.toHaveAttribute('target');
   await reference.click();
@@ -133,7 +133,7 @@ test('a See reference is a link to the article it names, in the same tab', async
     /#moving-across-chains\/what-is-the-difference-between-a-solver-route-and-a-canonical-bridge$/
   );
   await expect(page.locator(TITLE)).toHaveText(
-    'What is the difference between a solver route and a canonical bridge?'
+    'What is the difference between the Fast and Slow routes?'
   );
 });
 

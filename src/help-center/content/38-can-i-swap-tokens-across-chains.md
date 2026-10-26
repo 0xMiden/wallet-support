@@ -12,4 +12,4 @@ Use a crosschain swap only if your installed version and selected network explic
 
 Check the quote, expected received amount, fees and recipient before signing. If the quote expires or changes, review the updated quote. Do not assume a route is available because another token or network works.
 
-Use test assets on Testnet. Use Mainnet routes only when your installed released version supports them. See [*What is the difference between a solver route and a canonical bridge?*](#moving-across-chains/what-is-the-difference-between-a-solver-route-and-a-canonical-bridge)
+Use test assets on Testnet. Use Mainnet routes only when your installed released version supports them. See [*What is the difference between the Fast and Slow routes?*](#moving-across-chains/what-is-the-difference-between-a-solver-route-and-a-canonical-bridge)

@@ -19,7 +19,7 @@ Revised for Brian's 2026-10-23 launch support audit. Forty-nine articles. Existi
 | 11 | What does Guardian back up? | Manage wallet | Security and recovery |
 | 12 | How does recovery work with Guardian? | Manage wallet | Security and recovery |
 | 13 | Can I send funds to another blockchain? | Crosschain | Moving across chains |
-| 14 | What is the difference between a solver route and a canonical bridge? | Crosschain | Moving across chains |
+| 14 | What is the difference between the Fast and Slow routes? | Crosschain | Moving across chains |
 | 15 | Can I swap tokens across chains? | Crosschain | Moving across chains |
 | 16 | Can I earn yield in Bread? | Earn | Earning yield |
 | 17 | Are my funds private while they earn? | Earn | Earning yield |
@@ -242,20 +242,24 @@ Other supported assets use the Ethereum ↔ Miden Agglayer bridge when that exac
 
 Circle takes a fee from the amount you send, so you receive less than you send. Check the address before you confirm: once it is sent, the transfer can't be reclaimed.
 
-For the steps, see *How do I send funds from Bread to another blockchain?* For route differences, see *What is the difference between a solver route and a canonical bridge?*
+For the steps, see *How do I send funds from Bread to another blockchain?* For route differences, see *What is the difference between the Fast and Slow routes?*
 
-### 14. What is the difference between a solver route and a canonical bridge?
+### 14. What is the difference between the Fast and Slow routes?
 Category: Crosschain › Moving across chains
 
-A solver route fulfills a request to deliver assets on another chain. A canonical bridge uses the bridge's deposit and claim process. Their supported assets, fees, arrival times and recovery steps can differ.
+When you move funds between Miden and another chain, the route screen shows how they'll travel:
 
-On Partner Mainnet, Circle routes move native USDC on Ethereum, Base, Arbitrum or Arc to and from USDCx on Miden. The Agglayer bridge connects Ethereum and Miden for its configured assets, with native ETH handled separately. Epoch and NEAR Intents fast transfers are disabled. Epoch support for Earn does not enable those transfer routes.
+- **Fast · Epoch**: a third party delivers the funds on the other chain for you. It takes about 30 seconds.
+- **Slow · Agglayer**: the funds go through the bridge itself. It takes about 30 minutes and has no bridge fee.
+- **USDCx (Circle xReserve)**: for USDCX. Circle turns your USDCX into USDC on the other chain, and USDC back into USDCX. How long it takes depends on that chain.
 
-Bread shows only the routes configured for the selected network and asset. A bridge transfer does not necessarily swap the token in transit. Check the exact route, amount and fees before signing.
+On Mainnet, fast transfers are disabled for now. Epoch also runs Earn, but that doesn't switch fast transfers on. USDC moves through Circle on Ethereum, Base, Arbitrum and Arc. ETH and a few Ethereum tokens (WBTC, wrapped SOL, NEAR, PAXG, USDT, WBNB and PYUSD) use the Slow route. For the full list, see *Which bridge networks and tokens can I use?*
 
-Use test assets only on Testnet routes. Mainnet routes require a released wallet that supports them; seeing a test route is not evidence that its Mainnet equivalent is available.
+Before you confirm, check the route, the amount and the fees on the review screen.
 
-If a transfer is pending, follow its existing status and claim or recovery instructions rather than starting it again. See *What should I check if a bridge deposit or withdrawal is delayed?*
+On Testnet, use test tokens only. A route that works on Testnet may not be on Mainnet yet.
+
+If a transfer is still pending, don't start it again. Open it in **Activity** to check its status. A Fast transfer finishes on its own. A Slow transfer out of Miden needs one more step: when the funds are ready, select **Claim Asset** in its details to receive them on the other chain. See *What should I check if a bridge deposit or withdrawal is delayed?*
 
 ### 15. Can I swap tokens across chains?
 Category: Crosschain › Moving across chains
@@ -266,7 +270,7 @@ Use a crosschain swap only if your installed version and selected network explic
 
 Check the quote, expected received amount, fees and recipient before signing. If the quote expires or changes, review the updated quote. Do not assume a route is available because another token or network works.
 
-Use test assets on Testnet. Use Mainnet routes only when your installed released version supports them. See *What is the difference between a solver route and a canonical bridge?*
+Use test assets on Testnet. Use Mainnet routes only when your installed released version supports them. See *What is the difference between the Fast and Slow routes?*
 
 ### 16. Can I earn yield in Bread?
 Category: Earn › Earning yield
