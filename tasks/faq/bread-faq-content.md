@@ -1,6 +1,6 @@
 # Bread FAQ: content for implementation
 
-Revised for Brian's 2026-10-23 launch support audit. Fifty articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
+Revised for Brian's 2026-10-23 launch support audit. Fifty-six articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
 
 ## Placement
 
@@ -56,6 +56,12 @@ Revised for Brian's 2026-10-23 launch support audit. Fifty articles. Existing ID
 | 48 | What should I do if a bridge deposit fails? | Troubleshooting | Common issues |
 | 49 | How do I send funds from Bread to another blockchain? | Crosschain | Moving across chains |
 | 50 | My USDC or USDCX bridge transfer hasn't arrived. Who can help? | Troubleshooting | Common issues |
+| 51 | What happens to my funds if an Earn deposit fails? | Earn | Earning yield |
+| 52 | Why can't I install Bread on my device? | Getting started | Setup and basic use |
+| 53 | Why is Bread or Earn unavailable here? | Troubleshooting | Common issues |
+| 54 | Why does the bridge website show a different balance from my wallets? | Troubleshooting | Common issues |
+| 55 | My MetaMask bridge deposit fails with a 500 error. What should I do? | Troubleshooting | Common issues |
+| 56 | Which wallets can I use to add funds to Bread from another blockchain? | Crosschain | Moving across chains |
 
 ## Articles
 
@@ -1103,3 +1109,70 @@ Circle Customer Care:
 Tell them the networks, the direction, the amount, the time, the receiving address and the transaction hash from the other network. You can find the hash in your external wallet's history or on a block explorer.
 
 Never share your recovery phrase, keys or wallet backup file. Bread support will never ask for them. Use only the contacts on this page; anyone who messages you first offering to recover your funds is a scam.
+
+### 51. What happens to my funds if an Earn deposit fails?
+Category: Earn › Earning yield
+
+A failed Earn deposit can't be retried. If your funds left your account before the deposit failed, they come back to you after a waiting period. Don't make another deposit to get them back.
+
+Epoch, the lending service that Earn uses, sets the waiting period. On Mainnet it is currently 6,200 Miden blocks, which Bread estimates at about 5 hours. Epoch can change it.
+
+1. Open **Activity** and check the deposit. Let the wallet sync.
+2. After the waiting period, the funds appear on the **Activity** page as a pending transfer. Accept it to add them back to your balance. See *How do I accept a pending transfer?*
+3. To deposit again, start a new deposit from the **Earn** tab. See *How do I deposit into Earn?*
+
+If the funds haven't come back long after the waiting period, contact [support](/feedback).
+
+### 52. Why can't I install Bread on my device?
+Category: Getting started › Setup and basic use
+
+Bread needs one of these:
+
+- **Android:** Android 9 or later.
+- **iPhone:** iOS 15 or later.
+- **Computer:** Chrome 114 or later for the extension.
+
+On an older version, the store may not offer Bread, or it may not install. This depends on your device, not your country.
+
+If your device meets these minimums and Bread still won't install or open, contact [support](/feedback). Include your device model, its system version and your Bread version.
+
+### 53. Why is Bread or Earn unavailable here?
+Category: Troubleshooting › Common issues
+
+Bread blocks access in certain countries and regions. There, Bread shows **Wallet unavailable in your region** and the whole wallet is blocked, including withdrawals. New Earn deposits are blocked in the United Kingdom and New York. Individual games and apps may have additional regional restrictions.
+
+If Bread can't check your region, for example during a service problem, the wallet stays open but Earn stays off. Restart Bread to check again.
+
+See the full list of restrictions on the [compliance page](https://0xmiden.github.io/wallet/compliance/).
+
+### 54. Why does the bridge website show a different balance from my wallets?
+Category: Troubleshooting › Common issues
+
+The bridge website, https://bridge.miden.xyz/, reads your balances when you connect your wallets. It doesn't keep them updated while the page is open. If you received or sent funds since then, the **Available** amount can be out of date.
+
+- **Bread balance:** select the refresh icon next to it.
+- **Both balances:** reload the page.
+
+Refresh the balances before you enter an amount.
+
+### 55. My MetaMask bridge deposit fails with a 500 error. What should I do?
+Category: Troubleshooting › Common issues
+
+If MetaMask shows **Fetch error** with **Internal Server Error** a few seconds after you confirm a bridge deposit, MetaMask's **Smart Transactions** setting refused to send it. The error comes from MetaMask, not from Bread or the bridge. The deposit was not sent, so no funds moved and nothing appears on the **Activity** page.
+
+1. Check MetaMask's activity to confirm that the deposit was not sent.
+2. Turn off **Smart Transactions** in MetaMask:
+   - **MetaMask mobile app:** open **Settings**, then **Advanced**.
+   - **MetaMask extension:** open **Settings**, then **Transactions**.
+3. Try the deposit again.
+
+If it still fails, report it to our [support](/feedback). See *How do I send feedback or report a problem?*
+
+### 56. Which wallets can I use to add funds to Bread from another blockchain?
+Category: Crosschain › Moving across chains
+
+You can use a wallet app that supports WalletConnect, such as MetaMask, Rainbow or Uniswap Wallet. The wallet also needs to support the network you're sending from. See *Which bridge networks and tokens can I use?*
+
+- **Bread on your phone:** open **Receive**, tap **Cross-chain** and choose your wallet from the list.
+- **Bread extension:** scan the QR code with a wallet app on your phone. Browser-extension wallets, such as the MetaMask extension, can't connect to the Bread extension.
+- **Bridge website:** to use a browser-extension wallet such as MetaMask, go to https://bridge.miden.xyz/. See *How to add funds into Bread?*
