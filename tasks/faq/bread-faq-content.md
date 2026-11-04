@@ -1118,7 +1118,7 @@ A failed Earn deposit can't be retried. If your funds left your account before t
 Epoch, the lending service that Earn uses, sets the waiting period. On Mainnet it is currently 6,200 Miden blocks, which Bread estimates at about 5 hours. Epoch can change it.
 
 1. Open **Activity** and check the deposit. Let the wallet sync.
-2. After the waiting period, the funds appear on the **Activity** page as a pending transfer. Accept it to add them back to your balance. See *How do I accept a pending transfer?*
+2. After the waiting period, the USDCX comes back to your balance. Bread accepts it automatically when **Auto-accept USDCX transfers** is on in **General** settings, which it is unless you turned it off. If the setting is off, or the amount is too small to cover the network fee, accept the pending transfer on the **Activity** page. See *How do I accept a pending transfer?*
 3. To deposit again, start a new deposit from the **Earn** tab. See *How do I deposit into Earn?*
 
 If the funds haven't come back long after the waiting period, contact [support](/feedback).
