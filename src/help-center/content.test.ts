@@ -200,11 +200,11 @@ describe('coverage', () => {
    * The totals, written down rather than derived, so adding a category or an
    * article is a decision this file has to be told about.
    */
-  it('spans 7 main categories, 9 subcategories and 79 articles', () => {
+  it('spans 7 main categories, 9 subcategories and 82 articles', () => {
     const navigation = createHelpCenterNavigation(helpCenterMainCategories);
     expect(navigation.mainCategories).toHaveLength(7);
     expect(navigation.categories).toHaveLength(9);
-    expect(helpCenterAllArticles).toHaveLength(79);
+    expect(helpCenterAllArticles).toHaveLength(82);
   });
 
   it('resolves every article to exactly one position, through navigation.ts', () => {
@@ -234,7 +234,7 @@ describe('coverage', () => {
       taken.set(position, article.id);
     }
 
-    expect(taken.size).toBe(79);
+    expect(taken.size).toBe(82);
   });
 
   it('keeps Activity and transaction status in the hierarchy, with its one FAQ article after the first', () => {
@@ -411,7 +411,7 @@ describe('article sources', () => {
     }
 
     expect(helpCenterAllArticles.filter(article => pages.has(article.title))).toHaveLength(23);
-    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(56);
+    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(59);
   });
 });
 
@@ -439,7 +439,7 @@ const FAQ_PLACEMENT: Readonly<Record<string, readonly number[]>> = {
   'moving-across-chains': [13, 14, 15, 36, 43, 46, 49, 56],
   earn: [16, 17, 20, 21, 22, 23, 24, 25, 26, 27, 28, 51],
   'activity-and-transaction-status': [18],
-  'common-issues-and-support': [19, 40, 41, 47, 48, 50, 53, 54, 55]
+  'common-issues-and-support': [19, 40, 41, 47, 48, 50, 53, 54, 55, 57, 58, 59]
 };
 
 /** Alt text for each image, taken from the heading drawn inside it. */
@@ -537,7 +537,7 @@ describe('fidelity to the FAQ', () => {
   };
 
   it('reads fifty-six articles, numbered in order, that agree with the placement table', () => {
-    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 56 }, (_, index) => index + 1));
+    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 59 }, (_, index) => index + 1));
     expect(FAQ.placement).toEqual(
       FAQ.entries.map(({ number, title, mainCategory, subcategory }) => ({ number, title, mainCategory, subcategory }))
     );
@@ -562,7 +562,9 @@ describe('fidelity to the FAQ', () => {
     // FAQ 29 to 35 describe Settings on wallet 1.17.1 and were read on the
     // Extension only; the phone asks for a passcode where these say password.
     // Each joins the other platform once it is checked there (Ivan, 2026-10-09).
-    const EXTENSION_ONLY: ReadonlySet<number> = new Set([29, 30, 31, 32, 33, 34, 35]);
+    // FAQ 57 is about Miden Bridge, which only the Bread extension connects to
+    // (Ivan, 2026-11-04).
+    const EXTENSION_ONLY: ReadonlySet<number> = new Set([29, 30, 31, 32, 33, 34, 35, 57]);
     // FAQ 48 was reported and traced on the phone (wallet 1.17.3); it joins the
     // Extension once its reconnect steps are checked there (Ivan, 2026-10-21).
     const MOBILE_ONLY: ReadonlySet<number> = new Set([48]);
@@ -956,13 +958,13 @@ describe('fidelity to the FAQ', () => {
  */
 describe('the migrated article set', () => {
   it('carries every article in the approved mapping', () => {
-    expect(helpCenterAllArticles).toHaveLength(79);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(78);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(70);
+    expect(helpCenterAllArticles).toHaveLength(82);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(81);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(72);
   });
 
   it('publishes every article except the ones held back', () => {
-    expect(helpCenterArticles).toHaveLength(75);
+    expect(helpCenterArticles).toHaveLength(78);
     const published = helpCenterArticles.map(article => article.id);
     expect(published).not.toContain('how-to-restore-the-wallet-using-an-encrypted-file');
     expect(published).not.toContain('how-to-download-the-encrypted-file');
@@ -1313,7 +1315,10 @@ describe('the key-structure vocabulary', () => {
     { pattern: /cold[ \u00a0-]?keys?/gi, instead: 'emergency key' },
     { pattern: /recovery[ \u00a0-]keys?/gi, instead: 'recovery phrase' },
     { pattern: /private[ \u00a0-]keys?/gi, instead: 'recovery phrase' },
-    { pattern: /device[ \u00a0-]?keys?/gi, instead: 'everyday key' }
+    { pattern: /device[ \u00a0-]?keys?/gi, instead: 'everyday key' },
+    // Not a key, but held the same way: the site at bridge.miden.xyz is named
+    // Miden Bridge, as it names itself, and linked (Ivan, 2026-11-04).
+    { pattern: /bridge[ \u00a0-]?(?:web)?site/gi, instead: 'Miden Bridge' }
   ] as const;
 
   const GENERIC_CRYPTOGRAPHY = /private key that must be kept secret|Using a private key to create|someone controlling the private key|while the private key remains hidden/g;

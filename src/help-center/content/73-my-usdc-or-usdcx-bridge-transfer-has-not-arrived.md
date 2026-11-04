@@ -22,7 +22,7 @@ If you're unsure what happened, work through [*What should I check if a bridge d
 
 Contact Circle when one side of the transfer is done and the other never arrived:
 
-- **Sending out of Bread:** Bread shows **Burn confirmed**, or the bridge website shows **Withdrawal submitted**, but the USDC still hasn't reached the address on the other network.
+- **Sending out of Bread:** Bread shows **Burn confirmed**, or Miden Bridge shows **Withdrawal submitted**, but the USDC still hasn't reached the address on the other network.
 - **Adding funds to Bread:** your external wallet shows the USDC deposit as successful, but Bread is still waiting for Circle to attest it, long after the arrival time Bread estimated.
 
 Circle Customer Care:

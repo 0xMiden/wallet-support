@@ -43,6 +43,6 @@ WSOL, WBNB and NEAR here are the versions of those tokens that live on Ethereum.
 2. On the review screen, check the receiving address, the fees, the amount you'll receive and the arrival estimate.
 3. On Partner Mainnet, the current deposit cap is $1,232.462 USD for your total wallet balance after a deposit. If a deposit would take you over, Bread asks for a smaller amount. This is not a per-transfer allowance or a daily deposit limit. See [*What is the Partner Mainnet deposit limit?*](#moving-across-chains/what-is-the-partner-mainnet-deposit-limit)
 
-Only move funds through Bread or [bridge.miden.xyz](https://bridge.miden.xyz/), and never send tokens straight to a bridge contract address. The website can offer different choices from your installed wallet; check its route separately.
+Only move funds through Bread or [Miden Bridge](https://bridge.miden.xyz/), and never send tokens straight to a bridge contract address. Miden Bridge can offer different choices from your installed wallet; check its route separately.
 
 If a transfer is taking longer than expected, see [*What should I check if a bridge deposit or withdrawal is delayed?*](#common-issues-and-support/what-should-i-check-if-a-bridge-deposit-or-withdrawal-is-delayed)

@@ -1,6 +1,6 @@
 # Bread FAQ: content for implementation
 
-Revised for Brian's 2026-10-23 launch support audit. Fifty-six articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
+Revised for Brian's 2026-10-23 launch support audit. Fifty-nine articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
 
 ## Placement
 
@@ -59,9 +59,12 @@ Revised for Brian's 2026-10-23 launch support audit. Fifty-six articles. Existin
 | 51 | What happens to my funds if an Earn deposit fails? | Earn | Earning yield |
 | 52 | Why can't I install Bread on my device? | Getting started | Setup and basic use |
 | 53 | Why is Bread or Earn unavailable here? | Troubleshooting | Common issues |
-| 54 | Why does the bridge website show a different balance from my wallets? | Troubleshooting | Common issues |
-| 55 | My MetaMask bridge deposit fails with a 500 error. What should I do? | Troubleshooting | Common issues |
+| 54 | Why does Miden Bridge show a different balance from my wallets? | Troubleshooting | Common issues |
+| 55 | Why does MetaMask show a 500 error when I bridge to Bread? | Troubleshooting | Common issues |
 | 56 | Which wallets can I use to add funds to Bread from another blockchain? | Crosschain | Moving across chains |
+| 57 | What should I do if a deposit on Miden Bridge fails? | Troubleshooting | Common issues |
+| 58 | Why won't my wallet connect? | Troubleshooting | Common issues |
+| 59 | Why does my USDC bridge to Bread show Failed? | Troubleshooting | Common issues |
 
 ## Articles
 
@@ -981,7 +984,7 @@ WSOL, WBNB and NEAR here are the versions of those tokens that live on Ethereum.
 2. On the review screen, check the receiving address, the fees, the amount you'll receive and the arrival estimate.
 3. On Partner Mainnet, the current deposit cap is $1,232.462 USD for your total wallet balance after a deposit. If a deposit would take you over, Bread asks for a smaller amount. This is not a per-transfer allowance or a daily deposit limit. See *What is the Partner Mainnet deposit limit?*
 
-Only move funds through Bread or [bridge.miden.xyz](https://bridge.miden.xyz/), and never send tokens straight to a bridge contract address. The website can offer different choices from your installed wallet; check its route separately.
+Only move funds through Bread or [Miden Bridge](https://bridge.miden.xyz/), and never send tokens straight to a bridge contract address. Miden Bridge can offer different choices from your installed wallet; check its route separately.
 
 If a transfer is taking longer than expected, see *What should I check if a bridge deposit or withdrawal is delayed?*
 
@@ -1018,16 +1021,16 @@ Category: Crosschain › Moving across chains
 
 <!-- platform: extension-desktop -->
 
-These steps send USDCx from Bread to your MetaMask wallet on the bridge website, https://bridge.miden.xyz/. It arrives in MetaMask as USDC.
+These steps send USDCx from Bread to your MetaMask wallet on [Miden Bridge](https://bridge.miden.xyz/). It arrives in MetaMask as USDC.
 
-1. Go to https://bridge.miden.xyz/, connect MetaMask and Bread as in steps 2 to 5 of *How to add funds into Bread?*, and select **Withdraw**.
+1. Go to [Miden Bridge](https://bridge.miden.xyz/), connect MetaMask and Bread as in steps 2 to 5 of *How to add funds into Bread?*, and select **Withdraw**.
 2. Next to **To**, choose where you want to receive the funds: **Arc**, **Ethereum**, **Base** or **Arbitrum**. Enter the amount and select **Review transfer**.
 
-   ![The bridge website's Withdraw tab, with the Select network list next to To](E69-send-out-withdraw.png)
+   ![Miden Bridge's Withdraw tab, with the Select network list next to To](E69-send-out-withdraw.png)
 
 3. Check **Estimated received** and the fees, then select **Confirm in wallet**. Burning USDCx can't be reversed, and the final Circle fee can change after the burn. Keep some USDCx for the Miden network fee.
 
-   ![The bridge website's Review transfer window for a withdrawal, with Estimated received and the Confirm in wallet button](E69a-send-out-review.png)
+   ![Miden Bridge's Review transfer window for a withdrawal, with Estimated received and the Confirm in wallet button](E69a-send-out-review.png)
 
 4. Bread opens **Confirm Transaction**. Check the asset change and **Network Fee**, then select **Confirm**.
 
@@ -1035,7 +1038,7 @@ These steps send USDCx from Bread to your MetaMask wallet on the bridge website,
 
 5. The bridge shows **Withdrawal submitted**. It doesn't track the payout yet, so check MetaMask for the USDC. If it doesn't arrive, see *My USDC or USDCX bridge transfer hasn't arrived. Who can help?*
 
-   ![The bridge website's transfer card, marked Withdrawal submitted](E70-send-out-submitted.png)
+   ![Miden Bridge's transfer card, marked Withdrawal submitted](E70-send-out-submitted.png)
 
 <!-- platform: mobile -->
 
@@ -1098,7 +1101,7 @@ If you're unsure what happened, work through *What should I check if a bridge de
 
 Contact Circle when one side of the transfer is done and the other never arrived:
 
-- **Sending out of Bread:** Bread shows **Burn confirmed**, or the bridge website shows **Withdrawal submitted**, but the USDC still hasn't reached the address on the other network.
+- **Sending out of Bread:** Bread shows **Burn confirmed**, or Miden Bridge shows **Withdrawal submitted**, but the USDC still hasn't reached the address on the other network.
 - **Adding funds to Bread:** your external wallet shows the USDC deposit as successful, but Bread is still waiting for Circle to attest it, long after the arrival time Bread estimated.
 
 Circle Customer Care:
@@ -1145,17 +1148,17 @@ If Bread can't check your region, for example during a service problem, the wall
 
 See the full list of restrictions on the [compliance page](https://0xmiden.github.io/wallet/compliance/).
 
-### 54. Why does the bridge website show a different balance from my wallets?
+### 54. Why does Miden Bridge show a different balance from my wallets?
 Category: Troubleshooting › Common issues
 
-The bridge website, https://bridge.miden.xyz/, reads your balances when you connect your wallets. It doesn't keep them updated while the page is open. If you received or sent funds since then, the **Available** amount can be out of date.
+[Miden Bridge](https://bridge.miden.xyz/) reads your balances when you connect your wallets. It doesn't keep them updated while the page is open. If you received or sent funds since then, the **Available** amount can be out of date.
 
 - **Bread balance:** select the refresh icon next to it.
 - **Both balances:** reload the page.
 
 Refresh the balances before you enter an amount.
 
-### 55. My MetaMask bridge deposit fails with a 500 error. What should I do?
+### 55. Why does MetaMask show a 500 error when I bridge to Bread?
 Category: Troubleshooting › Common issues
 
 If MetaMask shows **Fetch error** with **Internal Server Error** a few seconds after you confirm a bridge deposit, MetaMask's **Smart Transactions** setting refused to send it. The error comes from MetaMask, not from Bread or the bridge. The deposit was not sent, so no funds moved and nothing appears on the **Activity** page.
@@ -1175,4 +1178,45 @@ You can use a wallet app that supports WalletConnect, such as MetaMask, Rainbow 
 
 - **Bread on your phone:** open **Receive**, tap **Cross-chain** and choose your wallet from the list.
 - **Bread extension:** scan the QR code with a wallet app on your phone. Browser-extension wallets, such as the MetaMask extension, can't connect to the Bread extension.
-- **Bridge website:** to use a browser-extension wallet such as MetaMask, go to https://bridge.miden.xyz/. See *How to add funds into Bread?*
+- **Miden Bridge:** to use a browser-extension wallet such as MetaMask, go to [Miden Bridge](https://bridge.miden.xyz/) on your computer. See *How to add funds into Bread?*
+
+### 57. What should I do if a deposit on Miden Bridge fails?
+Category: Troubleshooting › Common issues
+
+1. Check that nothing was sent. Look in MetaMask's activity and on the **Activity** page in Bread. If a deposit went through, don't send another. See *What should I check if a bridge deposit or withdrawal is delayed?*
+2. Find the message:
+   - **User rejected request** or **User denied transaction**: the request was cancelled in your wallet. Start again and approve each request.
+   - **Fetch error** with **Internal Server Error**: see *Why does MetaMask show a 500 error when I bridge to Bread?*
+   - **Your connected wallet changed** or **Refresh the quote before reviewing**: review the transfer again with a new quote.
+   - **Source transaction failed** or **The contract rejected this transfer**: the transaction was refused on the source network. Check the amount and try again.
+3. Reload the page, reconnect both wallets, and try again.
+
+If it still fails, contact [support](/feedback) with the message, the networks, the token and the time.
+
+### 58. Why won't my wallet connect?
+Category: Troubleshooting › Common issues
+
+**Bread on [Miden Bridge](https://bridge.miden.xyz/)**
+
+- **Wallet extension not detected**: install or turn on the Bread extension in the same Chrome browser, then refresh the page.
+- **Connection pending**, or a message that Bread didn't respond within 45 seconds: open Bread, unlock it and approve the connection. If the request is gone, select **Reset connection** and try again.
+- If the connected account looks wrong, open the wallet menu and select **Reconnect wallet**.
+
+**MetaMask or another wallet in Bread**
+
+- **In the Bread extension:** scan the QR code with a wallet app on your phone. Browser-extension wallets can't connect to the Bread extension; use [Miden Bridge](https://bridge.miden.xyz/) instead. See *Which wallets can I use to add funds to Bread from another blockchain?*
+- **The connected wallet did not approve …**: your wallet didn't allow that network. Reconnect the wallet and approve the network when it asks.
+
+### 59. Why does my USDC bridge to Bread show Failed?
+Category: Troubleshooting › Common issues
+
+When you add USDC to Bread from **Ethereum**, **Base**, **Arbitrum One** or **Arc**, Circle's xReserve route turns it into USDCX on Miden. A **Failed** transfer doesn't always mean nothing was sent, so check before you try again.
+
+1. Check your external wallet, such as MetaMask, for a USDC deposit at that time.
+   - **No USDC left your wallet:** nothing was sent, and your USDC is still there. You can try again.
+   - **USDC left your wallet:** don't send it again. See *My USDC or USDCX bridge transfer hasn't arrived. Who can help?*
+2. To see why it failed, open **Activity** in Bread and tap the failed transfer.
+3. Keep Bread open until you've approved every request in your wallet. If the deposit screen closes early, the transfer fails.
+4. If the same error appears again, stop retrying. Each attempt adds another failed transfer. On a computer, you can add USDC through [Miden Bridge](https://bridge.miden.xyz/) instead. See *How to add funds into Bread?*
+
+If it keeps failing, report the error text, your Bread version and the network. See *How do I send feedback or report a problem?*

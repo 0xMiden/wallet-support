@@ -1,6 +1,6 @@
 ---
-id: my-metamask-bridge-deposit-fails-with-a-500-error
-title: My MetaMask bridge deposit fails with a 500 error. What should I do?
+id: why-does-metamask-show-a-500-error-when-i-bridge
+title: Why does MetaMask show a 500 error when I bridge to Bread?
 mainCategory: troubleshooting
 subcategory: common-issues-and-support
 platforms: [extension-desktop, mobile]

@@ -10,4 +10,4 @@ You can use a wallet app that supports WalletConnect, such as MetaMask, Rainbow 
 
 - **Bread on your phone:** open **Receive**, tap **Cross-chain** and choose your wallet from the list.
 - **Bread extension:** scan the QR code with a wallet app on your phone. Browser-extension wallets, such as the MetaMask extension, can't connect to the Bread extension.
-- **Bridge website:** to use a browser-extension wallet such as MetaMask, go to https://bridge.miden.xyz/. See [*How to add funds into Bread?*](#setup-and-basic-use/how-to-fund-your-bread-wallet)
+- **Miden Bridge:** to use a browser-extension wallet such as MetaMask, go to [Miden Bridge](https://bridge.miden.xyz/) on your computer. See [*How to add funds into Bread?*](#setup-and-basic-use/how-to-fund-your-bread-wallet)

@@ -8,15 +8,15 @@ platforms: [extension-desktop, mobile]
 
 <!-- platform: extension-desktop -->
 
-You add funds to Bread from your computer on the bridge website, https://bridge.miden.xyz/. You need the MetaMask extension in Chrome, holding the tokens you want to bring in, plus enough to pay that network's fee: ETH on Ethereum, Base or Arbitrum, or USDC on Arc.
+You add funds to Bread from your computer on [Miden Bridge](https://bridge.miden.xyz/). You need the MetaMask extension in Chrome, holding the tokens you want to bring in, plus enough to pay that network's fee: ETH on Ethereum, Base or Arbitrum, or USDC on Arc.
 
-1. Go to https://bridge.miden.xyz/. On the **Bridge** tab, select **Deposit**.
+1. Go to [Miden Bridge](https://bridge.miden.xyz/). On the **Bridge** tab, select **Deposit**.
 
-   ![The bridge website's Bridge tab, with Deposit selected and a Connect wallet button next to From and To](E66-fund-bridge-deposit.png)
+   ![Miden Bridge's Bridge tab, with Deposit selected and a Connect wallet button next to From and To](E66-fund-bridge-deposit.png)
 
 2. Next to **From**, select **Connect wallet**, then choose **MetaMask**.
 
-   ![The bridge website's Connect Wallet list, with MetaMask](E66a-fund-connect-metamask.png)
+   ![Miden Bridge's Connect Wallet list, with MetaMask](E66a-fund-connect-metamask.png)
 
 3. In MetaMask, check the account and select **Connect**.
 
@@ -24,7 +24,7 @@ You add funds to Bread from your computer on the bridge website, https://bridge.
 
 4. Next to **To**, select **Connect wallet**, then select **Connect wallet** again in the menu that opens.
 
-   ![The bridge website's wallet menu next to To, with Bread ready to connect and the Connect wallet option](E66c-fund-connect-bread.png)
+   ![Miden Bridge's wallet menu next to To, with Bread ready to connect and the Connect wallet option](E66c-fund-connect-bread.png)
 
 5. Bread opens a window for https://bridge.miden.xyz. Check the account, tick **I understand the risk and wish to proceed.**, then select **Connect**. This gives the site ongoing access to your account data until you revoke it in **Authorized DApps**.
 
@@ -32,11 +32,11 @@ You add funds to Bread from your computer on the bridge website, https://bridge.
 
 6. Choose the token, and next to **From**, the network your funds are on. Enter the amount, check **Your route**, then select **Review transfer**.
 
-   ![The bridge website's Select network list next to From, with Arc, Ethereum, Base and Arbitrum, and Your route below](E67-fund-amount-network.png)
+   ![Miden Bridge's Select network list next to From, with Arc, Ethereum, Base and Arbitrum, and Your route below](E67-fund-amount-network.png)
 
 7. Check **You receive**, the fees and **Total USDC**, then select **Confirm in wallet**.
 
-   ![The bridge website's Review transfer window, with You receive, the fees and the Confirm in wallet button](E67a-fund-review-transfer.png)
+   ![Miden Bridge's Review transfer window, with You receive, the fees and the Confirm in wallet button](E67a-fund-review-transfer.png)
 
 8. MetaMask opens a **Spending cap request**. Check it and select **Confirm**.
 
@@ -48,7 +48,7 @@ You add funds to Bread from your computer on the bridge website, https://bridge.
 
 10. The bridge shows each stage of the transfer. When it reads **Delivered**, the USDCx is on Miden. If it's waiting in **Activity** in Bread, accept it. See [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
 
-    ![The bridge website's transfer card, marked Delivered, with each stage ticked](E68-fund-delivered.png)
+    ![Miden Bridge's transfer card, marked Delivered, with each stage ticked](E68-fund-delivered.png)
 
 USDC arrives in Bread as USDCx.
 
