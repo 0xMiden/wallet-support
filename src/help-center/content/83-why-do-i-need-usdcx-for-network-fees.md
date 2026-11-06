@@ -35,6 +35,4 @@ On the other network, your external wallet, such as MetaMask, pays that network'
 
 From **Base** or **Arbitrum One**, Circle adds its fee on top of the USDC you deposit. If the amount and the fee come to more than your wallet holds, Bread asks you to lower the amount.
 
-**Claim Asset** on a **Slow · Agglayer** withdrawal is a transaction on Ethereum, so the wallet you connect needs ETH for the fee on Ethereum.
-
 If a transaction fails, check **Activity** and your balances before you try again. If the problem continues, contact [support](/feedback).
