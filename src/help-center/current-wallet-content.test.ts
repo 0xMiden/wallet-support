@@ -45,12 +45,12 @@ describe('verified wallet behavior', () => {
     }
   });
 
-  it('allows partial withdrawals and distinguishes sponsored gas from costs', () => {
+  it('allows partial withdrawals and distinguishes a covered network fee from costs', () => {
     const partial = body('can-i-withdraw-part-of-my-position');
     expect(partial).toContain('**Max**');
     expect(partial).toContain('**Stays invested**');
     expect(partial).not.toContain('No. A withdrawal returns your whole position');
-    expect(body('what-does-it-cost-to-use-earn')).toContain('Sponsored gas does not mean');
+    expect(body('what-does-it-cost-to-use-earn')).toContain('has its network fee covered for you. That does not mean the withdrawal has no costs');
     expect(body('how-do-i-withdraw-from-earn')).toContain('accepted automatically');
   });
 

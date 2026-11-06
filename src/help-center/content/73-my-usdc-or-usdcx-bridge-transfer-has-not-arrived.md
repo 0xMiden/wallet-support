@@ -12,7 +12,7 @@ Transfers between USDC on **Ethereum**, **Base**, **Arbitrum One** or **Arc** an
 
 1. Open **Activity** and tap the transfer. If it's still in progress, keep Bread open and let it sync.
 2. If you're sending USDCX out of Bread, check the wallet you sent it to. The USDC may have arrived even if Bread still shows **Burn confirmed**.
-3. If you're adding USDC to Bread and Bread asks you to **Execute on Arc**, do it. This step needs a small amount of gas on Arc.
+3. If you're adding USDC to Bread and Bread asks you to **Execute on Arc**, do it. This step needs a small network fee on Arc, paid in USDC.
 4. If you're adding USDC to Bread, check whether the USDCX is waiting to be accepted. See [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer) and [*My transfer is stuck on Accepting stage*](#common-issues-and-support/my-token-is-stuck-on-consuming-receiver-address).
 5. Don't send the transfer again. Check your balances on both networks first: a second transfer doesn't speed up the first.
 

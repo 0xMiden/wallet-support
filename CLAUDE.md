@@ -59,6 +59,11 @@ not revert its choices.
   `content.test.ts`, and ask Ivan where the two disagree. On-screen labels are quoted exactly as the
   shipped wallet reads, retired terms included (Ivan, 2026-10-01): the terminology guard exempts a
   bold label, and still checks the same words in prose and in a bold run-in heading.
+- **Fees in plain words.** Say network fee, never "gas" or "gasless", on Miden and on every other
+  network, and name the token it is paid in where that helps, such as ETH on Ethereum or USDC on Arc
+  (Ivan, 2026-11-06: normal users don't understand gas). A sponsored fee is a network fee covered for
+  you. The terminology guard enforces this; a bold on-screen label is still quoted as the
+  wallet reads.
 - **Images line up.** Every image in every article, screenshot or diagram, top-level or inside a
   step, is centred on the article column, so all images share one centre line on every page (Ivan,
   2026-09-18: misaligned images look messy). A step's screenshot reaches back over the list indent

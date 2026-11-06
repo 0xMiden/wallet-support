@@ -42,6 +42,7 @@ WSOL, WBNB and NEAR here are the versions of those tokens that live on Ethereum.
 1. Check your network, then pick the exact token and both networks in Bread. If a route is missing, disabled or cannot be checked, don't send: it may be unsupported or temporarily unavailable. If the problem continues, contact [support](/feedback).
 2. On the review screen, check the receiving address, the fees, the amount you'll receive and the arrival estimate.
 3. On Partner Mainnet, the current deposit cap is $1,232.462 USD for your total wallet balance after a deposit. If a deposit would take you over, Bread asks for a smaller amount. This is not a per-transfer allowance or a daily deposit limit. See [*What is the Partner Mainnet deposit limit?*](#moving-across-chains/what-is-the-partner-mainnet-deposit-limit)
+4. Keep enough for the network fee on the network you send from: ETH on Ethereum, Base and Arbitrum, or USDC on Arc. See [*Why do I need USDCX for network fees?*](#common-issues-and-support/why-do-i-need-usdcx-for-network-fees)
 
 Only move funds through Bread or [Miden Bridge](https://bridge.miden.xyz/), and never send tokens straight to a bridge contract address. Miden Bridge can offer different choices from your installed wallet; check its route separately.
 

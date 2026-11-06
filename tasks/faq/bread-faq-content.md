@@ -1,6 +1,6 @@
 # Bread FAQ: content for implementation
 
-Revised for Brian's 2026-10-23 launch support audit. Fifty-nine articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
+Revised for Brian's 2026-10-23 launch support audit. Sixty articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
 
 ## Placement
 
@@ -65,6 +65,7 @@ Revised for Brian's 2026-10-23 launch support audit. Fifty-nine articles. Existi
 | 57 | What should I do if a deposit on Miden Bridge fails? | Troubleshooting | Common issues |
 | 58 | Why won't my wallet connect? | Troubleshooting | Common issues |
 | 59 | Why does my USDC bridge to Bread show Failed? | Troubleshooting | Common issues |
+| 60 | Why do I need USDCX for network fees? | Troubleshooting | Common issues |
 
 ## Articles
 
@@ -251,6 +252,8 @@ Yes. You can send USDCX from Bread to an address on **Ethereum**, **Base**, **Ar
 Other supported assets use the Ethereum ↔ Miden Agglayer bridge when that exact route is offered. Epoch and NEAR Intents fast transfers are not enabled on Partner Mainnet; Earn uses a separate Epoch service.
 
 Circle takes a fee from the amount you send, so you receive less than you send. Check the address before you confirm: once it is sent, the transfer can't be reclaimed.
+
+The Miden network fee is paid in USDCX too, so keep some USDCX beyond the amount you send. See *Why do I need USDCX for network fees?*
 
 For the steps, see *How do I send funds from Bread to another blockchain?* For route differences, see *What is the difference between the Fast and Slow routes?* If a transfer doesn't arrive, see *My USDC or USDCX bridge transfer hasn't arrived. Who can help?*
 
@@ -501,7 +504,7 @@ Category: Earn › Earning yield
 Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See *Can I earn yield in Bread?*
 
 - **Depositing** costs a Miden network fee. Check the displayed fee asset and **Max network fee** before confirming; keep enough USDCx on Mainnet for the deposit and that fee. The completed transaction shows the **Network Fee** paid.
-- **Withdrawing** uses sponsored gas on the supported Earn route. Sponsored gas does not mean the withdrawal has no costs: route costs are reflected in the quoted receipt. Check **You withdraw**, the expected receipt, the minimum receipt and **Route fees** before confirming.
+- **Withdrawing** on the supported Earn route has its network fee covered for you. That does not mean the withdrawal has no costs: route costs are reflected in the quoted receipt. Check **You withdraw**, the expected receipt, the minimum receipt and **Route fees** before confirming.
 
 Amounts and fees depend on the route and quote. Testnet fees and balances do not establish Mainnet costs. See *What do I need before I can use Earn?*
 
@@ -983,6 +986,7 @@ WSOL, WBNB and NEAR here are the versions of those tokens that live on Ethereum.
 1. Check your network, then pick the exact token and both networks in Bread. If a route is missing, disabled or cannot be checked, don't send: it may be unsupported or temporarily unavailable. If the problem continues, contact [support](/feedback).
 2. On the review screen, check the receiving address, the fees, the amount you'll receive and the arrival estimate.
 3. On Partner Mainnet, the current deposit cap is $1,232.462 USD for your total wallet balance after a deposit. If a deposit would take you over, Bread asks for a smaller amount. This is not a per-transfer allowance or a daily deposit limit. See *What is the Partner Mainnet deposit limit?*
+4. Keep enough for the network fee on the network you send from: ETH on Ethereum, Base and Arbitrum, or USDC on Arc. See *Why do I need USDCX for network fees?*
 
 Only move funds through Bread or [Miden Bridge](https://bridge.miden.xyz/), and never send tokens straight to a bridge contract address. Miden Bridge can offer different choices from your installed wallet; check its route separately.
 
@@ -1091,7 +1095,7 @@ Transfers between USDC on **Ethereum**, **Base**, **Arbitrum One** or **Arc** an
 
 1. Open **Activity** and tap the transfer. If it's still in progress, keep Bread open and let it sync.
 2. If you're sending USDCX out of Bread, check the wallet you sent it to. The USDC may have arrived even if Bread still shows **Burn confirmed**.
-3. If you're adding USDC to Bread and Bread asks you to **Execute on Arc**, do it. This step needs a small amount of gas on Arc.
+3. If you're adding USDC to Bread and Bread asks you to **Execute on Arc**, do it. This step needs a small network fee on Arc, paid in USDC.
 4. If you're adding USDC to Bread, check whether the USDCX is waiting to be accepted. See *How do I accept a pending transfer?* and *My transfer is stuck on Accepting stage*.
 5. Don't send the transfer again. Check your balances on both networks first: a second transfer doesn't speed up the first.
 
@@ -1218,5 +1222,42 @@ When you add USDC to Bread from **Ethereum**, **Base**, **Arbitrum One** or **Ar
 2. To see why it failed, open **Activity** in Bread and tap the failed transfer.
 3. Keep Bread open until you've approved every request in your wallet. If the deposit screen closes early, the transfer fails.
 4. If the same error appears again, stop retrying. Each attempt adds another failed transfer. On a computer, you can add USDC through [Miden Bridge](https://bridge.miden.xyz/) instead. See *How to add funds into Bread?*
+5. If you entered your whole USDC balance, lower the amount. On Arc, the network fee is paid in USDC, and from **Base** or **Arbitrum One**, Circle's fee is added on top of the amount. See *Why do I need USDCX for network fees?*
 
 If it keeps failing, report the error text, your Bread version and the network. See *How do I send feedback or report a problem?*
+
+### 60. Why do I need USDCX for network fees?
+Category: Troubleshooting › Common issues
+
+Every transaction on Miden pays a small network fee. On Mainnet, the fee is always paid in USDCX, whatever token the transaction moves. Bread takes it from the USDCX in your own balance, so keep some USDCX in your wallet, even if you mostly hold other tokens.
+
+**What pays the network fee**
+
+- **Send**, within Miden and to another blockchain
+- Accepting a pending transfer, by hand or through **Auto-accept USDCX transfers**
+- **Swap**, and **Cancel swap**
+- Depositing into **Earn**
+- Activating or rotating your everyday key
+- Switching Guardian operators
+- Transactions you approve for [Miden Bridge](https://bridge.miden.xyz/), an app in **Explore** or an Arcade game
+
+Withdrawing from **Earn** is the exception: its network fee is covered for you, and the route costs are reflected in the quoted amount you receive. See *What does it cost to use Earn?*
+
+**If you hold no USDCX**
+
+Without USDCX, you can't send, swap or deposit any token, including ETH, WBTC, Wrapped SOL, USDT, USDG, PYUSD, PAXG, Wrapped BNB, NEAR and POL. Accepting a transfer of one of these tokens needs USDCX too.
+
+Accepting a USDCX transfer pays its fee out of the transfer itself, so a new wallet can accept its first USDCX. To get USDCX, see *How to add funds into Bread?*
+
+**Moving funds from another blockchain**
+
+On the other network, your external wallet, such as MetaMask, pays that network's own fee:
+
+- **Ethereum, Base and Arbitrum One:** the fee is paid in ETH. If you bridge ETH, don't send your whole ETH balance.
+- **Arc:** the fee is paid in USDC. If you send USDC from Arc, don't send your whole USDC balance. The **Execute on Arc** step also needs a little USDC on Arc.
+
+From **Base** or **Arbitrum One**, Circle adds its fee on top of the USDC you deposit. If the amount and the fee come to more than your wallet holds, Bread asks you to lower the amount.
+
+**Claim Asset** on a **Slow · Agglayer** withdrawal is a transaction on Ethereum, so the wallet you connect needs ETH for the fee on Ethereum.
+
+If a transaction fails, check **Activity** and your balances before you try again. If the problem continues, contact [support](/feedback).
