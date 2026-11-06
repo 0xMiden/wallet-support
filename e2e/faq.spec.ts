@@ -31,7 +31,8 @@ test('the Crosschain and Earn cards each open their own subcategory, and the sid
     'What is the Partner Mainnet deposit limit?',
     'What should I check before a Swap?',
     'Which bridge networks and tokens can I use?',
-    'How do I send funds from Bread to another blockchain?'
+    'How do I send funds from Bread to another blockchain?',
+    'Which wallets can I use to add funds to Bread from another blockchain?'
   ]);
 
   // Earn is a group of its own, so its row is reached through its heading. A
@@ -56,7 +57,8 @@ test('the Crosschain and Earn cards each open their own subcategory, and the sid
     'What does it cost to use Earn?',
     'What should I do if an Earn deposit or withdrawal fails?',
     'Do I keep my Earn position if I restore my wallet?',
-    'Do spending limits apply to Earn deposits?'
+    'Do spending limits apply to Earn deposits?',
+    'What happens to my funds if an Earn deposit fails?'
   ]);
 
   await page.goto('/');

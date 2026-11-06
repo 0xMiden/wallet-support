@@ -12,7 +12,7 @@ Transfers between USDC on **Ethereum**, **Base**, **Arbitrum One** or **Arc** an
 
 1. Open **Activity** and tap the transfer. If it's still in progress, keep Bread open and let it sync.
 2. If you're sending USDCX out of Bread, check the wallet you sent it to. The USDC may have arrived even if Bread still shows **Burn confirmed**.
-3. If you're adding USDC to Bread and Bread asks you to **Execute on Arc**, do it. This step needs a small amount of gas on Arc.
+3. If you're adding USDC to Bread and Bread asks you to **Execute on Arc**, do it. This step needs a small network fee on Arc, paid in USDC.
 4. If you're adding USDC to Bread, check whether the USDCX is waiting to be accepted. See [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer) and [*My transfer is stuck on Accepting stage*](#common-issues-and-support/my-token-is-stuck-on-consuming-receiver-address).
 5. Don't send the transfer again. Check your balances on both networks first: a second transfer doesn't speed up the first.
 
@@ -22,7 +22,7 @@ If you're unsure what happened, work through [*What should I check if a bridge d
 
 Contact Circle when one side of the transfer is done and the other never arrived:
 
-- **Sending out of Bread:** Bread shows **Burn confirmed**, or the bridge website shows **Withdrawal submitted**, but the USDC still hasn't reached the address on the other network.
+- **Sending out of Bread:** Bread shows **Burn confirmed**, or Miden Bridge shows **Withdrawal submitted**, but the USDC still hasn't reached the address on the other network.
 - **Adding funds to Bread:** your external wallet shows the USDC deposit as successful, but Bread is still waiting for Circle to attest it, long after the arrival time Bread estimated.
 
 Circle Customer Care:
