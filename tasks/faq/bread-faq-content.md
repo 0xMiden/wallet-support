@@ -1285,15 +1285,34 @@ In **Activity**, the transfer shows **Deposit locked**. A transfer made with an 
 
 **Get your deposit back**
 
-1. In Bread, go to **Settings** › **Advanced** › **Recover locked bridge funds**.
-2. Connect the external wallet that made the deposit. If a different wallet is connected, tap **Connect another wallet**.
-3. Wait while Bread shows **Checking…**. It can take about 10 seconds. Your locked funds then appear, with the token, network and amount.
-4. Tap a locked amount to open it.
-5. Tap **Withdraw deposit** and approve the request in your external wallet. This starts the withdrawal, and a timer shows when the funds become available, about 1 hour and 5 minutes later.
-6. Wait for the timer to finish. You can close Bread in the meantime.
-7. Come back to the same page. When it shows **The withdrawal is available**, tap **Withdraw deposit** again and approve. The whole locked balance of that token goes back to your external wallet.
+The screenshots show the Bread extension with MetaMask on a phone. Your wallet address, network, token and amount may differ.
 
-Every step asks for approval in your external wallet. If you connected it by scanning a QR code, look for the request on your phone.
+1. In Bread, open **Profile** (the person icon), then **Advanced Settings** › **Recover locked bridge funds**.
+
+   ![Advanced Settings with Recover locked bridge funds highlighted](E71-recover-advanced-settings.png)
+
+2. Tap **Connect an EVM wallet** and connect the external wallet that made the deposit. In the extension, scan the WalletConnect QR code with your wallet app on your phone. In MetaMask, select the account that made the deposit and tap **Connect**. If a different wallet is connected, tap **Connect another wallet**.
+3. Wait while Bread shows **Checking…**. It can take about 10 seconds. Your locked funds then appear, with the token, network and amount.
+
+   ![Connected external wallet with a locked USDC balance on Polygon](E72-recover-locked-balance.png)
+
+4. Tap the locked amount to open **Locked funds**. Check the wallet address, network and locked amount, then tap **Withdraw deposit**. Confirm the transaction in your external wallet. This requests the withdrawal and starts the waiting period.
+
+   ![Locked funds with Withdrawal shown as Not requested and the Withdraw deposit button](E73-recover-request-withdrawal.png)
+
+5. Wait for the timer to finish, about **1 hour and 5 minutes**. **Withdraw deposit** stays disabled during the countdown. You can close Bread in the meantime.
+
+   ![Withdrawal countdown with Withdraw deposit disabled until the waiting period ends](E74-recover-withdrawal-countdown.png)
+
+6. Come back to the same page. When it shows **The withdrawal is available**, tap **Withdraw deposit** again.
+
+   ![Locked funds with The withdrawal is available and Withdraw deposit enabled](E75-recover-withdrawal-available.png)
+
+7. In the final MetaMask pop-up, review **You receive**, the network and the network fee, then tap **Confirm**. Once the transaction confirms, the whole locked balance of that token is automatically returned to the same external wallet on the network you sent from.
+
+   ![Final MetaMask transaction request showing USDC to receive on Polygon and the Confirm button](E76-recover-metamask-withdraw.png)
+
+With a new wallet connection, this is the third MetaMask prompt: connect the wallet, confirm the withdrawal request, then confirm the final withdrawal. If your wallet is already connected, the connection prompt may be skipped. If you connected by scanning a QR code, look for the requests on your phone.
 
 **Good to know**
 

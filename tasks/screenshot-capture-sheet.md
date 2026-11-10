@@ -1,5 +1,28 @@
 # Screenshot capture sheet
 
+## Funds recovery walkthrough supplied on 2026-11-10
+
+Article 84 (FAQ 61) uses six original PNGs from the supplied `Recover the stuck Bridge in` folder.
+The five Bread screens show the extension; the last screen shows MetaMask on a phone. The wallet
+release was not supplied. Keep these files unchanged, including their full height and existing
+highlight. The article identifies the platform and treats addresses, networks and amounts as examples.
+
+| Original | Shipped file | Dimensions |
+|---|---|---|
+| `2.png` | `E71-recover-advanced-settings.png` | 555 × 865 |
+| `5.png` | `E72-recover-locked-balance.png` | 544 × 1392 |
+| `6.png` | `E73-recover-request-withdrawal.png` | 547 × 1384 |
+| `7.png` | `E74-recover-withdrawal-countdown.png` | 550 × 1389 |
+| `8.png` | `E75-recover-withdrawal-available.png` | 549 × 1384 |
+| `3rd final withdrawal metamask pop up.PNG` | `E76-recover-metamask-withdraw.png` | 1206 × 2622 |
+
+The final phone capture remains at its native resolution. The narrow-surface ceiling now includes
+phone captures up to 440 CSS pixels at 3x (1320 pixels); exact registered dimensions, the 400 KB
+file-size ceiling and the existing height rule for other screenshots still apply. The connection QR
+code and the intermediate connection/request pop-ups are explained in text rather than embedded.
+
+## Earlier capture runs
+
 For Ivan's capture run, on both platforms. The positions are §7 of `tasks/content-proposal.md`; tick them
 off in the screenshot capture list in `tasks/todo.md`.
 
@@ -133,7 +156,7 @@ Not by who owns it. Bread Wallet's sidebar is a narrow panel like a Chrome menu,
 |---|---|---|
 | What | A page in a browser tab — the whole tab, or the part of it that matters (E01: the top of the Chrome Web Store listing); any Bread Wallet screen that opens as a full page in a tab | Chrome's jigsaw menu and **Add extension** dialog; Bread Wallet's sidebar or popup |
 | How | **Whole tab:** Chrome DevTools, device toolbar, width **1360**, DPR **1**. **Part of a tab:** OS screenshot at **150%** Windows display scaling, cropped to the part that matters | OS screenshot at **200%** Windows display scaling, cropped tight to the surface |
-| Capture width | **Whole tab:** exactly **1360px**. **Part of a tab:** **1360–2040px** | whatever the surface comes to at 2x, **520–1200px** (floor lowered 2026-09-18 and 2026-09-23, see below) |
+| Capture width | **Whole tab:** exactly **1360px**. **Part of a tab:** **1360–2040px** | whatever the surface comes to at 2x or native phone resolution, **520–1320px** (floor lowered 2026-09-18 and 2026-09-23; ceiling includes phones up to 440px at 3x) |
 | Shown at | 680px — the full column, identical for every one | half the capture, so it appears at life size — the `'narrow'` tag is what tells the page to halve it |
 
 **Why 1360 at DPR 1 and not 680 at DPR 2.** Both give 1360 device pixels, which is what the 2x rule
@@ -213,7 +236,7 @@ Bread Wallet's own screens carry none. Nothing is drawn on a delivered capture w
 ### If a capture misses the spec
 
 `content.test.ts` fails the build and names the file and the number it found: a column-width capture
-outside 1360–2040px, a narrow-surface capture outside 520–1200px, any image taller than 1.3× its width, or
+outside 1360–2040px, a narrow-surface capture outside 520–1320px, any image taller than 1.3× its width, or
 any file over 400 KB. The test cannot tell a whole tab from part of one, so a whole-tab capture that is
 not exactly 1360px, or a stroke that is not 3px on screen, is still yours to check.
 
