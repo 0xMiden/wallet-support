@@ -268,13 +268,13 @@ export const SCREENSHOT_SIZES: Readonly<Record<string, ScreenshotSize>> = {
   'E69a-send-out-review.png': [840, 1216, 'narrow'],
   'E69b-send-out-confirm.png': [576, 1026, 'narrow'],
   'E70-send-out-submitted.png': [840, 706, 'narrow'],
-  // Original recovery walkthrough supplied on 2026-11-10; the final capture is MetaMask on a phone.
+  // Recovery walkthrough supplied on 2026-11-10; the phone capture uses the 540px Mobile standard.
   'E71-recover-advanced-settings.png': [555, 865, 'narrow'],
   'E72-recover-locked-balance.png': [544, 1392, 'narrow'],
   'E73-recover-request-withdrawal.png': [547, 1384, 'narrow'],
   'E74-recover-withdrawal-countdown.png': [550, 1389, 'narrow'],
   'E75-recover-withdrawal-available.png': [549, 1384, 'narrow'],
-  'E76-recover-metamask-withdraw.png': [1206, 2622, 'narrow'],
+  'E76-recover-metamask-withdraw.png': [540, 1102, 'narrow'],
   'E13-restore-welcome.png': [822, 825, 'narrow'],
   'E14-restore-testnet-notice.png': [822, 1002, 'narrow'],
   'E14a-restore-import-type.png': [822, 615, 'narrow'],

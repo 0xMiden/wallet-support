@@ -824,7 +824,7 @@ describe('fidelity to the FAQ', () => {
       'E69a-send-out-review.png',
       'E69b-send-out-confirm.png',
       'E70-send-out-submitted.png',
-      // Recovery walkthrough supplied full height on 2026-11-10, including the phone's final prompt.
+      // Recovery walkthrough supplied on 2026-11-10; the phone prompt is prepared to the Mobile spec.
       'E71-recover-advanced-settings.png',
       'E72-recover-locked-balance.png',
       'E73-recover-request-withdrawal.png',
@@ -851,11 +851,10 @@ describe('fidelity to the FAQ', () => {
          * what the floor is for, a capture taken at 1x: Chrome's menus and
          * dialogs and the sidebar land between 310 and 435 at 1x.
          */
-        // Preserve phone captures at their native resolution, up to a 440px surface at 3x.
-        expect(file.width, `${name}: a narrow-surface capture should be 520–1320px wide`)
+        expect(file.width, `${name}: a narrow-surface capture should be 520–1200px wide`)
           .toBeGreaterThanOrEqual(520);
-        expect(file.width, `${name}: a narrow-surface capture should be 520–1320px wide`)
-          .toBeLessThanOrEqual(1320);
+        expect(file.width, `${name}: a narrow-surface capture should be 520–1200px wide`)
+          .toBeLessThanOrEqual(1200);
       } else {
         /*
          * Fills the column: a whole tab from the DevTools device toolbar at
