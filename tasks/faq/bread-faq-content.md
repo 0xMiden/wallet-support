@@ -1305,6 +1305,8 @@ Every step asks for approval in your external wallet. If you connected it by sca
 
 When you bridge out through Epoch, Bread puts your tokens in a reclaimable note on Miden. If the bridge fails while the funds are still in that note, you can reclaim them once the block shown in Bread is reached. The transfer may show **Bridge failed - funds reclaimable**.
 
+On Mainnet, this is currently about **5 hours and 10 minutes** from when Bread creates the note. This is an estimate: the block shown under **Funds reclaimable after block** determines when you can reclaim the funds.
+
 Usually you don't need to do anything. Once the network passes the block shown under **Funds reclaimable after block**, Bread takes the funds back on its own while the wallet is open, and **Activity** shows **Reclaimed**.
 
 If a transfer out no longer shows as reclaimable but nothing arrived in your external wallet, contact [support](/feedback) with the transfer details.
