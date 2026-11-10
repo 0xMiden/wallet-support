@@ -1303,7 +1303,7 @@ Every step asks for approval in your external wallet. If you connected it by sca
 
 **Bridge out: get back a failed transfer**
 
-When you bridge out with Epoch, your tokens go into a note on Miden. Epoch accepts that note only after it has paid you on the other network. If Epoch doesn't pay, the note stays yours, and the transfer shows **Bridge failed - funds reclaimable**.
+When you bridge out through Epoch, Bread puts your tokens in a reclaimable note on Miden. If the bridge fails while the funds are still in that note, you can reclaim them once the block shown in Bread is reached. The transfer may show **Bridge failed - funds reclaimable**.
 
 Usually you don't need to do anything. Once the network passes the block shown under **Funds reclaimable after block**, Bread takes the funds back on its own while the wallet is open, and **Activity** shows **Reclaimed**.
 
