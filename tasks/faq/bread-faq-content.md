@@ -1312,7 +1312,7 @@ The screenshots show the Bread extension with MetaMask on a phone. Your wallet a
 
    ![Final MetaMask transaction request showing USDC to receive on Polygon and the Confirm button](E76-recover-metamask-withdraw.png)
 
-With a new wallet connection, this is the third MetaMask prompt: connect the wallet, confirm the withdrawal request, then confirm the final withdrawal. If your wallet is already connected, the connection prompt may be skipped. If you connected by scanning a QR code, look for the requests on your phone.
+If Bread asks you to connect your wallet again, this can happen after you close the browser or lose the connection to MetaMask. Close Bread and fully quit your browser, then reopen it and unlock Bread with your password. Reconnect the same MetaMask wallet and continue with the final withdrawal.
 
 **Good to know**
 
