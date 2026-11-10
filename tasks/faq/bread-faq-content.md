@@ -1283,29 +1283,17 @@ Only the external wallet that made the deposit can take the funds out. Bread, Ep
 
 In **Activity**, the transfer shows **Deposit locked**. A transfer made with an older version of Bread may show **Failed** instead.
 
-**Before you start**
-
-- A version of Bread that has **Recover locked bridge funds** under **Settings** › **Advanced**. If you don't see it, update Bread first.
-- The external wallet that made the deposit, with the same address.
-- A little of that network's token for its network fees, such as POL on Polygon. You approve a few transactions for each token.
-- About 1 hour and 5 minutes. Most of it is waiting.
-
 **Get your deposit back**
 
-1. In Bread, go to **Settings** › **Advanced** › **Recover locked bridge funds**. You can also open the transfer marked **Deposit locked** in **Activity**.
+1. In Bread, go to **Settings** › **Advanced** › **Recover locked bridge funds**.
 2. Connect the external wallet that made the deposit. If a different wallet is connected, tap **Connect another wallet**.
 3. Wait while Bread shows **Checking…**. It can take about 10 seconds. Your locked funds then appear, with the token, network and amount.
 4. Tap a locked amount to open it.
 5. Tap **Withdraw deposit** and approve the request in your external wallet. This starts the withdrawal, and a timer shows when the funds become available, about 1 hour and 5 minutes later.
 6. Wait for the timer to finish. You can close Bread in the meantime.
 7. Come back to the same page. When it shows **The withdrawal is available**, tap **Withdraw deposit** again and approve. The whole locked balance of that token goes back to your external wallet.
-8. To bridge this token in again later from the same wallet, tap **Cancel withdrawal** and approve. Until you do, Bread can't start a new Fast transfer of that token from that address.
 
 Every step asks for approval in your external wallet. If you connected it by scanning a QR code, look for the request on your phone.
-
-If you have funds locked in more than one token, repeat steps 4 to 8 for each one. The timers can run at the same time. If you tap **Cancel withdrawal** before step 7, the withdrawal stops, and you start again from step 5.
-
-If the page also shows **Retry bridge**, you can try it first to send the deposit on to Bread. If that doesn't work, withdraw the deposit as above.
 
 **Good to know**
 
@@ -1319,8 +1307,6 @@ When you bridge out with Epoch, your tokens go into a note on Miden. Epoch accep
 
 Usually you don't need to do anything. Once the network passes the block shown under **Funds reclaimable after block**, Bread takes the funds back on its own while the wallet is open, and **Activity** shows **Reclaimed**.
 
-If the funds haven't come back after that block, open the transfer in **Activity**, tap **Reclaim funds** and approve.
-
-If a transfer out no longer shows as reclaimable but nothing arrived in your external wallet, contact [support](/feedback) with the transfer details. Epoch returns these funds by hand.
+If a transfer out no longer shows as reclaimable but nothing arrived in your external wallet, contact [support](/feedback) with the transfer details.
 
 Never share your recovery phrase, keys or wallet backup file. Bread support will never ask for them.
