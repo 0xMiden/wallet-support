@@ -14,4 +14,6 @@ platforms: [extension-desktop]
    - **Source transaction failed** or **The contract rejected this transfer**: the transaction was refused on the source network. Check the amount and try again.
 3. Reload the page, reconnect both wallets, and try again.
 
+If tokens left your external wallet but never reached Bread, see [*How do I get my funds back from a stuck bridge-in transfer?*](#common-issues-and-support/how-do-i-get-my-funds-back-from-a-stuck-bridge-in-transfer)
+
 If it still fails, contact [support](/feedback) with the message, the networks, the token and the time.

@@ -200,11 +200,11 @@ describe('coverage', () => {
    * The totals, written down rather than derived, so adding a category or an
    * article is a decision this file has to be told about.
    */
-  it('spans 7 main categories, 9 subcategories and 83 articles', () => {
+  it('spans 7 main categories, 9 subcategories and 84 articles', () => {
     const navigation = createHelpCenterNavigation(helpCenterMainCategories);
     expect(navigation.mainCategories).toHaveLength(7);
     expect(navigation.categories).toHaveLength(9);
-    expect(helpCenterAllArticles).toHaveLength(83);
+    expect(helpCenterAllArticles).toHaveLength(84);
   });
 
   it('resolves every article to exactly one position, through navigation.ts', () => {
@@ -234,7 +234,7 @@ describe('coverage', () => {
       taken.set(position, article.id);
     }
 
-    expect(taken.size).toBe(83);
+    expect(taken.size).toBe(84);
   });
 
   it('keeps Activity and transaction status in the hierarchy, with its one FAQ article after the first', () => {
@@ -411,7 +411,7 @@ describe('article sources', () => {
     }
 
     expect(helpCenterAllArticles.filter(article => pages.has(article.title))).toHaveLength(23);
-    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(60);
+    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(61);
   });
 });
 
@@ -439,7 +439,7 @@ const FAQ_PLACEMENT: Readonly<Record<string, readonly number[]>> = {
   'moving-across-chains': [13, 14, 15, 36, 43, 46, 49, 56],
   earn: [16, 17, 20, 21, 22, 23, 24, 25, 26, 27, 28, 51],
   'activity-and-transaction-status': [18],
-  'common-issues-and-support': [19, 40, 41, 47, 48, 50, 53, 54, 55, 57, 58, 59, 60]
+  'common-issues-and-support': [19, 40, 41, 47, 48, 50, 53, 54, 55, 57, 58, 59, 60, 61]
 };
 
 /** Alt text for each image, taken from the heading drawn inside it. */
@@ -537,7 +537,7 @@ describe('fidelity to the FAQ', () => {
   };
 
   it('reads fifty-six articles, numbered in order, that agree with the placement table', () => {
-    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 60 }, (_, index) => index + 1));
+    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 61 }, (_, index) => index + 1));
     expect(FAQ.placement).toEqual(
       FAQ.entries.map(({ number, title, mainCategory, subcategory }) => ({ number, title, mainCategory, subcategory }))
     );
@@ -958,13 +958,13 @@ describe('fidelity to the FAQ', () => {
  */
 describe('the migrated article set', () => {
   it('carries every article in the approved mapping', () => {
-    expect(helpCenterAllArticles).toHaveLength(83);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(82);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(73);
+    expect(helpCenterAllArticles).toHaveLength(84);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(83);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(74);
   });
 
   it('publishes every article except the ones held back', () => {
-    expect(helpCenterArticles).toHaveLength(79);
+    expect(helpCenterArticles).toHaveLength(80);
     const published = helpCenterArticles.map(article => article.id);
     expect(published).not.toContain('how-to-restore-the-wallet-using-an-encrypted-file');
     expect(published).not.toContain('how-to-download-the-encrypted-file');

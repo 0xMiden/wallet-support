@@ -1,6 +1,6 @@
 # Bread FAQ: content for implementation
 
-Revised for Brian's 2026-10-23 launch support audit. Sixty articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
+Revised for Brian's 2026-10-23 launch support audit. Sixty-one articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
 
 ## Placement
 
@@ -66,6 +66,7 @@ Revised for Brian's 2026-10-23 launch support audit. Sixty articles. Existing ID
 | 58 | Why won't my wallet connect? | Troubleshooting | Common issues |
 | 59 | Why does my USDC bridge to Bread show Failed? | Troubleshooting | Common issues |
 | 60 | Why do I need USDCX for network fees? | Troubleshooting | Common issues |
+| 61 | How do I get my funds back from a stuck bridge-in transfer? | Troubleshooting | Common issues |
 
 ## Articles
 
@@ -1018,6 +1019,8 @@ If Bread shows **Bridge deposit failed** after your external wallet, such as Met
 5. Tap **Connect another wallet**, choose the same wallet again and approve the connection in it.
 6. Enter the amount and continue. Approve each request in your wallet as it appears.
 
+If tokens left your external wallet but never reached Bread, see *How do I get my funds back from a stuck bridge-in transfer?*
+
 If it still fails, report the error, the networks, the token and your wallet version. Hide sensitive information in screenshots. See *How do I send feedback or report a problem?*
 
 ### 49. How do I send funds from Bread to another blockchain?
@@ -1195,6 +1198,8 @@ Category: Troubleshooting › Common issues
    - **Source transaction failed** or **The contract rejected this transfer**: the transaction was refused on the source network. Check the amount and try again.
 3. Reload the page, reconnect both wallets, and try again.
 
+If tokens left your external wallet but never reached Bread, see *How do I get my funds back from a stuck bridge-in transfer?*
+
 If it still fails, contact [support](/feedback) with the message, the networks, the token and the time.
 
 ### 58. Why won't my wallet connect?
@@ -1259,3 +1264,63 @@ On the other network, your external wallet, such as MetaMask, pays that network'
 From **Base** or **Arbitrum One**, Circle adds its fee on top of the USDC you deposit. If the amount and the fee come to more than your wallet holds, Bread asks you to lower the amount.
 
 If a transaction fails, check **Activity** and your balances before you try again. If the problem continues, contact [support](/feedback).
+
+### 61. How do I get my funds back from a stuck bridge-in transfer?
+Category: Troubleshooting › Common issues
+
+Most Fast transfers through Epoch finish within a few minutes. If one gets stuck, your funds are not lost, and you can get them back yourself. What to do depends on the direction:
+
+- **Bridge in**, from an external wallet such as MetaMask into Bread: the deposit can stay locked on the network you sent from.
+- **Bridge out**, from Bread to another blockchain: the funds come back to Bread.
+
+This page covers the Fast route through Epoch. For USDC through Circle, see *Why does my USDC bridge to Bread show Failed?*
+
+**Bridge in: why the deposit is locked**
+
+When you bridge in with Epoch, your tokens first go into a deposit contract called The Compact on the network you send from, such as Polygon. Epoch then delivers the same amount to Bread. If Epoch doesn't start the bridge, your tokens stay in The Compact, and they don't show in Bread or in your external wallet.
+
+Only the external wallet that made the deposit can take the funds out. Bread, Epoch and Miden can't move them.
+
+In **Activity**, the transfer shows **Deposit locked**. A transfer made with an older version of Bread may show **Failed** instead.
+
+**Before you start**
+
+- A version of Bread that has **Recover locked bridge funds** under **Settings** › **Advanced**. If you don't see it, update Bread first.
+- The external wallet that made the deposit, with the same address.
+- A little of that network's token for its network fees, such as POL on Polygon. You approve a few transactions for each token.
+- About 1 hour and 5 minutes. Most of it is waiting.
+
+**Get your deposit back**
+
+1. In Bread, go to **Settings** › **Advanced** › **Recover locked bridge funds**. You can also open the transfer marked **Deposit locked** in **Activity**.
+2. Connect the external wallet that made the deposit. If a different wallet is connected, tap **Connect another wallet**.
+3. Wait while Bread shows **Checking…**. It can take about 10 seconds. Your locked funds then appear, with the token, network and amount.
+4. Tap a locked amount to open it.
+5. Tap **Withdraw deposit** and approve the request in your external wallet. This starts the withdrawal, and a timer shows when the funds become available, about 1 hour and 5 minutes later.
+6. Wait for the timer to finish. You can close Bread in the meantime.
+7. Come back to the same page. When it shows **The withdrawal is available**, tap **Withdraw deposit** again and approve. The whole locked balance of that token goes back to your external wallet.
+8. To bridge this token in again later from the same wallet, tap **Cancel withdrawal** and approve. Until you do, Bread can't start a new Fast transfer of that token from that address.
+
+Every step asks for approval in your external wallet. If you connected it by scanning a QR code, look for the request on your phone.
+
+If you have funds locked in more than one token, repeat steps 4 to 8 for each one. The timers can run at the same time. If you tap **Cancel withdrawal** before step 7, the withdrawal stops, and you start again from step 5.
+
+If the page also shows **Retry bridge**, you can try it first to send the deposit on to Bread. If that doesn't work, withdraw the deposit as above.
+
+**Good to know**
+
+- The funds go back to your external wallet on the network you sent from, not to Bread. To bring them into Bread, bridge again.
+- **Nothing is locked for this wallet**: check that you connected the wallet that made the deposit.
+- **Could not check**: wait a few minutes and open the page again.
+
+**Bridge out: get back a failed transfer**
+
+When you bridge out with Epoch, your tokens go into a note on Miden. Epoch accepts that note only after it has paid you on the other network. If Epoch doesn't pay, the note stays yours, and the transfer shows **Bridge failed - funds reclaimable**.
+
+Usually you don't need to do anything. Once the network passes the block shown under **Funds reclaimable after block**, Bread takes the funds back on its own while the wallet is open, and **Activity** shows **Reclaimed**.
+
+If the funds haven't come back after that block, open the transfer in **Activity**, tap **Reclaim funds** and approve.
+
+If a transfer out no longer shows as reclaimable but nothing arrived in your external wallet, contact [support](/feedback) with the transfer details. Epoch returns these funds by hand.
+
+Never share your recovery phrase, keys or wallet backup file. Bread support will never ask for them.
