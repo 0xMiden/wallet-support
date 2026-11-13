@@ -45,12 +45,12 @@ describe('verified wallet behavior', () => {
     }
   });
 
-  it('allows partial withdrawals and distinguishes sponsored gas from costs', () => {
+  it('allows partial withdrawals and distinguishes a covered network fee from costs', () => {
     const partial = body('can-i-withdraw-part-of-my-position');
     expect(partial).toContain('**Max**');
     expect(partial).toContain('**Stays invested**');
     expect(partial).not.toContain('No. A withdrawal returns your whole position');
-    expect(body('what-does-it-cost-to-use-earn')).toContain('Sponsored gas does not mean');
+    expect(body('what-does-it-cost-to-use-earn')).toContain('has its network fee covered for you. That does not mean the withdrawal has no costs');
     expect(body('how-do-i-withdraw-from-earn')).toContain('accepted automatically');
   });
 
@@ -126,13 +126,26 @@ describe('verified wallet behavior', () => {
     expect(text).not.toContain('needs one more step');
   });
 
-  it('does not infer fast transfers from Earn being enabled', () => {
-    expect(body('what-is-the-difference-between-a-solver-route-and-a-canonical-bridge')).toContain('fast transfers are disabled');
-    const bridge = body('which-bridge-networks-and-tokens-can-i-use');
-    for (const route of ['Fast · Epoch', 'NEAR Intents']) {
-      const availability = bridge.split('\n').find(line => line.startsWith(`- **${route}**:`));
-      expect(availability, `${route} availability`).toBeDefined();
-      expect(availability).toMatch(/\bdisabled\b/);
+  // Mainnet config v18 (2026-11-13): Epoch deposits and withdrawals are on for these networks; NEAR Intents is off.
+  it('lists the Fast route as available on its Mainnet networks and NEAR Intents as disabled', () => {
+    const networks = 'Ethereum, Base, Arbitrum, Polygon and Robinhood Chain';
+    expect(body('what-is-the-difference-between-a-solver-route-and-a-canonical-bridge')).toContain(
+      `The Fast route works on ${networks}.`
+    );
+    const bridge = helpCenterArticles.find(article => article.id === 'which-bridge-networks-and-tokens-can-i-use');
+    for (const text of Object.values(bridge?.bodies ?? {})) {
+      expect(text).toContain(`**Fast route: ${networks}**`);
+      const unavailable = text.slice(text.indexOf('**Not available on Partner Mainnet**'));
+      expect(unavailable).not.toContain('Fast · Epoch');
+      expect(unavailable.split('\n').find(line => line.startsWith('- **NEAR Intents**:'))).toMatch(/\bdisabled\b/);
+    }
+    expect(Object.keys(bridge?.bodies ?? {}).length).toBeGreaterThan(0);
+    for (const id of [
+      'what-is-the-difference-between-a-solver-route-and-a-canonical-bridge',
+      'can-i-send-funds-to-another-blockchain',
+      'can-i-swap-tokens-across-chains'
+    ]) {
+      expect(body(id), id).not.toMatch(/Epoch[^.]*not (currently )?enabled|fast transfers are disabled/i);
     }
   });
 });
