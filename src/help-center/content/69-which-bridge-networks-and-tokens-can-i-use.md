@@ -6,7 +6,7 @@ subcategory: moving-across-chains
 platforms: [extension-desktop, mobile]
 ---
 
-Bread's current Partner Mainnet routes connect Miden with Ethereum, Base, Arbitrum and Arc. The choices depend on your installed version and the route checks in the wallet. Testnet uses different networks and settings.
+Bread's current Partner Mainnet routes connect Miden with Ethereum, Base, Arbitrum, Arc, Polygon and Robinhood Chain. The choices depend on your installed version and the route checks in the wallet.
 
 **USDC: Ethereum, Base, Arbitrum and Arc**
 
@@ -32,9 +32,18 @@ Bread labels the route **Slow · Agglayer** and shows an arrival estimate of abo
 
 WSOL, WBNB and NEAR here are the versions of those tokens that live on Ethereum. You can't send to or from the Solana, BNB Chain or NEAR networks themselves. Learn more about [Agglayer](https://docs.polygon.technology/interoperability/agglayer).
 
+**Fast route: Ethereum, Base, Arbitrum, Polygon and Robinhood Chain**
+
+Bread labels this route **Fast · Epoch**. A third party delivers your funds on the other network for you, and Bread shows an arrival estimate of about 30 seconds. The current Mainnet configuration lists these tokens for deposits and withdrawals:
+
+- Ethereum, Base and Arbitrum: USDC and ETH
+- Polygon: USDC and POL
+- Robinhood Chain: ETH and USDG
+
+USDC sent through this route arrives in Bread as USDCX. If a Fast transfer gets stuck, see [*How do I get my funds back from a stuck bridge-in transfer?*](#common-issues-and-support/how-do-i-get-my-funds-back-from-a-stuck-bridge-in-transfer)
+
 **Not available on Partner Mainnet**
 
-- **Fast · Epoch**: this transfer route through [Epoch](https://epochprotocol.xyz/) is disabled in the current Partner Mainnet configuration. Epoch support for Earn is separate.
 - **NEAR Intents**: transfers through [NEAR Intents](https://docs.near-intents.org/) are disabled in the current Partner Mainnet configuration. There is no announced availability date.
 
 **Before you move funds**
@@ -42,7 +51,7 @@ WSOL, WBNB and NEAR here are the versions of those tokens that live on Ethereum.
 1. Check your network, then pick the exact token and both networks in Bread. If a route is missing, disabled or cannot be checked, don't send: it may be unsupported or temporarily unavailable. If the problem continues, contact [support](/feedback).
 2. On the review screen, check the receiving address, the fees, the amount you'll receive and the arrival estimate.
 3. On Partner Mainnet, the current deposit cap is $1,232.462 USD for your total wallet balance after a deposit. If a deposit would take you over, Bread asks for a smaller amount. This is not a per-transfer allowance or a daily deposit limit. See [*What is the Partner Mainnet deposit limit?*](#moving-across-chains/what-is-the-partner-mainnet-deposit-limit)
-4. Keep enough for the network fee on the network you send from: ETH on Ethereum, Base and Arbitrum, or USDC on Arc. See [*Why do I need USDCX for network fees?*](#common-issues-and-support/why-do-i-need-usdcx-for-network-fees)
+4. Keep enough for the network fee on the network you send from: ETH on Ethereum, Base, Arbitrum and Robinhood Chain, POL on Polygon, or USDC on Arc. See [*Why do I need USDCX for network fees?*](#common-issues-and-support/why-do-i-need-usdcx-for-network-fees)
 
 Only move funds through Bread or [Miden Bridge](https://bridge.miden.xyz/), and never send tokens straight to a bridge contract address. Miden Bridge can offer different choices from your installed wallet; check its route separately.
 

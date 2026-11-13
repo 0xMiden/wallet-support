@@ -6,7 +6,7 @@ subcategory: common-issues-and-support
 platforms: [extension-desktop, mobile]
 ---
 
-When you add USDC to Bread from **Ethereum**, **Base**, **Arbitrum One** or **Arc**, Circle's xReserve route turns it into USDCX on Miden. A **Failed** transfer doesn't always mean nothing was sent, so check before you try again.
+When you add USDC to Bread from **Ethereum**, **Base**, **Arbitrum One** or **Arc**, Circle's xReserve route turns it into USDCX on Miden. A **Failed** transfer doesn't always mean nothing was sent, so check before you try again. This page covers Circle's route. For a transfer on the Fast route, see [*How do I get my funds back from a stuck bridge-in transfer?*](#common-issues-and-support/how-do-i-get-my-funds-back-from-a-stuck-bridge-in-transfer)
 
 1. Check your external wallet, such as MetaMask, for a USDC deposit at that time.
    - **No USDC left your wallet:** nothing was sent, and your USDC is still there. You can try again.

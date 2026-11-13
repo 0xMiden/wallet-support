@@ -248,11 +248,11 @@ For the in-app steps, see *How do I restore my wallet with a recovery phrase?*
 ### 13. Can I send funds to another blockchain?
 Category: Crosschain › Moving across chains
 
-Yes. You can send USDCX from Bread to an address on **Ethereum**, **Base**, **Arbitrum One** or **Arc**. It arrives there as USDC, through Circle's xReserve route.
+Yes. You can send USDCX from Bread to an address on **Ethereum**, **Base**, **Arbitrum One** or **Arc**. It arrives there as USDC, through Circle's xReserve route. On **Ethereum**, **Base**, **Arbitrum One** and **Polygon**, you can also send it through the Fast route.
 
-Other supported assets use the Ethereum ↔ Miden Agglayer bridge when that exact route is offered. Epoch and NEAR Intents fast transfers are not enabled on Partner Mainnet; Earn uses a separate Epoch service.
+Other supported assets use the Fast route or the Ethereum ↔ Miden Agglayer bridge when that exact route is offered. NEAR Intents transfers are not enabled on Partner Mainnet.
 
-Circle takes a fee from the amount you send, so you receive less than you send. Check the address before you confirm: once it is sent, the transfer can't be reclaimed.
+Circle takes a fee from the amount you send, so you receive less than you send. Check the address before you confirm: on Circle's route, once it is sent, the transfer can't be reclaimed.
 
 The Miden network fee is paid in USDCX too, so keep some USDCX beyond the amount you send. See *Why do I need USDCX for network fees?*
 
@@ -267,7 +267,7 @@ When you move funds between Miden and another chain, the route screen shows how 
 - **Slow · Agglayer**: the funds go through the bridge itself. The wallet estimates about 30 minutes and shows no bridge fee. Check any network fee separately.
 - **USDCx (Circle xReserve)**: for USDCX. Circle turns your USDCX into USDC on the other chain, and USDC back into USDCX. How long it takes depends on that chain.
 
-On Mainnet, fast transfers are disabled for now. Epoch also runs Earn, but that doesn't switch fast transfers on. USDC moves through Circle on Ethereum, Base, Arbitrum and Arc. ETH and a few Ethereum tokens (WBTC, wrapped SOL, NEAR, PAXG, USDT, WBNB and PYUSD) use the Slow route. For the full list, see *Which bridge networks and tokens can I use?*
+The Fast route works on Ethereum, Base, Arbitrum, Polygon and Robinhood Chain. USDC also moves through Circle on Ethereum, Base, Arbitrum and Arc. ETH and a few Ethereum tokens (WBTC, wrapped SOL, NEAR, PAXG, USDT, WBNB and PYUSD) use the Slow route. For the full list, see *Which bridge networks and tokens can I use?*
 
 Before you confirm, check the route, the amount and the fees on the review screen.
 
@@ -278,7 +278,7 @@ If a transfer is still pending, don't start it again. Open it in **Activity** to
 ### 15. Can I swap tokens across chains?
 Category: Crosschain › Moving across chains
 
-Partner Mainnet does not currently enable Epoch or NEAR Intents fast crosschain swaps. The Circle and Agglayer bridge routes move their supported assets; do not treat them as a general token-swap service. A Swap within Miden is a different operation.
+Partner Mainnet does not currently offer crosschain swaps. The Fast, Circle and Agglayer routes move their supported assets between chains; do not treat them as a general token-swap service. A Swap within Miden is a different operation.
 
 Use a crosschain swap only if your installed version and selected network explicitly offer that source token, destination token and route.
 
@@ -857,6 +857,8 @@ A disabled route can stop new transfers without cancelling a transfer already in
 
 For a USDC or USDCX transfer on Circle's route, see *My USDC or USDCX bridge transfer hasn't arrived. Who can help?*
 
+If a transfer on the Fast route is stuck, see *How do I get my funds back from a stuck bridge-in transfer?*
+
 If Bread shows **Bridge deposit failed**, see *What should I do if a bridge deposit fails?*
 
 ### 41. How do I send feedback or report a problem?
@@ -951,7 +953,7 @@ Report the game, network, wallet version and error text without recovery informa
 ### 46. Which bridge networks and tokens can I use?
 Category: Crosschain › Moving across chains
 
-Bread's current Partner Mainnet routes connect Miden with Ethereum, Base, Arbitrum and Arc. The choices depend on your installed version and the route checks in the wallet. Testnet uses different networks and settings.
+Bread's current Partner Mainnet routes connect Miden with Ethereum, Base, Arbitrum, Arc, Polygon and Robinhood Chain. The choices depend on your installed version and the route checks in the wallet.
 
 **USDC: Ethereum, Base, Arbitrum and Arc**
 
@@ -977,9 +979,18 @@ Bread labels the route **Slow · Agglayer** and shows an arrival estimate of abo
 
 WSOL, WBNB and NEAR here are the versions of those tokens that live on Ethereum. You can't send to or from the Solana, BNB Chain or NEAR networks themselves. Learn more about [Agglayer](https://docs.polygon.technology/interoperability/agglayer).
 
+**Fast route: Ethereum, Base, Arbitrum, Polygon and Robinhood Chain**
+
+Bread labels this route **Fast · Epoch**. A third party delivers your funds on the other network for you, and Bread shows an arrival estimate of about 30 seconds. The current Mainnet configuration lists these tokens for deposits and withdrawals:
+
+- Ethereum, Base and Arbitrum: USDC and ETH
+- Polygon: USDC and POL
+- Robinhood Chain: ETH and USDG
+
+USDC sent through this route arrives in Bread as USDCX. If a Fast transfer gets stuck, see *How do I get my funds back from a stuck bridge-in transfer?*
+
 **Not available on Partner Mainnet**
 
-- **Fast · Epoch**: this transfer route through [Epoch](https://epochprotocol.xyz/) is disabled in the current Partner Mainnet configuration. Epoch support for Earn is separate.
 - **NEAR Intents**: transfers through [NEAR Intents](https://docs.near-intents.org/) are disabled in the current Partner Mainnet configuration. There is no announced availability date.
 
 **Before you move funds**
@@ -987,7 +998,7 @@ WSOL, WBNB and NEAR here are the versions of those tokens that live on Ethereum.
 1. Check your network, then pick the exact token and both networks in Bread. If a route is missing, disabled or cannot be checked, don't send: it may be unsupported or temporarily unavailable. If the problem continues, contact [support](/feedback).
 2. On the review screen, check the receiving address, the fees, the amount you'll receive and the arrival estimate.
 3. On Partner Mainnet, the current deposit cap is $1,232.462 USD for your total wallet balance after a deposit. If a deposit would take you over, Bread asks for a smaller amount. This is not a per-transfer allowance or a daily deposit limit. See *What is the Partner Mainnet deposit limit?*
-4. Keep enough for the network fee on the network you send from: ETH on Ethereum, Base and Arbitrum, or USDC on Arc. See *Why do I need USDCX for network fees?*
+4. Keep enough for the network fee on the network you send from: ETH on Ethereum, Base, Arbitrum and Robinhood Chain, POL on Polygon, or USDC on Arc. See *Why do I need USDCX for network fees?*
 
 Only move funds through Bread or [Miden Bridge](https://bridge.miden.xyz/), and never send tokens straight to a bridge contract address. Miden Bridge can offer different choices from your installed wallet; check its route separately.
 
@@ -1092,7 +1103,7 @@ These steps send USDCX from Bread to your MetaMask wallet. It arrives in MetaMas
 ### 50. My USDC or USDCX bridge transfer hasn't arrived. Who can help?
 Category: Troubleshooting › Common issues
 
-Transfers between USDC on **Ethereum**, **Base**, **Arbitrum One** or **Arc** and USDCX on Miden use Circle's xReserve route. Bread handles the Miden side of the transfer and Circle completes the other side. Many delays can be resolved in Bread, so start there.
+Transfers between USDC on **Ethereum**, **Base**, **Arbitrum One** or **Arc** and USDCX on Miden use Circle's xReserve route. Bread handles the Miden side of the transfer and Circle completes the other side. Many delays can be resolved in Bread, so start there. This page covers Circle's route. If your transfer used the Fast route, see *How do I get my funds back from a stuck bridge-in transfer?*
 
 **Check Bread first**
 
@@ -1219,7 +1230,7 @@ Category: Troubleshooting › Common issues
 ### 59. Why does my USDC bridge to Bread show Failed?
 Category: Troubleshooting › Common issues
 
-When you add USDC to Bread from **Ethereum**, **Base**, **Arbitrum One** or **Arc**, Circle's xReserve route turns it into USDCX on Miden. A **Failed** transfer doesn't always mean nothing was sent, so check before you try again.
+When you add USDC to Bread from **Ethereum**, **Base**, **Arbitrum One** or **Arc**, Circle's xReserve route turns it into USDCX on Miden. A **Failed** transfer doesn't always mean nothing was sent, so check before you try again. This page covers Circle's route. For a transfer on the Fast route, see *How do I get my funds back from a stuck bridge-in transfer?*
 
 1. Check your external wallet, such as MetaMask, for a USDC deposit at that time.
    - **No USDC left your wallet:** nothing was sent, and your USDC is still there. You can try again.

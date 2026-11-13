@@ -18,4 +18,6 @@ A disabled route can stop new transfers without cancelling a transfer already in
 
 For a USDC or USDCX transfer on Circle's route, see [*My USDC or USDCX bridge transfer hasn't arrived. Who can help?*](#common-issues-and-support/my-usdc-or-usdcx-bridge-transfer-has-not-arrived)
 
+If a transfer on the Fast route is stuck, see [*How do I get my funds back from a stuck bridge-in transfer?*](#common-issues-and-support/how-do-i-get-my-funds-back-from-a-stuck-bridge-in-transfer)
+
 If Bread shows **Bridge deposit failed**, see [*What should I do if a bridge deposit fails?*](#common-issues-and-support/what-should-i-do-if-a-bridge-deposit-fails)

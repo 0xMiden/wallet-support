@@ -6,11 +6,11 @@ subcategory: moving-across-chains
 platforms: [extension-desktop, mobile]
 ---
 
-Yes. You can send USDCX from Bread to an address on **Ethereum**, **Base**, **Arbitrum One** or **Arc**. It arrives there as USDC, through Circle's xReserve route.
+Yes. You can send USDCX from Bread to an address on **Ethereum**, **Base**, **Arbitrum One** or **Arc**. It arrives there as USDC, through Circle's xReserve route. On **Ethereum**, **Base**, **Arbitrum One** and **Polygon**, you can also send it through the Fast route.
 
-Other supported assets use the Ethereum ↔ Miden Agglayer bridge when that exact route is offered. Epoch and NEAR Intents fast transfers are not enabled on Partner Mainnet; Earn uses a separate Epoch service.
+Other supported assets use the Fast route or the Ethereum ↔ Miden Agglayer bridge when that exact route is offered. NEAR Intents transfers are not enabled on Partner Mainnet.
 
-Circle takes a fee from the amount you send, so you receive less than you send. Check the address before you confirm: once it is sent, the transfer can't be reclaimed.
+Circle takes a fee from the amount you send, so you receive less than you send. Check the address before you confirm: on Circle's route, once it is sent, the transfer can't be reclaimed.
 
 The Miden network fee is paid in USDCX too, so keep some USDCX beyond the amount you send. See [*Why do I need USDCX for network fees?*](#common-issues-and-support/why-do-i-need-usdcx-for-network-fees)
 
