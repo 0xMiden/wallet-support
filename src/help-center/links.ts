@@ -9,8 +9,13 @@
  * A second, tidier version of an approved link is still a second answer.
  */
 
-/** Approved hosted intake, matching wallet Settings > About (wallet PR #1369). */
-export const CONTACT_SUPPORT_URL = 'https://cmuv78o9w003x5ebpyha3cf6p.zapier.app/page';
+/**
+ * The Help Center's own contact form (src/contact), which emails the support
+ * inbox through worker/contact. It replaced the hosted Zapier form once the
+ * Worker was live. The wallet's Settings > About still links the hosted form
+ * until the wallet changes it.
+ */
+export const CONTACT_SUPPORT_URL = '/contact';
 
 /**
  * The contact Worker the /contact form posts to (worker/contact). Only the
