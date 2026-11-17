@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { FormEvent, ReactNode } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
-import { ArrowUpRight, Menu, Search, X } from 'lucide-react';
+import { Menu, Search, X } from 'lucide-react';
 import { BreadBrand } from './BreadBrand';
 import { CONTACT_SUPPORT_URL } from './links';
 import type { PublicRoute } from './publicRoute';
@@ -17,7 +17,7 @@ export function PublicShell({ active, children }: { active: PublicRoute; childre
     <a href="/" aria-current={active === 'help' ? 'page' : undefined}>Help Center</a>
     <a href="/topics" aria-current={active === 'topics' ? 'page' : undefined}>All topics</a>
     {/* Not on the contact form itself, where it would lead back to the same form. */}
-    {active !== 'contact' ? <a className="public-feedback-link" href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">Send feedback<ArrowUpRight aria-hidden="true" /></a> : null}
+    {active !== 'contact' ? <a className="public-feedback-link" href={CONTACT_SUPPORT_URL}>Send feedback</a> : null}
   </>;
   return (
     <div className="public-shell">
