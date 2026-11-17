@@ -38,7 +38,7 @@ export type FeedbackType = keyof typeof FEEDBACK_TYPES;
 /** Longest accepted value for each text field, in characters. */
 export const LIMITS = {
   title: 120,
-  description: 5000,
+  description: 2000,
   steps: 2000,
   expected: 2000,
   actual: 2000,

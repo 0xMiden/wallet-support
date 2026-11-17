@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
-import type { FormEvent } from 'react';
+import type { ChangeEvent, FormEvent, ReactNode } from 'react';
+import { CloudUpload, FileText, Info, Layers, Mail, Paperclip, ShieldCheck, Smartphone, Tag, Target, TriangleAlert } from 'lucide-react';
 import { HelpCenterFooter } from '../help-center/HelpCenterFooter';
 import { helpCenterMainCategories } from '../help-center/categories';
 import { errorMessage, sendContactReport } from './api';
 import type { ContactResult } from './api';
 import './contact.css';
 
-const MAX_SCREENSHOT_BYTES = 15 * 1024 * 1024;
+const MAX_ATTACHMENT_BYTES = 15 * 1024 * 1024;
+const MAX_DESCRIPTION = 2000;
+const ATTACHMENT_TYPES = 'image/png,image/jpeg,image/webp,video/mp4,video/quicktime,video/webm';
 
 const FEEDBACK_TYPES = [['bug', 'Bug'], ['feature', 'Feature'], ['suggestion', 'Suggestion'], ['general', 'General']] as const;
 const PLATFORMS = [['ios', 'iOS'], ['android', 'Android'], ['extension', 'Chrome extension']] as const;
@@ -18,11 +21,11 @@ type State =
   | { kind: 'sent'; email: string }
   | { kind: 'failed'; message: string; field?: string };
 
-function Label({ htmlFor, children, required }: { htmlFor: string; children: string; required?: boolean }) {
+function Label({ htmlFor, children, icon, required }: { htmlFor: string; children: string; icon?: ReactNode; required?: boolean }) {
   return (
     <label className="contact-label" htmlFor={htmlFor}>
-      {children}
-      {required ? <span className="contact-required"> (required)</span> : null}
+      {icon}
+      <span>{children}{required ? <span className="contact-required" aria-hidden="true"> *</span> : null}</span>
     </label>
   );
 }
@@ -30,6 +33,8 @@ function Label({ htmlFor, children, required }: { htmlFor: string; children: str
 /** The Help Center contact form. Reports go to the support inbox through worker/contact. */
 export function ContactPage() {
   const [state, setState] = useState<State>({ kind: 'editing' });
+  const [descriptionLength, setDescriptionLength] = useState(0);
+  const [fileName, setFileName] = useState('');
   const status = useRef<HTMLDivElement>(null);
   const sentHeading = useRef<HTMLHeadingElement>(null);
 
@@ -49,22 +54,26 @@ export function ContactPage() {
     if (state.kind === 'sent') sentHeading.current?.focus();
   }, [state]);
 
+  const chooseFile = (event: ChangeEvent<HTMLInputElement>) => setFileName(event.target.files?.[0]?.name ?? '');
+
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
     const data = new FormData(form);
-    const screenshot = data.get('screenshot');
-    if (screenshot instanceof File && screenshot.size > MAX_SCREENSHOT_BYTES) {
-      setState({ kind: 'failed', message: errorMessage({ ok: false, error: 'too_large' }) });
+    const attachment = data.get('screenshot');
+    if (attachment instanceof File && attachment.size > MAX_ATTACHMENT_BYTES) {
+      setState({ kind: 'failed', message: errorMessage({ ok: false, error: 'too_large' }), field: 'screenshot' });
       return;
     }
-    if (screenshot instanceof File && screenshot.size === 0) data.delete('screenshot');
+    if (attachment instanceof File && attachment.size === 0) data.delete('screenshot');
 
     setState({ kind: 'sending' });
     const result: ContactResult = await sendContactReport(data);
     if (result.ok) {
       const email = String(data.get('email') ?? '').trim();
       form.reset();
+      setDescriptionLength(0);
+      setFileName('');
       setState({ kind: 'sent', email });
     } else {
       setState({ kind: 'failed', message: errorMessage(result), ...(result.field ? { field: result.field } : {}) });
@@ -75,7 +84,7 @@ export function ContactPage() {
     <div className="help-center-home contact-page">
       <main className="contact-main" id="help-center-content" tabIndex={-1}>
         <header className="contact-intro">
-          <h1>Send us your concerns and feedback</h1>
+          <h1>Send us your concerns or feedback</h1>
           <p>Report a problem or share a suggestion about Bread.</p>
         </header>
 
@@ -88,81 +97,103 @@ export function ContactPage() {
         ) : (
           <form className="contact-form" onSubmit={submit} aria-describedby="contact-safety">
             <div className="contact-warning" id="contact-safety" role="note">
-              <strong>Keep your wallet safe.</strong> Never include a recovery phrase, signing key,
-              password, or a screenshot that shows one.
+              <ShieldCheck className="contact-warning-icon" aria-hidden="true" />
+              <p><strong>Keep your wallet safe.</strong> Never include a recovery phrase, signing key,
+                password, or a screenshot that shows one.</p>
             </div>
 
-            {state.kind === 'failed' ? (
-              <div className="contact-error" id="contact-error" role="alert" ref={status} tabIndex={-1}>{state.message}</div>
-            ) : null}
+            <div className="contact-card">
+              {state.kind === 'failed' ? (
+                <div className="contact-error" id="contact-error" role="alert" ref={status} tabIndex={-1}>{state.message}</div>
+              ) : null}
 
-            <div className="contact-field">
-              <Label htmlFor="contact-type" required>Feedback type</Label>
-              <select id="contact-type" {...describe('type')} name="type" required defaultValue="">
-                <option value="" disabled>Select feedback type</option>
-                {FEEDBACK_TYPES.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
-              </select>
-            </div>
-
-            <div className="contact-field">
-              <Label htmlFor="contact-title" required>Short title</Label>
-              <input id="contact-title" {...describe('title')} name="title" type="text" required maxLength={120} autoComplete="off" />
-            </div>
-
-            <div className="contact-field">
-              <Label htmlFor="contact-description" required>Description</Label>
-              <textarea id="contact-description" {...describe('description')} name="description" required maxLength={5000} rows={5} />
-            </div>
-
-            {([['steps', 'Steps to reproduce'], ['expected', 'Expected result'], ['actual', 'Actual result']] as const).map(([name, label]) => (
-              <div className="contact-field" key={name}>
-                <Label htmlFor={`contact-${name}`}>{label}</Label>
-                <textarea id={`contact-${name}`} name={name} maxLength={2000} rows={3} {...describe(name, `contact-${name}-hint`)} />
-                <p className="contact-hint" id={`contact-${name}-hint`}>Only needed for bug reports</p>
-              </div>
-            ))}
-
-            <div className="contact-row">
               <div className="contact-field">
-                <Label htmlFor="contact-platform" required>Platform</Label>
-                <select id="contact-platform" {...describe('platform')} name="platform" required defaultValue="">
-                  <option value="" disabled>Select platform</option>
-                  {PLATFORMS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
-                </select>
+                <Label htmlFor="contact-title" required>Short title</Label>
+                <input id="contact-title" {...describe('title')} name="title" type="text" required maxLength={120} autoComplete="off" placeholder="Briefly describe your issue (e.g., can't access my wallet)" />
               </div>
+
+              <div className="contact-row contact-row-3">
+                <div className="contact-field">
+                  <Label htmlFor="contact-type" icon={<Tag aria-hidden="true" />} required>Feedback type</Label>
+                  <select id="contact-type" {...describe('type')} name="type" required defaultValue="">
+                    <option value="" disabled>Select feedback type</option>
+                    {FEEDBACK_TYPES.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+                  </select>
+                </div>
+                <div className="contact-field">
+                  <Label htmlFor="contact-platform" icon={<Smartphone aria-hidden="true" />} required>Platform</Label>
+                  <select id="contact-platform" {...describe('platform')} name="platform" required defaultValue="">
+                    <option value="" disabled>Select platform</option>
+                    {PLATFORMS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+                  </select>
+                </div>
+                <div className="contact-field">
+                  <Label htmlFor="contact-network" icon={<Layers aria-hidden="true" />} required>Network</Label>
+                  <select id="contact-network" {...describe('network')} name="network" required defaultValue="">
+                    <option value="" disabled>Select network</option>
+                    {NETWORKS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+                  </select>
+                </div>
+              </div>
+
               <div className="contact-field">
-                <Label htmlFor="contact-version">App version</Label>
-                <input id="contact-version" {...describe('version')} name="version" type="text" maxLength={40} placeholder="Optional" autoComplete="off" />
+                <Label htmlFor="contact-description" icon={<FileText aria-hidden="true" />} required>Description</Label>
+                <textarea
+                  id="contact-description" {...describe('description', 'contact-description-count')} name="description" required
+                  maxLength={MAX_DESCRIPTION} rows={4} onChange={event => setDescriptionLength(event.target.value.length)}
+                  placeholder="Please provide details about your issue, including any relevant context, error messages, or what you were trying to do."
+                />
+                <p className="contact-count" id="contact-description-count">{descriptionLength.toLocaleString('en-US')} / {MAX_DESCRIPTION.toLocaleString('en-US')}</p>
               </div>
-              <div className="contact-field">
-                <Label htmlFor="contact-network" required>Network</Label>
-                <select id="contact-network" {...describe('network')} name="network" required defaultValue="">
-                  <option value="" disabled>Select network</option>
-                  {NETWORKS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
-                </select>
+
+              <div className="contact-row contact-row-3">
+                <div className="contact-field">
+                  <Label htmlFor="contact-email" icon={<Mail aria-hidden="true" />} required>Contact email</Label>
+                  <input id="contact-email" {...describe('email')} name="email" type="email" required maxLength={254} autoComplete="email" placeholder="Your email address" />
+                </div>
+                <div className="contact-field">
+                  <Label htmlFor="contact-version" icon={<Info aria-hidden="true" />}>App version</Label>
+                  <input id="contact-version" {...describe('version')} name="version" type="text" maxLength={40} placeholder="Optional" autoComplete="off" />
+                </div>
+                <div className="contact-field">
+                  <Label htmlFor="contact-screenshot" icon={<Paperclip aria-hidden="true" />}>Screenshot or video (optional)</Label>
+                  <div className="contact-drop">
+                    <input id="contact-screenshot" {...describe('screenshot', 'contact-screenshot-hint')} name="screenshot" type="file" accept={ATTACHMENT_TYPES} onChange={chooseFile} />
+                    <CloudUpload className="contact-drop-icon" aria-hidden="true" />
+                    <span className="contact-drop-text" aria-hidden="true">{fileName || <>Drag &amp; drop or <span className="contact-drop-choose">Choose File</span></>}</span>
+                  </div>
+                  <p className="contact-hint" id="contact-screenshot-hint">PNG, JPEG, WebP, MP4, MOV or WebM, up to 15 MB</p>
+                </div>
               </div>
-            </div>
 
-            <div className="contact-field">
-              <Label htmlFor="contact-screenshot">Screenshot or video (optional)</Label>
-              <input id="contact-screenshot" name="screenshot" type="file" accept="image/png,image/jpeg,image/webp,video/mp4,video/quicktime,video/webm" {...describe('screenshot', 'contact-screenshot-hint')} />
-              <p className="contact-hint" id="contact-screenshot-hint">PNG, JPEG, WebP, MP4, MOV or WebM, up to 15 MB</p>
-            </div>
+              <fieldset className="contact-bug">
+                <legend>Bug details</legend>
+                <div className="contact-field">
+                  <Label htmlFor="contact-steps">Steps to reproduce</Label>
+                  <textarea id="contact-steps" {...describe('steps')} name="steps" maxLength={2000} rows={3} placeholder="Provide clear, numbered steps so we can reproduce the issue (e.g., 1. Open the app, 2. Tap Bridge, 3. Select USDC, 4. Tap Confirm)." />
+                </div>
+                <div className="contact-row contact-row-2">
+                  <div className="contact-field">
+                    <Label htmlFor="contact-expected" icon={<Target aria-hidden="true" />}>Expected result</Label>
+                    <textarea id="contact-expected" {...describe('expected')} name="expected" maxLength={2000} rows={2} placeholder="What should have happened?" />
+                  </div>
+                  <div className="contact-field">
+                    <Label htmlFor="contact-actual" icon={<TriangleAlert aria-hidden="true" />}>Actual result</Label>
+                    <textarea id="contact-actual" {...describe('actual')} name="actual" maxLength={2000} rows={2} placeholder="What actually happened?" />
+                  </div>
+                </div>
+              </fieldset>
 
-            <div className="contact-field">
-              <Label htmlFor="contact-email" required>Contact email</Label>
-              <input id="contact-email" name="email" type="email" required maxLength={254} autoComplete="email" {...describe('email')} />
-            </div>
+              {/* Hidden from people and from assistive technology; bots fill it in. */}
+              <div className="contact-trap" aria-hidden="true">
+                <label htmlFor="contact-website">Website</label>
+                <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+              </div>
 
-            {/* Hidden from people and from assistive technology; bots fill it in. */}
-            <div className="contact-trap" aria-hidden="true">
-              <label htmlFor="contact-website">Website</label>
-              <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+              <button className="help-center-contact-button contact-submit" type="submit" disabled={state.kind === 'sending'}>
+                {state.kind === 'sending' ? 'Sending…' : 'Submit feedback'}
+              </button>
             </div>
-
-            <button className="help-center-contact-button contact-submit" type="submit" disabled={state.kind === 'sending'}>
-              {state.kind === 'sending' ? 'Sending…' : 'Submit feedback'}
-            </button>
           </form>
         )}
       </main>

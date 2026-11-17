@@ -29,7 +29,7 @@ for (const width of [1440, 390]) {
     page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/contact');
-    await expect(page.getByRole('heading', { name: 'Send us your concerns and feedback', level: 1 })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Send us your concerns or feedback', level: 1 })).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
     const result = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
     expect(result.violations.map(v => ({ id: v.id, nodes: v.nodes.map(n => n.target) }))).toEqual([]);
@@ -38,13 +38,13 @@ for (const width of [1440, 390]) {
   });
 }
 
-test('the form asks the same questions as the hosted form, in the same order', async ({ page }) => {
+test('the form asks the approved questions, in the approved order', async ({ page }) => {
   await page.goto('/contact');
   const labels = await page.locator('.contact-form .contact-field > label').allTextContents();
   expect(labels).toEqual([
-    'Feedback type (required)', 'Short title (required)', 'Description (required)',
-    'Steps to reproduce', 'Expected result', 'Actual result',
-    'Platform (required)', 'App version', 'Network (required)', 'Screenshot or video (optional)', 'Contact email (required)'
+    'Short title *', 'Feedback type *', 'Platform *', 'Network *', 'Description *',
+    'Contact email *', 'App version', 'Screenshot or video (optional)',
+    'Steps to reproduce', 'Expected result', 'Actual result'
   ]);
   expect(await page.getByLabel('Feedback type').locator('option:not([disabled])').allTextContents()).toEqual(['Bug', 'Feature', 'Suggestion', 'General']);
   expect(await page.getByLabel('Platform').locator('option').allTextContents()).toEqual(['Select platform', 'iOS', 'Android', 'Chrome extension']);

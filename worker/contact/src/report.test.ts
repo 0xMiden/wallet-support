@@ -96,7 +96,7 @@ describe('githubIssueUrl', () => {
   });
 
   it('shortens a long report to fit, without splitting characters', async () => {
-    const long = await report({ description: 'Ünïcødé 🐞 line\n'.repeat(250) });
+    const long = await report({ description: 'Ünïcødé 🐞 line\n'.repeat(120) });
     const url = githubIssueUrl(long);
     expect(url.length).toBeLessThanOrEqual(MAX_ISSUE_URL);
     const body = new URL(url).searchParams.get('body') ?? '';
