@@ -41,6 +41,11 @@
 .contact-field input:not([type='file']):focus,
 .contact-field select:focus,
 .contact-field textarea:focus { border-color: var(--help-accent); background: var(--help-panel-elevated); }
+/* One ring, not two: the 3px focus ring is drawn over the field's own edge
+   instead of 3px outside it, so the orange border and the ring read as one. */
+.contact-field input:not([type='file']):focus-visible,
+.contact-field select:focus-visible,
+.contact-field textarea:focus-visible { outline-offset: -1px; }
 
 /* The file input covers the drop area, invisibly, so both dropping a file and
    clicking open the picker natively. The ring moves to the visible area. */
