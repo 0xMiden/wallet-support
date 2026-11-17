@@ -29,7 +29,7 @@ describe('sendContactReport', () => {
 
 describe('errorMessage', () => {
   it('names the field to fix and warns about recovery phrases', () => {
-    expect(errorMessage({ ok: false, error: 'invalid', field: 'email' })).toBe('Check Contact email and send again.');
+    expect(errorMessage({ ok: false, error: 'invalid', field: 'email' })).toBe('Check Email and send again.');
     expect(errorMessage({ ok: false, error: 'secret' })).toContain('recovery phrase');
     expect(errorMessage({ ok: false, error: 'send_failed' })).toContain("wasn't sent");
   });

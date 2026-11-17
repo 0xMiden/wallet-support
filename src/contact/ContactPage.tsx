@@ -105,7 +105,7 @@ export function ContactPage() {
               ) : null}
 
               <div className="contact-field">
-                <Label htmlFor="contact-title" required>Short title</Label>
+                <Label htmlFor="contact-title" required>Title</Label>
                 <input id="contact-title" {...describe('title')} name="title" type="text" required maxLength={120} autoComplete="off" placeholder="Briefly describe your issue (e.g., can't access my wallet)" />
               </div>
 
@@ -145,7 +145,7 @@ export function ContactPage() {
 
               <div className="contact-row contact-row-3">
                 <div className="contact-field">
-                  <Label htmlFor="contact-email" required>Contact email</Label>
+                  <Label htmlFor="contact-email" required>Email</Label>
                   <input id="contact-email" {...describe('email')} name="email" type="email" required maxLength={254} autoComplete="email" placeholder="Your email address" />
                 </div>
                 <div className="contact-field">
@@ -162,8 +162,9 @@ export function ContactPage() {
                 </div>
               </div>
 
-              <fieldset className="contact-bug">
+              <fieldset className="contact-bug" aria-describedby="contact-bug-hint">
                 <legend>Bug details</legend>
+                <p className="contact-hint contact-bug-hint" id="contact-bug-hint">Only needed for bug reports</p>
                 <div className="contact-field">
                   <Label htmlFor="contact-steps">Steps to reproduce</Label>
                   <textarea id="contact-steps" {...describe('steps')} name="steps" maxLength={2000} rows={3} placeholder="Provide clear, numbered steps so we can reproduce the issue (e.g., 1. Open the app, 2. Tap Bridge, 3. Select USDC, 4. Tap Confirm)." />

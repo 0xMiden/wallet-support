@@ -15,7 +15,7 @@ export type ContactResult = { ok: true } | { ok: false; error: ContactErrorCode;
 
 export const FIELD_LABELS: Readonly<Record<string, string>> = {
   type: 'Feedback type',
-  title: 'Short title',
+  title: 'Title',
   description: 'Description',
   steps: 'Steps to reproduce',
   expected: 'Expected result',
@@ -24,7 +24,7 @@ export const FIELD_LABELS: Readonly<Record<string, string>> = {
   version: 'App version',
   network: 'Network',
   screenshot: 'Screenshot or video',
-  email: 'Contact email'
+  email: 'Email'
 };
 
 /** Sentences shown above the form when a report is not sent. */

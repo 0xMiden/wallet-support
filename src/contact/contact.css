@@ -53,6 +53,8 @@
 
 .contact-bug { display: grid; gap: var(--space-4); margin: 0; padding: var(--space-5); border: 1px solid var(--tint-medium); border-radius: var(--radius-md); background: var(--tint-faint); }
 .contact-bug legend { float: left; width: 100%; padding: 0; color: var(--text-strong); font: var(--weight-strong) var(--text-base)/1.2 var(--font-display); }
+/* Pulled up under the legend, so the two read as one heading. */
+.contact-bug-hint { margin-top: calc(var(--space-3) * -1); }
 .contact-bug .contact-field input:not([type='file']),
 .contact-bug .contact-field textarea { background: var(--help-panel); }
 

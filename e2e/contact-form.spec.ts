@@ -16,11 +16,11 @@ async function worker(page: Page, status: number, body: unknown): Promise<Reques
 
 async function fillRequired(page: Page) {
   await page.getByLabel('Feedback type').selectOption('bug');
-  await page.getByLabel('Short title').fill('Send button stays grey');
+  await page.locator('#contact-title').fill('Send button stays grey');
   await page.getByLabel('Description', { exact: false }).first().fill('After entering an amount the Send button never turns orange.');
   await page.getByLabel('Platform').selectOption('ios');
   await page.getByLabel('Network').selectOption('mainnet');
-  await page.getByLabel('Contact email').fill('user@example.com');
+  await page.locator('#contact-email').fill('user@example.com');
 }
 
 for (const width of [1440, 390]) {
@@ -42,8 +42,8 @@ test('the form asks the approved questions, in the approved order', async ({ pag
   await page.goto('/contact');
   const labels = await page.locator('.contact-form .contact-field > label').allTextContents();
   expect(labels).toEqual([
-    'Short title *', 'Feedback type *', 'Platform *', 'Network *', 'Description *',
-    'Contact email *', 'App version', 'Screenshot or video (optional)',
+    'Title *', 'Feedback type *', 'Platform *', 'Network *', 'Description *',
+    'Email *', 'App version', 'Screenshot or video (optional)',
     'Steps to reproduce', 'Expected result', 'Actual result'
   ]);
   expect(await page.getByLabel('Feedback type').locator('option:not([disabled])').allTextContents()).toEqual(['Bug', 'Feature', 'Suggestion', 'General']);
@@ -56,7 +56,7 @@ test('a sent report reaches the Worker and the page confirms it', async ({ page 
   await page.goto('/contact');
   await fillRequired(page);
   await page.getByLabel('Platform').selectOption('ios');
-  await page.getByLabel('Contact email').fill('user@example.com');
+  await page.locator('#contact-email').fill('user@example.com');
   await page.getByLabel('Screenshot or video (optional)').setInputFiles('public/bread-wallet-og.png');
   await page.getByRole('button', { name: 'Submit feedback' }).click();
 
@@ -73,7 +73,7 @@ test('a sent report reaches the Worker and the page confirms it', async ({ page 
   expect(body).toContain('name="website"\r\n\r\n\r\n');
 
   await page.getByRole('button', { name: 'Send another report' }).click();
-  await expect(page.getByLabel('Short title')).toHaveValue('');
+  await expect(page.locator('#contact-title')).toHaveValue('');
 });
 
 test('a refused report keeps what was typed and says what to fix', async ({ page }) => {
@@ -84,7 +84,7 @@ test('a refused report keeps what was typed and says what to fix', async ({ page
   const alert = page.getByRole('alert');
   await expect(alert).toContainText('recovery phrase or key');
   await expect(alert).toBeFocused();
-  await expect(page.getByLabel('Short title')).toHaveValue('Send button stays grey');
+  await expect(page.locator('#contact-title')).toHaveValue('Send button stays grey');
 });
 
 test('a failed send says so and nothing is lost', async ({ page }) => {
@@ -93,7 +93,7 @@ test('a failed send says so and nothing is lost', async ({ page }) => {
   await fillRequired(page);
   await page.getByRole('button', { name: 'Submit feedback' }).click();
   await expect(page.getByRole('alert')).toContainText("Your report wasn't sent.");
-  await expect(page.getByLabel('Short title')).toHaveValue('Send button stays grey');
+  await expect(page.locator('#contact-title')).toHaveValue('Send button stays grey');
 });
 
 test('the browser requires the required fields before sending', async ({ page }) => {
@@ -108,13 +108,13 @@ test('a field the Worker rejects is marked, described and focused', async ({ pag
   await worker(page, 400, { ok: false, error: 'invalid', field: 'email' });
   await page.goto('/contact');
   await fillRequired(page);
-  await page.getByLabel('Contact email').fill('user@example.com');
+  await page.locator('#contact-email').fill('user@example.com');
   await page.getByRole('button', { name: 'Submit feedback' }).click();
-  const email = page.getByLabel('Contact email');
+  const email = page.locator('#contact-email');
   await expect(email).toBeFocused();
   await expect(email).toHaveAttribute('aria-invalid', 'true');
   await expect(email).toHaveAttribute('aria-describedby', 'contact-error');
-  await expect(page.getByRole('alert')).toHaveText('Check Contact email and send again.');
+  await expect(page.getByRole('alert')).toHaveText('Check Email and send again.');
 });
 
 test('the header leaves out Send feedback on the contact form itself', async ({ page }) => {
