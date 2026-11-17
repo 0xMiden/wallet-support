@@ -26,14 +26,35 @@ export function detectMnemonic(text: string, wordlist?: Set<string>): ScanHit | 
   const VALID_LENGTHS = new Set([12, 15, 18, 21, 24]);
   const tokens = text.toLowerCase().match(/[a-z]+/g) ?? [];
 
+  const MIN_PHRASE = 12;
+  /** 11 different words of 12, the same ~90% bar as a whole run: one typo still counts as a phrase. */
+  const MIN_WINDOW_HITS = 11;
+
   let run: string[] = [];
   const flush = (): ScanHit | null => {
-    if (!VALID_LENGTHS.has(run.length)) return null;
-    if (wordlist) {
+    if (VALID_LENGTHS.has(run.length)) {
+      if (!wordlist) return { kind: 'mnemonic', note: `${run.length}-word sequence` };
       const hits = run.filter((w) => wordlist.has(w)).length;
-      if (hits / run.length < 0.9) return null;
+      if (hits / run.length >= 0.9) return { kind: 'mnemonic', note: `${run.length}-word sequence` };
     }
-    return { kind: 'mnemonic', note: `${run.length}-word sequence` };
+    // A phrase inside a sentence. Ordinary words of 3-8 letters before or after
+    // it join the same run ("is this right? abandon ability …"), so the run is
+    // no longer 12 or 24 long and the check above misses it. With the wordlist
+    // we can look for the phrase itself: any 12 consecutive words of which at
+    // least 11 are DIFFERENT BIP-39 words. Distinct, because a real phrase
+    // rarely repeats a word while list-style reviews do ("very good, very
+    // simple, very clean …", "please help please fix please …"). Without the
+    // wordlist there is nothing to tell a phrase from prose, so a long run alone
+    // is not flagged.
+    if (wordlist && run.length > MIN_PHRASE) {
+      for (let start = 0; start + MIN_PHRASE <= run.length; start++) {
+        const distinct = new Set(run.slice(start, start + MIN_PHRASE).filter((w) => wordlist.has(w)));
+        if (distinct.size >= MIN_WINDOW_HITS) {
+          return { kind: 'mnemonic', note: `${MIN_PHRASE}-word sequence within ${run.length} words` };
+        }
+      }
+    }
+    return null;
   };
 
   for (const t of tokens) {
