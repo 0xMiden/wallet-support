@@ -1,10 +1,12 @@
-import { useState } from 'react';
-import type { FormEvent } from 'react';
+import { useId, useMemo, useState } from 'react';
+import type { FormEvent, KeyboardEvent } from 'react';
 import { articlesInMainCategory, helpCenterArticles } from './content';
+import { readerPlatform } from './HeaderSearch';
 import { HelpCenterFooter } from './HelpCenterFooter';
 import { CONTACT_SUPPORT_URL } from './links';
 import { panelTintFor } from './panelTint';
 import { articleHref, categoryHref } from './routing';
+import { searchHelpCenter } from './search';
 import { TopicIcon } from './TopicIcon';
 import type { HelpCenterMainCategory } from './types';
 
@@ -27,11 +29,56 @@ export interface HelpCenterHomeProps {
   readonly onSearch: (term: string) => void;
 }
 
+/** Enough to see whether the answer is there; "See all results" has the rest. */
+const SUGGESTED = 6;
+
 export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: HelpCenterHomeProps) {
   const [term, setTerm] = useState('');
+  // Suggestions appear as the reader types. Nothing is highlighted until they
+  // move into the list, so Enter on its own still opens the full results.
+  const [listOpen, setListOpen] = useState(false);
+  const [active, setActive] = useState(-1);
+  const listId = useId();
+  const suggestions = useMemo(
+    () => (term.trim().length >= 2 ? searchHelpCenter(helpCenterArticles, mainCategories, term, readerPlatform()).slice(0, SUGGESTED) : []),
+    [term, mainCategories]
+  );
+  const showList = listOpen && suggestions.length > 0;
+  const optionCount = suggestions.length + 1; // the suggestions, then "See all results"
+  const optionId = (index: number) => `${listId}-${index}`;
+
+  const choose = (index: number) => {
+    setListOpen(false);
+    setActive(-1);
+    const result = suggestions[index];
+    if (!result) {
+      onSearch(term.trim());
+      return;
+    }
+    window.location.hash = articleHref(result.article.subcategory, result.article.id);
+  };
+
   const submit = (event: FormEvent) => {
     event.preventDefault();
-    if (term.trim()) onSearch(term.trim());
+    if (showList && active >= 0) choose(active);
+    else if (term.trim()) onSearch(term.trim());
+  };
+
+  const onSearchKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      if (suggestions.length === 0) return;
+      event.preventDefault();
+      setListOpen(true);
+      setActive(current =>
+        event.key === 'ArrowDown'
+          ? (current + 1) % optionCount
+          : current <= 0 ? optionCount - 1 : current - 1
+      );
+    } else if (event.key === 'Escape' && showList) {
+      event.preventDefault();
+      setListOpen(false);
+      setActive(-1);
+    }
   };
 
   return (
@@ -40,17 +87,69 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
       <main className="help-home-main" id="help-center-content" tabIndex={-1}>
         <div className="help-home-intro">
           <section className="help-home-hero" aria-labelledby="help-home-title">
-            <p className="help-home-kicker">Bread Wallet support</p>
             <h1 id="help-home-title">How can we help?</h1>
             <p className="help-home-lede">From your first account to your next transfer.<br className="help-home-desktop-break" /> Find the answer and get on with your day.</p>
-            <form className="help-home-search-form" role="search" onSubmit={submit}>
-              <label className="help-home-search">
-                <span className="help-center-visually-hidden">Search the Help Center</span>
-                <svg aria-hidden="true" className="help-home-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4 4" /></svg>
-                <input type="search" value={term} onChange={event => setTerm(event.target.value)} placeholder="What do you need help with?" autoComplete="off" />
-              </label>
-              <button className="help-home-search-submit" type="submit"><span className="help-center-visually-hidden">Search</span><ArrowIcon /></button>
-            </form>
+            <div className="help-home-search-wrap">
+              <form className="help-home-search-form" role="search" onSubmit={submit}>
+                <label className="help-home-search">
+                  <span className="help-center-visually-hidden">Search the Help Center</span>
+                  <svg aria-hidden="true" className="help-home-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4 4" /></svg>
+                  <input
+                    type="search"
+                    role="combobox"
+                    aria-expanded={showList}
+                    aria-controls={listId}
+                    aria-autocomplete="list"
+                    aria-activedescendant={showList && active >= 0 ? optionId(active) : undefined}
+                    value={term}
+                    onChange={event => {
+                      setTerm(event.target.value);
+                      setListOpen(true);
+                      setActive(-1);
+                    }}
+                    onKeyDown={onSearchKeyDown}
+                    onFocus={() => setListOpen(true)}
+                    onBlur={() => setListOpen(false)}
+                    placeholder="What do you need help with?"
+                    autoComplete="off"
+                  />
+                </label>
+                <button className="help-home-search-submit" type="submit"><span className="help-center-visually-hidden">Search</span><ArrowIcon /></button>
+              </form>
+              <p className="help-center-visually-hidden" role="status">
+                {showList ? `${suggestions.length} suggested ${suggestions.length === 1 ? 'article' : 'articles'}` : ''}
+              </p>
+              {/* Kept in the page while empty, so aria-controls always names it. */}
+              <ul className="help-home-suggestions" id={listId} role="listbox" aria-label="Suggested articles" hidden={!showList}>
+                {suggestions.map((result, index) => (
+                  <li
+                    key={result.article.id}
+                    id={optionId(index)}
+                    role="option"
+                    aria-selected={index === active}
+                    className="help-home-suggestion"
+                    // Pressing would blur the field and close the list before the click lands.
+                    onMouseDown={event => event.preventDefault()}
+                    onMouseMove={() => setActive(index)}
+                    onClick={() => choose(index)}
+                  >
+                    <span className="help-home-suggestion-title">{result.article.title}</span>
+                    <span className="help-home-suggestion-where">{result.mainCategoryTitle} › {result.subcategoryTitle}</span>
+                  </li>
+                ))}
+                <li
+                  id={optionId(suggestions.length)}
+                  role="option"
+                  aria-selected={active === suggestions.length}
+                  className="help-home-suggestion help-home-suggestion-all"
+                  onMouseDown={event => event.preventDefault()}
+                  onMouseMove={() => setActive(suggestions.length)}
+                  onClick={() => choose(suggestions.length)}
+                >
+                  See all results for “{term.trim()}”
+                </li>
+              </ul>
+            </div>
             <div className="help-home-popular">
               <span id="help-home-popular-label">Try</span>
               <ul aria-labelledby="help-home-popular-label">{POPULAR_SEARCHES.map(suggestion => <li key={suggestion}><button type="button" onClick={() => onSearch(suggestion)}>{suggestion}</button></li>)}</ul>

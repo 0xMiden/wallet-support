@@ -35,7 +35,9 @@ test('uses the current wallet palette and correctly loaded font roles', async ({
   await expect(page.locator('.help-center-article-body')).toHaveCSS('font-family', /Inter/);
   await expect(page.locator('.help-center-article-body')).toHaveCSS('font-weight','400');
   await expect(page.locator('.help-center-desktop-brand')).toBeHidden();
-  await expect(page.getByRole('searchbox')).toHaveCount(1);
+  // Searching from an article is the header's icon; the page has no field of its own.
+  await expect(page.getByRole('combobox', { name: 'Search the Help Center' })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Search the Help Center' })).toHaveCount(1);
 });
 
 test('Radix site menu traps focus, closes with Escape, and returns focus to its trigger', async ({ page }) => {
@@ -105,7 +107,9 @@ test('breakpoint and text zoom sweeps retain usable chrome, search, and article 
       await page.evaluate(() => document.fonts.ready);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),`${width} ${path}`).toBe(true);
       await expect(page.locator('.public-brand')).toBeVisible();
-      await expect(page.getByRole('searchbox')).toBeVisible();
+      await expect(page.getByRole('button', { name: 'Search the Help Center' })).toBeVisible();
+      // The home field suggests articles as you type, so it is a combobox.
+      if (path === '/') await expect(page.getByRole('combobox', { name: 'Search the Help Center' })).toBeVisible();
     }
   }
   await page.setViewportSize({width:1440,height:900});
@@ -121,11 +125,14 @@ test('breakpoint and text zoom sweeps retain usable chrome, search, and article 
 test('mobile articles reach the answer without a blank band after search', async ({ page }) => {
   await page.setViewportSize({width:390,height:844});
   await page.goto('/#security-and-recovery/how-do-i-keep-my-wallet-secure');
-  const search=await page.locator('.help-center-search').boundingBox();
+  // No search field sits above the article any more: below the Browse help
+  // bar there is only the page's own top spacing (24px main + 24px category),
+  // plus the bar's 1px rule.
+  const bar=await page.locator('.help-center-menu-button').boundingBox();
   const back=await page.locator('.help-center-back').boundingBox();
-  expect(search).not.toBeNull();
+  expect(bar).not.toBeNull();
   expect(back).not.toBeNull();
-  expect(back!.y - search!.y - search!.height).toBeLessThanOrEqual(36);
+  expect(back!.y - bar!.y - bar!.height).toBeLessThanOrEqual(49);
   const title=await page.locator('h1').boundingBox();
   expect(title!.y+title!.height).toBeLessThan(500);
 });
