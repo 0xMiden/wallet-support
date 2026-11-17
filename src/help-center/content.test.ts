@@ -200,11 +200,11 @@ describe('coverage', () => {
    * The totals, written down rather than derived, so adding a category or an
    * article is a decision this file has to be told about.
    */
-  it('spans 7 main categories, 9 subcategories and 73 articles', () => {
+  it('spans 7 main categories, 9 subcategories and 84 articles', () => {
     const navigation = createHelpCenterNavigation(helpCenterMainCategories);
     expect(navigation.mainCategories).toHaveLength(7);
     expect(navigation.categories).toHaveLength(9);
-    expect(helpCenterAllArticles).toHaveLength(73);
+    expect(helpCenterAllArticles).toHaveLength(84);
   });
 
   it('resolves every article to exactly one position, through navigation.ts', () => {
@@ -234,7 +234,7 @@ describe('coverage', () => {
       taken.set(position, article.id);
     }
 
-    expect(taken.size).toBe(73);
+    expect(taken.size).toBe(84);
   });
 
   it('keeps Activity and transaction status in the hierarchy, with its one FAQ article after the first', () => {
@@ -411,7 +411,7 @@ describe('article sources', () => {
     }
 
     expect(helpCenterAllArticles.filter(article => pages.has(article.title))).toHaveLength(23);
-    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(50);
+    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(61);
   });
 });
 
@@ -431,15 +431,15 @@ function withoutMigrationMarkup(body: string) {
 
 /** Written out by hand from the placement table: FAQ numbers, in reading order. */
 const FAQ_PLACEMENT: Readonly<Record<string, readonly number[]>> = {
-  'setup-and-basic-use': [1, 37, 38, 44, 45],
+  'setup-and-basic-use': [1, 37, 38, 44, 45, 52],
   'security-and-recovery': [10, 11, 12, 29, 30, 31, 33, 34, 39],
   'sending-receiving-and-claiming': [35, 42],
   'public-and-private-transactions': [9],
   'guardian-protection': [2, 3, 4, 5, 6, 7, 8, 32],
-  'moving-across-chains': [13, 14, 15, 36, 43, 46, 49],
-  earn: [16, 17, 20, 21, 22, 23, 24, 25, 26, 27, 28],
+  'moving-across-chains': [13, 14, 15, 36, 43, 46, 49, 56],
+  earn: [16, 17, 20, 21, 22, 23, 24, 25, 26, 27, 28, 51],
   'activity-and-transaction-status': [18],
-  'common-issues-and-support': [19, 40, 41, 47, 48, 50]
+  'common-issues-and-support': [19, 40, 41, 47, 48, 50, 53, 54, 55, 57, 58, 59, 60, 61]
 };
 
 /** Alt text for each image, taken from the heading drawn inside it. */
@@ -536,8 +536,8 @@ describe('fidelity to the FAQ', () => {
     return article;
   };
 
-  it('reads fifty articles, numbered in order, that agree with the placement table', () => {
-    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 50 }, (_, index) => index + 1));
+  it('reads fifty-six articles, numbered in order, that agree with the placement table', () => {
+    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 61 }, (_, index) => index + 1));
     expect(FAQ.placement).toEqual(
       FAQ.entries.map(({ number, title, mainCategory, subcategory }) => ({ number, title, mainCategory, subcategory }))
     );
@@ -562,7 +562,9 @@ describe('fidelity to the FAQ', () => {
     // FAQ 29 to 35 describe Settings on wallet 1.17.1 and were read on the
     // Extension only; the phone asks for a passcode where these say password.
     // Each joins the other platform once it is checked there (Ivan, 2026-10-09).
-    const EXTENSION_ONLY: ReadonlySet<number> = new Set([29, 30, 31, 32, 33, 34, 35]);
+    // FAQ 57 is about Miden Bridge, which only the Bread extension connects to
+    // (Ivan, 2026-11-04).
+    const EXTENSION_ONLY: ReadonlySet<number> = new Set([29, 30, 31, 32, 33, 34, 35, 57]);
     // FAQ 48 was reported and traced on the phone (wallet 1.17.3); it joins the
     // Extension once its reconnect steps are checked there (Ivan, 2026-10-21).
     const MOBILE_ONLY: ReadonlySet<number> = new Set([48]);
@@ -619,8 +621,8 @@ describe('fidelity to the FAQ', () => {
       );
     }
 
-    expect(articlesInSubcategory(helpCenterAllArticles, 'moving-across-chains')).toHaveLength(7);
-    expect(articlesInSubcategory(helpCenterAllArticles, 'earn')).toHaveLength(11);
+    expect(articlesInSubcategory(helpCenterAllArticles, 'moving-across-chains')).toHaveLength(8);
+    expect(articlesInSubcategory(helpCenterAllArticles, 'earn')).toHaveLength(12);
   });
 
   it('links each referenced title to the published article it names, or leaves it italic', () => {
@@ -821,7 +823,14 @@ describe('fidelity to the FAQ', () => {
       'E69-send-out-withdraw.png',
       'E69a-send-out-review.png',
       'E69b-send-out-confirm.png',
-      'E70-send-out-submitted.png'
+      'E70-send-out-submitted.png',
+      // Recovery walkthrough supplied on 2026-11-10; the phone prompt is prepared to the Mobile spec.
+      'E71-recover-advanced-settings.png',
+      'E72-recover-locked-balance.png',
+      'E73-recover-request-withdrawal.png',
+      'E74-recover-withdrawal-countdown.png',
+      'E75-recover-withdrawal-available.png',
+      'E76-recover-metamask-withdraw.png'
     ]);
     for (const name of FULL_HEIGHT_BY_IVAN) expect(SCREENSHOT_SIZES[name], `${name}: not a registered screenshot`).toBeDefined();
 
@@ -956,13 +965,13 @@ describe('fidelity to the FAQ', () => {
  */
 describe('the migrated article set', () => {
   it('carries every article in the approved mapping', () => {
-    expect(helpCenterAllArticles).toHaveLength(73);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(72);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(64);
+    expect(helpCenterAllArticles).toHaveLength(84);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(83);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(74);
   });
 
   it('publishes every article except the ones held back', () => {
-    expect(helpCenterArticles).toHaveLength(69);
+    expect(helpCenterArticles).toHaveLength(80);
     const published = helpCenterArticles.map(article => article.id);
     expect(published).not.toContain('how-to-restore-the-wallet-using-an-encrypted-file');
     expect(published).not.toContain('how-to-download-the-encrypted-file');
@@ -1313,7 +1322,13 @@ describe('the key-structure vocabulary', () => {
     { pattern: /cold[ \u00a0-]?keys?/gi, instead: 'emergency key' },
     { pattern: /recovery[ \u00a0-]keys?/gi, instead: 'recovery phrase' },
     { pattern: /private[ \u00a0-]keys?/gi, instead: 'recovery phrase' },
-    { pattern: /device[ \u00a0-]?keys?/gi, instead: 'everyday key' }
+    { pattern: /device[ \u00a0-]?keys?/gi, instead: 'everyday key' },
+    // Not a key, but held the same way: the site at bridge.miden.xyz is named
+    // Miden Bridge, as it names itself, and linked (Ivan, 2026-11-04).
+    { pattern: /bridge[ \u00a0-]?(?:web)?site/gi, instead: 'Miden Bridge' },
+    // Not a key either: readers don't know the word gas, so every network's fee
+    // is a network fee, named with the token it is paid in (Ivan, 2026-11-06).
+    { pattern: /\bgas(?:less)?\b/gi, instead: 'network fee' }
   ] as const;
 
   const GENERIC_CRYPTOGRAPHY = /private key that must be kept secret|Using a private key to create|someone controlling the private key|while the private key remains hidden/g;
@@ -1344,6 +1359,11 @@ describe('the key-structure vocabulary', () => {
     expect(retired('**Before you type your recovery key:** it is the master key.')).toHaveLength(1);
     expect(retired('**Never share your recovery key.**')).toHaveLength(1);
     expect(retired('**Keep your cold key offline:**')).toHaveLength(1);
+    // The fee rule works the same way: the wallet's **Gas** label is quoted,
+    // the word in prose is not, and "Vegas" is not the word.
+    expect(retired('The receipt shows **Gas** as **Sponsored**.')).toEqual([]);
+    expect(retired('Keep some ETH for gas. The withdrawal is gasless.')).toHaveLength(2);
+    expect(retired('Las Vegas')).toEqual([]);
   });
 
   it('names the keys everyday, emergency and Guardian in every article, held-back ones included', () => {
@@ -1428,10 +1448,16 @@ describe('the key-structure vocabulary', () => {
       'emergency key (not "cold key"), recovery phrase for the words that restore the wallet (not "recovery ' +
       'key" or "private key"; Ivan, 2026-10-01, matching the wallet), and Guardian key (it acknowledges state updates; it ' +
       'does not co-sign).';
+    // The fee rule names "gas" to retire it, held the same way (Ivan, 2026-11-06).
+    const FEE_VOCABULARY =
+      'Say network fee, never "gas" or "gasless", on Miden and on every other network, and name the token ' +
+      'it is paid in where that helps, such as ETH on Ethereum or USDC on Arc (Ivan, 2026-11-06: normal ' +
+      "users don't understand gas).";
     const guide = claudeGuide.replace(/\s+/g, ' ');
 
     expect(guide.includes(VOCABULARY), 'CLAUDE.md no longer states the approved key vocabulary').toBe(true);
-    expect(retired(guide.replace(VOCABULARY, '')), 'CLAUDE.md').toEqual([]);
+    expect(guide.includes(FEE_VOCABULARY), 'CLAUDE.md no longer states the network fee rule').toBe(true);
+    expect(retired(guide.replace(VOCABULARY, '').replace(FEE_VOCABULARY, '')), 'CLAUDE.md').toEqual([]);
   });
 
   it('catches each retired name in every spelling, and leaves the recovery key alone', () => {

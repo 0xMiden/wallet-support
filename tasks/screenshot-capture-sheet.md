@@ -1,5 +1,32 @@
 # Screenshot capture sheet
 
+## Funds recovery walkthrough supplied on 2026-11-10
+
+Article 84 (FAQ 61) uses five original Bread PNGs and one prepared MetaMask PNG from the supplied
+`Recover the stuck Bridge in` folder. The five Bread screens show the extension; the last screen
+shows MetaMask on a phone. The wallet release was not supplied. Keep the Bread captures unchanged,
+including their full height and existing highlight. The article identifies the platform and treats
+addresses, networks and amounts as examples.
+
+| Original | Shipped file | Dimensions |
+|---|---|---|
+| `2.png` | `E71-recover-advanced-settings.png` | 555 × 865 |
+| `5.png` | `E72-recover-locked-balance.png` | 544 × 1392 |
+| `6.png` | `E73-recover-request-withdrawal.png` | 547 × 1384 |
+| `7.png` | `E74-recover-withdrawal-countdown.png` | 550 × 1389 |
+| `8.png` | `E75-recover-withdrawal-available.png` | 549 × 1384 |
+| `3rd final withdrawal metamask pop up.PNG` | `E76-recover-metamask-withdraw.png` | 540 × 1102 |
+
+The final phone capture follows the current phone preparation standard from the 1.16.2 Mobile
+retake: remove device chrome and scale to 540px wide, displayed at 270px. The original is 1206 × 2622;
+its top 160px (status bar and return-to-Camera label) are removed, and the remaining screen is scaled
+proportionally to 540 × 1102. No home indicator or wallet address is visible in this capture. The
+original source file remains unchanged. The native-resolution exception was removed; the existing
+520–1200px capture limits, exact dimensions and 400 KB ceiling apply. The connection QR code and the
+intermediate connection/request pop-ups are explained in text rather than embedded.
+
+## Earlier capture runs
+
 For Ivan's capture run, on both platforms. The positions are §7 of `tasks/content-proposal.md`; tick them
 off in the screenshot capture list in `tasks/todo.md`.
 

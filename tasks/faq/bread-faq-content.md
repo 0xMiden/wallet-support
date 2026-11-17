@@ -1,6 +1,6 @@
 # Bread FAQ: content for implementation
 
-Revised for Brian's 2026-10-23 launch support audit. Fifty articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
+Revised for Brian's 2026-10-23 launch support audit. Sixty-one articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
 
 ## Placement
 
@@ -56,6 +56,17 @@ Revised for Brian's 2026-10-23 launch support audit. Fifty articles. Existing ID
 | 48 | What should I do if a bridge deposit fails? | Troubleshooting | Common issues |
 | 49 | How do I send funds from Bread to another blockchain? | Crosschain | Moving across chains |
 | 50 | My USDC or USDCX bridge transfer hasn't arrived. Who can help? | Troubleshooting | Common issues |
+| 51 | What happens to my funds if an Earn deposit fails? | Earn | Earning yield |
+| 52 | Why can't I install Bread on my device? | Getting started | Setup and basic use |
+| 53 | Why is Bread or Earn unavailable here? | Troubleshooting | Common issues |
+| 54 | Why does Miden Bridge show a different balance from my wallets? | Troubleshooting | Common issues |
+| 55 | Why does MetaMask show a 500 error when I bridge to Bread? | Troubleshooting | Common issues |
+| 56 | Which wallets can I use to add funds to Bread from another blockchain? | Crosschain | Moving across chains |
+| 57 | What should I do if a deposit on Miden Bridge fails? | Troubleshooting | Common issues |
+| 58 | Why won't my wallet connect? | Troubleshooting | Common issues |
+| 59 | Why does my USDC bridge to Bread show Failed? | Troubleshooting | Common issues |
+| 60 | Why do I need USDCX for network fees? | Troubleshooting | Common issues |
+| 61 | How do I get my funds back from a stuck bridge-in transfer? | Troubleshooting | Common issues |
 
 ## Articles
 
@@ -237,11 +248,13 @@ For the in-app steps, see *How do I restore my wallet with a recovery phrase?*
 ### 13. Can I send funds to another blockchain?
 Category: Crosschain › Moving across chains
 
-Yes. You can send USDCX from Bread to an address on **Ethereum**, **Base**, **Arbitrum One** or **Arc**. It arrives there as USDC, through Circle's xReserve route.
+Yes. You can send USDCX from Bread to an address on **Ethereum**, **Base**, **Arbitrum One** or **Arc**. It arrives there as USDC, through Circle's xReserve route. On **Ethereum**, **Base**, **Arbitrum One** and **Polygon**, you can also send it through the Fast route.
 
-Other supported assets use the Ethereum ↔ Miden Agglayer bridge when that exact route is offered. Epoch and NEAR Intents fast transfers are not enabled on Partner Mainnet; Earn uses a separate Epoch service.
+Other supported assets use the Fast route or the Ethereum ↔ Miden Agglayer bridge when that exact route is offered. NEAR Intents transfers are not enabled on Partner Mainnet.
 
-Circle takes a fee from the amount you send, so you receive less than you send. Check the address before you confirm: once it is sent, the transfer can't be reclaimed.
+Circle takes a fee from the amount you send, so you receive less than you send. Check the address before you confirm: on Circle's route, once it is sent, the transfer can't be reclaimed.
+
+The Miden network fee is paid in USDCX too, so keep some USDCX beyond the amount you send. See *Why do I need USDCX for network fees?*
 
 For the steps, see *How do I send funds from Bread to another blockchain?* For route differences, see *What is the difference between the Fast and Slow routes?* If a transfer doesn't arrive, see *My USDC or USDCX bridge transfer hasn't arrived. Who can help?*
 
@@ -254,7 +267,7 @@ When you move funds between Miden and another chain, the route screen shows how 
 - **Slow · Agglayer**: the funds go through the bridge itself. The wallet estimates about 30 minutes and shows no bridge fee. Check any network fee separately.
 - **USDCx (Circle xReserve)**: for USDCX. Circle turns your USDCX into USDC on the other chain, and USDC back into USDCX. How long it takes depends on that chain.
 
-On Mainnet, fast transfers are disabled for now. Epoch also runs Earn, but that doesn't switch fast transfers on. USDC moves through Circle on Ethereum, Base, Arbitrum and Arc. ETH and a few Ethereum tokens (WBTC, wrapped SOL, NEAR, PAXG, USDT, WBNB and PYUSD) use the Slow route. For the full list, see *Which bridge networks and tokens can I use?*
+The Fast route works on Ethereum, Base, Arbitrum, Polygon and Robinhood Chain. USDC also moves through Circle on Ethereum, Base, Arbitrum and Arc. ETH and a few Ethereum tokens (WBTC, wrapped SOL, NEAR, PAXG, USDT, WBNB and PYUSD) use the Slow route. For the full list, see *Which bridge networks and tokens can I use?*
 
 Before you confirm, check the route, the amount and the fees on the review screen.
 
@@ -265,7 +278,7 @@ If a transfer is still pending, don't start it again. Open it in **Activity** to
 ### 15. Can I swap tokens across chains?
 Category: Crosschain › Moving across chains
 
-Partner Mainnet does not currently enable Epoch or NEAR Intents fast crosschain swaps. The Circle and Agglayer bridge routes move their supported assets; do not treat them as a general token-swap service. A Swap within Miden is a different operation.
+Partner Mainnet does not currently offer crosschain swaps. The Fast, Circle and Agglayer routes move their supported assets between chains; do not treat them as a general token-swap service. A Swap within Miden is a different operation.
 
 Use a crosschain swap only if your installed version and selected network explicitly offer that source token, destination token and route.
 
@@ -278,23 +291,15 @@ Category: Earn › Earning yield
 
 Earn is enabled for eligible Mainnet users, but an enabled feature or a visible vault does not guarantee that a deposit can complete. Your installed version, selected network, market, provider liquidity and quote must all support the action. Earn is not offered in the United Kingdom or New York. If availability cannot be checked, do not submit a new deposit; contact [support](/feedback).
 
-**Operational status — 26 October 2026, 14:31 JST:** a later wallet test reported positions-loading failures and a 1 USDCx deposit still **Pending** more than 45 minutes after **You're Earning!** appeared. The success screen does not confirm settlement. The earlier test does not guarantee Base withdrawal availability when positions cannot be loaded.
+If a vault shows **Deposits are closed**, new deposits into it are paused. Your existing position isn't affected.
 
-Let the wallet sync and check the existing **Activity**, spendable balance and position. If the deposit remains pending, positions cannot load or the outcome is unclear, contact [support](/feedback) before submitting another transaction.
+**You're Earning!** doesn't mean your deposit has finished. Wait until **Activity** no longer shows **Pending**, then check your position. If it stays pending or your position doesn't appear, contact [support](/feedback) before you deposit again.
 
-**Earlier tests — 26 October 2026, 12:32 JST:** USDCx deposits into Ethereum, Arbitrum and Base Earn markets were reported working in wallet tests. In the same report, withdrawals worked only from Base back to Miden; Ethereum and Arbitrum withdrawals were not working.
+**Which vaults can I use?**
 
-Reported tests do not guarantee current availability for every market, amount or installed version. Do not start new deposits into Ethereum or Arbitrum Earn markets while their withdrawal path is unavailable. Before any deposit, confirm that both deposit and withdrawal are currently available for the exact market; contact [support](/feedback) if uncertain. Do not repeatedly submit a failed withdrawal.
+The vaults Bread offers are listed under **Available Vaults** in **Earn**. On Mainnet, these are Aave V3 USDC on Base and Aave V3 USDC on Ethereum. Each one supplies native USDC to an external lending market. You fund the deposit with USDCx from your Miden wallet; USDCx and USDC are different tokens. [Aave](https://aave.com/help/aave-101/introduction-to-aave) explains how its markets work.
 
-**Mainnet markets**
-
-The Mainnet selection covers native USDC in six external lending markets:
-
-- Arbitrum: Aave V3 USDC and Compound III USDC.
-- Base: Aave V3 USDC and Compound III USDC.
-- Ethereum: Aave V3 USDC and Compound III USDC.
-
-You fund the deposit with USDCx in your Miden wallet; the route supplies native USDC to the external market. USDCx and USDC are distinct assets. Morpho vaults, bridged USDC variants and other assets are not part of this selection. [Aave](https://aave.com/help/aave-101/introduction-to-aave) and [Compound III](https://docs.compound.xyz/) explain their protocols; availability on a provider's own site does not establish availability in Bread.
+You can withdraw positions on Base and Ethereum. Withdrawals from Arbitrum aren't available at the moment. If you have a position on Arbitrum, contact [support](/feedback).
 
 Review the market, network, fees and expected amount before confirming. A missing or disabled deposit control means you should not start a deposit. Testnet uses test assets and estimated rewards there do not represent real returns.
 
@@ -376,7 +381,7 @@ Category: Earn › Earning yield
 
 Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See *Can I earn yield in Bread?*
 
-**Before depositing:** Do not start new deposits into Ethereum or Arbitrum Earn markets while their withdrawal path is unavailable. Deposits there were reported working on 26 October 2026, but withdrawals were reported working only from Base to Miden. A later report described positions-loading failures and a deposit still pending after the success screen, so do not infer settlement or a reliable exit from those earlier tests. Check the current status in *Can I earn yield in Bread?* and confirm an available withdrawal path for the exact market before starting a new deposit.
+**Before depositing:** If the vault shows **Deposits are closed**, you can't deposit into it right now. Your existing deposits aren't affected.
 
 You need spendable **USDCx** in your Miden wallet to fund an Earn deposit. The external lending market uses native USDC; the deposit route handles that change of asset.
 
@@ -391,7 +396,7 @@ Category: Earn › Earning yield
 
 Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See *Can I earn yield in Bread?*
 
-**Before depositing:** Do not start new deposits into Ethereum or Arbitrum Earn markets while their withdrawal path is unavailable. Deposits there were reported working on 26 October 2026, but withdrawals were reported working only from Base to Miden. A later report described positions-loading failures and a deposit still pending after the success screen, so do not infer settlement or a reliable exit from those earlier tests. Check the current status in *Can I earn yield in Bread?* and confirm an available withdrawal path for the exact market before starting a new deposit.
+**Before depositing:** If the vault shows **Deposits are closed**, you can't deposit into it right now. Your existing deposits aren't affected.
 
 Depositing spends USDCx from your Miden balance. The supported route supplies native USDC to the external lending market and opens a position there.
 
@@ -453,7 +458,9 @@ Category: Earn › Earning yield
 
 Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See *Can I earn yield in Bread?*
 
-**Withdrawal limitation — 26 October 2026, 12:32 JST:** withdrawals were reported working only from Base to Miden; Ethereum and Arbitrum withdrawals were not working. These are reported tests, not a guarantee for every market, amount or installed version. The earlier test does not guarantee Base withdrawal availability when positions cannot be loaded; a later report described positions-loading failures. Check the existing activity, balance and position after sync, and contact [support](/feedback) if they cannot be reconciled. The steps below describe implemented controls; they do not establish that an affected route can complete. Check the current status in *Can I earn yield in Bread?* and contact [support](/feedback) if your withdrawal route is unavailable.
+You can withdraw positions on Base and Ethereum, including one in a vault that's closed to new deposits. Withdrawals from Arbitrum aren't available at the moment. If you have a position on Arbitrum, contact [support](/feedback).
+
+Your first withdrawal on a network can take a little longer while Bread waits for a one-time setup. If that setup outlasts your review, Bread gets a new quote that's never lower than the minimum you reviewed.
 
 A supported withdrawal redeems the selected amount from the external native-USDC position and routes the receipt back to Miden as USDCx. A partial withdrawal leaves the remaining amount invested.
 
@@ -478,8 +485,6 @@ Category: Earn › Earning yield
 
 Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See *Can I earn yield in Bread?*
 
-**Withdrawal limitation — 26 October 2026, 12:32 JST:** withdrawals were reported working only from Base to Miden; Ethereum and Arbitrum withdrawals were not working. These are reported tests, not a guarantee for every market, amount or installed version. The earlier test does not guarantee Base withdrawal availability when positions cannot be loaded; a later report described positions-loading failures. Check the existing activity, balance and position after sync, and contact [support](/feedback) if they cannot be reconciled. The steps below describe implemented controls; they do not establish that an affected route can complete. Check the current status in *Can I earn yield in Bread?* and contact [support](/feedback) if your withdrawal route is unavailable.
-
 Yes, on a supported route with a valid quote. Select **Withdraw**, enter an amount up to the displayed available balance, then select **Review**. Use **Max** if you want to withdraw the available balance instead.
 
 The review shows **You withdraw** and **Stays invested**, so you can check how much remains in the position. The quoted receipt can be lower than the selected amount because of route costs. Check the expected and minimum receipt before confirming.
@@ -492,7 +497,7 @@ Category: Earn › Earning yield
 Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See *Can I earn yield in Bread?*
 
 - **Depositing** costs a Miden network fee. Check the displayed fee asset and **Max network fee** before confirming; keep enough USDCx on Mainnet for the deposit and that fee. The completed transaction shows the **Network Fee** paid.
-- **Withdrawing** uses sponsored gas on the supported Earn route. Sponsored gas does not mean the withdrawal has no costs: route costs are reflected in the quoted receipt. Check **You withdraw**, the expected receipt, the minimum receipt and **Route fees** before confirming.
+- **Withdrawing** on the supported Earn route has its network fee covered for you. That does not mean the withdrawal has no costs: route costs are reflected in the quoted receipt. Check **You withdraw**, the expected receipt, the minimum receipt and **Route fees** before confirming.
 
 Amounts and fees depend on the route and quote. Testnet fees and balances do not establish Mainnet costs. See *What do I need before I can use Earn?*
 
@@ -515,8 +520,6 @@ If a deposit shows **Transaction Failed**, check its status and your balance aft
 
 2. Wait for the wallet to sync. Check **Activity**, your spendable balance, the displayed fee reserve and any existing Earn position.
 3. Retry only after those checks confirm that the original deposit failed and no transfer is still pending. If the outcome is uncertain, contact [support](/feedback) before submitting again. An unavailable quote or provider route is not fixed by repeatedly signing deposits. See *How do I deposit into Earn?*
-
-Ethereum and Arbitrum Earn withdrawals were reported not working on 26 October 2026, while withdrawals from Base to Miden were reported working. A later report described positions-loading failures, so the earlier Base result does not guarantee withdrawal availability. Check the current status in *Can I earn yield in Bread?*. Do not repeatedly submit withdrawals on an affected route; contact [support](/feedback).
 
 For a withdrawal, check the existing **Withdraw from Earn** activity and position before starting another one. Let an in-progress withdrawal finish. If the wallet offers a recovery action, follow that existing activity rather than creating a duplicate withdrawal. If the outcome is uncertain or the position and balance disagree, contact [support](/feedback).
 
@@ -844,6 +847,8 @@ A disabled route can stop new transfers without cancelling a transfer already in
 
 For a USDC or USDCX transfer on Circle's route, see *My USDC or USDCX bridge transfer hasn't arrived. Who can help?*
 
+If a transfer on the Fast route is stuck, see *How do I get my funds back from a stuck bridge-in transfer?*
+
 If Bread shows **Bridge deposit failed**, see *What should I do if a bridge deposit fails?*
 
 ### 41. How do I send feedback or report a problem?
@@ -938,7 +943,7 @@ Report the game, network, wallet version and error text without recovery informa
 ### 46. Which bridge networks and tokens can I use?
 Category: Crosschain › Moving across chains
 
-Bread's current Partner Mainnet routes connect Miden with Ethereum, Base, Arbitrum and Arc. The choices depend on your installed version and the route checks in the wallet. Testnet uses different networks and settings.
+Bread's current Partner Mainnet routes connect Miden with Ethereum, Base, Arbitrum, Arc, Polygon and Robinhood Chain. The choices depend on your installed version and the route checks in the wallet.
 
 **USDC: Ethereum, Base, Arbitrum and Arc**
 
@@ -964,9 +969,18 @@ Bread labels the route **Slow · Agglayer** and shows an arrival estimate of abo
 
 WSOL, WBNB and NEAR here are the versions of those tokens that live on Ethereum. You can't send to or from the Solana, BNB Chain or NEAR networks themselves. Learn more about [Agglayer](https://docs.polygon.technology/interoperability/agglayer).
 
+**Fast route: Ethereum, Base, Arbitrum, Polygon and Robinhood Chain**
+
+Bread labels this route **Fast · Epoch**. A third party delivers your funds on the other network for you, and Bread shows an arrival estimate of about 30 seconds. The current Mainnet configuration lists these tokens for deposits and withdrawals:
+
+- Ethereum, Base and Arbitrum: USDC and ETH
+- Polygon: USDC and POL
+- Robinhood Chain: ETH and USDG
+
+USDC sent through this route arrives in Bread as USDCX. If a Fast transfer gets stuck, see *How do I get my funds back from a stuck bridge-in transfer?*
+
 **Not available on Partner Mainnet**
 
-- **Fast · Epoch**: this transfer route through [Epoch](https://epochprotocol.xyz/) is disabled in the current Partner Mainnet configuration. Epoch support for Earn is separate.
 - **NEAR Intents**: transfers through [NEAR Intents](https://docs.near-intents.org/) are disabled in the current Partner Mainnet configuration. There is no announced availability date.
 
 **Before you move funds**
@@ -974,8 +988,9 @@ WSOL, WBNB and NEAR here are the versions of those tokens that live on Ethereum.
 1. Check your network, then pick the exact token and both networks in Bread. If a route is missing, disabled or cannot be checked, don't send: it may be unsupported or temporarily unavailable. If the problem continues, contact [support](/feedback).
 2. On the review screen, check the receiving address, the fees, the amount you'll receive and the arrival estimate.
 3. On Partner Mainnet, the current deposit cap is $1,232.462 USD for your total wallet balance after a deposit. If a deposit would take you over, Bread asks for a smaller amount. This is not a per-transfer allowance or a daily deposit limit. See *What is the Partner Mainnet deposit limit?*
+4. Keep enough for the network fee on the network you send from: ETH on Ethereum, Base, Arbitrum and Robinhood Chain, POL on Polygon, or USDC on Arc. See *Why do I need USDCX for network fees?*
 
-Only move funds through Bread or [bridge.miden.xyz](https://bridge.miden.xyz/), and never send tokens straight to a bridge contract address. The website can offer different choices from your installed wallet; check its route separately.
+Only move funds through Bread or [Miden Bridge](https://bridge.miden.xyz/), and never send tokens straight to a bridge contract address. Miden Bridge can offer different choices from your installed wallet; check its route separately.
 
 If a transfer is taking longer than expected, see *What should I check if a bridge deposit or withdrawal is delayed?*
 
@@ -1005,6 +1020,8 @@ If Bread shows **Bridge deposit failed** after your external wallet, such as Met
 5. Tap **Connect another wallet**, choose the same wallet again and approve the connection in it.
 6. Enter the amount and continue. Approve each request in your wallet as it appears.
 
+If tokens left your external wallet but never reached Bread, see *How do I get my funds back from a stuck bridge-in transfer?*
+
 If it still fails, report the error, the networks, the token and your wallet version. Hide sensitive information in screenshots. See *How do I send feedback or report a problem?*
 
 ### 49. How do I send funds from Bread to another blockchain?
@@ -1012,16 +1029,16 @@ Category: Crosschain › Moving across chains
 
 <!-- platform: extension-desktop -->
 
-These steps send USDCx from Bread to your MetaMask wallet on the bridge website, https://bridge.miden.xyz/. It arrives in MetaMask as USDC.
+These steps send USDCx from Bread to your MetaMask wallet on [Miden Bridge](https://bridge.miden.xyz/). It arrives in MetaMask as USDC.
 
-1. Go to https://bridge.miden.xyz/, connect MetaMask and Bread as in steps 2 to 5 of *How to add funds into Bread?*, and select **Withdraw**.
+1. Go to [Miden Bridge](https://bridge.miden.xyz/), connect MetaMask and Bread as in steps 2 to 5 of *How to add funds into Bread?*, and select **Withdraw**.
 2. Next to **To**, choose where you want to receive the funds: **Arc**, **Ethereum**, **Base** or **Arbitrum**. Enter the amount and select **Review transfer**.
 
-   ![The bridge website's Withdraw tab, with the Select network list next to To](E69-send-out-withdraw.png)
+   ![Miden Bridge's Withdraw tab, with the Select network list next to To](E69-send-out-withdraw.png)
 
 3. Check **Estimated received** and the fees, then select **Confirm in wallet**. Burning USDCx can't be reversed, and the final Circle fee can change after the burn. Keep some USDCx for the Miden network fee.
 
-   ![The bridge website's Review transfer window for a withdrawal, with Estimated received and the Confirm in wallet button](E69a-send-out-review.png)
+   ![Miden Bridge's Review transfer window for a withdrawal, with Estimated received and the Confirm in wallet button](E69a-send-out-review.png)
 
 4. Bread opens **Confirm Transaction**. Check the asset change and **Network Fee**, then select **Confirm**.
 
@@ -1029,7 +1046,7 @@ These steps send USDCx from Bread to your MetaMask wallet on the bridge website,
 
 5. The bridge shows **Withdrawal submitted**. It doesn't track the payout yet, so check MetaMask for the USDC. If it doesn't arrive, see *My USDC or USDCX bridge transfer hasn't arrived. Who can help?*
 
-   ![The bridge website's transfer card, marked Withdrawal submitted](E70-send-out-submitted.png)
+   ![Miden Bridge's transfer card, marked Withdrawal submitted](E70-send-out-submitted.png)
 
 <!-- platform: mobile -->
 
@@ -1076,13 +1093,13 @@ These steps send USDCX from Bread to your MetaMask wallet. It arrives in MetaMas
 ### 50. My USDC or USDCX bridge transfer hasn't arrived. Who can help?
 Category: Troubleshooting › Common issues
 
-Transfers between USDC on **Ethereum**, **Base**, **Arbitrum One** or **Arc** and USDCX on Miden use Circle's xReserve route. Bread handles the Miden side of the transfer and Circle completes the other side. Many delays can be resolved in Bread, so start there.
+Transfers between USDC on **Ethereum**, **Base**, **Arbitrum One** or **Arc** and USDCX on Miden use Circle's xReserve route. Bread handles the Miden side of the transfer and Circle completes the other side. Many delays can be resolved in Bread, so start there. This page covers Circle's route. If your transfer used the Fast route, see *How do I get my funds back from a stuck bridge-in transfer?*
 
 **Check Bread first**
 
 1. Open **Activity** and tap the transfer. If it's still in progress, keep Bread open and let it sync.
 2. If you're sending USDCX out of Bread, check the wallet you sent it to. The USDC may have arrived even if Bread still shows **Burn confirmed**.
-3. If you're adding USDC to Bread and Bread asks you to **Execute on Arc**, do it. This step needs a small amount of gas on Arc.
+3. If you're adding USDC to Bread and Bread asks you to **Execute on Arc**, do it. This step needs a small network fee on Arc, paid in USDC.
 4. If you're adding USDC to Bread, check whether the USDCX is waiting to be accepted. See *How do I accept a pending transfer?* and *My transfer is stuck on Accepting stage*.
 5. Don't send the transfer again. Check your balances on both networks first: a second transfer doesn't speed up the first.
 
@@ -1092,7 +1109,7 @@ If you're unsure what happened, work through *What should I check if a bridge de
 
 Contact Circle when one side of the transfer is done and the other never arrived:
 
-- **Sending out of Bread:** Bread shows **Burn confirmed**, or the bridge website shows **Withdrawal submitted**, but the USDC still hasn't reached the address on the other network.
+- **Sending out of Bread:** Bread shows **Burn confirmed**, or Miden Bridge shows **Withdrawal submitted**, but the USDC still hasn't reached the address on the other network.
 - **Adding funds to Bread:** your external wallet shows the USDC deposit as successful, but Bread is still waiting for Circle to attest it, long after the arrival time Bread estimated.
 
 Circle Customer Care:
@@ -1103,3 +1120,215 @@ Circle Customer Care:
 Tell them the networks, the direction, the amount, the time, the receiving address and the transaction hash from the other network. You can find the hash in your external wallet's history or on a block explorer.
 
 Never share your recovery phrase, keys or wallet backup file. Bread support will never ask for them. Use only the contacts on this page; anyone who messages you first offering to recover your funds is a scam.
+
+### 51. What happens to my funds if an Earn deposit fails?
+Category: Earn › Earning yield
+
+A failed Earn deposit can't be retried. If your funds left your account before the deposit failed, they come back to you after a waiting period. Don't make another deposit to get them back.
+
+Epoch, the lending service that Earn uses, sets the waiting period. On Mainnet it is currently 6,200 Miden blocks, which Bread estimates at about 5 hours. Epoch can change it.
+
+1. Open **Activity** and check the deposit. Let the wallet sync.
+2. After the waiting period, the USDCX comes back to your balance. Bread accepts it automatically when **Auto-accept USDCX transfers** is on in **General** settings, which it is unless you turned it off. If the setting is off, accept the pending transfer on the **Activity** page. See *How do I accept a pending transfer?*
+3. To deposit again, start a new deposit from the **Earn** tab. See *How do I deposit into Earn?*
+
+If the funds haven't come back long after the waiting period, contact [support](/feedback).
+
+### 52. Why can't I install Bread on my device?
+Category: Getting started › Setup and basic use
+
+Bread needs one of these:
+
+- **Android:** Android 9 or later.
+- **iPhone:** iOS 15 or later.
+- **Computer:** Chrome 114 or later for the extension.
+
+On an older version, the store may not offer Bread, or it may not install. This depends on your device, not your country.
+
+If your device meets these minimums and Bread still won't install or open, contact [support](/feedback). Include your device model, its system version and your Bread version.
+
+### 53. Why is Bread or Earn unavailable here?
+Category: Troubleshooting › Common issues
+
+Bread blocks access in certain countries and regions. There, Bread shows **Wallet unavailable in your region** and the whole wallet is blocked, including withdrawals. New Earn deposits are blocked in the United Kingdom and New York. Individual games and apps may have additional regional restrictions.
+
+If Bread can't check your region, for example during a service problem, the wallet stays open but Earn stays off. Restart Bread to check again.
+
+See the full list of restrictions on the [compliance page](https://0xmiden.github.io/wallet/compliance/).
+
+### 54. Why does Miden Bridge show a different balance from my wallets?
+Category: Troubleshooting › Common issues
+
+[Miden Bridge](https://bridge.miden.xyz/) reads your balances when you connect your wallets. It doesn't keep them updated while the page is open. If you received or sent funds since then, the **Available** amount can be out of date.
+
+- **Bread balance:** select the refresh icon next to it.
+- **Both balances:** reload the page.
+
+Refresh the balances before you enter an amount.
+
+### 55. Why does MetaMask show a 500 error when I bridge to Bread?
+Category: Troubleshooting › Common issues
+
+If MetaMask shows **Fetch error** with **Internal Server Error** a few seconds after you confirm a bridge deposit, MetaMask's **Smart Transactions** setting refused to send it. The error comes from MetaMask, not from Bread or the bridge. The deposit was not sent, so no funds moved and nothing appears on the **Activity** page.
+
+1. Check MetaMask's activity to confirm that the deposit was not sent.
+2. Turn off **Smart Transactions** in MetaMask:
+   - **MetaMask mobile app:** open **Settings**, then **Advanced**.
+   - **MetaMask extension:** open **Settings**, then **Transactions**.
+3. Try the deposit again.
+
+If it still fails, report it to our [support](/feedback). See *How do I send feedback or report a problem?*
+
+### 56. Which wallets can I use to add funds to Bread from another blockchain?
+Category: Crosschain › Moving across chains
+
+You can use a wallet app that supports WalletConnect, such as MetaMask, Rainbow or Uniswap Wallet. The wallet also needs to support the network you're sending from. See *Which bridge networks and tokens can I use?*
+
+- **Bread on your phone:** open **Receive**, tap **Cross-chain** and choose your wallet from the list.
+- **Bread extension:** scan the QR code with a wallet app on your phone. Browser-extension wallets, such as the MetaMask extension, can't connect to the Bread extension.
+- **Miden Bridge:** to use a browser-extension wallet such as MetaMask, go to [Miden Bridge](https://bridge.miden.xyz/) on your computer. See *How to add funds into Bread?*
+
+### 57. What should I do if a deposit on Miden Bridge fails?
+Category: Troubleshooting › Common issues
+
+1. Check that nothing was sent. Look in MetaMask's activity and on the **Activity** page in Bread. If a deposit went through, don't send another. See *What should I check if a bridge deposit or withdrawal is delayed?*
+2. Find the message:
+   - **User rejected request** or **User denied transaction**: the request was cancelled in your wallet. Start again and approve each request.
+   - **Fetch error** with **Internal Server Error**: see *Why does MetaMask show a 500 error when I bridge to Bread?*
+   - **Your connected wallet changed** or **Refresh the quote before reviewing**: review the transfer again with a new quote.
+   - **Source transaction failed** or **The contract rejected this transfer**: the transaction was refused on the source network. Check the amount and try again.
+3. Reload the page, reconnect both wallets, and try again.
+
+If tokens left your external wallet but never reached Bread, see *How do I get my funds back from a stuck bridge-in transfer?*
+
+If it still fails, contact [support](/feedback) with the message, the networks, the token and the time.
+
+### 58. Why won't my wallet connect?
+Category: Troubleshooting › Common issues
+
+**Bread on [Miden Bridge](https://bridge.miden.xyz/)**
+
+- **Wallet extension not detected**: install or turn on the Bread extension in the same Chrome browser, then refresh the page.
+- **Connection pending**, or a message that Bread didn't respond within 45 seconds: open Bread, unlock it and approve the connection. If the request is gone, select **Reset connection** and try again.
+- If the connected account looks wrong, open the wallet menu and select **Reconnect wallet**.
+
+**MetaMask or another wallet in Bread**
+
+- **In the Bread extension:** scan the QR code with a wallet app on your phone. Browser-extension wallets can't connect to the Bread extension; use [Miden Bridge](https://bridge.miden.xyz/) instead. See *Which wallets can I use to add funds to Bread from another blockchain?*
+- **The connected wallet did not approve …**: your wallet didn't allow that network. Reconnect the wallet and approve the network when it asks.
+
+### 59. Why does my USDC bridge to Bread show Failed?
+Category: Troubleshooting › Common issues
+
+When you add USDC to Bread from **Ethereum**, **Base**, **Arbitrum One** or **Arc**, Circle's xReserve route turns it into USDCX on Miden. A **Failed** transfer doesn't always mean nothing was sent, so check before you try again. This page covers Circle's route. For a transfer on the Fast route, see *How do I get my funds back from a stuck bridge-in transfer?*
+
+1. Check your external wallet, such as MetaMask, for a USDC deposit at that time.
+   - **No USDC left your wallet:** nothing was sent, and your USDC is still there. You can try again.
+   - **USDC left your wallet:** don't send it again. See *My USDC or USDCX bridge transfer hasn't arrived. Who can help?*
+2. To see why it failed, open **Activity** in Bread and tap the failed transfer.
+3. Keep Bread open until you've approved every request in your wallet. If the deposit screen closes early, the transfer fails.
+4. If the same error appears again, stop retrying. Each attempt adds another failed transfer. On a computer, you can add USDC through [Miden Bridge](https://bridge.miden.xyz/) instead. See *How to add funds into Bread?*
+5. If you entered your whole USDC balance, lower the amount. On Arc, the network fee is paid in USDC, and from **Base** or **Arbitrum One**, Circle's fee is added on top of the amount. See *Why do I need USDCX for network fees?*
+
+If it keeps failing, report the error text, your Bread version and the network. See *How do I send feedback or report a problem?*
+
+### 60. Why do I need USDCX for network fees?
+Category: Troubleshooting › Common issues
+
+Every transaction on Miden pays a small network fee. On Mainnet, the fee is always paid in USDCX, whatever token the transaction moves. Bread takes it from the USDCX in your own balance, so keep some USDCX in your wallet, even if you mostly hold other tokens.
+
+**What pays the network fee**
+
+- **Send**, within Miden and to another blockchain
+- Accepting a pending transfer, by hand or through **Auto-accept USDCX transfers**
+- **Swap**, and **Cancel swap**
+- Depositing into **Earn**
+- Activating or rotating your everyday key
+- Switching Guardian operators
+- Transactions you approve for [Miden Bridge](https://bridge.miden.xyz/), an app in **Explore** or an Arcade game
+
+Withdrawing from **Earn** is the exception: its network fee is covered for you, and the route costs are reflected in the quoted amount you receive. See *What does it cost to use Earn?*
+
+**If you hold no USDCX**
+
+Without USDCX, you can't send, swap or deposit any token, including ETH, WBTC, Wrapped SOL, USDT, USDG, PYUSD, PAXG, Wrapped BNB, NEAR and POL. Accepting a transfer of one of these tokens needs USDCX too.
+
+Accepting a USDCX transfer pays its fee out of the transfer itself, so a new wallet can accept its first USDCX. To get USDCX, see *How to add funds into Bread?*
+
+**Moving funds from another blockchain**
+
+On the other network, your external wallet, such as MetaMask, pays that network's own fee:
+
+- **Ethereum, Base and Arbitrum One:** the fee is paid in ETH. If you bridge ETH, don't send your whole ETH balance.
+- **Arc:** the fee is paid in USDC. If you send USDC from Arc, don't send your whole USDC balance. The **Execute on Arc** step also needs a little USDC on Arc.
+
+From **Base** or **Arbitrum One**, Circle adds its fee on top of the USDC you deposit. If the amount and the fee come to more than your wallet holds, Bread asks you to lower the amount.
+
+If a transaction fails, check **Activity** and your balances before you try again. If the problem continues, contact [support](/feedback).
+
+### 61. How do I get my funds back from a stuck bridge-in transfer?
+Category: Troubleshooting › Common issues
+
+Most Fast transfers through Epoch finish within a few minutes. If one gets stuck, your funds are not lost, and you can get them back yourself. What to do depends on the direction:
+
+- **Bridge in**, from an external wallet such as MetaMask into Bread: the deposit can stay locked on the network you sent from.
+- **Bridge out**, from Bread to another blockchain: the funds come back to Bread.
+
+This page covers the Fast route through Epoch. For USDC through Circle, see *Why does my USDC bridge to Bread show Failed?*
+
+**Bridge in: why the deposit is locked**
+
+When you bridge in with Epoch, your tokens first go into a deposit contract called The Compact on the network you send from, such as Polygon. Epoch then delivers the same amount to Bread. If Epoch doesn't start the bridge, your tokens stay in The Compact, and they don't show in Bread or in your external wallet.
+
+Only the external wallet that made the deposit can take the funds out. Bread, Epoch and Miden can't move them.
+
+In **Activity**, the transfer shows **Deposit locked**. A transfer made with an older version of Bread may show **Failed** instead.
+
+**Get your deposit back**
+
+The screenshots show the Bread extension with MetaMask on a phone. Your wallet address, network, token and amount may differ.
+
+1. In Bread, open **Profile** (the person icon), then **Advanced Settings** › **Recover locked bridge funds**.
+
+   ![Advanced Settings with Recover locked bridge funds highlighted](E71-recover-advanced-settings.png)
+
+2. Tap **Connect an EVM wallet** and connect the external wallet that made the deposit. In the extension, scan the WalletConnect QR code with your wallet app on your phone. In MetaMask, select the account that made the deposit and tap **Connect**. If a different wallet is connected, tap **Connect another wallet**.
+3. Wait while Bread shows **Checking…**. It can take about 10 seconds. Your locked funds then appear, with the token, network and amount.
+
+   ![Connected external wallet with a locked USDC balance on Polygon](E72-recover-locked-balance.png)
+
+4. Tap the locked amount to open **Locked funds**. Check the wallet address, network and locked amount, then tap **Withdraw deposit**. Confirm the transaction in your external wallet. This requests the withdrawal and starts the waiting period.
+
+   ![Locked funds with Withdrawal shown as Not requested and the Withdraw deposit button](E73-recover-request-withdrawal.png)
+
+5. Wait for the timer to finish, about **1 hour and 5 minutes**. **Withdraw deposit** stays disabled during the countdown. You can close Bread in the meantime.
+
+   ![Withdrawal countdown with Withdraw deposit disabled until the waiting period ends](E74-recover-withdrawal-countdown.png)
+
+6. Come back to the same page. When it shows **The withdrawal is available**, tap **Withdraw deposit** again.
+
+   ![Locked funds with The withdrawal is available and Withdraw deposit enabled](E75-recover-withdrawal-available.png)
+
+7. In the final MetaMask pop-up, review **You receive**, the network and the network fee, then tap **Confirm**. Once the transaction confirms, the whole locked balance of that token is automatically returned to the same external wallet on the network you sent from.
+
+   ![Final MetaMask transaction request showing USDC to receive on Polygon and the Confirm button](E76-recover-metamask-withdraw.png)
+
+If Bread asks you to connect your wallet again, this can happen after you close the browser or lose the connection to MetaMask. Close Bread and fully quit your browser, then reopen it and unlock Bread with your password. Reconnect the same MetaMask wallet and continue with the withdrawal.
+
+**Good to know**
+
+- The funds go back to your external wallet on the network you sent from, not to Bread. To bring them into Bread, bridge again.
+- **Nothing is locked for this wallet**: check that you connected the wallet that made the deposit.
+- **Could not check**: wait a few minutes and open the page again.
+
+**Bridge out: get back a failed transfer**
+
+When you bridge out through Epoch, Bread puts your tokens in a reclaimable note on Miden. If the bridge fails while the funds are still in that note, you can reclaim them once the block shown in Bread is reached. The transfer may show **Bridge failed - funds reclaimable**.
+
+On Mainnet, this is currently about **5 hours and 10 minutes** from when Bread creates the note. This is an estimate: the block shown under **Funds reclaimable after block** determines when you can reclaim the funds.
+
+Usually you don't need to do anything. Once the network passes the block shown under **Funds reclaimable after block**, Bread takes the funds back on its own while the wallet is open, and **Activity** shows **Reclaimed**.
+
+If a transfer out no longer shows as reclaimable but nothing arrived in your external wallet, contact [support](/feedback) with the transfer details.
+
+Never share your recovery phrase, keys or wallet backup file. Bread support will never ask for them.

@@ -6,7 +6,7 @@ subcategory: moving-across-chains
 platforms: [extension-desktop, mobile]
 ---
 
-Partner Mainnet does not currently enable Epoch or NEAR Intents fast crosschain swaps. The Circle and Agglayer bridge routes move their supported assets; do not treat them as a general token-swap service. A Swap within Miden is a different operation.
+Partner Mainnet does not currently offer crosschain swaps. The Fast, Circle and Agglayer routes move their supported assets between chains; do not treat them as a general token-swap service. A Swap within Miden is a different operation.
 
 Use a crosschain swap only if your installed version and selected network explicitly offer that source token, destination token and route.
 

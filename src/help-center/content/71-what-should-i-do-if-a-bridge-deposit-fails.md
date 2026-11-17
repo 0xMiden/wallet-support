@@ -15,4 +15,6 @@ If Bread shows **Bridge deposit failed** after your external wallet, such as Met
 5. Tap **Connect another wallet**, choose the same wallet again and approve the connection in it.
 6. Enter the amount and continue. Approve each request in your wallet as it appears.
 
+If tokens left your external wallet but never reached Bread, see [*How do I get my funds back from a stuck bridge-in transfer?*](#common-issues-and-support/how-do-i-get-my-funds-back-from-a-stuck-bridge-in-transfer)
+
 If it still fails, report the error, the networks, the token and your wallet version. Hide sensitive information in screenshots. See [*How do I send feedback or report a problem?*](#common-issues-and-support/how-do-i-send-feedback-or-report-a-problem)
