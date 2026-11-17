@@ -87,9 +87,9 @@ test('a search result opens its article and leaves the search', async ({ page })
 });
 
 test('a search result for the article already open still leaves the search', async ({ page }) => {
-  // Same hash, so no hashchange fires: only the click can end the search.
-  await page.goto('/#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase');
-  await page.locator('.help-center-search input').fill('restore');
+  // Same hash, so no hashchange fires: only the click can end the search. The
+  // search is over the article itself, as a shared ?q= link to it arrives.
+  await page.goto('/?q=restore#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase');
   await expect(page.locator(RESULTS)).toContainText('for “restore”');
 
   await page.locator('.help-center-card-link', { hasText: 'How do I restore my wallet with a recovery phrase?' }).click();
@@ -103,11 +103,16 @@ test('searching keeps the platform, and the platform keeps the search', async ({
   // The stated case — choosing Mobile with a search active — is not reachable:
   // the tabs live inside the section that is hidden while results show. This
   // is the same invariant in the order a reader can perform, plus the reverse.
+  // Category and article pages have no search field of their own (it is in
+  // the header), so the search starts on the home page, as a reader's would.
   await page.goto('/#setup-and-basic-use');
   await page.locator('.help-center-platform-tabs button', { hasText: 'Mobile' }).click();
   await expect(page).toHaveURL(/platform=mobile/);
 
-  await page.locator('.help-center-search input').fill('guardian');
+  // Home by its hash, as the breadcrumb goes there: the platform stays in the URL.
+  await page.evaluate(() => { window.location.hash = ''; });
+  await page.locator('.help-home-search-form input').fill('guardian');
+  await page.locator('.help-home-search-form input').press('Enter');
   await expect(page.locator(RESULTS)).toContainText('for “guardian”');
   await expect(page).toHaveURL(/platform=mobile/);
   await expect(page).toHaveURL(/q=guardian/);
@@ -140,11 +145,13 @@ test('the footer is on every page, not only the home page', async ({ page }) => 
   }
 });
 
-test('the persistent brand carries the Help Center product label once', async ({ page }) => {
+test('the persistent brand is the Bread logo alone, and still names the Help Center to a screen reader', async ({ page }) => {
+  // The visible "Help Center" label beside the logo was dropped as redundant
+  // (Ivan, 2026-11-17): the nav already has a Help Center link.
   for (const route of ['/', '/#setup-and-basic-use']) {
     await page.goto(route);
-    await expect(page.locator('.public-brand'), route).toHaveText('Bread WalletHelp Center');
-    await expect(page.locator('.public-product-name'), route).toHaveText('Help Center');
+    await expect(page.locator('.public-brand'), route).toHaveText('Bread Wallet');
+    await expect(page.locator('.public-brand'), route).toHaveAccessibleName('Bread Wallet Help Center home');
     const remainingBrands = page.locator('.help-center-brand:not(.public-brand)');
     for (let i = 0; i < (await remainingBrands.count()); i++) {
       await expect(remainingBrands.nth(i), route).toHaveText('Bread Wallet');
@@ -258,7 +265,7 @@ test('a focused search box is ringed by its pill, not by a rectangle inside it',
    */
   for (const [route, wrapper] of [
     ['/', '.help-home-search-form'],
-    ['/#setup-and-basic-use', '.help-center-search']
+    ['/?q=guardian#setup-and-basic-use', '.help-center-search']
   ] as const) {
     await page.goto(route);
 
@@ -495,7 +502,7 @@ test('search results show alone, even over an article with a side rail', async (
   await expect(page.locator('.help-center-rail')).toBeVisible();
   await expect(page.locator('.help-center-category.has-rail')).toHaveCSS('display', 'grid');
 
-  await page.locator('.help-center-search input').fill('guardian');
+  await page.goto('/?q=guardian#common-issues-and-support/my-token-is-stuck-on-consuming-receiver-address');
 
   await expect(page.locator(RESULTS)).toBeVisible();
   await expect(page.locator('.help-center-article-body')).toBeHidden();

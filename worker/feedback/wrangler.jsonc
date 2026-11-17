@@ -136,6 +136,16 @@
     // real gate and CAP_PER_HOUR is the hard ceiling on GitHub writes.
     "RATE_LIMIT_PER_HOUR": "20",
 
+    // Help Center Ask assistant (src/ask/handler.ts). OFF until it has been
+    // tried and approved: with this "false", /api/ask answers 404 like any
+    // unknown path and makes no model call. Local trials turn it on in
+    // .dev.vars, never here.
+    "ASK_ENABLED": "false",
+
+    // Questions per IP per hour once it is on. The fallback in the
+    // RateLimiter is lower, so a missing value fails tight.
+    "ASK_RATE_LIMIT_PER_HOUR": "60",
+
     // Sign-in STARTS allowed per IP per 10 minutes. Read by the RateLimiter
     // Durable Object from its own env, never from a request -- see the note on
     // that class. Sized so a whole office behind one NAT egress cannot lock

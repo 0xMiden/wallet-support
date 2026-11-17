@@ -1,0 +1,98 @@
+/* Bread Assistant: a floating "Ask a Question" button and the chat panel it opens.
+   Tokens only. Both float outside .help-center-shell and .help-center-home, so the
+   shared focus ring, [hidden] rule and reduced-motion reset are repeated here. */
+
+.help-ask-launcher[hidden], .help-ask[hidden] { display: none !important; }
+.help-ask-launcher:focus-visible, .help-ask :focus-visible { outline: 3px solid var(--help-accent); outline-offset: 3px; }
+/* On the tinted header the brand orange is 2.65:1, under the 3:1 a focus ring needs; the deeper shade of the same hue is 5.07:1. */
+.help-ask-header :focus-visible { outline-color: var(--accent-text); }
+
+.help-ask-icon { width: var(--text-xl); height: var(--text-xl); flex: none; fill: none; stroke: currentcolor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* The launcher: a solid orange pill that floats over the page. White on the
+   brand orange itself is 3.00:1, so the fill is the next shade in the same hue
+   (4.23:1, as the skip link) and the label is large text (19px bold). */
+.help-ask-launcher { position: fixed; z-index: var(--z-float); right: var(--space-5); bottom: var(--space-5); min-height: var(--space-7); display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-5) var(--space-2) var(--space-4); border: 0; border-radius: var(--radius-pill); background: var(--help-accent-hover); color: var(--ink-on-accent); font: var(--weight-strong) var(--text-cta)/1.5 var(--font-display); cursor: pointer; box-shadow: 0 var(--space-2) var(--space-5) rgb(var(--shadow-ink) / 28%), 0 var(--space-1) var(--space-2) rgb(var(--shadow-ink) / 16%); transition: background 160ms ease; }
+.help-ask-launcher:hover { background: var(--accent-text); }
+/* Back to top moves up to sit above the launcher rather than under it. */
+body:has(.help-ask-launcher:not([hidden])) .help-center-to-top { bottom: calc(var(--space-5) + var(--space-7) + var(--space-3)); }
+
+/* The panel. Not modal on a wide screen; below the header, never under it. */
+.help-ask { position: fixed; z-index: var(--z-assistant); right: var(--space-5); bottom: var(--space-5); width: min(var(--assistant-width), calc(100vw - 2 * var(--space-5))); height: min(var(--assistant-height), calc(100dvh - var(--header-height) - 2 * var(--space-5))); display: grid; grid-template-rows: auto minmax(0, 1fr) auto; overflow: hidden; border: 1px solid var(--help-line); border-radius: var(--radius-md); background: var(--help-panel); color: var(--text-body); box-shadow: 0 var(--space-5) var(--space-8) rgb(var(--shadow-ink) / 28%), 0 var(--space-1) var(--space-3) rgb(var(--shadow-ink) / 14%); }
+
+/* A tinted header marks the panel off from a white page behind it. */
+.help-ask-header { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4); border-bottom: 1px solid var(--help-line); background: var(--tint-soft); }
+.help-ask-header h2 { flex: 1; min-width: 0; margin: 0; color: var(--text-strong); font: var(--weight-strong) var(--text-lg)/1.2 var(--font-display); letter-spacing: var(--tracking-heading); }
+.help-ask-tool { width: var(--space-6); height: var(--space-6); flex: none; display: grid; place-items: center; padding: 0; border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--text-muted); cursor: pointer; transition: background 160ms ease, color 160ms ease; }
+.help-ask-tool .help-ask-icon { width: var(--text-lg); height: var(--text-lg); }
+.help-ask-tool:hover { background: var(--help-panel); color: var(--text-strong); }
+
+.help-ask-avatar { flex: none; display: grid; place-items: center; border-radius: var(--radius-pill); background: var(--tint-soft); }
+.help-ask-avatar { width: var(--space-8); height: var(--space-8); }
+.help-ask-avatar img { width: 62%; height: auto; }
+
+.help-ask-body { display: grid; align-content: start; gap: var(--space-4); padding: var(--space-5) var(--space-4); overflow-y: auto; overscroll-behavior: contain; }
+
+/* The intro: centred and narrower than the panel, set apart from the chat by a rule. */
+.help-ask-intro { display: grid; justify-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-5) var(--space-5); border-bottom: 1px solid var(--help-line); text-align: center; text-wrap: balance; }
+.help-ask-intro p { margin: 0; color: var(--text-muted); font-size: var(--text-sm); line-height: 1.5; }
+.help-ask-intro .help-ask-intro-name { margin-top: var(--space-1); color: var(--text-strong); font: var(--weight-strong) var(--text-lg)/1.2 var(--font-display); }
+.help-ask-intro .help-ask-safety { margin-top: var(--space-2); font-size: var(--text-xs); }
+.help-ask-safety strong { color: var(--text-body); font-weight: var(--weight-semibold); }
+
+.help-ask-log { display: grid; gap: var(--space-3); margin: var(--space-2) 0 0; padding: 0; list-style: none; }
+.help-ask-question, .help-ask-answer { max-width: 88%; padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); color: var(--text-body); font: var(--weight-regular) var(--text-md)/1.5 var(--font-display); overflow-wrap: anywhere; }
+/* The reader's own messages: solid, in the deeper shade of the accent (white on it is 5.74:1). */
+.help-ask-question { justify-self: end; background: var(--accent-text); color: var(--ink-on-accent); white-space: pre-line; }
+.help-ask-answer { justify-self: start; display: grid; gap: var(--space-2); background: var(--help-panel-subtle); }
+.help-ask-answer p { margin: 0; }
+.help-ask-answer ol { display: grid; gap: var(--space-1); margin: 0; padding-left: var(--space-5); }
+.help-ask-sources { display: grid; gap: var(--space-1); padding-top: var(--space-2); border-top: 1px solid var(--help-line); }
+.help-ask-answer .help-ask-sources-label { color: var(--text-muted); font: var(--weight-semibold) var(--text-xs)/1.5 var(--font-body); }
+.help-ask-sources ul { display: grid; gap: var(--space-1); margin: 0; padding: 0; list-style: none; }
+.help-ask-sources a, .help-ask-contact { color: var(--accent-text); font: var(--weight-strong) var(--text-sm)/1.5 var(--font-display); text-decoration: none; }
+.help-ask-sources a:hover, .help-ask-contact:hover { text-decoration: underline; }
+.help-ask-contact { display: inline-flex; align-items: center; gap: var(--space-2); justify-self: start; }
+.help-ask-contact .help-home-arrow { width: var(--text-lg); height: var(--text-lg); fill: none; stroke: currentcolor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.help-ask-pending { color: var(--text-muted); font-size: var(--text-sm); line-height: 1.5; }
+
+.help-ask-notice { margin: 0; padding: var(--space-3) var(--space-4); border: 1px solid var(--accent-text); border-radius: var(--radius-sm); background: var(--help-panel); color: var(--text-body); font-size: var(--text-sm); line-height: 1.5; }
+
+.help-ask-footer { display: grid; gap: var(--space-2); padding: var(--space-3) var(--space-4) var(--space-4); border-top: 1px solid var(--help-line); }
+/* The field shows its focus on the pill around it, as the search field does. */
+/* Filled like the home page search, so the field reads as the place to type. */
+.help-ask-form { display: flex; align-items: end; gap: var(--space-2); padding: var(--space-1) var(--space-1) var(--space-1) var(--space-4); border: 1px solid transparent; border-radius: var(--radius-lg); background: var(--help-panel-subtle); transition: border-color 160ms ease, box-shadow 160ms ease; }
+.help-ask-form:focus-within { border-color: var(--accent-text); box-shadow: 0 0 0 3px var(--tint-strong); }
+.help-ask-form textarea { flex: 1; min-width: 0; max-height: calc(var(--text-base) * 1.5 * 4); padding: var(--space-2) 0; border: 0; background: transparent; color: var(--text-body); font: var(--weight-regular) var(--text-base)/1.5 var(--font-display); resize: none; field-sizing: content; }
+.help-ask-form textarea:focus, .help-ask-form textarea:focus-visible { outline: none; }
+.help-ask-form textarea::placeholder { color: var(--text-muted); }
+.help-ask-form textarea:disabled { cursor: not-allowed; }
+.help-ask-submit { width: var(--space-6); height: var(--space-6); margin: var(--space-1); flex: none; display: grid; place-items: center; padding: 0; border: 0; border-radius: var(--radius-pill); background: var(--help-accent); color: var(--ink-on-accent); cursor: pointer; transition: background 160ms ease; }
+.help-ask-submit .help-home-arrow { width: var(--text-lg); height: var(--text-lg); fill: none; stroke: currentcolor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.help-ask-submit:hover:not(:disabled) { background: var(--help-accent-hover); }
+.help-ask-submit:disabled { background: var(--help-panel); color: var(--text-muted); cursor: not-allowed; }
+.help-ask-meta { margin: 0; color: var(--text-muted); font-size: var(--text-2xs); line-height: 1.5; text-align: center; }
+
+/* "End chat?": the chat blurs behind a card at the foot of the panel. */
+.help-ask.is-confirming > .help-ask-header, .help-ask.is-confirming > .help-ask-body, .help-ask.is-confirming > .help-ask-footer { filter: blur(var(--space-1)); }
+.help-ask-confirm-scrim { position: absolute; inset: 0; display: flex; align-items: flex-end; padding: var(--space-4); background: rgb(var(--shadow-ink) / 24%); }
+.help-ask-confirm { width: 100%; display: grid; justify-items: center; gap: var(--space-2); padding: var(--space-5); border-radius: var(--radius-md); background: var(--help-panel); box-shadow: 0 var(--space-3) var(--space-6) rgb(var(--shadow-ink) / 18%); text-align: center; }
+.help-ask-confirm-title { margin: 0; color: var(--text-strong); font: var(--weight-strong) var(--text-lg)/1.3 var(--font-display); }
+.help-ask-confirm-note { margin: 0; color: var(--text-muted); font-size: var(--text-sm); line-height: 1.5; }
+.help-ask-confirm-actions { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-3); }
+.help-ask-confirm-actions button { min-height: var(--space-7); border: 0; border-radius: var(--radius-sm); background: var(--help-panel-subtle); color: var(--text-strong); font: var(--weight-strong) var(--text-md)/1.5 var(--font-display); cursor: pointer; transition: background 160ms ease; }
+.help-ask-confirm-actions button:hover { background: var(--help-fill-pressed); }
+
+/* On a phone the panel is the whole screen, the header included. */
+@media (max-width: 620px) {
+  /* Icon only on a phone: a round 48px button. The label stays for screen readers. */
+  .help-ask-launcher { right: var(--space-4); bottom: var(--space-4); width: var(--space-7); height: var(--space-7); justify-content: center; padding: 0; }
+  .help-ask-launcher-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  body:has(.help-ask-launcher:not([hidden])) .help-center-to-top { right: var(--space-4); bottom: calc(var(--space-4) + var(--space-7) + var(--space-3)); }
+  .help-ask { inset: 0; width: auto; height: 100dvh; border: 0; border-radius: 0; box-shadow: none; }
+  .help-ask-question, .help-ask-answer { max-width: 92%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .help-ask-launcher, .help-ask *, .help-ask *::before, .help-ask *::after { transition: none !important; }
+}

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type { MouseEvent } from 'react';
+import type { MouseEvent, ReactNode } from 'react';
 import * as Tabs from '@radix-ui/react-tabs';
 import { ResponsiveNavigation } from './ResponsiveNavigation';
 
@@ -8,6 +8,8 @@ import { helpCenterMainCategories } from './categories';
 import { HelpCenterBackToTop } from './HelpCenterBackToTop';
 import { HelpCenterFooter } from './HelpCenterFooter';
 import { HelpCenterGlossary } from './HelpCenterGlossary';
+import { ASK_ENABLED } from './ask';
+import { AskAssistant } from './AskAssistant';
 import { HelpCenterHome } from './HelpCenterHome';
 import {
   articleExcerpt,
@@ -99,14 +101,6 @@ function LinkIcon() {
     <svg aria-hidden="true" className="help-center-contact-icon" viewBox="0 0 24 24">
       <path d="M10 13.5a3.5 3.5 0 0 0 5 0l3-3a3.5 3.5 0 0 0-5-5l-1 1" />
       <path d="M14 10.5a3.5 3.5 0 0 0-5 0l-3 3a3.5 3.5 0 0 0 5 5l1-1" />
-    </svg>
-  );
-}
-
-function SupportIcon() {
-  return (
-    <svg aria-hidden="true" className="help-center-contact-icon" viewBox="0 0 24 24">
-      <path d="M5 6.5h14v9H9l-4 3v-12Z" />
     </svg>
   );
 }
@@ -230,9 +224,17 @@ export function HelpCenter() {
       setIsMobileMenuOpen(false);
     };
 
+    // On arrival the search in the URL is kept, so a shared ?q= link shows its
+    // results. A later move to another page leaves the search behind, as a
+    // result link does: the header's search opens an article by its address,
+    // from outside this component, and the reader asked for that article.
     handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    const onHashChange = () => {
+      setQuery('');
+      handleHashChange();
+    };
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
 
   // The browser cannot scroll to a shared entry on arrival, because the entry
@@ -467,12 +469,22 @@ export function HelpCenter() {
   // between sections — so it stays there and goes everywhere else.
   const sequenceNoun = activeArticle ? ' article' : '';
 
+  /*
+   * Bread Assistant floats over every Help Center page. Each view below returns
+   * a different tree, so the assistant is always the second child of the same
+   * fragment: React then keeps it mounted across views, and its open state,
+   * draft, conversation and any question still being answered survive moving
+   * between the home page and an article.
+   */
+  const assistant = ASK_ENABLED ? <AskAssistant key="bread-assistant" platform={activePlatform} /> : null;
+  const withAssistant = (page: ReactNode) => <>{page}{assistant}</>;
+
   // Searching is a destination of its own, and the results live in the
   // category view's main column. So a search started from the home page moves
   // the reader there without a route change — and clearing the field brings
   // them back, because the home page is what an empty hash means.
   if (view === 'home' && !isSearching) {
-    return (
+    return withAssistant(
       <HelpCenterHome
         mainCategories={helpCenterMainCategories}
         firstCategoryId={defaultCategoryId}
@@ -482,7 +494,7 @@ export function HelpCenter() {
   }
 
   if (!entry) {
-    return (
+    return withAssistant(
       <div className="help-center-shell">
         <main className="help-center-main" id="help-center-content">
           <div className="help-center-main-inner">
@@ -536,7 +548,7 @@ export function HelpCenter() {
   };
 
 
-  return (
+  return withAssistant(
     <div className="help-center-shell" onClick={followRouteLink}>
       <a
         className="help-center-skip-link"
@@ -637,7 +649,10 @@ export function HelpCenter() {
 
         <main className="help-center-main" id="help-center-content" tabIndex={-1}>
           <div className="help-center-main-inner">
-            <div className="help-center-utility-bar">
+            {/* The search lives in the header. The results page keeps a field of
+                its own, so a search started on the home page can be changed or
+                cleared where its results are. */}
+            {isSearching ? <div className="help-center-utility-bar">
               <label className="help-center-search">
                 <span className="help-center-visually-hidden">Search the Help Center</span>
                 <svg aria-hidden="true" viewBox="0 0 24 24">
@@ -647,19 +662,18 @@ export function HelpCenter() {
                 <input
                   type="search"
                   value={query}
-                  onChange={event => setQuery(event.target.value)}
+                  onChange={event => {
+                    setQuery(event.target.value);
+                    // Emptied, the field goes with the results, so focus moves to
+                    // the page the reader is back on rather than to nowhere.
+                    if (!event.target.value.trim()) {
+                      requestAnimationFrame(() => document.getElementById('help-center-content')?.focus());
+                    }
+                  }}
                   placeholder="Search articles and categories…"
                 />
               </label>
-
-              <a
-                className="help-center-contact-button"
-                href={CONTACT_SUPPORT_URL}
-              >
-                <span>Contact Support</span>
-                <SupportIcon />
-              </a>
-            </div>
+            </div> : null}
 
             {isSearching ? (
               <section className="help-center-category" aria-label="Search results">

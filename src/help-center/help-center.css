@@ -1220,7 +1220,6 @@
 @media (max-width: 620px) {
 
   .help-center-utility-bar { display: flex; }
-  .help-center-utility-bar > .help-center-contact-button { display: none; }
 
   .help-center-search,
   .help-center-contact-button {
