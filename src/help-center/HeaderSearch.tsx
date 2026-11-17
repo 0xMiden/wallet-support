@@ -5,6 +5,7 @@ import { Search } from 'lucide-react';
 import { helpCenterMainCategories } from './categories';
 import { helpCenterArticles } from './content';
 import { articleHref, defaultPlatform, parsePlatform } from './routing';
+import { ASK_ENABLED } from './ask';
 import { searchHelpCenter } from './search';
 
 /** Short enough to scan without scrolling on a laptop; the rest are a scroll away. */
@@ -17,8 +18,8 @@ export function readerPlatform() {
 
 /**
  * Opens an article from anywhere. On the Help Center page only the address
- * changes, so the page stays loaded; from another page, such as All topics, it
- * is a normal visit.
+ * changes, so the page (and Bread Assistant's conversation) stays loaded; from
+ * another page, such as All topics, it is a normal visit.
  */
 function openArticle(href: string) {
   if (window.location.pathname !== '/') window.location.assign(`/${href}`);
@@ -150,7 +151,7 @@ export function HeaderSearch() {
             ) : (
               <div className="public-search-empty">
                 <Search aria-hidden="true" />
-                <p>{typed ? `No articles match “${query.trim()}”. Try another word.` : 'Start typing to search'}</p>
+                <p>{typed ? `No articles match “${query.trim()}”. ${ASK_ENABLED ? 'Try another word, or ask Bread Assistant.' : 'Try another word.'}` : 'Start typing to search'}</p>
               </div>
             )}
           </div>

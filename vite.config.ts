@@ -1,9 +1,26 @@
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vitest/config';
 import { loadEnv } from 'vite';
+
+import { ASK_CORPUS_FILE, buildAskCorpus } from './src/help-center/askCorpus';
+
+/*
+ * The articles the Ask assistant answers from, read from the same Markdown files
+ * the pages render (src/help-center/askCorpus.ts explains the shape). Written on
+ * every build, so a deploy can never pair new pages with an old article set.
+ */
+function askCorpusSource(): string {
+  const directory = fileURLToPath(new URL('./src/help-center/content/', import.meta.url));
+  const modules = Object.fromEntries(
+    readdirSync(directory)
+      .filter(file => file.endsWith('.md'))
+      .map(file => [`./content/${file}`, readFileSync(`${directory}${file}`, 'utf8')])
+  );
+  return JSON.stringify(buildAskCorpus(modules));
+}
 
 /*
  * The headers Cloudflare Pages serves, read from public/_headers (the build
@@ -60,6 +77,11 @@ export default defineConfig(({ command, mode }) => {
             this.emitFile({ type: 'asset', fileName: `${path}/index.html`, source: document.source });
           }
         }
+      }
+    }, {
+      name: 'ask-corpus',
+      generateBundle() {
+        this.emitFile({ type: 'asset', fileName: ASK_CORPUS_FILE, source: askCorpusSource() });
       }
     }],
     build: {

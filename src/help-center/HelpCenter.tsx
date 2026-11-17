@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type { MouseEvent } from 'react';
+import type { MouseEvent, ReactNode } from 'react';
 import * as Tabs from '@radix-ui/react-tabs';
 import { ResponsiveNavigation } from './ResponsiveNavigation';
 
@@ -8,6 +8,8 @@ import { helpCenterMainCategories } from './categories';
 import { HelpCenterBackToTop } from './HelpCenterBackToTop';
 import { HelpCenterFooter } from './HelpCenterFooter';
 import { HelpCenterGlossary } from './HelpCenterGlossary';
+import { ASK_ENABLED } from './ask';
+import { AskAssistant } from './AskAssistant';
 import { HelpCenterHome } from './HelpCenterHome';
 import {
   articleExcerpt,
@@ -467,12 +469,22 @@ export function HelpCenter() {
   // between sections — so it stays there and goes everywhere else.
   const sequenceNoun = activeArticle ? ' article' : '';
 
+  /*
+   * Bread Assistant floats over every Help Center page. Each view below returns
+   * a different tree, so the assistant is always the second child of the same
+   * fragment: React then keeps it mounted across views, and its open state,
+   * draft, conversation and any question still being answered survive moving
+   * between the home page and an article.
+   */
+  const assistant = ASK_ENABLED ? <AskAssistant key="bread-assistant" platform={activePlatform} /> : null;
+  const withAssistant = (page: ReactNode) => <>{page}{assistant}</>;
+
   // Searching is a destination of its own, and the results live in the
   // category view's main column. So a search started from the home page moves
   // the reader there without a route change — and clearing the field brings
   // them back, because the home page is what an empty hash means.
   if (view === 'home' && !isSearching) {
-    return (
+    return withAssistant(
       <HelpCenterHome
         mainCategories={helpCenterMainCategories}
         firstCategoryId={defaultCategoryId}
@@ -482,7 +494,7 @@ export function HelpCenter() {
   }
 
   if (!entry) {
-    return (
+    return withAssistant(
       <div className="help-center-shell">
         <main className="help-center-main" id="help-center-content">
           <div className="help-center-main-inner">
@@ -536,7 +548,7 @@ export function HelpCenter() {
   };
 
 
-  return (
+  return withAssistant(
     <div className="help-center-shell" onClick={followRouteLink}>
       <a
         className="help-center-skip-link"

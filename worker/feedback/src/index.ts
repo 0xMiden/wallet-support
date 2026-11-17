@@ -29,6 +29,7 @@ import { withTheme } from './lib/theme';
 import { alertOverdue, purgeSpamAttachments, overdueCounts, opsConfig } from './lib/review-ops';
 import { assertWalletTarget, getGitHubToken, verifyGitHubInstallation } from './lib/github-auth';
 import { withRouteSecurityHeaders } from './lib/security-headers';
+import { handleAsk } from './ask/handler';
 
 export interface Env {
   ASSETS?: Fetcher;
@@ -124,6 +125,10 @@ export interface Env {
   ADMIN_EMAIL_DOMAINS?: string;
   /** Sign-in starts allowed per IP per 10 minutes. Floored at 1 in code. */
   ADMIN_AUTH_PER_WINDOW?: string;
+  /** The Help Center Ask assistant. Off unless exactly "true"; see src/ask/handler.ts. */
+  ASK_ENABLED?: string;
+  /** Questions allowed per IP per hour. Read by the RateLimiter, never from a request. */
+  ASK_RATE_LIMIT_PER_HOUR?: string;
   /**
    * Store Reviews classification. OFF unless the literal "true", the
    * convention PUBLISH_ENABLED and SPAM_GATE_ENABLED already follow, so a typo
@@ -604,6 +609,10 @@ const worker = {
       });
     }
 
+    // Matched before the catch-all below, which answers every other /api/ path
+    // with a 404. Disabled, handleAsk returns that same 404.
+    if (requestedPath === '/api/ask') return handleAsk(req, env);
+
     if (url.pathname !== '/submit' || req.method !== 'POST') {
       if (requestedPath.startsWith('/api/')) return json({ error: 'not found' }, 404);
       if (requestedPath.startsWith('/admin/')) return new Response('Not found', { status: 404, headers: { 'content-type': 'text/plain; charset=utf-8' } });
@@ -933,7 +942,7 @@ export function positiveIntOr(raw: unknown, fallback: number): number {
 export class RateLimiter {
   constructor(
     private state: DurableObjectState,
-    private env: { RATE_LIMIT_PER_HOUR?: string; ADMIN_AUTH_PER_WINDOW?: string }
+    private env: { RATE_LIMIT_PER_HOUR?: string; ADMIN_AUTH_PER_WINDOW?: string; ASK_RATE_LIMIT_PER_HOUR?: string }
   ) {}
 
   /**
@@ -969,6 +978,15 @@ export class RateLimiter {
         key: 'hits',
         windowMs: 3_600_000,
         limit: positiveIntOr(this.env.RATE_LIMIT_PER_HOUR, 5),
+      };
+    } else if (path === '/ask') {
+      // Help Center questions. A conversation is up to 31 of them, so this
+      // is looser than /check, and kept apart so asking can never use up the
+      // feedback form's budget (or the other way round).
+      policy = {
+        key: 'hits:ask',
+        windowMs: 3_600_000,
+        limit: positiveIntOr(this.env.ASK_RATE_LIMIT_PER_HOUR, 20),
       };
     } else {
       return new Response('unknown rate limit policy', { status: 400 });

@@ -85,9 +85,17 @@
   --gutter: 2.5rem;
   --header-height: 5rem;
   --sidebar-width: 18rem;
+  /* Bread Assistant's floating panel (proposed 2026-11-17, pending Ivan's approval). */
+  --assistant-width: 25rem;
+  --assistant-height: 40rem;
+  /* Floating controls sit under the header and the mobile drawer. */
+  --z-float: 25;
   --z-header: 30;
   --z-backdrop: 35;
   --z-drawer: 40;
+  /* The assistant panel: over the header (it covers the whole page on a phone),
+     under the navigation drawer and the search window, which open above it. */
+  --z-assistant: 33;
   --z-skip: 50;
 }
 @media (max-width: 620px) {
