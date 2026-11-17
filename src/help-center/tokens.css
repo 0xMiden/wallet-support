@@ -85,7 +85,7 @@
   --gutter: 2.5rem;
   --header-height: 5rem;
   --sidebar-width: 18rem;
-  /* Bread Assistant's floating panel (proposed 2026-11-17, pending Ivan's approval). */
+  /* Bread Assistant's floating panel (approved by Ivan, 2026-11-17). */
   --assistant-width: 25rem;
   --assistant-height: 40rem;
   /* Floating controls sit under the header and the mobile drawer. */

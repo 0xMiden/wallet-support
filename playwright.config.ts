@@ -18,6 +18,8 @@ const STATIC_PORT = Number(env.E2E_STATIC_PORT ?? 4319);
 
 export default defineConfig({
   testDir: './e2e',
+  // Bread Assistant's spec needs a build with it switched on: playwright.ask.config.ts.
+  testIgnore: ['ask-assistant.spec.ts'],
   fullyParallel: false,
   retries: 0,
   // One worker. This host has been bitten by unbounded pools, and six short

@@ -272,7 +272,7 @@ export function AskAssistant({ platform }: AskAssistantProps) {
         hidden={open}
         onClick={() => setOpen(true)}
       >
-        <ChatIcon />Ask a Question
+        <ChatIcon /><span className="help-ask-launcher-label">Ask a Question</span>
       </button>
 
       <div

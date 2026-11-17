@@ -4,6 +4,8 @@
 
 .help-ask-launcher[hidden], .help-ask[hidden] { display: none !important; }
 .help-ask-launcher:focus-visible, .help-ask :focus-visible { outline: 3px solid var(--help-accent); outline-offset: 3px; }
+/* On the tinted header the brand orange is 2.65:1, under the 3:1 a focus ring needs; the deeper shade of the same hue is 5.07:1. */
+.help-ask-header :focus-visible { outline-color: var(--accent-text); }
 
 .help-ask-icon { width: var(--text-xl); height: var(--text-xl); flex: none; fill: none; stroke: currentcolor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
@@ -16,13 +18,14 @@
 body:has(.help-ask-launcher:not([hidden])) .help-center-to-top { bottom: calc(var(--space-5) + var(--space-7) + var(--space-3)); }
 
 /* The panel. Not modal on a wide screen; below the header, never under it. */
-.help-ask { position: fixed; z-index: var(--z-assistant); right: var(--space-5); bottom: var(--space-5); width: min(var(--assistant-width), calc(100vw - 2 * var(--space-5))); height: min(var(--assistant-height), calc(100dvh - var(--header-height) - 2 * var(--space-5))); display: grid; grid-template-rows: auto minmax(0, 1fr) auto; overflow: hidden; border: 1px solid var(--help-line); border-radius: var(--radius-md); background: var(--help-panel); color: var(--text-body); box-shadow: 0 var(--space-5) var(--space-7) rgb(var(--shadow-ink) / 18%); }
+.help-ask { position: fixed; z-index: var(--z-assistant); right: var(--space-5); bottom: var(--space-5); width: min(var(--assistant-width), calc(100vw - 2 * var(--space-5))); height: min(var(--assistant-height), calc(100dvh - var(--header-height) - 2 * var(--space-5))); display: grid; grid-template-rows: auto minmax(0, 1fr) auto; overflow: hidden; border: 1px solid var(--help-line); border-radius: var(--radius-md); background: var(--help-panel); color: var(--text-body); box-shadow: 0 var(--space-5) var(--space-8) rgb(var(--shadow-ink) / 28%), 0 var(--space-1) var(--space-3) rgb(var(--shadow-ink) / 14%); }
 
-.help-ask-header { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4); border-bottom: 1px solid var(--help-line); }
+/* A tinted header marks the panel off from a white page behind it. */
+.help-ask-header { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4); border-bottom: 1px solid var(--help-line); background: var(--tint-soft); }
 .help-ask-header h2 { flex: 1; min-width: 0; margin: 0; color: var(--text-strong); font: var(--weight-strong) var(--text-lg)/1.2 var(--font-display); letter-spacing: var(--tracking-heading); }
 .help-ask-tool { width: var(--space-6); height: var(--space-6); flex: none; display: grid; place-items: center; padding: 0; border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--text-muted); cursor: pointer; transition: background 160ms ease, color 160ms ease; }
 .help-ask-tool .help-ask-icon { width: var(--text-lg); height: var(--text-lg); }
-.help-ask-tool:hover { background: var(--help-panel-subtle); color: var(--text-strong); }
+.help-ask-tool:hover { background: var(--help-panel); color: var(--text-strong); }
 
 .help-ask-avatar { flex: none; display: grid; place-items: center; border-radius: var(--radius-pill); background: var(--tint-soft); }
 .help-ask-avatar { width: var(--space-8); height: var(--space-8); }
@@ -82,7 +85,9 @@ body:has(.help-ask-launcher:not([hidden])) .help-center-to-top { bottom: calc(va
 
 /* On a phone the panel is the whole screen, the header included. */
 @media (max-width: 620px) {
-  .help-ask-launcher { right: var(--space-4); bottom: var(--space-4); }
+  /* Icon only on a phone: a round 48px button. The label stays for screen readers. */
+  .help-ask-launcher { right: var(--space-4); bottom: var(--space-4); width: var(--space-7); height: var(--space-7); justify-content: center; padding: 0; }
+  .help-ask-launcher-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   body:has(.help-ask-launcher:not([hidden])) .help-center-to-top { right: var(--space-4); bottom: calc(var(--space-4) + var(--space-7) + var(--space-3)); }
   .help-ask { inset: 0; width: auto; height: 100dvh; border: 0; border-radius: 0; box-shadow: none; }
   .help-ask-question, .help-ask-answer { max-width: 92%; }
