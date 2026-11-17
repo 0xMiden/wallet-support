@@ -1,0 +1,63 @@
+/* Contact form. Tokens only (src/help-center/tokens.css); the layout matches
+   the /feedback page and the fields take the search pill's surface. */
+.contact-main { width: min(100%, var(--frame)); margin: 0 auto; padding: var(--space-8) var(--gutter); }
+.contact-intro { max-width: var(--measure); margin-bottom: var(--space-6); }
+.contact-intro h1 { margin: 0; color: var(--text-strong); font: var(--weight-display) var(--text-2xl)/1.2 var(--font-display); letter-spacing: var(--tracking-heading); }
+.contact-intro > p:last-child { margin: var(--space-3) 0 0; color: var(--text-muted); font-size: var(--text-base); line-height: 1.65; }
+
+.contact-form, .contact-sent { max-width: var(--measure); display: grid; gap: var(--space-5); }
+.contact-warning { padding: var(--space-5); border-radius: var(--radius-md); color: var(--accent-text); background: var(--tint-soft); line-height: 1.65; }
+.contact-error { padding: var(--space-4) var(--space-5); border: 1px solid var(--tint-edge); border-radius: var(--radius-md); color: var(--accent-text); background: var(--tint-soft); font-weight: var(--weight-semibold); line-height: 1.65; }
+
+.contact-field { display: grid; gap: var(--space-2); min-width: 0; }
+.contact-row { display: grid; gap: var(--space-5); }
+.contact-label { color: var(--text-strong); font-family: var(--font-display); font-size: var(--text-md); font-weight: var(--weight-strong); }
+.contact-required { color: var(--text-muted); font-family: var(--font-body); font-size: var(--text-sm); font-weight: var(--weight-regular); }
+.contact-hint { margin: 0; color: var(--text-muted); font-size: var(--text-sm); line-height: 1.65; }
+
+.contact-field input:not([type='file']),
+.contact-field select,
+.contact-field textarea {
+  width: 100%;
+  min-height: var(--space-7);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--text-body);
+  background: var(--help-panel-subtle);
+  font: var(--weight-regular) var(--text-base)/1.65 var(--font-body);
+  transition: border-color 160ms ease, background 160ms ease;
+}
+.contact-field textarea { resize: vertical; }
+.contact-field input::placeholder { color: var(--text-faint); }
+.contact-field input:not([type='file']):focus,
+.contact-field select:focus,
+.contact-field textarea:focus { border-color: var(--help-accent); background: var(--help-panel-elevated); }
+.contact-field input[type='file'] { color: var(--text-body); font: var(--weight-regular) var(--text-sm)/1.65 var(--font-body); }
+.contact-field input[type='file']::file-selector-button {
+  margin-right: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  border: 0;
+  border-radius: var(--radius-pill);
+  color: var(--text-strong);
+  background: var(--help-panel-subtle);
+  font: var(--weight-strong) var(--text-sm) var(--font-display);
+  cursor: pointer;
+}
+.contact-field input[type='file']::file-selector-button:hover { background: var(--help-fill-pressed); }
+
+.contact-submit { justify-self: start; }
+.contact-submit:disabled { cursor: progress; background: var(--help-accent-hover); }
+
+.contact-sent h2 { margin: 0; color: var(--text-strong); font: var(--weight-display) var(--text-xl)/1.2 var(--font-display); letter-spacing: var(--tracking-heading); }
+.contact-sent p { margin: 0; color: var(--text-body); font-size: var(--text-base); line-height: 1.65; }
+.contact-sent button { justify-self: start; }
+
+/* Off-screen rather than display:none, which some bots skip. */
+.contact-trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+@media (min-width: 740px) { .contact-row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .contact-main { padding-top: var(--space-7); } }
+@media (prefers-reduced-motion: reduce) {
+  .contact-field input, .contact-field select, .contact-field textarea { transition: none; }
+}

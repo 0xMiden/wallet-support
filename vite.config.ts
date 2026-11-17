@@ -56,7 +56,7 @@ export default defineConfig(({ command, mode }) => {
         handler(_options, bundle) {
           const document = bundle['index.html'];
           if (!document || document.type !== 'asset') throw new Error('Built index.html is missing');
-          for (const path of ['topics', 'feedback']) {
+          for (const path of ['topics', 'feedback', 'contact']) {
             this.emitFile({ type: 'asset', fileName: `${path}/index.html`, source: document.source });
           }
         }
@@ -76,7 +76,7 @@ export default defineConfig(({ command, mode }) => {
      * the two suites apart would make the next e2e file the one that breaks
      * the unit run.
      */
-      include: ['src/**/*.test.ts']
+      include: ['src/**/*.test.ts', 'worker/contact/src/**/*.test.ts']
     }
   };
 });

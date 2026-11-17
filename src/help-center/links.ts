@@ -12,6 +12,12 @@
 /** Approved hosted intake, matching wallet Settings > About (wallet PR #1369). */
 export const CONTACT_SUPPORT_URL = 'https://cmuv78o9w003x5ebpyha3cf6p.zapier.app/page';
 
+/**
+ * The contact Worker the /contact form posts to (worker/contact). Only the
+ * form uses this address; people never visit it.
+ */
+export const CONTACT_FORM_ENDPOINT = 'https://contact.miden.xyz/';
+
 export interface HelpCenterDownload {
   readonly id: string;
   readonly label: string;

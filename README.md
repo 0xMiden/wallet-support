@@ -104,6 +104,31 @@ Skip a single push with `git push --no-verify`.
 and every push to `main`. It validates the feedback database migration chain, typechecks both
 packages, runs their unit suites and browser tests, and builds the production assets.
 
+## Contact Worker
+
+`worker/contact/` is the Worker behind the Help Center contact form at `/contact`. It receives a
+report from the form, refuses recovery phrases and keys, and emails the report to
+`support@miden.team` through Cloudflare's built-in email binding, with the screenshot attached,
+Reply-To set to the reporter, and an **Open as GitHub issue** link that opens a pre-filled issue
+on `0xMiden/wallet` without the reporter's name or email. It stores nothing and needs no API key.
+
+It runs at `contact.miden.xyz` on the Cloudflare account that holds `miden.xyz`. The Miden team
+sets it up once: turn on Email Routing for `miden.xyz`, verify `support@miden.team` as a
+destination address, then deploy from this folder:
+
+```bash
+cd worker/contact
+npx wrangler@4.131.1 deploy
+```
+
+A failed send is logged with Cloudflare's error code. `E_SENDER_NOT_VERIFIED` means the domain
+also has to be onboarded for Email Sending. The Turnstile bot check is optional: the Worker
+checks a token only when `TURNSTILE_SECRET` is set. The form does not show the widget yet, so the
+secret must not be set until a later change adds the widget and its CSP entries; set before that,
+it refuses every report. Its tests run with the main unit suite. The
+form stays unlinked until the Worker is deployed and a test report arrives; Contact Support still
+opens the hosted form in `src/help-center/links.ts`.
+
 ## Feedback Worker
 
 The imported feedback service lives in `worker/feedback/`. It keeps its D1 migrations, private R2
