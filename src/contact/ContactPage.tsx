@@ -6,7 +6,7 @@ import { errorMessage, sendContactReport } from './api';
 import type { ContactResult } from './api';
 import './contact.css';
 
-const MAX_SCREENSHOT_BYTES = 10 * 1024 * 1024;
+const MAX_SCREENSHOT_BYTES = 15 * 1024 * 1024;
 
 const FEEDBACK_TYPES = [['bug', 'Bug'], ['feature', 'Feature'], ['suggestion', 'Suggestion'], ['general', 'General']] as const;
 const PLATFORMS = [['ios', 'iOS'], ['android', 'Android'], ['extension', 'Chrome extension']] as const;
@@ -144,9 +144,9 @@ export function ContactPage() {
             </div>
 
             <div className="contact-field">
-              <Label htmlFor="contact-screenshot">Screenshot (optional)</Label>
-              <input id="contact-screenshot" name="screenshot" type="file" accept="image/png,image/jpeg,image/webp" {...describe('screenshot', 'contact-screenshot-hint')} />
-              <p className="contact-hint" id="contact-screenshot-hint">PNG, JPEG or WebP, up to 10 MB</p>
+              <Label htmlFor="contact-screenshot">Screenshot or video (optional)</Label>
+              <input id="contact-screenshot" name="screenshot" type="file" accept="image/png,image/jpeg,image/webp,video/mp4,video/quicktime,video/webm" {...describe('screenshot', 'contact-screenshot-hint')} />
+              <p className="contact-hint" id="contact-screenshot-hint">PNG, JPEG, WebP, MP4, MOV or WebM, up to 15 MB</p>
             </div>
 
             <div className="contact-field">

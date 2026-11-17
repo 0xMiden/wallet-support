@@ -44,7 +44,7 @@ test('the form asks the same questions as the hosted form, in the same order', a
   expect(labels).toEqual([
     'Feedback type (required)', 'Short title (required)', 'Description (required)',
     'Steps to reproduce', 'Expected result', 'Actual result',
-    'Platform (required)', 'App version', 'Network (required)', 'Screenshot (optional)', 'Contact email (required)'
+    'Platform (required)', 'App version', 'Network (required)', 'Screenshot or video (optional)', 'Contact email (required)'
   ]);
   expect(await page.getByLabel('Feedback type').locator('option:not([disabled])').allTextContents()).toEqual(['Bug', 'Feature', 'Suggestion', 'General']);
   expect(await page.getByLabel('Platform').locator('option').allTextContents()).toEqual(['Select platform', 'iOS', 'Android', 'Chrome extension']);
@@ -57,7 +57,7 @@ test('a sent report reaches the Worker and the page confirms it', async ({ page 
   await fillRequired(page);
   await page.getByLabel('Platform').selectOption('ios');
   await page.getByLabel('Contact email').fill('user@example.com');
-  await page.getByLabel('Screenshot (optional)').setInputFiles('public/bread-wallet-og.png');
+  await page.getByLabel('Screenshot or video (optional)').setInputFiles('public/bread-wallet-og.png');
   await page.getByRole('button', { name: 'Submit feedback' }).click();
 
   const sent = page.getByRole('heading', { name: 'Sent. Thanks for your feedback.' });
@@ -115,4 +115,11 @@ test('a field the Worker rejects is marked, described and focused', async ({ pag
   await expect(email).toHaveAttribute('aria-invalid', 'true');
   await expect(email).toHaveAttribute('aria-describedby', 'contact-error');
   await expect(page.getByRole('alert')).toHaveText('Check Contact email and send again.');
+});
+
+test('the header leaves out Send feedback on the contact form itself', async ({ page }) => {
+  await page.goto('/contact');
+  await expect(page.locator('.public-feedback-link')).toHaveCount(0);
+  await page.goto('/topics');
+  await expect(page.locator('.public-nav .public-feedback-link')).toBeVisible();
 });

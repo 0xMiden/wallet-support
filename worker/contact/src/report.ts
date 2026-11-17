@@ -47,11 +47,21 @@ export const LIMITS = {
 } as const;
 
 /**
- * 10 MB. Base64 adds about a third, which keeps the email well inside
- * Cloudflare's 25 MiB message limit.
+ * 15 MB for a screenshot or a short screen recording. Base64 adds about a
+ * third, which keeps the email inside Cloudflare's 25 MiB message limit.
  */
-export const MAX_SCREENSHOT_BYTES = 10 * 1024 * 1024;
-export const SCREENSHOT_TYPES = ['image/png', 'image/jpeg', 'image/webp'] as const;
+export const MAX_SCREENSHOT_BYTES = 15 * 1024 * 1024;
+
+/** Accepted attachment types, with the extension used when the filename is unusable. */
+const ATTACHMENT_EXTENSIONS = {
+  'image/png': '.png',
+  'image/jpeg': '.jpg',
+  'image/webp': '.webp',
+  'video/mp4': '.mp4',
+  'video/quicktime': '.mov',
+  'video/webm': '.webm',
+} as const;
+export const SCREENSHOT_TYPES = Object.keys(ATTACHMENT_EXTENSIONS) as ReadonlyArray<keyof typeof ATTACHMENT_EXTENSIONS>;
 
 export interface Screenshot {
   name: string;
@@ -139,8 +149,14 @@ export async function parseReport(form: FormData): Promise<Report | ReportError>
 
 function safeFilename(name: string, type: string): string {
   const base = name.replace(/[^A-Za-z0-9._-]+/g, '_').replace(/^\.+/, '').slice(0, 80);
-  const extension = type === 'image/png' ? '.png' : type === 'image/webp' ? '.webp' : '.jpg';
-  return base && /\.[A-Za-z0-9]+$/.test(base) ? base : `screenshot${extension}`;
+  const extension = ATTACHMENT_EXTENSIONS[type as keyof typeof ATTACHMENT_EXTENSIONS] ?? '';
+  const kind = type.startsWith('video/') ? 'video' : 'screenshot';
+  return base && /\.[A-Za-z0-9]+$/.test(base) ? base : `${kind}${extension}`;
+}
+
+/** "screenshot" or "video", for the sentences that mention the attachment. */
+function attachmentKind(report: Report): string {
+  return report.screenshot?.type.startsWith('video/') ? 'video' : 'screenshot';
 }
 
 /** Header values must stay on one line. */
@@ -195,7 +211,7 @@ export function githubIssueUrl(report: Report): string {
   const title = oneLine(report.title);
   const body = [
     ...sections(report).map(({ label, value }) => `**${label}**\n${value}`),
-    report.screenshot ? '_A screenshot is attached to the support email._' : '',
+    report.screenshot ? `_A ${attachmentKind(report)} is attached to the support email._` : '',
     '_Sent from the Help Center contact form._',
   ].filter(Boolean).join('\n\n');
 
@@ -236,7 +252,7 @@ export function supportEmail(report: Report): SupportEmail {
     `From: ${from}`,
     '',
     ...details.flatMap(({ label, value }) => [`${label}:`, value, '']),
-    report.screenshot ? 'Screenshot: attached.' : 'Screenshot: none.',
+    report.screenshot ? `Attachment: ${attachmentKind(report)} attached.` : 'Attachment: none.',
     '',
     `Open as GitHub issue: ${issueUrl}`,
   ].join('\n');
@@ -245,9 +261,9 @@ export function supportEmail(report: Report): SupportEmail {
 <h2 style="margin:0 0 12px">${escapeHtml(report.title)}</h2>
 <p style="margin:0 0 16px"><strong>From:</strong> ${escapeHtml(from)}</p>
 ${details.map(({ label, value }) => `<p style="margin:0 0 12px"><strong>${escapeHtml(label)}</strong><br>${escapeHtml(value).replace(/\n/g, '<br>')}</p>`).join('\n')}
-<p style="margin:0 0 20px">Screenshot: ${report.screenshot ? 'attached.' : 'none.'}</p>
+<p style="margin:0 0 20px">Attachment: ${report.screenshot ? `${attachmentKind(report)} attached.` : 'none.'}</p>
 <p><a href="${escapeHtml(issueUrl)}" style="display:inline-block;padding:10px 18px;border-radius:999px;background:#e77537;color:#ffffff;text-decoration:none;font-weight:bold">Open as GitHub issue</a></p>
-<p style="color:#6b6b6b;font-size:13px">The issue page opens without the reporter's name or email. Drag the screenshot in before you submit.</p>
+<p style="color:#6b6b6b;font-size:13px">The issue page opens without the reporter's name or email. Drag the attachment in before you submit.</p>
 </body></html>`;
 
   return {

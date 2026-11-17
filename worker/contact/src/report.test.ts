@@ -67,6 +67,16 @@ describe('parseReport', () => {
     expect(result.screenshot?.content.byteLength).toBe(3);
   });
 
+  it('accepts a screen recording and names the attachment by its kind', async () => {
+    for (const [type, name] of [['video/mp4', 'video.mp4'], ['video/quicktime', 'video.mov'], ['video/webm', 'video.webm']]) {
+      const result = await report({ screenshot: new File(['x'], '<bad>', { type }) });
+      expect(result.screenshot).toMatchObject({ type, name });
+      const url = new URL(githubIssueUrl(result));
+      expect(url.searchParams.get('body')).toContain('A video is attached to the support email.');
+      expect(supportEmail(result).text).toContain('Attachment: video attached.');
+    }
+  });
+
   it('rejects other file types and files over the size limit', async () => {
     expect(await parseReport(form({ ...minimal, screenshot: new File(['x'], 'a.gif', { type: 'image/gif' }) }))).toEqual({ error: 'invalid', field: 'screenshot' });
     const big = new File([new Uint8Array(MAX_SCREENSHOT_BYTES + 1)], 'big.png', { type: 'image/png' });

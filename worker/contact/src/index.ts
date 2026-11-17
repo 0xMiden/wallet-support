@@ -36,8 +36,8 @@ export interface Env {
   TURNSTILE_SECRET?: string;
 }
 
-/** Room for a 10 MB screenshot plus the text fields and multipart framing. */
-const MAX_REQUEST_BYTES = 11 * 1024 * 1024;
+/** Room for a 15 MB attachment plus the text fields and multipart framing. */
+const MAX_REQUEST_BYTES = 16 * 1024 * 1024;
 
 function reply(env: Env, status: number, body: Record<string, unknown>): Response {
   return new Response(JSON.stringify(body), {

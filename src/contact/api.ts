@@ -23,7 +23,7 @@ export const FIELD_LABELS: Readonly<Record<string, string>> = {
   platform: 'Platform',
   version: 'App version',
   network: 'Network',
-  screenshot: 'Screenshot',
+  screenshot: 'Screenshot or video',
   email: 'Contact email'
 };
 
@@ -33,7 +33,7 @@ export function errorMessage(result: Extract<ContactResult, { ok: false }>): str
     case 'secret':
       return 'Your report looks like it contains a recovery phrase or key. Remove it and send again. Never share your recovery phrase with anyone, including support.';
     case 'too_large':
-      return 'The screenshot is too large. Choose an image up to 10 MB.';
+      return 'The file is too large. Choose a screenshot or video up to 15 MB.';
     case 'invalid':
       return result.field && FIELD_LABELS[result.field]
         ? `Check ${FIELD_LABELS[result.field]} and send again.`
