@@ -75,15 +75,14 @@ export function ContactPage() {
     <div className="help-center-home contact-page">
       <main className="contact-main" id="help-center-content" tabIndex={-1}>
         <header className="contact-intro">
-          <p className="help-center-eyebrow">Contact Support</p>
-          <h1>Send us your feedback</h1>
+          <h1>Send us your concerns and feedback</h1>
           <p>Report a problem or share a suggestion about Bread.</p>
         </header>
 
         {state.kind === 'sent' ? (
           <section className="contact-sent" aria-labelledby="contact-sent-title">
             <h2 id="contact-sent-title" ref={sentHeading} tabIndex={-1}>Sent. Thanks for your feedback.</h2>
-            <p>{state.email ? `We'll reply to ${state.email}.` : "You didn't add a contact email, so we can't reply to this one."}</p>
+            <p>{`We'll reply to ${state.email}.`}</p>
             <button className="help-center-contact-button" type="button" onClick={() => setState({ kind: 'editing' })}>Send another report</button>
           </section>
         ) : (
@@ -125,9 +124,9 @@ export function ContactPage() {
 
             <div className="contact-row">
               <div className="contact-field">
-                <Label htmlFor="contact-platform">Platform</Label>
-                <select id="contact-platform" {...describe('platform')} name="platform" defaultValue="">
-                  <option value="">Select platform</option>
+                <Label htmlFor="contact-platform" required>Platform</Label>
+                <select id="contact-platform" {...describe('platform')} name="platform" required defaultValue="">
+                  <option value="" disabled>Select platform</option>
                   {PLATFORMS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
                 </select>
               </div>
@@ -136,9 +135,9 @@ export function ContactPage() {
                 <input id="contact-version" {...describe('version')} name="version" type="text" maxLength={40} placeholder="Optional" autoComplete="off" />
               </div>
               <div className="contact-field">
-                <Label htmlFor="contact-network">Network</Label>
-                <select id="contact-network" {...describe('network')} name="network" defaultValue="">
-                  <option value="">Select network</option>
+                <Label htmlFor="contact-network" required>Network</Label>
+                <select id="contact-network" {...describe('network')} name="network" required defaultValue="">
+                  <option value="" disabled>Select network</option>
                   {NETWORKS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
                 </select>
               </div>
@@ -151,9 +150,8 @@ export function ContactPage() {
             </div>
 
             <div className="contact-field">
-              <Label htmlFor="contact-email">Contact email</Label>
-              <input id="contact-email" name="email" type="email" maxLength={254} autoComplete="email" {...describe('email', 'contact-email-hint')} />
-              <p className="contact-hint" id="contact-email-hint">Only if you'd like us to follow up.</p>
+              <Label htmlFor="contact-email" required>Contact email</Label>
+              <input id="contact-email" name="email" type="email" required maxLength={254} autoComplete="email" {...describe('email')} />
             </div>
 
             {/* Hidden from people and from assistive technology; bots fill it in. */}

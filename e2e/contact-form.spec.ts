@@ -18,6 +18,9 @@ async function fillRequired(page: Page) {
   await page.getByLabel('Feedback type').selectOption('bug');
   await page.getByLabel('Short title').fill('Send button stays grey');
   await page.getByLabel('Description', { exact: false }).first().fill('After entering an amount the Send button never turns orange.');
+  await page.getByLabel('Platform').selectOption('ios');
+  await page.getByLabel('Network').selectOption('mainnet');
+  await page.getByLabel('Contact email').fill('user@example.com');
 }
 
 for (const width of [1440, 390]) {
@@ -26,7 +29,7 @@ for (const width of [1440, 390]) {
     page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/contact');
-    await expect(page.getByRole('heading', { name: 'Send us your feedback', level: 1 })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Send us your concerns and feedback', level: 1 })).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
     const result = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
     expect(result.violations.map(v => ({ id: v.id, nodes: v.nodes.map(n => n.target) }))).toEqual([]);
@@ -41,7 +44,7 @@ test('the form asks the same questions as the hosted form, in the same order', a
   expect(labels).toEqual([
     'Feedback type (required)', 'Short title (required)', 'Description (required)',
     'Steps to reproduce', 'Expected result', 'Actual result',
-    'Platform', 'App version', 'Network', 'Screenshot (optional)', 'Contact email'
+    'Platform (required)', 'App version', 'Network (required)', 'Screenshot (optional)', 'Contact email (required)'
   ]);
   expect(await page.getByLabel('Feedback type').locator('option:not([disabled])').allTextContents()).toEqual(['Bug', 'Feature', 'Suggestion', 'General']);
   expect(await page.getByLabel('Platform').locator('option').allTextContents()).toEqual(['Select platform', 'iOS', 'Android', 'Chrome extension']);
@@ -93,7 +96,7 @@ test('a failed send says so and nothing is lost', async ({ page }) => {
   await expect(page.getByLabel('Short title')).toHaveValue('Send button stays grey');
 });
 
-test('the browser requires the three required fields before sending', async ({ page }) => {
+test('the browser requires the required fields before sending', async ({ page }) => {
   const requests = await worker(page, 200, { ok: true });
   await page.goto('/contact');
   await page.getByRole('button', { name: 'Submit feedback' }).click();
@@ -110,6 +113,6 @@ test('a field the Worker rejects is marked, described and focused', async ({ pag
   const email = page.getByLabel('Contact email');
   await expect(email).toBeFocused();
   await expect(email).toHaveAttribute('aria-invalid', 'true');
-  await expect(email).toHaveAttribute('aria-describedby', 'contact-email-hint contact-error');
+  await expect(email).toHaveAttribute('aria-describedby', 'contact-error');
   await expect(page.getByRole('alert')).toHaveText('Check Contact email and send again.');
 });

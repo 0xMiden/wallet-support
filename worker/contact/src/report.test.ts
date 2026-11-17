@@ -18,7 +18,7 @@ function form(fields: Record<string, string | File>): FormData {
   return data;
 }
 
-const minimal = { type: 'bug', title: 'Send button stays grey', description: 'After entering an amount the Send button never turns orange.' };
+const minimal = { type: 'bug', title: 'Send button stays grey', description: 'After entering an amount the Send button never turns orange.', platform: 'ios', network: 'mainnet', email: 'user@example.com' };
 
 async function report(fields: Record<string, string | File> = {}): Promise<Report> {
   const result = await parseReport(form({ ...minimal, ...fields }));
@@ -27,12 +27,12 @@ async function report(fields: Record<string, string | File> = {}): Promise<Repor
 }
 
 describe('parseReport', () => {
-  it('accepts the three required fields alone', async () => {
+  it('accepts the six required fields alone', async () => {
     const result = await report();
-    expect(result).toMatchObject({ type: 'bug', title: minimal.title, platform: '', network: '', email: '', screenshot: null });
+    expect(result).toMatchObject({ type: 'bug', title: minimal.title, platform: 'ios', network: 'mainnet', email: 'user@example.com', steps: '', screenshot: null });
   });
 
-  it.each(['type', 'title', 'description'])('requires %s', async (field) => {
+  it.each(['type', 'title', 'description', 'platform', 'network', 'email'])('requires %s', async (field) => {
     const result = await parseReport(form({ ...minimal, [field]: '  ' }));
     expect(result).toEqual({ error: 'invalid', field });
   });
@@ -102,12 +102,6 @@ describe('supportEmail', () => {
     expect(email.subject).toBe('[Bug] Send button stays grey');
     expect(email.attachments).toEqual([expect.objectContaining({ filename: 'shot.jpg', type: 'image/jpeg', disposition: 'attachment' })]);
     expect(email.html).toContain('Open as GitHub issue');
-  });
-
-  it('says when replies cannot reach the reporter', async () => {
-    const email = supportEmail(await report());
-    expect(email.replyTo).toBeUndefined();
-    expect(email.text).toContain('No email given');
   });
 
   it('escapes user text in the HTML and keeps the subject on one line', async () => {

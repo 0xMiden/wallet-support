@@ -66,9 +66,9 @@ export interface Report {
   steps: string;
   expected: string;
   actual: string;
-  platform: keyof typeof PLATFORMS | '';
+  platform: keyof typeof PLATFORMS;
   version: string;
-  network: keyof typeof NETWORKS | '';
+  network: keyof typeof NETWORKS;
   email: string;
   screenshot: Screenshot | null;
 }
@@ -107,12 +107,13 @@ export async function parseReport(form: FormData): Promise<Report | ReportError>
   if (!oneOf(type, FEEDBACK_TYPES)) return { error: 'invalid', field: 'type' };
   if (!fields.title) return { error: 'invalid', field: 'title' };
   if (!fields.description) return { error: 'invalid', field: 'description' };
+  if (!oneOf(platform, PLATFORMS)) return { error: 'invalid', field: 'platform' };
+  if (!oneOf(network, NETWORKS)) return { error: 'invalid', field: 'network' };
+  if (!fields.email) return { error: 'invalid', field: 'email' };
   for (const [name, limit] of Object.entries(LIMITS)) {
     if (fields[name as keyof typeof fields].length > limit) return { error: 'invalid', field: name };
   }
-  if (platform && !oneOf(platform, PLATFORMS)) return { error: 'invalid', field: 'platform' };
-  if (network && !oneOf(network, NETWORKS)) return { error: 'invalid', field: 'network' };
-  if (fields.email && !EMAIL.test(fields.email)) return { error: 'invalid', field: 'email' };
+  if (!EMAIL.test(fields.email)) return { error: 'invalid', field: 'email' };
 
   // A report is emailed and may be copied to a public GitHub issue, so a
   // recovery phrase or key is refused outright rather than sent on.
@@ -165,9 +166,9 @@ interface Section {
 function sections(report: Report): Section[] {
   return [
     { label: 'Feedback type', value: FEEDBACK_TYPES[report.type] },
-    { label: 'Platform', value: report.platform ? PLATFORMS[report.platform] : '' },
+    { label: 'Platform', value: PLATFORMS[report.platform] },
     { label: 'App version', value: report.version },
-    { label: 'Network', value: report.network ? NETWORKS[report.network] : '' },
+    { label: 'Network', value: NETWORKS[report.network] },
     { label: 'Description', value: report.description },
     { label: 'Steps to reproduce', value: report.steps },
     { label: 'Expected result', value: report.expected },
@@ -226,7 +227,7 @@ export interface SupportEmail {
 export function supportEmail(report: Report): SupportEmail {
   const subject = oneLine(`[${FEEDBACK_TYPES[report.type]}] ${report.title}`).slice(0, 200);
   const issueUrl = githubIssueUrl(report);
-  const from = report.email || 'No email given. Replies cannot reach this person.';
+  const from = report.email;
   const details = sections(report);
 
   const text = [
@@ -253,7 +254,7 @@ ${details.map(({ label, value }) => `<p style="margin:0 0 12px"><strong>${escape
     subject,
     text,
     html,
-    ...(report.email ? { replyTo: report.email } : {}),
+    replyTo: report.email,
     ...(report.screenshot
       ? { attachments: [{ content: report.screenshot.content, filename: report.screenshot.name, type: report.screenshot.type, disposition: 'attachment' as const }] }
       : {}),

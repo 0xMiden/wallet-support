@@ -19,7 +19,7 @@ function env(overrides: Partial<Env> = {}): Env & { sent: unknown[] } {
 /** A form POST as a browser sends it, with its Content-Length. */
 async function post(fields: Record<string, string>, headers: Record<string, string> = { origin: ORIGIN }): Promise<Request> {
   const form = new FormData();
-  for (const [name, value] of Object.entries({ type: 'general', title: 'A question', description: 'How do I add a token?', ...fields })) form.append(name, value);
+  for (const [name, value] of Object.entries({ type: 'general', title: 'A question', description: 'How do I add a token?', platform: 'android', network: 'testnet', email: 'user@example.com', ...fields })) form.append(name, value);
   const encoded = new Request('https://x/', { method: 'POST', body: form });
   const body = await encoded.arrayBuffer();
   return new Request('https://contact.miden.xyz/', {
