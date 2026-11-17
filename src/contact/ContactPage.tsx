@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import type { ChangeEvent, FormEvent, ReactNode } from 'react';
-import { CloudUpload, FileText, Info, Layers, Mail, Paperclip, ShieldCheck, Smartphone, Tag, Target, TriangleAlert } from 'lucide-react';
+import type { ChangeEvent, FormEvent } from 'react';
 import { HelpCenterFooter } from '../help-center/HelpCenterFooter';
 import { helpCenterMainCategories } from '../help-center/categories';
 import { errorMessage, sendContactReport } from './api';
@@ -21,10 +20,9 @@ type State =
   | { kind: 'sent'; email: string }
   | { kind: 'failed'; message: string; field?: string };
 
-function Label({ htmlFor, children, icon, required }: { htmlFor: string; children: string; icon?: ReactNode; required?: boolean }) {
+function Label({ htmlFor, children, required }: { htmlFor: string; children: string; required?: boolean }) {
   return (
     <label className="contact-label" htmlFor={htmlFor}>
-      {icon}
       <span>{children}{required ? <span className="contact-required" aria-hidden="true"> *</span> : null}</span>
     </label>
   );
@@ -97,7 +95,6 @@ export function ContactPage() {
         ) : (
           <form className="contact-form" onSubmit={submit} aria-describedby="contact-safety">
             <div className="contact-warning" id="contact-safety" role="note">
-              <ShieldCheck className="contact-warning-icon" aria-hidden="true" />
               <p><strong>Keep your wallet safe.</strong> Never include a recovery phrase, signing key,
                 password, or a screenshot that shows one.</p>
             </div>
@@ -114,21 +111,21 @@ export function ContactPage() {
 
               <div className="contact-row contact-row-3">
                 <div className="contact-field">
-                  <Label htmlFor="contact-type" icon={<Tag aria-hidden="true" />} required>Feedback type</Label>
+                  <Label htmlFor="contact-type" required>Feedback type</Label>
                   <select id="contact-type" {...describe('type')} name="type" required defaultValue="">
                     <option value="" disabled>Select feedback type</option>
                     {FEEDBACK_TYPES.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
                   </select>
                 </div>
                 <div className="contact-field">
-                  <Label htmlFor="contact-platform" icon={<Smartphone aria-hidden="true" />} required>Platform</Label>
+                  <Label htmlFor="contact-platform" required>Platform</Label>
                   <select id="contact-platform" {...describe('platform')} name="platform" required defaultValue="">
                     <option value="" disabled>Select platform</option>
                     {PLATFORMS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
                   </select>
                 </div>
                 <div className="contact-field">
-                  <Label htmlFor="contact-network" icon={<Layers aria-hidden="true" />} required>Network</Label>
+                  <Label htmlFor="contact-network" required>Network</Label>
                   <select id="contact-network" {...describe('network')} name="network" required defaultValue="">
                     <option value="" disabled>Select network</option>
                     {NETWORKS.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
@@ -137,7 +134,7 @@ export function ContactPage() {
               </div>
 
               <div className="contact-field">
-                <Label htmlFor="contact-description" icon={<FileText aria-hidden="true" />} required>Description</Label>
+                <Label htmlFor="contact-description" required>Description</Label>
                 <textarea
                   id="contact-description" {...describe('description', 'contact-description-count')} name="description" required
                   maxLength={MAX_DESCRIPTION} rows={4} onChange={event => setDescriptionLength(event.target.value.length)}
@@ -148,18 +145,17 @@ export function ContactPage() {
 
               <div className="contact-row contact-row-3">
                 <div className="contact-field">
-                  <Label htmlFor="contact-email" icon={<Mail aria-hidden="true" />} required>Contact email</Label>
+                  <Label htmlFor="contact-email" required>Contact email</Label>
                   <input id="contact-email" {...describe('email')} name="email" type="email" required maxLength={254} autoComplete="email" placeholder="Your email address" />
                 </div>
                 <div className="contact-field">
-                  <Label htmlFor="contact-version" icon={<Info aria-hidden="true" />}>App version</Label>
+                  <Label htmlFor="contact-version">App version</Label>
                   <input id="contact-version" {...describe('version')} name="version" type="text" maxLength={40} placeholder="Optional" autoComplete="off" />
                 </div>
                 <div className="contact-field">
-                  <Label htmlFor="contact-screenshot" icon={<Paperclip aria-hidden="true" />}>Screenshot or video (optional)</Label>
+                  <Label htmlFor="contact-screenshot">Screenshot or video (optional)</Label>
                   <div className="contact-drop">
                     <input id="contact-screenshot" {...describe('screenshot', 'contact-screenshot-hint')} name="screenshot" type="file" accept={ATTACHMENT_TYPES} onChange={chooseFile} />
-                    <CloudUpload className="contact-drop-icon" aria-hidden="true" />
                     <span className="contact-drop-text" aria-hidden="true">{fileName || <>Drag &amp; drop or <span className="contact-drop-choose">Choose File</span></>}</span>
                   </div>
                   <p className="contact-hint" id="contact-screenshot-hint">PNG, JPEG, WebP, MP4, MOV or WebM, up to 15 MB</p>
@@ -174,11 +170,11 @@ export function ContactPage() {
                 </div>
                 <div className="contact-row contact-row-2">
                   <div className="contact-field">
-                    <Label htmlFor="contact-expected" icon={<Target aria-hidden="true" />}>Expected result</Label>
+                    <Label htmlFor="contact-expected">Expected result</Label>
                     <textarea id="contact-expected" {...describe('expected')} name="expected" maxLength={2000} rows={2} placeholder="What should have happened?" />
                   </div>
                   <div className="contact-field">
-                    <Label htmlFor="contact-actual" icon={<TriangleAlert aria-hidden="true" />}>Actual result</Label>
+                    <Label htmlFor="contact-actual">Actual result</Label>
                     <textarea id="contact-actual" {...describe('actual')} name="actual" maxLength={2000} rows={2} placeholder="What actually happened?" />
                   </div>
                 </div>
