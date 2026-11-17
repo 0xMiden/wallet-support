@@ -7,6 +7,12 @@ const ROOT = fileURLToPath(new URL('../', import.meta.url));
 const SCANNED_EXTENSIONS = new Set(['.html', '.json', '.md', '.ts', '.tsx']);
 const IGNORED_DIRECTORIES = new Set(['.git', 'dist', 'node_modules', 'playwright-report', 'test-results']);
 const URL_PATTERN = /https?:\/\/[^\s<>'")\]]+/g;
+/*
+ * Addresses code posts to, not pages anyone opens. The contact Worker answers
+ * only a form POST from support.miden.xyz, so a HEAD or GET is refused by
+ * design and would read as a dead link.
+ */
+const FORM_ENDPOINTS = new Set(['https://contact.miden.xyz/']);
 const MAX_ATTEMPTS = 3;
 const CONCURRENCY = 8;
 
@@ -65,7 +71,7 @@ async function collectLinks() {
       } catch {
         continue;
       }
-      if (isPrivateHost(url.hostname)) continue;
+      if (isPrivateHost(url.hostname) || FORM_ENDPOINTS.has(url.href)) continue;
       const locations = links.get(value) ?? [];
       locations.push(relative(ROOT, file));
       links.set(value, locations);

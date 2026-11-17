@@ -131,8 +131,12 @@ export async function handle(request: Request, env: Env): Promise<Response> {
     // The code tells the team which setup step is missing; for example
     // E_SENDER_NOT_VERIFIED means Email Sending has to be turned on.
     const code = (error as { code?: unknown }).code;
-    console.error('contact: email not sent', typeof code === 'string' ? code : '', (error as Error).message ?? '');
-    return reply(env, 502, { ok: false, error: 'send_failed' });
+    const known = typeof code === 'string' && /^E_[A-Z_]+$/.test(code) ? code : undefined;
+    console.error('contact: email not sent', known ?? '', (error as Error).message ?? '');
+    // Cloudflare's code describes a setup state, not a secret, so it is also
+    // returned: the first test report shows it in the browser's Network tab
+    // without anyone opening the Worker's logs.
+    return reply(env, 502, { ok: false, error: 'send_failed', ...(known ? { code: known } : {}) });
   }
 
   return reply(env, 200, { ok: true });

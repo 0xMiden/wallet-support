@@ -121,13 +121,15 @@ cd worker/contact
 npx wrangler@4.131.1 deploy
 ```
 
-A failed send is logged with Cloudflare's error code. `E_SENDER_NOT_VERIFIED` means the domain
+A failed send is logged with Cloudflare's error code and returns it in the response body, so the
+first test report shows it in the browser's Network tab. `E_SENDER_NOT_VERIFIED` means the domain
 also has to be onboarded for Email Sending. The Turnstile bot check is optional: the Worker
 checks a token only when `TURNSTILE_SECRET` is set. The form does not show the widget yet, so the
 secret must not be set until a later change adds the widget and its CSP entries; set before that,
 it refuses every report. Its tests run with the main unit suite. The
 form stays unlinked until the Worker is deployed and a test report arrives; Contact Support still
-opens the hosted form in `src/help-center/links.ts`.
+opens the hosted form in `src/help-center/links.ts`. The recovery-phrase check imports `bip39.ts` and
+`secret-scan.ts` from `worker/feedback/src/lib/`; move them before removing the feedback Worker.
 
 ## Feedback Worker
 

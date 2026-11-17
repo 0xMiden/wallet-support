@@ -98,7 +98,7 @@ describe('contact Worker', () => {
     const e = env({ EMAIL: { send: async () => { throw failure; } } });
     const response = await handle(await post({}), e);
     expect(response.status).toBe(502);
-    expect(await response.json()).toEqual({ ok: false, error: 'send_failed' });
+    expect(await response.json()).toEqual({ ok: false, error: 'send_failed', code: 'E_SENDER_NOT_VERIFIED' });
     expect(log).toHaveBeenCalledWith('contact: email not sent', 'E_SENDER_NOT_VERIFIED', 'sender not verified');
   });
 
