@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
-const FEEDBACK = 'https://cmuv78o9w003x5ebpyha3cf6p.zapier.app/page';
+const FEEDBACK = '/contact';
 const directory = new URL('../src/help-center/content/', import.meta.url).pathname;
 const articles = [...readdirSync(directory)].sort().map(file => {
   const source = readFileSync(join(directory, file), 'utf8');
@@ -43,7 +43,7 @@ for (const { width, platform } of [
       for (const link of await body.locator('a').all()) {
         const href = await link.getAttribute('href') ?? '';
         expect(href, article.id).not.toContain('miden-feedback-relay.workers.dev');
-        if (href === FEEDBACK) await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+        if (href === FEEDBACK) await expect(link).not.toHaveAttribute('target', '_blank');
       }
       if (Number(article.file.slice(0, 2)) >= 59) await page.screenshot({ path: testInfo.outputPath(`${width}-${article.id}.png`), fullPage: true });
     }
@@ -56,30 +56,20 @@ for (const { width, platform } of [
     expect(writes).toEqual([]);
   });
 
-  test(`feedback header and compatibility button navigate safely at ${width}px`, async ({ page, context }) => {
-    await context.route(`${FEEDBACK}**`, route => route.fulfill({ status: 200, contentType: 'text/html', body: '<h1>Mock feedback destination</h1>' }));
+  test(`Send feedback in the header opens the contact form at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
-    for (const path of ['/', '/topics', '/feedback', '/#common-issues-and-support/how-do-i-send-feedback-or-report-a-problem']) {
+    for (const path of ['/', '/topics', '/#common-issues-and-support/how-do-i-send-feedback-or-report-a-problem']) {
       await page.goto(path);
       if (width <= 900) await page.getByRole('button', { name: 'Open site navigation' }).click();
       const header = width <= 900 ? page.getByRole('dialog').locator('.public-feedback-link') : page.locator('.public-feedback-link');
       await header.focus();
       await expect(header).toBeFocused();
-      const popupPromise = page.waitForEvent('popup');
       await page.keyboard.press('Enter');
-      const popup = await popupPromise;
-      await expect(popup).toHaveURL(FEEDBACK);
-      await expect(popup.getByRole('heading')).toHaveText('Mock feedback destination');
-      await popup.close();
+      await expect(page).toHaveURL(/\/contact$/);
+      await expect(page.getByRole('heading', { name: 'Send us your concerns or feedback', level: 1 })).toBeVisible();
     }
     await page.goto('/feedback');
-    const button = page.getByRole('link', { name: 'Submit feedback', exact: true });
-    await button.focus();
-    await expect(button).toBeFocused();
-    const popupPromise = page.waitForEvent('popup');
-    await page.keyboard.press('Enter');
-    const popup = await popupPromise;
-    await expect(popup).toHaveURL(FEEDBACK);
-    await expect(page.locator('form.feedback-form')).toHaveCount(0);
+    await expect(page.getByRole('heading', { name: 'Send us your concerns or feedback', level: 1 })).toBeVisible();
   });
+
 }

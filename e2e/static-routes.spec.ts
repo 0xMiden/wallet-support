@@ -8,7 +8,8 @@ for (const width of [375, 1280]) {
     await page.setViewportSize({ width, height: 900 });
     for (const [path, title] of [
       ['/topics', 'All topics'], ['/topics/', 'All topics'],
-      ['/feedback', 'Help us improve Bread Wallet'], ['/feedback/', 'Help us improve Bread Wallet']
+      ['/feedback', 'Send us your concerns or feedback'], ['/feedback/', 'Send us your concerns or feedback'],
+      ['/contact', 'Send us your concerns or feedback'], ['/contact/', 'Send us your concerns or feedback']
     ]) {
       expect((await page.goto(`${origin()}${path}`))?.status()).toBe(200);
       await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible();

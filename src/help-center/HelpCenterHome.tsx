@@ -79,7 +79,7 @@ export function HelpCenterHome({ mainCategories, firstCategoryId, onSearch }: He
 
         <section className="help-home-support" aria-labelledby="help-home-support-title">
           <div className="help-home-support-copy"><h2 id="help-home-support-title">A little more help?</h2><p>Tell us what happened, or share an idea for Bread.<br />Keep your recovery phrase and keys to yourself.</p></div>
-          <a className="help-center-contact-button" href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">Contact Support<ArrowIcon /></a>
+          <a className="help-center-contact-button" href={CONTACT_SUPPORT_URL}>Contact Support<ArrowIcon /></a>
         </section>
       </main>
       <HelpCenterFooter mainCategories={mainCategories} firstCategoryId={firstCategoryId} />

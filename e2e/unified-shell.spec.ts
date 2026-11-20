@@ -19,27 +19,17 @@ test('home, topics, and articles retain one stable public header', async ({ page
   expect(await header.boundingBox()).toEqual(initial);
 });
 
-test('feedback compatibility page opens the approved hosted form without submitting', async ({ page, context }) => {
+test('the old /feedback address opens the contact form and sends nothing on its own', async ({ page, context }) => {
   const unexpectedWrites: string[] = [];
   await context.route('**/*', async route => {
     const request = route.request();
-    if (!['GET', 'HEAD'].includes(request.method())) unexpectedWrites.push(request.url());
-    if (request.url().startsWith('https://cmuv78o9w003x5ebpyha3cf6p.zapier.app/')) {
-      await route.fulfill({ status: 200, contentType: 'text/html', body: '<h1>Mock hosted feedback form</h1>' });
-    } else if (!['GET', 'HEAD'].includes(request.method())) await route.abort();
+    if (!['GET', 'HEAD'].includes(request.method())) { unexpectedWrites.push(request.url()); await route.abort(); }
     else await route.continue();
   });
   await page.goto('/feedback');
-  await expect(page.getByRole('heading', { name: 'Help us improve Bread Wallet' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Send us your concerns or feedback', level: 1 })).toBeVisible();
   await expect(page.getByText('Never include a recovery phrase')).toBeVisible();
-  await expect(page.locator('form.feedback-form')).toHaveCount(0);
-  const button = page.getByRole('link', { name: 'Submit feedback', exact: true });
-  await expect(button).toHaveAttribute('href', 'https://cmuv78o9w003x5ebpyha3cf6p.zapier.app/page');
-  const popupPromise = page.waitForEvent('popup');
-  await button.click();
-  const popup = await popupPromise;
-  await expect(popup).toHaveURL('https://cmuv78o9w003x5ebpyha3cf6p.zapier.app/page');
-  await expect(popup.getByRole('heading')).toHaveText('Mock hosted feedback form');
+  await expect(page.locator('.public-feedback-link')).toHaveCount(0);
   expect(unexpectedWrites).toEqual([]);
-  await expect(page.locator('a[href*="miden-feedback-relay.workers.dev"]')).toHaveCount(0);
+  await expect(page.locator('a[href*="zapier.app"], a[href*="miden-feedback-relay.workers.dev"]')).toHaveCount(0);
 });
