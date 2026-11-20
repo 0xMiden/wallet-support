@@ -5,6 +5,8 @@ import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vitest/config';
 import { loadEnv } from 'vite';
 
+import { routeCsp } from './worker/feedback/src/lib/security-headers';
+
 /*
  * The headers Cloudflare Pages serves, read from public/_headers (the build
  * copies it into dist/). `vite preview` serves the same set, so the e2e suite
@@ -46,6 +48,8 @@ export default defineConfig(({ command, mode }) => {
     }
   }
 
+  const { 'Content-Security-Policy': siteCsp = '', ...headers } = pagesHeaders();
+
   return {
     plugins: [react(), {
       name: 'public-route-documents',
@@ -56,17 +60,28 @@ export default defineConfig(({ command, mode }) => {
         handler(_options, bundle) {
           const document = bundle['index.html'];
           if (!document || document.type !== 'asset') throw new Error('Built index.html is missing');
-          for (const path of ['topics', 'feedback']) {
+          for (const path of ['topics', 'feedback', 'contact']) {
             this.emitFile({ type: 'asset', fileName: `${path}/index.html`, source: document.source });
           }
         }
+      }
+    }, {
+      name: 'route-csp',
+      // The production Worker gives /feedback and /contact their own policy, for
+      // Turnstile (worker/feedback/src/lib/security-headers.ts). Preview applies
+      // the same rule, so the e2e suite runs the contact form under its real policy.
+      configurePreviewServer(server) {
+        server.middlewares.use((req, res, next) => {
+          res.setHeader('Content-Security-Policy', routeCsp(new URL(req.originalUrl ?? '/', 'http://preview').pathname) ?? siteCsp);
+          next();
+        });
       }
     }],
     build: {
       target: 'es2022'
     },
     preview: {
-      headers: pagesHeaders()
+      headers
     },
     test: {
     /*
@@ -76,7 +91,7 @@ export default defineConfig(({ command, mode }) => {
      * the two suites apart would make the next e2e file the one that breaks
      * the unit run.
      */
-      include: ['src/**/*.test.ts']
+      include: ['src/**/*.test.ts', 'worker/contact/src/**/*.test.ts']
     }
   };
 });
