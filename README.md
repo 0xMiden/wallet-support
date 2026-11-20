@@ -109,9 +109,8 @@ packages, runs their unit suites and browser tests, and builds the production as
 `worker/contact/` is the Worker behind the Help Center contact form at `/contact`. It receives a
 report from the form, refuses recovery phrases and keys, and emails the report to
 `support@miden.team` through Cloudflare's built-in email binding, with the screenshot attached,
-Reply-To set to the reporter, and a link to a blank new issue on `0xMiden/wallet`. Nothing from the
-report goes in that link; the email asks whoever files the issue to redact the text and any
-screenshot or video first. It stores nothing and needs no API key.
+Reply-To set to the reporter, and an **Open as GitHub issue** link that opens a pre-filled issue
+on `0xMiden/wallet` without the reporter's name or email. It stores nothing and needs no API key.
 
 It runs at `contact.miden.xyz` on the Cloudflare account that holds `miden.xyz`. The Miden team
 sets it up once: turn on Email Routing for `miden.xyz`, verify `support@miden.team` as a

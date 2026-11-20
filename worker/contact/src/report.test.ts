@@ -2,9 +2,11 @@ import { describe, expect, it } from 'vitest';
 
 import {
   GITHUB_NEW_ISSUE,
+  MAX_ISSUE_URL,
   MAX_SCREENSHOT_BYTES,
-  REDACT_NOTE,
+  SHORTENED_NOTE,
   escapeHtml,
+  githubIssueUrl,
   parseReport,
   supportEmail,
   type Report,
@@ -69,6 +71,8 @@ describe('parseReport', () => {
     for (const [type, name] of [['video/mp4', 'video.mp4'], ['video/quicktime', 'video.mov'], ['video/webm', 'video.webm']]) {
       const result = await report({ screenshot: new File(['x'], '<bad>', { type }) });
       expect(result.screenshot).toMatchObject({ type, name });
+      const url = new URL(githubIssueUrl(result));
+      expect(url.searchParams.get('body')).toContain('A video is attached to the support email.');
       expect(supportEmail(result).text).toContain('Attachment: video attached.');
     }
   });
@@ -80,22 +84,34 @@ describe('parseReport', () => {
   });
 });
 
+describe('githubIssueUrl', () => {
+  it('fills the title and body and carries no name, email or label', async () => {
+    const url = new URL(githubIssueUrl(await report({ email: 'user@example.com', platform: 'ios', version: '1.16.1' })));
+    expect(`${url.origin}${url.pathname}`).toBe(GITHUB_NEW_ISSUE);
+    expect(url.searchParams.get('title')).toBe(minimal.title);
+    expect(url.searchParams.get('body')).toContain('**Platform**\niOS');
+    expect(url.searchParams.get('body')).toContain('**App version**\n1.16.1');
+    expect(url.toString()).not.toContain('example.com');
+    expect(url.searchParams.has('labels')).toBe(false);
+  });
+
+  it('shortens a long report to fit, without splitting characters', async () => {
+    const long = await report({ description: 'Ünïcødé 🐞 line\n'.repeat(120) });
+    const url = githubIssueUrl(long);
+    expect(url.length).toBeLessThanOrEqual(MAX_ISSUE_URL);
+    const body = new URL(url).searchParams.get('body') ?? '';
+    expect(body.endsWith(SHORTENED_NOTE)).toBe(true);
+    expect(body).not.toMatch(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])/);
+  });
+});
+
 describe('supportEmail', () => {
   it('sets Reply-To to the reporter and attaches the screenshot', async () => {
     const email = supportEmail(await report({ email: 'user@example.com', screenshot: new File(['x'], 'shot.jpg', { type: 'image/jpeg' }) }));
     expect(email.replyTo).toBe('user@example.com');
     expect(email.subject).toBe('[Bug] Send button stays grey');
     expect(email.attachments).toEqual([expect.objectContaining({ filename: 'shot.jpg', type: 'image/jpeg', disposition: 'attachment' })]);
-    expect(email.html).toContain('Open a blank GitHub issue');
-  });
-
-  it('links a blank GitHub issue that carries nothing from the report, and says to redact', async () => {
-    const email = supportEmail(await report({ title: 'Marker title', description: 'Marker description', version: '9.9.9', email: 'user@example.com', screenshot: new File(['x'], 'shot.png', { type: 'image/png' }) }));
-    for (const body of [email.text, email.html]) {
-      const links = body.match(/https:\/\/github\.com[^\s"<]*/g);
-      expect(links).toEqual([GITHUB_NEW_ISSUE]);
-      expect(body).toContain(REDACT_NOTE);
-    }
+    expect(email.html).toContain('Open as GitHub issue');
   });
 
   it('escapes user text in the HTML and keeps the subject on one line', async () => {
