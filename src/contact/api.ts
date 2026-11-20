@@ -40,6 +40,8 @@ export function errorMessage(result: Extract<ContactResult, { ok: false }>): str
         : 'Check the form and send again.';
     case 'rate_limited':
       return 'Too many reports in a short time. Wait a minute and send again.';
+    case 'bot_check':
+      return "Verification didn't finish. Send again in a moment. What you entered is still here.";
     default:
       return "Your report wasn't sent. Try again in a few minutes. What you entered is still here.";
   }

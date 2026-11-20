@@ -192,45 +192,13 @@ function sections(report: Report): Section[] {
   ].filter((section) => section.value !== '');
 }
 
+/**
+ * A blank new-issue page. Nothing from the report goes in the link: whoever
+ * reads the email decides what reaches the public repository, and redacts it
+ * first.
+ */
 export const GITHUB_NEW_ISSUE = 'https://github.com/0xMiden/wallet/issues/new';
-
-/**
- * GitHub refuses long query strings: measured on 2026-11-16, a 6,000-character
- * URL opened, 7,000 failed with a server error and 9,000 with "URI Too Long".
- * This caps the ENCODED URL, which is what GitHub measures; spaces, line
- * breaks and non-ASCII text can grow several times when encoded.
- */
-export const MAX_ISSUE_URL = 5000;
-export const SHORTENED_NOTE = '\n\n_Shortened to fit the link. The full report is in the support email._';
-
-/**
- * Opens GitHub's new-issue page with the title and body filled in. It carries
- * no name, email or label, so anyone with a GitHub account can submit it.
- */
-export function githubIssueUrl(report: Report): string {
-  const title = oneLine(report.title);
-  const body = [
-    ...sections(report).map(({ label, value }) => `**${label}**\n${value}`),
-    report.screenshot ? `_A ${attachmentKind(report)} is attached to the support email._` : '',
-    '_Sent from the Help Center contact form._',
-  ].filter(Boolean).join('\n\n');
-
-  const url = (text: string) =>
-    `${GITHUB_NEW_ISSUE}?title=${encodeURIComponent(title)}&body=${encodeURIComponent(text)}`;
-  if (url(body).length <= MAX_ISSUE_URL) return url(body);
-
-  // Longest prefix that fits, counted in code points so an emoji or accented
-  // letter is never cut in half.
-  const characters = Array.from(body);
-  let low = 0;
-  let high = characters.length;
-  while (low < high) {
-    const middle = Math.ceil((low + high) / 2);
-    if (url(characters.slice(0, middle).join('') + SHORTENED_NOTE).length <= MAX_ISSUE_URL) low = middle;
-    else high = middle - 1;
-  }
-  return url(characters.slice(0, low).join('').trimEnd() + SHORTENED_NOTE);
-}
+export const REDACT_NOTE = 'Redact the text and any screenshot or video before you share them on GitHub.';
 
 export interface SupportEmail {
   subject: string;
@@ -242,7 +210,6 @@ export interface SupportEmail {
 
 export function supportEmail(report: Report): SupportEmail {
   const subject = oneLine(`[${FEEDBACK_TYPES[report.type]}] ${report.title}`).slice(0, 200);
-  const issueUrl = githubIssueUrl(report);
   const from = report.email;
   const details = sections(report);
 
@@ -254,7 +221,8 @@ export function supportEmail(report: Report): SupportEmail {
     ...details.flatMap(({ label, value }) => [`${label}:`, value, '']),
     report.screenshot ? `Attachment: ${attachmentKind(report)} attached.` : 'Attachment: none.',
     '',
-    `Open as GitHub issue: ${issueUrl}`,
+    `Open a blank GitHub issue: ${GITHUB_NEW_ISSUE}`,
+    REDACT_NOTE,
   ].join('\n');
 
   const html = `<!doctype html><html><body style="font-family:sans-serif;line-height:1.5">
@@ -262,8 +230,8 @@ export function supportEmail(report: Report): SupportEmail {
 <p style="margin:0 0 16px"><strong>From:</strong> ${escapeHtml(from)}</p>
 ${details.map(({ label, value }) => `<p style="margin:0 0 12px"><strong>${escapeHtml(label)}</strong><br>${escapeHtml(value).replace(/\n/g, '<br>')}</p>`).join('\n')}
 <p style="margin:0 0 20px">Attachment: ${report.screenshot ? `${attachmentKind(report)} attached.` : 'none.'}</p>
-<p><a href="${escapeHtml(issueUrl)}" style="display:inline-block;padding:10px 18px;border-radius:999px;background:#e77537;color:#ffffff;text-decoration:none;font-weight:bold">Open as GitHub issue</a></p>
-<p style="color:#6b6b6b;font-size:13px">The issue page opens without the reporter's name or email. Drag the attachment in before you submit.</p>
+<p><a href="${GITHUB_NEW_ISSUE}" style="display:inline-block;padding:10px 18px;border-radius:999px;background:#e77537;color:#ffffff;text-decoration:none;font-weight:bold">Open a blank GitHub issue</a></p>
+<p style="color:#6b6b6b;font-size:13px">${REDACT_NOTE}</p>
 </body></html>`;
 
   return {

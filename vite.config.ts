@@ -5,6 +5,8 @@ import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vitest/config';
 import { loadEnv } from 'vite';
 
+import { routeCsp } from './worker/feedback/src/lib/security-headers';
+
 /*
  * The headers Cloudflare Pages serves, read from public/_headers (the build
  * copies it into dist/). `vite preview` serves the same set, so the e2e suite
@@ -46,6 +48,8 @@ export default defineConfig(({ command, mode }) => {
     }
   }
 
+  const { 'Content-Security-Policy': siteCsp = '', ...headers } = pagesHeaders();
+
   return {
     plugins: [react(), {
       name: 'public-route-documents',
@@ -61,12 +65,23 @@ export default defineConfig(({ command, mode }) => {
           }
         }
       }
+    }, {
+      name: 'route-csp',
+      // The production Worker gives /feedback and /contact their own policy, for
+      // Turnstile (worker/feedback/src/lib/security-headers.ts). Preview applies
+      // the same rule, so the e2e suite runs the contact form under its real policy.
+      configurePreviewServer(server) {
+        server.middlewares.use((req, res, next) => {
+          res.setHeader('Content-Security-Policy', routeCsp(new URL(req.originalUrl ?? '/', 'http://preview').pathname) ?? siteCsp);
+          next();
+        });
+      }
     }],
     build: {
       target: 'es2022'
     },
     preview: {
-      headers: pagesHeaders()
+      headers
     },
     test: {
     /*

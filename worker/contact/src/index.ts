@@ -4,7 +4,7 @@
  * Receives one report from the form on support.miden.xyz, checks it, and
  * emails it to the support inbox through Cloudflare's built-in email binding.
  * It stores nothing and calls no outside service; the only outbound request is
- * the optional Turnstile check, which is Cloudflare's own.
+ * the Turnstile check, which is Cloudflare's own.
  */
 
 import { parseReport, supportEmail } from './report';
@@ -32,7 +32,7 @@ export interface Env {
   ALLOWED_ORIGIN: string;
   FROM_ADDRESS: string;
   TO_ADDRESS: string;
-  /** Optional. When set, every report must carry a passing Turnstile token. */
+  /** Secret for the form's Turnstile site key. Without it, no report is sent. */
   TURNSTILE_SECRET?: string;
 }
 
@@ -107,11 +107,15 @@ export async function handle(request: Request, env: Env): Promise<Response> {
   const trap = form.get('website');
   if (typeof trap === 'string' && trap.trim() !== '') return reply(env, 200, { ok: true });
 
-  if (env.TURNSTILE_SECRET) {
-    const token = form.get('cf-turnstile-response');
-    if (typeof token !== 'string' || !token || !(await turnstilePasses(token, env.TURNSTILE_SECRET, ip))) {
-      return reply(env, 403, { ok: false, error: 'bot_check' });
-    }
+  // Mail goes out only after Turnstile passes. A Worker deployed without its
+  // secret refuses every report rather than skip the check.
+  if (!env.TURNSTILE_SECRET) {
+    console.error('contact: TURNSTILE_SECRET is not set');
+    return reply(env, 503, { ok: false, error: 'send_failed' });
+  }
+  const token = form.get('cf-turnstile-response');
+  if (typeof token !== 'string' || !token || !(await turnstilePasses(token, env.TURNSTILE_SECRET, ip))) {
+    return reply(env, 403, { ok: false, error: 'bot_check' });
   }
 
   const report = await parseReport(form);

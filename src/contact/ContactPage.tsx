@@ -14,6 +14,68 @@ const FEEDBACK_TYPES = [['bug', 'Bug'], ['feature', 'Feature'], ['suggestion', '
 const PLATFORMS = [['ios', 'iOS'], ['android', 'Android'], ['extension', 'Chrome extension']] as const;
 const NETWORKS = [['mainnet', 'Mainnet'], ['testnet', 'Testnet']] as const;
 
+/** Public site key, set at build time. The matching secret lives only on the contact Worker. */
+const TURNSTILE_SITE_KEY: string = import.meta.env.VITE_TURNSTILE_SITE_KEY ?? '';
+const TURNSTILE_SCRIPT = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render(container: HTMLElement, options: { sitekey: string; appearance: 'interaction-only'; 'before-interactive-callback': () => void }): string;
+      remove(widgetId: string): void;
+    };
+  }
+}
+
+let turnstileScript: Promise<void> | undefined;
+
+/** Loads Cloudflare's script once, on this page only. A failed load is tried again next time. */
+function loadTurnstile(): Promise<void> {
+  turnstileScript ??= new Promise<void>((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = TURNSTILE_SCRIPT;
+    script.onload = () => resolve();
+    script.onerror = () => {
+      script.remove();
+      turnstileScript = undefined;
+      reject(new Error('Turnstile did not load'));
+    };
+    document.head.append(script);
+  });
+  return turnstileScript;
+}
+
+/**
+ * Cloudflare Turnstile, Managed and drawn only when it needs the visitor; it
+ * is marked shown then, so the button gives it room. It writes its token into
+ * a hidden cf-turnstile-response field inside the form, so the token travels
+ * with the report. A token works once, so the form gives this a new key after
+ * every send: a fresh render rather than reset(), for the reason in
+ * worker/feedback/docs/SAFETY-CONTROLS.md, section 0.1a.
+ */
+function Turnstile() {
+  const container = useRef<HTMLDivElement>(null);
+  const [shown, setShown] = useState(false);
+  useEffect(() => {
+    let widget: string | undefined;
+    let mounted = true;
+    loadTurnstile().then(() => {
+      if (mounted && container.current && window.turnstile) {
+        widget = window.turnstile.render(container.current, {
+          sitekey: TURNSTILE_SITE_KEY,
+          appearance: 'interaction-only',
+          'before-interactive-callback': () => setShown(true)
+        });
+      }
+    }, () => {});
+    return () => {
+      mounted = false;
+      if (widget) window.turnstile?.remove(widget);
+    };
+  }, []);
+  return <div className="contact-turnstile" data-shown={shown || undefined} ref={container} />;
+}
+
 type State =
   | { kind: 'editing' }
   | { kind: 'sending' }
@@ -33,6 +95,7 @@ export function ContactPage() {
   const [state, setState] = useState<State>({ kind: 'editing' });
   const [descriptionLength, setDescriptionLength] = useState(0);
   const [fileName, setFileName] = useState('');
+  const [widgetKey, setWidgetKey] = useState(0);
   const status = useRef<HTMLDivElement>(null);
   const sentHeading = useRef<HTMLHeadingElement>(null);
 
@@ -64,9 +127,17 @@ export function ContactPage() {
       return;
     }
     if (attachment instanceof File && attachment.size === 0) data.delete('screenshot');
+    // No token yet: the check is still running, waits for the visitor, or its
+    // script did not load, in which case a new widget loads it again.
+    if (!data.get('cf-turnstile-response')) {
+      if (!window.turnstile) setWidgetKey(key => key + 1);
+      setState({ kind: 'failed', message: errorMessage({ ok: false, error: 'bot_check' }) });
+      return;
+    }
 
     setState({ kind: 'sending' });
     const result: ContactResult = await sendContactReport(data);
+    setWidgetKey(key => key + 1);
     if (result.ok) {
       const email = String(data.get('email') ?? '').trim();
       form.reset();
@@ -186,6 +257,8 @@ export function ContactPage() {
                 <label htmlFor="contact-website">Website</label>
                 <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
               </div>
+
+              <Turnstile key={widgetKey} />
 
               <button className="help-center-contact-button contact-submit" type="submit" disabled={state.kind === 'sending'}>
                 {state.kind === 'sending' ? 'Sending…' : 'Submit feedback'}

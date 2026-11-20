@@ -63,6 +63,10 @@
 .contact-bug .contact-field input:not([type='file']),
 .contact-bug .contact-field textarea { background: var(--help-panel); }
 
+/* Turnstile, centred over the button. Until it needs the visitor it is 0px
+   tall, so the button takes back the grid gap the empty row would add. */
+.contact-turnstile { text-align: center; }
+.contact-turnstile:not([data-shown]) + .contact-submit { margin-top: calc(var(--space-5) * -1); }
 .contact-submit { justify-self: center; width: min(100%, calc(var(--space-9) * 4)); }
 .contact-submit:disabled { cursor: progress; background: var(--help-accent-hover); }
 

@@ -1,8 +1,11 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi, type MockInstance } from 'vitest';
 
 import { handle, type Env } from './index';
 
 const ORIGIN = 'https://support.miden.xyz';
+/** Cloudflare's always-pass test secret and the dummy token its test site keys issue. */
+const TEST_SECRET = '1x0000000000000000000000000000000AA';
+const TEST_TOKEN = 'XXXX.DUMMY.TOKEN.XXXX';
 
 function env(overrides: Partial<Env> = {}): Env & { sent: unknown[] } {
   const sent: unknown[] = [];
@@ -12,6 +15,7 @@ function env(overrides: Partial<Env> = {}): Env & { sent: unknown[] } {
     ALLOWED_ORIGIN: ORIGIN,
     FROM_ADDRESS: 'help-center@miden.xyz',
     TO_ADDRESS: 'support@miden.team',
+    TURNSTILE_SECRET: TEST_SECRET,
     ...overrides,
   };
 }
@@ -19,7 +23,7 @@ function env(overrides: Partial<Env> = {}): Env & { sent: unknown[] } {
 /** A form POST as a browser sends it, with its Content-Length. */
 async function post(fields: Record<string, string>, headers: Record<string, string> = { origin: ORIGIN }): Promise<Request> {
   const form = new FormData();
-  for (const [name, value] of Object.entries({ type: 'general', title: 'A question', description: 'How do I add a token?', platform: 'android', network: 'testnet', email: 'user@example.com', ...fields })) form.append(name, value);
+  for (const [name, value] of Object.entries({ type: 'general', title: 'A question', description: 'How do I add a token?', platform: 'android', network: 'testnet', email: 'user@example.com', 'cf-turnstile-response': TEST_TOKEN, ...fields })) form.append(name, value);
   const encoded = new Request('https://x/', { method: 'POST', body: form });
   const body = await encoded.arrayBuffer();
   return new Request('https://contact.miden.xyz/', {
@@ -29,6 +33,13 @@ async function post(fields: Record<string, string>, headers: Record<string, stri
   });
 }
 
+/** Cloudflare's siteverify, answering with the given result. */
+function siteverify(result: Record<string, unknown>): MockInstance<typeof fetch> {
+  return vi.spyOn(globalThis, 'fetch').mockImplementation(async () => new Response(JSON.stringify(result)));
+}
+
+let verify: MockInstance<typeof fetch>;
+beforeEach(() => { verify = siteverify({ success: true }); });
 afterEach(() => vi.restoreAllMocks());
 
 describe('contact Worker', () => {
@@ -44,6 +55,13 @@ describe('contact Worker', () => {
       replyTo: 'user@example.com',
       subject: '[General] A question',
     })]);
+
+    expect(verify).toHaveBeenCalledOnce();
+    const [url, init] = verify.mock.calls[0]!;
+    expect(url).toBe('https://challenges.cloudflare.com/turnstile/v0/siteverify');
+    const sent = init?.body as FormData;
+    expect(sent.get('secret')).toBe(TEST_SECRET);
+    expect(sent.get('response')).toBe(TEST_TOKEN);
   });
 
   it('refuses requests from any other origin, before sending', async () => {
@@ -102,17 +120,32 @@ describe('contact Worker', () => {
     expect(log).toHaveBeenCalledWith('contact: email not sent', 'E_SENDER_NOT_VERIFIED', 'sender not verified');
   });
 
-  it('skips the bot check without a secret, and requires a passing token with one', async () => {
-    const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(JSON.stringify({ success: true })));
-    expect((await handle(await post({}), env())).status).toBe(200);
-    expect(fetchMock).not.toHaveBeenCalled();
+  it('sends nothing without a token, and checks no token with Cloudflare', async () => {
+    const e = env();
+    const response = await handle(await post({ 'cf-turnstile-response': '' }), e);
+    expect(response.status).toBe(403);
+    expect(await response.json()).toEqual({ ok: false, error: 'bot_check' });
+    expect(verify).not.toHaveBeenCalled();
+    expect(e.sent).toEqual([]);
+  });
 
-    const e = env({ TURNSTILE_SECRET: 'secret' });
-    expect((await handle(await post({}), e)).status).toBe(403);
-    expect((await handle(await post({ 'cf-turnstile-response': 'token' }), e)).status).toBe(200);
-    expect(fetchMock).toHaveBeenCalledOnce();
+  it.each(['invalid-input-response', 'timeout-or-duplicate'])('sends nothing when Cloudflare answers %s', async (code) => {
+    siteverify({ success: false, 'error-codes': [code] });
+    const e = env();
+    const response = await handle(await post({}), e);
+    expect(response.status).toBe(403);
+    expect(await response.json()).toEqual({ ok: false, error: 'bot_check' });
+    expect(e.sent).toEqual([]);
+  });
 
-    fetchMock.mockResolvedValue(new Response(JSON.stringify({ success: false })));
-    expect((await handle(await post({ 'cf-turnstile-response': 'bad' }), e)).status).toBe(403);
+  it('refuses every report when the Turnstile secret is missing', async () => {
+    const log = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const e = env({ TURNSTILE_SECRET: undefined });
+    const response = await handle(await post({}), e);
+    expect(response.status).toBe(503);
+    expect(await response.json()).toEqual({ ok: false, error: 'send_failed' });
+    expect(log).toHaveBeenCalledWith('contact: TURNSTILE_SECRET is not set');
+    expect(verify).not.toHaveBeenCalled();
+    expect(e.sent).toEqual([]);
   });
 });
