@@ -104,6 +104,34 @@ Skip a single push with `git push --no-verify`.
 and every push to `main`. It validates the feedback database migration chain, typechecks both
 packages, runs their unit suites and browser tests, and builds the production assets.
 
+## Contact Worker
+
+`worker/contact/` is the Worker behind the Help Center contact form at `/contact`. It receives a
+report from the form, refuses recovery phrases and keys, and emails the report to
+`support@miden.team` through Cloudflare's built-in email binding, with the screenshot attached,
+Reply-To set to the reporter, and an **Open as GitHub issue** link that opens a pre-filled issue
+on `0xMiden/wallet` without the reporter's name or email. It stores nothing and needs no API key.
+
+It runs at `contact.miden.xyz` on the Cloudflare account that holds `miden.xyz`. The Miden team
+sets it up once: turn on Email Routing for `miden.xyz`, verify `support@miden.team` as a
+destination address, then set the Turnstile secret and deploy from this folder:
+
+```bash
+cd worker/contact
+npx wrangler@4.131.1 secret put TURNSTILE_SECRET
+npx wrangler@4.131.1 deploy
+```
+
+A failed send is logged with Cloudflare's error code and returns it in the response body, so the
+first test report shows it in the browser's Network tab. `E_SENDER_NOT_VERIFIED` means the domain
+also has to be onboarded for Email Sending. Every report needs a passing Turnstile token: the form
+renders the widget with the build's `VITE_TURNSTILE_SITE_KEY`, and the Worker checks the token with
+`TURNSTILE_SECRET`, the secret of that same widget. Without the secret it sends nothing and logs
+`contact: TURNSTILE_SECRET is not set`. Its tests run with the main unit suite. The
+form stays unlinked until the Worker is deployed and a test report arrives; Contact Support still
+opens the hosted form in `src/help-center/links.ts`. The recovery-phrase check imports `bip39.ts` and
+`secret-scan.ts` from `worker/feedback/src/lib/`; move them before removing the feedback Worker.
+
 ## Feedback Worker
 
 The imported feedback service lives in `worker/feedback/`. It keeps its D1 migrations, private R2
@@ -236,4 +264,6 @@ only the site's own scripts, styles, fonts and images, `frame-ancestors 'none'` 
 `Referrer-Policy: strict-origin-when-cross-origin`. The build copies it into `dist/`, and
 `vite preview` serves the same headers, so `yarn e2e` runs the built page under the policy and
 `e2e/security-headers.spec.ts` fails on any violation. Anything the site newly loads from somewhere
-else needs a matching change to the policy.
+else needs a matching change to the policy. On `/feedback` and `/contact` the production Worker swaps
+in a policy that also allows Cloudflare Turnstile (`worker/feedback/src/lib/security-headers.ts`), and
+`vite preview` applies the same rule.
