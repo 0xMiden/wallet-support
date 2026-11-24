@@ -40,7 +40,7 @@ Bread labels this route **Fast · Epoch**. A third party delivers your funds on 
 - Polygon: USDC and POL
 - Robinhood Chain: ETH and USDG
 
-USDC sent through this route arrives in Bread as USDCX. If a Fast transfer gets stuck, see [*How do I get my funds back from a stuck bridge-in transfer?*](#common-issues-and-support/how-do-i-get-my-funds-back-from-a-stuck-bridge-in-transfer)
+USDC sent through this route arrives in Bread as USDCX. If a Fast transfer gets stuck, see [*How do I get my funds back from a locked or failed transfer in Bread?*](#common-issues-and-support/how-do-i-get-my-funds-back-from-a-stuck-bridge-in-transfer) or [*How do I recover a locked deposit on Miden Bridge?*](#common-issues-and-support/how-do-i-recover-a-locked-deposit-on-miden-bridge)
 
 **Not available on Partner Mainnet**
 

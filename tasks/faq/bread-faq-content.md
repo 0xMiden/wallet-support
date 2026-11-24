@@ -66,7 +66,7 @@ Revised for Brian's 2026-10-23 launch support audit. Sixty-two articles. Existin
 | 58 | Why won't my wallet connect? | Troubleshooting | Common issues |
 | 59 | Why does my USDC bridge to Bread show Failed? | Troubleshooting | Common issues |
 | 60 | Why do I need USDCX for network fees? | Troubleshooting | Common issues |
-| 61 | How do I get my funds back from a stuck bridge-in transfer? | Troubleshooting | Common issues |
+| 61 | How do I get my funds back from a locked or failed transfer in Bread? | Troubleshooting | Common issues |
 | 62 | How do I recover a locked deposit on Miden Bridge? | Troubleshooting | Common issues |
 
 ## Articles
@@ -848,7 +848,7 @@ A disabled route can stop new transfers without cancelling a transfer already in
 
 For a USDC or USDCX transfer on Circle's route, see *My USDC or USDCX bridge transfer hasn't arrived. Who can help?*
 
-If a transfer on the Fast route is stuck, see *How do I get my funds back from a stuck bridge-in transfer?*
+If a transfer on the Fast route is stuck, see *How do I get my funds back from a locked or failed transfer in Bread?* or *How do I recover a locked deposit on Miden Bridge?*
 
 If Bread shows **Bridge deposit failed**, see *What should I do if a bridge deposit fails?*
 
@@ -978,7 +978,7 @@ Bread labels this route **Fast · Epoch**. A third party delivers your funds on 
 - Polygon: USDC and POL
 - Robinhood Chain: ETH and USDG
 
-USDC sent through this route arrives in Bread as USDCX. If a Fast transfer gets stuck, see *How do I get my funds back from a stuck bridge-in transfer?*
+USDC sent through this route arrives in Bread as USDCX. If a Fast transfer gets stuck, see *How do I get my funds back from a locked or failed transfer in Bread?* or *How do I recover a locked deposit on Miden Bridge?*
 
 **Not available on Partner Mainnet**
 
@@ -1021,7 +1021,7 @@ If Bread shows **Bridge deposit failed** after your external wallet, such as Met
 5. Tap **Connect another wallet**, choose the same wallet again and approve the connection in it.
 6. Enter the amount and continue. Approve each request in your wallet as it appears.
 
-If tokens left your external wallet but never reached Bread, see *How do I get my funds back from a stuck bridge-in transfer?*
+If tokens left your external wallet but never reached Bread, see *How do I get my funds back from a locked or failed transfer in Bread?*
 
 If it still fails, report the error, the networks, the token and your wallet version. Hide sensitive information in screenshots. See *How do I send feedback or report a problem?*
 
@@ -1094,7 +1094,7 @@ These steps send USDCX from Bread to your MetaMask wallet. It arrives in MetaMas
 ### 50. My USDC or USDCX bridge transfer hasn't arrived. Who can help?
 Category: Troubleshooting › Common issues
 
-Transfers between USDC on **Ethereum**, **Base**, **Arbitrum One** or **Arc** and USDCX on Miden use Circle's xReserve route. Bread handles the Miden side of the transfer and Circle completes the other side. Many delays can be resolved in Bread, so start there. This page covers Circle's route. If your transfer used the Fast route, see *How do I get my funds back from a stuck bridge-in transfer?*
+Transfers between USDC on **Ethereum**, **Base**, **Arbitrum One** or **Arc** and USDCX on Miden use Circle's xReserve route. Bread handles the Miden side of the transfer and Circle completes the other side. Many delays can be resolved in Bread, so start there. This page covers Circle's route. If your transfer used the Fast route, see *How do I get my funds back from a locked or failed transfer in Bread?*
 
 **Check Bread first**
 
@@ -1200,7 +1200,7 @@ Category: Troubleshooting › Common issues
    - **Source transaction failed** or **The contract rejected this transfer**: the transaction was refused on the source network. Check the amount and try again.
 3. Reload the page, reconnect both wallets, and try again.
 
-If tokens left your external wallet but never reached Bread, see *How do I get my funds back from a stuck bridge-in transfer?*
+If tokens left your external wallet but never reached Bread, see *How do I recover a locked deposit on Miden Bridge?* You can also recover it in Bread: see *How do I get my funds back from a locked or failed transfer in Bread?*
 
 If it still fails, contact [support](/feedback) with the message, the networks, the token and the time.
 
@@ -1221,7 +1221,7 @@ Category: Troubleshooting › Common issues
 ### 59. Why does my USDC bridge to Bread show Failed?
 Category: Troubleshooting › Common issues
 
-When you add USDC to Bread from **Ethereum**, **Base**, **Arbitrum One** or **Arc**, Circle's xReserve route turns it into USDCX on Miden. A **Failed** transfer doesn't always mean nothing was sent, so check before you try again. This page covers Circle's route. For a transfer on the Fast route, see *How do I get my funds back from a stuck bridge-in transfer?*
+When you add USDC to Bread from **Ethereum**, **Base**, **Arbitrum One** or **Arc**, Circle's xReserve route turns it into USDCX on Miden. A **Failed** transfer doesn't always mean nothing was sent, so check before you try again. This page covers Circle's route. For a transfer on the Fast route, see *How do I get my funds back from a locked or failed transfer in Bread?*
 
 1. Check your external wallet, such as MetaMask, for a USDC deposit at that time.
    - **No USDC left your wallet:** nothing was sent, and your USDC is still there. You can try again.
@@ -1267,7 +1267,7 @@ From **Base** or **Arbitrum One**, Circle adds its fee on top of the USDC you de
 
 If a transaction fails, check **Activity** and your balances before you try again. If the problem continues, contact [support](/feedback).
 
-### 61. How do I get my funds back from a stuck bridge-in transfer?
+### 61. How do I get my funds back from a locked or failed transfer in Bread?
 Category: Troubleshooting › Common issues
 
 Most Fast transfers through Epoch finish within a few minutes. If one gets stuck, your funds are not lost, and you can get them back yourself. What to do depends on the direction:
@@ -1275,7 +1275,7 @@ Most Fast transfers through Epoch finish within a few minutes. If one gets stuck
 - **Bridge in**, from an external wallet such as MetaMask into Bread: the deposit can stay locked on the network you sent from.
 - **Bridge out**, from Bread to another blockchain: the funds come back to Bread.
 
-This page covers the Fast route through Epoch. For USDC through Circle, see *Why does my USDC bridge to Bread show Failed?*
+This page is only for transfers on the Fast route, which Bread labels **Fast · Epoch**. For USDC through Circle, see *Why does my USDC bridge to Bread show Failed?*
 
 **Bridge in: why the deposit is locked**
 
@@ -1283,9 +1283,13 @@ When you bridge in with Epoch, your tokens first go into a deposit contract call
 
 Only the external wallet that made the deposit can take the funds out. Bread, Epoch and Miden can't move them.
 
+You can also get the deposit back on Miden Bridge, without Bread. See *How do I recover a locked deposit on Miden Bridge?*
+
 In **Activity**, the transfer shows **Deposit locked**. A transfer made with an older version of Bread may show **Failed** instead.
 
 **Get your deposit back**
+
+If the transfer's details in **Activity** show **Retry bridge**, you can try it first to send the deposit on to Bread. If that doesn't work, or the button isn't there, withdraw the deposit as below.
 
 The screenshots show the Bread extension with MetaMask on a phone. Your wallet address, network, token and amount may differ.
 
@@ -1314,6 +1318,8 @@ The screenshots show the Bread extension with MetaMask on a phone. Your wallet a
 
    ![Final MetaMask transaction request showing USDC to receive on Polygon and the Confirm button](E76-recover-metamask-withdraw.png)
 
+8. To bridge this token in again from the same wallet, tap **Disable withdrawal** and confirm in your external wallet. Until you do, Bread can't start a new Fast transfer of that token from that address. Miden Bridge calls this button **Cancel withdrawal**.
+
 If Bread asks you to connect your wallet again, this can happen after you close the browser or lose the connection to MetaMask. Close Bread and fully quit your browser, then reopen it and unlock Bread with your password. Reconnect the same MetaMask wallet and continue with the withdrawal.
 
 **Good to know**
@@ -1337,14 +1343,14 @@ Never share your recovery phrase, keys or wallet backup file. Bread support will
 ### 62. How do I recover a locked deposit on Miden Bridge?
 Category: Troubleshooting › Common issues
 
-If a Fast transfer into Bread gets stuck, your deposit can stay locked in The Compact, the deposit contract Epoch uses on the network you sent from. You can send it back to your external wallet on [Miden Bridge](https://bridge.miden.xyz/recovery), without opening Bread.
+This page is only for transfers on the Fast route, which Bread labels **Fast · Epoch**. If a Fast transfer into Bread gets stuck, your deposit can stay locked in The Compact, the deposit contract Epoch uses on the network you sent from. You can send it back to your external wallet on [Miden Bridge](https://bridge.miden.xyz/recovery), without opening Bread.
 
 **Miden Bridge or Bread?**
 
-Both check the same locked deposit, and both return it to the external wallet that made it, on the network you sent from. Neither sends it to Bread. Use one of them, not both at once.
+Both check the same locked deposit. Withdrawing it on either one returns it to the external wallet that made it, on the network you sent from, not to Bread. Use one of them, not both at once.
 
 - **Miden Bridge:** use it in a browser where your external wallet is installed, such as MetaMask in Chrome on a computer. It needs only the wallet that made the deposit, not Bread. It finds every locked deposit for that wallet, whichever app made it.
-- **Bread:** use **Recover locked bridge funds** in **Advanced Settings** if you're already in Bread. See *How do I get my funds back from a stuck bridge-in transfer?*
+- **Bread:** use **Recover locked bridge funds** in **Advanced Settings** if you're already in Bread. Bread can also offer **Retry bridge**, which tries to send the deposit on to Bread instead. See *How do I get my funds back from a locked or failed transfer in Bread?*
 
 **Before you start**
 
@@ -1360,7 +1366,7 @@ Both check the same locked deposit, and both return it to the external wallet th
 4. Select the deposit, then select **Start withdrawal** and approve the transaction in your wallet. The 65-minute wait starts when it confirms.
 5. Wait until the deposit shows **Ready to withdraw**. Until then it shows **Available in** and the time left.
 6. Select **Withdraw to wallet** and approve the second transaction. When it confirms, the page shows **Withdrawal complete**, and the whole locked balance of that token is back in your wallet.
-7. Select **Cancel withdrawal** and approve. Until you do, Fast deposits of that token from this wallet stay paused, even though the funds are already out.
+7. Select **Cancel withdrawal** and approve. Until you do, Fast deposits of that token from this wallet stay paused, even though the funds are already out. Bread calls this button **Disable withdrawal**.
 
 If more than one deposit is locked, repeat steps 4 to 7 for each.
 

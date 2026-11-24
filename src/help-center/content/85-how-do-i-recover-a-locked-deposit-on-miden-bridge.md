@@ -6,14 +6,14 @@ subcategory: common-issues-and-support
 platforms: [extension-desktop, mobile]
 ---
 
-If a Fast transfer into Bread gets stuck, your deposit can stay locked in The Compact, the deposit contract Epoch uses on the network you sent from. You can send it back to your external wallet on [Miden Bridge](https://bridge.miden.xyz/recovery), without opening Bread.
+This page is only for transfers on the Fast route, which Bread labels **Fast · Epoch**. If a Fast transfer into Bread gets stuck, your deposit can stay locked in The Compact, the deposit contract Epoch uses on the network you sent from. You can send it back to your external wallet on [Miden Bridge](https://bridge.miden.xyz/recovery), without opening Bread.
 
 **Miden Bridge or Bread?**
 
-Both check the same locked deposit, and both return it to the external wallet that made it, on the network you sent from. Neither sends it to Bread. Use one of them, not both at once.
+Both check the same locked deposit. Withdrawing it on either one returns it to the external wallet that made it, on the network you sent from, not to Bread. Use one of them, not both at once.
 
 - **Miden Bridge:** use it in a browser where your external wallet is installed, such as MetaMask in Chrome on a computer. It needs only the wallet that made the deposit, not Bread. It finds every locked deposit for that wallet, whichever app made it.
-- **Bread:** use **Recover locked bridge funds** in **Advanced Settings** if you're already in Bread. See [*How do I get my funds back from a stuck bridge-in transfer?*](#common-issues-and-support/how-do-i-get-my-funds-back-from-a-stuck-bridge-in-transfer)
+- **Bread:** use **Recover locked bridge funds** in **Advanced Settings** if you're already in Bread. Bread can also offer **Retry bridge**, which tries to send the deposit on to Bread instead. See [*How do I get my funds back from a locked or failed transfer in Bread?*](#common-issues-and-support/how-do-i-get-my-funds-back-from-a-stuck-bridge-in-transfer)
 
 **Before you start**
 
@@ -29,7 +29,7 @@ Both check the same locked deposit, and both return it to the external wallet th
 4. Select the deposit, then select **Start withdrawal** and approve the transaction in your wallet. The 65-minute wait starts when it confirms.
 5. Wait until the deposit shows **Ready to withdraw**. Until then it shows **Available in** and the time left.
 6. Select **Withdraw to wallet** and approve the second transaction. When it confirms, the page shows **Withdrawal complete**, and the whole locked balance of that token is back in your wallet.
-7. Select **Cancel withdrawal** and approve. Until you do, Fast deposits of that token from this wallet stay paused, even though the funds are already out.
+7. Select **Cancel withdrawal** and approve. Until you do, Fast deposits of that token from this wallet stay paused, even though the funds are already out. Bread calls this button **Disable withdrawal**.
 
 If more than one deposit is locked, repeat steps 4 to 7 for each.
 
