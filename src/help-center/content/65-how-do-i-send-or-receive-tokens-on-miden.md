@@ -10,7 +10,7 @@ For a transfer within Miden, both wallets must use the same network. A transfer 
 
 **To receive:**
 
-Open **Receive** and share the account address or QR code for the intended network. Share the address, never your recovery phrase or signing keys. Ask the sender to check the network and token. Incoming transfers may need to be accepted in **Activity** before they become spendable.
+Open **Receive** and share the account address or QR code for the intended network. Share the address, never your recovery phrase or signing keys. Ask the sender to check the network and token. Incoming transfers may need to be accepted in **Activity** before they become spendable. A very small balance can be hidden from **Home**. See [*Why don't I see a token on Home?*](#common-issues-and-support/why-dont-i-see-a-token-on-home)
 
 **To send:**
 

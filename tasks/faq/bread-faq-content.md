@@ -355,7 +355,7 @@ If accepting fails, see *What should I do if accepting a transfer fails?*.
 
 **Decline** only hides a transfer from **Activity** on this device. It does not return the tokens to the sender or delete the transfer. To bring hidden transfers back, select the **Pending** tab, then select the **Restore** button next to **Hidden transfers**.
 
-Eligible USDCX transfers can be accepted automatically in versions where **Auto-accept USDCX transfers** is on in **General** settings, so it may not appear as a pending transfer. Auto-accept skips a transfer worth less than its network fee, and waits while the fee isn't known yet, so a small transfer can stay in **Pending** with auto-accept on. Accept it yourself if you want it.
+Eligible USDCX transfers can be accepted automatically in versions where **Auto-accept USDCX transfers** is on in **General** settings, so it may not appear as a pending transfer. Auto-accept skips a transfer worth less than its network fee, and waits while the fee isn't known yet, so a small transfer can stay in **Pending** with auto-accept on. Accept it yourself if you want it. A very small balance can also be hidden from **Home** after you accept it. See *Why don't I see a token on Home?*
 
 ### 19. What should I do if accepting a transfer fails?
 Category: Troubleshooting › Common issues
@@ -876,7 +876,7 @@ For a transfer within Miden, both wallets must use the same network. A transfer 
 
 **To receive:**
 
-Open **Receive** and share the account address or QR code for the intended network. Share the address, never your recovery phrase or signing keys. Ask the sender to check the network and token. Incoming transfers may need to be accepted in **Activity** before they become spendable.
+Open **Receive** and share the account address or QR code for the intended network. Share the address, never your recovery phrase or signing keys. Ask the sender to check the network and token. Incoming transfers may need to be accepted in **Activity** before they become spendable. A very small balance can be hidden from **Home**. See *Why don't I see a token on Home?*
 
 **To send:**
 
