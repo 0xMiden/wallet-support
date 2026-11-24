@@ -61,6 +61,16 @@ test('the document carries the declared security headers', async ({ page }) => {
   expect(declared['referrer-policy']).toBe('strict-origin-when-cross-origin');
 });
 
+test('the contact page policy adds only Cloudflare Turnstile: its script and its frame', async ({ page }) => {
+  const response = await page.goto('/contact');
+  expect(response).not.toBeNull();
+  const served = Object.fromEntries(directives(response!.headers()['content-security-policy'] ?? ''));
+  const expected = Object.fromEntries(directives(declared['content-security-policy'] as string));
+  expected['script-src'] = [...(expected['script-src'] ?? []), 'https://challenges.cloudflare.com'];
+  expected['frame-src'] = ['https://challenges.cloudflare.com'];
+  expect(served).toEqual(expected);
+});
+
 /*
  * Every page shape the site has, and the one form: home, the home search
  * submitted by typing, a shared search link, a subcategory, an article with

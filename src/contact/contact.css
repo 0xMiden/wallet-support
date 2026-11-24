@@ -1,0 +1,89 @@
+/* Contact form. Tokens only (src/help-center/tokens.css). Layout follows the
+   approved mock: the safety note, then one card holding the fields in rows of
+   three, and the bug details in a tinted panel. Rows stack below 740px. */
+.contact-main { width: min(100%, var(--frame)); margin: 0 auto; padding: var(--space-8) var(--gutter); }
+/* The form reads at the measure plus a sidebar's width: wide enough for three
+   fields in a row, narrow enough to scan. */
+.contact-intro, .contact-form, .contact-sent { max-width: calc(var(--measure) + var(--sidebar-width)); margin-inline: auto; }
+.contact-intro { margin-bottom: var(--space-5); }
+.contact-intro h1 { margin: 0; color: var(--text-strong); font: var(--weight-display) var(--text-2xl)/1.2 var(--font-display); letter-spacing: var(--tracking-heading); }
+.contact-intro > p { margin: var(--space-2) 0 0; color: var(--text-muted); font-size: var(--text-base); line-height: 1.65; }
+
+.contact-form, .contact-sent { display: grid; gap: var(--space-4); }
+.contact-warning { padding: var(--space-4) var(--space-5); border-radius: var(--radius-md); color: var(--accent-text); background: var(--tint-soft); line-height: 1.65; }
+.contact-warning p { margin: 0; }
+
+.contact-card { display: grid; gap: var(--space-5); padding: var(--space-6); border: 1px solid var(--help-line); border-radius: var(--radius-card); background: var(--help-panel); }
+.contact-error { padding: var(--space-4) var(--space-5); border: 1px solid var(--tint-edge); border-radius: var(--radius-md); color: var(--accent-text); background: var(--tint-soft); font-weight: var(--weight-semibold); line-height: 1.65; }
+
+.contact-row { display: grid; gap: var(--space-5); }
+.contact-field { display: grid; gap: var(--space-2); align-content: start; min-width: 0; }
+.contact-label { display: flex; align-items: center; gap: var(--space-2); color: var(--text-strong); font-family: var(--font-display); font-size: var(--text-md); font-weight: var(--weight-strong); }
+.contact-required { color: var(--accent-text); }
+.contact-hint { margin: 0; color: var(--text-muted); font-size: var(--text-sm); line-height: 1.65; }
+.contact-count { margin: 0; justify-self: end; color: var(--text-muted); font-size: var(--text-sm); font-variant-numeric: tabular-nums; }
+
+.contact-field input:not([type='file']),
+.contact-field select,
+.contact-field textarea {
+  width: 100%;
+  min-height: var(--space-7);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--help-fill-pressed);
+  border-radius: var(--radius-xs);
+  color: var(--text-body);
+  background: var(--help-panel-subtle);
+  font: var(--weight-regular) var(--text-md)/1.65 var(--font-body);
+  transition: border-color 160ms ease, background 160ms ease;
+}
+.contact-field textarea { resize: vertical; }
+.contact-field input::placeholder, .contact-field textarea::placeholder { color: var(--text-muted); }
+.contact-field input:not([type='file']):focus,
+.contact-field select:focus,
+.contact-field textarea:focus { border-color: var(--help-accent); background: var(--help-panel-elevated); }
+/* One ring, not two: the 3px focus ring is drawn over the field's own edge
+   instead of 3px outside it, so the orange border and the ring read as one. */
+.contact-field input:not([type='file']):focus-visible,
+.contact-field select:focus-visible,
+.contact-field textarea:focus-visible { outline-offset: -1px; }
+
+/* The file input covers the drop area, invisibly, so both dropping a file and
+   clicking open the picker natively. The ring moves to the visible area. */
+.contact-drop { position: relative; min-height: var(--space-7); display: flex; align-items: center; justify-content: center; gap: var(--space-2); padding: var(--space-2) var(--space-4); border: 1px dashed var(--text-faint); border-radius: var(--radius-xs); color: var(--text-body); background: var(--help-panel); font-size: var(--text-sm); text-align: center; transition: border-color 160ms ease; }
+.contact-drop input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.contact-drop:hover { border-color: var(--help-accent); }
+.contact-drop:focus-within { outline: 3px solid var(--help-accent); outline-offset: 3px; }
+.contact-drop-text { min-width: 0; overflow-wrap: anywhere; }
+.contact-drop-choose { color: var(--accent-text); font-weight: var(--weight-strong); }
+
+.contact-bug { display: grid; gap: var(--space-4); margin: 0; padding: var(--space-5); border: 1px solid var(--tint-medium); border-radius: var(--radius-md); background: var(--tint-faint); }
+.contact-bug legend { float: left; width: 100%; padding: 0; color: var(--text-strong); font: var(--weight-strong) var(--text-base)/1.2 var(--font-display); }
+/* Pulled up under the legend, so the two read as one heading. */
+.contact-bug-hint { margin-top: calc(var(--space-3) * -1); }
+.contact-bug .contact-field input:not([type='file']),
+.contact-bug .contact-field textarea { background: var(--help-panel); }
+
+/* Turnstile, centred over the button. Until it needs the visitor it is 0px
+   tall, so the button takes back the grid gap the empty row would add. */
+.contact-turnstile { text-align: center; }
+.contact-turnstile:not([data-shown]) + .contact-submit { margin-top: calc(var(--space-5) * -1); }
+.contact-submit { justify-self: center; width: min(100%, calc(var(--space-9) * 4)); }
+.contact-submit:disabled { cursor: progress; background: var(--help-accent-hover); }
+
+.contact-sent h2 { margin: 0; color: var(--text-strong); font: var(--weight-display) var(--text-xl)/1.2 var(--font-display); letter-spacing: var(--tracking-heading); }
+.contact-sent p { margin: 0; color: var(--text-body); font-size: var(--text-base); line-height: 1.65; }
+.contact-sent button { justify-self: start; }
+
+/* Off-screen rather than display:none, which some bots skip. */
+.contact-trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+@media (min-width: 620px) { .contact-row-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 740px) { .contact-row-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 620px) {
+  .contact-main { padding-top: var(--space-7); }
+  .contact-card { padding: var(--space-4); }
+  .contact-bug { padding: var(--space-4); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .contact-field input, .contact-field select, .contact-field textarea, .contact-drop { transition: none; }
+}

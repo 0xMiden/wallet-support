@@ -16,7 +16,8 @@ export function PublicShell({ active, children }: { active: PublicRoute; childre
   const links = <>
     <a href="/" aria-current={active === 'help' ? 'page' : undefined}>Help Center</a>
     <a href="/topics" aria-current={active === 'topics' ? 'page' : undefined}>All topics</a>
-    <a className="public-feedback-link" href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">Send feedback<ArrowUpRight aria-hidden="true" /></a>
+    {/* Not on the contact form itself, where it would lead back to the same form. */}
+    {active !== 'contact' ? <a className="public-feedback-link" href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">Send feedback<ArrowUpRight aria-hidden="true" /></a> : null}
   </>;
   return (
     <div className="public-shell">

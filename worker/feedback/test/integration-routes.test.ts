@@ -24,12 +24,14 @@ describe('combined support routes', () => {
     expect(admin.headers.get('content-type')).toContain('text/plain');
   });
 
-  it('adds Turnstile allowances only to the feedback page policy', async () => {
-    const feedback = await callWorker(new Request('https://support.miden.xyz/feedback'));
-    const feedbackSlash = await callWorker(new Request('https://support.miden.xyz/feedback/'));
+  it('adds Turnstile allowances only to the feedback and contact page policies', async () => {
+    for (const path of ['/feedback', '/feedback/', '/contact', '/contact/']) {
+      const page = await callWorker(new Request(`https://support.miden.xyz${path}`));
+      expect(page.headers.get('content-security-policy'), path).toContain('https://challenges.cloudflare.com');
+    }
+    const contact = await callWorker(new Request('https://support.miden.xyz/contact'));
+    expect(contact.headers.get('content-security-policy')).toContain("connect-src 'self' https://contact.miden.xyz;");
     const ordinary = await callWorker(new Request('https://support.miden.xyz/not-real'));
-    expect(feedback.headers.get('content-security-policy')).toContain('https://challenges.cloudflare.com');
-    expect(feedbackSlash.headers.get('content-security-policy')).toContain('https://challenges.cloudflare.com');
     expect(ordinary.headers.get('content-security-policy')).not.toContain('https://challenges.cloudflare.com');
   });
 });
