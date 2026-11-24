@@ -1362,11 +1362,28 @@ Both check the same locked deposit. Withdrawing it on either one returns it to t
 
 1. Go to [Miden Bridge](https://bridge.miden.xyz/) and select **Recovery** in the top bar. Check that the network next to it is **Mainnet**.
 2. On **Recover Epoch deposits**, select **Connect wallet** under **Deposit wallet**, and connect the wallet that made the deposit.
+
+   ![Recover Epoch deposits with Connect wallet next to Deposit wallet](E77-bridge-recover-connect.png)
+
 3. Wait while the page shows **Checking deposits…**. Each locked deposit then appears under **Locked deposits**, with its token, amount and network.
+
+   ![Locked deposits listing 250 USDC on Polygon, Withdrawal not started](E78-bridge-recover-locked-deposits.png)
+
 4. Select the deposit, then select **Start withdrawal** and approve the transaction in your wallet. The 65-minute wait starts when it confirms.
-5. Wait until the deposit shows **Ready to withdraw**. Until then it shows **Available in** and the time left.
+
+   ![A 250 USDC deposit on Polygon with the two steps and the Start withdrawal button](E79-bridge-recover-start-withdrawal.png)
+
+5. Wait until the deposit shows **Ready to withdraw**. Until then it shows **Withdrawal started** and the time left.
+
+   ![Withdrawal started, with the time left before Withdraw to wallet and a Cancel withdrawal button](E80-bridge-recover-countdown.png)
+
 6. Select **Withdraw to wallet** and approve the second transaction. When it confirms, the page shows **Withdrawal complete**, and the whole locked balance of that token is back in your wallet.
+
+   ![Ready to withdraw, with the Withdraw to wallet button](E81-bridge-recover-ready.png)
+
 7. Select **Cancel withdrawal** and approve. Until you do, Fast deposits of that token from this wallet stay paused, even though the funds are already out. Bread calls this button **Disable withdrawal**.
+
+   ![Withdrawal complete, 0 USDC left and Cancel the withdrawal to resume Epoch deposits](E82-bridge-recover-complete.png)
 
 If more than one deposit is locked, repeat steps 4 to 7 for each.
 

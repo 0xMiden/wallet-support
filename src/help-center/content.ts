@@ -275,6 +275,13 @@ export const SCREENSHOT_SIZES: Readonly<Record<string, ScreenshotSize>> = {
   'E74-recover-withdrawal-countdown.png': [550, 1389, 'narrow'],
   'E75-recover-withdrawal-available.png': [549, 1384, 'narrow'],
   'E76-recover-metamask-withdraw.png': [540, 1102, 'narrow'],
+  // Miden Bridge recovery, captured 2026-11-24 from 0xMiden/bridge-portal 0ccf995 on Mainnet with its simulated wallet.
+  'E77-bridge-recover-connect.png': [1176, 412, 'narrow'],
+  'E78-bridge-recover-locked-deposits.png': [1176, 696, 'narrow'],
+  'E79-bridge-recover-start-withdrawal.png': [1176, 1154, 'narrow'],
+  'E80-bridge-recover-countdown.png': [1176, 914, 'narrow'],
+  'E81-bridge-recover-ready.png': [1176, 1074, 'narrow'],
+  'E82-bridge-recover-complete.png': [1176, 1026, 'narrow'],
   'E13-restore-welcome.png': [822, 825, 'narrow'],
   'E14-restore-testnet-notice.png': [822, 1002, 'narrow'],
   'E14a-restore-import-type.png': [822, 615, 'narrow'],
