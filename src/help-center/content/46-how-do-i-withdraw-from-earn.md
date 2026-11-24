@@ -8,7 +8,7 @@ platforms: [extension-desktop, mobile]
 
 Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See [*Can I earn yield in Bread?*](#earn/can-i-earn-yield-in-bread)
 
-You can withdraw positions on Base and Ethereum, including one in a vault that's closed to new deposits. Withdrawals from Arbitrum aren't available at the moment. If you have a position on Arbitrum, contact [support](/feedback).
+You can withdraw positions on Base and Ethereum, including one in a vault that's closed to new deposits. Epoch can't currently route withdrawals from Arbitrum. If you have a position on Arbitrum, contact [support](/feedback).
 
 Your first withdrawal on a network can take a little longer while Bread waits for a one-time setup. If that setup outlasts your review, Bread gets a new quote that's never lower than the minimum you reviewed.
 

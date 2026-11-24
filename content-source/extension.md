@@ -67,7 +67,7 @@ You add funds to Bread from your computer on [Miden Bridge](https://bridge.miden
 
    ![Miden Bridge's wallet menu next to To, with Bread ready to connect and the Connect wallet option](E66c-fund-connect-bread.png)
 
-5. Bread opens a window for https://bridge.miden.xyz. Check the account, tick **I understand the risk and wish to proceed.**, then select **Connect**. This gives the site ongoing access to your account data until you revoke it in **Authorized DApps**.
+5. Bread opens a window for https://bridge.miden.xyz. Check the site and the account, and read the list under **This site will be able to**. Tick **I understand the risk and wish to proceed.**, then select **Connect**. This gives the site ongoing access to your account data until you revoke it in **Authorized DApps**.
 
    ![Bread's window asking to connect bridge.miden.xyz, with the risk checkbox ticked and the Connect button](E66d-fund-bread-connect.png)
 
@@ -100,8 +100,8 @@ The Partner Mainnet cap is $1,232.462 for the total wallet balance after a depos
 **Steps:**
 
 1. From the Bread Wallet homepage, select the token you want to view.
-2. Scroll down to the Token Information section.
-3. Click the **Copy icon** beside the contract address to copy the token contract address.
+2. Expand **Faucet ID** to see the token's full ID.
+3. Click the copy icon beside it. Bread confirms when it's copied.
 
 ### Is Bread available on mobile?
 
@@ -142,7 +142,7 @@ Use your Bread account on one device at a time. Recovering it with your recovery
 1. Open Bread and select **Recover your account** when the welcome screen offers it.
 2. Select recovery with your recovery phrase if Bread asks for an import method.
 3. Enter the words in their original order, in the official wallet only.
-4. Create a new wallet password and follow the Guardian recovery prompts. Bread can look for the operator; if it cannot find your account, check the network and the Guardian you used.
+4. Create a new wallet password and follow the Guardian recovery prompts. Bread can look for the operator; if it cannot find your account, check the network and the Guardian you used. If Bread says nothing was restored, read why. If Guardian's data doesn't match your recovery phrase, contact [support](/feedback) and don't try other phrases. If Guardian's copy doesn't match the network yet, try again in a few minutes. If Bread can't reach the Miden network, your recovery phrase is fine: check your connection and try again.
 5. Open the wallet when recovery finishes. Wait for any everyday-key rotation and sync before making a transaction.
 
 Some screens differ between releases. Recovery needs your phrase and a supported account-state backup; support cannot reset your phrase. Do not erase a working installation just to troubleshoot. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)
@@ -169,6 +169,10 @@ Protect your recovery phrase and the device that holds your wallet.
 
 - Write your recovery phrase on paper and store it safely offline.
 - Use a strong, unique wallet password or passcode, and supported biometric unlock on mobile.
+- On Chrome, you can turn on **Passkey unlock**. Your wallet password still works.
+- The mobile and desktop apps lock after time in the background. Choose how long in **Profile** › **General** › **Auto-lock**.
+- On mobile, a copied recovery phrase or key is cleared from the clipboard after 60 seconds. Copy it only when you must.
+- The desktop app keeps its window out of screenshots and recordings while a secret is shown.
 - Download and update Bread only through official sources.
 - Keep your operating system secure and be cautious of fake apps, sites and support messages.
 - Never share your recovery phrase, signing keys or password, including in screenshots or feedback.
@@ -265,6 +269,12 @@ Incoming tokens wait in **Activity**, on the **Pending** tab, until the recipien
 
 A recallable send has an expiration shown as **Expiration Date** before you send. If the recipient has not accepted it by then, it becomes eligible for you to reclaim. Check your **Pending** tab in **Activity** and select **Accept Transfer** when the reclaimable transfer appears. Expiration alone does not add it to your spendable balance.
 
+**3. If the send's details show a delivery warning**
+
+For a private send, open it in **Activity**. If its details show **Recipient not notified** or **Delivery unconfirmed**, the transaction is on chain, but the private transfer could not be handed to the delivery service, or the wallet could not confirm that it reached it. Until it does, the recipient cannot see or spend it.
+
+Keep the wallet open and connected. Delivery is retried automatically for up to three days, and the warning clears once it goes through. Do not send again. If the recipient still has nothing after a day, or the details say automatic delivery has stopped, save the transaction ID shown there and contact [support](/feedback). The transfer can still be recovered from it.
+
 **Still missing after an hour?**
 
 If the recipient can't find it, they can check [*Why is my token taking so long to arrive?*](#common-issues-and-support/why-is-my-token-taking-so-long-to-arrive) If it's still missing, report it to our [**SUPPORT**](/feedback).
@@ -305,7 +315,7 @@ If a send cannot finish, it may show **Transaction failed**. After an app or bro
 
 Occasionally a failed send has already reached the network just before it stopped. Let your wallet sync, then check your balance and **Activity**.
 
-To try again, open the failed send in **Activity** and select its **Retry** button. The wallet checks whether the send already went through. If the outcome is uncertain, wait for sync and check your balance and the recipient before retrying; do not start a second send while the first may still be processing.
+To try again, open the failed send in **Activity** and select its **Retry** button. The wallet checks whether the send already went through, including swaps and bridge transfers. If it can't check the network, it sends nothing and asks you to check your balance. If the send shows **You can retry after** a time, Guardian is holding it, and **Retry** works once the countdown ends. If the outcome is uncertain, wait for sync and check your balance and the recipient before retrying; do not start a second send while the first may still be processing. If Bread shows **Retry anyway** for a transaction an app asked for, it checks the network first, and finishes the transaction instead of running it again if it already went through.
 
 If the send shows as **Confirmed** but the recipient doesn't have it, see [*My transfer shows as confirmed, but the token never arrived.*](#common-issues-and-support/my-transfer-shows-as-completed-but-the-token-never-arrived)
 

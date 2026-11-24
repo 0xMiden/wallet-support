@@ -29,12 +29,12 @@ If the transfer's details in **Activity** show **Retry bridge**, you can try it 
 
 The screenshots show the Bread extension with MetaMask on a phone. Your wallet address, network, token and amount may differ.
 
-1. In Bread, open **Profile** (the person icon), then **Advanced Settings** › **Recover locked bridge funds**.
+1. In Bread, open **Profile** (the person icon), then under **Developer**, **Advanced Settings** › **Recover locked bridge funds**.
 
    ![Advanced Settings with Recover locked bridge funds highlighted](E71-recover-advanced-settings.png)
 
 2. Tap **Connect an EVM wallet** and connect the external wallet that made the deposit. In the extension, scan the WalletConnect QR code with your wallet app on your phone. In MetaMask, select the account that made the deposit and tap **Connect**. If a different wallet is connected, tap **Connect another wallet**.
-3. Wait while Bread shows **Checking…**. It can take about 10 seconds. Your locked funds then appear, with the token, network and amount.
+3. Wait a few seconds while Bread checks. Your locked funds then appear, with the token, network and amount.
 
    ![Connected external wallet with a locked USDC balance on Polygon](E72-recover-locked-balance.png)
 
@@ -66,11 +66,11 @@ If Bread asks you to connect your wallet again, this can happen after you close 
 
 **Bridge out: get back a failed transfer**
 
-When you bridge out through Epoch, Bread puts your tokens in a reclaimable note on Miden. If the bridge fails while the funds are still in that note, you can reclaim them once the block shown in Bread is reached. The transfer may show **Bridge failed - funds reclaimable**.
+When you bridge out through Epoch, Bread puts your tokens in a reclaimable note on Miden. If the bridge fails while the funds are still in that note, you can reclaim them once the block shown in Bread is reached. The transfer may show **Bridge failed - funds reclaimable**. It also shows where your funds are: **Awaiting Return** while they wait on Miden for the block shown, **Ready to Claim** when you can claim them, then **Returning Funds** and **Funds Returned**.
 
 On Mainnet, this is currently about **5 hours and 10 minutes** from when Bread creates the note. This is an estimate: the block shown under **Funds reclaimable after block** determines when you can reclaim the funds.
 
-Usually you don't need to do anything. Once the network passes the block shown under **Funds reclaimable after block**, Bread takes the funds back on its own while the wallet is open, and **Activity** shows **Reclaimed**.
+Once the network passes the block shown under **Funds reclaimable after block**, open the transfer in **Activity** and select **Reclaim funds**. First select the account that sent the transfer: **Reclaim funds** works only for that account. This is a Miden transaction with a small network fee in USDCX. When it completes, **Activity** shows **Reclaimed**.
 
 If a transfer out no longer shows as reclaimable but nothing arrived in your external wallet, contact [support](/feedback) with the transfer details.
 

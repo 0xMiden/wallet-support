@@ -6,7 +6,7 @@ subcategory: common-issues-and-support
 platforms: [extension-desktop, mobile]
 ---
 
-If MetaMask shows **Fetch error** with **Internal Server Error** a few seconds after you confirm a bridge deposit, MetaMask's **Smart Transactions** setting refused to send it. The error comes from MetaMask, not from Bread or the bridge. The deposit was not sent, so no funds moved and nothing appears on the **Activity** page.
+If you see **Fetch error** with **Internal Server Error** a few seconds after you confirm a bridge deposit, MetaMask's **Smart Transactions** setting refused to send it. In Bread, the message says Smart Transactions could not send the transaction and asks you to turn it off in MetaMask. The error comes from MetaMask, not from Bread or the bridge. The deposit was not sent, so no funds moved. If you started the deposit in Bread, **Activity** shows it as **Failed**, but nothing left your wallet.
 
 1. Check MetaMask's activity to confirm that the deposit was not sent.
 2. Turn off **Smart Transactions** in MetaMask:

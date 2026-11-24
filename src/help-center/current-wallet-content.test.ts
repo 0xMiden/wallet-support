@@ -44,7 +44,7 @@ describe('verified wallet behavior', () => {
     }
     for (const id of ['can-i-earn-yield-in-bread', 'how-do-i-withdraw-from-earn']) {
       expect(body(id)).toContain('withdraw positions on Base and Ethereum');
-      expect(body(id)).toContain('Withdrawals from Arbitrum aren\'t available');
+      expect(body(id)).toMatch(/Withdrawals from Arbitrum aren't available|Epoch can't currently route withdrawals from Arbitrum/);
     }
     expect(body('how-do-i-withdraw-from-earn')).toContain('one-time setup');
   });
@@ -54,7 +54,8 @@ describe('verified wallet behavior', () => {
     expect(partial).toContain('**Max**');
     expect(partial).toContain('**Stays invested**');
     expect(partial).not.toContain('No. A withdrawal returns your whole position');
-    expect(body('what-does-it-cost-to-use-earn')).toContain('has its network fee covered for you. That does not mean the withdrawal has no costs');
+    expect(body('what-does-it-cost-to-use-earn')).toContain('has its network fee covered for you.');
+    expect(body('what-does-it-cost-to-use-earn')).toContain('That does not mean the withdrawal has no costs');
     expect(body('how-do-i-withdraw-from-earn')).toContain('accepted automatically');
   });
 
@@ -73,7 +74,7 @@ describe('verified wallet behavior', () => {
     const text = body('how-do-gamecoins-and-arcade-work');
     expect(text).toContain('Each game sets its own rules');
     expect(text).toContain('does not provide a weekly');
-    expect(text).toContain('**Buy more GC** is disabled');
+    expect(text).toContain('On Mainnet you can buy GC in the wallet');
     expect(text).not.toMatch(/10 GC|costs 1 GC|per week/);
   });
 
@@ -94,7 +95,7 @@ describe('verified wallet behavior', () => {
       expect(body(id)).toMatch(/sync/);
       expect(body(id)).toMatch(/balance/);
     }
-    expect(body('what-should-i-do-if-accepting-a-transfer-fails')).toContain('does not automatically return');
+    expect(body('what-should-i-do-if-accepting-a-transfer-fails')).toContain('**Auto-accept USDCX transfers** on');
   });
 
   it('labels retained Earn screenshots as historical illustrations', () => {

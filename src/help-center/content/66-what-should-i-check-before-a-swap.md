@@ -16,13 +16,13 @@ Swap trades one token for another inside Miden. On Partner Mainnet you can swap 
 - WBTC and USDCX
 - Wrapped SOL and USDCX
 
-Wrapped SOL can appear as **SOL** in the token picker. NEAR, PAXG, WBNB and PYUSD can't be swapped yet. Swap prices come from [Forkchoice](https://forkchoice.xyz/).
+Wrapped SOL can appear as **SOL** in the token picker. WBNB and PYUSD can't be swapped yet. The token picker shows the current pairs. Swap prices come from [Forkchoice](https://forkchoice.xyz/).
 
 Swap only works within Miden. To move tokens to or from another blockchain, see [*Which bridge networks and tokens can I use?*](#moving-across-chains/which-bridge-networks-and-tokens-can-i-use)
 
 **Before you confirm**
 
-On **Review Swap**, check **You Send**, **You Receive**, **Rate**, **Slippage** and **Max network fee**. Slippage is how far below the current rate your order may fill. The network fee is paid in USDCX, so keep some in your wallet.
+After you choose **Review Swap**, check **You Send**, **You Receive**, **Rate**, **Slippage** and **Max network fee**. Slippage is how far below the current rate your order may fill. The network fee is paid in USDCX, so keep some in your wallet.
 
 **How a swap fills**
 

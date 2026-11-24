@@ -15,7 +15,7 @@ The **Address Book** saves addresses under a name, so you can send to a person w
    ![Bread Wallet's Address Book page, with the New contact button](E61-address-book.png)
 
 2. Select **New contact**.
-3. Enter the **Address**, then a **Name**. Use the full Miden address supplied for the correct network. Do not substitute an Ethereum address or reuse a Testnet address for Mainnet.
+3. Enter the **Address**, then a **Name**. Use the full Miden address supplied for the correct network. You can also save an Ethereum (0x) address with its network, for sending to another chain. Do not reuse a Testnet address for Mainnet.
 
    ![Bread Wallet's New contact page, with the Address and Name fields](E62-new-contact.png)
 

@@ -6,7 +6,7 @@ subcategory: moving-across-chains
 platforms: [extension-desktop, mobile]
 ---
 
-Yes. You can send USDCX from Bread to an address on **Ethereum**, **Base**, **Arbitrum One** or **Arc**. It arrives there as USDC, through Circle's xReserve route. On **Ethereum**, **Base**, **Arbitrum One** and **Polygon**, you can also send it through the Fast route.
+Yes. You can send USDCX from Bread to an address on **Ethereum**, **Base**, **Arbitrum One** or **Arc**. It arrives there as USDC, through Circle's xReserve route. To **Polygon**, which Circle's route doesn't serve, USDCX goes through the Fast route instead.
 
 Other supported assets use the Fast route or the Ethereum ↔ Miden Agglayer bridge when that exact route is offered. NEAR Intents transfers are not enabled on Partner Mainnet.
 

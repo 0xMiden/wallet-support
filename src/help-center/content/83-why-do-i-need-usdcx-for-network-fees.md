@@ -31,7 +31,7 @@ Accepting a USDCX transfer pays its fee out of the transfer itself, so a new wal
 On the other network, your external wallet, such as MetaMask, pays that network's own fee:
 
 - **Ethereum, Base and Arbitrum One:** the fee is paid in ETH. If you bridge ETH, don't send your whole ETH balance.
-- **Arc:** the fee is paid in USDC. If you send USDC from Arc, don't send your whole USDC balance. The **Execute on Arc** step also needs a little USDC on Arc.
+- **Arc:** the fee is paid in USDC. If you send USDC from Arc, don't send your whole USDC balance.
 
 From **Base** or **Arbitrum One**, Circle adds its fee on top of the USDC you deposit. If the amount and the fee come to more than your wallet holds, Bread asks you to lower the amount.
 

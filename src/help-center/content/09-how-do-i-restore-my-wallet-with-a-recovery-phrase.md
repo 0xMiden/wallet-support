@@ -15,7 +15,7 @@ Use your Bread account on one device at a time. Recovering it with your recovery
 1. Open Bread and select **Recover your account** when the welcome screen offers it.
 2. Select recovery with your recovery phrase if Bread asks for an import method.
 3. Enter the words in their original order, in the official wallet only.
-4. Create a new wallet password and follow the Guardian recovery prompts. Bread can look for the operator; if it cannot find your account, check the network and the Guardian you used.
+4. Create a new wallet password and follow the Guardian recovery prompts. Bread can look for the operator; if it cannot find your account, check the network and the Guardian you used. If Bread says nothing was restored, read why. If Guardian's data doesn't match your recovery phrase, contact [support](/feedback) and don't try other phrases. If Guardian's copy doesn't match the network yet, try again in a few minutes. If Bread can't reach the Miden network, your recovery phrase is fine: check your connection and try again.
 5. Open the wallet when recovery finishes. Wait for any everyday-key rotation and sync before making a transaction.
 
 Some screens differ between releases. Recovery needs your phrase and a supported account-state backup; support cannot reset your phrase. Do not erase a working installation just to troubleshoot. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)

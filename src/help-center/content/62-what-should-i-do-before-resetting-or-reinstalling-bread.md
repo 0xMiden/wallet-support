@@ -6,14 +6,16 @@ subcategory: security-and-recovery
 platforms: [extension-desktop, mobile]
 ---
 
+On the browser extension, if Bread shows **Browser storage is not responding**, your wallet data is not lost. Quit and reopen the browser completely to restore it. Don't reset Bread or reinstall the extension to fix it.
+
 A reset can erase this installation's wallet keys, local history, contacts and settings. Signing out to recover a forgotten password and resetting developer endpoints can also replace local wallet data.
 
-Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; you can no longer use the account on the previous device. Recovery does not set up synced access across both devices.
+Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; the previous device shows **Another device holds this account** and can use the account again only by taking it back with **Make this device the main one**, which removes access from the other device. Recovery does not set up synced access across both devices.
 
 Before you continue:
 
 1. Confirm that you have the recovery phrase written correctly and stored offline. A passcode, password or biometric unlock alone cannot restore a wallet on a new installation.
-2. Check which network and Guardian the account uses. Standard Guardian recovery needs your phrase and its account-state backup.
+2. Check which network and Guardian the account uses. Standard Guardian recovery needs your phrase and the Guardian operator that keeps your account state.
 3. Check **Activity**, balances and any in-flight bridge or Earn transfers. Record non-secret references you may need to follow up.
 4. Keep any working installation until you have confirmed a supported recovery path. Do not assume an encrypted-file guide applies to your released version.
 

@@ -22,6 +22,6 @@ Open **Earn** to check your positions and estimated earnings. Let the wallet loa
 
    ![Bread 1.16.2 Testnet position page, with Deposit more and Withdraw](E42-earn-position.png)
 
-The position page includes **Deposited**, **Total Earned**, **APY**, **Daily Avg**, **Time Active** and **Started**. A dash means the wallet has no value to display yet. APY and projected rewards are estimates, not guaranteed returns.
+The position page includes **Deposited**, **Total Earned**, **APY**, **Daily Avg**, **Time Active** and **Started**. **Total earned** and the position's **Total Earned**, **Daily Avg**, **Time Active** and **Started** aren't tracked yet, so they show $0 or a dash. **Deposited** is the position's current value, interest included. APY and projected rewards are estimates, not guaranteed returns.
 
 To add to a position, use **Deposit more** only when it is available and follow [*How do I deposit into Earn?*](#earn/how-do-i-deposit-into-earn)

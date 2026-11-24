@@ -12,6 +12,10 @@ Protect your recovery phrase and the device that holds your wallet.
 
 - Write your recovery phrase on paper and store it safely offline.
 - Use a strong, unique wallet password or passcode, and supported biometric unlock on mobile.
+- On Chrome, you can turn on **Passkey unlock**. Your wallet password still works.
+- The mobile and desktop apps lock after time in the background. Choose how long in **Profile** › **General** › **Auto-lock**.
+- On mobile, a copied recovery phrase or key is cleared from the clipboard after 60 seconds. Copy it only when you must.
+- The desktop app keeps its window out of screenshots and recordings while a secret is shown.
 - Download and update Bread only through official sources.
 - Keep your operating system secure and be cautious of fake apps, sites and support messages.
 - Never share your recovery phrase, signing keys or password, including in screenshots or feedback.

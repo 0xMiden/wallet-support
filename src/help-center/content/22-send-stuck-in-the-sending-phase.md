@@ -14,6 +14,6 @@ If a send cannot finish, it may show **Transaction failed**. After an app or bro
 
 Occasionally a failed send has already reached the network just before it stopped. Let your wallet sync, then check your balance and **Activity**.
 
-To try again, open the failed send in **Activity** and select its **Retry** button. The wallet checks whether the send already went through. If the outcome is uncertain, wait for sync and check your balance and the recipient before retrying; do not start a second send while the first may still be processing.
+To try again, open the failed send in **Activity** and select its **Retry** button. The wallet checks whether the send already went through, including swaps and bridge transfers. If it can't check the network, it sends nothing and asks you to check your balance. If the send shows **You can retry after** a time, Guardian is holding it, and **Retry** works once the countdown ends. If the outcome is uncertain, wait for sync and check your balance and the recipient before retrying; do not start a second send while the first may still be processing. If Bread shows **Retry anyway** for a transaction an app asked for, it checks the network first, and finishes the transaction instead of running it again if it already went through.
 
 If the send shows as **Confirmed** but the recipient doesn't have it, see [*My transfer shows as confirmed, but the token never arrived.*](#common-issues-and-support/my-transfer-shows-as-completed-but-the-token-never-arrived)

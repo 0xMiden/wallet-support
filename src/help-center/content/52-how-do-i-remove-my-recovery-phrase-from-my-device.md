@@ -29,6 +29,6 @@ Removing your recovery phrase deletes the stored copy from this installation, so
 
 The wallet then shows **Recovery phrase removed from this device**, and **Recovery Phrase** no longer appears in **Profile**.
 
-Earlier backups may still contain the phrase. Keep them secure. If the phrase is removed, account creation and some security actions may require it again; keep your offline copy available.
+Earlier backups may still contain the phrase. Keep them secure. After the phrase is removed, you can't add a new account on this device. Guardian changes and everyday key replacement ask you to type the phrase, so keep your offline copy available.
 
 Related: [*How do I view my recovery phrase?*](#security-and-recovery/how-do-i-view-my-recovery-phrase), [*What should I do if I lose my recovery phrase?*](#security-and-recovery/what-should-i-do-if-i-lose-my-recovery-phrase)

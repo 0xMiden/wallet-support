@@ -26,7 +26,7 @@ You add funds to Bread from your computer on [Miden Bridge](https://bridge.miden
 
    ![Miden Bridge's wallet menu next to To, with Bread ready to connect and the Connect wallet option](E66c-fund-connect-bread.png)
 
-5. Bread opens a window for https://bridge.miden.xyz. Check the account, tick **I understand the risk and wish to proceed.**, then select **Connect**. This gives the site ongoing access to your account data until you revoke it in **Authorized DApps**.
+5. Bread opens a window for https://bridge.miden.xyz. Check the site and the account, and read the list under **This site will be able to**. Tick **I understand the risk and wish to proceed.**, then select **Connect**. This gives the site ongoing access to your account data until you revoke it in **Authorized DApps**.
 
    ![Bread's window asking to connect bridge.miden.xyz, with the risk checkbox ticked and the Connect button](E66d-fund-bread-connect.png)
 
@@ -72,7 +72,7 @@ You add funds to Bread by bridging them from your MetaMask wallet. MetaMask need
 
    ![MetaMask asking to connect, with the account and the Connect button](M05c-fund-metamask-connect.png)
 
-4. Back in Bread, tap the token to choose what to bring in, such as **USDC**. Then tap **From** and choose the network your funds are on.
+4. Back in Bread, tap the token to choose what to bring in, such as **USDC**. The list shows only tokens your connected wallet holds. Then tap **From** and choose the network your funds are on. If your wallet holds none there, Bread tells you it has no tokens with a positive balance on this network.
 
    ![Bread's Bridge in page, with USDC as the token, From Ethereum and To Miden](M05d-fund-enter-amount.png)
 
