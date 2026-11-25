@@ -1375,17 +1375,17 @@ describe('the key-structure vocabulary', () => {
   });
 
   it('is the vocabulary in the interface too, not only the articles', () => {
-    // The feedback page sits beside the Help Center and gives the same safety
-    // advice, so it is held to the same words (its "recovery key" was missed
-    // until 2026-10-01 because only this folder was read).
-    const components = import.meta.glob<string>(['./*.tsx', '../feedback/*.tsx'], {
+    // The contact form sits beside the Help Center and gives the same safety
+    // advice, so it is held to the same words (the old feedback page's
+    // "recovery key" was missed until 2026-10-01 because only this folder was read).
+    const components = import.meta.glob<string>(['./*.tsx', '../contact/*.tsx'], {
       query: '?raw',
       import: 'default',
       eager: true
     });
 
     expect(Object.keys(components).length).toBeGreaterThan(0);
-    expect(Object.keys(components), 'the feedback page was moved or renamed').toContain('../feedback/FeedbackPage.tsx');
+    expect(Object.keys(components), 'the contact form was moved or renamed').toContain('../contact/ContactPage.tsx');
 
     for (const [file, source] of Object.entries(components)) {
       expect(retired(source), file).toEqual([]);
@@ -1561,8 +1561,8 @@ describe('design tokens', () => {
    */
   const cssDir = fileURLToPath(new URL('.', import.meta.url));
   const cssFiles = readdirSync(cssDir).filter(name => name.endsWith('.css'));
-  const feedbackCss = readFileSync(fileURLToPath(new URL('../feedback/feedback.css', import.meta.url)), 'utf8');
-  const allCss = `${cssFiles.map(name => readFileSync(join(cssDir, name), 'utf8')).join('\n')}\n${feedbackCss}`;
+  const contactCss = readFileSync(fileURLToPath(new URL('../contact/contact.css', import.meta.url)), 'utf8');
+  const allCss = `${cssFiles.map(name => readFileSync(join(cssDir, name), 'utf8')).join('\n')}\n${contactCss}`;
 
   it('are every one of them referenced somewhere', () => {
     expect(cssFiles.length).toBeGreaterThan(0);

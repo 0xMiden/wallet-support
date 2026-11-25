@@ -29,14 +29,14 @@ describe('inline markup', () => {
     expect(render('[**SUPPORT**](https://example.com/)')).toContain('<strong>SUPPORT</strong>');
   });
 
-  it('routes the retired feedback worker URL to the approved hosted form', () => {
+  it('routes the retired feedback worker URL to the contact form', () => {
     const html = render('[Support](https://miden-feedback-v2.miden-feedback-relay.workers.dev/?cb=4)');
-    expect(html).toContain('href="https://cmuv78o9w003x5ebpyha3cf6p.zapier.app/page" target="_blank" rel="noopener noreferrer">Support</a>');
+    expect(html).toContain('<a href="/contact">Support</a>');
     expect(html).not.toContain('workers.dev');
   });
 
-  it('routes compatibility feedback links to the same hosted form', () => {
-    expect(render('[Support](/feedback)')).toContain('href="https://cmuv78o9w003x5ebpyha3cf6p.zapier.app/page"');
+  it('routes compatibility feedback links to the same contact form', () => {
+    expect(render('[Support](/feedback)')).toContain('<a href="/contact">Support</a>');
   });
 
   it('refuses a link scheme outside http, https and mailto', () => {

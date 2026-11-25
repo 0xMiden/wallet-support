@@ -1,9 +1,0 @@
-.feedback-main { width: min(100%, var(--frame)); margin: 0 auto; padding: var(--space-8) var(--gutter); }
-.feedback-intro { max-width: var(--measure); margin-bottom: var(--space-6); }
-.feedback-intro h1 { margin: 0; color: var(--text-strong); font: var(--weight-display) var(--text-2xl)/1.2 var(--font-display); letter-spacing: var(--tracking-heading); }
-.feedback-intro > p:last-child { color: var(--text-muted); font-size: var(--text-base); line-height: 1.65; }
-.feedback-form { max-width: var(--measure); display: grid; gap: var(--space-5); }
-.feedback-warning { padding: var(--space-5); border-radius: var(--radius-md); color: var(--accent-text); background: var(--tint-soft); line-height: 1.65; }
-.feedback-form > p { margin: 0; color: var(--text-body); font-size: var(--text-base); line-height: 1.65; }
-.feedback-form > a { justify-self: start; }
-@media (max-width: 620px) { .feedback-main { padding-top: var(--space-7); } }

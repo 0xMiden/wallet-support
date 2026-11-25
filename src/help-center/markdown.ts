@@ -51,7 +51,7 @@ const SECTION_LABEL = /^\*\*([^*]+)\*\*$/;
  * a link that goes nowhere. It stays in the tab: the reader is still inside
  * the Help Center, and the query string, which carries the platform, is kept.
  */
-const INTERNAL_HREF = /^(?:\/feedback|#[a-z0-9]+(?:-[a-z0-9]+)*(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)?)$/;
+const INTERNAL_HREF = /^(?:\/feedback|\/contact|#[a-z0-9]+(?:-[a-z0-9]+)*(?:\/[a-z0-9]+(?:-[a-z0-9]+)*)?)$/;
 
 /*
  * An image is a line of its own: ![alt](file.png). Alt text is required, and

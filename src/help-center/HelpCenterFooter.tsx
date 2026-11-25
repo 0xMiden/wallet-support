@@ -78,12 +78,12 @@ export function HelpCenterFooter({ mainCategories, firstCategoryId }: HelpCenter
           <h2>Support</h2>
           <ul>
             <li>
-              <a href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">
+              <a href={CONTACT_SUPPORT_URL}>
                 Contact Support
               </a>
             </li>
             <li>
-              <a href={CONTACT_SUPPORT_URL} target="_blank" rel="noopener noreferrer">
+              <a href={CONTACT_SUPPORT_URL}>
                 Send feedback
               </a>
             </li>

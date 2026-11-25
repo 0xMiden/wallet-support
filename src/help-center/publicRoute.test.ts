@@ -6,7 +6,7 @@ describe('parsePublicRoute', () => {
     ['/', 'help'],
     ['/topics', 'topics'],
     ['/topics/', 'topics'],
-    ['/feedback', 'feedback'],
+    ['/feedback', 'contact'],
     ['/contact', 'contact'],
     ['/contact/', 'contact'],
     ['/api/feedback/submit', 'not-found'],
