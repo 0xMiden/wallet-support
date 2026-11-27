@@ -28,7 +28,7 @@ Your personal access code is in your invitation email. A code registers one new 
 
 If you already registered a Mainnet account, recover that account instead of registering another one. On the Mainnet welcome screen choose **Recover your account**. Recovery of an existing registered account does not require a new invitation code. It needs your recovery phrase (or encrypted wallet file) and the account's Guardian backup. A Testnet account cannot gain Mainnet access through recovery.
 
-A standard Bread account supports one active device at a time. Recovery replaces the former device's access; it does not synchronize use across devices. In 1.17.7, **Another device holds this account** and **Make this device the main one** identify the device-replacement flow. Earlier installed versions may show different controls.
+From version 1.18.2, a standard Bread account can be used on more than one device. When you recover on another device, Bread asks how it should join your wallet: **Add this device** keeps your other devices working, and **Make this device the main one** removes every other device. If your old device was lost or stolen, choose **Make this device the main one**. In earlier versions, recovery makes the new device the only one with access.
 
 Follow [*How do I restore my wallet with a recovery phrase?*](#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase). Wait for recovery, any everyday-key rotation and sync to finish before transacting. Do not reset again if the result is unclear.
 

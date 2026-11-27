@@ -200,11 +200,11 @@ describe('coverage', () => {
    * The totals, written down rather than derived, so adding a category or an
    * article is a decision this file has to be told about.
    */
-  it('spans 7 main categories, 9 subcategories and 88 articles', () => {
+  it('spans 7 main categories, 9 subcategories and 89 articles', () => {
     const navigation = createHelpCenterNavigation(helpCenterMainCategories);
     expect(navigation.mainCategories).toHaveLength(7);
     expect(navigation.categories).toHaveLength(9);
-    expect(helpCenterAllArticles).toHaveLength(88);
+    expect(helpCenterAllArticles).toHaveLength(89);
   });
 
   it('resolves every article to exactly one position, through navigation.ts', () => {
@@ -234,7 +234,7 @@ describe('coverage', () => {
       taken.set(position, article.id);
     }
 
-    expect(taken.size).toBe(88);
+    expect(taken.size).toBe(89);
   });
 
   it('keeps Activity and transaction status in the hierarchy, with its one FAQ article after the first', () => {
@@ -411,7 +411,7 @@ describe('article sources', () => {
     }
 
     expect(helpCenterAllArticles.filter(article => pages.has(article.title))).toHaveLength(23);
-    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(65);
+    expect(helpCenterAllArticles.filter(article => FAQ_TITLES.has(article.title))).toHaveLength(66);
   });
 });
 
@@ -432,7 +432,7 @@ function withoutMigrationMarkup(body: string) {
 /** Written out by hand from the placement table: FAQ numbers, in reading order. */
 const FAQ_PLACEMENT: Readonly<Record<string, readonly number[]>> = {
   'setup-and-basic-use': [1, 37, 38, 44, 45, 52],
-  'security-and-recovery': [10, 11, 12, 29, 30, 31, 33, 34, 39, 63, 64],
+  'security-and-recovery': [10, 11, 12, 29, 30, 31, 33, 34, 39, 63, 64, 66],
   'sending-receiving-and-claiming': [35, 42],
   'public-and-private-transactions': [9],
   'guardian-protection': [2, 3, 4, 5, 6, 7, 8, 32],
@@ -537,7 +537,7 @@ describe('fidelity to the FAQ', () => {
   };
 
   it('reads fifty-six articles, numbered in order, that agree with the placement table', () => {
-    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 65 }, (_, index) => index + 1));
+    expect(FAQ.entries.map(entry => entry.number)).toEqual(Array.from({ length: 66 }, (_, index) => index + 1));
     expect(FAQ.placement).toEqual(
       FAQ.entries.map(({ number, title, mainCategory, subcategory }) => ({ number, title, mainCategory, subcategory }))
     );
@@ -965,13 +965,13 @@ describe('fidelity to the FAQ', () => {
  */
 describe('the migrated article set', () => {
   it('carries every article in the approved mapping', () => {
-    expect(helpCenterAllArticles).toHaveLength(88);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(88);
-    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(78);
+    expect(helpCenterAllArticles).toHaveLength(89);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('extension-desktop'))).toHaveLength(89);
+    expect(helpCenterAllArticles.filter(a => a.platforms.includes('mobile'))).toHaveLength(79);
   });
 
   it('publishes every article except the ones held back', () => {
-    expect(helpCenterArticles).toHaveLength(85);
+    expect(helpCenterArticles).toHaveLength(86);
     const published = helpCenterArticles.map(article => article.id);
     expect(published).not.toContain('how-to-restore-the-wallet-using-an-encrypted-file');
     expect(published).not.toContain('how-to-download-the-encrypted-file');
@@ -1139,11 +1139,11 @@ describe('card excerpts', () => {
 
 describe('finding articles', () => {
   it('lists every published article in a subcategory regardless of platform', () => {
-    expect(articlesInSubcategory(helpCenterArticles, 'security-and-recovery')).toHaveLength(15);
+    expect(articlesInSubcategory(helpCenterArticles, 'security-and-recovery')).toHaveLength(16);
   });
 
   it('keeps the held-back article out of its subcategory listing', () => {
-    expect(articlesInSubcategory(helpCenterAllArticles, 'security-and-recovery')).toHaveLength(18);
+    expect(articlesInSubcategory(helpCenterAllArticles, 'security-and-recovery')).toHaveLength(19);
   });
 
   it('finds an article only inside its own subcategory', () => {

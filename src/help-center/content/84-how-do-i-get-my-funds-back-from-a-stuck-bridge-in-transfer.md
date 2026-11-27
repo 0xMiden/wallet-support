@@ -50,7 +50,7 @@ The screenshots show the Bread extension with MetaMask on a phone. Your wallet a
 
    ![Locked funds with The withdrawal is available and Withdraw deposit enabled](E75-recover-withdrawal-available.png)
 
-7. In the final MetaMask pop-up, review **You receive**, the network and the network fee, then tap **Confirm**. Once the transaction confirms, the whole locked balance of that token is automatically returned to the same external wallet on the network you sent from.
+7. In the final MetaMask pop-up, review **You receive**, the network and the network fee, then tap **Confirm**. Once the transaction confirms, the whole locked balance of that token is automatically returned to the same external wallet on the network you sent from. Bread then shows **Withdrawal successful**. Tap **Return to locked funds** to check another token, or **Home** to finish.
 
    ![Final MetaMask transaction request showing USDC to receive on Polygon and the Confirm button](E76-recover-metamask-withdraw.png)
 

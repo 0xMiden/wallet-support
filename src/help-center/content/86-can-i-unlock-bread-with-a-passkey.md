@@ -8,6 +8,8 @@ platforms: [extension-desktop]
 
 On Chrome 140 or later, on macOS 15 or later or Windows 11, you can unlock Bread with a passkey instead of typing your password. A passkey is a sign-in key stored by your device or password manager. Your wallet password keeps working.
 
+Setup can also offer passkey unlock as one of its steps. To turn it on later:
+
 1. Open the wallet side panel. You can't set up passkey unlock from the popup.
 2. Select **Profile** (the person icon), then **Passkey unlock** under **Security**.
 3. Select **Enable passkey unlock**, enter your wallet password, and follow your passkey provider's prompts.

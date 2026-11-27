@@ -14,7 +14,7 @@ When someone sends you tokens, they show up as a pending transfer on the **Activ
 
    ![Bread Wallet's Activity page, with a pending transfer and the Accept Transfer button](E24-accept-activity.png)
 
-2. Select the **Pending** tab to see only the transfers you haven't accepted yet.
+2. If **Activity** opens in **Groups**, open **View options** and choose **List**. Bread remembers your choice. Then select the **Pending** tab to see only the transfers you haven't accepted yet.
 
    ![Bread Wallet's Activity page, with the Pending tab selected](E25-accept-pending-tab.png)
 

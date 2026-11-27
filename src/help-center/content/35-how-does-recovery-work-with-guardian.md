@@ -6,9 +6,9 @@ subcategory: security-and-recovery
 platforms: [extension-desktop, mobile]
 ---
 
-On a new device, the recovery phrase rebuilds the emergency key. Together, the emergency key and Guardian unlock the backed-up state and establish a fresh everyday key tied to the new device.
+On a new device, the recovery phrase rebuilds the emergency key. Together, the emergency key and Guardian unlock the backed-up state and give the new device its own everyday key. Your other devices keep their everyday keys unless you choose **Make this device the main one**.
 
-Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; the previous device shows **Another device holds this account** and can use the account again only by taking it back with **Make this device the main one**, which removes access from the other device. Recovery does not set up synced access across both devices.
+If your old device was lost or stolen, choose **Make this device the main one** when you recover, so that device can no longer sign for your account. When you recover with your recovery phrase on another device, Bread asks how this device should join your wallet. **Add this device** keeps your other devices working, so you can use the account on both. **Make this device the main one** removes every other device. Either way, this device gets its own everyday key, and a small network fee is paid from the account. A removed device shows **Another device holds this account**. If it still holds the recovery phrase, it can take the account back with **Make this device the main one**, which removes the other devices in turn.
 
 The full round trip across your device, Guardian, and Miden:
 

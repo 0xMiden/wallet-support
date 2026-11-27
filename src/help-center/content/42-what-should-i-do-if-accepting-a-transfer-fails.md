@@ -14,7 +14,7 @@ If accepting a transfer fails, the transfer stays in your **Activity** list and 
 
    ![Bread Wallet's Activity page, with a transfer showing the Retry button](E30-accept-fails-activity.png)
 
-2. Select the **Pending** tab and find the transfer card that shows a **Retry** button.
+2. If **Activity** opens in **Groups**, open **View options** and choose **List**. Then select the **Pending** tab and find the transfer card that shows a **Retry** button.
 
    ![Bread Wallet's Activity page, with the Pending tab selected and the Retry button](E31-accept-fails-pending-tab.png)
 

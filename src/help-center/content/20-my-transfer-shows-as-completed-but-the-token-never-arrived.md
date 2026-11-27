@@ -10,7 +10,7 @@ When a send shows as **Confirmed** in **Activity**, the transaction is on the bl
 
 **1. Ask the recipient to check their Pending tab**
 
-Incoming tokens wait in **Activity**, on the **Pending** tab, until the recipient selects **Accept Transfer**. Eligible USDCX transfers can be accepted automatically when **Auto-accept USDCX transfers** is on. Other transfers may need manual acceptance. If the recipient selected **Decline**, the transfer is only hidden on their device, and they can restore it in **Activity**. For the steps, see [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
+Incoming tokens wait in **Activity**, on the **Pending** tab, until the recipient selects **Accept Transfer**. If their **Activity** opens in **Groups**, they open **View options** and choose **List** to see the **Pending** tab. Eligible USDCX transfers can be accepted automatically when **Auto-accept USDCX transfers** is on. Other transfers may need manual acceptance. If the recipient selected **Decline**, the transfer is only hidden on their device, and they can restore it in **Activity**. For the steps, see [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
 
 **2. If the recipient never accepts it**
 

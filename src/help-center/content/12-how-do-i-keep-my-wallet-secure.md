@@ -22,7 +22,7 @@ Protect your recovery phrase and the device that holds your wallet.
 
 **Guardian and recovery:**
 
-Standard Bread accounts use Guardian to back up private account state. Your recovery phrase restores the keys; Guardian provides the supported account-state recovery path. Guardian does not keep your phrase and cannot move funds alone. See [*How do I restore my wallet with a recovery phrase?*](#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase)
+Standard Bread accounts use Guardian to back up private account state. Your recovery phrase restores the keys; Guardian provides the supported account-state recovery path. Guardian does not keep your phrase and cannot move funds alone. On a Guardian-backed account, check **Profile** › **Security** › **Devices** now and then, and revoke any device you no longer use. See [*How do I use my wallet on more than one device?*](#security-and-recovery/how-do-i-use-my-wallet-on-more-than-one-device) See [*How do I restore my wallet with a recovery phrase?*](#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase)
 
 **Before a reset:**
 

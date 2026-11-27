@@ -23,4 +23,4 @@ If **Recovery Phrase** is missing from **Profile**, the phrase has been removed 
 
 > ⚠️ **Important note:** Anyone who knows your recovery phrase can access your wallet and funds. Never share it.
 
-Related: [*How do I keep my wallet secure?*](#security-and-recovery/how-do-i-keep-my-wallet-secure), [*How do I remove my recovery phrase from my device?*](#security-and-recovery/how-do-i-remove-my-recovery-phrase-from-my-device)
+Related: [*How do I keep my wallet secure?*](#security-and-recovery/how-do-i-keep-my-wallet-secure), [*How do I remove my recovery phrase from my device?*](#security-and-recovery/how-do-i-remove-my-recovery-phrase-from-my-device), [*How do I use my wallet on more than one device?*](#security-and-recovery/how-do-i-use-my-wallet-on-more-than-one-device)

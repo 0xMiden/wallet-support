@@ -1,6 +1,6 @@
 # Bread FAQ: content for implementation
 
-Revised for Brian's 2026-10-23 launch support audit. Sixty-five articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
+Revised for Brian's 2026-10-23 launch support audit. Sixty-six articles. Existing IDs are preserved. Articles 29–35 remain Extension only until their phone flows are checked. Seven new consumer topics use both platforms. Release-dependent behavior is conditional; these guides do not announce a Mainnet or App Store release. See the local review inventory for implementation evidence and unresolved release checks.
 
 ## Placement
 
@@ -71,6 +71,7 @@ Revised for Brian's 2026-10-23 launch support audit. Sixty-five articles. Existi
 | 63 | Can I unlock Bread with a passkey? | Manage wallet | Security and recovery |
 | 64 | How do I change when Bread locks? | Manage wallet | Security and recovery |
 | 65 | Why don't I see a token on Home? | Troubleshooting | Common issues |
+| 66 | How do I use my wallet on more than one device? | Manage wallet | Security and recovery |
 
 ## Articles
 
@@ -121,7 +122,7 @@ Category: Guardian › Guardian protection
 
 The emergency key comes from your recovery phrase. It stays on this device unless you remove the recovery phrase; after that, the wallet asks you to type the phrase whenever the key is needed. Some wallet screens call it your **Guardian recovery key** or your **recovery (cold) key**; it is the same key.
 
-It is used when your everyday key has to be replaced (a new or lost device, or a rotation from **Keys**) and when switching Guardian. On a new device, the recovery phrase rebuilds the emergency key. Together, the emergency key and Guardian unlock the backed-up state and establish a fresh everyday key tied to the new device.
+It is used when your everyday key has to be replaced (a new or lost device, or a rotation from **Keys**) and when switching Guardian. On a new device, the recovery phrase rebuilds the emergency key. Together, the emergency key and Guardian unlock the backed-up state and give the new device its own everyday key. Your other devices keep their everyday keys unless you choose **Make this device the main one**.
 
 Guardian keeps the backup, and the emergency key keeps control. Keep your recovery phrase offline and never share it.
 
@@ -134,7 +135,7 @@ The everyday key lives on your device and is used for regular wallet actions. Wh
 
 Sending, receiving, swapping, and earning take the everyday key plus Guardian. On its own, the everyday key cannot move funds.
 
-If your device is lost or changed, a fresh everyday key is established with the emergency key plus Guardian. See *Can I get my wallet back if I lose my device?*
+Each device has its own everyday key. When you recover on a new device, the emergency key plus Guardian give it a new one. Your other devices keep theirs unless you choose **Make this device the main one**. See *Can I get my wallet back if I lose my device?*
 
 Related: *What is the emergency key?*, *What is the Guardian key?*
 
@@ -216,7 +217,7 @@ Category: Manage wallet › Security and recovery
 
 For a standard Guardian-backed Bread account, recovery on a new device uses your recovery phrase and Guardian's account-state backup. See *How do I restore my wallet with a recovery phrase?*
 
-Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; the previous device shows **Another device holds this account** and can use the account again only by taking it back with **Make this device the main one**, which removes access from the other device. Recovery does not set up synced access across both devices.
+If your old device was lost or stolen, choose **Make this device the main one** when you recover, so that device can no longer sign for your account. When you recover with your recovery phrase on another device, Bread asks how this device should join your wallet. **Add this device** keeps your other devices working, so you can use the account on both. **Make this device the main one** removes every other device. Either way, this device gets its own everyday key, and a small network fee is paid from the account. A removed device shows **Another device holds this account**. If it still holds the recovery phrase, it can take the account back with **Make this device the main one**, which removes the other devices in turn. See *How do I use my wallet on more than one device?*
 
 You still need the recovery phrase. Guardian cannot replace it or recover funds for you if the phrase and every device holding your keys are lost.
 
@@ -234,9 +235,9 @@ Guardian keeps the backup, and the emergency key keeps control. Guardian never h
 ### 12. How does recovery work with Guardian?
 Category: Manage wallet › Security and recovery
 
-On a new device, the recovery phrase rebuilds the emergency key. Together, the emergency key and Guardian unlock the backed-up state and establish a fresh everyday key tied to the new device.
+On a new device, the recovery phrase rebuilds the emergency key. Together, the emergency key and Guardian unlock the backed-up state and give the new device its own everyday key. Your other devices keep their everyday keys unless you choose **Make this device the main one**.
 
-Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; the previous device shows **Another device holds this account** and can use the account again only by taking it back with **Make this device the main one**, which removes access from the other device. Recovery does not set up synced access across both devices.
+If your old device was lost or stolen, choose **Make this device the main one** when you recover, so that device can no longer sign for your account. When you recover with your recovery phrase on another device, Bread asks how this device should join your wallet. **Add this device** keeps your other devices working, so you can use the account on both. **Make this device the main one** removes every other device. Either way, this device gets its own everyday key, and a small network fee is paid from the account. A removed device shows **Another device holds this account**. If it still holds the recovery phrase, it can take the account back with **Make this device the main one**, which removes the other devices in turn.
 
 The full round trip across your device, Guardian, and Miden:
 
@@ -334,7 +335,7 @@ When someone sends you tokens, they show up as a pending transfer on the **Activ
 
    ![Bread Wallet's Activity page, with a pending transfer and the Accept Transfer button](E24-accept-activity.png)
 
-2. Select the **Pending** tab to see only the transfers you haven't accepted yet.
+2. If **Activity** opens in **Groups**, open **View options** and choose **List**. Bread remembers your choice. Then select the **Pending** tab to see only the transfers you haven't accepted yet.
 
    ![Bread Wallet's Activity page, with the Pending tab selected](E25-accept-pending-tab.png)
 
@@ -368,7 +369,7 @@ If accepting a transfer fails, the transfer stays in your **Activity** list and 
 
    ![Bread Wallet's Activity page, with a transfer showing the Retry button](E30-accept-fails-activity.png)
 
-2. Select the **Pending** tab and find the transfer card that shows a **Retry** button.
+2. If **Activity** opens in **Groups**, open **View options** and choose **List**. Then select the **Pending** tab and find the transfer card that shows a **Retry** button.
 
    ![Bread Wallet's Activity page, with the Pending tab selected and the Retry button](E31-accept-fails-pending-tab.png)
 
@@ -539,7 +540,7 @@ Earn depends on your installed version, network, eligibility and an available pr
 
 For a supported position on the same network, recovery uses your recovery phrase and the Guardian backup of your standard Bread account. After restoring, let the wallet sync and check **Current Positions** in **Earn** or open **My positions**. If a position is missing, check the network and account before contacting [support](/feedback). Do not make a replacement deposit to recover a missing position.
 
-Recovery establishes access on the replacement device; it does not provide synchronized use on multiple devices. Use one device at a time, because recovery replaces the former device's access.
+Your Earn position belongs to your account, not to a device. When you recover on another device, **Add this device** keeps your other devices working, and **Make this device the main one** removes them. Either way, the position stays with the account.
 
 Recovery does not move a Testnet position to Mainnet. Developer-created accounts without Guardian require a separate recovery plan.
 
@@ -606,7 +607,7 @@ If **Recovery Phrase** is missing from **Profile**, the phrase has been removed 
 
 > ⚠️ **Important note:** Anyone who knows your recovery phrase can access your wallet and funds. Never share it.
 
-Related: *How do I keep my wallet secure?*, *How do I remove my recovery phrase from my device?*
+Related: *How do I keep my wallet secure?*, *How do I remove my recovery phrase from my device?*, *How do I use my wallet on more than one device?*
 
 ### 31. How do I reveal my keys in Bread?
 Category: Manage wallet › Security and recovery
@@ -788,7 +789,7 @@ Your personal access code is in your invitation email. A code registers one new 
 
 If you already registered a Mainnet account, recover that account instead of registering another one. On the Mainnet welcome screen choose **Recover your account**. Recovery of an existing registered account does not require a new invitation code. It needs your recovery phrase (or encrypted wallet file) and the account's Guardian backup. A Testnet account cannot gain Mainnet access through recovery.
 
-A standard Bread account supports one active device at a time. Recovery replaces the former device's access; it does not synchronize use across devices. In 1.17.7, **Another device holds this account** and **Make this device the main one** identify the device-replacement flow. Earlier installed versions may show different controls.
+From version 1.18.2, a standard Bread account can be used on more than one device. When you recover on another device, Bread asks how it should join your wallet: **Add this device** keeps your other devices working, and **Make this device the main one** removes every other device. If your old device was lost or stolen, choose **Make this device the main one**. In earlier versions, recovery makes the new device the only one with access.
 
 Follow *How do I restore my wallet with a recovery phrase?*. Wait for recovery, any everyday-key rotation and sync to finish before transacting. Do not reset again if the result is unclear.
 
@@ -822,7 +823,7 @@ On the browser extension, if Bread shows **Browser storage is not responding**, 
 
 A reset can erase this installation's wallet keys, local history, contacts and settings. Signing out to recover a forgotten password and resetting developer endpoints can also replace local wallet data.
 
-Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; the previous device shows **Another device holds this account** and can use the account again only by taking it back with **Make this device the main one**, which removes access from the other device. Recovery does not set up synced access across both devices.
+If your old device was lost or stolen, choose **Make this device the main one** when you recover, so that device can no longer sign for your account. When you recover with your recovery phrase on another device, Bread asks how this device should join your wallet. **Add this device** keeps your other devices working, so you can use the account on both. **Make this device the main one** removes every other device. Either way, this device gets its own everyday key, and a small network fee is paid from the account. A removed device shows **Another device holds this account**. If it still holds the recovery phrase, it can take the account back with **Make this device the main one**, which removes the other devices in turn.
 
 Before you continue:
 
@@ -937,7 +938,7 @@ Category: Getting started › Setup and basic use
 
 GameCoin (GC) is used by supported Arcade games. Each game sets its own rules for stakes, leaderboard submissions and payouts, including any posting fee. Bread does not provide a weekly GC allowance or claim service.
 
-In versions that include the Arcade balance display, Bread shows your GC balance for the selected network. On Mainnet you can buy GC in the wallet. In Arcade's **Game Coins**, choose **Buy more GC**, enter the amount in **GC to buy**, check the USDCx price and the network fee, then choose **Confirm purchase**. If Bread says buying GC isn't available, the sale isn't open on your network right now. Store releases can differ by platform; check your installed version.
+In versions that include the Arcade balance display, Bread shows your GC balance for the selected network. On Mainnet you can buy GC in the wallet, in a package of 1,000 GC for 1 USDCx plus network fees. In Arcade's **Game Coins**, choose **Buy more GC**, check **You pay**, **You receive** and the network fee, then choose **Confirm purchase**. The purchase fills a public sale note, so it can be seen on the Miden chain. If your USDCx doesn't cover the package, Bread says so and nothing is sent. If Bread says buying GC isn't available, the sale isn't open on your network right now. Store releases can differ by platform; check your installed version.
 
 Before playing or submitting a result, check the game's rules, any GC stake, the network fee and the action shown by the wallet. GC does not replace the network fee asset. Free play and social sharing depend on what the game offers.
 
@@ -1006,7 +1007,7 @@ Category: Troubleshooting › Common issues
 
 If Bread reports a Guardian connection or authentication error, such as 401, keep the wallet installed. An error does not mean your recovery phrase is wrong, and resetting the wallet is not a connection fix.
 
-Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; the previous device shows **Another device holds this account** and can use the account again only by taking it back with **Make this device the main one**, which removes access from the other device. Recovery does not set up synced access across both devices. If you have already recovered elsewhere, continue on the device where recovery completed instead of repeatedly recovering back and forth.
+If your old device was lost or stolen, choose **Make this device the main one** when you recover, so that device can no longer sign for your account. When you recover with your recovery phrase on another device, Bread asks how this device should join your wallet. **Add this device** keeps your other devices working, so you can use the account on both. **Make this device the main one** removes every other device. Either way, this device gets its own everyday key, and a small network fee is paid from the account. A removed device shows **Another device holds this account**. If it still holds the recovery phrase, it can take the account back with **Make this device the main one**, which removes the other devices in turn. If you have already recovered elsewhere, continue on the device where recovery completed instead of repeatedly recovering back and forth.
 
 1. Check your internet connection and update through the official store. If the wallet is still syncing or rotating an everyday key after recovery, let that operation finish before starting another one.
 2. Confirm that the wallet is on the network used by the original account. Mainnet and Testnet have different account state. Do not replace RPC or Guardian endpoints with addresses supplied by strangers.
@@ -1322,7 +1323,7 @@ The screenshots show the Bread extension with MetaMask on a phone. Your wallet a
 
    ![Locked funds with The withdrawal is available and Withdraw deposit enabled](E75-recover-withdrawal-available.png)
 
-7. In the final MetaMask pop-up, review **You receive**, the network and the network fee, then tap **Confirm**. Once the transaction confirms, the whole locked balance of that token is automatically returned to the same external wallet on the network you sent from.
+7. In the final MetaMask pop-up, review **You receive**, the network and the network fee, then tap **Confirm**. Once the transaction confirms, the whole locked balance of that token is automatically returned to the same external wallet on the network you sent from. Bread then shows **Withdrawal successful**. Tap **Return to locked funds** to check another token, or **Home** to finish.
 
    ![Final MetaMask transaction request showing USDC to receive on Polygon and the Confirm button](E76-recover-metamask-withdraw.png)
 
@@ -1410,6 +1411,8 @@ Category: Manage wallet › Security and recovery
 
 On Chrome 140 or later, on macOS 15 or later or Windows 11, you can unlock Bread with a passkey instead of typing your password. A passkey is a sign-in key stored by your device or password manager. Your wallet password keeps working.
 
+Setup can also offer passkey unlock as one of its steps. To turn it on later:
+
 1. Open the wallet side panel. You can't set up passkey unlock from the popup.
 2. Select **Profile** (the person icon), then **Passkey unlock** under **Security**.
 3. Select **Enable passkey unlock**, enter your wallet password, and follow your passkey provider's prompts.
@@ -1427,3 +1430,29 @@ The Bread app on your phone or computer locks itself after it has been in the ba
 Category: Troubleshooting › Common issues
 
 Bread hides very small balances from Home. **Hide dust tokens** in **Profile** › **General** is on by default. It hides tokens worth less than $0.001, including a zero balance of a token Bread can price. Your native token always stays visible, and so does any token Bread can't price. To see every token, turn **Hide dust tokens** off.
+
+### 66. How do I use my wallet on more than one device?
+Category: Manage wallet › Security and recovery
+
+On a Guardian-backed account, you can use Bread on more than one device. Each device has its own everyday key. You can see and remove devices in **Profile** › **Security** › **Devices**.
+
+**Add a device**
+
+1. On the new device, choose **Recover your account** and enter your recovery phrase. See *How do I restore my wallet with a recovery phrase?*
+2. When Bread asks **How should this device join your wallet?**, choose **Add this device**. Your other devices keep working.
+3. If Bread asks **Keep the recovery phrase on this device?**, choose **Keep it on this device** or **Remove recovery phrase**. Daily transactions work without it. Guardian changes and everyday key replacement will ask you to enter it, so write it down before you remove it.
+
+If your old device was lost or stolen, choose **Make this device the main one** in step 2 instead. Every other device is removed from the wallet. Each choice is a transaction, and a small network fee is paid from the account.
+
+**Remove a device**
+
+1. Open **Profile** › **Security** › **Devices**. The list shows each device that can sign for your account. **This device** marks the one you're using.
+2. Choose the device, then **Revoke device**.
+3. Confirm with your password or biometrics. If your recovery phrase isn't stored on this device, enter it to approve. It will not be saved on this device.
+
+A revoked device can no longer sign transactions. It can regain access with the recovery phrase.
+
+**If a device shows a notice**
+
+- **This device was revoked**: it was removed from the devices that can sign. Use the recovery phrase to make it the main device again, or remove the wallet from this device.
+- **Another device holds this account**: another device was made the main one. Choose **Make this device the main one** to take the account back, or **Remove wallet from this device**.

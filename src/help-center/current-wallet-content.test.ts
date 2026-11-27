@@ -75,6 +75,9 @@ describe('verified wallet behavior', () => {
     expect(text).toContain('Each game sets its own rules');
     expect(text).toContain('does not provide a weekly');
     expect(text).toContain('On Mainnet you can buy GC in the wallet');
+    // Wallet 1.18.2 sells one fixed package and dropped the GC to buy amount field.
+    expect(text).toContain('1,000 GC for 1 USDCx');
+    expect(text).not.toContain('GC to buy');
     expect(text).not.toMatch(/10 GC|costs 1 GC|per week/);
   });
 
@@ -83,9 +86,33 @@ describe('verified wallet behavior', () => {
     'can-i-get-my-wallet-back-if-i-lose-my-device', 'how-does-recovery-work-with-guardian',
     'how-do-i-prepare-for-mainnet-and-check-my-network',
     'what-should-i-do-before-resetting-or-reinstalling-bread', 'what-should-i-do-if-guardian-cannot-connect'
-  ])('preserves the active-device recovery warning in %s', id => {
-    expect(body(id)).toMatch(/one (active )?device at a time/);
-    expect(body(id)).toMatch(/only one with access|replaces the former/);
+  ])('describes the 1.18.2 device choice on recovery in %s', id => {
+    // Wallet 1.18.2: a phrase recovery on a Guardian account asks Add this device
+    // or Make this device the main one; it no longer cuts off the old device.
+    expect(body(id)).toContain('**Make this device the main one**');
+    // Article 60 may still say what earlier versions did; none may state it as today's rule.
+    expect(body(id)).not.toMatch(/one (active )?device at a time|makes that device the only one with access|replaces the former/);
+  });
+
+  it('keeps the lost-device warning wherever recovery offers Add this device', () => {
+    for (const id of [
+      'how-do-i-restore-my-wallet-with-a-recovery-phrase', 'can-i-get-my-wallet-back-if-i-lose-my-device',
+      'how-does-recovery-work-with-guardian', 'what-should-i-do-before-resetting-or-reinstalling-bread',
+      'what-should-i-do-if-guardian-cannot-connect', 'how-do-i-use-my-wallet-on-more-than-one-device'
+    ]) {
+      expect(body(id)).toContain('**Add this device**');
+      expect(body(id)).toMatch(/lost or stolen, choose \*\*Make this device the main one\*\*/);
+    }
+  });
+
+  it('sends readers from Groups to List before the Pending tab', () => {
+    for (const id of [
+      'how-do-i-accept-a-pending-transfer', 'what-should-i-do-if-accepting-a-transfer-fails',
+      'my-token-is-stuck-on-consuming-receiver-address', 'why-is-my-token-taking-so-long-to-arrive',
+      'my-transfer-shows-as-completed-but-the-token-never-arrived'
+    ]) {
+      expect(body(id)).toMatch(/\*\*View options\*\* and choose \*\*List\*\*/);
+    }
   });
 
   it('retains both acceptance labels and reconciliation before retry', () => {
