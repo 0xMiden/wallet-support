@@ -9,7 +9,7 @@ platforms: [extension-desktop, mobile]
 A bridge transfer can include a source-chain transaction, route processing and a destination-chain claim or arrival. Confirmation on the source chain alone does not mean the destination balance has updated.
 
 1. Check the source and destination networks, token and recipient in the original transfer.
-2. Open **Activity** and read the existing transfer's status and any claim or recovery action. Keep the wallet connected and let it sync.
+2. Open **Activity** and read the existing transfer's status and any claim or recovery action. On the Fast route, a transfer into Bread can show **Deposit locked**, and a transfer out can show **Awaiting Return**, **Ready to Claim**, **Returning Funds** or **Funds Returned**. Keep the wallet connected and let it sync.
 3. Check whether an incoming Miden transfer is waiting to be accepted. See [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
 4. If the outcome is uncertain, check the source and destination balances before retrying. Do not submit a second deposit or withdrawal just because the screen was interrupted.
 5. If it remains delayed, report the route, networks, wallet version and a non-secret transaction reference. Hide sensitive information in screenshots. See [*How do I send feedback or report a problem?*](#common-issues-and-support/how-do-i-send-feedback-or-report-a-problem)
@@ -17,5 +17,7 @@ A bridge transfer can include a source-chain transaction, route processing and a
 A disabled route can stop new transfers without cancelling a transfer already in progress. Follow recovery actions shown for that transfer. Do not change Developer Settings to force a route.
 
 For a USDC or USDCX transfer on Circle's route, see [*My USDC or USDCX bridge transfer hasn't arrived. Who can help?*](#common-issues-and-support/my-usdc-or-usdcx-bridge-transfer-has-not-arrived)
+
+If a transfer on the Fast route is stuck, see [*How do I get my funds back from a locked or failed transfer in Bread?*](#common-issues-and-support/how-do-i-get-my-funds-back-from-a-stuck-bridge-in-transfer) or [*How do I recover a locked deposit on Miden Bridge?*](#common-issues-and-support/how-do-i-recover-a-locked-deposit-on-miden-bridge)
 
 If Bread shows **Bridge deposit failed**, see [*What should I do if a bridge deposit fails?*](#common-issues-and-support/what-should-i-do-if-a-bridge-deposit-fails)

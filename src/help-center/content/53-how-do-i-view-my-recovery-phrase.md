@@ -17,10 +17,10 @@ You can show your recovery phrase again at any time, as long as it is still stor
    ![Bread Wallet's Recovery Phrase page with the phrase covered, and the View button](E51-reveal-phrase-notice.png)
 
 4. Enter your wallet password and select **Continue**.
-5. Your 12 words appear. Write them down, or select **Copy**. Select **Hide Recovery Phrase** when you are done.
+5. Select **Show** to see your 12 words. They hide again if the wallet window loses focus. Write them down, or select **Copy**. Select **Hide Recovery Phrase** when you are done.
 
 If **Recovery Phrase** is missing from **Profile**, the phrase has been removed from this device and can no longer be shown here.
 
 > ⚠️ **Important note:** Anyone who knows your recovery phrase can access your wallet and funds. Never share it.
 
-Related: [*How do I keep my wallet secure?*](#security-and-recovery/how-do-i-keep-my-wallet-secure), [*How do I remove my recovery phrase from my device?*](#security-and-recovery/how-do-i-remove-my-recovery-phrase-from-my-device)
+Related: [*How do I keep my wallet secure?*](#security-and-recovery/how-do-i-keep-my-wallet-secure), [*How do I remove my recovery phrase from my device?*](#security-and-recovery/how-do-i-remove-my-recovery-phrase-from-my-device), [*How do I use my wallet on more than one device?*](#security-and-recovery/how-do-i-use-my-wallet-on-more-than-one-device)

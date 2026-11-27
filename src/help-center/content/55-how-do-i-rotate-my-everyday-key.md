@@ -3,7 +3,7 @@ id: how-do-i-rotate-my-everyday-key
 title: How do I rotate my everyday key?
 mainCategory: guardian
 subcategory: guardian-protection
-platforms: [extension-desktop]
+platforms: [extension-desktop, mobile]
 ---
 
 Rotating creates a new everyday key and replaces the current one on-chain. Do this if you suspect your device is compromised. Your account, address and funds stay the same.

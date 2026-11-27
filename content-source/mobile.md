@@ -32,7 +32,7 @@ To set up your wallet next, see [*How do I create a new account with Bread?*](#s
 
 Use the official app and follow the setup shown in your installed version. If the welcome screen asks for an access code, follow your invitation; do not change Developer Settings to bypass it.
 
-Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; you can no longer use the account on the previous device. Recovery does not set up synced access across both devices.
+You can use your Bread account on more than one device. When you recover it with your recovery phrase on another device, Bread asks whether to add that device or make it the main one, which removes every other device. If a device is lost or stolen, choose **Make this device the main one**.
 
 1. Tap **Get started** when that option is available.
 2. Follow the prompts to set up a passcode or supported biometric unlock. Keep a secure way to unlock the device.
@@ -60,7 +60,7 @@ You add funds to Bread by bridging them from your MetaMask wallet. MetaMask need
 
    ![MetaMask asking to connect, with the account and the Connect button](M05c-fund-metamask-connect.png)
 
-4. Back in Bread, tap the token to choose what to bring in, such as **USDC**. Then tap **From** and choose the network your funds are on.
+4. Back in Bread, tap the token to choose what to bring in, such as **USDC**. The list shows only tokens your connected wallet holds. Then tap **From** and choose the network your funds are on. If your wallet holds none there, Bread tells you it has no tokens with a positive balance on this network.
 
    ![Bread's Bridge in page, with USDC as the token, From Ethereum and To Miden](M05d-fund-enter-amount.png)
 
@@ -98,8 +98,8 @@ The Partner Mainnet cap is $1,232.462 for the total wallet balance after a depos
 **Steps:**
 
 1. From the Bread Wallet homepage, select the token you want to view.
-2. Scroll down to the Token Information section.
-3. Tap the copy icon beside the contract address to copy it.
+2. Expand **Faucet ID** to see the token's full ID.
+3. Tap the copy icon beside it. Bread confirms when it's copied.
 
 ### Is Bread available on mobile?
 
@@ -135,13 +135,15 @@ Never share your recovery phrase or backup password with anyone offering to *rec
 
 Have your recovery phrase (sometimes called a seed phrase) ready and use the official app on the same network as the account you want to recover.
 
-Use your Bread account on one device at a time. Recovering it with your recovery phrase on another device makes that device the only one with access; you can no longer use the account on the previous device. Recovery does not set up synced access across both devices.
+If your old device was lost or stolen, choose **Make this device the main one** when you recover, so that device can no longer sign for your account. When you recover with your recovery phrase on another device, Bread asks how this device should join your wallet. **Add this device** keeps your other devices working, so you can use the account on both. **Make this device the main one** removes every other device. Either way, this device gets its own everyday key, and a small network fee is paid from the account. See [*How do I use my wallet on more than one device?*](#security-and-recovery/how-do-i-use-my-wallet-on-more-than-one-device)
 
 1. Open Bread and tap **Recover your account** when the welcome screen offers it.
 2. Select recovery with your recovery phrase if Bread asks for an import method.
 3. Enter the words in their original order, in the official app only.
 4. Follow the device-protection and Guardian recovery prompts. Bread can look for the operator; if it cannot find your account, check the network and the Guardian you used.
-5. Open the wallet when recovery finishes. Wait for any everyday-key rotation and sync before making a transaction.
+5. If you already use the wallet on another device, Bread asks **How should this device join your wallet?** Choose **Add this device** or **Make this device the main one**.
+6. If Bread asks **Keep the recovery phrase on this device?**, choose **Keep it on this device** or **Remove recovery phrase**. Daily transactions work without it, but Guardian changes and everyday key replacement will ask you to enter it. Write it down before you remove it.
+7. Open the wallet when recovery finishes. Wait for any everyday-key rotation and sync before making a transaction.
 
 Some screens differ between store releases. Recovery needs your phrase and a supported account-state backup; support cannot reset your phrase. Biometrics are an unlock method, not a recovery backup. See [*How do I prepare for Mainnet and check my network?*](#setup-and-basic-use/how-do-i-prepare-for-mainnet-and-check-my-network)
 
@@ -155,13 +157,17 @@ Protect your recovery phrase and the device that holds your wallet.
 
 - Write your recovery phrase on paper and store it safely offline.
 - Use a strong, unique wallet password or passcode, and supported biometric unlock on mobile.
+- On Chrome, you can turn on **Passkey unlock**. Your wallet password still works.
+- The mobile and desktop apps lock after time in the background. Choose how long in **Profile** › **General** › **Auto-lock**.
+- On mobile, a copied recovery phrase or key is cleared from the clipboard after 60 seconds. Copy it only when you must.
+- The desktop app keeps its window out of screenshots and recordings while a secret is shown.
 - Download and update Bread only through official sources.
 - Keep your operating system secure and be cautious of fake apps, sites and support messages.
 - Never share your recovery phrase, signing keys or password, including in screenshots or feedback.
 
 **Guardian and recovery:**
 
-Standard Bread accounts use Guardian to back up private account state. Your recovery phrase restores the keys; Guardian provides the supported account-state recovery path. Guardian does not keep your phrase and cannot move funds alone. See [*How do I restore my wallet with a recovery phrase?*](#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase)
+Standard Bread accounts use Guardian to back up private account state. Your recovery phrase restores the keys; Guardian provides the supported account-state recovery path. Guardian does not keep your phrase and cannot move funds alone. On a Guardian-backed account, check **Profile** › **Security** › **Devices** now and then, and revoke any device you no longer use. See [*How do I use my wallet on more than one device?*](#security-and-recovery/how-do-i-use-my-wallet-on-more-than-one-device) See [*How do I restore my wallet with a recovery phrase?*](#security-and-recovery/how-do-i-restore-my-wallet-with-a-recovery-phrase)
 
 **Before a reset:**
 
@@ -245,11 +251,17 @@ When a send shows as **Confirmed** in **Activity**, the transaction is on the bl
 
 **1. Ask the recipient to check their Pending tab**
 
-Incoming tokens wait in **Activity**, on the **Pending** tab, until the recipient selects **Accept Transfer**. Eligible USDCX transfers can be accepted automatically when **Auto-accept USDCX transfers** is on. Other transfers may need manual acceptance. If the recipient selected **Decline**, the transfer is only hidden on their device, and they can restore it in **Activity**. For the steps, see [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
+Incoming tokens wait in **Activity**, on the **Pending** tab, until the recipient selects **Accept Transfer**. If their **Activity** opens in **Groups**, they open **View options** and choose **List** to see the **Pending** tab. Eligible USDCX transfers can be accepted automatically when **Auto-accept USDCX transfers** is on. Other transfers may need manual acceptance. If the recipient selected **Decline**, the transfer is only hidden on their device, and they can restore it in **Activity**. For the steps, see [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
 
 **2. If the recipient never accepts it**
 
 A recallable send has an expiration shown as **Expiration Date** before you send. If the recipient has not accepted it by then, it becomes eligible for you to reclaim. Check your **Pending** tab in **Activity** and select **Accept Transfer** when the reclaimable transfer appears. Expiration alone does not add it to your spendable balance.
+
+**3. If the send's details show a delivery warning**
+
+For a private send, open it in **Activity**. If its details show **Recipient not notified** or **Delivery unconfirmed**, the transaction is on chain, but the private transfer could not be handed to the delivery service, or the wallet could not confirm that it reached it. Until it does, the recipient cannot see or spend it.
+
+Keep the wallet open and connected. Delivery is retried automatically for up to three days, and the warning clears once it goes through. Do not send again. If the recipient still has nothing after a day, or the details say automatic delivery has stopped, save the transaction ID shown there and contact [support](/feedback). The transfer can still be recovered from it.
 
 **Still missing after an hour?**
 
@@ -274,7 +286,7 @@ Retry your stuck transfers one at a time instead of all together.
 2. Turn off **Auto-accept USDCX transfers**.
 
 3. Wait until nothing shows **Accepting…**. Turning the setting off does not stop a transfer that is already being claimed.
-4. Open **Activity** and select the **Pending** tab. Choose one transfer. If its acceptance failed and it shows **Retry**, select that button only after checking the synced status and balance. A transfer that has not been accepted shows **Accept Transfer** instead. Wait for it to finish before you continue with the next one.
+4. Open **Activity**. If it opens in **Groups**, open **View options** and choose **List**. Then select the **Pending** tab. Choose one transfer. If its acceptance failed and it shows **Retry**, select that button only after checking the synced status and balance. A transfer that has not been accepted shows **Accept Transfer** instead. Wait for it to finish before you continue with the next one.
 5. When all your stuck transfers have gone through, turn **Auto-accept USDCX transfers** back on.
 
 Each transfer you retry is a separate transaction with its own network fee, so retrying them one at a time costs more than claiming them together.
@@ -291,7 +303,7 @@ If a send cannot finish, it may show **Transaction failed**. After an app or bro
 
 Occasionally a failed send has already reached the network just before it stopped. Let your wallet sync, then check your balance and **Activity**.
 
-To try again, open the failed send in **Activity** and select its **Retry** button. The wallet checks whether the send already went through. If the outcome is uncertain, wait for sync and check your balance and the recipient before retrying; do not start a second send while the first may still be processing.
+To try again, open the failed send in **Activity** and select its **Retry** button. The wallet checks whether the send already went through, including swaps and bridge transfers. If it can't check the network, it sends nothing and asks you to check your balance. If the send shows **You can retry after** a time, Guardian is holding it, and **Retry** works once the countdown ends. If the outcome is uncertain, wait for sync and check your balance and the recipient before retrying; do not start a second send while the first may still be processing. If Bread shows **Retry anyway** for a transaction an app asked for, it checks the network first, and finishes the transaction instead of running it again if it already went through.
 
 If the send shows as **Confirmed** but the recipient doesn't have it, see [*My transfer shows as confirmed, but the token never arrived.*](#common-issues-and-support/my-transfer-shows-as-completed-but-the-token-never-arrived)
 
@@ -300,7 +312,7 @@ If the send shows as **Confirmed** but the recipient doesn't have it, see [*My t
 Incoming tokens usually show up within a few moments. If they're taking longer, check these first:
 
 1. **Open and unlock your wallet.** Bread checks for incoming tokens every few seconds while it's open. On mobile it only checks while the app is open; on the browser extension it also checks in the background about once a minute.
-2. **Check the Pending tab.** Incoming tokens wait in **Activity**, on the **Pending** tab, until you select **Accept Transfer**. Eligible USDCX transfers can be accepted automatically when **Auto-accept USDCX transfers** is on. See [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
+2. **Check the Pending tab.** Incoming tokens wait in **Activity**, on the **Pending** tab, until you select **Accept Transfer**. If **Activity** opens in **Groups**, open **View options** and choose **List** to see the **Pending** tab. Eligible USDCX transfers can be accepted automatically when **Auto-accept USDCX transfers** is on. See [*How do I accept a pending transfer?*](#activity-and-transaction-status/how-do-i-accept-a-pending-transfer)
 3. **Check for a connection banner.** If a banner at the top of the wallet says **You appear to be offline** or **Cannot reach the Miden node**, the wallet can't check for new tokens. Check your internet connection, then select **Try again** or **Retry sync**. If the Miden network is down or busy, your tokens appear once it's reachable again.
 
 If there is still nothing after an hour, report it to our [**SUPPORT**](/feedback).

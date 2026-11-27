@@ -26,48 +26,44 @@ describe('verified wallet behavior', () => {
     expect(text).not.toContain('not accepted automatically');
   });
 
-  it('keeps reported deposit success separate from the non-Base withdrawal limitation', () => {
-    const status = body('can-i-earn-yield-in-bread');
-    expect(status).toContain('26 October 2026, 12:32 JST');
-    expect(status).toContain('deposits into Ethereum, Arbitrum and Base Earn markets were reported working');
-    expect(status).toContain('withdrawals worked only from Base back to Miden');
-    expect(status).toContain('Ethereum and Arbitrum withdrawals were not working');
-    expect(status).toContain('Do not start new deposits into Ethereum or Arbitrum Earn markets');
-    expect(status).toContain('do not guarantee');
-    expect(status).not.toContain('provider liquidity setup is still in progress');
+  it('describes paused vaults and withdrawal networks without dated test reports', () => {
+    const earnIds = [
+      'can-i-earn-yield-in-bread', 'what-do-i-need-before-i-can-use-earn', 'how-do-i-deposit-into-earn',
+      'how-do-i-withdraw-from-earn', 'can-i-withdraw-part-of-my-position',
+      'what-should-i-do-if-an-earn-deposit-or-withdrawal-fails'
+    ];
+    for (const id of earnIds) {
+      expect(body(id)).not.toMatch(/JST|reported|26 October 2026|implemented controls/);
+    }
+    const overview = body('can-i-earn-yield-in-bread');
+    expect(overview).toContain('**Deposits are closed**');
+    expect(overview).toContain('Aave V3 USDC on Base and Aave V3 USDC on Ethereum');
+    expect(overview).not.toMatch(/Compound III|Morpho/);
     for (const id of ['what-do-i-need-before-i-can-use-earn', 'how-do-i-deposit-into-earn']) {
-      expect(body(id)).toContain('Do not start new deposits into Ethereum or Arbitrum Earn markets');
-      expect(body(id)).toContain('withdrawal');
+      expect(body(id)).toContain('**Deposits are closed**');
     }
-    for (const id of ['how-do-i-withdraw-from-earn', 'can-i-withdraw-part-of-my-position']) {
-      expect(body(id)).toContain('Ethereum and Arbitrum withdrawals were not working');
-      expect(body(id)).toContain('implemented controls');
+    for (const id of ['can-i-earn-yield-in-bread', 'how-do-i-withdraw-from-earn']) {
+      expect(body(id)).toContain('withdraw positions on Base and Ethereum');
+      expect(body(id)).toMatch(/Withdrawals from Arbitrum aren't available|Epoch can't currently route withdrawals from Arbitrum/);
     }
+    expect(body('how-do-i-withdraw-from-earn')).toContain('one-time setup');
   });
 
-  it('allows partial withdrawals and distinguishes sponsored gas from costs', () => {
+  it('allows partial withdrawals and distinguishes a covered network fee from costs', () => {
     const partial = body('can-i-withdraw-part-of-my-position');
     expect(partial).toContain('**Max**');
     expect(partial).toContain('**Stays invested**');
     expect(partial).not.toContain('No. A withdrawal returns your whole position');
-    expect(body('what-does-it-cost-to-use-earn')).toContain('Sponsored gas does not mean');
+    expect(body('what-does-it-cost-to-use-earn')).toContain('has its network fee covered for you.');
+    expect(body('what-does-it-cost-to-use-earn')).toContain('That does not mean the withdrawal has no costs');
     expect(body('how-do-i-withdraw-from-earn')).toContain('accepted automatically');
   });
 
-  it('qualifies the success screen and earlier Base results with the later pending report', () => {
-    const status = body('can-i-earn-yield-in-bread');
-    expect(status).toContain('26 October 2026, 14:31 JST');
-    expect(status).toContain('45 minutes');
-    expect(status).toContain('positions-loading');
-    expect(status).toContain('does not confirm settlement');
-    expect(status).toContain('does not guarantee Base withdrawal availability');
-    expect(status).not.toMatch(/every account|no Mainnet user|reclaimable/);
+  it('says the success screen does not mean the deposit has finished', () => {
+    expect(body('can-i-earn-yield-in-bread')).toContain("doesn't mean your deposit has finished");
     const deposit = body('how-do-i-deposit-into-earn');
     expect(deposit).toContain('does not confirm settlement');
     expect(deposit).not.toContain('If the deposit completes, Bread shows');
-    for (const id of ['how-do-i-withdraw-from-earn', 'can-i-withdraw-part-of-my-position']) {
-      expect(body(id)).toContain('does not guarantee Base withdrawal availability');
-    }
     const failure = body('what-should-i-do-if-an-earn-deposit-or-withdrawal-fails');
     expect(failure).toContain('**Pending**');
     expect(failure).toContain('balance');
@@ -78,7 +74,10 @@ describe('verified wallet behavior', () => {
     const text = body('how-do-gamecoins-and-arcade-work');
     expect(text).toContain('Each game sets its own rules');
     expect(text).toContain('does not provide a weekly');
-    expect(text).toContain('**Buy more GC** is disabled');
+    expect(text).toContain('On Mainnet you can buy GC in the wallet');
+    // Wallet 1.18.2 sells one fixed package and dropped the GC to buy amount field.
+    expect(text).toContain('1,000 GC for 1 USDCx');
+    expect(text).not.toContain('GC to buy');
     expect(text).not.toMatch(/10 GC|costs 1 GC|per week/);
   });
 
@@ -87,9 +86,33 @@ describe('verified wallet behavior', () => {
     'can-i-get-my-wallet-back-if-i-lose-my-device', 'how-does-recovery-work-with-guardian',
     'how-do-i-prepare-for-mainnet-and-check-my-network',
     'what-should-i-do-before-resetting-or-reinstalling-bread', 'what-should-i-do-if-guardian-cannot-connect'
-  ])('preserves the active-device recovery warning in %s', id => {
-    expect(body(id)).toMatch(/one (active )?device at a time/);
-    expect(body(id)).toMatch(/only one with access|replaces the former/);
+  ])('describes the 1.18.2 device choice on recovery in %s', id => {
+    // Wallet 1.18.2: a phrase recovery on a Guardian account asks Add this device
+    // or Make this device the main one; it no longer cuts off the old device.
+    expect(body(id)).toContain('**Make this device the main one**');
+    // Article 60 may still say what earlier versions did; none may state it as today's rule.
+    expect(body(id)).not.toMatch(/one (active )?device at a time|makes that device the only one with access|replaces the former/);
+  });
+
+  it('keeps the lost-device warning wherever recovery offers Add this device', () => {
+    for (const id of [
+      'how-do-i-restore-my-wallet-with-a-recovery-phrase', 'can-i-get-my-wallet-back-if-i-lose-my-device',
+      'how-does-recovery-work-with-guardian', 'what-should-i-do-before-resetting-or-reinstalling-bread',
+      'what-should-i-do-if-guardian-cannot-connect', 'how-do-i-use-my-wallet-on-more-than-one-device'
+    ]) {
+      expect(body(id)).toContain('**Add this device**');
+      expect(body(id)).toMatch(/lost or stolen, choose \*\*Make this device the main one\*\*/);
+    }
+  });
+
+  it('sends readers from Groups to List before the Pending tab', () => {
+    for (const id of [
+      'how-do-i-accept-a-pending-transfer', 'what-should-i-do-if-accepting-a-transfer-fails',
+      'my-token-is-stuck-on-consuming-receiver-address', 'why-is-my-token-taking-so-long-to-arrive',
+      'my-transfer-shows-as-completed-but-the-token-never-arrived'
+    ]) {
+      expect(body(id)).toMatch(/\*\*View options\*\* and choose \*\*List\*\*/);
+    }
   });
 
   it('retains both acceptance labels and reconciliation before retry', () => {
@@ -99,7 +122,7 @@ describe('verified wallet behavior', () => {
       expect(body(id)).toMatch(/sync/);
       expect(body(id)).toMatch(/balance/);
     }
-    expect(body('what-should-i-do-if-accepting-a-transfer-fails')).toContain('does not automatically return');
+    expect(body('what-should-i-do-if-accepting-a-transfer-fails')).toContain('**Auto-accept USDCX transfers** on');
   });
 
   it('labels retained Earn screenshots as historical illustrations', () => {
@@ -126,13 +149,26 @@ describe('verified wallet behavior', () => {
     expect(text).not.toContain('needs one more step');
   });
 
-  it('does not infer fast transfers from Earn being enabled', () => {
-    expect(body('what-is-the-difference-between-a-solver-route-and-a-canonical-bridge')).toContain('fast transfers are disabled');
-    const bridge = body('which-bridge-networks-and-tokens-can-i-use');
-    for (const route of ['Fast · Epoch', 'NEAR Intents']) {
-      const availability = bridge.split('\n').find(line => line.startsWith(`- **${route}**:`));
-      expect(availability, `${route} availability`).toBeDefined();
-      expect(availability).toMatch(/\bdisabled\b/);
+  // Mainnet config v18 (2026-11-13): Epoch deposits and withdrawals are on for these networks; NEAR Intents is off.
+  it('lists the Fast route as available on its Mainnet networks and NEAR Intents as disabled', () => {
+    const networks = 'Ethereum, Base, Arbitrum, Polygon and Robinhood Chain';
+    expect(body('what-is-the-difference-between-a-solver-route-and-a-canonical-bridge')).toContain(
+      `The Fast route works on ${networks}.`
+    );
+    const bridge = helpCenterArticles.find(article => article.id === 'which-bridge-networks-and-tokens-can-i-use');
+    for (const text of Object.values(bridge?.bodies ?? {})) {
+      expect(text).toContain(`**Fast route: ${networks}**`);
+      const unavailable = text.slice(text.indexOf('**Not available on Partner Mainnet**'));
+      expect(unavailable).not.toContain('Fast · Epoch');
+      expect(unavailable.split('\n').find(line => line.startsWith('- **NEAR Intents**:'))).toMatch(/\bdisabled\b/);
+    }
+    expect(Object.keys(bridge?.bodies ?? {}).length).toBeGreaterThan(0);
+    for (const id of [
+      'what-is-the-difference-between-a-solver-route-and-a-canonical-bridge',
+      'can-i-send-funds-to-another-blockchain',
+      'can-i-swap-tokens-across-chains'
+    ]) {
+      expect(body(id), id).not.toMatch(/Epoch[^.]*not (currently )?enabled|fast transfers are disabled/i);
     }
   });
 });

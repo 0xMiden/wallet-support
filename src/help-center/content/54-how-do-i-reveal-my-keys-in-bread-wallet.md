@@ -18,7 +18,7 @@ Bread can show the keys your account signs with: your Miden everyday key and you
 
 4. The wallet shows a QR code that holds both keys. Select **Show keys as text** to see the **Miden everyday private key** and the **EVM private key** written out, or **Show QR code** to go back.
 
-The page hides the keys again after a short time. Enter your password again if you need more time.
+The keys start hidden. Select **Show** to see them. They hide again when you leave the page or switch to another window. Reveal them again with your password if you need them.
 
 > ⚠️ **Important note:** Keep both keys secret. Anyone with them can control your Miden and EVM assets. Rotating your everyday key does not change or protect a leaked EVM key.
 

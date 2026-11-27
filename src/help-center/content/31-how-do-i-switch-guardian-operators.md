@@ -30,7 +30,7 @@ Switching Guardian uses your everyday key and your emergency key, so have your r
 
    ![Bread Wallet's Review rotation page, with the Continue button](E23-guardian-review.png)
 
-6. A password page will appear to authenticate the switch. Enter your wallet password, then click **Continue**.
+6. Confirm the switch. On the extension, enter your wallet password on the **Enter password** page, then click **Continue**. On your phone, confirm with Face ID, fingerprint or your passcode; if the **Enter your passcode** page appears, enter your passcode.
 
    ![Bread Wallet's Enter password page, with the Continue button](E32-guardian-password.png)
 

@@ -9,6 +9,7 @@ platforms: [extension-desktop, mobile]
 Earn does not provide the same privacy as holding assets in your private Miden account.
 
 - **On Miden:** the private account state is hidden from the public chain; Guardian can see its backup.
+- **Leaving Miden:** the deposit is sent as a public note, so its amount and destination can be seen on the Miden chain.
 - **In an external lending market:** the amount, activity and rewards may be publicly visible.
 - **On return:** the assets go back to your Miden account after the route completes and the transfer is accepted.
 

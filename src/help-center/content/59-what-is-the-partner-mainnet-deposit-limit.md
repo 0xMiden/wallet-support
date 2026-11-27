@@ -6,7 +6,7 @@ subcategory: moving-across-chains
 platforms: [extension-desktop, mobile]
 ---
 
-The Partner Mainnet cap is $1,232.462 USD. It's the most a Bread account can hold after you bridge funds in. It is not a per-transfer allowance or a daily deposit limit.
+The Partner Mainnet cap is $1,232.462 USD. When you add funds through **Receive** › **Cross-chain**, Bread stops a deposit that would take the receiving account over the limit. It is not a per-transfer allowance or a daily deposit limit.
 
 When you make a bridge deposit, Bread adds its value to what the receiving account already holds. If the total would go over $1,232.462 USD, Bread stops the deposit. It shows what the account holds and what the deposit would add, so you can enter a smaller amount. For example, an account that holds $1,000 can take up to $232.462 more. Splitting a deposit into smaller ones doesn't help, because they all count toward the same total.
 

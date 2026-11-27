@@ -8,7 +8,7 @@ platforms: [extension-desktop, mobile]
 
 GameCoin (GC) is used by supported Arcade games. Each game sets its own rules for stakes, leaderboard submissions and payouts, including any posting fee. Bread does not provide a weekly GC allowance or claim service.
 
-In versions that include the Arcade balance display, Bread shows your GC balance for the selected network. In version 1.17.7, **Buy more GC** is disabled: purchasing GC inside the wallet is not implemented. A purchase offered inside a game is a separate game flow, not confirmation that wallet purchasing is available. Store releases can differ by platform; check your installed version.
+In versions that include the Arcade balance display, Bread shows your GC balance for the selected network. On Mainnet you can buy GC in the wallet, in a package of 1,000 GC for 1 USDCx plus network fees. In Arcade's **Game Coins**, choose **Buy more GC**, check **You pay**, **You receive** and the network fee, then choose **Confirm purchase**. The purchase fills a public sale note, so it can be seen on the Miden chain. If your USDCx doesn't cover the package, Bread says so and nothing is sent. If Bread says buying GC isn't available, the sale isn't open on your network right now. Store releases can differ by platform; check your installed version.
 
 Before playing or submitting a result, check the game's rules, any GC stake, the network fee and the action shown by the wallet. GC does not replace the network fee asset. Free play and social sharing depend on what the game offers.
 

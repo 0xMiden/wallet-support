@@ -8,7 +8,9 @@ platforms: [extension-desktop, mobile]
 
 Earn depends on your installed version, network, eligibility and an available provider quote. If a control is disabled or a quote is unavailable, do not submit a new transaction. See [*Can I earn yield in Bread?*](#earn/can-i-earn-yield-in-bread)
 
-**Withdrawal limitation — 26 October 2026, 12:32 JST:** withdrawals were reported working only from Base to Miden; Ethereum and Arbitrum withdrawals were not working. These are reported tests, not a guarantee for every market, amount or installed version. The earlier test does not guarantee Base withdrawal availability when positions cannot be loaded; a later report described positions-loading failures. Check the existing activity, balance and position after sync, and contact [support](/feedback) if they cannot be reconciled. The steps below describe implemented controls; they do not establish that an affected route can complete. Check the current status in [*Can I earn yield in Bread?*](#earn/can-i-earn-yield-in-bread) and contact [support](/feedback) if your withdrawal route is unavailable.
+You can withdraw positions on Base and Ethereum, including one in a vault that's closed to new deposits. Epoch can't currently route withdrawals from Arbitrum. If you have a position on Arbitrum, contact [support](/feedback).
+
+Your first withdrawal on a network can take a little longer while Bread waits for a one-time setup. If that setup outlasts your review, Bread gets a new quote that's never lower than the minimum you reviewed.
 
 A supported withdrawal redeems the selected amount from the external native-USDC position and routes the receipt back to Miden as USDCx. A partial withdrawal leaves the remaining amount invested.
 

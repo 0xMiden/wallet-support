@@ -10,7 +10,7 @@ Earn depends on your installed version, network, eligibility and an available pr
 
 For a supported position on the same network, recovery uses your recovery phrase and the Guardian backup of your standard Bread account. After restoring, let the wallet sync and check **Current Positions** in **Earn** or open **My positions**. If a position is missing, check the network and account before contacting [support](/feedback). Do not make a replacement deposit to recover a missing position.
 
-Recovery establishes access on the replacement device; it does not provide synchronized use on multiple devices. Use one device at a time, because recovery replaces the former device's access.
+Your Earn position belongs to your account, not to a device. When you recover on another device, **Add this device** keeps your other devices working, and **Make this device the main one** removes them. Either way, the position stays with the account.
 
 Recovery does not move a Testnet position to Mainnet. Developer-created accounts without Guardian require a separate recovery plan.
 

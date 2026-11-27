@@ -3,7 +3,7 @@ id: what-should-i-do-if-a-bridge-deposit-fails
 title: What should I do if a bridge deposit fails?
 mainCategory: troubleshooting
 subcategory: common-issues-and-support
-platforms: [mobile]
+platforms: [extension-desktop, mobile]
 ---
 
 If Bread shows **Bridge deposit failed** after your external wallet, such as MetaMask, asks you to approve the deposit, the connection between Bread and that wallet may need refreshing. Disconnecting and reconnecting the wallet can let the deposit complete.
@@ -14,5 +14,9 @@ If Bread shows **Bridge deposit failed** after your external wallet, such as Met
 4. Tap your wallet address at the top of the screen. **Switch wallet** opens.
 5. Tap **Connect another wallet**, choose the same wallet again and approve the connection in it.
 6. Enter the amount and continue. Approve each request in your wallet as it appears.
+
+If tokens left your external wallet but never reached Bread, see [*How do I get my funds back from a locked or failed transfer in Bread?*](#common-issues-and-support/how-do-i-get-my-funds-back-from-a-stuck-bridge-in-transfer)
+
+If Bread says MetaMask Smart Transactions could not send the transaction, first check that no deposit was sent (step 1). Then turn off **Smart Transactions** in MetaMask and try again.
 
 If it still fails, report the error, the networks, the token and your wallet version. Hide sensitive information in screenshots. See [*How do I send feedback or report a problem?*](#common-issues-and-support/how-do-i-send-feedback-or-report-a-problem)
